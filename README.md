@@ -32,9 +32,11 @@ If we think of popular game like pubg, the game itself has around only 3 maps bu
  8. Lists(needs to be linked to the game story)
  9. Booleans(needs to be linked to the game story)
  10. Mapping(needs to be linked to the game story)
- 11. if/else(TODO: add)
- 12. throw/assert(TODO: add)
- 13. structs(TODO: add)
+ 11. if/else(needs to be linked to the game story)
+ 12. assert (needs to be linked to the game story)
+ 13. structs(needs to be linked to the game story)
+ 14. sp.self and sp.sender (needs to be linked to the game story)
+ 15. Testing Scenarios
 
 ## Lesson Content
 
@@ -179,7 +181,7 @@ sp.list(l = …, t = …): Defines a list of (optional) elements in l whose opti
 Example: `sp.list(l=[1, 2, 3], t=sp.TInt)`
 
 **Put it to code**
-TODO: example to be added here
+TODO: Link with game story
 
 ### 9.booleans
 SmartPy has `sp.TBool`: The type of boolean values, True, False, sp.bool(True) and sp.bool(False)
@@ -208,23 +210,105 @@ TODO: example to be added here
 Since Python doesn’t allow its control statements to be overloaded, certain language constructs are desugared by a pre-processor: `sp.if, sp.else` are SmartPy commands.
 If we use e.g. sp.if instead of a plain if, the result will be a SmartPy conditional instead of a Python one. SmartPy conditionals are executed once the contract has been constructed and has been deployed or is being simulated. On the other hand, Python conditionals are executed immediately. Therefore the condition after the if cannot depend on the state of the contract. When in doubt, always use the sp. prefix inside a smart contract.
 
+Creating function to check if the player is alive or not (self.data.isAlive)
+
+Example: 
+
+```python
+
+# if @sp.entry_point is not declared then the function can be called by another contract function but not by user (acts as private function) 
+
+def checkPlayer(self):
+    sp.if self.data.life == 0:
+        self.data.isAlive = true
+
+```
 **Put it to code**
-TODO: example to be added here
+TODO: Link with game story
 
 
-### 12.throw/assert
-TODO: add content
+### 12.assert (verify)
+In smartpy sp.verify(condition, message="") acts as the assertion statement. It checks if the mentioned condition is met, if the condition is true then only the code chunk will move forward otherwise will throw an error with the provided message (message is optional).
+
+Example: `sp.verify(attack >= defence, message="attack is smaller than defence")`
+
+**Put it to code**
+TODO: Link with game story
 
 ### 13.structs
-Python by default doesn't have struct in-built, so in that case we can create our own
-```python
-class Struct(object):
-    pass
-s = Struct()
-s.whatever = 'you want'
+Python by default doesn't have struct in-built, but smartPy have records (sp.TRecords) which basically act as structures.
+
+To initialize Records:
+
+Example: `player = sp.record(name = sp.TString, life = sp.TInt, attack = sp.TInt, defence = sp.TInt)`
+ 
+ **Put it to code**
+ TODO: Link with game story
+
+ ### 14. sp.sender & sp.self
+ SmartPy has a way to get the current function's caller address and get the contract address. This can be done by using sp.sender and sp.self respectively.
+
+ Example: 
+ If we want for the owner to call certain functions, we can verify it by using sp.sender.
+ `sp.verify(owner == sp.sender, "You are not authorized")`
+ 
+ **Put it to code**
+ TODO: Link with game story
+
+ ### 15. Testing Scenarios
+ SmartPy has a method to test the developed contract and verify if the functions are working as per the requirements of not. For testing smart contracts, you first create a scenario which is basically a view where you can check the test results. Then you initialize the contract and register the contract in the scenario. After that you call and register functions (entry_points) to view their results.
+
+ Example:
+ ```python
+ @sp.add_test(name = "First test")
+  def test():
+      # We define a test scenario, called scenario,
+      # together with some outputs and checks
+      scenario = sp.test_scenario()
+      # We first define a contract and add it to the scenario
+      c1 = Contract(name = "test")
+      scenario += c1
+      scenario += c1.entry_point(params)
+
  ```
- 
- 
+ **Put it to code**
+ Now let's create a test scenario for your Character and perform attack and defence entry point functions.
+
+```python
+import smartpy as sp
+class Character(sp.Contract) {
+    def __init__(self, name):
+        self.init(name = sp.string(name), attack=sp.int(10), defence=sp.int(10), life=sp.int(100)
+    
+    @sp.entry_point    
+    def attack(self):
+        sp.verfiy(self.data.life > 0 )
+        # TODO: return attack
+        return self.data.attack
+        
+    @sp.entry_point    
+    def defence(self):
+        sp.verfiy(self.data.life > 0 )
+        #TODO: return defence(which will be reduced from attack point from subtracting life point )
+        return self.data.defence
+}
+
+@sp.add_test(name = "Chracter test")
+  def test():
+      # We define a test scenario, called scenario,
+      # together with some outputs and checks
+      scenario = sp.test_scenario()
+      # We first define a contract and add it to the scenario
+      c1 = Character(name = "Goku")
+      scenario += c1
+      # And send messages to some entry points of c1
+      scenario += c1.attack() # no parameter since it conly takes self as argument
+      scenario += c1.defence() # no parameter since it conly takes self as argument
+      scenario += c1.attack().run(sender = sp.address('tz1222')) # defines the sender address as 'tz1222' (sp.sender = tz1222)
+      scenario += c1.defence().run(valid = False) # this is expected to fail
+
+```
+
  # Game Mechanics
  
  #### Type of Characters
