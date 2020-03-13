@@ -6,25 +6,22 @@ The seed evolves to a plant as the user progresses through the chapters. Complet
  - No currency/points as it distracts from the lesson. A direct reward is received after completing the chapter.
  - Scope to add potions/accessories received after completing a chapter
 
-## Lesson development path
- - Lesson 1: creating of basic simple smart contract
-
 # Lesson Index
- 1. Intro
- 2. Lesson Overview
- 3. Scaffolding A Contract
- 4. State Variables
- 5. Integers
- 6. Booleans
- 6. Creating A Entry Point Function
- 7. Math Operations
- 8. Pairs
- 10. Records
- 11. Maps
- 12. Address
- 13. List
- 14. If/Else
- 15. Verify
+ 1. **Intro**(smartpy intro)
+ 2. **Lesson Overview**(storyline intro)
+ 3. **Scaffolding A Contract**(smart contract intro + creating shell for contract)
+ 4. **State Variables**(using self.init() method for storing contract state)
+ 5. **Integers**(int, nat, and intOrNat explanation)
+ 6. **Booleans**
+ 6. **Creating A Entry Point Function**(public method of a contract class)
+ 7. **Math Operations**(+, -, *, %, operations)
+ 8. **Pairs**(unique datatype which is a pair of 2 values)
+ 10. **Records**(act as structs)
+ 11. **Maps**(key-value pairs)
+ 12. **Address**(is address of the user who is calling the function)
+ 13. **List**(collection of values which are of same type)
+ 14. **If/Else**
+ 15. **Verify**(Assertion command)
 
 ## Lesson Content
 
@@ -416,29 +413,11 @@ class Plant(sp.Contact):
 ```
  
  # Game Mechanics
+ TODO:
  
- #### Type of Characters
- 1. For Plants
-    a. Pea shooter
- 
- ### Point System
- > Every Character will have
-    0.A Name
-    1.Evolution state: basic / level1 / level2
-    2.HP(Hit Points):
-    3.Type(plant/zombie)
-    4.attacks: how much damage they can do
-    5.weakness
- 
- # Application Principles
- - Mobile first design principle
- - SEO/SSR
-    - Research needed(come to a conclusion as to what aspect of it is needed to be considered, estimated time for research: 5hrs)
- - Techstask
-    - Gastby
-        - mdx(markdown support)
-    - Monaco editor
-        - Small package size
-        - https://github.com/Microsoft/monaco-editor/issues/19
-    - Typescript
-    - Emotion library
+ # Techstask
+ - Gastby
+    - mdx(markdown support)
+ - Monaco editor
+ - Typescript
+ - Emotion library
