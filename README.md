@@ -1,25 +1,13 @@
 # Game overview
-**A card game built on tezos smart contract, with zombies and plants as its player.**
- 1. User will choose b/w plant or zombie as there character
- 2. After that, user will go through a journey and build its selected player
- 3. For every successful completion of a chapter user will earn x points, which the user will be allowed to spend to upgrade their player at the end of the lesson
- 4. For checking the answer or hint user will incur in subtraction of points
- 5. At the end of the lesson, user can/will fight with a NPC(NON-PLAYABLE-CHARACTER) boss, which will depict whether user has completed the lesson without skiping the chapters and directly checking the hint and answer to progress forward(need to be finalized).
- 
-## Features to be considered
- - Allow user to compete with other players after lesson completion, online.
- - User will compete with same level online, If the user win against another online player there point will be deducted and added to the user who won the game thus allowing to level_up even more
+A zombie apocalypse has begun. You’ve luckily found the seed of a plant that is known to stop zombies. Your task is to incubate the seed and help it evolve before the zombies reach you. In the lesson, you’re going to learn how to evolve your plant and train it to defend against the incoming apocalypse.
+
+The seed evolves to a plant as the user progresses through the chapters. Completing the lesson results in the user playing an (optional, small) interactive game where the plant defeats the zombies (this is synonymous to a google doodle with infinite attempts and the user will most likely win this easy game).
+
+ - No currency/points as it distracts from the lesson. A direct reward is received after completing the chapter.
+ - Scope to add potions/accessories received after completing a chapter
 
 ## Lesson development path
- - Lesson 1: creation of basic simple contract(Building player character from sratch)
- - Lesson 2: Player character evolution(Add extra feature like special power etc) 
-
-## Gamification Thought Process
-If we think of popular game like pubg, the game itself has around only 3 maps but the element of multi-player game aspect provides a dopamine rush every time the game is played since every time the experience is different, that’s the crux which will be used to build the foundation of the game.
-
-### Principles to be followed
- - Remove monotony nature that tends to kick in games normally
- - Every path user take is a unique one — you’re on your own personal (learning) journey.
+ - Lesson 1: creating of basic simple smart contract
 
 # Lesson Index
  1. Intro
@@ -27,47 +15,53 @@ If we think of popular game like pubg, the game itself has around only 3 maps bu
  3. Scaffolding A Contract
  4. State Variables
  5. Integers
+ 6. Booleans
  6. Creating A Entry Point Function
  7. Math Operations
- 8. Lists(needs to be linked to the game story)
- 9. Booleans(needs to be linked to the game story)
- 10. Mapping(needs to be linked to the game story)
- 11. if/else(needs to be linked to the game story)
- 12. assert (needs to be linked to the game story)
- 13. structs(needs to be linked to the game story)
- 14. sp.self and sp.sender (needs to be linked to the game story)
- 15. Testing Scenarios
+ 8. Pairs
+ 10. Records
+ 11. Maps
+ 12. Address
+ 13. List
+ 14. If/Else
+ 15. Verify
 
 ## Lesson Content
 
 ### 1.Intro
-This lesson will teach you how to build a card game on tezos. It's designed for beginners, but it assumes you have some experience programming in python language.	
+This lesson will teach you how to build a simple smart contract in smartpy which can be deployed on tezos blockchain. It's designed for beginners, but it assumes you have some experience programming in python language.
+
 SmartPy is a high-level smart contract library in Python that offers a simple, intuitive and powerful syntax, enabling developers to easily define Michelson smart contracts for the Tezos blockchain.
-
-### 2.Lesson Overview
-In Lesson 1, you're going to build your selected player for bidding againt a npc boss at the end of lesson.
-
-You will choose b/w plant or zombie as your character, After that, you will go through a journey and build your selected charachter, For every successful completion of a chapter you will earn x points, which can be spent to upgrade your player at the end of the lesson.For checking the answer or hint will incur in subtraction of points, At the end of the lesson you will fight with a NPC(NON-PLAYABLE-CHARACTER) boss, with the character you have built on your own.
-
-Select your character
-You can choose between zombie or a plant as your player
-**Select your player, you would like to go forward with**
-
-### 3.Scaffolding A Contract
-Starting with the absolute basics:
-
-You'll learn how to interact with the smartpy, a python library using in-browser editor. This perfectly simulates how you can interact with a REAL tezos testnet today. Later, we'll show you how to deploy it to a testnet.
-
-Smart contracts are small programs that are stored and executed on the blockchain, smart contracts in Tezos are unique, as they’re written in Michelson. In addition, Tezos supports formal verification, which guarantees the correctness of smart contract code with respect to a specification. Smart contract code can be proved mathematically according to certain properties. Using formal verification, the Tezos project makes smart contracts more secure and reliable.
- — all variables and functions belong to a contract, and this will be the starting point of all your projects.
-
-We define a Python class lets call it `Character` that inherits from the `Contract` class of SmartPy. This class will represent our smart contract and enclose all of the storage initialization, entry points.
-
 
 First of all, we’ll have to import the smartpy library
 ```python 
 import smartpy as sp	
 ```
+
+**Put it to code**
+All smartpy source code should start by importing `smartpy` library
+It looks like this: 
+```python
+import smartpy as sp
+```
+
+### 2.Lesson Overview
+In Lesson 1, you're going to incubate your plant to fight against zombie apocalypse at end of the lesson.
+
+A zombie apocalypse has begun. You’ve luckily found the seed of a plant that is known to stop zombies. Your task is to incubate the seed and help it evolve before the zombies reach you. In the lesson, you’re going to learn how to evolve your plant and train it to defend against the incoming apocalypse.
+
+Incubating users plant
+`*(Animation of seed being set in an incubator)*`
+ 
+### 3.Scaffolding A Contract
+Starting with the absolute basics:
+
+You'll learn how to interact with the smartpy, a python library using in-browser editor. This perfectly simulates how you can interact with a REAL tezos testnet today. In Later lessons, we'll show you how to deploy it to a testnet.
+
+Smart contracts are small programs that are stored and executed on the blockchain, smart contracts in Tezos are unique, as they’re written in Michelson. In addition, Tezos supports formal verification, which guarantees the correctness of smart contract code with respect to a specification. Smart contract code can be proved mathematically according to certain properties. Using formal verification, the Tezos project makes smart contracts more secure and reliable.
+ — all variables and functions belong to a contract, and this will be the starting point of all your projects.
+
+We define a Python class lets call it `HelloWorld` that inherits from the `Contract` class of SmartPy. This class will represent our smart contract and enclose all of the storage initialization, entry points.
 
 An empty contract named HelloWorld would look like this:
 ```
@@ -76,15 +70,11 @@ class HelloWorld(sp.Contract) {
 }
 ```
 
-**Put it to the code**
-All smartpy source code should start by importing `smartpy` library
-It looks like this: 
+**Put it to the code**(Continue from the previous state)
+Putting it together, here is a bare-bones starting contract — the first thing you'll write every time you create a new contract:
+Declare a class named Plant and extend smartpy contract class from it
 ```python
-import smartpy as sp
-```
-Putting it together, here is a bare-bones starting contract — the first thing you'll write every time you start a new project:
-```python
-class Character(sp.Contract) {
+class Plant(sp.Contract) {
 
 }
 ```
@@ -92,20 +82,22 @@ class Character(sp.Contract) {
 ### 4.State Variables
 Great job! Now that we've got a shell for our contract, let's learn about how smartpy deals with variables.
 
-We define an initialization method for HelloWorld  that determines the initial storage during contract origination. `__init__()` accepts one argument, name and calls `self.init()` to assign its value to the newly-created name varaible field of type string in the contract’s storage.
+We define an initialization method for `Plant` that determines the initial storage during contract origination. `__init__()` accepts one argument, name and calls `self.init()` to assign its value to the newly-created name variable field of type string in the contract’s storage.
+
+SmartyPy does most of type inference automatically in almost all the cases, we can also explicitly define string by using sp.string method
+
+Container constructor names are uncapitalized `(sp.string("peashooter"))` and their types are capitalized: `(sp.TString)`
 
 ```python
 def __init__(self, name):
     self.init(name = sp.string(name))
 ```
 
-This contract calls an initialization method `self.init`, contained in `sp.Contract`, that is able to determine an initial storage for the contract.
+This contract calls an initialization method `self.init`, contained in `sp.Contract`, that is able to determine an initial storage for the contract and all the state variables are declared in self.init method.
 
-**Put it to code**
-(Continuing from previous state)
+**Put it to code**(Continuing from previous state)
+Now, declare  `__init__` function inside the plant class
 ```python
-import smartpy as sp
-class Character(sp.Contract) {
     def __init__(self, name):
         self.init(name = sp.string(name))
 }
@@ -120,195 +112,309 @@ Container constructor names are uncapitalized `(sp.int(-42))` and their types ar
 
 In SmartPy, we have three possible types for integer: `int, nat, and intOrNat`. When writing an integer 12, we don’t know whether it is an int or a nat so we type it as intOrNat. Its exact type will be determined at a later stage. This determination is necessary for the Michelson compiler because Michelson needs to make this precise determination.
 
-**Put it to code**
-Now you'll intialize attack and defence for your player
-add attack and defence state variable to your storage with x values respectively
+**Put it to code**(Continuing from previous state)
+Now you'll intialize growth_rate attribute and health for your plant to grow.
+declare growth_rate state and health variable to your storage with 10, 100 value respectively
 
-(Continuing from previous state)
 ```python
-import smartpy as sp
-class Character(sp.Contract) {
-    def __init__(self, name):
-        self.init(name = sp.string(name), attack=sp.int(10), defence=sp.int(10))
-}
+    def __init__(self, name, growth_rate):
+        self.init(name = sp.string(name), growth_rate = sp.int(10), health = sp.int(100))
 ```
 
+### 6.booleans
+SmartPy has `sp.TBool`: The type of boolean values, True, False, sp.bool(True) and sp.bool(False)
 
-### 6.Creating A Entry Point Function
-Entry Point is a method of a contract class that can be called from the outside. They need to be marked with the `@sp.entry_point` decorator. For example the following entry point checks that the argument given is greater than 2.
+In smartPy, all the bitwise operators work the same way as in python, so for example, `True == ~False` is correct in smartPy as well.
+
+**Put it to code**
+Your Plant is alive as its health is 100, declare boolean attribute `is_alive` with the initial value as `False`
+
+`self.init(is_alive = False)`
+
+`*Animation: Plant starts growing*`
+
+### 7.Creating A Entry Point Function
+Entry Point is a method of a contract class that can be called from the outside. They need to be marked with the `@sp.entry_point` decorator. For example the following entry point checks that the argument given is greater than 2 or not.
 
 ```python
 @sp.entry_point
 def checkName(self, params):
    sp.verify(params.x > 2)
 ```
-**Put it to code**
-Now let's create attack and defence entry point function for your character
-TODO: create point machanics
+**Put it to code**(Continuing from previous state)
+Now let's create shell for attack and defence entry point function for your plant.
+Declare function `attack` and `defence` with `entrypoint` decorator.
 ```python
-import smartpy as sp
-class Character(sp.Contract) {
-    def __init__(self, name):
-        self.init(name = sp.string(name), attack=sp.int(10), defence=sp.int(10), life=sp.int(100)
-    
-    @sp.entry_point    
-    def attack(self):
-        sp.verfiy(self.data.life > 0 )
-        //TODO: return attack
-        return self.data.attack
-        
-    @sp.entry_point    
-    def defence(self):
-        sp.verfiy(self.data.life > 0 )
-        //TODO: return defence(which will be reduced from attack point from subtracting life point )
-        return self.data.defence
-}
-```
+@sp.entry_point
+def attack():
+    pass
 
-### 7.Math Operations
+@sp.entry_point
+def defense():
+    pass
+```
+`*Animation: Evolution/Growth*`
+
+### 8.Math Operations
 The arithmetic operators +, -, *, %, // behave just like in Python.
 
 In SmartPy, type inference of arithmetic operators imposes that both sides have the same type.
 
-**Put it to do**
-TODO: attack/defence mechanics to be added using basic math operations
+> For example, If zombie attack your plant, the plant's health will decrease.
+`self.data.health -= params.attack`
 
-### 8.Lists
-There is no array in SmartPy because they are missing in Michelson, instead we have list.
-Container constructor names are uncapitalized `([1, 2, 3])` and their types are capitalized: `(sp.TList)`
-sp.TList: The type of lists, e.g. [1, 2, 3].
-sp.list(l = …, t = …): Defines a list of (optional) elements in l whose optional type is t
-Example: `sp.list(l=[1, 2, 3], t=sp.TInt)`
+**Put it to do**(Continuing from previous state)
+Complete the attack and defence functions and upgrade attack and defence of your plant.
 
-**Put it to code**
-TODO: Link with game story
+```python
+(Need discussion)
+@sp.entry_point
+def attack(self, params):
+    self.data.attack += params.attack
 
-### 9.booleans
-SmartPy has `sp.TBool`: The type of boolean values, True, False, sp.bool(True) and sp.bool(False)
+@sp.entry_point
+def defense(self, params):
+    self.data.defense += params.defense
+```
+`*Animation: Plant becomes a pea shooter*`
 
-**Put it to code**
-TODO: example to be added here
 
-### 10.mapping
+### 8.Pairs
+`Pair` is a unique datatype in smartPy which is nothing but a pair of 2 values. These values can be of any primitive datatype and need not be the same.
+
+To initialize a pair:
+```python
+example = sp.pair("", 0)
+# this will initialize a pair with first element as sp.TString and second as sp.TInt
+```
+Elements of a pair can be called by using `sp.fst(..)` to get the first element and `sp.snd(..)` to get the second element.
+
+Example:
+
+```python
+sp.fst(example) # this will give you the first value of test
+sp.snd(example) # this will give you the second value of test
+```
+
+Elements of a `pair` is immutable, that means, you cannot reassign values to it's unique elements.
+
+Example:
+```python
+sp.fst(test) = "change"
+# this will give you error
+```
+
+**Put it to do**(Continuing from previous state)
+Declare and initialize a variable of type `sp.TPair(sp.TString, sp.TInt)` `power_move`
+
+```python
+self.init(power_move = sp.pair("Bullet Seed", 95))
+```
+`*Animation: Plant Evolves*`
+### 9.Record(Structs)
+Python doesn't have concepts of structures, so to compensate for the same, smartPy has Records which act as structs. This not only makes the contract more readable and understnadable but also makes it much more logical.
+
+Records in smartPy contract are declared in the following manner `Record = sp.record()`
+
+**Put it to do**(Continuing from previous state)
+1) Remove the various Plant attributes which were initialized earlier and also `attack` and `defense` functions as these functions will need to be updated.
+
+2) Create a variable named `stat` which is a record containing the values of all the attributes of your Plant
+```python
+self.init(stat = sp.record(
+name = name,
+attack = sp.int(70),
+defence = sp.int(30),
+health = sp.int(100),
+growth_rate = sp.int(10),
+is_alive = False)
+```
+
+### 10.Maps
 Maps are data structures that store key-value pairs. As a result, they enable smart contracts to create valuable associations between related information.
 
-sp.TMap:  e.g. {'A': 65, 'B': 66, 'C'; 67}.
-sp.TBigMap: e.g. {'A': 65, 'B': 66, 'C'; 67}.
+Maps in smartPy can be declared in the following manner:
+`sp.TMap:  e.g. {'A': 65, 'B': 66, 'C'; 67}`
+`sp.TBigMap: e.g. {'A': 65, 'B': 66, 'C'; 67}`
 
 sp.big_map(l = …, tkey = …, tvalue = …): Defines a big_map of (optional) elements in l with optional key type tkey and optional value type tvalue.
 sp.map(l = …, tkey = …, tvalue = …): Defines a map of (optional) elements in l with optional key type tkey and optional value type tvalue.
-Example: sp.map(l={one: 1, two: 2}, tkey=sp.TString, tvalue=sp.TInt)
+`Example: sp.map(l={one: 1, two: 2}, tkey=sp.TString, tvalue=sp.TInt)`
 Container constructor names are uncapitalized `{'A': 1, 'B': 2, 'C': 3}` and their types are capitalized: `(sp.TMap) or (sp.TBigMap)`
+
+SmartPy has an inbuilt function `map.contains(key)` to check if a certain key is already available in the mapping or not. If the key is present, then it will return `True`, otherwise `False`.
+
+Mapping will be used to point your tezos wallet address with your character.
+
+**Put it to code**(Continuing from previous state)
+1) Declare a variable `player` of type mapping and initialize it as an empty map
+
+`player = sp.map() # edit in self.init`
+
+2) Create an entry_point `assignPlant` which will take one string parameter `name` which will be name of your plant.
+
+```python
+    @sp.entry_point
+    def assignChararter(self, params):
+        self.data.player[params.sender] = self.data.stat
+        self.data.player[params.sender].name = params.name
+```
+
+
+### 9.Address
+`sp.sender` is a global variable that is availble to all function. It is of type `sp.TAddress` and it refers to the address of the user who is calling the function.
+
+Example:
+```python
+@sp.entry_point
+def makeOwner():
+    isOwner[sp.sender] = True
+# if `tz1234` calls this function, then he will become the owner.    
+```
+
+**Put it to code**(Continuing from previous state)
+1) remove `params.sender` from `assignCharacter` function.
+
+2) use `sp.sender` to assign character to the function caller.
+
+3) Also update the previously defined `attack` & `defense` functions in the same manner.
+
+```python
+
+    @sp.entry_point
+    def attack(self, params):
+        self.data.player[sp.sender].attack += params.attack
+
+    @sp.entry_point
+    def defence(self, params):
+        self.data.player[sp.sender].defence += params.defence
+        
+```
+
+### 8.List
+Lists are the collection of object/values which are of same type.
+List in smartPy are of type sp.TList but are initialized in the same manner as in python.
 There is no array in SmartPy because they are missing in Michelson, we use maps instead.
+example:
+`list = []`
+Values can be added to the list by using `push` function
 
-**Put it to code**
-TODO: example to be added here
+Example:
+`list.push(value)`
+In your contract, list will be used to store all the attacks of your plant which will create a special move.
+
+**Put it to code**(Continuing from previous state)
+1) Remove `power_move` as it is not required now.
+
+1) declare an empty list `special_move` inside the stat record
+
+`special_moves = []`
+
+2) Create a function `createMove` which will take a list of `sp.TPair` type `moves` as parameter and will store that list in `special_moves`.
 
 
+```python
+    @sp.entry_point
+    def createMove(self, params):
+        self.data.player[sp.sender].special_move = params.moves
+```
 
 ### 11.if/else
-Since Python doesn’t allow its control statements to be overloaded, certain language constructs are desugared by a pre-processor: `sp.if, sp.else` are SmartPy commands.
-If we use e.g. sp.if instead of a plain if, the result will be a SmartPy conditional instead of a Python one. SmartPy conditionals are executed once the contract has been constructed and has been deployed or is being simulated. On the other hand, Python conditionals are executed immediately. Therefore the condition after the if cannot depend on the state of the contract. When in doubt, always use the sp. prefix inside a smart contract.
+If/else statements are the conditional statements which are used to check condition and run the chunk of code only if the conditions are met. 
 
-Creating function to check if the player is alive or not (self.data.isAlive)
-
-Example: 
+In smartpy, if/else comamands are `sp.if, sp.else`.
 
 ```python
+sp.if [condition]:
+    # execute code if condition met
 
-# if @sp.entry_point is not declared then the function can be called by another contract function but not by user (acts as private function) 
-
-def checkPlayer(self):
-    sp.if self.data.life == 0:
-        self.data.isAlive = true
-
+sp.else:
+    # execute code if condition didn't met
 ```
-**Put it to code**
-TODO: Link with game story
 
+You will use these condition statements to check if the sender address is already assigned with a character or not. This will ensure that one user has only one character
 
-### 12.assert (verify)
-In smartpy sp.verify(condition, message="") acts as the assertion statement. It checks if the mentioned condition is met, if the condition is true then only the code chunk will move forward otherwise will throw an error with the provided message (message is optional).
-
-Example: `sp.verify(attack >= defence, message="attack is smaller than defence")`
-
-**Put it to code**
-TODO: Link with game story
-
-### 13.structs
-Python by default doesn't have struct in-built, but smartPy have records (sp.TRecords) which basically act as structures.
-
-To initialize Records:
-
-Example: `player = sp.record(name = sp.TString, life = sp.TInt, attack = sp.TInt, defence = sp.TInt)`
- 
- **Put it to code**
- TODO: Link with game story
-
- ### 14. sp.sender & sp.self
- SmartPy has a way to get the current function's caller address and get the contract address. This can be done by using sp.sender and sp.self respectively.
-
- Example: 
- If we want for the owner to call certain functions, we can verify it by using sp.sender.
- `sp.verify(owner == sp.sender, "You are not authorized")`
- 
- **Put it to code**
- TODO: Link with game story
-
- ### 15. Testing Scenarios
- SmartPy has a method to test the developed contract and verify if the functions are working as per the requirements of not. For testing smart contracts, you first create a scenario which is basically a view where you can check the test results. Then you initialize the contract and register the contract in the scenario. After that you call and register functions (entry_points) to view their results.
-
- Example:
- ```python
- @sp.add_test(name = "First test")
-  def test():
-      # We define a test scenario, called scenario,
-      # together with some outputs and checks
-      scenario = sp.test_scenario()
-      # We first define a contract and add it to the scenario
-      c1 = Contract(name = "test")
-      scenario += c1
-      scenario += c1.entry_point(params)
-
- ```
- **Put it to code**
- Now let's create a test scenario for your Character and perform attack and defence entry point functions.
+**Put it to code**(Continuing from previous state)
+Check if the sender is already assigned
 
 ```python
-import smartpy as sp
-class Character(sp.Contract) {
-    def __init__(self, name):
-        self.init(name = sp.string(name), attack=sp.int(10), defence=sp.int(10), life=sp.int(100)
-    
-    @sp.entry_point    
-    def attack(self):
-        sp.verfiy(self.data.life > 0 )
-        # TODO: return attack
-        return self.data.attack
-        
-    @sp.entry_point    
-    def defence(self):
-        sp.verfiy(self.data.life > 0 )
-        #TODO: return defence(which will be reduced from attack point from subtracting life point )
-        return self.data.defence
-}
-
-@sp.add_test(name = "Chracter test")
-  def test():
-      # We define a test scenario, called scenario,
-      # together with some outputs and checks
-      scenario = sp.test_scenario()
-      # We first define a contract and add it to the scenario
-      c1 = Character(name = "Goku")
-      scenario += c1
-      # And send messages to some entry points of c1
-      scenario += c1.attack() # no parameter since it conly takes self as argument
-      scenario += c1.defence() # no parameter since it conly takes self as argument
-      scenario += c1.attack().run(sender = sp.address('tz1222')) # defines the sender address as 'tz1222' (sp.sender = tz1222)
-      scenario += c1.defence().run(valid = False) # this is expected to fail
-
+    @sp.entry_point
+    def assignChar(self, params):
+        sp.if ~ self.data.player.contains(sp.sender):
+            self.data.player[sp.sender] = self.data.Character
+            self.data.player[sp.sender].name = params.name
+        sp.else:
+            pass
 ```
 
+
+
+### 12.Verify
+Assertion statements are also a kind of condition checking statements but they are very useful in smart contracts because unlike if/else statements, they revert back the transaction and hence saving the gas/transaction fees as well.
+
+Assertion command can be as follows in SmartPy: 
+```python
+sp.verify(condition, message="")
+# message is an optional parameter
+``` 
+
+We can use verify command at the beginning of any entry_point to check the required conditions. 
+
+In our example previously, if/else commands were used. That is not an efficient way of doing things as you may have noticed, if the condition is not met and the code goes to else statement, it has nothing to execute and the gas/transaction fee will be wasted. 
+
+To overcome this, you will be using `sp.verify()` statement.
+
+**Put it to code**(Continuing from previous state)
+1) Remove if/else statment from the previous code.
+2) Include `sp.verify()` statement to check the conditions.
+
+```python
+    @sp.entry_point
+    def assignChar(self, params):
+        sp.verify(~ self.data.player.contains(sp.sender), "User already have a character")
+        self.data.player[sp.sender] = self.data.Character
+        self.data.player[sp.sender].name = params.name
+```
+
+3) Create a function `endGame` that will verify the health of the player. If health of the player is 0, change `is_alive` to `False` and end the game.
+
+```python
+    @sp.entry_point
+    def endGame(self, params):
+        sp.verify(self.data.player[sp.sender].health == 0, "You are not dead")
+        self.data.player[sp.sender].is_alive = False
+```
+ 
+ ##Final Code
+ ```Python
+ import smartpy as sp
+
+class Plant(sp.Contact):
+
+    def __init__(self, _name):
+        self.init(player = sp.map(), stat = sp.record(name = _name, attack = sp.int(0), defence = sp.int(0), health = sp.int(100), growth_rate = sp.int(5), is_alive = True, special_move = []))
+
+
+    @sp.entry_point
+    def assignChar(self, params):
+        sp.verify(~ self.data.player.contains(sp.sender), "User already have a character")
+        self.data.player[sp.sender] = self.data.stat
+        self.data.player[sp.sender].name = params.name
+
+    @sp.entry_point
+    def attack(self, params):
+        self.data.player[sp.sender].attack += params.attack
+
+    @sp.entry_point
+    def defence(self, params):
+        self.data.player[sp.sender].defence += params.defence
+
+    @sp.entry_point
+    def endGame(self, params):
+        sp.verify(self.data.player[sp.sender].health == 0, "You are not dead")
+        self.data.player[sp.sender].is_alive = False
+```
+ 
  # Game Mechanics
  
  #### Type of Characters
@@ -323,18 +429,16 @@ class Character(sp.Contract) {
     3.Type(plant/zombie)
     4.attacks: how much damage they can do
     5.weakness
-    
-For very chapter user will earn 5 points 
-
- ### Fight system(player vs player and player vs npc)
- >
- ### Interaction
- >
  
  # Application Principles
  - Mobile first design principle
  - SEO/SSR
     - Research needed(come to a conclusion as to what aspect of it is needed to be considered, estimated time for research: 5hrs)
- - Decide Which framework would be best on for frontend side
-    - Gatsby(with markdown for content)
-
+ - Techstask
+    - Gastby
+        - mdx(markdown support)
+    - Monaco editor
+        - Small package size
+        - https://github.com/Microsoft/monaco-editor/issues/19
+    - Typescript
+    - Emotion library
