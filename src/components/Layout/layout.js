@@ -15,9 +15,9 @@ const Layout = ({ children }) => {
             margin: 0;
           }
           /* More info: https://bit.ly/2PsCnzk */
-          * + * {
+          ${'' /* * + * {
             margin-top: 1rem;
-          }
+          } */}
           html,
           body {
             margin: 0;
