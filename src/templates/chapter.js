@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { graphql, Link } from 'gatsby';
+import { graphql, Link, navigate } from 'gatsby';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import { css } from '@emotion/core';
 import styled from '@emotion/styled';
 import Layout from '../components/Layout/layout';
 import { ControlledEditor, monaco } from '@monaco-editor/react';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { TiTick } from 'react-icons/ti';
+import { AiOutlineQuestion } from 'react-icons/ai';
+import { IoIosMenu } from 'react-icons/io';
+import './prism-custom.css';
 
 export const query = graphql`
   query($slug: String!) {
@@ -36,7 +41,7 @@ const Header = styled.header`
   align-items: center;
 `;
 
-const BackLink = styled(Link)`
+const BackLink = styled.button`
   color: white;
   margin-left: 1rem;
   font-family: Roboto;
@@ -45,6 +50,21 @@ const BackLink = styled(Link)`
   font-size: 23px;
   line-height: 27px;
   text-decoration: none;
+  background: #0e1817;
+  border: none;
+  height: 50px;
+  cursor: pointer;
+  transition: 0.3s;
+
+  :hover {
+    background: #fff;
+    color: #0e1817;
+    border-radius: 50%;
+  }
+
+  > svg {
+    vertical-align: middle;
+  }
 `;
 
 const LessonTitle = styled.h1`
@@ -93,6 +113,7 @@ const Footer = styled.footer`
 
 const Content = styled.div`
   grid-area: content;
+  overflow-y: auto;
   height: calc(100vh - 140px);
   width: calc(((100vw) / 2.4));
 `;
@@ -134,15 +155,28 @@ const ChapterTitle = styled.p`
   font-size: 1.1rem;
   line-height: 27px;
   margin-left: 1rem;
+  display: flex;
+  align-self: center;
 `;
 
 const PrevLink = styled(Link)`
   color: rgba(255, 255, 255, 0.5);
-  margin: 0 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-top: 1px;
   font-family: Roboto;
   font-style: normal;
   font-weight: normal;
   text-decoration: none;
+
+  > span {
+    margin-left: 6px;
+  }
+
+  > svg {
+    display: inline-block;
+    vertical-align: middle;
+  }
 `;
 
 const ContentIndex = styled.span`
@@ -151,11 +185,17 @@ const ContentIndex = styled.span`
 
 const NextLink = styled(Link)`
   color: #fff;
-  margin: 0 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-top: 1px;
   font-family: Roboto;
   font-style: normal;
   font-weight: normal;
   text-decoration: none;
+  > svg {
+    display: inline-block;
+    vertical-align: middle;
+  }
 `;
 
 const ContentFrontmatterTitle = styled.p`
@@ -192,7 +232,15 @@ const CheckAnswerButton = styled.button`
   font-weight: normal;
   font-size: 20px;
   color: #fff;
-  margin: 0 10px;
+  padding: 0 1rem;
+  margin: 0 15px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+  :hover {
+    background: #fff;
+    color: #18b77e;
+  }
 `;
 
 const ShowAnswerButton = styled.button`
@@ -204,6 +252,22 @@ const ShowAnswerButton = styled.button`
   font-size: 20px;
   color: #fff;
   margin: 0 10px;
+  padding: 0 1rem;
+  border: none;
+  transition: 0.3s;
+  cursor: pointer;
+  :hover {
+    background: #fff;
+    color: #162f30;
+  }
+`;
+
+const MenuButton = styled.button`
+  margin-left: 1rem;
+  background: #0e1817;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
 `;
 const PostTemplate = ({ data: { mdx: post } }) => {
   const [editorInputValue, setEditorInputValue] = useState('');
@@ -245,7 +309,9 @@ const PostTemplate = ({ data: { mdx: post } }) => {
     <Layout>
       <Container>
         <Header>
-          <BackLink>{'< '}Back</BackLink>
+          <BackLink onClick={() => window.history.back()}>
+            <FaChevronLeft size={34} />
+          </BackLink>
           <LessonTitle>Lesson: Introduction to SmartPy</LessonTitle>
           <HelpButton>Get Help!</HelpButton>
         </Header>
@@ -273,6 +339,7 @@ const PostTemplate = ({ data: { mdx: post } }) => {
         <Editor>
           <ControlledEditor
             height={`calc(100vh - 250px)`}
+            width={`calc(100vw - (100vw / 2.4))`}
             value={editorInputValue}
             onChange={(_, value) => setEditorInputValue(value)}
             language="python"
@@ -290,18 +357,30 @@ const PostTemplate = ({ data: { mdx: post } }) => {
           />
         </Editor>
         <Option>
-          <ShowAnswerButton> ? Show Answer</ShowAnswerButton>
-          <CheckAnswerButton>TickIcon Check</CheckAnswerButton>
+          <ShowAnswerButton>
+            {' '}
+            <AiOutlineQuestion /> Show Answer
+          </ShowAnswerButton>
+          <CheckAnswerButton>
+            <TiTick /> Check
+          </CheckAnswerButton>
         </Option>
         <Footer>
           <div>
-            <nav>Content Menu</nav>
+            <MenuButton>
+              <IoIosMenu size={36} color="#fff" />
+            </MenuButton>
             <ChapterTitle>Chapter 1: Scaffolding A Contract</ChapterTitle>
           </div>
           <div>
-            <PrevLink>{'< '} Prev</PrevLink>
+            <PrevLink>
+              <FaChevronLeft />
+              <span>Prev</span>
+            </PrevLink>
             <ContentIndex>1/15</ContentIndex>
-            <NextLink>Next {' >'}</NextLink>
+            <NextLink>
+              <span>Next</span> <FaChevronRight />
+            </NextLink>
           </div>
         </Footer>
       </Container>

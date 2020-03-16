@@ -30,6 +30,9 @@ const Layout = ({ children }) => {
               margin-top: 0;
             }
           }
+          .react-icons {
+            vertical-align: middle;
+          }
           ${'' /* h1,
           h2,
           h3,
