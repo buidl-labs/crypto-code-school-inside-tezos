@@ -1,5 +1,6 @@
 export const primaryFont = '"Roboto", "Open Sans"';
 
+//Third major
 export const typeScale = {
   header1: '1.8rem',
   header2: '1.6rem',
