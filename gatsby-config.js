@@ -44,6 +44,11 @@ module.exports = {
             variants: [`400`, `500`, `700`],
           },
           {
+            family: `Inconsolata`,
+            subsets: [`latin`],
+            variants: [`400`, `700`],
+          },
+          {
             family: `Open Sans`,
             variants: [`400`, `700`],
           },
@@ -52,6 +57,21 @@ module.exports = {
     },
     {
       resolve: `gatsby-plugin-mdx`,
+      options: {
+        extensions: [`.mdx`, `.md`],
+        gatsbyRemarkPlugins: [
+          {
+            resolve: `gatsby-remark-images`,
+          },
+          {
+            resolve: `gatsby-remark-prismjs`,
+            options: {
+              classPrefix: 'language-python',
+            },
+          },
+          `gatsby-remark-smartypants`,
+        ],
+      },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline

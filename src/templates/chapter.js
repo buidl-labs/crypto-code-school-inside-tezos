@@ -164,50 +164,55 @@ const ContentHeader = styled.div`
   padding: 1.5rem;
 `;
 
-const PostTemplate = ({ data: { mdx: post } }) => (
-  <Layout>
-    <Container>
-      <Header>
-        {/* <BackLink>{'< '}Back</BackLink> */}
-        <LessonTitle>Lesson: Introduction to SmartPy</LessonTitle>
-        <HelpButton>Get Help!</HelpButton>
-      </Header>
-      <Content>
-        <ContentHeader>
-          <ContentFrontmatterChapter>
-            {post.frontmatter.chapter}
-          </ContentFrontmatterChapter>
-          <ContentFrontmatterTitle>
-            {post.frontmatter.title}
-          </ContentFrontmatterTitle>
-        </ContentHeader>
-        <p
-          css={css`
-            font-size: 0.75rem;
-          `}
-        ></p>
-        <MDXRenderer>{post.body}</MDXRenderer>
-      </Content>
-      <ContractFile>filename.py</ContractFile>
-      <Editor>In-Browser editor</Editor>
-      <Option>
-        options
-        <button>show answer</button>
-        <button>check</button>
-      </Option>
-      <Footer>
-        <div>
-          <nav>Content Menu</nav>
-          <ChapterTitle>Chapter 1: Scaffolding A Contract</ChapterTitle>
-        </div>
-        <div>
-          {/* <PrevLink>{'< '} Prev</PrevLink> */}
-          <ContentIndex>1/15</ContentIndex>
-          {/* <NextLink>Next {' >'}</NextLink> */}
-        </div>
-      </Footer>
-    </Container>
-  </Layout>
-);
+const PostTemplate = ({ data: { mdx: post } }) => {
+  console.log('Data body', post.body);
+  return (
+    <Layout>
+      <Container>
+        <Header>
+          <BackLink>{'< '}Back</BackLink>
+          <LessonTitle>Lesson: Introduction to SmartPy</LessonTitle>
+          <HelpButton>Get Help!</HelpButton>
+        </Header>
+        <Content>
+          <ContentHeader>
+            <ContentFrontmatterChapter>
+              {post.frontmatter.chapter}
+            </ContentFrontmatterChapter>
+            <ContentFrontmatterTitle>
+              {post.frontmatter.title}
+            </ContentFrontmatterTitle>
+          </ContentHeader>
+          <p
+            css={css`
+              font-size: 0.75rem;
+            `}
+          ></p>
+          <div style={{ margin: 20 }}>
+            <MDXRenderer>{post.body}</MDXRenderer>
+          </div>
+        </Content>
+        <ContractFile>filename.py</ContractFile>
+        <Editor>In-Browser editor</Editor>
+        <Option>
+          options
+          <button>show answer</button>
+          <button>check</button>
+        </Option>
+        <Footer>
+          <div>
+            <nav>Content Menu</nav>
+            <ChapterTitle>Chapter 1: Scaffolding A Contract</ChapterTitle>
+          </div>
+          <div>
+            <PrevLink>{'< '} Prev</PrevLink>
+            <ContentIndex>1/15</ContentIndex>
+            <NextLink>Next {' >'}</NextLink>
+          </div>
+        </Footer>
+      </Container>
+    </Layout>
+  );
+};
 
 export default PostTemplate;
