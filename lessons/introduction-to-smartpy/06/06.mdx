@@ -1,0 +1,32 @@
+---
+title: Booleans
+chapter: Chapter 6
+slug: chapter-06
+editor:
+  language: python
+  startingCode: |
+    import smartpy as sp
+    class Plant(sp.Contract) {
+        def __init__(self, name):
+        self.init(name = sp.string(name), growth_rate = sp.int(10),
+        health = sp.int(100))
+    }
+  answer: |  
+    import smartpy as sp
+    class Plant(sp.Contract) {
+        def __init__(self, name):
+        self.init(name = sp.string(name), growth_rate = sp.int(10),
+        health = sp.int(100), is_alive = True)
+    }
+---
+
+SmartPy has `sp.TBool`: The type of boolean values, True, False, sp.bool(True) and sp.bool(False)
+
+In smartPy, all the bitwise operators work the same way as in python, so for example, `True == ~False` is correct in smartPy as well.
+
+**Put it to code**
+Your Plant is alive as its health is 100, declare boolean attribute `is_alive` with the initial value as `True`
+
+```python
+self.init(..., is_alive = True)
+```

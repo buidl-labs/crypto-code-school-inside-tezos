@@ -1,0 +1,69 @@
+---
+title: Pairs
+chapter: Chapter 9
+slug: chapter-09
+editor:
+  language: python
+  startingCode: |
+    import smartpy as sp
+    class Plant(sp.Contract) {
+        def __init__(self, name):
+        self.init(name = sp.string(name), growth_rate = sp.int(10),
+        health = sp.int(100), is_alive = True)
+    }
+
+    @sp.entry_point
+    def attack(self, params):
+        self.data.attack += params.attack
+
+    @sp.entry_point
+    def defense(self, params):
+        self.data.defense += params.defense
+  answer: |  
+    import smartpy as sp
+    class Plant(sp.Contract) {
+        def __init__(self, name):
+        self.init(name = sp.string(name), growth_rate = sp.int(10),
+        health = sp.int(100), is_alive = True,
+        power_move = sp.pair("Bullet Seed", 95))
+    }
+
+    @sp.entry_point
+    def attack(self, params):
+        self.data.attack += params.attack
+
+    @sp.entry_point
+    def defense(self, params):
+        self.data.defense += params.defense
+---
+
+`Pair` is a unique datatype in smartPy which is nothing but a pair of 2 values. These values can be of any primitive datatype and need not be the same.
+
+To initialize a pair:
+```python
+example = sp.pair("", 0)
+# this will initialize a pair with first element as sp.TString and second as sp.TInt
+```
+Elements of a pair can be called by using `sp.fst(..)` to get the first element and `sp.snd(..)` to get the second element.
+
+Example:
+
+```python
+sp.fst(example) # this will give you the first value of test
+sp.snd(example) # this will give you the second value of test
+```
+
+Elements of a `pair` is immutable, that means, you cannot reassign values to it's unique elements.
+
+Example:
+```python
+sp.fst(test) = "change"
+# this will give you error
+```
+
+**Put it to do**(Continuing from previous state)
+Declare and initialize a variable of type `sp.TPair(sp.TString, sp.TInt)` `power_move`
+
+```python
+self.init(power_move = sp.pair("Bullet Seed", 95))
+```

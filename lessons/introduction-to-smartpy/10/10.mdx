@@ -1,0 +1,63 @@
+---
+title: Records
+chapter: Chapter 10
+slug: chapter-10
+editor:
+  language: python
+  startingCode: |
+    import smartpy as sp
+    class Plant(sp.Contract) {
+        def __init__(self, name):
+            self.init(name = sp.string(name), growth_rate = sp.int(10),
+            health = sp.int(100), is_alive = True,
+            power_move = sp.pair("Bullet Seed", 95))
+    }
+
+    @sp.entry_point
+    def attack(self, params):
+        self.data.attack += params.attack
+
+    @sp.entry_point
+    def defense(self, params):
+        self.data.defense += params.defense
+  answer: |  
+    import smartpy as sp
+    class Plant(sp.Contract) {
+        def __init__(self, name):
+            self.init(stat = sp.record(
+            name = sp.string(name),
+            attack = sp.int(70),
+            defence = sp.int(30),
+            health = sp.int(100),
+            growth_rate = sp.int(10),
+            is_alive = False,
+            power_move = sp.pair("Bullet Seed", 95))
+    }
+
+    @sp.entry_point
+    def attack(self, params):
+        self.data.attack += params.attack
+
+    @sp.entry_point
+    def defense(self, params):
+        self.data.defense += params.defense
+---
+
+Python doesn't have concepts of structures, so to compensate for the same, smartPy has Records which act as structs. This not only makes the contract more readable and understnadable but also makes it much more logical.
+
+Records in smartPy contract are declared in the following manner `Record = sp.record()`
+
+**Put it to do**
+
+1) Remove the various Plant attributes which were initialized earlier and also `attack` and `defense` functions as these functions will need to be updated.
+
+2) Create a variable named `stat` which is a record containing the values of all the attributes of your Plant
+```python
+self.init(stat = sp.record(
+name = sp.string(name),
+attack = sp.int(70),
+defence = sp.int(30),
+health = sp.int(100),
+growth_rate = sp.int(10),
+is_alive = False)
+```

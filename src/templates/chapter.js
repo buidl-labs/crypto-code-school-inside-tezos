@@ -127,7 +127,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
   //     console.log(chapter.frontmatter.editor.answer);
   //   }
   // }, [editorInputValue]);
-  console.log('Data body', chapter);
+  console.log('Data body', chapterList);
   return (
     <Layout>
       <Container>
