@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { TiTick } from 'react-icons/ti';
 import { AiOutlineQuestion } from 'react-icons/ai';
 
-function ChapterEditor({ children }) {
+function ChapterEditor({ children, setShowOutput }) {
   return (
     <>
       <ContractFile>
@@ -11,10 +11,18 @@ function ChapterEditor({ children }) {
       </ContractFile>
       <Editor>{children}</Editor>
       <Option>
-        <ShowAnswerButton>
+        <ShowAnswerButton
+          onClick={() => {
+            setShowOutput(true);
+          }}
+        >
           <AiOutlineQuestion /> Show Answer
         </ShowAnswerButton>
-        <CheckAnswerButton>
+        <CheckAnswerButton
+          onClick={() => {
+            setShowOutput(true);
+          }}
+        >
           <TiTick /> Check
         </CheckAnswerButton>
       </Option>

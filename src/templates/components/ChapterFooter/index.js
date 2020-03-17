@@ -4,24 +4,43 @@ import { IoIosMenu } from 'react-icons/io';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { Link } from 'gatsby';
 
-function ChapterFooter() {
+function ChapterFooter({
+  chapter,
+  title,
+  chapterIndex: { current, total, nextSlug, prevSlug },
+}) {
   return (
     <Footer>
       <div>
         <MenuButton>
           <IoIosMenu size={36} color="#fff" />
         </MenuButton>
-        <ChapterTitle>Chapter 1: Scaffolding A Contract</ChapterTitle>
+        <ChapterTitle>
+          {chapter}
+          {': '}
+          {title}
+        </ChapterTitle>
       </div>
       <div>
-        <PrevLink>
-          <FaChevronLeft />
-          <span>Prev</span>
-        </PrevLink>
-        <ContentIndex>1/15</ContentIndex>
-        <NextLink>
-          <span>Next</span> <FaChevronRight />
-        </NextLink>
+        {prevSlug ? (
+          <PrevLink to={`/lesson/${prevSlug}`}>
+            <FaChevronLeft />
+            <span>Prev</span>
+          </PrevLink>
+        ) : null}
+
+        <ContentIndex>
+          {current}/{total}
+        </ContentIndex>
+        {nextSlug ? (
+          <NextLink to={`/lesson/${nextSlug}`}>
+            <span>Next</span> <FaChevronRight />
+          </NextLink>
+        ) : (
+          <NextLink to="/">
+            <span>Finish</span> <FaChevronRight />
+          </NextLink>
+        )}
       </div>
     </Footer>
   );
