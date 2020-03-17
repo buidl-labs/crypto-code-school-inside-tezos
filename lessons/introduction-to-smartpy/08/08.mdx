@@ -1,0 +1,57 @@
+---
+title: Math Operations
+chapter: Chapter 8
+slug: chapter-08
+editor:
+  language: python
+  startingCode: |
+    import smartpy as sp
+    class Plant(sp.Contract) {
+        def __init__(self, name):
+        self.init(name = sp.string(name), growth_rate = sp.int(10),
+        health = sp.int(100), is_alive = True)
+    }
+
+    @sp.entry_point
+    def attack():
+        pass
+
+    @sp.entry_point
+    def defense():
+        pass
+  answer: |  
+    import smartpy as sp
+    class Plant(sp.Contract) {
+        def __init__(self, name):
+        self.init(name = sp.string(name), growth_rate = sp.int(10),
+        health = sp.int(100), is_alive = True)
+    }
+
+    @sp.entry_point
+    def attack(self, params):
+        self.data.attack += params.attack
+
+    @sp.entry_point
+    def defense(self, params):
+        self.data.defense += params.defense
+---
+
+The arithmetic operators +, -, *, %, // behave just like in Python.
+
+In SmartPy, type inference of arithmetic operators imposes that both sides have the same type.
+
+> For example, If zombie attack your plant, the plant's health will decrease.
+`self.data.health -= params.attack`
+
+**Put it to do**(Continuing from previous state)
+Complete the attack and defence functions and upgrade attack and defence of your plant.
+
+```python
+@sp.entry_point
+def attack(self, params):
+    self.data.attack += params.attack
+
+@sp.entry_point
+def defense(self, params):
+    self.data.defense += params.defense
+```

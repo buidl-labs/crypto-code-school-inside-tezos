@@ -1,0 +1,36 @@
+---
+title: Integers
+chapter: Chapter 5
+slug: chapter-05
+editor:
+  language: python
+  startingCode: |
+    import smartpy as sp
+    class Plant(sp.Contract) {
+        def __init__(self, name):
+        self.init(name = sp.string(name))
+    }
+  answer: |  
+    import smartpy as sp
+    class Plant(sp.Contract) {
+        def __init__(self, name):
+        self.init(name = sp.string(name), growth_rate = sp.int(10), health = sp.int(100))
+    }
+---
+
+Container constructor names are uncapitalized `(sp.int(-42))` and their types are capitalized: `(sp.TInt)`
+
+ - sp.TInt: The type of integer values, e.g. -42 or sp.int(-42).
+ - sp.TNat: The type of non-negative integer values, e.g. sp.nat(42).
+ - sp.TIntOrNat: The type of integer values whose type is still undetermined between sp.TInt or sp.TNat, e.g. 42 or sp.intOrNat(42).
+
+In SmartPy, we have three possible types for integer: `int, nat, and intOrNat`. When writing an integer 12, we don’t know whether it is an int or a nat so we type it as intOrNat. Its exact type will be determined at a later stage. This determination is necessary for the Michelson compiler because Michelson needs to make this precise determination.
+
+**Put it to code**(Continuing from previous state)
+Now you'll intialize growth_rate attribute and health for your plant to grow.
+declare growth_rate state and health variable to your storage with 10, 100 value respectively
+
+```python
+def __init__(self, name, growth_rate):
+    self.init(name = sp.string(name), growth_rate = sp.int(10), health = sp.int(100))
+```

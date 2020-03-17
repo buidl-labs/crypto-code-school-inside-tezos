@@ -1,0 +1,86 @@
+---
+title: Address
+chapter: Chapter 12
+slug: chapter-12
+editor:
+  language: python
+  startingCode: |
+    import smartpy as sp
+    class Plant(sp.Contract) {
+        def __init__(self, name):
+            self.init(stat = sp.record(
+            name = sp.string(name),
+            attack = sp.int(70),
+            defence = sp.int(30),
+            health = sp.int(100),
+            growth_rate = sp.int(10),
+            is_alive = False,
+            power_move = sp.pair("Bullet Seed", 95))
+    }
+
+    @sp.entry_point
+    def attack(self, params):
+        self.data.attack += params.attack
+
+    @sp.entry_point
+    def defense(self, params):
+        self.data.defense += params.defense
+
+    @sp.entry_point
+    def assignCharacter(self, params):
+        self.data.player[params.sender] = self.data.stat
+        self.data.player[params.sender].name = params.name
+  answer: |  
+    import smartpy as sp
+    class Plant(sp.Contract) {
+        def __init__(self, name):
+            self.init(stat = sp.record(
+            name = sp.string(name),
+            attack = sp.int(70),
+            defence = sp.int(30),
+            health = sp.int(100),
+            growth_rate = sp.int(10),
+            is_alive = False,
+            power_move = sp.pair("Bullet Seed", 95))
+    }
+
+    @sp.entry_point
+    def attack(self, params):
+        self.data.player[sp.sender].attack += params.attack
+
+    @sp.entry_point
+    def defence(self, params):
+        self.data.player[sp.sender].defence += params.defence
+
+    @sp.entry_point
+    def assignCharacter(self, params):
+        self.data.player[params.sender] = self.data.stat
+        self.data.player[params.sender].name = params.name
+---
+
+`sp.sender` is a global variable that is availble to all function. It is of type `sp.TAddress` and it refers to the address of the user who is calling the function.
+
+Example:
+```python
+@sp.entry_point
+def makeOwner():
+    isOwner[sp.sender] = True
+# if `tz1234` calls this function, then he will become the owner.    
+```
+
+**Put it to code**
+1) remove `params.sender` from `assignCharacter` function.
+
+2) use `sp.sender` to assign character to the function caller.
+
+3) Also update the previously defined `attack` & `defense` functions in the same manner.
+
+```python
+@sp.entry_point
+def attack(self, params):
+    self.data.player[sp.sender].attack += params.attack
+
+@sp.entry_point
+def defence(self, params):
+    self.data.player[sp.sender].defence += params.defence
+```
