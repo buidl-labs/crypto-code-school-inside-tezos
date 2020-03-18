@@ -54,8 +54,11 @@ editor:
 
     @sp.entry_point
     def assignCharacter(self, params):
-        self.data.player[params.sender] = self.data.stat
-        self.data.player[params.sender].name = params.name
+        sp.if ~ self.data.player.contains(sp.sender):
+            self.data.player[sp.sender] = self.data.stat
+            self.data.player[sp.sender].name = params.name
+        sp.else:
+            pass
 ---
 
 If/else statements are the conditional statements which are used to check condition and run the chunk of code only if the conditions are met. 
@@ -72,14 +75,15 @@ sp.else:
 
 You will use these condition statements to check if the sender address is already assigned with a character or not. This will ensure that one user has only one character
 
-**Put it to code**(Continuing from previous state)
+## Put it to code
+
 Check if the sender is already assigned
 
 ```python
 @sp.entry_point
-def assignChar(self, params):
+def assignCharacter(self, params):
     sp.if ~ self.data.player.contains(sp.sender):
-        self.data.player[sp.sender] = self.data.Character
+        self.data.player[sp.sender] = self.data.stat
         self.data.player[sp.sender].name = params.name
     sp.else:
         pass
