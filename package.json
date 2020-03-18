@@ -19,6 +19,7 @@
     "gatsby-plugin-prefetch-google-fonts": "^1.4.3",
     "gatsby-plugin-react-helmet": "^3.1.21",
     "gatsby-plugin-sharp": "^2.4.3",
+    "gatsby-plugin-webpack-bundle-analyzer": "^1.0.5",
     "gatsby-remark-images": "^3.1.49",
     "gatsby-remark-prismjs": "^3.3.35",
     "gatsby-remark-smartypants": "^2.1.22",
@@ -46,7 +47,8 @@
     "start": "npm run develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
+    "analyze": "ANALYZE_BUNDLE_SIZE=true gatsby build"
   },
   "repository": {
     "type": "git",

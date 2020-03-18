@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { FaChevronLeft } from 'react-icons/fa';
+import { navigate } from 'gatsby';
 
 function ChapterHeader() {
   return (
     <Header>
-      <BackLink onClick={() => window.history.back()}>
-        <FaChevronLeft size={34} />
+      <BackLink onClick={() => navigate('/')}>
+        <FaChevronLeft size={28} />
       </BackLink>
       <LessonTitle>Lesson: Introduction to SmartPy</LessonTitle>
       <HelpButton>Get Help!</HelpButton>
@@ -34,14 +35,14 @@ const BackLink = styled.button`
   text-decoration: none;
   background: #0e1817;
   border: none;
-  height: 50px;
+  height: 45px;
   cursor: pointer;
   transition: 0.3s;
 
   :hover {
     background: #fff;
     color: #0e1817;
-    border-radius: 50%;
+    border-radius: 35px;
   }
 
   > svg {

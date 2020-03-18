@@ -10,9 +10,8 @@ editor:
 
   answer: |  
     import smartpy as sp
-    class Plant(sp.Contract) {
-
-    }
+    class Plant(sp.Contract):
+        pass
 ---
 Starting with the absolute basics:
 
@@ -25,16 +24,17 @@ We define a Python class lets call it `HelloWorld` that inherits from the `Contr
 
 An empty contract named HelloWorld would look like this:
 ```python
-class HelloWorld(sp.Contract) {
-
-}
+class Plant(sp.Contract):
+    pass
 ```
 
-**Put it to the code**(Continue from the previous state)
+## Put it to code
 Putting it together, here is a bare-bones starting contract — the first thing you'll write every time you create a new contract:
-Declare a class named Plant and extend smartpy contract class from it
-```python
-class Plant(sp.Contract) {
 
-}
+Declare a class named Plant and extend smartpy contract class from it
+
+```python
+class Plant(sp.Contract):
+    pass
 ```
+**TODO: Scaffold a plant contract**

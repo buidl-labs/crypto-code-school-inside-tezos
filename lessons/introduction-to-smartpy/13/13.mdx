@@ -6,59 +6,66 @@ editor:
   language: python
   startingCode: |
     import smartpy as sp
-    class Plant(sp.Contract) {
+    class Plant(sp.Contract):
         def __init__(self, name):
-            self.init(stat = sp.record(
-            name = sp.string(name),
-            attack = sp.int(70),
-            defence = sp.int(30),
-            health = sp.int(100),
-            growth_rate = sp.int(10),
-            is_alive = False,
-            power_move = sp.pair("Bullet Seed", 95))
-    }
+        		self.init(stat = sp.record(
+                name = sp.string(name),
+                attack = sp.int(70),
+                defence = sp.int(30),
+                health = sp.int(100),
+                growth_rate = sp.int(10),
+                is_alive = True,
+                power_move = sp.pair("Bullet Seed", 95)),
+                player = sp.map())
+        
+        @sp.entry_point
+        def assignCharacter(self, params):
+            self.data.player[sp.sender] = self.data.stat
+            self.data.player[sp.sender].name = params.name
 
-    @sp.entry_point
-    def attack(self, params):
-        self.data.player[sp.sender].attack += params.attack
+        @sp.entry_point
+        def attack(self, params):
+            self.data.player[sp.sender].attack += params.attack
 
-    @sp.entry_point
-    def defence(self, params):
-        self.data.player[sp.sender].defence += params.defence
+        @sp.entry_point
+        def defence(self, params):
+            self.data.player[sp.sender].defence += params.defence
 
-    @sp.entry_point
-    def assignCharacter(self, params):
-        self.data.player[params.sender] = self.data.stat
-        self.data.player[params.sender].name = params.name
   answer: |  
     import smartpy as sp
-    class Plant(sp.Contract) {
+    class Plant(sp.Contract):
         def __init__(self, name):
-            self.init(stat = sp.record(
-            name = sp.string(name),
-            attack = sp.int(70),
-            defence = sp.int(30),
-            health = sp.int(100),
-            growth_rate = sp.int(10),
-            is_alive = False,
-            power_move = sp.pair("Bullet Seed", 95))
-    }
+        		self.init(stat = sp.record(
+                name = sp.string(name),
+                attack = sp.int(70),
+                defence = sp.int(30),
+                health = sp.int(100),
+                growth_rate = sp.int(10),
+                is_alive = True,
+                power_move = sp.pair("Bullet Seed", 95)),
+                player = sp.map())
+        
+        @sp.entry_point
+        def assignCharacter(self, params):
+            self.data.player[sp.sender] = self.data.stat
+            self.data.player[sp.sender].name = params.name
 
-    @sp.entry_point
-    def attack(self, params):
-        self.data.player[sp.sender].attack += params.attack
+        @sp.entry_point
+        def attack(self, params):
+            self.data.player[sp.sender].attack += params.attack
 
-    @sp.entry_point
-    def defence(self, params):
-        self.data.player[sp.sender].defence += params.defence
+        @sp.entry_point
+        def defence(self, params):
+            self.data.player[sp.sender].defence += params.defence
+        
+        @sp.entry_point
+        def createMove(self, params):
+            self.data.player[sp.sender].special_move = params.moves
 
-    @sp.entry_point
-    def assignCharacter(self, params):
-        self.data.player[params.sender] = self.data.stat
-        self.data.player[params.sender].name = params.name
 ---
 
-Lists are the collection of object/values which are of same type.
+Lists are the collection of object/values which are of same type in smartpy.
+
 List in smartPy are of type sp.TList but are initialized in the same manner as in python.
 There is no array in SmartPy because they are missing in Michelson, we use maps instead.
 example:
@@ -69,7 +76,12 @@ Example:
 `list.push(value)`
 In your contract, list will be used to store all the attacks of your plant which will create a special move.
 
+<<<<<<< HEAD
 **Put it to code**(Continuing from previous state)
+=======
+## Put it to code
+
+>>>>>>> develop
 1) Remove `power_move` as it is not required now.
 
 1) declare an empty list `special_move` inside the stat record
