@@ -6,10 +6,13 @@ editor:
   language: python
   startingCode: |
     import smartpy as sp
+
     class Plant(sp.Contract):
         def __init__(self, name):
-        		self.init(name = sp.string(name),
-            growth_rate = sp.int(10), health = sp.int(100), is_alive = True)
+
+            # Initialize the required variable
+
+        	  self.init(name = sp.string(name), attack = sp.int(10), defense = sp.int(10), growth_rate = sp.int(10), health = sp.int(100), is_alive = True)
    
         @sp.entry_point
         def attack(self, params):
@@ -21,11 +24,13 @@ editor:
 
   answer: |  
     import smartpy as sp
+
     class Plant(sp.Contract):
         def __init__(self, name):
-        		self.init(name = sp.string(name),
-            growth_rate = sp.int(10), health = sp.int(100), is_alive = True,
-            power_move = sp.pair("Bullet Seed", 95))
+
+            # Initialize the required variable
+
+        		self.init(name = sp.string(name), attack = sp.int(10), defense = sp.int(10), growth_rate = sp.int(10), health = sp.int(100), is_alive = True, power_move = sp.pair("Bullet Seed", 95))
    
         @sp.entry_point
         def attack(self, params):
@@ -34,7 +39,6 @@ editor:
         @sp.entry_point
         def defense(self, params):
             self.data.defense += params.defense
-
 ---
 
 `Pair` is a unique datatype in smartPy which is nothing but a pair of 2 values. These values can be of any primitive datatype and need not be the same.

@@ -6,36 +6,47 @@ editor:
   language: python
   startingCode: |
     import smartpy as sp
+
     class Plant(sp.Contract):
-        def __init__(self, name):
-        		self.init(stat = sp.record(
-                name = sp.string(name),
-                attack = sp.int(70),
-                defence = sp.int(30),
-                health = sp.int(100),
-                growth_rate = sp.int(10),
-                is_alive = True,
-                power_move = sp.pair("Bullet Seed", 95))
+        def __init__(self):
+
+            # Initialize state variable
+
+        	self.init(stat = sp.record(name = "", attack = sp.int(10), defence = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True))
+
+        @sp.entry_point
+        def attack(self, params):
+            pass
+
+        @sp.entry_point
+        def defense(self, params):
+            pass
+
+        # Code from below
 
   answer: |  
     import smartpy as sp
+
     class Plant(sp.Contract):
-        def __init__(self, name):
-        		self.init(stat = sp.record(
-                name = sp.string(name),
-                attack = sp.int(70),
-                defence = sp.int(30),
-                health = sp.int(100),
-                growth_rate = sp.int(10),
-                is_alive = True,
-                power_move = sp.pair("Bullet Seed", 95)),
-                player = sp.map())
-        
+        def __init__(self):
+
+            # Initialize state variable
+
+            self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.int(10), defence = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True))
+    
         @sp.entry_point
-        def assignCharacter(self, params):
+        def attack(self, params):
+            pass
+
+        @sp.entry_point
+        def defense(self, params):
+            pass
+
+        # Code from below
+        @sp.entry_point
+        def assignChararter(self, params):
             self.data.player[params.sender] = self.data.stat
             self.data.player[params.sender].name = params.name
-
 ---
 
 Maps are data structures that store key-value pairs. As a result, they enable smart contracts to create valuable associations between related information.

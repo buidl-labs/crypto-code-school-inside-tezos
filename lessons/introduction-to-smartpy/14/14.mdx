@@ -6,59 +6,58 @@ editor:
   language: python
   startingCode: |
     import smartpy as sp
-    class Plant(sp.Contract) {
-        def __init__(self, name):
-            self.init(stat = sp.record(
-            name = sp.string(name),
-            attack = sp.int(70),
-            defence = sp.int(30),
-            health = sp.int(100),
-            growth_rate = sp.int(10),
-            is_alive = False,
-            power_move = sp.pair("Bullet Seed", 95))
-    }
 
-    @sp.entry_point
-    def attack(self, params):
-        self.data.player[sp.sender].attack += params.attack
+    class Plant(sp.Contract):
+        def __init__(self):
+            self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.int(10), defence = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True, special_moves = []))
 
-    @sp.entry_point
-    def defence(self, params):
-        self.data.player[sp.sender].defence += params.defence
+        @sp.entry_point
+        def attack(self, params):
+            self.data.player[sp.sender].attack += params.attack
 
-    @sp.entry_point
-    def assignCharacter(self, params):
-        self.data.player[params.sender] = self.data.stat
-        self.data.player[params.sender].name = params.name
-  answer: |  
-    import smartpy as sp
-    class Plant(sp.Contract) {
-        def __init__(self, name):
-            self.init(stat = sp.record(
-            name = sp.string(name),
-            attack = sp.int(70),
-            defence = sp.int(30),
-            health = sp.int(100),
-            growth_rate = sp.int(10),
-            is_alive = False,
-            power_move = sp.pair("Bullet Seed", 95))
-    }
+        @sp.entry_point
+        def defense(self, params):
+            self.data.player[sp.sender].defence += params.defence
 
-    @sp.entry_point
-    def attack(self, params):
-        self.data.player[sp.sender].attack += params.attack
+        @sp.entry_point
+        def assignChararter(self, params):
 
-    @sp.entry_point
-    def defence(self, params):
-        self.data.player[sp.sender].defence += params.defence
-
-    @sp.entry_point
-    def assignCharacter(self, params):
-        sp.if ~ self.data.player.contains(sp.sender):
+            # Update the function
             self.data.player[sp.sender] = self.data.stat
             self.data.player[sp.sender].name = params.name
-        sp.else:
-            pass
+
+        @sp.entry_point
+        def createMove(self, params):
+            self.data.player[sp.sender].special_move = params.moves
+
+  answer: |  
+    import smartpy as sp
+
+    class Plant(sp.Contract):
+        def __init__(self):
+            self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.int(10), defence = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True, special_moves = []))
+
+        @sp.entry_point
+        def attack(self, params):
+            self.data.player[sp.sender].attack += params.attack
+
+        @sp.entry_point
+        def defense(self, params):
+            self.data.player[sp.sender].defence += params.defence
+
+        @sp.entry_point
+        def assignChararter(self, params):
+
+            # Update the function
+            sp.if ~ self.data.player.contains(sp.sender):
+                self.data.player[sp.sender] = self.data.stat
+                self.data.player[sp.sender].name = params.name
+            sp.else:
+                pass
+
+        @sp.entry_point
+        def createMove(self, params):
+            self.data.player[sp.sender].special_move = params.moves
 ---
 
 If/else statements are the conditional statements which are used to check condition and run the chunk of code only if the conditions are met. 

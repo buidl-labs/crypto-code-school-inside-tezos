@@ -6,34 +6,41 @@ editor:
   language: python
   startingCode: |
     import smartpy as sp
+
     class Plant(sp.Contract):
         def __init__(self, name):
-        		self.init(name = sp.string(name),
-            growth_rate = sp.int(10), health = sp.int(100), is_alive = True)
+        	self.init(name = sp.string(name), attack = sp.int(10), defense = sp.int(10), growth_rate = sp.int(10), health = sp.int(100), is_alive = True)
    
         @sp.entry_point
         def attack():
+
+            # Update the function
             pass
 
         @sp.entry_point
         def defence():
+
+            # Update the function
             pass
 
   answer: |  
     import smartpy as sp
+
     class Plant(sp.Contract):
         def __init__(self, name):
-        		self.init(name = sp.string(name),
-            growth_rate = sp.int(10), health = sp.int(100), is_alive = True)
+        	self.init(name = sp.string(name), attack = sp.int(10), defense = sp.int(10), growth_rate = sp.int(10), health = sp.int(100), is_alive = True)
    
         @sp.entry_point
         def attack(self, params):
+
+            # Update the function
             self.data.attack += params.attack
 
         @sp.entry_point
         def defense(self, params):
-            self.data.defense += params.defense
 
+            # Update the function
+            self.data.defense += params.defense
 ---
 
 The arithmetic operators +, -, *, %, // behave just like in Python.
