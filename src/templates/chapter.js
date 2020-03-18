@@ -3,6 +3,7 @@ import { graphql } from 'gatsby';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import styled from '@emotion/styled';
 import Layout from '../components/Layout/layout';
+import { MDXProvider } from '@mdx-js/react';
 import { ControlledEditor, monaco, DiffEditor } from '@monaco-editor/react';
 import './prism-custom.css';
 import {
@@ -88,7 +89,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           base: 'vs-dark',
           inherit: true,
           rules: [
-            { token: 'comment', foreground: '666666', fontStyle: 'italic' },
+            { token: 'comment', foreground: '989898', fontStyle: 'italic' },
             { token: 'keyword', foreground: 'EA4192' },
             { token: 'number', foreground: '00FF47' },
             { token: 'string', foreground: 'FA00FF' },
@@ -136,7 +137,19 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           chapter={chapter.frontmatter.chapter}
           title={chapter.frontmatter.title}
         >
-          <MDXRenderer>{chapter.body}</MDXRenderer>
+          <MDXProvider
+            components={{
+              p: props => <p {...props} style={{ marginBottom: 10 }} />,
+              h2: props => (
+                <h2
+                  {...props}
+                  style={{ marginTop: 40, marginBottom: 5, color: '#2e2d2d' }}
+                />
+              ),
+            }}
+          >
+            <MDXRenderer>{chapter.body}</MDXRenderer>
+          </MDXProvider>
         </ChapterContent>
         <ChapterEditor setShowOutput={setShowOutput}>
           <ControlledEditor
