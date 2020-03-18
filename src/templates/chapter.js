@@ -139,7 +139,9 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
         >
           <MDXProvider
             components={{
-              p: props => <p {...props} style={{ marginBottom: 10 }} />,
+              p: props => (
+                <p {...props} style={{ marginBottom: 10, marginTop: 5 }} />
+              ),
               h2: props => (
                 <h2
                   {...props}
