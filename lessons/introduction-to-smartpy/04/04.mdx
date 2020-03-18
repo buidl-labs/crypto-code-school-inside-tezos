@@ -6,16 +6,16 @@ editor:
   language: python
   startingCode: |
     import smartpy as sp
-    class Plant(sp.Contract) {
+    class Plant(sp.Contract):
 
 
-    }
+    
   answer: |  
     import smartpy as sp
-    class Plant(sp.Contract) {
+    class Plant(sp.Contract):
         def __init__(self, name):
-        self.init(name = sp.string(name))
-    }
+        		self.init(name = sp.string(name))
+    
 ---
 
 Great job! Now that we've got a shell for our contract, let's learn about how smartpy deals with variables.
@@ -33,10 +33,11 @@ def __init__(self, name):
 
 This contract calls an initialization method `self.init`, contained in `sp.Contract`, that is able to determine an initial storage for the contract and all the state variables are declared in self.init method.
 
-**Put it to code**(Continuing from previous state)
+## Put it to code
 Now, declare  `__init__` function inside the plant class
 ```python
-    def __init__(self, name):
-        self.init(name = sp.string(name))
-}
+def __init__(self, name):
+  self.init(name = sp.string(name))
 ```
+
+**TODO: declare __init__ function **
