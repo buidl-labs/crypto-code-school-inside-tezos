@@ -18,13 +18,13 @@ editor:
         		self.init(name = sp.string(name),
             growth_rate = sp.int(10), health = sp.int(100), is_alive = True)
    
-    @sp.entry_point
-    def attack():
-        pass
+        @sp.entry_point
+        def attack():
+            pass
 
-    @sp.entry_point
-    def defence():
-        pass
+        @sp.entry_point
+        def defence():
+            pass
 
 ---
 
@@ -38,7 +38,7 @@ def checkValue(self, params):
 
 ## Put it to code
 Now let's create shell for attack and defence entry point function for your plant.
-Declare function `attack` and `defence` with `entrypoint` decorator.
+Declare function `attack` and `defence` with `@sp.entrypoint` as decorator.
 
 ```python
 @sp.entry_point
