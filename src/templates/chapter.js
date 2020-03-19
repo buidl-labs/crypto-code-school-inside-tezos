@@ -14,6 +14,7 @@ import {
 } from './components/index';
 import useChapters from '../hooks/use-chapters';
 import { getChaptersIndex } from '../utils/index';
+import { checkCode } from '../utils/compiler';
 
 export const query = graphql`
   query($slug: String!) {
@@ -77,6 +78,12 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
       prevSlug,
     };
   });
+
+  const [validation, updateValidation] = useState({
+    success: false,
+    error: [''],
+  });
+
   const [editorInputValue, setEditorInputValue] = useState(
     `${chapter.frontmatter.editor.startingCode}`,
   );
@@ -128,7 +135,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
   //     console.log(chapter.frontmatter.editor.answer);
   //   }
   // }, [editorInputValue]);
-  console.log('Data body', chapterList);
+  console.log('Data body', validation);
   return (
     <Layout>
       <Container>
@@ -153,12 +160,19 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
             <MDXRenderer>{chapter.body}</MDXRenderer>
           </MDXProvider>
         </ChapterContent>
-        <ChapterEditor setShowOutput={setShowOutput}>
+        <ChapterEditor
+          setShowOutput={setShowOutput}
+          chapterIndex={index}
+          updateValidation={updateValidation}
+          editorInputValue={editorInputValue}
+        >
           <ControlledEditor
             height={`calc(100vh - (250px + 200px + 40px))`}
             width={`calc(100vw - (100vw / 2.4))`}
             value={editorInputValue}
-            onChange={(_, value) => setEditorInputValue(value)}
+            onChange={(_, value) => {
+              setEditorInputValue(value);
+            }}
             language="python"
             theme="myCustomTheme"
             options={{
@@ -175,24 +189,50 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           <Output>
             <div>output</div>
           </Output>
-          <DiffEditor
-            height="200px"
-            original={showOutput ? chapter.frontmatter.editor.answer : '\n'}
-            modified={showOutput ? editorInputValue : '\n'}
-            language="python"
-            theme="myCustomTheme"
-            options={{
-              lineNumbers: false,
-              scrollBeyondLastLine: true,
-              minimap: { enabled: false },
-              scrollbar: { vertical: 'hidden', verticalScrollbarSize: 0 },
-              folding: false,
-              readOnly: true,
-              fontSize: 18,
-              fontFamily: 'Inconsolata',
-              renderSideBySide: false,
-            }}
-          />
+          {showOutput ? (
+            <DiffEditor
+              height="200px"
+              original={showOutput ? chapter.frontmatter.editor.answer : '\n'}
+              modified={showOutput ? editorInputValue : '\n'}
+              language="python"
+              theme="myCustomTheme"
+              options={{
+                lineNumbers: false,
+                scrollBeyondLastLine: true,
+                minimap: { enabled: false },
+                scrollbar: { vertical: 'hidden', verticalScrollbarSize: 0 },
+                folding: false,
+                readOnly: true,
+                fontSize: 18,
+                fontFamily: 'Inconsolata',
+                renderSideBySide: false,
+              }}
+            />
+          ) : (
+            <div style={{ height: 200, background: '#1B3738', color: '#fff' }}>
+              {validation.success ? (
+                <div style={{ padding: 10 }}>
+                  <p style={{ color: '#18b77e', paddingBottom: 5 }}>
+                    <span> > </span>Great, you got it right!
+                  </p>
+                  <p style={{ color: '#18b77e' }}>
+                    <span> > </span>Click 'next >' to continue.
+                  </p>
+                </div>
+              ) : (
+                <div style={{ padding: 10 }}>
+                  {validation.error.map(errorMessage => {
+                    return (
+                      <p style={{ color: '#d0454c', paddingBottom: 5 }}>
+                        <span> {errorMessage ? '>' : ''} </span>
+                        {errorMessage}
+                      </p>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          )}
         </ChapterEditor>
         <ChapterFooter
           chapter={chapter.frontmatter.chapter}
