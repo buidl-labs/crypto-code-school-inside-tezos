@@ -9,7 +9,6 @@ editor:
 
     class Plant(sp.Contract):
         def __init__(self, name):
-
             # Initilize the required attribute
         		self.init(name = sp.string(name), attack = sp.int(10), defense = sp.int(10), growth_rate = sp.int(10), health = sp.int(100))
 
@@ -18,7 +17,6 @@ editor:
 
     class Plant(sp.Contract):
         def __init__(self, name):
-
             # Initilize the required attribute
         		self.init(name = sp.string(name), attack = sp.int(10), defense = sp.int(10), growth_rate = sp.int(10), health = sp.int(100), is_alive = True)
 ---
@@ -28,7 +26,10 @@ SmartPy has `sp.TBool`: The type of boolean values, True, False, sp.bool(True) a
 In smartPy, all the bitwise operators work the same way as in python, so for example, `True == ~False` is correct in smartPy as well.
 
 ## Put it to code
-Your Plant is alive as its health is 100, declare boolean attribute `is_alive` with the initial value as `True` inside your contract storage.
+
+Your Plant is alive as its health is 100, 
+
+1) Declare boolean attribute `is_alive` of type `sp.TBool` with the initial value as `True` inside your contract storage.
 
 ```python
 is_alive = True

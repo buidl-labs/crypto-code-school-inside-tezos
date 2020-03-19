@@ -9,9 +9,7 @@ editor:
 
     class Plant(sp.Contract):
         def __init__(self):
-
             # Initialize state variable
-
             self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.int(10), defence = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True))
     
         @sp.entry_point
@@ -34,9 +32,7 @@ editor:
 
     class Plant(sp.Contract):
         def __init__(self):
-
-            # Initialize state variable
-            
+            # Initialize state variable            
             self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.int(10), defence = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True, special_moves = []))
 
         @sp.entry_point
@@ -78,11 +74,4 @@ In your contract, list will be used to store all the attacks of your plant which
 
 `special_moves = []`
 
-2) Create a function `createMove` which will take a list of `sp.TPair` type `moves` as parameter and will store that list in `special_moves`.
-
-
-```python
-@sp.entry_point
-def createMove(self, params):
-    self.data.player[sp.sender].special_move = params.moves
-```
+2) Create a callable function `createMove` which will take a list of `sp.TPair` type `moves` as parameter and will store that list in `special_moves`.

@@ -21,7 +21,6 @@ editor:
 
         @sp.entry_point
         def assignChararter(self, params):
-
             # Update the function
             sp.if ~ self.data.player.contains(sp.sender):
                 self.data.player[sp.sender] = self.data.stat
@@ -52,7 +51,6 @@ editor:
 
         @sp.entry_point
         def assignChararter(self, params):
-
             # Update the function
             sp.verify(~ self.data.player.contains(sp.sender), "User already have a character")
             self.data.player[sp.sender] = self.data.Character
@@ -85,23 +83,9 @@ To overcome this, you will be using `sp.verify()` statement.
 
 ## Put it to code
 
-1) Remove if/else statment from the previous code.
+1) Remove if/else statment from the previous code,
 
-2) Include `sp.verify()` statement to check the condition instead.
+2) Include `sp.verify()` statement to check the condition instead,
+    `sp.verify(~ self.data.player.contains(sp.sender), "User already have a character")`
 
-```python
-@sp.entry_point
-def assignCharacter(self, params):
-    sp.verify(~ self.data.player.contains(sp.sender), "User already have a character")
-    self.data.player[sp.sender] = self.data.Character
-    self.data.player[sp.sender].name = params.name
-```
-
-3) Create a function `endGame` that will verify the health of the player. If health of the player is 0, change `is_alive` to `False`.
-
-```python
-@sp.entry_point
-def endGame(self, params):
-    sp.verify(self.data.player[sp.sender].health == 0, "You are dead")
-    self.data.player[sp.sender].is_alive = False
-```
+3) Create a callable function `endGame` that will verify the health of the player. If health of the player is 0, change `is_alive` to `False`.

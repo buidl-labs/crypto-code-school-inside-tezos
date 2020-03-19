@@ -8,14 +8,12 @@ editor:
     import smartpy as sp
 
     class Plant(sp.Contract):
-
         # Code from below
 
   answer: |  
     import smartpy as sp
 
     class Plant(sp.Contract):
-
         # Code from below
         def __init__(self, name):
         		self.init(name = sp.string(name))
@@ -37,10 +35,11 @@ def __init__(self, name):
 This contract calls an initialization method `self.init`, contained in `sp.Contract`, that is able to determine an initial storage for the contract and all the state variables are declared in self.init method.
 
 ## Put it to code
-Now, declare  `__init__` function inside the plant class
-```python
-def __init__(self, name):
-  self.init(name = sp.string(name))
-```
+
+1) Declare `__init__` function in the plant class to initialize the class,
+
+2) Pass a parameter `name` in the initialization function,
+
+3) Declare a state variable `name` of type `sp.TString` for your class and initialize it will the class parameter `name`
 
 **TODO: declare __init__ function **

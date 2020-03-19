@@ -21,7 +21,6 @@ editor:
 
         @sp.entry_point
         def assignChararter(self, params):
-
             # Update the function
             self.data.player[sp.sender] = self.data.stat
             self.data.player[sp.sender].name = params.name
@@ -47,7 +46,6 @@ editor:
 
         @sp.entry_point
         def assignChararter(self, params):
-
             # Update the function
             sp.if ~ self.data.player.contains(sp.sender):
                 self.data.player[sp.sender] = self.data.stat
@@ -79,11 +77,8 @@ You will use these condition statements to check if the sender address is alread
 Check if the sender is already assigned
 
 ```python
-@sp.entry_point
-def assignCharacter(self, params):
     sp.if ~ self.data.player.contains(sp.sender):
-        self.data.player[sp.sender] = self.data.stat
-        self.data.player[sp.sender].name = params.name
+        .....
     sp.else:
         pass
 ```
