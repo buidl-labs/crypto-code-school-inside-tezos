@@ -6,34 +6,37 @@ editor:
   language: python
   startingCode: |
     import smartpy as sp
+
     class Plant(sp.Contract):
         def __init__(self, name):
-        		self.init(name = sp.string(name),
-            growth_rate = sp.int(10), health = sp.int(100), is_alive = True)
+        	self.init(name = sp.string(name), attack = sp.int(10), defense = sp.int(10), growth_rate = sp.int(10), health = sp.int(100), is_alive = True)
    
         @sp.entry_point
         def attack():
+            # Update the function
             pass
 
         @sp.entry_point
-        def defence():
+        def defense():
+            # Update the function
             pass
 
   answer: |  
     import smartpy as sp
+
     class Plant(sp.Contract):
         def __init__(self, name):
-        		self.init(name = sp.string(name),
-            growth_rate = sp.int(10), health = sp.int(100), is_alive = True)
+        	self.init(name = sp.string(name), attack = sp.int(10), defense = sp.int(10), growth_rate = sp.int(10), health = sp.int(100), is_alive = True)
    
         @sp.entry_point
         def attack(self, params):
+            # Update the function
             self.data.attack += params.attack
 
         @sp.entry_point
         def defense(self, params):
+            # Update the function
             self.data.defense += params.defense
-
 ---
 
 The arithmetic operators +, -, *, %, // behave just like in Python.
@@ -46,14 +49,10 @@ In SmartPy, type inference of arithmetic operators imposes that both sides have 
 ## Put it to code
 Complete the attack and defence functions and upgrade attack and defence of your plant.
 
-```python
-@sp.entry_point
-def attack(self, params):
-    self.data.attack += params.attack
+1) Pass 2 parameters `self` and `params` in `attack` and `defense` functions,
 
-@sp.entry_point
-def defense(self, params):
-    self.data.defense += params.defense
-```
+2) Add `attack` points in the state variable `attack` using `self.data.attack += params.attack` in `attack` function,
+
+3) Add `defense` points in the state variable `defense` using `self.data.defense += params.defense` in `defense` function,
 
 **TODO: add functionality for attack and defence entry_point function**

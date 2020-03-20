@@ -7,12 +7,16 @@ editor:
   startingCode: |
     import smartpy as sp
 
+    # Initialize a python class
 
   answer: |  
     import smartpy as sp
+
+    # Initialize a python class
     class Plant(sp.Contract):
         pass
 ---
+
 Starting with the absolute basics:
 
 You'll learn how to interact with the smartpy, a python library using in-browser editor. This perfectly simulates how you can interact with a REAL tezos testnet today. In Later lessons, we'll show you how to deploy it to a testnet.
@@ -24,17 +28,16 @@ We define a Python class lets call it `HelloWorld` that inherits from the `Contr
 
 An empty contract named HelloWorld would look like this:
 ```python
-class Plant(sp.Contract):
+class HelloWorld(sp.Contract):
     pass
 ```
 
 ## Put it to code
+
 Putting it together, here is a bare-bones starting contract — the first thing you'll write every time you create a new contract:
 
-Declare a class named Plant and extend smartpy contract class from it
+1) Declare a class named Plant,
 
-```python
-class Plant(sp.Contract):
-    pass
-```
+2) Extend smartpy contract 
+
 **TODO: Scaffold a plant contract**

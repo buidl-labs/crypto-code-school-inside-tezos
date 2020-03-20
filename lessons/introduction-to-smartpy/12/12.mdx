@@ -6,50 +6,47 @@ editor:
   language: python
   startingCode: |
     import smartpy as sp
+
     class Plant(sp.Contract):
-        def __init__(self, name):
-        		self.init(stat = sp.record(
-                name = sp.string(name),
-                attack = sp.int(70),
-                defence = sp.int(30),
-                health = sp.int(100),
-                growth_rate = sp.int(10),
-                is_alive = True,
-                power_move = sp.pair("Bullet Seed", 95)),
-                player = sp.map())
-        
+        def __init__(self):
+            self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.int(10), defence = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True))
+    
         @sp.entry_point
-        def assignCharacter(self, params):
+        def attack(self, params):
+            # Update the function
+            pass
+
+        @sp.entry_point
+        def defense(self, params):
+            # Update the function
+            pass
+
+        @sp.entry_point
+        def assignChararter(self, params):
             self.data.player[params.sender] = self.data.stat
             self.data.player[params.sender].name = params.name
 
   answer: |  
     import smartpy as sp
-    class Plant(sp.Contract):
-        def __init__(self, name):
-        		self.init(stat = sp.record(
-                name = sp.string(name),
-                attack = sp.int(70),
-                defence = sp.int(30),
-                health = sp.int(100),
-                growth_rate = sp.int(10),
-                is_alive = True,
-                power_move = sp.pair("Bullet Seed", 95)),
-                player = sp.map())
-        
-        @sp.entry_point
-        def assignCharacter(self, params):
-            self.data.player[sp.sender] = self.data.stat
-            self.data.player[sp.sender].name = params.name
 
+    class Plant(sp.Contract):
+        def __init__(self):
+            self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.int(10), defence = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True))
+    
         @sp.entry_point
         def attack(self, params):
+            # Update the function
             self.data.player[sp.sender].attack += params.attack
 
         @sp.entry_point
-        def defence(self, params):
+        def defense(self, params):
+            # Update the function
             self.data.player[sp.sender].defence += params.defence
 
+        @sp.entry_point
+        def assignChararter(self, params):
+            self.data.player[sp.sender] = self.data.stat
+            self.data.player[sp.sender].name = params.name
 ---
 
 `sp.sender` is a global variable that is availble to all function.
@@ -72,13 +69,3 @@ def makeOwner():
 2) use `sp.sender` to assign character to the function caller.
 
 3) Also update the previously defined `attack` & `defense` functions in the same manner.
-
-```python
-@sp.entry_point
-def attack(self, params):
-    self.data.player[sp.sender].attack += params.attack
-
-@sp.entry_point
-def defence(self, params):
-    self.data.player[sp.sender].defence += params.defence
-```

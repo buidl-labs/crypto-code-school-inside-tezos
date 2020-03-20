@@ -6,36 +6,43 @@ editor:
   language: python
   startingCode: |
     import smartpy as sp
+
     class Plant(sp.Contract):
-        def __init__(self, name):
-        		self.init(stat = sp.record(
-                name = sp.string(name),
-                attack = sp.int(70),
-                defence = sp.int(30),
-                health = sp.int(100),
-                growth_rate = sp.int(10),
-                is_alive = True,
-                power_move = sp.pair("Bullet Seed", 95))
+        def __init__(self):
+            # Initialize state variable
+        	self.init(stat = sp.record(name = "", attack = sp.int(10), defence = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True))
+
+        @sp.entry_point
+        def attack(self, params):
+            pass
+
+        @sp.entry_point
+        def defense(self, params):
+            pass
+
+        # Code from below
 
   answer: |  
     import smartpy as sp
+
     class Plant(sp.Contract):
-        def __init__(self, name):
-        		self.init(stat = sp.record(
-                name = sp.string(name),
-                attack = sp.int(70),
-                defence = sp.int(30),
-                health = sp.int(100),
-                growth_rate = sp.int(10),
-                is_alive = True,
-                power_move = sp.pair("Bullet Seed", 95)),
-                player = sp.map())
-        
+        def __init__(self):
+            # Initialize state variable
+            self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.int(10), defence = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True))
+    
         @sp.entry_point
-        def assignCharacter(self, params):
+        def attack(self, params):
+            pass
+
+        @sp.entry_point
+        def defense(self, params):
+            pass
+
+        # Code from below
+        @sp.entry_point
+        def assignChararter(self, params):
             self.data.player[params.sender] = self.data.stat
             self.data.player[params.sender].name = params.name
-
 ---
 
 Maps are data structures that store key-value pairs. As a result, they enable smart contracts to create valuable associations between related information.
@@ -65,15 +72,13 @@ Mapping will be used to point your tezos wallet address with your character.
 
 ## Put it to code
 
-1) Declare a variable `player` of type mapping and initialize it as an empty map
+1) Declare a variable `player` of type `sp.TMap`,
 
-`player = sp.map() # edit in self.init`
+2) Create a callable function `assignCharacter` of type `self`, `params`,
 
-2) Create an entry_point `assignCharacter` which will take one string parameter `name` which will be name of your plant.
-
-```python
-@sp.entry_point
-def assignCharacter(self, params):
-    self.data.player[params.sender] = self.data.stat
-    self.data.player[params.sender].name = params.name
-```
+3) Assign the `stat` variable to the `sender's` using player `mapping` 
+   `self.data.player[params.sender] = self.data.stat` 
+   
+4) Assign name to player's plant's name
+    `self.data.player[params.sender].name = params.name`
+which will take one string parameter `name` which will be name of your plant.

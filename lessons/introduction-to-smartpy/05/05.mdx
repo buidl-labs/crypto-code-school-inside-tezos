@@ -6,17 +6,19 @@ editor:
   language: python
   startingCode: |
     import smartpy as sp
+
     class Plant(sp.Contract):
         def __init__(self, name):
-        		self.init(name = sp.string(name))
-    
+            # Initialize state variables
+        		self.init(name = sp.string(name)) 
+
   answer: |  
     import smartpy as sp
+
     class Plant(sp.Contract):
         def __init__(self, name):
-        		self.init(name = sp.string(name),
-            growth_rate = sp.int(10), health = sp.int(100))
-    
+            # Initialize state variables
+        		self.init(name = sp.string(name), attack = sp.int(10), defense = sp.int(10), growth_rate = sp.int(10), health = sp.int(100))
 ---
 
 Container constructor names are uncapitalized, example: `(sp.int(-42))` and their types are capitalized, example `(sp.TInt)`
@@ -28,13 +30,9 @@ Container constructor names are uncapitalized, example: `(sp.int(-42))` and thei
 In SmartPy, we have three possible types for integer: `int, nat, and intOrNat`. When writing an integer 12, we don’t know whether it is an int or a nat so we type it as intOrNat. Its exact type will be determined at a later stage. This determination is necessary for the Michelson compiler because Michelson needs to make this precise determination.
 
 ## Put it to code
-Now you'll intialize growth_rate attribute and health for your plant to grow.
-declare growth_rate state and health variable to your storage with 10, 100 value respectively
 
-```python
-def __init__(self, name):
-    self.init(name = sp.string(name),
-    growth_rate = sp.int(10), health = sp.int(100))
-```
+Now you'll intialize growth_rate attribute and health for your plant to grow.
+
+1) Declare state variables attack, defence, growth_rate and health all of type `sp.TInt` and initialize then with 10, 10, 10, 100 respectively
 
 **TODO: declare growth_rate and health **

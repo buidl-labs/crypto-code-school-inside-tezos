@@ -6,26 +6,28 @@ editor:
   language: python
   startingCode: |
     import smartpy as sp
+
     class Plant(sp.Contract):
         def __init__(self, name):
-        		self.init(name = sp.string(name),
-            growth_rate = sp.int(10), health = sp.int(100), is_alive = True)
-   
+        		self.init(name = sp.string(name), attack = sp.int(10), defense = sp.int(10), growth_rate = sp.int(10), health = sp.int(100), is_alive = True)
+
+        # Code from below
+
   answer: |  
     import smartpy as sp
+
     class Plant(sp.Contract):
         def __init__(self, name):
-        		self.init(name = sp.string(name),
-            growth_rate = sp.int(10), health = sp.int(100), is_alive = True)
-   
+        		self.init(name = sp.string(name), attack = sp.int(10), defense = sp.int(10), growth_rate = sp.int(10), health = sp.int(100), is_alive = True)
+
+        # Code from below
         @sp.entry_point
         def attack():
             pass
 
         @sp.entry_point
-        def defence():
+        def defense():
             pass
-
 ---
 
 Entry Point is a method of a contract class that can be called from the outside. They need to be marked with the `@sp.entry_point` decorator. For example the following entry point checks that the argument given is greater than 2 or not.
@@ -37,17 +39,10 @@ def checkValue(self, params):
 ```
 
 ## Put it to code
-Now let's create shell for attack and defence entry point function for your plant.
-Declare function `attack` and `defence` with `@sp.entrypoint` as decorator.
+Now let's create shell for attack and defense entry point function for your plant.
 
-```python
-@sp.entry_point
-def attack():
-    pass
+1) Declare an empty callable function `attack`,
 
-@sp.entry_point
-def defence():
-    pass
-```
+2) Declare an empty callable function `defense`
 
-**TODO: declare attack and defence entry_point function**
+**TODO: declare attack and defense entry_point function**
