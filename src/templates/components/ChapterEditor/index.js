@@ -2,8 +2,15 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { TiTick } from 'react-icons/ti';
 import { AiOutlineQuestion } from 'react-icons/ai';
+import { checkCode } from '../../../utils/compiler';
 
-function ChapterEditor({ children, setShowOutput }) {
+function ChapterEditor({
+  children,
+  setShowOutput,
+  chapterIndex,
+  updateValidation,
+  editorInputValue,
+}) {
   return (
     <>
       <ContractFile>
@@ -20,7 +27,10 @@ function ChapterEditor({ children, setShowOutput }) {
         </ShowAnswerButton>
         <CheckAnswerButton
           onClick={() => {
-            setShowOutput(true);
+            setShowOutput(false);
+            const result = checkCode(editorInputValue, chapterIndex.current);
+            // console.log('result', result);
+            updateValidation(result);
           }}
         >
           <TiTick /> Check
