@@ -10,7 +10,7 @@ editor:
     class Plant(sp.Contract):
         def __init__(self):
             # Initialize state variable
-        	self.init(stat = sp.record(name = "", attack = sp.int(10), defence = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True))
+            self.init(stat = sp.record(name = "", attack = sp.int(10), defense = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True))
 
         @sp.entry_point
         def attack(self, params):
@@ -28,7 +28,7 @@ editor:
     class Plant(sp.Contract):
         def __init__(self):
             # Initialize state variable
-            self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.int(10), defence = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True))
+            self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.int(10), defense = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True))
     
         @sp.entry_point
         def attack(self, params):
@@ -40,7 +40,7 @@ editor:
 
         # Code from below
         @sp.entry_point
-        def assignChararter(self, params):
+        def assignCharacter(self, params):
             self.data.player[params.sender] = self.data.stat
             self.data.player[params.sender].name = params.name
 ---
@@ -76,9 +76,9 @@ Mapping will be used to point your tezos wallet address with your character.
 
 2) Create a callable function `assignCharacter` of type `self`, `params`,
 
-3) Assign the `stat` variable to the `sender's` using player `mapping` 
+3) Inside the function, assign the `stat` variable to the `sender's` using player `mapping` 
    `self.data.player[params.sender] = self.data.stat` 
    
-4) Assign name to player's plant's name
+4) Inside the function, assign name to player's plant's name
     `self.data.player[params.sender].name = params.name`
 which will take one string parameter `name` which will be name of your plant.

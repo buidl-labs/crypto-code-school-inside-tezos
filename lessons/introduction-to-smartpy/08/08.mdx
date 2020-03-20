@@ -9,7 +9,7 @@ editor:
 
     class Plant(sp.Contract):
         def __init__(self, name):
-        	self.init(name = sp.string(name), attack = sp.int(10), defense = sp.int(10), growth_rate = sp.int(10), health = sp.int(100), is_alive = True)
+            self.init(name = sp.string(name), attack = sp.int(10), defense = sp.int(10), growth_rate = sp.int(10), health = sp.int(100), is_alive = True)
    
         @sp.entry_point
         def attack():
@@ -26,7 +26,7 @@ editor:
 
     class Plant(sp.Contract):
         def __init__(self, name):
-        	self.init(name = sp.string(name), attack = sp.int(10), defense = sp.int(10), growth_rate = sp.int(10), health = sp.int(100), is_alive = True)
+            self.init(name = sp.string(name), attack = sp.int(10), defense = sp.int(10), growth_rate = sp.int(10), health = sp.int(100), is_alive = True)
    
         @sp.entry_point
         def attack(self, params):
@@ -47,7 +47,7 @@ In SmartPy, type inference of arithmetic operators imposes that both sides have 
 `self.data.health -= params.attack`, here both attack and health is assumed to be of type int.
 
 ## Put it to code
-Complete the attack and defence functions and upgrade attack and defence of your plant.
+Complete the attack and defense functions and upgrade attack and defense of your plant.
 
 1) Pass 2 parameters `self` and `params` in `attack` and `defense` functions,
 
@@ -55,4 +55,4 @@ Complete the attack and defence functions and upgrade attack and defence of your
 
 3) Add `defense` points in the state variable `defense` using `self.data.defense += params.defense` in `defense` function,
 
-**TODO: add functionality for attack and defence entry_point function**
+**TODO: add functionality for attack and defense entry_point function**

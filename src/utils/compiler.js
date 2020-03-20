@@ -5,6 +5,10 @@ var _ = require('lodash');
 //  intro
 export const l1 = `import smartpy as sp`;
 
+// export const l2 = `import smartpy as sp
+
+// #`;
+
 //scaffolding contract
 export const l3 = `import smartpy as sp
 
@@ -82,7 +86,7 @@ export const l10 = `import smartpy as sp
 
 class Plant(sp.Contract):
     def __init__(self):
-        self.init(stat = sp.record(name = "", attack = sp.int(10), defence = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True))
+        self.init(stat = sp.record(name = "", attack = sp.int(10), defense = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True))
         
     @sp.entry_point
     def attack(self, params):
@@ -97,7 +101,7 @@ export const l11 = `import smartpy as sp
 
 class Plant(sp.Contract):
     def __init__(self):
-        self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.int(10), defence = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True))
+        self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.int(10), defense = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True))
     
     @sp.entry_point
     def attack(self, params):
@@ -108,7 +112,7 @@ class Plant(sp.Contract):
         pass
 
     @sp.entry_point
-    def assignChararter(self, params):
+    def assignCharacter(self, params):
         self.data.player[params.sender] = self.data.stat
         self.data.player[params.sender].name = params.name`;
 
@@ -117,7 +121,7 @@ export const l12 = `import smartpy as sp
 
 class Plant(sp.Contract):
     def __init__(self):
-        self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.int(10), defence = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True))
+        self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.int(10), defense = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True))
     
     @sp.entry_point
     def attack(self, params):
@@ -125,7 +129,7 @@ class Plant(sp.Contract):
 
     @sp.entry_point
     def defense(self, params):
-        self.data.player[sp.sender].defence += params.defence
+        self.data.player[sp.sender].defense += params.defense
 
     @sp.entry_point
     def assignChararter(self, params):
@@ -137,7 +141,7 @@ export const l13 = `import smartpy as sp
 
 class Plant(sp.Contract):
     def __init__(self):
-        self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.int(10), defence = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True, special_moves = []))
+        self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.int(10), defense = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True, special_moves = []))
     
     @sp.entry_point
     def attack(self, params):
@@ -145,7 +149,7 @@ class Plant(sp.Contract):
 
     @sp.entry_point
     def defense(self, params):
-        self.data.player[sp.sender].defence += params.defence
+        self.data.player[sp.sender].defense += params.defense
 
     @sp.entry_point
     def assignChararter(self, params):
@@ -154,14 +158,14 @@ class Plant(sp.Contract):
     
     @sp.entry_point
     def createMove(self, params):
-        self.data.player[sp.sender].special_move = params.moves`;
+        self.data.player[sp.sender].special_moves = params.moves`;
 
 //if\else
 export const l14 = `import smartpy as sp
 
 class Plant(sp.Contract):
     def __init__(self):
-        self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.int(10), defence = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True, special_moves = []))
+        self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.int(10), defense = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True, special_moves = []))
     
     @sp.entry_point
     def attack(self, params):
@@ -169,7 +173,7 @@ class Plant(sp.Contract):
 
     @sp.entry_point
     def defense(self, params):
-        self.data.player[sp.sender].defence += params.defence
+        self.data.player[sp.sender].defense += params.defense
 
     @sp.entry_point
     def assignChararter(self, params):
@@ -181,14 +185,14 @@ class Plant(sp.Contract):
     
     @sp.entry_point
     def createMove(self, params):
-        self.data.player[sp.sender].special_move = params.moves`;
+        self.data.player[sp.sender].special_moves = params.moves`;
 
 //verify
 export const l15 = `import smartpy as sp
 
 class Plant(sp.Contract):
     def __init__(self):
-        self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.int(10), defence = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True, special_moves = []))
+        self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.int(10), defense = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True, special_moves = []))
     
     @sp.entry_point
     def attack(self, params):
@@ -196,21 +200,21 @@ class Plant(sp.Contract):
 
     @sp.entry_point
     def defense(self, params):
-        self.data.player[sp.sender].defence += params.defence
+        self.data.player[sp.sender].defense += params.defense
 
     @sp.entry_point
     def assignChararter(self, params):
-        sp.verify(~ self.data.player.contains(sp.sender), "User already have a character")
-        self.data.player[sp.sender] = self.data.Character
+        sp.verify(~ self.data.player.contains(sp.sender), "User already has a plant")
+        self.data.player[sp.sender] = self.data.stat
         self.data.player[sp.sender].name = params.name
     
     @sp.entry_point
     def createMove(self, params):
-        self.data.player[sp.sender].special_move = params.moves
+        self.data.player[sp.sender].special_moves = params.moves
 
     @sp.entry_point
     def endGame(self, params):
-        sp.verify(self.data.player[sp.sender].health == 0, "You are not dead")
+        sp.verify(self.data.player[sp.sender].health == 0, "You are alive!!!")
         self.data.player[sp.sender].is_alive = False`;
 
 //-----Error messages for each line------//
@@ -253,24 +257,24 @@ var missing = {
     'class initialization require a `name & self`  parameter',
 
   'self.init(name = sp.string(name))':
-    'name `sp.TString` initialization is missing or is invalid',
+    'name of type `sp.TString` initialization is missing or is invalid',
 
   'self.init(name = sp.string(name), attack = sp.int(10), defense = sp.int(10), growth_rate = sp.int(10), health = sp.int(100))':
     'state variables initialization is missing or is invalid',
 
   'self.init(name = sp.string(name), attack = sp.int(10), defense = sp.int(10), growth_rate = sp.int(10), health = sp.int(100), is_alive = True)':
-    'is_alive `sp.TBoolean` initialization is missing or is invalid',
+    'is_alive of type `sp.TBoolean` initialization is missing or is invalid',
 
   'self.init(name = sp.string(name), attack = sp.int(10), defense = sp.int(10), growth_rate = sp.int(10), health = sp.int(100), is_alive = True, power_move = sp.pair("Bullet Seed", 95))':
-    'power_move `sp.TPair` initialization is missing or is invalid',
+    'power_move of type `sp.TPair` initialization is missing or is invalid',
 
-  'self.init(stat = sp.record(name = "", attack = sp.int(10), defence = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True))':
-    'stat `sp.TRecord` initialization is missing or is invalid',
+  'self.init(stat = sp.record(name = "", attack = sp.int(10), defense = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True))':
+    'stat of type `sp.TRecord` initialization is missing or is invalid',
 
-  'self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.int(10), defence = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True))':
-    'player `sp.TMap` initialization is missing or is invalid',
+  'self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.int(10), defense = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True))':
+    'player of type `sp.TMap` initialization is missing or is invalid',
 
-  'self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.int(10), defence = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True, special_moves = []))':
+  'self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.int(10), defense = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True, special_moves = []))':
     'special_moves array (sp.TList) initialization is missing or is invalid',
 
   '@sp.entry_point': '@sp.entry_point decorator missing or invalid',
@@ -284,11 +288,11 @@ var missing = {
 
   pass: 'cannot have an empty function (add `pass`)',
 
-  'def defense():': 'defence function declaration error',
-  'def defense(self, params):': 'defence function declaration error',
+  'def defense():': 'defense function declaration error',
+  'def defense(self, params):': 'defense function declaration error',
   'self.data.defense += params.defense':
     'invalid or missing statement in defense function',
-  'self.data.player[sp.sender].defence += params.defence':
+  'self.data.player[sp.sender].defense += params.defense':
     'invalid or missing statement in defense function',
 
   'def assignChararter(self, params):':
@@ -301,17 +305,17 @@ var missing = {
     'invalid or missing assignment statement in assignChararter()',
   'self.data.player[sp.sender].name = params.name':
     'invalid or missing assignment statement in assignChararter()',
-  'sp.verify(~ self.data.player.contains(sp.sender), "User already have a character")':
+  'sp.verify(~ self.data.player.contains(sp.sender), "User already has a plant")':
     'missing or invalid verification in assignChararter()',
 
   'def endGame(self, params):': 'endGame function declaration error',
   'self.data.player[sp.sender].is_alive = False':
     'missing or invalid assignment in endGame function',
-  'sp.verify(self.data.player[sp.sender].health == 0, "You are not dead")':
-    'missing or invalid verification in endGame()',
+  'sp.verify(self.data.player[sp.sender].health == 0, "You are alive!!!")':
+    'missin g or invalid verification in endGame()',
 
   'def createMove(self, params):': 'createMove function declaration error',
-  'self.data.player[sp.sender].special_move = params.moves':
+  'self.data.player[sp.sender].special_moves = params.moves':
     'invalid or missing statmenet in createMove()',
 
   'sp.if ~ self.data.player.contains(sp.sender):':
@@ -336,7 +340,7 @@ export function checkCode(get, lesson) {
   if (lesson === 1) {
     lesson = l1;
   } else if (lesson === 2) {
-    return { success: true, error: ['No error'] };
+    lesson = "l2";
   } else if (lesson === 3) {
     lesson = l3;
   } else if (lesson === 4) {
@@ -373,16 +377,65 @@ export function checkCode(get, lesson) {
 
   // spliting user's code to get array of lines
   var user = get.split('\n');
+  //console.log("SURAJ", user);
 
   // removing '\r' from the end of each element(line).
   for (var x in user) {
-    user[x] = user[x].replace('\r;', '');
+    user[x] = user[x].replace(';\r', '');
+  }
+
+  for (var a in user) {
+    user[a] = user[a].replace('\t', '  ');
   }
 
   // removing new lines and white spaces from the user's code
-  var userArray = user.filter(function(entry) {
+  var userArray = user.filter(function (entry) {
     return entry.trim() !== '';
   });
+
+  if (lesson === "l2") {
+
+    // getting array from the correct code (each line is an element of the array)
+    var testl2 = l1.split('\n');
+
+    //console.log("TEST L2", testl2);
+
+    // removing new lines and white spaces from the correct code
+    var correctl2 = testl2.filter(function (entry) {
+      return entry.trim() !== '';
+    });
+
+    //console.log("2 TEST L2", correctl2);
+
+    var comment = userArray.filter(x => !correctl2.includes(x));
+
+    var final = comment.filter(z => z.trim()[0] === '#')
+    var com = comment.filter(z => z.trim()[0] !== '#')
+
+    //console.log("L2 COMMENT", comment);
+    //console.log("L2 FINAL", final);
+    //console.log("L2 COM", com);
+
+
+    var comError = [];
+
+    if (com.length > 0) {
+      for (var c in com) {
+        comError.push("Invalid code at line " + (user.indexOf(com[c]) + 1));
+      }
+      return {
+        success: false, error: comError
+      }
+    }
+
+    else if (final.length === 0) {
+      return { success: false, error: ["You didn't write any comment."] }
+    }
+
+    else {
+      return { success: true, error: ['No error'] };
+    }
+  }
 
   // removing valid python comments starting with #
   userArray = userArray.filter(x => x.trim()[0] !== '#');
@@ -390,11 +443,11 @@ export function checkCode(get, lesson) {
   // getting all invalid comments `//` as valid comments `#` are already removed
   var commentsTest = userArray.filter(line => line.trim().includes('//', 0));
 
-  console.log('THIS IS COMMENT LINEs', commentsTest);
+  //console.log('THIS IS COMMENT LINEs', commentsTest);
 
   // error message for all the invalid comment lines
-  for (var comment in commentsTest) {
-    result[user.indexOf(commentsTest[comment]) + 1] =
+  for (var comments in commentsTest) {
+    result[user.indexOf(commentsTest[comments]) + 1] =
       'Comments in python starts with #';
   }
 
@@ -405,7 +458,7 @@ export function checkCode(get, lesson) {
   var code = lesson.split('\n');
 
   // removing new lines and white spaces from the correct code
-  var correctCodeArray = code.filter(function(entry) {
+  var correctCodeArray = code.filter(function (entry) {
     return entry.trim() !== '';
   });
 
@@ -421,26 +474,36 @@ export function checkCode(get, lesson) {
   if (
     missingFromUser.indexOf('        pass') === -1 &&
     _.countBy(correctCodeArray)['        pass'] !==
-      _.countBy(userArray)['        pass']
+    _.countBy(userArray)['        pass']
   ) {
     missingFromUser.push('        pass');
   }
+
+  if (
+    missingFromUser.indexOf('    @sp.entry_point') === -1 &&
+    _.countBy(correctCodeArray)['    @sp.entry_point'] !==
+    _.countBy(userArray)['    @sp.entry_point']
+  ) {
+    missingFromUser.push('    @sp.entry_point');
+  }
+
+
   // var correct = _.countBy(correctCodeArray);
   // var user = _.countBy(userArray);
 
-  // console.log(correct['        pass'])
-  // console.log(user['        pass'])
-  // console.log(correctCodeArray.indexOf('        pass'));
-  // console.log(userArray.indexOf('        pass'));
+  // //console.log(correct['        pass'])
+  // //console.log(user['        pass'])
+  // //console.log(correctCodeArray.indexOf('        pass'));
+  // //console.log(userArray.indexOf('        pass'));
 
   // list of extra lines (code) thats user wrote
   var extraInUser = userArray.filter(w => !correctCodeArray.includes(w));
 
-  console.log('USER ARRAY', userArray);
-  console.log('CORRECT ARRAY', correctCodeArray);
+  //console.log('USER ARRAY', userArray);
+  //console.log('CORRECT ARRAY', correctCodeArray);
 
-  console.log('MISSING', missingFromUser);
-  console.log('EXTRA', extraInUser);
+  //console.log('MISSING', missingFromUser);
+  //console.log('EXTRA', extraInUser);
 
   //l10 get pass
   if (lesson === l10) {
@@ -458,7 +521,7 @@ export function checkCode(get, lesson) {
     }
   }
 
-  console.log(missingFromUser.length);
+  //console.log(missingFromUser.length);
 
   if (missingFromUser.length !== 0) {
     result[404] = [];
@@ -467,9 +530,9 @@ export function checkCode(get, lesson) {
     }
   }
 
-  console.log(i, j);
+  //console.log(i, j);
 
-  console.log('RESULT', result);
+  //console.log('RESULT', result);
 
   var FINAL_RESULT = {
     success: null,
@@ -477,7 +540,7 @@ export function checkCode(get, lesson) {
   };
 
   var RR = Object.keys(result);
-  console.log('RR');
+  //console.log('RR');
 
   if (RR.length === 0) {
     FINAL_RESULT = {
@@ -487,7 +550,7 @@ export function checkCode(get, lesson) {
 
     return FINAL_RESULT;
   } else {
-    RR = RR.filter(function(value) {
+    RR = RR.filter(function (value) {
       return value < 404;
     });
 
@@ -499,34 +562,34 @@ export function checkCode(get, lesson) {
     var resFinal = [];
 
     if (lines === errors) {
-      for (var i = 0; i < lines; i++) {
-        resFinal.push(err[i] + ' at line ' + RR[i]);
+      for (var b = 0; b < lines; b++) {
+        resFinal.push(err[b] + ' at line ' + RR[b]);
       }
     } else if (lines < errors) {
-      var i = 0;
+      var n = 0;
 
-      while (i < lines) {
-        resFinal.push(err[i] + ' at line ' + RR[i]);
-        i++;
+      while (n < lines) {
+        resFinal.push(err[n] + ' at line ' + RR[n]);
+        n++;
       }
-      while (i < errors) {
-        resFinal.push(err[i]);
-        i++;
+      while (n < errors) {
+        resFinal.push(err[n]);
+        n++;
       }
     } else if (lines > errors) {
-      var i = 0;
+      var m = 0;
 
-      while (i < errors) {
-        resFinal.push(err[i] + ' at line ' + RR[i]);
-        i++;
+      while (m < errors) {
+        resFinal.push(err[m] + ' at line ' + RR[m]);
+        m++;
       }
-      while (i < lines) {
-        resFinal.push(result[RR[i]] + ' at line ' + RR[i]);
-        i++;
+      while (m < lines) {
+        resFinal.push(result[RR[m]] + ' at line ' + RR[m]);
+        m++;
       }
     }
 
-    console.log('\nFINAL RESULT\n', resFinal);
+    //console.log('\nFINAL RESULT\n', resFinal);
 
     FINAL_RESULT = {
       success: false,
@@ -536,7 +599,7 @@ export function checkCode(get, lesson) {
     return FINAL_RESULT;
   }
 
-  //   console.log(Object.values(result));
+  //   //console.log(Object.values(result));
 
   //   return result;
 

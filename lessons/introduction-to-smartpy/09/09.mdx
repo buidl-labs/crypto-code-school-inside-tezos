@@ -10,8 +10,8 @@ editor:
     class Plant(sp.Contract):
         def __init__(self, name):
             # Initialize the required variable
-        	self.init(name = sp.string(name), attack = sp.int(10), defense = sp.int(10), growth_rate = sp.int(10), health = sp.int(100), is_alive = True)
-   
+            self.init(name = sp.string(name), attack = sp.int(10), defense = sp.int(10), growth_rate = sp.int(10), health = sp.int(100), is_alive = True)
+
         @sp.entry_point
         def attack(self, params):
             self.data.attack += params.attack
@@ -26,8 +26,8 @@ editor:
     class Plant(sp.Contract):
         def __init__(self, name):
             # Initialize the required variable
-        	self.init(name = sp.string(name), attack = sp.int(10), defense = sp.int(10), growth_rate = sp.int(10), health = sp.int(100), is_alive = True, power_move = sp.pair("Bullet Seed", 95))
-   
+            self.init(name = sp.string(name), attack = sp.int(10), defense = sp.int(10), growth_rate = sp.int(10), health = sp.int(100), is_alive = True, power_move = sp.pair("Bullet Seed", 95))
+
         @sp.entry_point
         def attack(self, params):
             self.data.attack += params.attack

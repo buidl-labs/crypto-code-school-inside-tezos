@@ -10,7 +10,7 @@ editor:
     class Plant(sp.Contract):
         def __init__(self, name):
             # Initialize state variables
-        		self.init(name = sp.string(name)) 
+            self.init(name = sp.string(name)) 
 
   answer: |  
     import smartpy as sp
@@ -18,7 +18,7 @@ editor:
     class Plant(sp.Contract):
         def __init__(self, name):
             # Initialize state variables
-        		self.init(name = sp.string(name), attack = sp.int(10), defense = sp.int(10), growth_rate = sp.int(10), health = sp.int(100))
+            self.init(name = sp.string(name), attack = sp.int(10), defense = sp.int(10), growth_rate = sp.int(10), health = sp.int(100))
 ---
 
 Container constructor names are uncapitalized, example: `(sp.int(-42))` and their types are capitalized, example `(sp.TInt)`
@@ -33,6 +33,6 @@ In SmartPy, we have three possible types for integer: `int, nat, and intOrNat`. 
 
 Now you'll intialize growth_rate attribute and health for your plant to grow.
 
-1) Declare state variables attack, defence, growth_rate and health all of type `sp.TInt` and initialize then with 10, 10, 10, 100 respectively
+1) Declare state variables `attack`, `defense`, `growth_rate` and `health` all of type `sp.TInt` and initialize then with 10, 10, 10, 100 respectively
 
 **TODO: declare growth_rate and health **
