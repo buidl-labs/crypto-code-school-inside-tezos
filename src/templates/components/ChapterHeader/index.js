@@ -10,7 +10,7 @@ function ChapterHeader() {
         <FaChevronLeft size={28} />
       </BackLink>
       <LessonTitle>Lesson: Introduction to SmartPy</LessonTitle>
-      <HelpButton>Get Help!</HelpButton>
+      <HelpButton>Get Help</HelpButton>
     </Header>
   );
 }
@@ -38,7 +38,7 @@ const BackLink = styled.button`
   height: 45px;
   cursor: pointer;
   transition: 0.3s;
-  border-radius: 35px;
+  border-radius: 50%;
 
   :hover {
     background: rgba(255, 255, 255, 0.1);

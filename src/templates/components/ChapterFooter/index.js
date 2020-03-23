@@ -85,7 +85,7 @@ const ChapterTitle = styled.p`
 `;
 
 const PrevLink = styled(Link)`
-  color: rgba(255, 255, 255, 0.5);
+  color: #fff;
   margin-left: 1rem;
   margin-right: 1rem;
   margin-top: 1px;

@@ -52,7 +52,7 @@ const ContractFile = styled.div`
     display: inline-block;
     margin-left: 1rem;
     color: #729e9f;
-    padding-top: 13px;
+    padding-top: 15px;
     padding-right: 10px;
     padding-left: 10px;
   }
@@ -84,8 +84,8 @@ const CheckAnswerButton = styled.button`
   cursor: pointer;
   transition: 0.3s;
   :hover {
-    background: #fff;
-    color: #18b77e;
+    background: #2b8d6a;
+    color: #fff;
   }
 `;
 
@@ -103,8 +103,8 @@ const ShowAnswerButton = styled.button`
   transition: 0.3s;
   cursor: pointer;
   :hover {
-    background: #fff;
-    color: #162f30;
+    background: #112122;
+    color: #fff;
   }
 `;
 

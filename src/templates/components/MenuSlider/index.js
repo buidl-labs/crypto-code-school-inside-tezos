@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import useChapters from '../../../hooks/use-chapters';
 import {
   SideDrawer,

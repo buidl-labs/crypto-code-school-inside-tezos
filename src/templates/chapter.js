@@ -14,7 +14,6 @@ import {
 } from './components/index';
 import useChapters from '../hooks/use-chapters';
 import { getChaptersIndex } from '../utils/index';
-import { checkCode } from '../utils/compiler';
 
 export const query = graphql`
   query($slug: String!) {
@@ -53,7 +52,7 @@ const Output = styled.div`
     display: inline-block;
     margin-left: 1rem;
     color: #729e9f;
-    padding-top: 13px;
+    padding-top: 15px;
     padding-right: 10px;
     padding-left: 10px;
     border-top: 1px solid #112425;
