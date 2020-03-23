@@ -9,7 +9,7 @@ editor:
 
     class Plant(sp.Contract):
         def __init__(self):
-            self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.int(10), defence = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True, special_moves = []))
+            self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.int(10), defense = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True, special_moves = []))
 
         @sp.entry_point
         def attack(self, params):
@@ -17,7 +17,7 @@ editor:
 
         @sp.entry_point
         def defense(self, params):
-            self.data.player[sp.sender].defence += params.defence
+            self.data.player[sp.sender].defense += params.defense
 
         @sp.entry_point
         def assignChararter(self, params):
@@ -30,7 +30,7 @@ editor:
 
         @sp.entry_point
         def createMove(self, params):
-            self.data.player[sp.sender].special_move = params.moves
+            self.data.player[sp.sender].special_moves = params.moves
 
         # Code from below
 
@@ -39,7 +39,7 @@ editor:
 
     class Plant(sp.Contract):
         def __init__(self):
-            self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.int(10), defence = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True, special_moves = []))
+            self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.int(10), defense = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True, special_moves = []))
 
         @sp.entry_point
         def attack(self, params):
@@ -47,23 +47,23 @@ editor:
 
         @sp.entry_point
         def defense(self, params):
-            self.data.player[sp.sender].defence += params.defence
+            self.data.player[sp.sender].defense += params.defense
 
         @sp.entry_point
         def assignChararter(self, params):
             # Update the function
-            sp.verify(~ self.data.player.contains(sp.sender), "User already have a character")
-            self.data.player[sp.sender] = self.data.Character
+            sp.verify(~ self.data.player.contains(sp.sender), "User already has a plant")
+            self.data.player[sp.sender] = self.data.stat
             self.data.player[sp.sender].name = params.name
 
         @sp.entry_point
         def createMove(self, params):
-            self.data.player[sp.sender].special_move = params.moves
+            self.data.player[sp.sender].special_moves = params.moves
 
         # Code from below
         @sp.entry_point
         def endGame(self, params):
-            sp.verify(self.data.player[sp.sender].health == 0, "You are not dead")
+            sp.verify(self.data.player[sp.sender].health == 0, "You are alive!!!")
             self.data.player[sp.sender].is_alive = False
 ---
 
@@ -86,6 +86,6 @@ To overcome this, you will be using `sp.verify()` statement.
 1) Remove if/else statment from the previous code,
 
 2) Include `sp.verify()` statement to check the condition instead,
-    `sp.verify(~ self.data.player.contains(sp.sender), "User already have a character")`
+    `sp.verify(~ self.data.player.contains(sp.sender), "User already has a plant")`
 
-3) Create a callable function `endGame` that will verify the health of the player. If health of the player is 0, change `is_alive` to `False`.
+3) Create a callable function `endGame` that will verify the health of the player with a message "You are alive!!!". If health of the player is 0, change `is_alive` to `False`.

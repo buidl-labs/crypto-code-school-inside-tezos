@@ -9,8 +9,8 @@ editor:
 
     class Plant(sp.Contract):
         def __init__(self):
-            self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.int(10), defence = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True))
-    
+            self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.int(10), defense = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True))
+
         @sp.entry_point
         def attack(self, params):
             # Update the function
@@ -31,8 +31,8 @@ editor:
 
     class Plant(sp.Contract):
         def __init__(self):
-            self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.int(10), defence = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True))
-    
+            self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.int(10), defense = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True))
+
         @sp.entry_point
         def attack(self, params):
             # Update the function
@@ -41,7 +41,7 @@ editor:
         @sp.entry_point
         def defense(self, params):
             # Update the function
-            self.data.player[sp.sender].defence += params.defence
+            self.data.player[sp.sender].defense += params.defense
 
         @sp.entry_point
         def assignChararter(self, params):
