@@ -301,7 +301,7 @@ var missing = {
     'invalid or missing assignment statement in assignChararter()',
   'self.data.player[sp.sender] = self.data.stat':
     'invalid or missing assignment statement in assignChararter()',
-  'self.data.player[params.sender].name = params.name`;':
+  'self.data.player[params.sender].name = params.name':
     'invalid or missing assignment statement in assignChararter()',
   'self.data.player[sp.sender].name = params.name':
     'invalid or missing assignment statement in assignChararter()',
@@ -312,7 +312,7 @@ var missing = {
   'self.data.player[sp.sender].is_alive = False':
     'missing or invalid assignment in endGame function',
   'sp.verify(self.data.player[sp.sender].health == 0, "You are alive!!!")':
-    'missin g or invalid verification in endGame()',
+    'missing or invalid verification in endGame()',
 
   'def createMove(self, params):': 'createMove function declaration error',
   'self.data.player[sp.sender].special_moves = params.moves':
@@ -389,7 +389,7 @@ export function checkCode(get, lesson) {
   }
 
   // removing new lines and white spaces from the user's code
-  var userArray = user.filter(function(entry) {
+  var userArray = user.filter(function (entry) {
     return entry.trim() !== '';
   });
 
@@ -400,7 +400,7 @@ export function checkCode(get, lesson) {
     //console.log("TEST L2", testl2);
 
     // removing new lines and white spaces from the correct code
-    var correctl2 = testl2.filter(function(entry) {
+    var correctl2 = testl2.filter(function (entry) {
       return entry.trim() !== '';
     });
 
@@ -453,7 +453,7 @@ export function checkCode(get, lesson) {
   var code = lesson.split('\n');
 
   // removing new lines and white spaces from the correct code
-  var correctCodeArray = code.filter(function(entry) {
+  var correctCodeArray = code.filter(function (entry) {
     return entry.trim() !== '';
   });
 
@@ -468,16 +468,16 @@ export function checkCode(get, lesson) {
 
   if (
     missingFromUser.indexOf('        pass') === -1 &&
-    _.countBy(correctCodeArray)['        pass'] !==
-      _.countBy(userArray)['        pass']
+    _.countBy(correctCodeArray)['        pass'] >
+    _.countBy(userArray)['        pass']
   ) {
     missingFromUser.push('        pass');
   }
 
   if (
     missingFromUser.indexOf('    @sp.entry_point') === -1 &&
-    _.countBy(correctCodeArray)['    @sp.entry_point'] !==
-      _.countBy(userArray)['    @sp.entry_point']
+    _.countBy(correctCodeArray)['    @sp.entry_point'] >
+    _.countBy(userArray)['    @sp.entry_point']
   ) {
     missingFromUser.push('    @sp.entry_point');
   }
@@ -507,14 +507,15 @@ export function checkCode(get, lesson) {
 
   // invalid statements of extra line of codes
   for (i in extraInUser) {
-    if (lesson === l12 && extraInUser[i].trim() === 'pass') {
+    if ((lesson === l12 || lesson === l8) && extraInUser[i].trim() === 'pass') {
       result[user.indexOf(extraInUser[i]) + 1] =
         'Invalid statement, remove `pass and update the function with appropriate statement`';
+      //console.log("RESULT", result);
     } else {
       result[user.indexOf(extraInUser[i]) + 1] = 'Invalid statement';
     }
   }
-
+  //console.log("RESULT2", result);
   //console.log(missingFromUser.length);
 
   if (missingFromUser.length !== 0) {
@@ -523,7 +524,7 @@ export function checkCode(get, lesson) {
       result[404].push(missing[missingFromUser[i].trim()]);
     }
   }
-
+  //console.log("RESULT3", result);
   //console.log(i, j);
 
   //console.log('RESULT', result);
@@ -534,7 +535,7 @@ export function checkCode(get, lesson) {
   };
 
   var RR = Object.keys(result);
-  //console.log('RR');
+  //console.log('RR', RR);
 
   if (RR.length === 0) {
     FINAL_RESULT = {
@@ -544,53 +545,71 @@ export function checkCode(get, lesson) {
 
     return FINAL_RESULT;
   } else {
-    RR = RR.filter(function(value) {
-      return value < 404;
-    });
 
-    var err = result[404];
+    if (404 in result) {
 
-    var lines = RR.length;
-    var errors = err.length;
+      RR = RR.filter(function (value) {
+        return value < 404;
+      });
 
-    var resFinal = [];
+      var err = result[404];
 
-    if (lines === errors) {
-      for (var b = 0; b < lines; b++) {
-        resFinal.push(err[b] + ' at line ' + RR[b]);
+      var lines = RR.length;
+      var errors = err.length;
+
+      var resFinal = [];
+
+      if (lines === errors) {
+        for (var b = 0; b < lines; b++) {
+          resFinal.push(err[b] + ' at line ' + RR[b]);
+        }
+      } else if (lines < errors) {
+        var n = 0;
+
+        while (n < lines) {
+          resFinal.push(err[n] + ' at line ' + RR[n]);
+          n++;
+        }
+        while (n < errors) {
+          resFinal.push(err[n]);
+          n++;
+        }
+      } else if (lines > errors) {
+        var m = 0;
+
+        while (m < errors) {
+          resFinal.push(err[m] + ' at line ' + RR[m]);
+          m++;
+        }
+        while (m < lines) {
+          resFinal.push(result[RR[m]] + ' at line ' + RR[m]);
+          m++;
+        }
       }
-    } else if (lines < errors) {
-      var n = 0;
 
-      while (n < lines) {
-        resFinal.push(err[n] + ' at line ' + RR[n]);
-        n++;
-      }
-      while (n < errors) {
-        resFinal.push(err[n]);
-        n++;
-      }
-    } else if (lines > errors) {
-      var m = 0;
+      //console.log('\nFINAL RESULT\n', resFinal);
 
-      while (m < errors) {
-        resFinal.push(err[m] + ' at line ' + RR[m]);
-        m++;
-      }
-      while (m < lines) {
-        resFinal.push(result[RR[m]] + ' at line ' + RR[m]);
-        m++;
-      }
+      FINAL_RESULT = {
+        success: false,
+        error: resFinal,
+      };
+
+      return FINAL_RESULT;
     }
+    else if (!(404 in result)) {
 
-    //console.log('\nFINAL RESULT\n', resFinal);
+      var resFinal = [];
+      var len = RR.length;
+      for (var w = 0; w < len; w++) {
+        resFinal.push(result[RR[w]] + 'at line' + RR[w]);
+      }
+      FINAL_RESULT = {
+        success: false,
+        error: resFinal,
+      };
 
-    FINAL_RESULT = {
-      success: false,
-      error: resFinal,
-    };
-
-    return FINAL_RESULT;
+      return FINAL_RESULT;
+    }
   }
 
   //   //console.log(Object.values(result));
