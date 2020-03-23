@@ -8,6 +8,7 @@ const useChapters = () => {
           frontmatter {
             title
             slug
+            chapter
           }
           excerpt
         }
@@ -16,6 +17,7 @@ const useChapters = () => {
   `);
   return data.allMdx.nodes.map(chapter => ({
     title: chapter.frontmatter.title,
+    chapter: chapter.frontmatter.chapter,
     slug: chapter.frontmatter.slug,
     excerpt: chapter.excerpt,
   }));

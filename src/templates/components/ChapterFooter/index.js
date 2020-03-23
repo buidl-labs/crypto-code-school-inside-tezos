@@ -1,19 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { IoIosMenu } from 'react-icons/io';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { Link } from 'gatsby';
-
+import ContentMenuSlider from '../MenuSlider/index';
 function ChapterFooter({
   chapter,
   title,
   chapterIndex: { current, total, nextSlug, prevSlug },
 }) {
+  const [openDrawer, toggleDrawer] = useState(false);
+  const toggle = () => {
+    toggleDrawer(openDrawer => !openDrawer);
+  };
   return (
     <Footer>
       <div>
         <MenuButton>
-          <IoIosMenu size={36} color="#fff" />
+          <IoIosMenu onClick={toggle} size={36} color="#fff" />
+          <ContentMenuSlider openDrawer={openDrawer} toggle={toggle} />
         </MenuButton>
         <ChapterTitle>
           {chapter}
