@@ -184,6 +184,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
               readOnly: false,
               fontSize: 18,
               fontFamily: 'Inconsolata',
+              wordWrap: true,
             }}
           />
           <Output>
@@ -206,12 +207,13 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                 fontSize: 18,
                 fontFamily: 'Inconsolata',
                 renderSideBySide: false,
+                wordWrap: true,
               }}
             />
           ) : (
             <div style={{ height: 200, background: '#1B3738', color: '#fff' }}>
               {validation.success ? (
-                <div style={{ padding: 10 }}>
+                <div style={{ fontFamily: 'Inconsolata', padding: 10 }}>
                   <p style={{ color: '#18b77e', paddingBottom: 5 }}>
                     <span> > </span>Great, you got it right!
                   </p>
@@ -223,7 +225,13 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                 <div style={{ padding: 10 }}>
                   {validation.error.map(errorMessage => {
                     return (
-                      <p style={{ color: '#d0454c', paddingBottom: 5 }}>
+                      <p
+                        style={{
+                          fontFamily: 'Inconsolata',
+                          color: '#d0454c',
+                          paddingBottom: 5,
+                        }}
+                      >
                         <span> {errorMessage ? '>' : ''} </span>
                         {errorMessage}
                       </p>
