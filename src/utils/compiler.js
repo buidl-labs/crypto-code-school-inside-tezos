@@ -340,7 +340,7 @@ export function checkCode(get, lesson) {
   if (lesson === 1) {
     lesson = l1;
   } else if (lesson === 2) {
-    lesson = "l2";
+    lesson = 'l2';
   } else if (lesson === 3) {
     lesson = l3;
   } else if (lesson === 4) {
@@ -389,19 +389,18 @@ export function checkCode(get, lesson) {
   }
 
   // removing new lines and white spaces from the user's code
-  var userArray = user.filter(function (entry) {
+  var userArray = user.filter(function(entry) {
     return entry.trim() !== '';
   });
 
-  if (lesson === "l2") {
-
+  if (lesson === 'l2') {
     // getting array from the correct code (each line is an element of the array)
     var testl2 = l1.split('\n');
 
     //console.log("TEST L2", testl2);
 
     // removing new lines and white spaces from the correct code
-    var correctl2 = testl2.filter(function (entry) {
+    var correctl2 = testl2.filter(function(entry) {
       return entry.trim() !== '';
     });
 
@@ -409,30 +408,26 @@ export function checkCode(get, lesson) {
 
     var comment = userArray.filter(x => !correctl2.includes(x));
 
-    var final = comment.filter(z => z.trim()[0] === '#')
-    var com = comment.filter(z => z.trim()[0] !== '#')
+    var final = comment.filter(z => z.trim()[0] === '#');
+    var com = comment.filter(z => z.trim()[0] !== '#');
 
     //console.log("L2 COMMENT", comment);
     //console.log("L2 FINAL", final);
     //console.log("L2 COM", com);
 
-
     var comError = [];
 
     if (com.length > 0) {
       for (var c in com) {
-        comError.push("Invalid code at line " + (user.indexOf(com[c]) + 1));
+        comError.push('Invalid code at line ' + (user.indexOf(com[c]) + 1));
       }
       return {
-        success: false, error: comError
-      }
-    }
-
-    else if (final.length === 0) {
-      return { success: false, error: ["You didn't write any comment."] }
-    }
-
-    else {
+        success: false,
+        error: comError,
+      };
+    } else if (final.length === 0) {
+      return { success: false, error: ['comment is required.'] };
+    } else {
       return { success: true, error: ['No error'] };
     }
   }
@@ -458,7 +453,7 @@ export function checkCode(get, lesson) {
   var code = lesson.split('\n');
 
   // removing new lines and white spaces from the correct code
-  var correctCodeArray = code.filter(function (entry) {
+  var correctCodeArray = code.filter(function(entry) {
     return entry.trim() !== '';
   });
 
@@ -474,7 +469,7 @@ export function checkCode(get, lesson) {
   if (
     missingFromUser.indexOf('        pass') === -1 &&
     _.countBy(correctCodeArray)['        pass'] !==
-    _.countBy(userArray)['        pass']
+      _.countBy(userArray)['        pass']
   ) {
     missingFromUser.push('        pass');
   }
@@ -482,11 +477,10 @@ export function checkCode(get, lesson) {
   if (
     missingFromUser.indexOf('    @sp.entry_point') === -1 &&
     _.countBy(correctCodeArray)['    @sp.entry_point'] !==
-    _.countBy(userArray)['    @sp.entry_point']
+      _.countBy(userArray)['    @sp.entry_point']
   ) {
     missingFromUser.push('    @sp.entry_point');
   }
-
 
   // var correct = _.countBy(correctCodeArray);
   // var user = _.countBy(userArray);
@@ -550,7 +544,7 @@ export function checkCode(get, lesson) {
 
     return FINAL_RESULT;
   } else {
-    RR = RR.filter(function (value) {
+    RR = RR.filter(function(value) {
       return value < 404;
     });
 
