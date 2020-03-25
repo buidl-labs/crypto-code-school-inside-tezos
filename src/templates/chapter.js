@@ -52,14 +52,10 @@ const Output = styled.div`
     display: inline-block;
     margin-left: 1rem;
     color: #729e9f;
-    padding-top: 15px;
-    padding-right: 10px;
-    padding-left: 10px;
+    padding: 10px 5px 0 5px;
     border-top: 1px solid #112425;
     font-family: Roboto;
-    padding-bottom: -28px;
     margin: 1p;
-    padding: 10px;
   }
 `;
 
