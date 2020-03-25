@@ -53,8 +53,8 @@ const ContractFile = styled.div`
     margin-left: 1rem;
     color: #729e9f;
     padding-top: 15px;
-    padding-right: 10px;
-    padding-left: 10px;
+    padding-right: 5px;
+    padding-left: 5px;
   }
 `;
 const Editor = styled.div`
@@ -78,13 +78,13 @@ const CheckAnswerButton = styled.button`
   font-weight: normal;
   font-size: 20px;
   color: #fff;
-  padding: 0 1rem;
+  padding: 1rem 0.5rem;
   margin: 0 15px;
   border: none;
   cursor: pointer;
   transition: 0.3s;
   :hover {
-    background: #2b8d6a;
+    background: #66cca7;
     color: #fff;
   }
 `;
@@ -98,12 +98,12 @@ const ShowAnswerButton = styled.button`
   font-size: 20px;
   color: #fff;
   margin: 0 10px;
-  padding: 0 1rem;
+  padding: 1rem 0.5rem;
   border: none;
   transition: 0.3s;
   cursor: pointer;
   :hover {
-    background: #112122;
+    background: #436061;
     color: #fff;
   }
 `;
