@@ -10,7 +10,7 @@ editor:
     class Plant(sp.Contract):
         def __init__(self, name):
             # Initialize state variables
-            self.init(name = sp.string(name)) 
+            self.init(name = name) 
 
   answer: |  
     import smartpy as sp
@@ -18,7 +18,7 @@ editor:
     class Plant(sp.Contract):
         def __init__(self, name):
             # Initialize state variables
-            self.init(name = sp.string(name), attack = sp.int(10), defense = sp.int(10), growth_rate = sp.int(10), health = sp.int(100))
+            self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100))
 ---
 
 Container constructor names are uncapitalized, example: `(sp.int(-42))` and their types are capitalized, example `(sp.TInt)`
@@ -27,12 +27,12 @@ Container constructor names are uncapitalized, example: `(sp.int(-42))` and thei
  - sp.TNat: The type of non-negative integer values, e.g: sp.nat(42).
  - sp.TIntOrNat: The type of integer values whose type is still undetermined between sp.TInt or sp.TNat, e.g: 42 or sp.intOrNat(42).
 
-In SmartPy, we have three possible types for integer: `int, nat, and intOrNat`. When writing an integer 12, we don’t know whether it is an int or a nat so we type it as intOrNat. Its exact type will be determined at a later stage. This determination is necessary for the Michelson compiler because Michelson needs to make this precise determination.
+In SmartPy, we have three possible types for integer: `int, nat, and intOrNat`. When writing a number (say, 12), as you can see, it can be of type sp.TInt or sp.TNat which makes it important to explicitly mention the type in such cases. If you don’t know whether it is an int or a nat then you type it as intOrNat (sp.TIntOrNat). Its exact type will be determined at a later stage. This determination is necessary for the Michelson compiler because Michelson needs to make this precise determination.
 
 ## Put it to code
 
 Now you'll intialize growth_rate attribute and health for your plant to grow.
 
-1) Declare state variables `attack`, `defense`, `growth_rate` and `health` all of type `sp.TInt` and initialize then with 10, 10, 10, 100 respectively
+1) Declare state variables `attack`, `defense`, `growth_rate` and `health` all of type `sp.TNat` and initialize then with 10, 10, 10, 100 respectively
 
 

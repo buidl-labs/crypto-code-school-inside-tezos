@@ -9,15 +9,15 @@ editor:
 
     class Plant(sp.Contract):
         def __init__(self, name):
-            self.init(name = sp.string(name), attack = sp.int(10), defense = sp.int(10), growth_rate = sp.int(10), health = sp.int(100), is_alive = True)
+            self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True)
    
         @sp.entry_point
-        def attack():
+        def attack(self):
             # Update the function
             pass
 
         @sp.entry_point
-        def defense():
+        def defense(self):
             # Update the function
             pass
 
@@ -26,7 +26,7 @@ editor:
 
     class Plant(sp.Contract):
         def __init__(self, name):
-            self.init(name = sp.string(name), attack = sp.int(10), defense = sp.int(10), growth_rate = sp.int(10), health = sp.int(100), is_alive = True)
+            self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True)
    
         @sp.entry_point
         def attack(self, params):
@@ -49,7 +49,7 @@ In SmartPy, type inference of arithmetic operators imposes that both sides have 
 ## Put it to code
 Complete the attack and defense functions and upgrade attack and defense of your plant.
 
-1) Pass 2 parameters `self` and `params` in `attack` and `defense` functions,
+1) Add other parameter `params` in `attack` and `defense` functions,
 
 2) Add `attack` points in the state variable `attack` using `self.data.attack += params.attack` in `attack` function,
 
