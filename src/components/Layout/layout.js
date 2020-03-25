@@ -33,18 +33,18 @@ const Layout = ({ children }) => {
           .react-icons {
             vertical-align: middle;
           }
-          ${'' /* h1,
-          h2,
-          h3,
-          h4,
-          h5,
-          h6 {
-            color: #222;
-            line-height: 1.1;
-            + * {
-              margin-top: 0.5rem;
-            }
-          } */}
+          body::-webkit-scrollbar {
+            background-color: #fff;
+            width: 16px;
+          }
+          body::-webkit-scrollbar-track {
+            background-color: #fff;
+          }
+          body::-webkit-scrollbar-thumb {
+            background-color: #babac0;
+            border-radius: 16px;
+            border: 4px solid #fff;
+          }
         `}
       />
       <Helmet>
