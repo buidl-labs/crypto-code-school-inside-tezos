@@ -7,9 +7,9 @@ function ChapterHeader() {
   return (
     <Header>
       <BackLink onClick={() => navigate('/')}>
-        <FaChevronLeft size={28} />
+        <FaChevronLeft size={30} />
       </BackLink>
-      <LessonTitle>Lesson: Introduction to SmartPy</LessonTitle>
+      <LessonTitle>Lesson: Introduction to Smartpy</LessonTitle>
       <HelpButton>Get Help</HelpButton>
     </Header>
   );
@@ -27,19 +27,13 @@ const Header = styled.header`
 const BackLink = styled.button`
   color: white;
   margin-left: 1rem;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 23px;
-  line-height: 27px;
   text-decoration: none;
   background: #0e1817;
   border: none;
-  height: 45px;
   cursor: pointer;
   transition: 0.3s;
+  padding: 0.8rem;
   border-radius: 50%;
-
   :hover {
     background: rgba(255, 255, 255, 0.1);
   }
