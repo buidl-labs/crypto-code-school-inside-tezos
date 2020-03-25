@@ -11,7 +11,7 @@ editor:
         # Update contract initialization
         def __init__(self, name):
             # Update state variables
-            self.init(name = sp.string(name), growth_rate = sp.int(10), health = sp.int(100), is_alive = True, power_move = sp.pair("Bullet Seed", 95))
+            self.init(name = name, growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True, power_move = sp.pair("Bullet Seed", 95))
 
         @sp.entry_point
         def attack(self, params):
@@ -30,7 +30,7 @@ editor:
         # Update contract initialization
         def __init__(self):
             # Update state variables
-            self.init(stat = sp.record(name = "", attack = sp.int(10), defense = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True))
+            self.init(stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True))
 
         @sp.entry_point
         def attack(self, params):
@@ -58,5 +58,5 @@ Records in smartPy contract are declared in the following manner `Record = sp.re
 4) Create a variable named `stat` of type `sp.TRecords` which contains all the previously initialized attributes of your Plant
 
 ```python
-self.init(stat = sp.record(name = "", attack = sp.int(10), defense = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True))
+self.init(stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True))
 ```

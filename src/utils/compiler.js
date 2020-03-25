@@ -20,35 +20,35 @@ export const l4 = `import smartpy as sp
 
 class Plant(sp.Contract):
     def __init__(self, name):
-        self.init(name = sp.string(name))`;
+        self.init(name = name)`;
 
 //integers
 export const l5 = `import smartpy as sp
 
 class Plant(sp.Contract):
     def __init__(self, name):
-        self.init(name = sp.string(name), attack = sp.int(10), defense = sp.int(10), growth_rate = sp.int(10), health = sp.int(100))`;
+        self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100))`;
 
 // booleans
 export const l6 = `import smartpy as sp
 
 class Plant(sp.Contract):
     def __init__(self, name):
-        self.init(name = sp.string(name), attack = sp.int(10), defense = sp.int(10), growth_rate = sp.int(10), health = sp.int(100), is_alive = True)`;
+        self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True)`;
 
 // creating a entry_point function
 export const l7 = `import smartpy as sp
 
 class Plant(sp.Contract):
     def __init__(self, name):
-        self.init(name = sp.string(name), attack = sp.int(10), defense = sp.int(10), growth_rate = sp.int(10), health = sp.int(100), is_alive = True)
+        self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True)
 
     @sp.entry_point
-    def attack():
+    def attack(self):
         pass
 
     @sp.entry_point
-    def defense():
+    def defense(self):
         pass`;
 
 // math operations
@@ -56,7 +56,7 @@ export const l8 = `import smartpy as sp
 
 class Plant(sp.Contract):
     def __init__(self, name):
-        self.init(name = sp.string(name), attack = sp.int(10), defense = sp.int(10), growth_rate = sp.int(10), health = sp.int(100), is_alive = True)
+        self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True)
         
     @sp.entry_point
     def attack(self, params):
@@ -71,7 +71,7 @@ export const l9 = `import smartpy as sp
 
 class Plant(sp.Contract):
     def __init__(self, name):
-        self.init(name = sp.string(name), attack = sp.int(10), defense = sp.int(10), growth_rate = sp.int(10), health = sp.int(100), is_alive = True, power_move = sp.pair("Bullet Seed", 95))
+        self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True, power_move = ("Bullet Seed", 95))
         
     @sp.entry_point
     def attack(self, params):
@@ -86,7 +86,7 @@ export const l10 = `import smartpy as sp
 
 class Plant(sp.Contract):
     def __init__(self):
-        self.init(stat = sp.record(name = "", attack = sp.int(10), defense = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True))
+        self.init(stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True))
         
     @sp.entry_point
     def attack(self, params):
@@ -101,7 +101,7 @@ export const l11 = `import smartpy as sp
 
 class Plant(sp.Contract):
     def __init__(self):
-        self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.int(10), defense = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True))
+        self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True))
     
     @sp.entry_point
     def attack(self, params):
@@ -121,7 +121,7 @@ export const l12 = `import smartpy as sp
 
 class Plant(sp.Contract):
     def __init__(self):
-        self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.int(10), defense = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True))
+        self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True))
     
     @sp.entry_point
     def attack(self, params):
@@ -141,7 +141,7 @@ export const l13 = `import smartpy as sp
 
 class Plant(sp.Contract):
     def __init__(self):
-        self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.int(10), defense = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True, special_moves = []))
+        self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True, special_moves = []))
     
     @sp.entry_point
     def attack(self, params):
@@ -165,7 +165,7 @@ export const l14 = `import smartpy as sp
 
 class Plant(sp.Contract):
     def __init__(self):
-        self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.int(10), defense = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True, special_moves = []))
+        self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True, special_moves = []))
     
     @sp.entry_point
     def attack(self, params):
@@ -192,7 +192,7 @@ export const l15 = `import smartpy as sp
 
 class Plant(sp.Contract):
     def __init__(self):
-        self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.int(10), defense = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True, special_moves = []))
+        self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True, special_moves = []))
     
     @sp.entry_point
     def attack(self, params):
@@ -256,30 +256,30 @@ var missing = {
   'def __init__(self, name):':
     'class initialization require a `name & self`  parameter',
 
-  'self.init(name = sp.string(name))':
+  'self.init(name = name)':
     'name of type `sp.TString` initialization is missing or is invalid',
 
-  'self.init(name = sp.string(name), attack = sp.int(10), defense = sp.int(10), growth_rate = sp.int(10), health = sp.int(100))':
+  'self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100))':
     'state variables initialization is missing or is invalid',
 
-  'self.init(name = sp.string(name), attack = sp.int(10), defense = sp.int(10), growth_rate = sp.int(10), health = sp.int(100), is_alive = True)':
+  'self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True)':
     'is_alive of type `sp.TBoolean` initialization is missing or is invalid',
 
-  'self.init(name = sp.string(name), attack = sp.int(10), defense = sp.int(10), growth_rate = sp.int(10), health = sp.int(100), is_alive = True, power_move = sp.pair("Bullet Seed", 95))':
+  'self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True, power_move = ("Bullet Seed", 95))':
     'power_move of type `sp.TPair` initialization is missing or is invalid',
 
-  'self.init(stat = sp.record(name = "", attack = sp.int(10), defense = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True))':
+  'self.init(stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True))':
     'stat of type `sp.TRecord` initialization is missing or is invalid',
 
-  'self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.int(10), defense = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True))':
+  'self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True))':
     'player of type `sp.TMap` initialization is missing or is invalid',
 
-  'self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.int(10), defense = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True, special_moves = []))':
+  'self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True, special_moves = []))':
     'special_moves array (sp.TList) initialization is missing or is invalid',
 
   '@sp.entry_point': '@sp.entry_point decorator missing or invalid',
 
-  'def attack():': 'attack function declaration error',
+  'def attack(self):': 'attack function declaration error',
   'def attack(self, params):': 'attack function declaration error',
   'self.data.attack += params.attack':
     'invalid or missing statement in attack function',
@@ -288,7 +288,7 @@ var missing = {
 
   pass: 'cannot have an empty function (add `pass`)',
 
-  'def defense():': 'defense function declaration error',
+  'def defense(self):': 'defense function declaration error',
   'def defense(self, params):': 'defense function declaration error',
   'self.data.defense += params.defense':
     'invalid or missing statement in defense function',
@@ -381,12 +381,32 @@ export function checkCode(get, lesson) {
 
   // removing '\r' from the end of each element(line).
   for (var x in user) {
-    user[x] = user[x].replace(';\r', '');
+    user[x] = user[x].replace('\r', '');
   }
 
+  // removing ; as it doesnot gives error
+  for (var x in user) {
+    user[x] = user[x].replace(';', '');
+  }
+
+  // replacing tabs with spaces
   for (var a in user) {
     user[a] = user[a].replace('\t', '  ');
   }
+
+  // removing extra spaces from the end of line
+  for (var a in user) {
+    user[a] = user[a].trimRight();
+  }
+
+  // console.log("USER", user);
+
+  // replacing ' with "
+  for (var a in user) {
+    user[a] = user[a].split(`'`).join(`"`);
+  }
+
+  // console.log("USER2", user)
 
   // removing new lines and white spaces from the user's code
   var userArray = user.filter(function (entry) {
@@ -431,7 +451,6 @@ export function checkCode(get, lesson) {
       return { success: true, error: ['No error'] };
     }
   }
-
   // removing valid python comments starting with #
   userArray = userArray.filter(x => x.trim()[0] !== '#');
 
@@ -447,16 +466,44 @@ export function checkCode(get, lesson) {
   }
 
   // updating user array and removing invalid comments as well
-  userArray = userArray.filter(x => !x.trim().includes('//', 0));
+  // var userArray = userArray.filter(x => !x.trim().includes('//', 0));
+  var userRemoveInvalidCommentArray = userArray.filter(x => !x.trim().includes('//', 0));
+
+
+  // dict = {withoutSpace : withspaceOriginal}
+  userArray = {}
+
+  // replacing all spaces in lines
+  for (var a in userRemoveInvalidCommentArray) {
+    userArray[userRemoveInvalidCommentArray[a].split(` , `).join(`,`).split(`, `).join(`,`).split(` ,`).join(`,`).split(` ~ `).join(`~`).split(`~ `).join(`~`).split(` ~`).join(`~`).split(` : `).join(`:`).split(`: `).join(`:`).split(` :`).join(`:`).split(`( `).join(`(`).split(` )`).join(`)`).split(` = `).join(`=`).split(`= `).join(`=`).split(` =`).join(`=`).split(` ' `).join(`'`).split(` '`).join(`'`).split(`' `).join(`'`).split(` " `).join(`"`).split(` "`).join(`"`).split(`" `).join(`"`)] = userRemoveInvalidCommentArray[a]
+    // userArray[userRemoveInvalidCommentArray[a].substr(0,userRemoveInvalidCommentArray[a].length - userRemoveInvalidCommentArray[a].trimLeft().length) + userRemoveInvalidCommentArray[a].split(" ").join("")] = userRemoveInvalidCommentArray[a];
+  }
+
+
+  // console.log("USER", userArray);
+  // --------------------------------
 
   // getting array from the correct code (each line is an element of the array)
   var code = lesson.split('\n');
 
   // removing new lines and white spaces from the correct code
-  var correctCodeArray = code.filter(function (entry) {
+  // var correctCodeArray = code.filter(function (entry) {
+  var correctCodeArrayWithSpace = code.filter(function (entry) {
     return entry.trim() !== '';
   });
 
+  // dict = {withoutSpace : withspaceOriginal}
+  var correctCodeArray = {}
+
+  // replacing all spaces in lines
+  for (var a in correctCodeArrayWithSpace) {
+    correctCodeArray[correctCodeArrayWithSpace[a].split(` , `).join(`,`).split(`, `).join(`,`).split(` ,`).join(`,`).split(` ~ `).join(`~`).split(`~ `).join(`~`).split(` ~`).join(`~`).split(` : `).join(`:`).split(`: `).join(`:`).split(` :`).join(`:`).split(`( `).join(`(`).split(` )`).join(`)`).split(` = `).join(`=`).split(`= `).join(`=`).split(` =`).join(`=`).split(` ' `).join(`'`).split(` '`).join(`'`).split(`' `).join(`'`).split(` " `).join(`"`).split(` "`).join(`"`).split(`" `).join(`"`)] = correctCodeArrayWithSpace[a];
+    // correctCodeArray[correctCodeArrayWithSpace[a].substr(0,correctCodeArrayWithSpace[a].length - correctCodeArrayWithSpace[a].trimLeft().length) + correctCodeArrayWithSpace[a].split(" ").join("")] = correctCodeArrayWithSpace[a];
+  }
+
+
+
+  // console.log("CODE", correctCodeArray);
   // length of the array of user's code
   var i = userArray.length;
 
@@ -464,20 +511,32 @@ export function checkCode(get, lesson) {
   var j = correctCodeArray.length;
 
   // list of lines (code) that user didn't write
-  var missingFromUser = correctCodeArray.filter(w => !userArray.includes(w));
+  // var missingFromUser = correctCodeArray.filter(w => !userArray.includes(w));
+  var missingFromUser = []; // it has code without space
+  for(a in correctCodeArray){
+    if(userArray[a] === undefined){
+      missingFromUser.push(a);
+    }
+    else{
+      continue
+    }
+  }
+
 
   if (
     missingFromUser.indexOf('        pass') === -1 &&
-    _.countBy(correctCodeArray)['        pass'] >
-    _.countBy(userArray)['        pass']
+    _.countBy(correctCodeArrayWithSpace)['        pass'] >
+    _.countBy(userRemoveInvalidCommentArray)['        pass']
+    // _.countBy(correctCodeArray)['        pass'] >
+    // _.countBy(userArray)['        pass']
   ) {
     missingFromUser.push('        pass');
   }
 
   if (
     missingFromUser.indexOf('    @sp.entry_point') === -1 &&
-    _.countBy(correctCodeArray)['    @sp.entry_point'] >
-    _.countBy(userArray)['    @sp.entry_point']
+    _.countBy(correctCodeArrayWithSpace)['    @sp.entry_point'] >
+    _.countBy(userRemoveInvalidCommentArray)['    @sp.entry_point']
   ) {
     missingFromUser.push('    @sp.entry_point');
   }
@@ -491,13 +550,22 @@ export function checkCode(get, lesson) {
   // //console.log(userArray.indexOf('        pass'));
 
   // list of extra lines (code) thats user wrote
-  var extraInUser = userArray.filter(w => !correctCodeArray.includes(w));
+  // var extraInUser = userArray.filter(w => !correctCodeArray.includes(w));
+  var extraInUser = []; // it has code without space
+  for(a in userArray){
+    if(correctCodeArray[a] === undefined){
+      extraInUser.push(a);
+    }
+    else{
+      continue
+    }
+  }
 
   //console.log('USER ARRAY', userArray);
   //console.log('CORRECT ARRAY', correctCodeArray);
 
-  //console.log('MISSING', missingFromUser);
-  //console.log('EXTRA', extraInUser);
+  // console.log('MISSING', missingFromUser);
+  // console.log('EXTRA', extraInUser);
 
   //l10 get pass
   if (lesson === l10) {
@@ -508,11 +576,13 @@ export function checkCode(get, lesson) {
   // invalid statements of extra line of codes
   for (i in extraInUser) {
     if ((lesson === l12 || lesson === l8) && extraInUser[i].trim() === 'pass') {
-      result[user.indexOf(extraInUser[i]) + 1] =
+      result[user.indexOf(userArray[extraInUser[i]]) + 1] =
+      // result[user.indexOf(extraInUser[i]) + 1] =
         'Invalid statement, remove `pass and update the function with appropriate statement`';
       //console.log("RESULT", result);
     } else {
-      result[user.indexOf(extraInUser[i]) + 1] = 'Invalid statement';
+      result[user.indexOf(userArray[extraInUser[i]]) + 1] = 'Invalid statement';
+      // result[user.indexOf(extraInUser[i]) + 1] = 'Invalid statement';
     }
   }
   //console.log("RESULT2", result);
@@ -521,7 +591,8 @@ export function checkCode(get, lesson) {
   if (missingFromUser.length !== 0) {
     result[404] = [];
     for (i in missingFromUser) {
-      result[404].push(missing[missingFromUser[i].trim()]);
+      result[404].push(missing[correctCodeArray[missingFromUser[i]].trim()]);
+      // result[404].push(missing[missingFromUser[i].trim()]);
     }
   }
   //console.log("RESULT3", result);
