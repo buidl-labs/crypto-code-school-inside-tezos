@@ -10,7 +10,7 @@ editor:
     class Plant(sp.Contract):
         def __init__(self, name):
             # Initialize the required variable
-            self.init(name = sp.string(name), attack = sp.int(10), defense = sp.int(10), growth_rate = sp.int(10), health = sp.int(100), is_alive = True)
+            self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True)
 
         @sp.entry_point
         def attack(self, params):
@@ -26,7 +26,7 @@ editor:
     class Plant(sp.Contract):
         def __init__(self, name):
             # Initialize the required variable
-            self.init(name = sp.string(name), attack = sp.int(10), defense = sp.int(10), growth_rate = sp.int(10), health = sp.int(100), is_alive = True, power_move = sp.pair("Bullet Seed", 95))
+            self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True, power_move = ("Bullet Seed", 95))
 
         @sp.entry_point
         def attack(self, params):
@@ -37,11 +37,11 @@ editor:
             self.data.defense += params.defense
 ---
 
-`Pair` is a unique datatype in smartPy which is nothing but a pair of 2 values. These values can be of any primitive datatype and need not be the same.
+`Pair` is a unique datatype in smartPy which is nothing but a pair of 2 values. It can be taken as a python tuple with only 2 values. These values can be of any primitive datatype and need not be the same. Its type is also inferred automatically.
 
 To initialize a pair:
 ```python
-example = sp.pair("", 0) 
+example = ("", 0) 
 # this will initialize a pair with first element
 # as type of sp.TString and second as sp.TInt
 ```

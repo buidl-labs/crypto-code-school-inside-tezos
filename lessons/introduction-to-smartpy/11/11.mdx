@@ -10,7 +10,7 @@ editor:
     class Plant(sp.Contract):
         def __init__(self):
             # Initialize state variable
-            self.init(stat = sp.record(name = "", attack = sp.int(10), defense = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True))
+            self.init(stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True))
 
         @sp.entry_point
         def attack(self, params):
@@ -28,7 +28,7 @@ editor:
     class Plant(sp.Contract):
         def __init__(self):
             # Initialize state variable
-            self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.int(10), defense = sp.int(10), health = sp.int(100), growth_rate = sp.int(10), is_alive = True))
+            self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True))
     
         @sp.entry_point
         def attack(self, params):
