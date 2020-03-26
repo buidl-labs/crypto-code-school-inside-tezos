@@ -9,13 +9,27 @@ import {
   ShowAnswerButton,
   CheckAnswerButton,
 } from './styled';
+
+interface Props {
+  children: React.ReactNode;
+  setShowOutput(input: boolean): void;
+  chapterIndex: {
+    current: number;
+    total: number;
+    nextSlug: string | undefined;
+    prevSlug: string | undefined;
+  };
+  updateValidation(input: string): void;
+  editorInputValue: string;
+}
+
 function ChapterEditor({
   children,
   setShowOutput,
   chapterIndex,
   updateValidation,
   editorInputValue,
-}) {
+}: Props) {
   return (
     <>
       <ContractFile>

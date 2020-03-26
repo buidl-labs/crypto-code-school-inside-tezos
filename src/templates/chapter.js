@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { graphql } from 'gatsby';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
-import styled from '@emotion/styled';
 import Layout from '../components/Layout/layout';
 import { MDXProvider } from '@mdx-js/react';
 import { ControlledEditor, monaco, DiffEditor } from '@monaco-editor/react';
@@ -14,7 +13,7 @@ import {
 } from './components/index';
 import useChapters from '../hooks/use-chapters';
 import { getChaptersIndex } from '../utils/index';
-
+import { Container, Output } from './chapter.styled';
 export const query = graphql`
   query($slug: String!) {
     mdx(frontmatter: { slug: { eq: $slug } }) {
@@ -30,32 +29,6 @@ export const query = graphql`
       }
       body
     }
-  }
-`;
-
-const Container = styled.div`
-  display: grid;
-  grid-template-areas:
-    'header header header header'
-    'content contractFile contractFile contractFile'
-    'content editor editor editor'
-    'content option option option'
-    'footer footer footer footer';
-`;
-const Output = styled.div`
-  height: 40px;
-  background: #112425;
-
-  > div {
-    background: #1b3738;
-    height: 40px;
-    display: inline-block;
-    margin-left: 1rem;
-    color: #729e9f;
-    padding: 10px 5px 0 5px;
-    border-top: 1px solid #112425;
-    font-family: Roboto;
-    margin: 1p;
   }
 `;
 
@@ -116,20 +89,6 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
       // cleanup;
     };
   }, []);
-  // useEffect(() => {
-  //   /*
-  //   Current state user can pass the test even if spaces are not as per the answer
-  //   */
-  //   if (
-  //     editorInputValue.trim().replace(/\s/g, '') ===
-  //     chapter.frontmatter.editor.answer.trim().replace(/\s/g, '')
-  //   ) {
-  //     console.log('Yo, right answer');
-  //   } else {
-  //     console.log(editorInputValue);
-  //     console.log(chapter.frontmatter.editor.answer);
-  //   }
-  // }, [editorInputValue]);
   console.log('Data body', validation);
   return (
     <Layout>
