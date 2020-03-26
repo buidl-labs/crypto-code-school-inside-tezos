@@ -4,7 +4,6 @@ import {
   SideDrawer,
   Backdrop,
   Title,
-  ListItem,
   ChapterLink,
   SliderHeader,
 } from './styled';

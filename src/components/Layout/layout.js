@@ -2,6 +2,7 @@ import React from 'react';
 import { Global, css } from '@emotion/core';
 import Helmet from 'react-helmet';
 import useSiteMetadata from '../../hooks/use-sitemetadata';
+import { normalize } from 'polished';
 
 const Layout = ({ children }) => {
   const { title, description } = useSiteMetadata();
@@ -10,6 +11,7 @@ const Layout = ({ children }) => {
     <>
       <Global
         styles={css`
+          ${normalize()}
           * {
             box-sizing: border-box;
             margin: 0;
