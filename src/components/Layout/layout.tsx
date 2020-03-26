@@ -4,7 +4,11 @@ import Helmet from 'react-helmet';
 import useSiteMetadata from '../../hooks/use-sitemetadata';
 import { normalize } from 'polished';
 
-const Layout = ({ children }) => {
+interface Props {
+  children: React.ReactNode;
+}
+
+const Layout = ({ children }: Props) => {
   const { title, description } = useSiteMetadata();
 
   return (

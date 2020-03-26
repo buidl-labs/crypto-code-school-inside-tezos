@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+
 export const ContractFile = styled.div`
   grid-area: contractFile;
   background: #112425;
@@ -19,7 +20,6 @@ export const ContractFile = styled.div`
 export const Editor = styled.div`
   grid-area: editor;
 `;
-
 export const Option = styled.div`
   grid-area: option;
   background: #112425;
@@ -28,7 +28,6 @@ export const Option = styled.div`
   display: flex;
   justify-content: flex-end;
 `;
-
 export const CheckAnswerButton = styled.button`
   height: 60px;
   background-color: #18b77e;
@@ -47,7 +46,6 @@ export const CheckAnswerButton = styled.button`
     color: #fff;
   }
 `;
-
 export const ShowAnswerButton = styled.button`
   height: 60px;
   background-color: #162f30;

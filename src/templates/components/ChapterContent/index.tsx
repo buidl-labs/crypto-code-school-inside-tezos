@@ -6,7 +6,13 @@ import {
   ContentFrontmatterTitle,
 } from './styled';
 
-function ChapterContent({ title, chapter, children }) {
+interface Props {
+  title: string;
+  chapter: string;
+  children: React.ReactNode;
+}
+
+function ChapterContent({ title, chapter, children }: Props) {
   return (
     <Content>
       <ContentHeader>
