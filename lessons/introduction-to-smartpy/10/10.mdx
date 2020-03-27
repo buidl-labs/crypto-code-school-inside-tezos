@@ -55,7 +55,7 @@ Records in smartPy contract are declared in the following manner `Record = sp.re
 
 3) Remove `name` variable from `__init__`, as you will be providing name to your Plant explicitly later on,
 
-4) Create a variable named `stat` of type `sp.TRecords` which contains all the previously initialized attributes of your Plant
+4) Create a variable named `stat` of type `sp.TRecord` which contains all the previously initialized attributes of your Plant
 
 ```python
 self.init(stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True))
