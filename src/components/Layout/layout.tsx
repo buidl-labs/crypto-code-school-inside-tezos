@@ -2,14 +2,20 @@ import React from 'react';
 import { Global, css } from '@emotion/core';
 import Helmet from 'react-helmet';
 import useSiteMetadata from '../../hooks/use-sitemetadata';
+import { normalize } from 'polished';
 
-const Layout = ({ children }) => {
+interface Props {
+  children: React.ReactNode;
+}
+
+const Layout = ({ children }: Props) => {
   const { title, description } = useSiteMetadata();
 
   return (
     <>
       <Global
         styles={css`
+          ${normalize()}
           * {
             box-sizing: border-box;
             margin: 0;

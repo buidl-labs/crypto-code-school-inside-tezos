@@ -4,16 +4,18 @@ import {
   SideDrawer,
   Backdrop,
   Title,
-  ListItem,
   ChapterLink,
   SliderHeader,
 } from './styled';
 import { IoIosClose } from 'react-icons/io';
 
-const ContentMenu = ({ openDrawer = false, toggle, ...args }) => {
+interface Props {
+  openDrawer: boolean;
+  toggle(input: boolean): void;
+}
+
+const ContentMenu = ({ openDrawer = false, toggle }: Props) => {
   const chapters = useChapters();
-  console.log('chapters', chapters);
-  console.log('menu', args);
   return (
     <>
       {openDrawer ? <Backdrop onClick={toggle} show={openDrawer} /> : null}

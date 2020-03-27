@@ -1,14 +1,31 @@
 import React, { useState } from 'react';
-import styled from '@emotion/styled';
 import { IoIosMenu } from 'react-icons/io';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import { Link } from 'gatsby';
 import ContentMenuSlider from '../MenuSlider/index';
+import {
+  Footer,
+  MenuButton,
+  ChapterTitle,
+  PrevLink,
+  ContentIndex,
+  NextLink,
+} from './styled';
+interface Props {
+  chapter: string;
+  title: string;
+  chapterIndex: {
+    current: number;
+    total: number;
+    nextSlug: string;
+    prevSlug: string;
+  };
+}
+
 function ChapterFooter({
   chapter,
   title,
   chapterIndex: { current, total, nextSlug, prevSlug },
-}) {
+}: Props) {
   const [openDrawer, toggleDrawer] = useState(false);
   const toggle = () => {
     toggleDrawer(openDrawer => !openDrawer);
@@ -50,77 +67,5 @@ function ChapterFooter({
     </Footer>
   );
 }
-
-const Footer = styled.footer`
-  grid-area: footer;
-  background: #0e1817;
-  height: 70px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  > div {
-    display: flex;
-  }
-`;
-
-const MenuButton = styled.button`
-  margin-left: 1rem;
-  background: #0e1817;
-  border: none;
-  cursor: pointer;
-  transition: 0.3s;
-`;
-
-const ChapterTitle = styled.p`
-  color: #fff;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 1.1rem;
-  line-height: 27px;
-  margin-left: 1rem;
-  display: flex;
-  align-self: center;
-`;
-
-const PrevLink = styled(Link)`
-  color: #fff;
-  margin-left: 1rem;
-  margin-right: 1rem;
-  margin-top: 1px;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  text-decoration: none;
-
-  > span {
-    margin-left: 6px;
-  }
-
-  > svg {
-    display: inline-block;
-    vertical-align: middle;
-  }
-`;
-
-const ContentIndex = styled.span`
-  color: #fff;
-`;
-
-const NextLink = styled(Link)`
-  color: #fff;
-  margin-left: 1rem;
-  margin-right: 1rem;
-  margin-top: 1px;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  text-decoration: none;
-  > svg {
-    display: inline-block;
-    vertical-align: middle;
-  }
-`;
 
 export default ChapterFooter;

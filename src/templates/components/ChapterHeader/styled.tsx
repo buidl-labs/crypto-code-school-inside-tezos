@@ -1,21 +1,6 @@
-import React from 'react';
 import styled from '@emotion/styled';
-import { FaChevronLeft } from 'react-icons/fa';
-import { navigate } from 'gatsby';
 
-function ChapterHeader() {
-  return (
-    <Header>
-      <BackLink onClick={() => navigate('/')}>
-        <FaChevronLeft size={30} />
-      </BackLink>
-      <LessonTitle>Lesson: Introduction to Smartpy</LessonTitle>
-      <HelpButton>Get Help</HelpButton>
-    </Header>
-  );
-}
-
-const Header = styled.header`
+export const Header = styled.header`
   grid-area: header;
   height: 70px;
   background-color: #0e1817;
@@ -24,7 +9,7 @@ const Header = styled.header`
   align-items: center;
 `;
 
-const BackLink = styled.button`
+export const BackLink = styled.button`
   color: white;
   margin-left: 1rem;
   text-decoration: none;
@@ -43,7 +28,7 @@ const BackLink = styled.button`
   }
 `;
 
-const LessonTitle = styled.h1`
+export const LessonTitle = styled.h1`
   font-family: Roboto;
   font-style: normal;
   font-weight: normal;
@@ -53,7 +38,7 @@ const LessonTitle = styled.h1`
   color: #ffffff;
 `;
 
-const HelpButton = styled.button`
+export const HelpButton = styled.button`
   border: 2px solid #ffffff;
   box-sizing: border-box;
   width: 118px;
@@ -73,5 +58,3 @@ const HelpButton = styled.button`
     color: #0e1817;
   }
 `;
-
-export default ChapterHeader;

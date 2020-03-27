@@ -19,6 +19,7 @@
     "gatsby-plugin-prefetch-google-fonts": "^1.4.3",
     "gatsby-plugin-react-helmet": "^3.1.21",
     "gatsby-plugin-sharp": "^2.4.3",
+    "gatsby-plugin-typescript": "^2.3.1",
     "gatsby-plugin-webpack-bundle-analyzer": "^1.0.5",
     "gatsby-remark-images": "^3.1.49",
     "gatsby-remark-prismjs": "^3.3.35",
@@ -26,6 +27,7 @@
     "gatsby-source-filesystem": "^2.1.46",
     "gatsby-transformer-sharp": "^2.3.13",
     "monaco-editor": "^0.20.0",
+    "polished": "^3.5.1",
     "prismjs": "^1.19.0",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
@@ -34,7 +36,14 @@
     "react-icons": "^3.9.0"
   },
   "devDependencies": {
-    "prettier": "^1.19.1"
+    "@types/node": "^12.12.31",
+    "@types/react": "^16.9.25",
+    "@types/react-dom": "^16.9.5",
+    "@typescript-eslint/eslint-plugin": "^2.25.0",
+    "@typescript-eslint/parser": "^2.25.0",
+    "eslint": "^6.8.0",
+    "prettier": "^1.19.1",
+    "typescript": "^3.8.3"
   },
   "keywords": [
     "gatsby"
@@ -48,7 +57,8 @@
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
-    "analyze": "ANALYZE_BUNDLE_SIZE=true gatsby build"
+    "analyze": "ANALYZE_BUNDLE_SIZE=true gatsby build",
+    "type-check": "tsc --noEmit"
   },
   "repository": {
     "type": "git",
