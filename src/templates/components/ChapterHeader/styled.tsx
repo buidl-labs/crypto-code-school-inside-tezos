@@ -7,6 +7,7 @@ export const Header = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  grid-area: 1/1/ 2/5;
 `;
 
 export const BackLink = styled.button`

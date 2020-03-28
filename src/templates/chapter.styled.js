@@ -4,9 +4,9 @@ export const Container = styled.div`
   display: grid;
   grid-template-areas:
     'header header header header'
-    'content contractFile contractFile contractFile'
-    'content editor editor editor'
-    'content option option option'
+    'content content contractFile contractFile'
+    'content content editor editor'
+    'content content option option'
     'footer footer footer footer';
 `;
 export const Output = styled.div`

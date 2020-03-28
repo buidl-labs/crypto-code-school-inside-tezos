@@ -4,7 +4,7 @@ export const ContractFile = styled.div`
   grid-area: contractFile;
   background: #112425;
   height: 50px;
-  width: calc(100vw - (100vw / 2.4));
+  grid-area: 2/3/ 3/5;
 
   > p {
     background: #1b3738;
@@ -24,7 +24,7 @@ export const Option = styled.div`
   grid-area: option;
   background: #112425;
   height: 60px;
-  width: calc(100vw - (100vw / 2.4));
+  grid-area: 4/3/ 5/5;
   display: flex;
   justify-content: flex-end;
 `;

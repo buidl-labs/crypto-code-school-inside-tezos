@@ -3,8 +3,8 @@ import styled from '@emotion/styled';
 export const Content = styled.div`
   grid-area: content;
   overflow-y: auto;
-  height: calc(100vh - 140px);
-  width: calc(((100vw) / 2.4));
+  overflow-x: auto;
+  grid-area: 2/1/5/3;
 `;
 
 export const ContentHeader = styled.div`

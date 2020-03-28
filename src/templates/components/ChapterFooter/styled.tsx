@@ -7,6 +7,7 @@ export const Footer = styled.footer`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  grid-area: 5/1/ 6/5;
 
   > div {
     display: flex;
