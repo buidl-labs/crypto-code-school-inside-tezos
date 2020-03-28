@@ -56,6 +56,8 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
     `${chapter.frontmatter.editor.startingCode}`,
   );
   const [showOutput, setShowOutput] = useState(false);
+  const [buttonClicked, setButtonClicked] = useState(false);
+  var [editorHeight, setEditorHeight] = useState(`calc(100vh - (210px + 40px))`);
   useEffect(() => {
     monaco
       .init()
@@ -63,6 +65,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
         monacoInstance.editor.defineTheme('myCustomTheme', {
           base: 'vs-dark',
           inherit: true,
+          automaticLayout: true,
           rules: [
             { token: 'comment', foreground: '989898', fontStyle: 'italic' },
             { token: 'keyword', foreground: 'EA4192' },
@@ -116,13 +119,17 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
         </ChapterContent>
         <ChapterEditor
           setShowOutput={setShowOutput}
+          setButtonClicked={setButtonClicked}
+          setEditorHeight={setEditorHeight}
           chapterIndex={index}
           updateValidation={updateValidation}
           editorInputValue={editorInputValue}
         >
           <ControlledEditor
-            height={`calc(100vh - (250px + 200px + 40px))`}
+            height={`${editorHeight}`}
+            // height={`100%`}
             width={`calc(100vw - (100vw / 2.4))`}
+            marWidth={`calc(100vw - (100vw / 2.4))`}
             value={editorInputValue}
             onChange={(_, value) => {
               setEditorInputValue(value);
@@ -141,60 +148,73 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
               wordWrap: true,
             }}
           />
-          <Output>
-            <div>output</div>
-          </Output>
-          {showOutput ? (
-            <DiffEditor
-              height="200px"
-              original={showOutput ? chapter.frontmatter.editor.answer : '\n'}
-              modified={showOutput ? editorInputValue : '\n'}
-              language="python"
-              theme="myCustomTheme"
-              options={{
-                lineNumbers: false,
-                scrollBeyondLastLine: true,
-                minimap: { enabled: false },
-                scrollbar: { vertical: 'hidden', verticalScrollbarSize: 0 },
-                folding: false,
-                readOnly: true,
-                fontSize: 18,
-                fontFamily: 'Inconsolata',
-                renderSideBySide: false,
-                wordWrap: true,
-              }}
-            />
-          ) : (
-            <div style={{ height: 200, background: '#1B3738', color: '#fff' }}>
-              {validation.success ? (
-                <div style={{ fontFamily: 'Inconsolata', padding: 10 }}>
-                  <p style={{ color: '#18b77e', paddingBottom: 5 }}>
-                    <span> > </span>Great, you got it right!
-                  </p>
-                  <p style={{ color: '#18b77e' }}>
-                    <span> > </span>Click 'next >' to continue.
-                  </p>
+          {
+            buttonClicked ?
+              showOutput ? (
+                <div>
+                  <Output>
+                    <div style={{paddingLeft: '8px', paddingRight: '8px'}}>output</div>
+                  </Output>
+                  <DiffEditor
+                    height="200px"
+                    original={showOutput ? chapter.frontmatter.editor.answer : '\n'}
+                    modified={showOutput ? editorInputValue : '\n'}
+                    language="python"
+                    theme="myCustomTheme"
+                    options={{
+                      lineNumbers: false,
+                      scrollBeyondLastLine: true,
+                      minimap: { enabled: false },
+                      scrollbar: { vertical: 'hidden', verticalScrollbarSize: 0 },
+                      folding: false,
+                      readOnly: true,
+                      fontSize: 18,
+                      fontFamily: 'Inconsolata',
+                      renderSideBySide: false,
+                      wordWrap: true,
+                    }}
+                  />
                 </div>
               ) : (
-                <div style={{ padding: 10 }}>
-                  {validation.error.map(errorMessage => {
-                    return (
-                      <p
-                        style={{
-                          fontFamily: 'Inconsolata',
-                          color: '#d0454c',
-                          paddingBottom: 5,
-                        }}
-                      >
-                        <span> {errorMessage ? '>' : ''} </span>
-                        {errorMessage}
-                      </p>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-          )}
+                  <div>
+                    <Output>
+                      <div>output</div>
+                    </Output>
+                    <div style={{ height: "200px", background: '#1B3738', color: '#fff' }}>
+                      {validation.success ? (
+                        <div style={{ fontFamily: 'Inconsolata', padding: 10 }}>
+                          <p style={{ color: '#18b77e', paddingBottom: 5 }}>
+                            <span> > </span>Great, you got it right!
+                  </p>
+                          <p style={{ color: '#18b77e' }}>
+                            <span> > </span>Click 'next >' to continue.
+                  </p>
+                        </div>
+                      ) : (
+                          <div style={{ padding: 10 }}>
+                            {validation.error.map(errorMessage => {
+                              return (
+                                <p
+                                  style={{
+                                    fontFamily: 'Inconsolata',
+                                    color: '#d0454c',
+                                    paddingBottom: 5,
+                                  }}
+                                >
+                                  <span> {errorMessage ? '>' : ''} </span>
+                                  {errorMessage}
+                                </p>
+                              );
+                            })}
+                          </div>
+                        )}
+                    </div>
+                  </div>
+                )
+
+              : console.log("No Output")
+          }
+
         </ChapterEditor>
         <ChapterFooter
           chapter={chapter.frontmatter.chapter}

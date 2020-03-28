@@ -7,7 +7,8 @@
   border-radius: 0.3em;
   margin: 0.5em 0;
   padding: 1em;
-  overflow: auto;
+  overflow-y: hidden;
+  overflow-x: hidden;
 }
 
 /**
@@ -21,7 +22,8 @@
   background-color: transparent;
   margin: 0;
   padding: 0;
-  overflow: initial;
+  overflow-y: hidden;
+  overflow-x: hidden;
   float: left; /* 1 */
   min-width: 100%; /* 2 */
 }
@@ -40,4 +42,8 @@ pre[class*='language-'] {
 /* .token.function, */
 .token.class-name {
   color: #29cb6a;
+}
+
+p{
+  line-height: 1.5rem;
 }

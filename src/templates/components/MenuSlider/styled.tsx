@@ -9,7 +9,7 @@ export const SideDrawer = styled.div`
   width: 420px;
   z-index: 200;
   box-shadow: 1px 0px 7px rgba(0, 0, 0, 0.5);
-  transform: ${props => (props.show ? 'translateX(0)' : 'translateX(-100%)')};
+  transform: ${props => (props.show ? 'translateX(0)' : 'translateX(-130%)')};
   transition: transform 0.3s ease-out;
   background-color: #0e1817;
   overflow-y: auto;
