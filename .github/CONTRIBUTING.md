@@ -2,7 +2,7 @@
 
 ## Labels & Milestones
 
-We use [labels](https://github.com/buidl-labs/zombies-in-the-room/labels) to manage PRs and issues and communicate the state of a PR. Please familiarize yourself with them. Furthermore we are organizing issues in [milestones](https://github.com/openethereum/openethereum/milestones) and [projects](https://github.com/buidl-labs/zombies-in-the-room/projects).
+We use [labels](https://github.com/buidl-labs/zombies-in-the-room/labels) to manage PRs and issues and communicate the state of a PR. Please familiarize yourself with them. Furthermore we are organizing issues in [milestones](https://github.com/buidl-labs/zombies-in-the-room/milestones) and [projects](https://github.com/buidl-labs/zombies-in-the-room/projects).
 
 ## Rules
 
