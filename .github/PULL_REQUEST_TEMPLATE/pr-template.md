@@ -1,17 +1,16 @@
 ---
-name: PR Template
+name: Open pull request
 about: Make sure your PR adheres to our CONTRIBUTION doc.
-title: "{story type}-{2-3 word summary}-{issue id if related to any}"
+title: '{story type}-{2-3 word summary}-{issue id if any related to it}'
 labels: ''
 assignees: ''
-
 ---
 
 Before you submit, please check that:
 
-- [ ] You labeled the PR with appropriate labels.
+- [ ] You labeled the PR with appropriate labels, if any.
 - [ ] You mentioned a related issue if this PR related to it, e.g. `Fixes #22` or `Related #17`.
-- [ ] You asked any particular reviewer to review. If you aren't sure, please ask.
+- [ ] You asked any particular reviewer to review. If you aren't sure, ask.
 - [ ] Your PR adheres to our [CONTRIBUTION GUIDELINES]().
 
 After you've read this notice feel free to remove it.
@@ -27,10 +26,8 @@ A clear and concise description of how the changes can be tested.
 
 **Any background context you want to provide?**
 
-
 **Screenshots(optional)**
-If applicable, add screenshots to help to explain your problem.
-
+If applicable, add screenshots to help to explain the problem/solution.
 
 **Additional context(optional)**
 Add any other context if any.
