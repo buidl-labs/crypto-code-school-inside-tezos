@@ -3,7 +3,7 @@
 - [ ] You labeled the PR with appropriate labels, if any.
 - [ ] You mentioned a related issue if this PR related to it, e.g. `Fixes #22` or `Related #17`.
 - [ ] You asked any particular reviewer to review. If you aren't sure, ask.
-- [ ] Your PR adheres to our [CONTRIBUTION GUIDELINES](../CONTRIBUTING.md).
+- [ ] Your PR adheres to our `CONTRIBUTION GUIDELINES`
 
 After you've read this notice feel free to remove it.
 ✄ -----------------------------------------------------------------------------
