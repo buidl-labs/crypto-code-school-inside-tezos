@@ -1,6 +1,7 @@
 ---
 name: Bug report
 about: Any unexpected behavior within the project
+title: '{story type}-{2-3 word summary}'
 ---
 
 Before you submit, please check that:
