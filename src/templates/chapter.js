@@ -153,7 +153,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
               showOutput ? (
                 <div>
                   <Output>
-                    <div style={{paddingLeft: '8px', paddingRight: '8px'}}>output</div>
+                    <div style={{paddingLeft: '10px', paddingRight: '10px'}}>output</div>
                   </Output>
                   <DiffEditor
                     height="200px"
@@ -174,11 +174,12 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                       wordWrap: true,
                     }}
                   />
+                  
                 </div>
               ) : (
                   <div>
                     <Output>
-                      <div>output</div>
+                      <div style={{paddingLeft: '10px', paddingRight: '10px'}}>output</div>
                     </Output>
                     <div style={{ height: "200px", background: '#1B3738', color: '#fff' }}>
                       {validation.success ? (

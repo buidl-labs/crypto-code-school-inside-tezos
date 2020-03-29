@@ -12,7 +12,7 @@ export const ContractFile = styled.div`
     display: inline-block;
     margin-left: 1rem;
     color: #729e9f;
-    padding-top: 12px;
+    padding-top: 14px;
     padding-right: 8px;
     padding-left: 8px;
   }
