@@ -14,7 +14,7 @@ Interactive Code School for onboarding newcomers to the Tezos Ecosystem
 This project aims to help beginners build a simple smart contract in smartpy which can be deployed on tezos blockchain via Interactive Coding Lessons.
 
 ### Interactive Learning Interface <a id="learning_interface"></a>
-[Learning interface](https://user-images.githubusercontent.com/16613455/77850831-bb806680-71f2-11ea-988e-1bab03773636.png)
+![Learning interface](https://user-images.githubusercontent.com/16613455/77850831-bb806680-71f2-11ea-988e-1bab03773636.png)
 
 ### Lessons Overview <a id="project_overview"></a>
 
