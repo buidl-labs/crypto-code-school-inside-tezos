@@ -1,12 +1,4 @@
----
-name: Open pull request
-about: Make sure your PR adheres to our CONTRIBUTION doc.
-title: '{story type}-{2-3 word summary}-{issue id if any related to it}'
-labels: ''
-assignees: ''
----
-
-Before you submit, please check that:
+### Before you submit, please check that:
 
 - [ ] You labeled the PR with appropriate labels, if any.
 - [ ] You mentioned a related issue if this PR related to it, e.g. `Fixes #22` or `Related #17`.
