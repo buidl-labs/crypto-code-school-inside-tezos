@@ -1,16 +1,15 @@
 ---
 name: Bug report
 about: Any unexpected behavior within the project
-title: '{story type}-{2-3 word summary}'
+title: 'bf-{2-3 word summary}'
 ---
 
-Before you submit, please check that:
+Before you submit, please add:
 
 - [ ] **System Information**
 
   - [ ] Browser type and version
   - [ ] OS type and version
-  - [ ] Node version
   - [ ] Any error messages in the JS console
 
 - [ ] **Describe the bug**
@@ -20,10 +19,10 @@ Before you submit, please check that:
 - [ ] **To Reproduce**
       Steps to reproduce the behavior:
 
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+      1. Go to '...'
+      2. Click on '....'
+      3. Scroll down to '....'
+      4. See error
 
 - [ ] **Expected behavior**
       A clear and concise description of what you expected to happen.
