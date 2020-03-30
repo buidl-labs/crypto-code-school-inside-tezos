@@ -32,11 +32,6 @@ export const query = graphql`
   }
 `;
 
-export const EditorResponsiveView = () => {
-  const MobileView = window.innerWidth < 768;
-  return MobileView ? `calc(100vh - 130px)` : `calc(100vh - (210px + 40px))`;
-};
-
 const ChapterTemplate = ({ data: { mdx: chapter } }) => {
   const chapterList = useChapters();
   const [index] = useState(() => {
@@ -62,11 +57,9 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
   );
   const [showOutput, setShowOutput] = useState(false);
   const [buttonClicked, setButtonClicked] = useState(false);
-  var [editorHeight, setEditorHeight] = useState('');
-
-  useEffect(() => {
-    setEditorHeight(EditorResponsiveView);
-  }, []);
+  var [editorHeight, setEditorHeight] = useState(
+    `calc(100vh - (210px + 40px))`,
+  );
 
   useEffect(() => {
     monaco

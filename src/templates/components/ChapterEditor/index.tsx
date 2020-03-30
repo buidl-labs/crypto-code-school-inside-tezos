@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { TiTick } from 'react-icons/ti';
 import { AiOutlineQuestion } from 'react-icons/ai';
 import { checkCode } from '../../../utils/compiler';
@@ -36,11 +36,6 @@ function ChapterEditor({
   updateValidation,
   editorInputValue,
 }: Props) {
-  const [editorHeight, setResponsiveEditorHeight] = useState('');
-  useEffect(() => {
-    setResponsiveEditorHeight(EditorResponsiveView);
-  }, []);
-
   return (
     <>
       <ContractFile>
@@ -52,7 +47,7 @@ function ChapterEditor({
           onClick={() => {
             setShowOutput(true);
             setButtonClicked(true);
-            setEditorHeight(editorHeight);
+            setEditorHeight(`calc(100vh - (250px + 200px + 40px))`);
           }}
         >
           <AiOutlineQuestion /> <span>Show Answer</span>
@@ -61,7 +56,7 @@ function ChapterEditor({
           onClick={() => {
             setShowOutput(false);
             setButtonClicked(true);
-            setEditorHeight(editorHeight);
+            setEditorHeight(`calc(100vh - (250px + 200px + 40px))`);
             const result = checkCode(editorInputValue, chapterIndex.current);
             // console.log('result', result);
             updateValidation(result);
