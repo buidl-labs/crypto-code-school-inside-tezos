@@ -10,6 +10,8 @@ import {
   CheckAnswerButton,
 } from './styled';
 
+import { EditorResponsiveView } from '../../chapter';
+
 interface Props {
   children: React.ReactNode;
   setShowOutput(input: boolean): void;
@@ -45,22 +47,22 @@ function ChapterEditor({
           onClick={() => {
             setShowOutput(true);
             setButtonClicked(true);
-            setEditorHeight(`calc(100vh - (250px + 200px + 40px))`);
+            setEditorHeight(EditorResponsiveView);
           }}
         >
-          <AiOutlineQuestion /> Show Answer
+          <AiOutlineQuestion /> <span>Show Answer</span>
         </ShowAnswerButton>
         <CheckAnswerButton
           onClick={() => {
             setShowOutput(false);
             setButtonClicked(true);
-            setEditorHeight(`calc(100vh - (250px + 200px + 40px))`);
+            setEditorHeight(EditorResponsiveView);
             const result = checkCode(editorInputValue, chapterIndex.current);
             // console.log('result', result);
             updateValidation(result);
           }}
         >
-          <TiTick /> Check
+          <TiTick /> <span>Check</span>
         </CheckAnswerButton>
       </Option>
     </>

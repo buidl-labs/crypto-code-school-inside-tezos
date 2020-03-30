@@ -52,6 +52,14 @@ export const CheckAnswerButton = styled.button`
     background: #66cca7;
     color: #fff;
   }
+
+  @media only screen and (max-width: 767px) {
+    span {
+      display: none;
+    }
+
+    padding: 1rem 2rem;
+  }
 `;
 export const ShowAnswerButton = styled.button`
   height: 60px;
@@ -69,5 +77,12 @@ export const ShowAnswerButton = styled.button`
   :hover {
     background: #436061;
     color: #fff;
+  }
+
+  @media only screen and (max-width: 767px) {
+    span {
+      display: none;
+    }
+    padding: 1rem 2rem;
   }
 `;
