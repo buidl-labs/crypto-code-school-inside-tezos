@@ -200,16 +200,16 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                     </div>
                   ) : (
                     <div
-                      class="checking"
                       style={{
                         padding: 10,
                         height: '200px',
                         overflowY: 'auto',
                       }}
                     >
-                      {validation.error.map(errorMessage => {
+                      {validation.error.map((errorMessage, index) => {
                         return (
                           <p
+                            key={index}
                             style={{
                               fontFamily: 'Inconsolata',
                               color: '#d0454c',

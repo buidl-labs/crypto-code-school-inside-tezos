@@ -9,8 +9,7 @@ import {
   ShowAnswerButton,
   CheckAnswerButton,
 } from './styled';
-
-import { EditorResponsiveView } from '../../chapter';
+import { useMediaQuery } from 'react-responsive';
 
 interface Props {
   children: React.ReactNode;
@@ -36,6 +35,8 @@ function ChapterEditor({
   updateValidation,
   editorInputValue,
 }: Props) {
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
+
   return (
     <>
       <ContractFile>
@@ -47,7 +48,13 @@ function ChapterEditor({
           onClick={() => {
             setShowOutput(true);
             setButtonClicked(true);
-            setEditorHeight(`calc(100vh - (250px + 200px + 40px))`);
+            setEditorHeight(
+              `${
+                isMobile
+                  ? `calc(100vh - (130px)) `
+                  : `calc(100vh - (250px + 200px + 40px))`
+              }`,
+            );
           }}
         >
           <AiOutlineQuestion /> <span>Show Answer</span>
@@ -56,7 +63,13 @@ function ChapterEditor({
           onClick={() => {
             setShowOutput(false);
             setButtonClicked(true);
-            setEditorHeight(`calc(100vh - (250px + 200px + 40px))`);
+            setEditorHeight(
+              `${
+                isMobile
+                  ? `calc(100vh - (130px)) `
+                  : `calc(100vh - (250px + 200px + 40px))`
+              }`,
+            );
             const result = checkCode(editorInputValue, chapterIndex.current);
             // console.log('result', result);
             updateValidation(result);
