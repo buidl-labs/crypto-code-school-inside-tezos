@@ -18,6 +18,10 @@ export const SideDrawer = styled.div`
     list-style-type: none;
     padding: 0;
   }
+
+  @media only screen and (max-width: 767px) {
+    width: 100vw;
+  }
 `;
 
 export const Backdrop = styled.div`
