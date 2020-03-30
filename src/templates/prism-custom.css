@@ -43,12 +43,3 @@ pre[class*='language-'] {
 .token.class-name {
   color: #29cb6a;
 }
-
-/* p{
-  line-height: 1.5rem;
-} */
-
-div.checking:-webkit-scrollbar {
-    width: 0px;
-    background: transparent; /* make scrollbar transparent */
-}
