@@ -1,5 +1,5 @@
 ---
-name: Feature/Enhancement (Type: Big/Medium)
+name: Feature/Enhancement (Type- Big/Medium)
 about: New feature/enhancement implementation details for the project.
 title: 'ft-{2-3 word summary}'
 ---
