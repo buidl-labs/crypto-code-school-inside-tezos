@@ -62,7 +62,12 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
   );
   const [showOutput, setShowOutput] = useState(false);
   const [buttonClicked, setButtonClicked] = useState(false);
-  var [editorHeight, setEditorHeight] = useState(EditorResponsiveView);
+  var [editorHeight, setEditorHeight] = useState('');
+
+  useEffect(() => {
+    setEditorHeight(EditorResponsiveView);
+  }, []);
+
   useEffect(() => {
     monaco
       .init()
