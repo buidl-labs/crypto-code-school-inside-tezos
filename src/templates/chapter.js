@@ -93,6 +93,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
     };
   }, []);
   console.log('Data body', validation);
+  console.log('SHOWOUTPUT', showOutput);
   return (
     <Layout>
       <Container>
@@ -153,12 +154,12 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
               showOutput ? (
                 <div>
                   <Output>
-                    <div style={{paddingLeft: '10px', paddingRight: '10px'}}>output</div>
+                    <div>output</div>
                   </Output>
                   <DiffEditor
                     height="200px"
-                    original={showOutput ? chapter.frontmatter.editor.answer : '\n'}
-                    modified={showOutput ? editorInputValue : '\n'}
+                    original={showOutput ? chapter.frontmatter.editor.answer : 'MODIFIED'}
+                    modified={showOutput ? editorInputValue : 'MODIFIED'}
                     language="python"
                     theme="myCustomTheme"
                     options={{
@@ -179,7 +180,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
               ) : (
                   <div>
                     <Output>
-                      <div style={{paddingLeft: '10px', paddingRight: '10px'}}>output</div>
+                      <div>output</div>
                     </Output>
                     <div style={{ height: "200px", background: '#1B3738', color: '#fff' }}>
                       {validation.success ? (
@@ -192,7 +193,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                   </p>
                         </div>
                       ) : (
-                          <div style={{ padding: 10 }}>
+                          <div class="checking" style={{ padding: 10, height: "200px", overflowY: 'auto'}}>
                             {validation.error.map(errorMessage => {
                               return (
                                 <p

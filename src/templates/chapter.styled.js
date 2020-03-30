@@ -19,7 +19,7 @@ export const Output = styled.div`
     display: inline-block;
     margin-left: 1rem;
     color: #729e9f;
-    padding: 10px 5px 0 5px;
+    padding: 10px 10px 0 10px;
     border-top: 1px solid #112425;
     font-family: Roboto;
     margin: 1p;
