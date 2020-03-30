@@ -8,7 +8,7 @@ function ChapterHeader() {
       <BackLink onClick={() => navigate('/')}>
         <FaChevronLeft size={30} />
       </BackLink>
-      <LessonTitle>Lesson: Introduction to Smartpy</LessonTitle>
+      <LessonTitle>Lesson: Introduction to SmartPy</LessonTitle>
       <HelpButton>Get Help</HelpButton>
     </Header>
   );

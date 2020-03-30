@@ -19,7 +19,7 @@ function ChapterContent({ title, chapter, children }: Props) {
         <ContentFrontmatterChapter>{chapter}</ContentFrontmatterChapter>
         <ContentFrontmatterTitle>{title}</ContentFrontmatterTitle>
       </ContentHeader>
-      <div style={{ margin: 20 }}>{children}</div>
+      <div style={{ margin: 20, lineHeight: `1.5rem`}}>{children}</div>
     </Content>
   );
 }

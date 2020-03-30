@@ -13,6 +13,8 @@ import {
 interface Props {
   children: React.ReactNode;
   setShowOutput(input: boolean): void;
+  setButtonClicked(input: boolean): void;
+  setEditorHeight(input: string): void;
   chapterIndex: {
     current: number;
     total: number;
@@ -26,6 +28,8 @@ interface Props {
 function ChapterEditor({
   children,
   setShowOutput,
+  setButtonClicked,
+  setEditorHeight,
   chapterIndex,
   updateValidation,
   editorInputValue,
@@ -40,6 +44,8 @@ function ChapterEditor({
         <ShowAnswerButton
           onClick={() => {
             setShowOutput(true);
+            setButtonClicked(true);
+            setEditorHeight(`calc(100vh - (250px + 200px + 40px))`);
           }}
         >
           <AiOutlineQuestion /> Show Answer
@@ -47,6 +53,8 @@ function ChapterEditor({
         <CheckAnswerButton
           onClick={() => {
             setShowOutput(false);
+            setButtonClicked(true);
+            setEditorHeight(`calc(100vh - (250px + 200px + 40px))`);
             const result = checkCode(editorInputValue, chapterIndex.current);
             // console.log('result', result);
             updateValidation(result);

@@ -12,13 +12,15 @@ export const ContractFile = styled.div`
     display: inline-block;
     margin-left: 1rem;
     color: #729e9f;
-    padding-top: 15px;
-    padding-right: 5px;
-    padding-left: 5px;
+    padding-top: 14px;
+    padding-right: 8px;
+    padding-left: 8px;
   }
 `;
 export const Editor = styled.div`
   grid-area: editor;
+  overflow-y: hidden;
+  overflow-x: hidden;
 `;
 export const Option = styled.div`
   grid-area: option;
