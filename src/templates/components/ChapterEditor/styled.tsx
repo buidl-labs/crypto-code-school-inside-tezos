@@ -4,7 +4,10 @@ export const ContractFile = styled.div`
   grid-area: contractFile;
   background: #112425;
   height: 50px;
-  width: calc(100vw - (100vw / 2.4));
+
+  @media only screen and (min-width: 768px) {
+    width: calc(100vw - (100vw / 2.4));
+  }
 
   > p {
     background: #1b3738;
@@ -26,9 +29,11 @@ export const Option = styled.div`
   grid-area: option;
   background: #112425;
   height: 60px;
-  width: calc(100vw - (100vw / 2.4));
   display: flex;
   justify-content: flex-end;
+  @media only screen and (min-width: 768px) {
+    width: calc(100vw - (100vw / 2.4));
+  }
 `;
 export const CheckAnswerButton = styled.button`
   height: 60px;

@@ -57,7 +57,9 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
   );
   const [showOutput, setShowOutput] = useState(false);
   const [buttonClicked, setButtonClicked] = useState(false);
-  var [editorHeight, setEditorHeight] = useState(`calc(100vh - (210px + 40px))`);
+  var [editorHeight, setEditorHeight] = useState(
+    `calc(100vh - (210px + 40px))`,
+  );
   useEffect(() => {
     monaco
       .init()
@@ -128,9 +130,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
         >
           <ControlledEditor
             height={`${editorHeight}`}
-            // height={`100%`}
-            width={`calc(100vw - (100vw / 2.4))`}
-            marWidth={`calc(100vw - (100vw / 2.4))`}
+            marWidth={`calc(100vw)`}
             value={editorInputValue}
             onChange={(_, value) => {
               setEditorInputValue(value);
@@ -149,74 +149,86 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
               wordWrap: true,
             }}
           />
-          {
-            buttonClicked ?
-              showOutput ? (
-                <div>
-                  <Output>
-                    <div>output</div>
-                  </Output>
-                  <DiffEditor
-                    height="200px"
-                    original={showOutput ? chapter.frontmatter.editor.answer : 'MODIFIED'}
-                    modified={showOutput ? editorInputValue : 'MODIFIED'}
-                    language="python"
-                    theme="myCustomTheme"
-                    options={{
-                      lineNumbers: false,
-                      scrollBeyondLastLine: true,
-                      minimap: { enabled: false },
-                      scrollbar: { vertical: 'hidden', verticalScrollbarSize: 0 },
-                      folding: false,
-                      readOnly: true,
-                      fontSize: 18,
-                      fontFamily: 'Inconsolata',
-                      renderSideBySide: false,
-                      wordWrap: true,
-                    }}
-                  />
-                  
-                </div>
-              ) : (
-                  <div>
-                    <Output>
-                      <div>output</div>
-                    </Output>
-                    <div style={{ height: "200px", background: '#1B3738', color: '#fff' }}>
-                      {validation.success ? (
-                        <div style={{ fontFamily: 'Inconsolata', padding: 10 }}>
-                          <p style={{ color: '#18b77e', paddingBottom: 5 }}>
-                            <span> > </span>Great, you got it right!
-                  </p>
-                          <p style={{ color: '#18b77e' }}>
-                            <span> > </span>Click 'next >' to continue.
-                  </p>
-                        </div>
-                      ) : (
-                          <div class="checking" style={{ padding: 10, height: "200px", overflowY: 'auto'}}>
-                            {validation.error.map(errorMessage => {
-                              return (
-                                <p
-                                  style={{
-                                    fontFamily: 'Inconsolata',
-                                    color: '#d0454c',
-                                    paddingBottom: 5,
-                                  }}
-                                >
-                                  <span> {errorMessage ? '>' : ''} </span>
-                                  {errorMessage}
-                                </p>
-                              );
-                            })}
-                          </div>
-                        )}
+          {buttonClicked ? (
+            showOutput ? (
+              <div>
+                <Output>
+                  <div>output</div>
+                </Output>
+                <DiffEditor
+                  height="200px"
+                  original={
+                    showOutput ? chapter.frontmatter.editor.answer : 'MODIFIED'
+                  }
+                  modified={showOutput ? editorInputValue : 'MODIFIED'}
+                  language="python"
+                  theme="myCustomTheme"
+                  options={{
+                    lineNumbers: false,
+                    scrollBeyondLastLine: true,
+                    minimap: { enabled: false },
+                    scrollbar: { vertical: 'hidden', verticalScrollbarSize: 0 },
+                    folding: false,
+                    readOnly: true,
+                    fontSize: 18,
+                    fontFamily: 'Inconsolata',
+                    renderSideBySide: false,
+                    wordWrap: true,
+                  }}
+                />
+              </div>
+            ) : (
+              <div>
+                <Output>
+                  <div>output</div>
+                </Output>
+                <div
+                  style={{
+                    height: '200px',
+                    background: '#1B3738',
+                    color: '#fff',
+                  }}
+                >
+                  {validation.success ? (
+                    <div style={{ fontFamily: 'Inconsolata', padding: 10 }}>
+                      <p style={{ color: '#18b77e', paddingBottom: 5 }}>
+                        <span> > </span>Great, you got it right!
+                      </p>
+                      <p style={{ color: '#18b77e' }}>
+                        <span> > </span>Click 'next >' to continue.
+                      </p>
                     </div>
-                  </div>
-                )
-
-              : console.log("No Output")
-          }
-
+                  ) : (
+                    <div
+                      class="checking"
+                      style={{
+                        padding: 10,
+                        height: '200px',
+                        overflowY: 'auto',
+                      }}
+                    >
+                      {validation.error.map(errorMessage => {
+                        return (
+                          <p
+                            style={{
+                              fontFamily: 'Inconsolata',
+                              color: '#d0454c',
+                              paddingBottom: 5,
+                            }}
+                          >
+                            <span> {errorMessage ? '>' : ''} </span>
+                            {errorMessage}
+                          </p>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )
+          ) : (
+            console.log('No Output')
+          )}
         </ChapterEditor>
         <ChapterFooter
           chapter={chapter.frontmatter.chapter}
