@@ -35,12 +35,18 @@ const Layout = ({ children }: Props) => {
             > div {
               margin-top: 0;
             }
+            background: radial-gradient(198.67% 198.67% at 53.06% -50.22%, #13282D 53.32%, #296460 100%) no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            height: 100vh;
           }
           .react-icons {
             vertical-align: middle;
           }
           body::-webkit-scrollbar {
-            background-color: #fff;
+            background-color: background: radial-gradient(198.67% 198.67% at 53.06% -50.22%, #13282D 53.32%, #296460 100%);;
             width: 16px;
           }
           body::-webkit-scrollbar-track {

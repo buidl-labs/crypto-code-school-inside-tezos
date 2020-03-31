@@ -5,6 +5,7 @@ export const Content = styled.div`
   overflow-y: auto;
   height: calc(100vh - 140px);
   width: calc(((100vw) / 2.4));
+  background: #FFF;
 `;
 
 export const ContentHeader = styled.div`
