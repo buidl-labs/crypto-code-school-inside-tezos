@@ -51,8 +51,15 @@ Complete the attack and defense functions and upgrade attack and defense of your
 
 1) Add other parameter `params` in `attack` and `defense` functions,
 
-2) Add `attack` points in the state variable `attack` using `self.data.attack += params.attack` in `attack` function,
+2) Add `attack` points in the state variable `attack` using `attack` function
+```python 
+self.data.attack += params.attack
+```
 
-3) Add `defense` points in the state variable `defense` using `self.data.defense += params.defense` in `defense` function,
+3) Add `defense` points in the state variable `defense` using `defense` function
+
+```python
+self.data.defense += params.defense
+```
 
 
