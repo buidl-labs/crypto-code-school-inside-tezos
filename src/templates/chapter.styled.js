@@ -8,7 +8,18 @@ export const Container = styled.div`
     'content editor editor editor'
     'content option option option'
     'footer footer footer footer';
+
+  @media only screen and (max-width: 767px) {
+    grid-template-areas:
+      'header '
+      'content'
+      'contractFile'
+      'editor'
+      'option'
+      'footer';
+  }
 `;
+
 export const Output = styled.div`
   height: 40px;
   background: #112425;

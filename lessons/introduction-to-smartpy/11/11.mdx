@@ -48,13 +48,17 @@ editor:
 Maps are data structures that store key-value pairs. As a result, they enable smart contracts to create valuable associations between related information.
 
 Maps in SmartPy can be declared in the following manner:
-`sp.TMap:  e.g. {'A': 65, 'B': 66, 'C'; 67}`
+```python
+sp.TMap:  e.g. {'A': 65, 'B': 66, 'C'; 67}
+```
 
 sp.map(l = …, tkey = …, tvalue = …): Defines a map of (optional) elements in l with optional key type tkey and optional value type tvalue.
 
 or either by
 
-`sp.TBigMap: e.g. {'A': 65, 'B': 66, 'C'; 67}`
+```python
+sp.TBigMap: e.g. {'A': 65, 'B': 66, 'C'; 67}
+```
 
 sp.big_map(l = …, tkey = …, tvalue = …): Defines a big_map of (optional) elements in l with optional key type tkey and optional value type tvalue.
 
@@ -78,8 +82,13 @@ Mapping will be used to point your tezos wallet address with your character.
 
 3) Inside the function, assign the `stat` variable to the `sender's` using player `mapping` 
 
-   `self.data.player[params.sender] = self.data.stat` 
+```python
+self.data.player[params.sender] = self.data.stat
+``` 
    
 4) Inside the function, assign name to player's plant's name
-    `self.data.player[params.sender].name = params.name`
+
+```python
+self.data.player[params.sender].name = params.name
+```
 which will take one string parameter `name` which will be name of your plant.

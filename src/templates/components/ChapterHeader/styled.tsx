@@ -36,6 +36,10 @@ export const LessonTitle = styled.h1`
   text-align: center;
   line-height: 27px;
   color: #ffffff;
+
+  @media only screen and (max-width: 767px) {
+    display: none;
+  }
 `;
 
 export const HelpButton = styled.button`

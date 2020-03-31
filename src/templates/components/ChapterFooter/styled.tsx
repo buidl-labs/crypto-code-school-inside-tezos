@@ -51,6 +51,12 @@ export const PrevLink = styled(Link)`
     display: inline-block;
     vertical-align: middle;
   }
+
+  @media only screen and (max-width: 767px) {
+    span {
+      display: none;
+    }
+  }
 `;
 
 export const ContentIndex = styled.span`
@@ -69,5 +75,11 @@ export const NextLink = styled(Link)`
   > svg {
     display: inline-block;
     vertical-align: middle;
+  }
+
+  @media only screen and (max-width: 767px) {
+    span {
+      display: none;
+    }
   }
 `;
