@@ -31,7 +31,7 @@ export const query = graphql`
     }
   }
 `;
-console.log("QUERY", query);
+
 const ChapterTemplate = ({ data: { mdx: chapter } }) => {
   const chapterList = useChapters();
   const [index] = useState(() => {
