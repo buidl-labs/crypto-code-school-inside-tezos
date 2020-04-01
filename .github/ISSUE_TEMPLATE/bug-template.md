@@ -1,7 +1,7 @@
 ---
 name: Bug report
 about: Any unexpected behavior within the project
-title: 'bf-{2-3 word summary}'
+title: '{2-3 word summary}'
 ---
 
 Before you submit, please add:

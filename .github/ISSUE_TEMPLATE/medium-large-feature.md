@@ -1,7 +1,7 @@
 ---
 name: Feature/Enhancement (Type- Big/Medium)
 about: New feature/enhancement implementation details for the project.
-title: 'ft-{2-3 word summary}'
+title: '{2-3 word summary}'
 ---
 
 **What's the motivation behind the feature? what problem does the feature intend to solve ?**
