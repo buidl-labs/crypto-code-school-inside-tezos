@@ -6,7 +6,7 @@ const IndexPage = () => {
     <Layout>
       <button
         onClick={() => {
-          navigate('/lesson/chapter-01');
+          navigate('/lessons');
         }}
       >
         Start learning

@@ -5,7 +5,7 @@ import { Header, BackLink, LessonTitle, HelpButton } from './styled';
 function ChapterHeader() {
   return (
     <Header>
-      <BackLink onClick={() => navigate('/')}>
+      <BackLink onClick={() => navigate('/lessons')}>
         <FaChevronLeft size={30} />
       </BackLink>
       <LessonTitle>Lesson: Introduction to SmartPy</LessonTitle>
