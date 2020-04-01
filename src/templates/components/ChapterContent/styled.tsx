@@ -3,12 +3,10 @@ import styled from '@emotion/styled';
 export const Content = styled.div`
   grid-area: content;
   overflow-y: auto;
-  background: #FFF;
 
   @media only screen and (min-width: 768px) {
     height: calc(100vh - 140px);
     width: calc(((100vw) / 2.4));
-    background: #FFF;
   }
 `;
   

@@ -86,7 +86,10 @@ To overcome this, you will be using `sp.verify()` statement.
 1) Remove if/else statment from the previous code,
 
 2) Include `sp.verify()` statement to check the condition instead,
-    `sp.verify(~ self.data.player.contains(sp.sender), 
-          "User already has a plant")`
+
+```python
+sp.verify(~ self.data.player.contains(sp.sender), 
+"User already has a plant")
+```
 
 3) Create a callable function `endGame` that will verify the health of the player with a message "You are alive!!!". If health of the player is 0, change `is_alive` to `False`.
