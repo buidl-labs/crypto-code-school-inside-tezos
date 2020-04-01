@@ -10,7 +10,7 @@ A clear and concise description of what the problem is.
 **Describe the solution you'd like.**
 A clear and concise description of what you want to happen.
 
-For whenever working on a feature or implementation for which execution path is unknown or that requires breaking the logic into multiple separate steps.
+From here onwards,the steps will not be trivial and clear at first, take your time and experiment to have full clarity on execution in pseudo code, for whenever working on a feature or implementation for which execution path is unknown or that requires breaking the logic into multiple separate steps, proceed with the following:
 
 **1. Communicate overall strategy**
 
@@ -34,10 +34,13 @@ For whenever working on a feature or implementation for which execution path is 
     - Why I expect it’s not working
 
 **5. Optional Summary Explanation**
-Prefect if line by line pseudo code isn't clear
+
+> Perfect if line by line pseudo code isn't clear
 
 **Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+
+> A clear and concise description of any alternative solutions or features you've considered.
 
 **Additional context**
-Add any other context or screenshots about the feature here if any.
+
+> Add any other context or screenshots about the feature here if any.
