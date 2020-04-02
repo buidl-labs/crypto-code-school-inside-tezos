@@ -26,19 +26,6 @@ import {
   ChapterLink
 } from '../templates/components/MenuSlider/styled';
 
-import {
-  PrevButton,
-  Rows,
-  Row1,
-  Row2,
-  Col1,
-  Description,
-  Col2,
-  Chapters,
-  ChapterHead,
-  ChaptersList
-} from './styles/styled';
-
 import './styles/styled.css';
 
 const ChapterView = () => {
@@ -47,48 +34,48 @@ const ChapterView = () => {
     <Layout>
       <div>
 
-        <PrevButton>
+        <div className='PrevButton'>
           <PrevLink to={`/`}>
             <FaChevronLeft />
             <span>Back</span>
           </PrevLink>
-        </PrevButton>
+        </div>
 
-        <Rows>
+        <div className='Rows'>
 
-          <Row1>
+          <div className='Row1'>
             <img src={ThemeLogo} alt="THEME" style={{height: 'auto'}} />
-          </Row1>
+          </div>
 
-          <Row2>
+          <div className='Row2'>
 
-            <Col1>
+            <div className='Col1'>
 
-              <Description>
+              <div className='Description'>
 
                 <div className="content" style={{ padding: '-5px 5px 5px 5px' }}>
                   <img src={Seed} alt="SEED" style={{height: 'auto'}}/>
                   <div style={{ marginTop: '20px', lineHeight: "150%" }}>/* Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut laboe et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae*/</div>
                 </div>
-              </Description>
+              </div>
 
-            </Col1>
-            <Col2>
-              <Chapters>
+            </div>
+            <div className='Col2'>
+              <div className='Chapters'>
 
-                <ChapterHead>
+                <div className='ChapterHead'>
                   <img src={ChaptersHeading} alt="CHAPTERS" style={{height: 'auto'}} />
                   <Link to={'/lesson/chapter-01'}>
                     <img className="next" src={Forward} alt="NEXT" style={{height: 'auto'}} />
                   </Link>
-                </ChapterHead>
+                </div>
 
                 <div>
                   {chapters.map(chapter => {
                     return (
 
-                      <ChaptersList>
-                        <Link
+                      <div className='ChaptersList'>
+                        <Link className='Link'
                           partiallyActive={true}
                           activeStyle={{ background: '#18B77E' }}
                           to={`/lesson/${chapter.slug}`} style={{ display: 'block', color: "white", textDecoration: 'none', fontSize: "25px", lineHeight: '33px', margin: '20px', marginTop: '30px' }}
@@ -106,16 +93,16 @@ const ChapterView = () => {
                         <img src={Line} alt="Line" style={{marginTop: '20px', width:'100%', height:'auto'}}/>
 
                         {/* <hr style={{ margin: '10px', height:'3px', background: "rgba(255, 255, 255, 0.01);" }} /> */}
-                      </ChaptersList>
+                      </div>
 
                     );
                   })}
                 </div>
 
-              </Chapters>
-            </Col2>
-          </Row2>
-        </Rows>
+              </div>
+            </div>
+          </div>
+        </div>
 
       </div>
     </Layout>
