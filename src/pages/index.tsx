@@ -2,7 +2,6 @@ import React from 'react';
 import Layout from '../components/Layout/layout';
 import { Link } from 'gatsby';
 import Logo from '../images/theme-logo.svg';
-import Clouds from '../images/clouds.svg'
 import Grass from '../images/complete-grass.svg';
 import LearningInterface from '../images/learning-interface.svg';
 import Plants from '../images/plants.svg';
@@ -19,13 +18,13 @@ const IndexPage = () => {
         <div className='Header'>
           <img className="cloud" src={Cloud1} alt="logo" style={{ paddingLeft: '50px',paddingBottom: '50px'}}/>
           <img src={Logo} alt="logo" style={{ marginRight: 'auto', marginLeft: 'auto', maxWidth: '100%', height: 'auto', position: 'relative'}} />
-          <img className="cloud" src={Cloud1} alt="logo" style={{ paddingRight: '50px', paddingTop: '50px'}}/>
+          <img className="cloud" src={Cloud2} alt="logo" style={{ paddingRight: '50px',marginLeft: '-50px', paddingTop: '50px'}}/>
         </div>
 
         <div className='FlexContainer'>
 
           <div className='Content'>
-            <div className='Text'>
+            <div className='Text' style={{textAlign: 'center'}}>
               <h1>
                 Learn to build smart contracts on tezos with SmartPy
             </h1>
@@ -45,7 +44,7 @@ const IndexPage = () => {
                   <div>
                     <img src={LearningInterface} alt="learning-interface" style={{ width: '100%', height: 'auto' }} />
                   </div>
-                  <div className='DetailsText'>
+                  <div className='DetailsText' style={{textAlign: 'center'}}>
                     <h1>
                       The Interavtive School to master SmartPy
                   </h1>
@@ -55,7 +54,7 @@ const IndexPage = () => {
                   </div>
                 </div>
                 <div className='Character'>
-                  <div className='DetailsText'>
+                  <div className='DetailsText' style={{textAlign: 'center'}}>
                     <h1>
                       Evolve your plant to fight against zombie apocalypse
                       </h1>
