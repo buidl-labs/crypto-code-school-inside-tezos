@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { graphql } from 'gatsby';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import { navigate } from 'gatsby';
-import Layout from '../components/Layout/layout';=
+import Layout from '../components/Layout/layout';
+import ContentMenuSlider from '../templates/components/MenuSlider/index';
 import useChapters from '../hooks/use-chapters';
 import { Link } from 'gatsby';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
@@ -14,11 +15,16 @@ import Complete from '../images/complete.svg';
 import Incomplete from '../images/incomplete.svg';
 import Line from '../images/line.svg';
 
+import { useMediaQuery } from 'react-responsive';
 
 import {
   PrevLink,
+  NextLink,
 } from '../templates/components/ChapterFooter/styled';
 
+import {
+  ChapterLink
+} from '../templates/components/MenuSlider/styled';
 
 import './styles/styled.css';
 
@@ -37,7 +43,7 @@ const ChapterView = () => {
 
         <div className='Rows'>
 
-          <div className='Row1'>
+          <div className='Row1' style={{marginTop:'30px'}}>
             <img src={ThemeLogo} alt="THEME" style={{height: 'auto'}} />
           </div>
 
