@@ -9,6 +9,14 @@ module.exports = {
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     {
+      resolve: 'gatsby-plugin-react-svg',
+      options: {
+        rule: {
+          include: /assets/, // See below to configure properly
+        },
+      },
+    },
+    {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,
@@ -51,6 +59,10 @@ module.exports = {
           {
             family: `Open Sans`,
             variants: [`400`, `700`],
+          },
+          {
+            family: `Sigmar One`,
+            subsets: [`latin`],
           },
         ],
       },
