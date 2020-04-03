@@ -4,11 +4,7 @@ import Helmet from 'react-helmet';
 import useSiteMetadata from '../../hooks/use-sitemetadata';
 import { normalize } from 'polished';
 
-interface Props {
-  children: React.ReactNode;
-}
-
-const Layout = ({ children }: Props) => {
+const Layout = ({ children, background }) => {
   const { title, description } = useSiteMetadata();
 
   return (
@@ -31,6 +27,7 @@ const Layout = ({ children }: Props) => {
             font-family: 'Roboto';
             font-size: 16px;
             line-height: 19px;
+            background: ${background ? background : 'none'};
             /* remove margin for the main div that Gatsby mounts into */
             > div {
               margin-top: 0;
