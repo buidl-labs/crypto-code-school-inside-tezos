@@ -1,0 +1,173 @@
+/* @media only screen and (max-width: 767px) {
+  .GridContainer {
+    display: grid;
+    grid-template-areas:
+      'header '
+      'flexContainer'
+      'flexContainer'
+      'footer';
+  }
+}
+
+@media only screen and (min-width: 767px) {
+  .GridContainer {
+    display: grid;
+    grid-template-areas:
+      'header header header header'
+      'flexContainer flexContainer flexContainer flexContainer'
+      'flexContainer flexContainer flexContainer flexContainer'
+      'footer footer footer footer';
+  }
+} */
+
+@media only screen and (max-width: 600px) {
+  .cloud {
+    display: none;
+  }
+}
+
+.Header{
+  grid-area: 'header';
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.Main{
+  grid-area: 'main';  
+  margin: 1px;
+}
+
+.FlexContainer{
+  grid-area: 'flexContainer';
+  display: flex;
+  flex-direction: column;
+  color: white;
+  width: 100%;
+}
+
+.Content{
+  display: flex;
+  flex-direction: column;
+  color: white;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+
+@media only screen and (min-width: 800px){
+  .Text{
+    display: flex;
+    flex: 1;
+    color: white;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+  }
+  .Text > h1, p{
+    line-height: 125%;
+    text-align: center;
+  } 
+  .DetailsText{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+  }
+  .DetailsText > h1, p{
+    line-height: 125%;
+    text-align: center;
+  } 
+  .School{
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    padding-right: 100px;
+    padding-left: 100px;
+    /* margin-bottom: -10vm; */
+  }
+  .School > div {
+    width: 50%
+  }
+  .Character{
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    padding-right: 100px;
+    padding-left: 100px;
+  }
+  .Character > div {
+    width: 50%
+  }
+}
+
+@media only screen and (max-width: 800px){
+  .Text{
+    display: flex;
+    flex: 1;
+    color: white;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 75%;
+  }
+  .Text > h1{
+    text-align: center;
+    line-height: 125%;
+    font-size: 1.5em;
+  } 
+  .Text > p{
+    text-align: center;
+    line-height: 125%;
+  } 
+  .DetailsText{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 75%;
+  }
+  .DetailsText > h1{
+    text-align: center;
+    line-height: 125%;
+    font-size: 1.5em;
+  } 
+  .DetailsText > p{
+    text-align: center;
+    line-height: 125%;
+  }
+  .School{
+    display: flex;
+    flex: 1;
+    flex-direction: column-reverse;
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+  .School > div {
+    width: 100%
+  }
+  .Character{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+  .Character > div {
+    width: 100%
+  }
+}
+
+.Details{
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
+};
