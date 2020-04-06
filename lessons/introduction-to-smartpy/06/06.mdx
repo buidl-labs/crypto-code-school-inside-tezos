@@ -1,5 +1,5 @@
 ---
-title: Booleans
+title: Creating A Entry Point Function
 chapter: Chapter 6
 slug: chapter-06
 editor:
@@ -9,30 +9,40 @@ editor:
 
     class Plant(sp.Contract):
         def __init__(self, name):
-            # Initilize the required attribute
-            self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100))
+            self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True)
+
+        # Code from below
 
   answer: |  
     import smartpy as sp
 
     class Plant(sp.Contract):
         def __init__(self, name):
-            # Initilize the required attribute
             self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True)
+
+        # Code from below
+        @sp.entry_point
+        def attack(self):
+            pass
+
+        @sp.entry_point
+        def defense(self):
+            pass
 ---
 
-SmartPy has `sp.TBool`: The type of boolean values, True, False, sp.bool(True) and sp.bool(False)
-
-In SmartPy, all the bitwise operators work the same way as in python, so for example, `True == ~False` is correct in SmartPy as well.
-
-## Put it to code
-
-Your Plant is alive as its health is 100, 
-
-1) Declare boolean attribute `is_alive` and Initilize with `True` inside your contract storage.
+Entry Point is a method of a contract class that can be called from the outside. They must take a `self` parameter and an optional parameter `params` if the method takes user input. They need to be marked with the `@sp.entry_point` decorator. For example the following entry point checks that the argument given is greater than 2 or not.
 
 ```python
-is_alive = True
+@sp.entry_point
+def checkValue(self, params):
+   sp.verify(params.x > 2)
 ```
+
+## Put it to code
+Now let's create shell for attack and defense entry point function for your plant.
+
+1) Declare an empty callable function `attack` with `self` parameter,
+
+2) Declare an empty callable function `defense` with `self` parameter
 
 

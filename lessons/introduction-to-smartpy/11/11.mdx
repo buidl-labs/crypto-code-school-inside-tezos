@@ -1,5 +1,5 @@
 ---
-title: Maps
+title: Address
 chapter: Chapter 11
 slug: chapter-11
 editor:
@@ -9,86 +9,63 @@ editor:
 
     class Plant(sp.Contract):
         def __init__(self):
-            # Initialize state variable
-            self.init(stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True))
+            self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True))
 
         @sp.entry_point
         def attack(self, params):
+            # Update the function
             pass
 
         @sp.entry_point
         def defense(self, params):
+            # Update the function
             pass
 
-        # Code from below
+        @sp.entry_point
+        def assignChararter(self, params):
+            self.data.player[params.sender] = self.data.stat
+            self.data.player[params.sender].name = params.name
 
   answer: |  
     import smartpy as sp
 
     class Plant(sp.Contract):
         def __init__(self):
-            # Initialize state variable
             self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True))
-    
+
         @sp.entry_point
         def attack(self, params):
-            pass
+            # Update the function
+            self.data.player[sp.sender].attack += params.attack
 
         @sp.entry_point
         def defense(self, params):
-            pass
+            # Update the function
+            self.data.player[sp.sender].defense += params.defense
 
-        # Code from below
         @sp.entry_point
-        def assignCharacter(self, params):
-            self.data.player[params.sender] = self.data.stat
-            self.data.player[params.sender].name = params.name
+        def assignChararter(self, params):
+            self.data.player[sp.sender] = self.data.stat
+            self.data.player[sp.sender].name = params.name
 ---
 
-Maps are data structures that store key-value pairs. As a result, they enable smart contracts to create valuable associations between related information.
+`sp.sender` is a global variable that is availble to all function.
 
-Maps in SmartPy can be declared in the following manner:
-```python
-sp.TMap:  e.g. {'A': 65, 'B': 66, 'C'; 67}
-```
+It is of type `sp.TAddress` and it refers to the address of the user who is calling the function.
 
-sp.map(l = …, tkey = …, tvalue = …): Defines a map of (optional) elements in l with optional key type tkey and optional value type tvalue.
-
-or either by
-
-```python
-sp.TBigMap: e.g. {'A': 65, 'B': 66, 'C'; 67}
-```
-
-sp.big_map(l = …, tkey = …, tvalue = …): Defines a big_map of (optional) elements in l with optional key type tkey and optional value type tvalue.
-
-```python
 Example:
-sp.map(l={one: 1, two: 2}, tkey=sp.TString, tvalue=sp.TInt)
+```python
+@sp.entry_point
+def makeOwner():
+    isOwner[sp.sender] = True
+# if `tz1234` calls this function,
+# then he will become the owner.    
 ```
-Container constructor names are uncapitalized, example: `{'A': 1, 'B': 2, 'C': 3}` 
-
-and their types are capitalized: `(sp.TMap) or (sp.TBigMap)`
-
-SmartPy has an inbuilt function `map.contains(key)` to check if a certain key is already available in the mapping or not. If the key is present, then it will return `True`, otherwise `False`.
-
-Mapping will be used to point your tezos wallet address with your character.
 
 ## Put it to code
 
-1) Declare a variable `player` of type `sp.TMap`,
+1) remove `params.sender` from `assignCharacter` function.
 
-2) Create a callable function `assignCharacter` of type `self`, `params`,
+2) use `sp.sender` to assign character to the function caller.
 
-3) Inside the function, assign the `stat` variable to the `sender's` using player `mapping` 
-
-```python
-self.data.player[params.sender] = self.data.stat
-``` 
-   
-4) Inside the function, assign name to player's plant's name
-
-```python
-self.data.player[params.sender].name = params.name
-```
-which will take one string parameter `name` which will be name of your plant.
+3) Also update the previously defined `attack` & `defense` functions in the same manner.

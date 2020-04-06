@@ -10,34 +10,34 @@ export const l1 = `import smartpy as sp`;
 // #`;
 
 //scaffolding contract
-export const l3 = `import smartpy as sp
+export const l2 = `import smartpy as sp
 
 class Plant(sp.Contract):
     pass`;
 
 // state variable
-export const l4 = `import smartpy as sp
+export const l3 = `import smartpy as sp
 
 class Plant(sp.Contract):
     def __init__(self, name):
         self.init(name = name)`;
 
 //integers
-export const l5 = `import smartpy as sp
+export const l4 = `import smartpy as sp
 
 class Plant(sp.Contract):
     def __init__(self, name):
         self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100))`;
 
 // booleans
-export const l6 = `import smartpy as sp
+export const l5 = `import smartpy as sp
 
 class Plant(sp.Contract):
     def __init__(self, name):
         self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True)`;
 
 // creating a entry_point function
-export const l7 = `import smartpy as sp
+export const l6 = `import smartpy as sp
 
 class Plant(sp.Contract):
     def __init__(self, name):
@@ -52,7 +52,7 @@ class Plant(sp.Contract):
         pass`;
 
 // math operations
-export const l8 = `import smartpy as sp
+export const l7 = `import smartpy as sp
 
 class Plant(sp.Contract):
     def __init__(self, name):
@@ -67,7 +67,7 @@ class Plant(sp.Contract):
         self.data.defense += params.defense`;
 
 // pairs
-export const l9 = `import smartpy as sp
+export const l8 = `import smartpy as sp
 
 class Plant(sp.Contract):
     def __init__(self, name):
@@ -82,7 +82,7 @@ class Plant(sp.Contract):
         self.data.defense += params.defense`;
 
 // records
-export const l10 = `import smartpy as sp
+export const l9 = `import smartpy as sp
 
 class Plant(sp.Contract):
     def __init__(self):
@@ -97,7 +97,7 @@ class Plant(sp.Contract):
         pass`;
 
 //map
-export const l11 = `import smartpy as sp
+export const l10 = `import smartpy as sp
 
 class Plant(sp.Contract):
     def __init__(self):
@@ -117,7 +117,7 @@ class Plant(sp.Contract):
         self.data.player[params.sender].name = params.name`;
 
 //address
-export const l12 = `import smartpy as sp
+export const l11 = `import smartpy as sp
 
 class Plant(sp.Contract):
     def __init__(self):
@@ -137,7 +137,7 @@ class Plant(sp.Contract):
         self.data.player[sp.sender].name = params.name`;
 
 //list
-export const l13 = `import smartpy as sp
+export const l12 = `import smartpy as sp
 
 class Plant(sp.Contract):
     def __init__(self):
@@ -161,7 +161,7 @@ class Plant(sp.Contract):
         self.data.player[sp.sender].special_moves = params.moves`;
 
 //if\else
-export const l14 = `import smartpy as sp
+export const l13 = `import smartpy as sp
 
 class Plant(sp.Contract):
     def __init__(self):
@@ -340,7 +340,7 @@ export function checkCode(get, lesson) {
   if (lesson === 1) {
     lesson = l1;
   } else if (lesson === 2) {
-    lesson = 'l2';
+    lesson = l2;
   } else if (lesson === 3) {
     lesson = l3;
   } else if (lesson === 4) {
@@ -364,13 +364,11 @@ export function checkCode(get, lesson) {
   } else if (lesson === 13) {
     lesson = l13;
   } else if (lesson === 14) {
-    lesson = l14;
-  } else if (lesson === 15) {
     lesson = l15;
   }
 
   // user - this is the array of each line of the code which user types in the editor,
-  // lesson - this is the code from the above variables, ex: for lesson 1, use l1, lesson 3 - l3 and so on...
+  // lesson - this is the code from the above variables, ex: for lesson 1, use l1, lesson 3 - l2 and so on...
 
   // result to be print result[line_number] = error message
   var result = {};
@@ -413,44 +411,44 @@ export function checkCode(get, lesson) {
     return entry.trim() !== '';
   });
 
-  if (lesson === 'l2') {
-    // getting array from the correct code (each line is an element of the array)
-    var testl2 = l1.split('\n');
+  // if (lesson === 'l2') {
+  //   // getting array from the correct code (each line is an element of the array)
+  //   var testl2 = l1.split('\n');
 
-    //console.log("TEST L2", testl2);
+  //   //console.log("TEST L2", testl2);
 
-    // removing new lines and white spaces from the correct code
-    var correctl2 = testl2.filter(function (entry) {
-      return entry.trim() !== '';
-    });
+  //   // removing new lines and white spaces from the correct code
+  //   var correctl2 = testl2.filter(function (entry) {
+  //     return entry.trim() !== '';
+  //   });
 
-    //console.log("2 TEST L2", correctl2);
+  //   //console.log("2 TEST L2", correctl2);
 
-    var comment = userArray.filter(x => !correctl2.includes(x));
+  //   var comment = userArray.filter(x => !correctl2.includes(x));
 
-    var final = comment.filter(z => z.trim()[0] === '#');
-    var com = comment.filter(z => z.trim()[0] !== '#');
+  //   var final = comment.filter(z => z.trim()[0] === '#');
+  //   var com = comment.filter(z => z.trim()[0] !== '#');
 
-    //console.log("L2 COMMENT", comment);
-    //console.log("L2 FINAL", final);
-    //console.log("L2 COM", com);
+  //   //console.log("L2 COMMENT", comment);
+  //   //console.log("L2 FINAL", final);
+  //   //console.log("L2 COM", com);
 
-    var comError = [];
+  //   var comError = [];
 
-    if (com.length > 0) {
-      for (var c in com) {
-        comError.push('Invalid code at line ' + (user.indexOf(com[c]) + 1));
-      }
-      return {
-        success: false,
-        error: comError,
-      };
-    } else if (final.length === 0) {
-      return { success: false, error: ['comment is required.'] };
-    } else {
-      return { success: true, error: ['No error'] };
-    }
-  }
+  //   if (com.length > 0) {
+  //     for (var c in com) {
+  //       comError.push('Invalid code at line ' + (user.indexOf(com[c]) + 1));
+  //     }
+  //     return {
+  //       success: false,
+  //       error: comError,
+  //     };
+  //   } else if (final.length === 0) {
+  //     return { success: false, error: ['comment is required.'] };
+  //   } else {
+  //     return { success: true, error: ['No error'] };
+  //   }
+  // }
   // removing valid python comments starting with #
   userArray = userArray.filter(x => x.trim()[0] !== '#');
 
@@ -567,15 +565,15 @@ export function checkCode(get, lesson) {
   // console.log('MISSING', missingFromUser);
   // console.log('EXTRA', extraInUser);
 
-  //l10 get pass
-  if (lesson === l10) {
+  //l9 get pass
+  if (lesson === l9) {
     missing['pass'] =
       'Remove assignment statement in attack and defense functions as they are not valid at this moment. Add `pass`';
   }
 
   // invalid statements of extra line of codes
   for (i in extraInUser) {
-    if ((lesson === l12 || lesson === l8) && extraInUser[i].trim() === 'pass') {
+    if ((lesson === l11 || lesson === l7) && extraInUser[i].trim() === 'pass') {
       result[user.indexOf(userArray[extraInUser[i]]) + 1] =
       // result[user.indexOf(extraInUser[i]) + 1] =
         'Invalid statement, remove `pass and update the function with appropriate statement`';

@@ -1,5 +1,5 @@
 ---
-title: State Variables
+title: Integers
 chapter: Chapter 4
 slug: chapter-04
 editor:
@@ -8,36 +8,31 @@ editor:
     import smartpy as sp
 
     class Plant(sp.Contract):
-        # Code from below
+        def __init__(self, name):
+            # Initialize state variables
+            self.init(name = name) 
 
   answer: |  
     import smartpy as sp
 
     class Plant(sp.Contract):
-        # Code from below
         def __init__(self, name):
-            self.init(name = name)
+            # Initialize state variables
+            self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100))
 ---
 
-Great job! Now that we've got a shell for our contract, let's learn about how SmartPy deals with variables.
+Container constructor names are uncapitalized, example: `(sp.int(-42))` and their types are capitalized, example `(sp.TInt)`
 
-We define an initialization method for `Plant` that determines the initial storage during contract origination. `__init__()` accepts one argument, name and calls `self.init()` to assign its value to the newly-created name variable field of type string in the contract’s storage.
+ - sp.TInt: The type of integer values, e.g: -42 or sp.int(-42).
+ - sp.TNat: The type of non-negative integer values, e.g: sp.nat(42).
+ - sp.TIntOrNat: The type of integer values whose type is still undetermined between sp.TInt or sp.TNat, e.g: 42 or sp.intOrNat(42).
 
-SmartyPy does most of type inference automatically in almost all the cases, we can also explicitly define string by using sp.string method but it is not required in case of string.
-
-Container constructor names are uncapitalized `(sp.string("peashooter"))` and their types are capitalized: `(sp.TString)`
-
-```python
-def __init__(self, name):
-    self.init(name = name)
-```
-
-This contract calls an initialization method `self.init`, contained in `sp.Contract`, that is able to determine an initial storage for the contract and all the state variables are declared in self.init method.
+In SmartPy, we have three possible types for integer: `int, nat, and intOrNat`. When writing a number (say, 12), as you can see, it can be of type sp.TInt or sp.TNat which makes it important to explicitly mention the type in such cases. If you don’t know whether it is an int or a nat then you type it as intOrNat (sp.TIntOrNat). Its exact type will be determined at a later stage. This determination is necessary for the Michelson compiler because Michelson needs to make this precise determination.
 
 ## Put it to code
 
-1) Declare `__init__` function in the plant class to initialize the class,
+Now you'll intialize growth_rate attribute and health for your plant to grow.
 
-2) Pass a parameter `name` in the initialization function,
+1) Declare state variables `attack`, `defense`, `growth_rate` and `health` all of type `sp.TNat` and initialize then with 10, 10, 10, 100 respectively.
 
-3) Declare a state variable `name` and initialize it with the class parameter `name`. In this case, it's of type `sp.TString` 
+

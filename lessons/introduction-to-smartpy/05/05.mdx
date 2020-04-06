@@ -1,5 +1,5 @@
 ---
-title: Integers
+title: Booleans
 chapter: Chapter 5
 slug: chapter-05
 editor:
@@ -9,30 +9,30 @@ editor:
 
     class Plant(sp.Contract):
         def __init__(self, name):
-            # Initialize state variables
-            self.init(name = name) 
+            # Initilize the required attribute
+            self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100))
 
   answer: |  
     import smartpy as sp
 
     class Plant(sp.Contract):
         def __init__(self, name):
-            # Initialize state variables
-            self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100))
+            # Initilize the required attribute
+            self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True)
 ---
 
-Container constructor names are uncapitalized, example: `(sp.int(-42))` and their types are capitalized, example `(sp.TInt)`
+SmartPy has `sp.TBool`: The type of boolean values, True, False, sp.bool(True) and sp.bool(False)
 
- - sp.TInt: The type of integer values, e.g: -42 or sp.int(-42).
- - sp.TNat: The type of non-negative integer values, e.g: sp.nat(42).
- - sp.TIntOrNat: The type of integer values whose type is still undetermined between sp.TInt or sp.TNat, e.g: 42 or sp.intOrNat(42).
-
-In SmartPy, we have three possible types for integer: `int, nat, and intOrNat`. When writing a number (say, 12), as you can see, it can be of type sp.TInt or sp.TNat which makes it important to explicitly mention the type in such cases. If you don’t know whether it is an int or a nat then you type it as intOrNat (sp.TIntOrNat). Its exact type will be determined at a later stage. This determination is necessary for the Michelson compiler because Michelson needs to make this precise determination.
+In SmartPy, all the bitwise operators work the same way as in python, so for example, `True == ~False` is correct in SmartPy as well.
 
 ## Put it to code
 
-Now you'll intialize growth_rate attribute and health for your plant to grow.
+Your Plant is alive as its health is 100, 
 
-1) Declare state variables `attack`, `defense`, `growth_rate` and `health` all of type `sp.TNat` and initialize then with 10, 10, 10, 100 respectively.
+1) Declare boolean attribute `is_alive` and Initilize with `True` inside your contract storage.
+
+```python
+is_alive = True
+```
 
 
