@@ -36,18 +36,6 @@ const Layout = ({ children, background }) => {
           .react-icons {
             vertical-align: middle;
           }
-          body::-webkit-scrollbar {
-            background-color: #fff;
-            width: 16px;
-          }
-          body::-webkit-scrollbar-track {
-            background-color: #fff;
-          }
-          body::-webkit-scrollbar-thumb {
-            background-color: #babac0;
-            border-radius: 16px;
-            border: 4px solid #fff;
-          }
         `}
       />
       <Helmet>
@@ -61,3 +49,17 @@ const Layout = ({ children, background }) => {
 };
 
 export default Layout;
+
+//TODO: add custom-scroll bar
+// body::-webkit-scrollbar {
+//   background-color: #fff;
+//   width: 16px;
+// }
+// body::-webkit-scrollbar-track {
+//   background-color: #fff;
+// }
+// body::-webkit-scrollbar-thumb {
+//   background-color: #babac0;
+//   border-radius: 16px;
+//   border: 4px solid #fff;
+// }
