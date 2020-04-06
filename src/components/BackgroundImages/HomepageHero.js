@@ -16,7 +16,7 @@ const HomepageHeroImage = ({ className, children }) => {
         desktop: file(relativePath: { eq: "landing_background.jpg" }) {
           childImageSharp {
             fluid(quality: 90, maxWidth: 4160) {
-              ...GatsbyImageSharpFluid_withWebp_tracedSVG
+              ...GatsbyImageSharpFluid_withWebp
             }
           }
         }
@@ -32,7 +32,6 @@ const HomepageHeroImage = ({ className, children }) => {
       // To style via external CSS see layout.css last examples:
       // className="test"
       fluid={imageData}
-      backgroundColor={`#040e18`}
       // Title get's passed to both container and noscriptImg.
       title="gbitest"
       id="gbitest"
