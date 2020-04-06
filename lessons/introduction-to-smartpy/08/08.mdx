@@ -1,5 +1,5 @@
 ---
-title: Math Operations
+title: Pairs
 chapter: Chapter 8
 slug: chapter-08
 editor:
@@ -9,57 +9,68 @@ editor:
 
     class Plant(sp.Contract):
         def __init__(self, name):
+            # Initialize the required variable
             self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True)
-   
-        @sp.entry_point
-        def attack(self):
-            # Update the function
-            pass
 
         @sp.entry_point
-        def defense(self):
-            # Update the function
-            pass
+        def attack(self, params):
+            self.data.attack += params.attack
+
+        @sp.entry_point
+        def defense(self, params):
+            self.data.defense += params.defense
 
   answer: |  
     import smartpy as sp
 
     class Plant(sp.Contract):
         def __init__(self, name):
-            self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True)
-   
+            # Initialize the required variable
+            self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True, power_move = ("Bullet Seed", 95))
+
         @sp.entry_point
         def attack(self, params):
-            # Update the function
             self.data.attack += params.attack
 
         @sp.entry_point
         def defense(self, params):
-            # Update the function
             self.data.defense += params.defense
 ---
 
-The arithmetic operators +, -, *, %, // behave just like in Python.
+`Pair` is a unique datatype in SmartPy which is nothing but a pair of 2 values. It can be taken as a python tuple with only 2 values. These values can be of any primitive datatype and need not be the same. Its type is also inferred automatically.
 
-In SmartPy, type inference of arithmetic operators imposes that both sides have the same type.
-
-> For example, If zombie attack your plant, the plant's health will decrease.
-`self.data.health -= params.attack`, here both attack and health is assumed to be of type int.
-
-## Put it to code
-Complete the attack and defense functions and upgrade attack and defense of your plant.
-
-1) Add other parameter `params` in `attack` and `defense` functions,
-
-2) Add `attack` points in the state variable `attack` using `attack` function
-```python 
-self.data.attack += params.attack
+To initialize a pair:
+```python
+example = ("", 0) 
+# this will initialize a pair with first element
+# as type of sp.TString and second as sp.TInt
 ```
+Elements of a pair can be called by using `sp.fst(..)` to get the first element and `sp.snd(..)` to get the second element.
 
-3) Add `defense` points in the state variable `defense` using `defense` function
+Example:
 
 ```python
-self.data.defense += params.defense
+sp.fst(example) # this will return the first value
+sp.snd(example) # this will return the second value
 ```
+
+Elements of a `pair` is immutable, that means, you cannot reassign values to it's unique elements.
+
+Example:
+```python
+sp.fst(test) = "change"
+# this will throw an error
+```
+
+## Put it to code
+Declare and initialize a variable of type `(sp.TString, sp.TInt)` `power_move`, (attack_name, attack_power). 
+In this case as well, the type will be automatically inferred as `sp.TPair`
+
+1) Variable name: `power_move`,
+
+2) Name of the move: `Bullet Seed`
+
+3) Attack power: `95`
+
 
 

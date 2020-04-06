@@ -1,5 +1,5 @@
 ---
-title: Creating A Entry Point Function
+title: Math Operations
 chapter: Chapter 7
 slug: chapter-07
 editor:
@@ -10,8 +10,16 @@ editor:
     class Plant(sp.Contract):
         def __init__(self, name):
             self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True)
+   
+        @sp.entry_point
+        def attack(self):
+            # Update the function
+            pass
 
-        # Code from below
+        @sp.entry_point
+        def defense(self):
+            # Update the function
+            pass
 
   answer: |  
     import smartpy as sp
@@ -19,30 +27,39 @@ editor:
     class Plant(sp.Contract):
         def __init__(self, name):
             self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True)
-
-        # Code from below
+   
         @sp.entry_point
-        def attack(self):
-            pass
+        def attack(self, params):
+            # Update the function
+            self.data.attack += params.attack
 
         @sp.entry_point
-        def defense(self):
-            pass
+        def defense(self, params):
+            # Update the function
+            self.data.defense += params.defense
 ---
 
-Entry Point is a method of a contract class that can be called from the outside. They must take a `self` parameter and an optional parameter `params` if the method takes user input. They need to be marked with the `@sp.entry_point` decorator. For example the following entry point checks that the argument given is greater than 2 or not.
+The arithmetic operators +, -, *, %, // behave just like in Python.
 
-```python
-@sp.entry_point
-def checkValue(self, params):
-   sp.verify(params.x > 2)
-```
+In SmartPy, type inference of arithmetic operators imposes that both sides have the same type.
+
+> For example, If zombie attack your plant, the plant's health will decrease.
+`self.data.health -= params.attack`, here both attack and health is assumed to be of type int.
 
 ## Put it to code
-Now let's create shell for attack and defense entry point function for your plant.
+Complete the attack and defense functions and upgrade attack and defense of your plant.
 
-1) Declare an empty callable function `attack` with `self` parameter,
+1) Add other parameter `params` in `attack` and `defense` functions,
 
-2) Declare an empty callable function `defense` with `self` parameter
+2) Add `attack` points in the state variable `attack` using `attack` function
+```python 
+self.data.attack += params.attack
+```
+
+3) Add `defense` points in the state variable `defense` using `defense` function
+
+```python
+self.data.defense += params.defense
+```
 
 

@@ -1,5 +1,5 @@
 ---
-title: Records
+title: Maps
 chapter: Chapter 10
 slug: chapter-10
 editor:
@@ -8,55 +8,87 @@ editor:
     import smartpy as sp
 
     class Plant(sp.Contract):
-        # Update contract initialization
-        def __init__(self, name):
-            # Update state variables
-            self.init(name = name, growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True, power_move = sp.pair("Bullet Seed", 95))
+        def __init__(self):
+            # Initialize state variable
+            self.init(stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True))
 
         @sp.entry_point
         def attack(self, params):
-            # Update the function
-            self.data.attack += params.attack
+            pass
 
         @sp.entry_point
         def defense(self, params):
-            # Update the function
-            self.data.defense += params.defense
+            pass
+
+        # Code from below
 
   answer: |  
     import smartpy as sp
 
     class Plant(sp.Contract):
-        # Update contract initialization
         def __init__(self):
-            # Update state variables
-            self.init(stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True))
-
+            # Initialize state variable
+            self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True))
+    
         @sp.entry_point
         def attack(self, params):
-            # Update the function
             pass
 
         @sp.entry_point
         def defense(self, params):
-            # Update the function
             pass
+
+        # Code from below
+        @sp.entry_point
+        def assignCharacter(self, params):
+            self.data.player[params.sender] = self.data.stat
+            self.data.player[params.sender].name = params.name
 ---
 
-Python doesn't have concepts of structures so to compensate for the same, SmartPy has Records which act as structs. This not only makes the contract more readable and understandable but also makes it much more logical.
+Maps are data structures that store key-value pairs. As a result, they enable smart contracts to create valuable associations between related information.
 
-Records in SmartPy contract are declared in the following manner `Record = sp.record()`
+Maps in SmartPy can be declared in the following manner:
+```python
+sp.TMap:  e.g. {'A': 65, 'B': 66, 'C'; 67}
+```
+
+sp.map(l = …, tkey = …, tvalue = …): Defines a map of (optional) elements in l with optional key type tkey and optional value type tvalue.
+
+or either by
+
+```python
+sp.TBigMap: e.g. {'A': 65, 'B': 66, 'C'; 67}
+```
+
+sp.big_map(l = …, tkey = …, tvalue = …): Defines a big_map of (optional) elements in l with optional key type tkey and optional value type tvalue.
+
+```python
+Example:
+sp.map(l={one: 1, two: 2}, tkey=sp.TString, tvalue=sp.TInt)
+```
+Container constructor names are uncapitalized, example: `{'A': 1, 'B': 2, 'C': 3}` 
+
+and their types are capitalized: `(sp.TMap) or (sp.TBigMap)`
+
+SmartPy has an inbuilt function `map.contains(key)` to check if a certain key is already available in the mapping or not. If the key is present, then it will return `True`, otherwise `False`.
+
+Mapping will be used to point your tezos wallet address with your character.
 
 ## Put it to code
 
-1) Remove the various Plant attributes which were initialized earlier,
+1) Declare a variable `player` of type `sp.TMap`,
 
-2) Remove statements in `attack()` and `defense()`, as we remove state variables and `pass` the functions. These functions will be updated in the upcoming lessons,
+2) Create a callable function `assignCharacter` of type `self`, `params`,
 
-3) Remove `name` variable from `__init__`, as you will be providing name to your Plant explicitly later on,
-
-4) Create a variable named `stat` of type `sp.TRecord` which contains all the previously initialized attributes of your Plant
+3) Inside the function, assign the `stat` variable to the `sender's` using player `mapping` 
 
 ```python
-self.init(stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True))
+self.data.player[params.sender] = self.data.stat
+``` 
+   
+4) Inside the function, assign name to player's plant's name
+
+```python
+self.data.player[params.sender].name = params.name
 ```
+which will take one string parameter `name` which will be name of your plant.

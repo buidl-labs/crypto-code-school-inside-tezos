@@ -1,5 +1,5 @@
 ---
-title: Lesson Overview
+title: Scaffolding A Contract
 chapter: Chapter 2
 slug: chapter-02
 editor:
@@ -7,19 +7,36 @@ editor:
   startingCode: |
     import smartpy as sp
 
-  answer: |
+    # Initialize a python class
+
+  answer: |  
     import smartpy as sp
-    # Plant Contract
+
+    # Initialize a python class
+    class Plant(sp.Contract):
+        pass
 ---
 
-In Lesson 1, you're going to incubate your plant to fight against zombie apocalypse at end of the lesson.
+Starting with the absolute basics:
 
-A zombie apocalypse has begun. You’ve luckily found the seed of a plant that is known to stop zombies. Your task is to incubate the seed and help it evolve before the zombies reach you. In the lesson, you’re going to learn how to evolve your plant and train it to defend against the incoming apocalypse by building a simple smart contract in SmartPy which can be deployed on tezos blockchain.
+You'll learn how to interact with the SmartPy, a python library using in-browser editor. This perfectly simulates how you can interact with a REAL tezos testnet today. In Later lessons, we'll show you how to deploy it to a testnet.
+
+Smart contracts are small programs that are stored and executed on the blockchain, smart contracts in Tezos are unique, as they’re written in Michelson. In addition, Tezos supports formal verification, which guarantees the correctness of smart contract code with respect to a specification. Smart contract code can be proved mathematically according to certain properties. Using formal verification, the Tezos project makes smart contracts more secure and reliable.
+ — all variables and functions belong to a contract, and this will be the starting point of all your projects.
+
+We define a Python class lets call it `HelloWorld` that inherits from the `Contract` class of SmartPy. This class will represent our smart contract and enclose all of the storage initialization, entry points.
+
+An empty contract named HelloWorld would look like this:
+```python
+class HelloWorld(sp.Contract):
+    pass
+```
 
 ## Put it to code
 
-1) Declare comment
+Putting it together, here is a bare-bones starting contract — the first thing you'll write every time you create a new contract:
 
-```python
-# Plant Contract
-```
+1) Declare a class named Plant,
+
+2) Extend SmartPy contract 
+

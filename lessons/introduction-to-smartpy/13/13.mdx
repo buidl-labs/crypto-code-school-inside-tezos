@@ -1,5 +1,5 @@
 ---
-title: Lists
+title: If/Else
 chapter: Chapter 13
 slug: chapter-13
 editor:
@@ -9,30 +9,6 @@ editor:
 
     class Plant(sp.Contract):
         def __init__(self):
-            # Initialize state variable
-            self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True))
-    
-        @sp.entry_point
-        def attack(self, params):
-            self.data.player[sp.sender].attack += params.attack
-
-        @sp.entry_point
-        def defense(self, params):
-            self.data.player[sp.sender].defense += params.defense
-
-        @sp.entry_point
-        def assignChararter(self, params):
-            self.data.player[sp.sender] = self.data.stat
-            self.data.player[sp.sender].name = params.name
-
-        # Code from below
-
-  answer: |  
-    import smartpy as sp
-
-    class Plant(sp.Contract):
-        def __init__(self):
-            # Initialize state variable            
             self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True, special_moves = []))
 
         @sp.entry_point
@@ -45,31 +21,64 @@ editor:
 
         @sp.entry_point
         def assignChararter(self, params):
+            # Update the function
             self.data.player[sp.sender] = self.data.stat
             self.data.player[sp.sender].name = params.name
 
-        # Code from below
+        @sp.entry_point
+        def createMove(self, params):
+            self.data.player[sp.sender].special_moves = params.moves
+
+  answer: |  
+    import smartpy as sp
+
+    class Plant(sp.Contract):
+        def __init__(self):
+            self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True, special_moves = []))
+
+        @sp.entry_point
+        def attack(self, params):
+            self.data.player[sp.sender].attack += params.attack
+
+        @sp.entry_point
+        def defense(self, params):
+            self.data.player[sp.sender].defense += params.defense
+
+        @sp.entry_point
+        def assignChararter(self, params):
+            # Update the function
+            sp.if ~ self.data.player.contains(sp.sender):
+                self.data.player[sp.sender] = self.data.stat
+                self.data.player[sp.sender].name = params.name
+            sp.else:
+                pass
+
         @sp.entry_point
         def createMove(self, params):
             self.data.player[sp.sender].special_moves = params.moves
 ---
 
-Lists are the collection of object/values which are of same type in SmartPy.
+If/else statements are the conditional statements which are used to check condition and run the chunk of code only if the conditions are met. 
 
-List in SmartPy are of type sp.TList but are initialized in the same manner as in python.
-There is no array in SmartPy because they are missing in Michelson, we use maps instead.
-example:
-`list = []`
-Values can be added to the list by using `push` function
+In SmartPy, if/else comamands are `sp.if, sp.else`.
 
-Example:
-`list.push(value)`
-In your contract, list will be used to store all the attacks of your plant which will create a special move.
+```python
+sp.if [condition]:
+    # execute code if condition met
+
+sp.else:
+    # execute code if condition didn't met
+```
+
+You will use these condition statements to check if the sender address is already assigned with a character or not. This will ensure that one user has only one character
 
 ## Put it to code
 
-1) declare an empty list `special_moves` inside the stat record
+Check if the sender is already assigned using `.contains()` function of `sp.TMap` in `assignChararter` function.
 
-`special_moves = []`
-
-2) Create a callable function `createMove` which will take a list of `sp.TPair` type and name it `moves` as parameter and will store that list in `special_moves`.
+```python
+    sp.if ~ self.data.player.contains(sp.sender):
+        .....
+    sp.else:
+        pass
+```

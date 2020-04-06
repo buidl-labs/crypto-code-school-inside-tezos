@@ -1,5 +1,5 @@
 ---
-title: Pairs
+title: Records
 chapter: Chapter 9
 slug: chapter-09
 editor:
@@ -8,69 +8,55 @@ editor:
     import smartpy as sp
 
     class Plant(sp.Contract):
+        # Update contract initialization
         def __init__(self, name):
-            # Initialize the required variable
-            self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True)
+            # Update state variables
+            self.init(name = name, growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True, power_move = sp.pair("Bullet Seed", 95))
 
         @sp.entry_point
         def attack(self, params):
+            # Update the function
             self.data.attack += params.attack
 
         @sp.entry_point
         def defense(self, params):
+            # Update the function
             self.data.defense += params.defense
 
   answer: |  
     import smartpy as sp
 
     class Plant(sp.Contract):
-        def __init__(self, name):
-            # Initialize the required variable
-            self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True, power_move = ("Bullet Seed", 95))
+        # Update contract initialization
+        def __init__(self):
+            # Update state variables
+            self.init(stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True))
 
         @sp.entry_point
         def attack(self, params):
-            self.data.attack += params.attack
+            # Update the function
+            pass
 
         @sp.entry_point
         def defense(self, params):
-            self.data.defense += params.defense
+            # Update the function
+            pass
 ---
 
-`Pair` is a unique datatype in SmartPy which is nothing but a pair of 2 values. It can be taken as a python tuple with only 2 values. These values can be of any primitive datatype and need not be the same. Its type is also inferred automatically.
+Python doesn't have concepts of structures so to compensate for the same, SmartPy has Records which act as structs. This not only makes the contract more readable and understandable but also makes it much more logical.
 
-To initialize a pair:
-```python
-example = ("", 0) 
-# this will initialize a pair with first element
-# as type of sp.TString and second as sp.TInt
-```
-Elements of a pair can be called by using `sp.fst(..)` to get the first element and `sp.snd(..)` to get the second element.
-
-Example:
-
-```python
-sp.fst(example) # this will return the first value
-sp.snd(example) # this will return the second value
-```
-
-Elements of a `pair` is immutable, that means, you cannot reassign values to it's unique elements.
-
-Example:
-```python
-sp.fst(test) = "change"
-# this will throw an error
-```
+Records in SmartPy contract are declared in the following manner `Record = sp.record()`
 
 ## Put it to code
-Declare and initialize a variable of type `(sp.TString, sp.TInt)` `power_move`, (attack_name, attack_power). 
-In this case as well, the type will be automatically inferred as `sp.TPair`
 
-1) Variable name: `power_move`,
+1) Remove the various Plant attributes which were initialized earlier,
 
-2) Name of the move: `Bullet Seed`
+2) Remove statements in `attack()` and `defense()`, as we remove state variables and `pass` the functions. These functions will be updated in the upcoming lessons,
 
-3) Attack power: `95`
+3) Remove `name` variable from `__init__`, as you will be providing name to your Plant explicitly later on,
 
+4) Create a variable named `stat` of type `sp.TRecord` which contains all the previously initialized attributes of your Plant
 
-
+```python
+self.init(stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True))
+```

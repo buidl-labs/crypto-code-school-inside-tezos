@@ -1,5 +1,5 @@
 ---
-title: Scaffolding A Contract
+title: State Variables
 chapter: Chapter 3
 slug: chapter-03
 editor:
@@ -7,36 +7,37 @@ editor:
   startingCode: |
     import smartpy as sp
 
-    # Initialize a python class
+    class Plant(sp.Contract):
+        # Code from below
 
   answer: |  
     import smartpy as sp
 
-    # Initialize a python class
     class Plant(sp.Contract):
-        pass
+        # Code from below
+        def __init__(self, name):
+            self.init(name = name)
 ---
 
-Starting with the absolute basics:
+Great job! Now that we've got a shell for our contract, let's learn about how SmartPy deals with variables.
 
-You'll learn how to interact with the SmartPy, a python library using in-browser editor. This perfectly simulates how you can interact with a REAL tezos testnet today. In Later lessons, we'll show you how to deploy it to a testnet.
+We define an initialization method for `Plant` that determines the initial storage during contract origination. `__init__()` accepts one argument, name and calls `self.init()` to assign its value to the newly-created name variable field of type string in the contract’s storage.
 
-Smart contracts are small programs that are stored and executed on the blockchain, smart contracts in Tezos are unique, as they’re written in Michelson. In addition, Tezos supports formal verification, which guarantees the correctness of smart contract code with respect to a specification. Smart contract code can be proved mathematically according to certain properties. Using formal verification, the Tezos project makes smart contracts more secure and reliable.
- — all variables and functions belong to a contract, and this will be the starting point of all your projects.
+SmartyPy does most of type inference automatically in almost all the cases, we can also explicitly define string by using sp.string method but it is not required in case of string.
 
-We define a Python class lets call it `HelloWorld` that inherits from the `Contract` class of SmartPy. This class will represent our smart contract and enclose all of the storage initialization, entry points.
+Container constructor names are uncapitalized `(sp.string("peashooter"))` and their types are capitalized: `(sp.TString)`
 
-An empty contract named HelloWorld would look like this:
 ```python
-class HelloWorld(sp.Contract):
-    pass
+def __init__(self, name):
+    self.init(name = name)
 ```
+
+This contract calls an initialization method `self.init`, contained in `sp.Contract`, that is able to determine an initial storage for the contract and all the state variables are declared in self.init method.
 
 ## Put it to code
 
-Putting it together, here is a bare-bones starting contract — the first thing you'll write every time you create a new contract:
+1) Declare `__init__` function in the plant class to initialize the class,
 
-1) Declare a class named Plant,
+2) Pass a parameter `name` in the initialization function,
 
-2) Extend SmartPy contract 
-
+3) Declare a state variable `name` and initialize it with the class parameter `name`. In this case, it's of type `sp.TString` 

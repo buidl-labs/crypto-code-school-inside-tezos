@@ -1,35 +1,10 @@
 ---
-title: If/Else
+title: Verify
 chapter: Chapter 14
 slug: chapter-14
 editor:
   language: python
   startingCode: |
-    import smartpy as sp
-
-    class Plant(sp.Contract):
-        def __init__(self):
-            self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True, special_moves = []))
-
-        @sp.entry_point
-        def attack(self, params):
-            self.data.player[sp.sender].attack += params.attack
-
-        @sp.entry_point
-        def defense(self, params):
-            self.data.player[sp.sender].defense += params.defense
-
-        @sp.entry_point
-        def assignChararter(self, params):
-            # Update the function
-            self.data.player[sp.sender] = self.data.stat
-            self.data.player[sp.sender].name = params.name
-
-        @sp.entry_point
-        def createMove(self, params):
-            self.data.player[sp.sender].special_moves = params.moves
-
-  answer: |  
     import smartpy as sp
 
     class Plant(sp.Contract):
@@ -56,29 +31,65 @@ editor:
         @sp.entry_point
         def createMove(self, params):
             self.data.player[sp.sender].special_moves = params.moves
+
+        # Code from below
+
+  answer: |  
+    import smartpy as sp
+
+    class Plant(sp.Contract):
+        def __init__(self):
+            self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True, special_moves = []))
+
+        @sp.entry_point
+        def attack(self, params):
+            self.data.player[sp.sender].attack += params.attack
+
+        @sp.entry_point
+        def defense(self, params):
+            self.data.player[sp.sender].defense += params.defense
+
+        @sp.entry_point
+        def assignChararter(self, params):
+            # Update the function
+            sp.verify(~ self.data.player.contains(sp.sender), "User already has a plant")
+            self.data.player[sp.sender] = self.data.stat
+            self.data.player[sp.sender].name = params.name
+
+        @sp.entry_point
+        def createMove(self, params):
+            self.data.player[sp.sender].special_moves = params.moves
+
+        # Code from below
+        @sp.entry_point
+        def endGame(self, params):
+            sp.verify(self.data.player[sp.sender].health == 0, "You are alive!!!")
+            self.data.player[sp.sender].is_alive = False
 ---
 
-If/else statements are the conditional statements which are used to check condition and run the chunk of code only if the conditions are met. 
+Assertion statements are also a kind of condition checking statements but they are very useful in smart contracts because unlike if/else statements, they revert back the transaction and hence saving the gas/transaction fees as well.
 
-In SmartPy, if/else comamands are `sp.if, sp.else`.
-
+Assertion command can be as follows in SmartPy: 
 ```python
-sp.if [condition]:
-    # execute code if condition met
+sp.verify(condition, message="")
+# message is an optional parameter
+``` 
 
-sp.else:
-    # execute code if condition didn't met
-```
+We can use verify command at the beginning of any entry_point to check the required conditions. 
 
-You will use these condition statements to check if the sender address is already assigned with a character or not. This will ensure that one user has only one character
+In our example previously, if/else commands was used. That is not an efficient way of doing things as you may have noticed, if the condition is not met and the code goes to else statement, it has nothing to execute and the gas/transaction fee will be wasted. 
+
+To overcome this, you will be using `sp.verify()` statement.
 
 ## Put it to code
 
-Check if the sender is already assigned using `.contains()` function of `sp.TMap` in `assignChararter` function.
+1) Remove if/else statment from the previous code,
+
+2) Include `sp.verify()` statement to check the condition instead,
 
 ```python
-    sp.if ~ self.data.player.contains(sp.sender):
-        .....
-    sp.else:
-        pass
+sp.verify(~ self.data.player.contains(sp.sender), 
+"User already has a plant")
 ```
+
+3) Create a callable function `endGame` that will verify the health of the player with a message "You are alive!!!". If health of the player is 0, change `is_alive` to `False`.
