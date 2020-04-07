@@ -6,10 +6,43 @@ import StartLearning from '../assets/start_learning.svg';
 import Plant from '../assets/plant.svg';
 import Zombie from '../assets/zombie.svg';
 import Plants from '../assets/plants.svg';
+import LeftCloudSvg from '../assets/left_cloud.svg';
+import RightCloudSvg from '../assets/right_cloud.svg';
 import learningInterface from '../images/Interface.png';
 import HomepageHeroImage from '../components/BackgroundImages/HomepageHero';
 import { FaChevronRight } from 'react-icons/fa';
 import { Link } from 'gatsby';
+import { keyframes } from '@emotion/core';
+
+const move = keyframes`
+  0% { transform: translateX(100%); opacity: 0.9; }
+  100% { transform: translateX(-100%); opacity: 0.9; }
+`;
+
+const LeftCloud = styled(LeftCloudSvg)`
+  animation-name: ${move};
+  animation-duration: 40s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-direction: reverse;
+  position: absolute;
+  z-index: -1;
+  left: 10px;
+  right: 10;
+  top: 5rem;
+`;
+
+const RightCloud = styled(RightCloudSvg)`
+  animation-name: ${move};
+  animation-duration: 30s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  position: absolute;
+  z-index: -1;
+  right: 10px;
+  right: 10;
+  top: 10rem;
+`;
 
 const HomePage = () => {
   return (
@@ -22,6 +55,8 @@ const HomePage = () => {
     no-repeat center center fixed`}
     >
       <HomepageHeroImage>
+        <RightCloud />
+        <LeftCloud />
         <HeroContainer>
           <div>
             <Logo width="500" height="auto" />
@@ -37,7 +72,7 @@ const HomePage = () => {
               <Plant width="150" height="auto" />
             </div>
             <div>
-              <StartLearning />
+              <StartLearning width="auto" height="auto" />
             </div>
             <div>
               <Zombie width="150" height="auto" />
