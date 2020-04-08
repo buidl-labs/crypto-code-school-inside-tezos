@@ -15,7 +15,7 @@ import { Link } from 'gatsby';
 import { keyframes } from '@emotion/core';
 
 const move = keyframes`
-  0% { transform: translateX(100%); opacity: 0.9; }
+  0% { transform: translateX(30%); opacity: 0.9; }
   100% { transform: translateX(-100%); opacity: 0.9; }
 `;
 
