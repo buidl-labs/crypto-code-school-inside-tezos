@@ -6,6 +6,9 @@ import WaterPlant from '../components/Plants/Water';
 import ElectricPlant from '../components/Plants/Electric';
 import GrassPlant from '../components/Plants/Grass';
 import IcePlant from '../components/Plants/Ice';
+import Modal from '../components/EvolutionModal/index';
+import { FaChevronRight } from 'react-icons/fa';
+import { Link } from 'gatsby';
 
 function Evolution() {
   const [stages, updateStage] = useState([1, 2, 3, 4, 5, 6]);
@@ -24,13 +27,14 @@ function Evolution() {
   //     patterns: [Pattern1, Pattern2, Pattern3, Pattern4],
   //   },
 
-  const Body = styled(plantsType.fire.body[1])`
+  const Body = styled(plantsType.fire.body[2])`
     position: absolute;
     top: 45%;
     width: 100%;
     height: 35%;
+    left: 0;
   `;
-  const Eye = styled(plantsType.fire.eyes[0])`
+  const Eye = styled(plantsType.fire.eyes[2])`
     position: absolute;
     height: 50%;
     z-index: 2;
@@ -43,7 +47,7 @@ function Evolution() {
     top: -31px;
     height: 40%;
     z-index: -1;
-    left: -19%;
+    left: -35%;
     transform: translate(14px, 10px);
   `;
   const HeadSVG = styled(plantsType.fire.head[0])`
@@ -58,12 +62,14 @@ function Evolution() {
     top: 60%;
     width: 100%;
     height: 30%;
+    left: 0;
   `;
   const FrontLeaves = styled(plantsType.fire.frontLeaves[0])`
     position: absolute;
     top: 70%;
     width: 100%;
     height: 30%;
+    left: 0;
   `;
   const PatternSVG = styled(plantsType.fire.patterns[0])`
     position: absolute;
@@ -76,47 +82,118 @@ function Evolution() {
 
   const Plant = styled.div`
     position: absolute;
-    top: 50%;
+    top: 41%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    width: 200px;
-    height: 280px;
+    transform: translate(-55%, -70%);
+    width: 150px;
+    height: 210px;
   `;
 
   const glowAnimation = keyframes`
     0% {
         transform: translate(-50%, -50%) scale(0.9); }
     50% {
-        transform: translate(-50%, -50%) scale(1.1); }
+        transform: translate(-50%, -50%) scale(1); }
     100% {
         transform: translate(-50%, -50%) scale(0.9); }
   `;
   const Glow = styled.div`
-    height: 450px;
-    width: 450px;
-    position: absolute;
-    top: 50%;
+    height: 350px;
+    width: 350px;
+    position: relative;
+    top: 30%;
     left: 50%;
     animation: ${glowAnimation} 3s infinite;
-    background: rgba(217, 194, 74, 0.1);
+    background: rgba(208, 252, 255, 0.15);
     border-radius: 100%;
   `;
   return (
     <>
-      <Glow />
-      <Plant>
-        <BackLeaves />
-        {/* <FireSVG /> */}
-        <Body />
-        <HeadSVG />
-        <Eye />
-        <Hair />
-        <FrontLeaves />
-        <PatternSVG />
-      </Plant>
+      <Modal>
+        <Glow />
+        <Plant>
+          <BackLeaves />
+          <Body />
+          <HeadSVG />
+          <Eye />
+          <Hair />
+          <FrontLeaves />
+          <PatternSVG />
+        </Plant>
+        <ContentContainer>
+          <h3>Success</h3>
+          <p>
+            You have successfully completed the chapter and evolved your plants
+            to defend against the zombies.
+          </p>
+          <ProceedLink to="/">
+            Proceed <FaChevronRight />
+          </ProceedLink>
+        </ContentContainer>
+      </Modal>
     </>
   );
 }
+
+const ContentContainer = styled.div`
+  color: white;
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h3 {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 54px;
+    line-height: 63px;
+    text-align: center;
+    color: #ffffff;
+    margin: 10px 0;
+  }
+
+  p {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 23px;
+    text-align: center;
+    margin-top: 0;
+    max-width: 600px;
+  }
+`;
+
+const ProceedLink = styled(Link)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+
+  background: #18b77e;
+  border-radius: 10px;
+  border: none;
+  width: 196px;
+  height: 68px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 26px;
+  line-height: 30px;
+  color: #fff;
+  transition: 0.3s;
+
+  > svg {
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: 1px;
+  }
+
+  :hover {
+    background: #18a472;
+  }
+`;
 
 export default Evolution;
 
@@ -135,3 +212,13 @@ export default Evolution;
 //     patterns: [1, 2, 3, 4],
 //   },
 // };
+
+//Evolution growth cycle
+//seed --> bottom back_front-leaves --> body --> head --> eyes --> hair --> addition attribute(spark, ice/fire head etc)
+
+//chapter 1 --> `*(Animation of seed being set in an incubator)*`
+//chapter 3(state variables) `*(Animation of seed growing into leaves)*`
+//chapter 6(booleans) `*(Animation of body growing)*`
+//chapter 8(Math Operations) `*(Animation of head growing)*`
+//chapter 11(Address) `*(Animation of eyes growing)*`
+//chapter 12(Verify) `*(Animation of hair growing)*` --> plant has fully grown --> to battle zombie apocalypse

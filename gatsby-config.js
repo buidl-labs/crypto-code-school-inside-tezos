@@ -4,6 +4,7 @@ module.exports = {
     description: `Interactive Code School for onboarding newcomers to the Tezos Ecosystem using smartpy`,
   },
   plugins: [
+    `gatsby-plugin-portal`,
     `gatsby-plugin-emotion`,
     `gatsby-plugin-react-helmet`,
     `gatsby-transformer-sharp`,
