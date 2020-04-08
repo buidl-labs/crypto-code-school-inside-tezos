@@ -10,22 +10,16 @@ import Modal from '../components/EvolutionModal/index';
 import { FaChevronRight } from 'react-icons/fa';
 import { Link } from 'gatsby';
 
-function Evolution() {
-  const [stages, updateStage] = useState([1, 2, 3, 4, 5, 6]);
-  const plantsType = {
-    fire: IcePlant,
-  };
+const plantsList = [FirePlant, WaterPlant, ElectricPlant, IcePlant, GrassPlant];
+const randomPlant = plantsList[Math.floor(Math.random() * plantsList.length)];
 
-  //   {
-  //     body: [Body1, Body2, Body3, Body4],
-  //     eyes: [Eye1, Eye2, Eye3, Eye4, Eye5, Eye6, Eye7, Eye8],
-  //     fire: [Fire],
-  //     hair: [Hair1, Hair2, Hair3, Hair4, Hair5],
-  //     head: [Head],
-  //     backLeaves: [BackLeaves1, BackLeaves2, BackLeaves3, BackLeaves4],
-  //     frontLeaves: [FrontLeaves1, FrontLeaves2, FrontLeaves3, FrontLeaves4],
-  //     patterns: [Pattern1, Pattern2, Pattern3, Pattern4],
-  //   },
+function Evolution() {
+  const [stage, updateStage] = useState(1);
+  //TODO: randomly select plant b/w fire, water, electric, grass and ice type
+  //select plants sub parts randomly from options given before showing plant growth
+  const plantsType = {
+    fire: randomPlant,
+  };
 
   const Body = styled(plantsType.fire.body[2])`
     position: absolute;
@@ -107,18 +101,43 @@ function Evolution() {
     background: rgba(208, 252, 255, 0.15);
     border-radius: 100%;
   `;
+
+  const SeedSVG = styled(plantsType.fire.seed[0])`
+    position: absolute;
+    top: 26%;
+    left: 25%;
+    transform: translate(-55%, -70%);
+  `;
+
   return (
     <>
       <Modal>
         <Glow />
         <Plant>
-          <BackLeaves />
-          <Body />
-          <HeadSVG />
-          <Eye />
-          <Hair />
-          <FrontLeaves />
-          <PatternSVG />
+          <SeedSVG
+            style={{ transform: `${stage === 1 ? 'scale(1)' : 'scale(0)'}` }}
+          />
+          <BackLeaves
+            style={{ transform: `${stage >= 2 ? 'scale(1)' : 'scale(0)'}` }}
+          />
+          <Body
+            style={{ transform: `${stage >= 3 ? 'scale(1)' : 'scale(0)'}` }}
+          />
+          <HeadSVG
+            style={{ transform: `${stage >= 4 ? 'scale(1)' : 'scale(0)'}` }}
+          />
+          <Eye
+            style={{ transform: `${stage >= 5 ? 'scale(1)' : 'scale(0)'}` }}
+          />
+          <Hair
+            style={{ transform: `${stage >= 6 ? 'scale(1)' : 'scale(0)'}` }}
+          />
+          <FrontLeaves
+            style={{ transform: `${stage >= 2 ? 'scale(1)' : 'scale(0)'}` }}
+          />
+          <PatternSVG
+            style={{ transform: `${stage >= 6 ? 'scale(1)' : 'scale(0)'}` }}
+          />
         </Plant>
         <ContentContainer>
           <h3>Success</h3>
@@ -129,6 +148,18 @@ function Evolution() {
           <ProceedLink to="/">
             Proceed <FaChevronRight />
           </ProceedLink>
+          <button
+            onClick={() => {
+              updateStage(prevStage => prevStage + 1);
+              //set background color to dark
+              //setTimeout after 2000 milliseconds
+              //lighten the background color
+              //setTimeout for showing plant growth to 1000 milliseconds
+              console.log('stage', stage);
+            }}
+          >
+            Evolve
+          </button>
         </ContentContainer>
       </Modal>
     </>
@@ -215,6 +246,14 @@ export default Evolution;
 
 //Evolution growth cycle
 //seed --> bottom back_front-leaves --> body --> head --> eyes --> hair --> addition attribute(spark, ice/fire head etc)
+// const stages = [
+//   'seedIncubation',
+//   'seedToLeaves',
+//   'AddBody',
+//   'AddHead',
+//   'AddEyes',
+//   'AddHair',
+// ];
 
 //chapter 1 --> `*(Animation of seed being set in an incubator)*`
 //chapter 3(state variables) `*(Animation of seed growing into leaves)*`
@@ -222,3 +261,9 @@ export default Evolution;
 //chapter 8(Math Operations) `*(Animation of head growing)*`
 //chapter 11(Address) `*(Animation of eyes growing)*`
 //chapter 12(Verify) `*(Animation of hair growing)*` --> plant has fully grown --> to battle zombie apocalypse
+
+//Approach one
+//Select seed type at random b/w [fire, water, electric, grass, ice]
+//build the selected plant type in 6 stages
+//for every stage select plant body part at random from available list
+//Approach two

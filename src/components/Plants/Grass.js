@@ -37,6 +37,8 @@ import Pattern1 from '../../assets/PlantsType/Grass/Pattern_1.svg';
 import Pattern2 from '../../assets/PlantsType/Grass/Pattern_2.svg';
 import Pattern3 from '../../assets/PlantsType/Grass/Pattern_3.svg';
 import Pattern4 from '../../assets/PlantsType/Grass/Pattern_4.svg';
+//Grass
+import GrassSeed from '../../assets/PlantsType/Seed/Seed_grass.svg';
 
 //Grass Type Plant
 export default {
@@ -47,4 +49,5 @@ export default {
   backLeaves: [BackLeaves1, BackLeaves2, BackLeaves3, BackLeaves4],
   frontLeaves: [FrontLeaves1, FrontLeaves2, FrontLeaves3, FrontLeaves4],
   patterns: [Pattern1, Pattern2, Pattern3, Pattern4],
+  seed: [GrassSeed],
 };
