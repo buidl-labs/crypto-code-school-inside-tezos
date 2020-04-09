@@ -3,6 +3,7 @@ import PlantContainer from './Plant';
 import styled from '@emotion/styled';
 import { FaChevronRight } from 'react-icons/fa';
 import { Link } from 'gatsby';
+import React, { useEffect, useState } from 'react';
 
 const stages = [
   {
@@ -14,25 +15,25 @@ const stages = [
   {
     stage: 1,
     description:
-      "You have successfully completed the chapter and evolved your plant's from seed into leaves",
+      "You have successfully completed the chapter and evolved your plant's seed  into leaves",
     nextChapterLink: '',
   },
   {
     stage: 2,
     description:
-      "You have successfully completed the chapter and evolved your plant's body part",
+      "You have successfully completed the chapter and evolved your plant's body",
     nextChapterLink: '',
   },
   {
     stage: 3,
     description:
-      "You have successfully completed the chapter and evolved your plant's head part",
+      "You have successfully completed the chapter and evolved your plant's head",
     nextChapterLink: '',
   },
   {
     stage: 4,
     description:
-      "You have successfully completed the chapter and evolved your plant's eyes part",
+      "You have successfully completed the chapter and evolved your plant's eyes",
     nextChapterLink: '',
   },
   {
@@ -43,24 +44,52 @@ const stages = [
   },
 ];
 
-const PlantGrowthModalView = () => {
+const PlantGrowthModalView = ({ currentChapter, nextSlug }) => {
+  const [stage, updateStage] = useState(0);
+  useEffect(() => {
+    switch (currentChapter) {
+      case 1:
+        updateStage(1);
+        break;
+      case 3:
+        updateStage(2);
+        break;
+      case 6:
+        updateStage(3);
+        break;
+      case 11:
+        updateStage(4);
+        break;
+      case 14:
+        updateStage(5);
+        break;
+    }
+  }, [currentChapter]);
+
   return (
     <Portal>
       <div>
         <div>
-          <PlantContainer />
+          <PlantContainer stage={stage} />
         </div>
         <Container>
           <ContentContainer>
             <h3>Success</h3>
             <p>
-              You have successfully completed the chapter and evolved your
-              plants to defend against the zombies.
+              {stage > 6
+                ? `You have successfully completed the chapter and evolved your
+              plants to defend against the zombies.`
+                : stages[stage].description}
             </p>
-            <ProceedLink to="/">
-              Proceed <FaChevronRight />
-            </ProceedLink>
-            {/* <button>Evolve</button> */}
+            {nextSlug ? (
+              <ProceedLink to={`/lesson/${nextSlug}`}>
+                Proceed <FaChevronRight />
+              </ProceedLink>
+            ) : (
+              <ProceedLink to={`/`}>
+                Proceed <FaChevronRight />
+              </ProceedLink>
+            )}
           </ContentContainer>
         </Container>
       </div>

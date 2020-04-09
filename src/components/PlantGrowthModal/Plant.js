@@ -10,6 +10,7 @@ const Body = styled(randomPlant.body[2])`
   width: 96%;
   height: 35%;
   left: 0;
+  transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
 const Eye = styled(randomPlant.eyes[2])`
   position: absolute;
@@ -18,6 +19,7 @@ const Eye = styled(randomPlant.eyes[2])`
   width: 45%;
   left: 35.5%;
   top: -11%;
+  transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
 const Hair = styled(randomPlant.hair[0])`
   position: absolute;
@@ -27,6 +29,7 @@ const Hair = styled(randomPlant.hair[0])`
   z-index: -1;
   left: -22%;
   transform: translate(14px, 10px);
+  transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
 const Head = styled(randomPlant.head[0])`
   height: 100%;
@@ -34,6 +37,7 @@ const Head = styled(randomPlant.head[0])`
   left: 24.5%;
   top: -22%;
   width: 80%;
+  transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
 const BackLeaves = styled(randomPlant.backLeaves[0])`
   position: absolute;
@@ -42,6 +46,7 @@ const BackLeaves = styled(randomPlant.backLeaves[0])`
   height: 30%;
   z-index: -1;
   left: 1px;
+  transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
 const FrontLeaves = styled(randomPlant.frontLeaves[0])`
       position: absolute;
@@ -49,6 +54,7 @@ const FrontLeaves = styled(randomPlant.frontLeaves[0])`
     width: 86%;
     height: 30%;
     left: 6px;
+    transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 }
 `;
 const Pattern = styled(randomPlant.patterns[0])`
@@ -58,6 +64,7 @@ const Pattern = styled(randomPlant.patterns[0])`
   width: 40%;
   left: 20.5%;
   top: 20%;
+  transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
 
 const Plant = styled.div`
@@ -97,6 +104,7 @@ const Glow = styled.div`
   top: 45%;
   left: 48%;
   z-index: -2;
+  transition: all 0.2s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 
   @media only screen and (max-width: 425px) {
     height: 250px;
@@ -104,25 +112,66 @@ const Glow = styled.div`
   }
 `;
 const Seed = styled(randomPlant.seed[0])`
+  width: 100%;
   position: absolute;
-  top: 26%;
-  left: 25%;
-  transform: translate(-55%, -70%);
+  top: 20%;
+  left: 20%;
+  transform: translate(-25%, -25%) scale(0);
+  transition: all 0.5s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
 
-const PlantContainer = () => {
+const Light = styled.div`
+  background: rgba(208, 252, 255, -0.1);
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  top: 35%;
+  left: 49%;
+  animation: ${glowAnimation} 3s infinite;
+  border-radius: 100%;
+  top: 45%;
+  left: 48%;
+  transition: all 0.2s cubic-bezier(0.43, 0.13, 0.15, 0.99);
+`;
+
+// chapter 1 --> `*(Animation of seed being set in an incubator)*`(optional)
+//chapter 1 `*(Animation of seed growing into leaves)*`
+//chapter 3 `*(Animation of body growing)*`
+//chapter 6 `*(Animation of head growing)*`
+//chapter 11 `*(Animation of  growing)*`
+//chapter 14 `*(Animation of hair growing)*` --> plant has fully grown --> to battle zombie apocalypse
+
+const PlantContainer = ({ stage }) => {
   return (
     <>
       <Plant>
+        <Light />
         <Glow />
-        {/* <Seed /> */}
-        <Body />
-        <Eye />
-        <Head />
-        <Hair />
-        <BackLeaves />
-        <FrontLeaves />
-        <Pattern />
+        {/*TODO: replace with incubated seed */}
+        <Seed
+          style={{
+            transform: `${stage === 0 ? 'scale(1)' : 'scale(0)'}`,
+          }}
+        />
+        <Body
+          style={{ transform: `${stage >= 2 ? 'scale(1)' : 'scale(0)'}` }}
+        />
+        <Eye style={{ transform: `${stage >= 4 ? 'scale(1)' : 'scale(0)'}` }} />
+        <Head
+          style={{ transform: `${stage >= 3 ? 'scale(1)' : 'scale(0)'}` }}
+        />
+        <Hair
+          style={{ transform: `${stage >= 5 ? 'scale(1)' : 'scale(0)'}` }}
+        />
+        <BackLeaves
+          style={{ transform: `${stage >= 1 ? 'scale(1)' : 'scale(0)'}` }}
+        />
+        <FrontLeaves
+          style={{ transform: `${stage >= 1 ? 'scale(1)' : 'scale(0)'}` }}
+        />
+        <Pattern
+          style={{ transform: `${stage >= 5 ? 'scale(1)' : 'scale(0)'}` }}
+        />
       </Plant>
     </>
   );

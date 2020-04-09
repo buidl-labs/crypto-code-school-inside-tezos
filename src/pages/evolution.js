@@ -6,7 +6,7 @@ import WaterPlant from '../components/Plants/Water';
 import ElectricPlant from '../components/Plants/Electric';
 import GrassPlant from '../components/Plants/Grass';
 import IcePlant from '../components/Plants/Ice';
-import Modal from '../components/EvolutionModal/index';
+import Modal from '../components/Portal/index';
 import { FaChevronRight } from 'react-icons/fa';
 import { Link } from 'gatsby';
 
@@ -14,7 +14,7 @@ const plantsList = [FirePlant, WaterPlant, ElectricPlant, IcePlant, GrassPlant];
 const randomPlant = plantsList[Math.floor(Math.random() * plantsList.length)];
 
 function Evolution() {
-  const [stage, updateStage] = useState(1);
+  const [stage, updateStage] = useState(2);
   //TODO: randomly select plant b/w fire, water, electric, grass and ice type
   //select plants sub parts randomly from options given before showing plant growth
   const plantsType = {
@@ -94,8 +94,8 @@ function Evolution() {
   const Glow = styled.div`
     height: 350px;
     width: 350px;
-    position: relative;
-    top: 30%;
+    position: absolute;
+    top: 35%;
     left: 50%;
     animation: ${glowAnimation} 3s infinite;
     background: rgba(208, 252, 255, 0.15);
@@ -112,55 +112,62 @@ function Evolution() {
   return (
     <>
       <Modal>
-        <Glow />
-        <Plant>
-          <SeedSVG
-            style={{ transform: `${stage === 1 ? 'scale(1)' : 'scale(0)'}` }}
-          />
-          <BackLeaves
-            style={{ transform: `${stage >= 2 ? 'scale(1)' : 'scale(0)'}` }}
-          />
-          <Body
-            style={{ transform: `${stage >= 3 ? 'scale(1)' : 'scale(0)'}` }}
-          />
-          <HeadSVG
-            style={{ transform: `${stage >= 4 ? 'scale(1)' : 'scale(0)'}` }}
-          />
-          <Eye
-            style={{ transform: `${stage >= 5 ? 'scale(1)' : 'scale(0)'}` }}
-          />
-          <Hair
-            style={{ transform: `${stage >= 6 ? 'scale(1)' : 'scale(0)'}` }}
-          />
-          <FrontLeaves
-            style={{ transform: `${stage >= 2 ? 'scale(1)' : 'scale(0)'}` }}
-          />
-          <PatternSVG
-            style={{ transform: `${stage >= 6 ? 'scale(1)' : 'scale(0)'}` }}
-          />
-        </Plant>
-        <ContentContainer>
-          <h3>Success</h3>
-          <p>
-            You have successfully completed the chapter and evolved your plants
-            to defend against the zombies.
-          </p>
-          <ProceedLink to="/">
-            Proceed <FaChevronRight />
-          </ProceedLink>
-          <button
-            onClick={() => {
-              updateStage(prevStage => prevStage + 1);
-              //set background color to dark
-              //setTimeout after 2000 milliseconds
-              //lighten the background color
-              //setTimeout for showing plant growth to 1000 milliseconds
-              console.log('stage', stage);
-            }}
-          >
-            Evolve
-          </button>
-        </ContentContainer>
+        <div>
+          <div>
+            <Glow />
+            <Plant>
+              <SeedSVG
+                style={{
+                  transform: `${stage === 1 ? 'scale(1)' : 'scale(0)'}`,
+                }}
+              />
+              <BackLeaves
+                style={{ transform: `${stage >= 2 ? 'scale(1)' : 'scale(0)'}` }}
+              />
+              <Body
+                style={{ transform: `${stage >= 3 ? 'scale(1)' : 'scale(0)'}` }}
+              />
+              <HeadSVG
+                style={{ transform: `${stage >= 4 ? 'scale(1)' : 'scale(0)'}` }}
+              />
+              <Eye
+                style={{ transform: `${stage >= 5 ? 'scale(1)' : 'scale(0)'}` }}
+              />
+              <Hair
+                style={{ transform: `${stage >= 6 ? 'scale(1)' : 'scale(0)'}` }}
+              />
+              <FrontLeaves
+                style={{ transform: `${stage >= 2 ? 'scale(1)' : 'scale(0)'}` }}
+              />
+              <PatternSVG
+                style={{ transform: `${stage >= 6 ? 'scale(1)' : 'scale(0)'}` }}
+              />
+            </Plant>
+            <div style={{ height: '330px' }} />
+            <ContentContainer>
+              <h3>Success</h3>
+              <p>
+                You have successfully completed the chapter and evolved your
+                plants to defend against the zombies.
+              </p>
+              <ProceedLink to="/">
+                Proceed <FaChevronRight />
+              </ProceedLink>
+              <button
+                onClick={() => {
+                  updateStage(prevStage => prevStage + 1);
+                  //set background color to dark
+                  //setTimeout after 2000 milliseconds
+                  //lighten the background color
+                  //setTimeout for showing plant growth to 1000 milliseconds
+                  console.log('stage', stage);
+                }}
+              >
+                Evolve
+              </button>
+            </ContentContainer>
+          </div>
+        </div>
       </Modal>
     </>
   );
@@ -259,7 +266,7 @@ export default Evolution;
 //chapter 3(state variables) `*(Animation of seed growing into leaves)*`
 //chapter 6(booleans) `*(Animation of body growing)*`
 //chapter 8(Math Operations) `*(Animation of head growing)*`
-//chapter 11(Address) `*(Animation of eyes growing)*`
+//chapter 11(Address) `*(Animation of  growing)*`
 //chapter 12(Verify) `*(Animation of hair growing)*` --> plant has fully grown --> to battle zombie apocalypse
 
 //Approach one
