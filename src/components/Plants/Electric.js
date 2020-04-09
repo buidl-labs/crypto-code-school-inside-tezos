@@ -42,6 +42,7 @@ import ElectricSeed from '../../assets/PlantsType/Seed/Seed_electric.svg';
 
 //Electric Type Plant
 export default {
+  type: 'electric',
   body: [Body1, Body2, Body3, Body4, Body5],
   eyes: [Eye1, Eye2, Eye3, Eye4, Eye5, Eye6, Eye7, Eye8],
   hair: [Hair1, Hair2, Hair3, Hair4, Hair5],
