@@ -1,10 +1,10 @@
 import React from 'react';
 import Layout from '../components/Layout/layout';
 import styled from '@emotion/styled';
-import Logo from '../assets/theme.svg';
-import StartLearning from '../assets/start_learning.svg';
-import Plant from '../assets/plant.svg';
-import Zombie from '../assets/zombie.svg';
+import LogoSVG from '../assets/theme.svg';
+import StartLearningSVG from '../assets/start_learning.svg';
+import PlantSVG from '../assets/plant.svg';
+import ZombieSVG from '../assets/zombie.svg';
 import Plants from '../assets/plants.svg';
 import LeftCloudSvg from '../assets/left_cloud.svg';
 import RightCloudSvg from '../assets/right_cloud.svg';
@@ -55,11 +55,11 @@ const HomePage = () => {
     no-repeat center center fixed`}
     >
       <HomepageHeroImage>
-        <RightCloud />
-        <LeftCloud />
+        {/* <RightCloud /> */}
+        {/* <LeftCloud /> */}
         <HeroContainer>
           <div>
-            <Logo width="500" height="auto" />
+            <Logo />
           </div>
           <HeroTitle>Learn to Code Blockchain apps in SmartPy</HeroTitle>
           <HeroSubheading>
@@ -69,13 +69,13 @@ const HomePage = () => {
           </HeroSubheading>
           <InnerContainer>
             <div>
-              <Plant width="150" height="auto" />
+              <Plant />
             </div>
             <div>
-              <StartLearning width="auto" height="auto" />
+              <StartLearning />
             </div>
             <div>
-              <Zombie width="150" height="auto" />
+              <Zombie />
             </div>
           </InnerContainer>
         </HeroContainer>
@@ -155,11 +155,47 @@ const HomePage = () => {
   );
 };
 
+const Zombie = styled(ZombieSVG)`
+  width: 100%;
+  height: auto;
+`;
+
+const StartLearning = styled(StartLearningSVG)`
+  width: 100%;
+  height: auto;
+`;
+
+const Plant = styled(PlantSVG)`
+  width: 100%;
+  height: auto;
+`;
+
+const Logo = styled(LogoSVG)`
+  max-width: 100%;
+  width: 500px;
+  height: auto;
+`;
+
 const HeroContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 95vh;
+
+  @media only screen and (max-width: 425px) {
+    margin: 0 1rem;
+    >div: first-of-type {
+      margin: 0 1rem;
+    }
+
+    h1 {
+      font-size: 27px;
+    }
+
+    p {
+      font-size: 14px;
+    }
+  }
 `;
 
 const HeroTitle = styled.h1`
@@ -191,6 +227,8 @@ const InnerContainer = styled.div`
   padding: 4rem 1rem 0 1rem;
   justify-content: space-between;
   align-items: baseline;
+  position: absolute;
+  bottom: 0;
 `;
 
 const StartLink = styled(Link)`
@@ -237,6 +275,22 @@ const GridContainer = styled.div`
   grid-template-columns: 1fr 1fr;
   grid-gap: 1rem;
   margin: 0 1rem 1rem 1rem;
+
+  @media only screen and (max-width: 425px) {
+    grid-template-columns: 1fr;
+
+    >div: first-of-type {
+      grid-row: 2;
+    }
+
+    h2 {
+      font-size: 33px;
+    }
+
+    p {
+      font-size: 14px;
+    }
+  }
 `;
 
 const LinkContainer = styled.div`
