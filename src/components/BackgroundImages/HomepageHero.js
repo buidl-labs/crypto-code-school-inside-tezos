@@ -15,7 +15,7 @@ const HomepageHeroImage = ({ className, children }) => {
       query {
         desktop: file(relativePath: { eq: "landing_background.jpg" }) {
           childImageSharp {
-            fluid(quality: 90, maxWidth: 4160) {
+            fluid(quality: 100, maxWidth: 4160) {
               ...GatsbyImageSharpFluid_withWebp
             }
           }
