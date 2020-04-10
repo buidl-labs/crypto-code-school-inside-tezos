@@ -122,8 +122,58 @@ const Seed = styled(randomPlant.seed[0])`
   transition: all 0.5s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
 
+/*
+Glow colors
+ice: light: rgba(208, 252, 255, 0.25), dark: rgba(208, 252, 255, 0.8);
+electric: light: rgba(217, 194, 74, 0.25), dark: rgba(217, 194, 74, 0.8);
+grass: light:  rgba(102, 204, 0, 0.2);, dark:  rgba(102, 204, 0, 0.8);
+fire: light:  rgba(203, 80, 41, 0.3);, dark:  rgba(203, 80, 41, 0.8);
+water: light:  rgba(41, 125, 203, 0.25);, dark:  rgba(41, 125, 203, 0.8);;
+*/
+
+const getPlantTypeGlowLight = randomPlant => {
+  let color = {
+    light: 'rgba(208, 252, 255, 0.25)',
+    dark: 'rgba(208, 252, 255, 0.8)',
+  };
+  switch (randomPlant.type) {
+    case 'ice':
+      color = {
+        light: 'rgba(208, 252, 255, 0.25)',
+        dark: 'rgba(208, 252, 255, 0.8)',
+      };
+      break;
+    case 'electric':
+      color = {
+        light: 'rgba(217, 194, 74, 0.25)',
+        dark: 'rgba(217, 194, 74, 0.8)',
+      };
+      break;
+    case 'grass':
+      color = {
+        light: 'rgba(102, 204, 0, 0.2)',
+        dark: 'rgba(102, 204, 0, 0.8)',
+      };
+      break;
+    case 'fire':
+      color = {
+        light: 'rgba(203, 80, 41, 0.3)',
+        dark: 'rgba(203, 80, 41, 0.8)',
+      };
+      break;
+    case 'water':
+      color = {
+        light: 'rgba(41, 125, 203, 0.25)',
+        dark: 'rgba(41, 125, 203, 0.8)',
+      };
+      break;
+  }
+
+  return color;
+};
+
 const Light = styled(animated.div)`
-  background: rgba(217, 194, 74, 0.25);
+  background: ${getPlantTypeGlowLight(randomPlant).light};
   height: 300px;
   width: 300px;
   position: absolute;
@@ -150,7 +200,7 @@ const PlantContainer = ({ stage }) => {
     opacity: 0,
     width: 300,
     height: 300,
-    background: 'rgba(217, 194, 74, 0.8)',
+    background: `${getPlantTypeGlowLight(randomPlant).light}`,
     from: {
       opacity: 100,
       width: 200,
@@ -158,6 +208,11 @@ const PlantContainer = ({ stage }) => {
     },
     config: config.molasses,
     delay: 100,
+  });
+
+  const seedAnimation = useSpring({
+    delay: 100,
+    config: config.wobbly,
   });
 
   return (
@@ -168,6 +223,7 @@ const PlantContainer = ({ stage }) => {
         {/*TODO: replace with incubated seed */}
         <Seed
           style={{
+            seedAnimation,
             transform: `${stage === 0 ? 'scale(1)' : 'scale(0)'}`,
           }}
         />
