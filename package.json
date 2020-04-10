@@ -17,6 +17,7 @@
     "gatsby-plugin-manifest": "^2.2.39",
     "gatsby-plugin-mdx": "^1.0.82",
     "gatsby-plugin-offline": "^3.0.32",
+    "gatsby-plugin-portal": "^1.0.7",
     "gatsby-plugin-prefetch-google-fonts": "^1.4.3",
     "gatsby-plugin-react-helmet": "^3.1.21",
     "gatsby-plugin-react-svg": "^3.0.0",
@@ -36,7 +37,8 @@
     "react-dom": "^16.12.0",
     "react-helmet": "^5.2.1",
     "react-icons": "^3.9.0",
-    "react-responsive": "^8.0.3"
+    "react-responsive": "^8.0.3",
+    "react-spring": "^8.0.27"
   },
   "devDependencies": {
     "@types/node": "^12.12.31",

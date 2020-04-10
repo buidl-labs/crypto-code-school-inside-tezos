@@ -14,6 +14,7 @@ import {
 import useChapters from '../hooks/use-chapters';
 import { getChaptersIndex } from '../utils/index';
 import { Container, Output } from './chapter.styled';
+import PlantGrowthModalView from '../components/PlantGrowthModal';
 export const query = graphql`
   query($slug: String!) {
     mdx(frontmatter: { slug: { eq: $slug } }) {
@@ -34,6 +35,7 @@ export const query = graphql`
 
 const ChapterTemplate = ({ data: { mdx: chapter } }) => {
   const chapterList = useChapters();
+  const [showModal, setModal] = useState(false);
   const [index] = useState(() => {
     const { current, total, nextSlug, prevSlug } = getChaptersIndex(
       chapterList,
@@ -96,8 +98,26 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
     };
   }, []);
 
+  useEffect(() => {
+    switch (index.current) {
+      case 1:
+      case 3:
+      case 6:
+      case 11:
+      case 14:
+        setModal(true);
+        break;
+    }
+  }, [index.current]);
+
   return (
     <Layout>
+      {validation.success && showModal ? (
+        <PlantGrowthModalView
+          currentChapter={index.current}
+          nextSlug={index.nextSlug}
+        />
+      ) : null}
       <Container>
         <ChapterHeader />
         <ChapterContent

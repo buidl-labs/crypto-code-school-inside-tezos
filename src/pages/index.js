@@ -1,10 +1,10 @@
 import React from 'react';
 import Layout from '../components/Layout/layout';
 import styled from '@emotion/styled';
-import Logo from '../assets/theme.svg';
-import StartLearning from '../assets/start_learning.svg';
-import Plant from '../assets/plant.svg';
-import Zombie from '../assets/zombie.svg';
+import LogoSVG from '../assets/theme.svg';
+import StartLearningSVG from '../assets/start_learning.svg';
+import PlantSVG from '../assets/plant.svg';
+import ZombieSVG from '../assets/zombie.svg';
 import Plants from '../assets/plants.svg';
 import LeftCloudSvg from '../assets/left_cloud.svg';
 import RightCloudSvg from '../assets/right_cloud.svg';
@@ -15,7 +15,7 @@ import { Link } from 'gatsby';
 import { keyframes } from '@emotion/core';
 
 const move = keyframes`
-  0% { transform: translateX(100%); opacity: 0.9; }
+  0% { transform: translateX(30%); opacity: 0.9; }
   100% { transform: translateX(-100%); opacity: 0.9; }
 `;
 
@@ -55,27 +55,26 @@ const HomePage = () => {
     no-repeat center center fixed`}
     >
       <HomepageHeroImage>
-        <RightCloud />
-        <LeftCloud />
+        {/* <RightCloud /> */}
+        {/* <LeftCloud /> */}
         <HeroContainer>
           <div>
-            <Logo width="500" height="auto" />
+            <Logo />
           </div>
           <HeroTitle>Learn to Code Blockchain apps in SmartPy</HeroTitle>
           <HeroSubheading>
-            Explore interactive code school for onboarding newcomers to the
-            tezos ecosystem and Learn to create smart contract in smartpy which
-            can be deployed on tezos blockchain.
+            Explore interactive code school and learn to create smart contract
+            in smartpy which can be deployed on tezos blockchain.
           </HeroSubheading>
           <InnerContainer>
             <div>
-              <Plant width="150" height="auto" />
+              <Plant />
             </div>
             <div>
-              <StartLearning width="auto" height="auto" />
+              <StartLearning />
             </div>
             <div>
-              <Zombie width="150" height="auto" />
+              <Zombie />
             </div>
           </InnerContainer>
         </HeroContainer>
@@ -93,25 +92,21 @@ const HomePage = () => {
           <FlexContainer>
             <h2>The Interactive School to master Smartpy</h2>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur.
+              Interactive In-Browser based code editor, with step-by-step
+              chapter to help you with an intuitive and effective Smart contract
+              language smartpy to creating your own simple smart contract by the
+              end of Lesson 1, by end you'll know enough to call your self a
+              tezos blockchain developer.
             </p>
           </FlexContainer>
         </GridContainer>
         <GridContainer>
           <FlexContainer>
-            <h2>The Interactive School to master Smartpy</h2>
+            <h2>Evolve your plant to fight against a zombie apocalypse</h2>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur.
+              As you progress through the chapters, you will grow your plant
+              which will be generated automatically to help you fight against
+              upcoming zombie apocalypse at the end of lessons 1.
             </p>
           </FlexContainer>
           <div>
@@ -155,11 +150,50 @@ const HomePage = () => {
   );
 };
 
+const Zombie = styled(ZombieSVG)`
+  width: 75%;
+  max-width: 193px;
+  height: auto;
+`;
+
+const StartLearning = styled(StartLearningSVG)`
+  width: 75%;
+  height: auto;
+  max-width: 278px;
+`;
+
+const Plant = styled(PlantSVG)`
+  width: 75%;
+  height: auto;
+  max-width: 202px;
+`;
+
+const Logo = styled(LogoSVG)`
+  max-width: 100%;
+  width: 500px;
+  height: auto;
+`;
+
 const HeroContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 95vh;
+
+  @media only screen and (max-width: 425px) {
+    margin: 0 1rem;
+    >div: first-of-type {
+      margin: 0 1rem;
+    }
+
+    h1 {
+      font-size: 27px;
+    }
+
+    p {
+      font-size: 14px;
+    }
+  }
 `;
 
 const HeroTitle = styled.h1`
@@ -191,6 +225,12 @@ const InnerContainer = styled.div`
   padding: 4rem 1rem 0 1rem;
   justify-content: space-between;
   align-items: baseline;
+  position: absolute;
+  bottom: 0;
+
+  > div:first-of-type {
+    margin-left: 4%;
+  }
 `;
 
 const StartLink = styled(Link)`
@@ -237,6 +277,22 @@ const GridContainer = styled.div`
   grid-template-columns: 1fr 1fr;
   grid-gap: 1rem;
   margin: 0 1rem 1rem 1rem;
+
+  @media only screen and (max-width: 425px) {
+    grid-template-columns: 1fr;
+
+    >div: first-of-type {
+      grid-row: 2;
+    }
+
+    h2 {
+      font-size: 33px;
+    }
+
+    p {
+      font-size: 14px;
+    }
+  }
 `;
 
 const LinkContainer = styled.div`
