@@ -63,9 +63,8 @@ const HomePage = () => {
           </div>
           <HeroTitle>Learn to Code Blockchain apps in SmartPy</HeroTitle>
           <HeroSubheading>
-            Explore interactive code school for onboarding newcomers to the
-            tezos ecosystem and Learn to create smart contract in smartpy which
-            can be deployed on tezos blockchain.
+            Explore interactive code school and learn to create smart contract
+            in smartpy which can be deployed on tezos blockchain.
           </HeroSubheading>
           <InnerContainer>
             <div>
@@ -93,12 +92,11 @@ const HomePage = () => {
           <FlexContainer>
             <h2>The Interactive School to master Smartpy</h2>
             <p>
-              {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. */}
+              Interactive In-Browser based code editor, with step-by-step
+              chapter to help you with an intuitive and effective Smart contract
+              language smartpy to creating your own simple smart contract by the
+              end of Lesson 1, by end you'll know enough to call your self a
+              tezos blockchain developer.
             </p>
           </FlexContainer>
         </GridContainer>
@@ -106,12 +104,9 @@ const HomePage = () => {
           <FlexContainer>
             <h2>Evolve your plant to fight against a zombie apocalypse</h2>
             <p>
-              {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. */}
+              As you progress through the chapters, you will grow your plant
+              which will be generated automatically to help you fight against
+              upcoming zombie apocalypse at the end of lessons 1.
             </p>
           </FlexContainer>
           <div>
