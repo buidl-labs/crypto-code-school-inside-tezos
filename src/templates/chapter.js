@@ -35,6 +35,7 @@ export const query = graphql`
 
 const ChapterTemplate = ({ data: { mdx: chapter } }) => {
   const chapterList = useChapters();
+  const [showModal, setModal] = useState(false);
   const [index] = useState(() => {
     const { current, total, nextSlug, prevSlug } = getChaptersIndex(
       chapterList,
@@ -97,9 +98,21 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
     };
   }, []);
 
+  useEffect(() => {
+    switch (index.current) {
+      case 1:
+      case 3:
+      case 6:
+      case 11:
+      case 14:
+        setModal(true);
+        break;
+    }
+  }, [index.current]);
+
   return (
     <Layout>
-      {validation.success ? (
+      {validation.success && showModal ? (
         <PlantGrowthModalView
           currentChapter={index.current}
           nextSlug={index.nextSlug}
