@@ -47,23 +47,25 @@ const stages = [
 const PlantGrowthModalView = ({ currentChapter, nextSlug }) => {
   const [stage, updateStage] = useState(0);
   useEffect(() => {
-    switch (currentChapter) {
-      case 1:
-        updateStage(1);
-        break;
-      case 3:
-        updateStage(2);
-        break;
-      case 6:
-        updateStage(3);
-        break;
-      case 11:
-        updateStage(4);
-        break;
-      case 14:
-        updateStage(5);
-        break;
-    }
+    setTimeout(() => {
+      switch (currentChapter) {
+        case 1:
+          updateStage(1);
+          break;
+        case 3:
+          updateStage(2);
+          break;
+        case 6:
+          updateStage(3);
+          break;
+        case 11:
+          updateStage(4);
+          break;
+        case 14:
+          updateStage(5);
+          break;
+      }
+    }, 1000);
   }, [currentChapter]);
 
   return (

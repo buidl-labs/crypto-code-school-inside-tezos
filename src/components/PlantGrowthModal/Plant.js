@@ -2,6 +2,8 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { keyframes } from '@emotion/core';
 import plantsList from '../Plants/index';
+import { useSpring, animated, config } from 'react-spring';
+
 const randomPlant = plantsList[Math.floor(Math.random() * plantsList.length)];
 
 const Body = styled(randomPlant.body[2])`
@@ -27,7 +29,7 @@ const Hair = styled(randomPlant.hair[0])`
   height: 45%;
   width: 54%;
   z-index: -1;
-  left: -22%;
+  left: -18%;
   transform: translate(14px, 10px);
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
@@ -114,24 +116,26 @@ const Glow = styled.div`
 const Seed = styled(randomPlant.seed[0])`
   width: 100%;
   position: absolute;
-  top: 20%;
-  left: 20%;
+  top: 23%;
+  left: 10%;
   transform: translate(-25%, -25%) scale(0);
   transition: all 0.5s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
 
-const Light = styled.div`
-  background: rgba(208, 252, 255, -0.1);
-  height: 50px;
-  width: 50px;
+const Light = styled(animated.div)`
+  background: rgba(217, 194, 74, 0.25);
+  height: 300px;
+  width: 300px;
   position: absolute;
   top: 35%;
   left: 49%;
+  filter: blur(50px);
   animation: ${glowAnimation} 3s infinite;
   border-radius: 100%;
   top: 45%;
   left: 48%;
   transition: all 0.2s cubic-bezier(0.43, 0.13, 0.15, 0.99);
+  z-index: -1;
 `;
 
 // chapter 1 --> `*(Animation of seed being set in an incubator)*`(optional)
@@ -142,10 +146,24 @@ const Light = styled.div`
 //chapter 14 `*(Animation of hair growing)*` --> plant has fully grown --> to battle zombie apocalypse
 
 const PlantContainer = ({ stage }) => {
+  const props = useSpring({
+    opacity: 0,
+    width: 300,
+    height: 300,
+    background: 'rgba(217, 194, 74, 0.8)',
+    from: {
+      opacity: 100,
+      width: 200,
+      height: 200,
+    },
+    config: config.molasses,
+    delay: 100,
+  });
+
   return (
     <>
       <Plant>
-        <Light />
+        <Light style={props} />
         <Glow />
         {/*TODO: replace with incubated seed */}
         <Seed
