@@ -79,6 +79,29 @@ export const OverviewContainer = styled.div`
       }
     }
   }
+
+  @media only screen and (max-width: 768px) {
+    grid-template-columns: 1fr;
+    margin: 0;
+
+    div {
+      width: 90%;
+      margin: 0 auto;
+    }
+
+    > div:last-of-type {
+      > div {
+        h2 {
+          font-size: 29px;
+        }
+
+        svg {
+          width: 56px;
+          height: 56px;
+        }
+      }
+    }
+  }
 `;
 
 export const BackLink = styled(Link)`
