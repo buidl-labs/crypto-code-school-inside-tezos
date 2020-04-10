@@ -157,17 +157,20 @@ const HomePage = () => {
 
 const Zombie = styled(ZombieSVG)`
   width: 75%;
+  max-width: 193px;
   height: auto;
 `;
 
 const StartLearning = styled(StartLearningSVG)`
   width: 75%;
   height: auto;
+  max-width: 278px;
 `;
 
 const Plant = styled(PlantSVG)`
   width: 75%;
   height: auto;
+  max-width: 202px;
 `;
 
 const Logo = styled(LogoSVG)`
