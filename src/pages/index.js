@@ -93,25 +93,25 @@ const HomePage = () => {
           <FlexContainer>
             <h2>The Interactive School to master Smartpy</h2>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
               nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
               reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur.
+              nulla pariatur. */}
             </p>
           </FlexContainer>
         </GridContainer>
         <GridContainer>
           <FlexContainer>
-            <h2>The Interactive School to master Smartpy</h2>
+            <h2>Evolve your plant to fight against a zombie apocalypse</h2>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
               nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
               reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur.
+              nulla pariatur. */}
             </p>
           </FlexContainer>
           <div>
@@ -156,17 +156,17 @@ const HomePage = () => {
 };
 
 const Zombie = styled(ZombieSVG)`
-  width: 100%;
+  width: 75%;
   height: auto;
 `;
 
 const StartLearning = styled(StartLearningSVG)`
-  width: 100%;
+  width: 75%;
   height: auto;
 `;
 
 const Plant = styled(PlantSVG)`
-  width: 100%;
+  width: 75%;
   height: auto;
 `;
 
@@ -229,6 +229,10 @@ const InnerContainer = styled.div`
   align-items: baseline;
   position: absolute;
   bottom: 0;
+
+  > div:first-of-type {
+    margin-left: 4%;
+  }
 `;
 
 const StartLink = styled(Link)`
