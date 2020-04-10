@@ -71,7 +71,9 @@ const HomePage = () => {
               <Plant />
             </div>
             <div>
-              <StartLearning />
+              <Link to="/overview">
+                <StartLearning />
+              </Link>
             </div>
             <div>
               <Zombie />
@@ -160,6 +162,11 @@ const StartLearning = styled(StartLearningSVG)`
   width: 75%;
   height: auto;
   max-width: 278px;
+
+  :hover {
+    cursor: pointer;
+    transform: scale(1.1) rotate(-5deg);
+  }
 `;
 
 const Plant = styled(PlantSVG)`
