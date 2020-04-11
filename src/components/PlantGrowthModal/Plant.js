@@ -6,7 +6,7 @@ import { useSpring, animated, config } from 'react-spring';
 
 const randomPlant = plantsList[Math.floor(Math.random() * plantsList.length)];
 
-const Body = styled(randomPlant.body[2])`
+export const Body = styled(randomPlant.body[2])`
   position: absolute;
   top: 45%;
   width: 96%;
@@ -14,7 +14,7 @@ const Body = styled(randomPlant.body[2])`
   left: 0;
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
-const Eye = styled(randomPlant.eyes[2])`
+export const Eye = styled(randomPlant.eyes[2])`
   position: absolute;
   height: 50%;
   z-index: 2;
@@ -23,7 +23,7 @@ const Eye = styled(randomPlant.eyes[2])`
   top: -11%;
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
-const Hair = styled(randomPlant.hair[0])`
+export const Hair = styled(randomPlant.hair[0])`
   position: absolute;
   top: -18px;
   height: 45%;
@@ -33,7 +33,7 @@ const Hair = styled(randomPlant.hair[0])`
   transform: translate(14px, 10px);
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
-const Head = styled(randomPlant.head[0])`
+export const Head = styled(randomPlant.head[0])`
   height: 100%;
   position: absolute;
   left: 24.5%;
@@ -41,7 +41,7 @@ const Head = styled(randomPlant.head[0])`
   width: 80%;
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
-const BackLeaves = styled(randomPlant.backLeaves[0])`
+export const BackLeaves = styled(randomPlant.backLeaves[0])`
   position: absolute;
   top: 60%;
   width: 96%;
@@ -50,7 +50,7 @@ const BackLeaves = styled(randomPlant.backLeaves[0])`
   left: 1px;
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
-const FrontLeaves = styled(randomPlant.frontLeaves[0])`
+export const FrontLeaves = styled(randomPlant.frontLeaves[0])`
       position: absolute;
     top: 69%;
     width: 86%;
@@ -59,7 +59,7 @@ const FrontLeaves = styled(randomPlant.frontLeaves[0])`
     transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 }
 `;
-const Pattern = styled(randomPlant.patterns[0])`
+export const Pattern = styled(randomPlant.patterns[0])`
   position: absolute;
   height: 15%;
   z-index: 2;
@@ -69,7 +69,7 @@ const Pattern = styled(randomPlant.patterns[0])`
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
 
-const Plant = styled.div`
+export const Plant = styled.div`
   position: absolute;
   top: 41%;
   left: 50%;

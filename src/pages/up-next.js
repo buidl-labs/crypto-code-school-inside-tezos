@@ -6,6 +6,7 @@ import Logo from '../assets/theme.svg';
 import styled from '@emotion/styled';
 import { Link } from 'gatsby';
 import LockSVG from '../assets/lock.svg';
+import GrownPlant from '../components/PlantGrowthModal/GrownPlant';
 
 function UpNextPage() {
   return (
@@ -26,7 +27,9 @@ function UpNextPage() {
       <MidContainer>
         <div>
           <h2>Success</h2>
-          <div></div>
+          <div style={{ background: 'rgba(208, 252, 255, 0.15)' }}>
+            <GrownPlant />
+          </div>
           <p>
             You have successfully evolved your plant to face the incoming wave
             of zombie attack.
@@ -108,9 +111,9 @@ const MidContainer = styled.div`
     }
 
     div {
-      width: 236px;
-      height: 236px;
-      background: rgba(208, 252, 255, 0.15);
+      position: relative;
+      width: 250px;
+      height: 250px;
       border-radius: 500px;
       margin-top: 42px;
     }
