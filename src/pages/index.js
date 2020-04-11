@@ -13,18 +13,22 @@ import HomepageHeroImage from '../components/BackgroundImages/HomepageHero';
 import { FaChevronRight } from 'react-icons/fa';
 import { Link } from 'gatsby';
 import { keyframes } from '@emotion/core';
+import Footer from '../components/Footer';
 
-const move = keyframes`
-  0% { transform: translateX(30%); opacity: 0.9; }
-  100% { transform: translateX(-100%); opacity: 0.9; }
+const moveLeft = keyframes`
+  0% { transform: translateX(-20%); opacity: 0.9; }
+  100% { transform: translateX(-100vw); opacity: 0.9; }
+`;
+const moveRight = keyframes`
+  0% { transform: translateX(10%); opacity: 0.9; }
+  100% { transform: translateX(100vw); opacity: 0.9; }
 `;
 
 const LeftCloud = styled(LeftCloudSvg)`
-  animation-name: ${move};
-  animation-duration: 40s;
+  animation-name: ${moveRight};
+  animation-duration: 400s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
-  animation-direction: reverse;
   position: absolute;
   z-index: -1;
   left: 10px;
@@ -33,8 +37,8 @@ const LeftCloud = styled(LeftCloudSvg)`
 `;
 
 const RightCloud = styled(RightCloudSvg)`
-  animation-name: ${move};
-  animation-duration: 30s;
+  animation-name: ${moveLeft};
+  animation-duration: 300s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
   position: absolute;
@@ -55,8 +59,8 @@ const HomePage = () => {
     no-repeat center center fixed`}
     >
       <HomepageHeroImage>
-        {/* <RightCloud /> */}
-        {/* <LeftCloud /> */}
+        <RightCloud />
+        <LeftCloud />
         <HeroContainer>
           <div>
             <Logo />
@@ -121,33 +125,7 @@ const HomePage = () => {
           </StartLink>
         </ButtonContainer>
       </div>
-      <Footer>
-        <FooterInner>
-          <div>
-            <h3>BUIDL LABS</h3>
-            <h3>LOGO X Tezos</h3>
-          </div>
-          <div>
-            <LinkContainer>
-              <h4>Navigation</h4>
-              <ul>
-                <li>Home</li>
-                <li>About</li>
-                <li>Blog</li>
-              </ul>
-            </LinkContainer>
-            <LinkContainer>
-              <h4>Social</h4>
-              <ul>
-                <li>Github</li>
-                <li>Twitter</li>
-                <li>ProductHunt</li>
-              </ul>
-            </LinkContainer>
-          </div>
-        </FooterInner>
-        <p>2020 | Footnote</p>
-      </Footer>
+      <Footer />
     </Layout>
   );
 };
@@ -302,41 +280,6 @@ const GridContainer = styled.div`
   }
 `;
 
-const LinkContainer = styled.div`
-  margin: 2rem;
-
-  h4 {
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 22px;
-    line-height: 26px;
-    color: #ffffff;
-  }
-
-  ul {
-    list-style: none;
-    margin-top: 0.5rem;
-    padding: 0;
-
-    li {
-      font-family: Roboto;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 22px;
-      line-height: 26px;
-      margin-top: 2rem;
-      /* identical to box height */
-
-      color: #768987;
-    }
-  }
-
-  @media only screen and (max-width: 321px) {
-    margin: 0rem;
-  }
-`;
-
 const FlexContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -362,76 +305,6 @@ const FlexContainer = styled.div`
     line-height: 162.69%;
     /* or 31px */
     color: #98a4a6;
-  }
-`;
-
-const Footer = styled.footer`
-  background: #1a2a28;
-  height: 100%;
-  max-height: 400px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-
-  p {
-    background: #1a2a28;
-    padding-bottom: 20px;
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 17px;
-    line-height: 20px;
-    /* identical to box height */
-
-    text-align: center;
-
-    color: #335a55;
-  }
-`;
-
-const FooterInner = styled.div`
-  background: #1a2a28;
-  display: flex;
-  justify-content: space-between;
-  list-style: none;
-
-  > div:first-of-type {
-    margin: 2rem;
-    h3 {
-      font-family: Roboto;
-      font-style: normal;
-      font-weight: bold;
-      font-size: 34px;
-      line-height: 40px;
-
-      color: #ffffff;
-    }
-  }
-  > div:last-of-type {
-    display: flex;
-    flex-direction: row;
-    margin-right: 2rem;
-  }
-
-  @media only screen and (max-width: 550px) {
-    display: grid;
-    > div:first-of-type {
-      grid-row: 2;
-    }
-
-    > div:last-of-type {
-      display: flex;
-      flex-direction: column;
-
-      ul {
-        display: flex;
-
-        li {
-          padding-right: 1rem;
-          margin-top: 1rem;
-        }
-      }
-    }
   }
 `;
 
