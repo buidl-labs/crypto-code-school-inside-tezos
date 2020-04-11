@@ -4,9 +4,76 @@ import { keyframes } from '@emotion/core';
 import plantsList from '../Plants/index';
 import { useSpring, animated, config } from 'react-spring';
 
-const randomPlant = plantsList[Math.floor(Math.random() * plantsList.length)];
+/*
+Check if plant has already been generated
+  //if yes --> get the generated plant id from local-storage
+  //if not --> generate plant id and store it in local-storage
 
-export const Body = styled(randomPlant.body[2])`
+  Generation of random plant
+
+  //get random plant from list of water, electric, grass, ice, fire
+    //get random body, eyes, hair, backLeaves, frontLeaves, patterns part from selected plant type
+    
+    store object example:
+    {
+      type: "",
+      plantId: [0-4],
+      bodyId: [0-4],
+      eyesId: [0-7],
+      hair: [0-4],
+      backLeaves: [0-3],
+      frontLeaves: [],
+      patterns: [],
+      seed: []
+    }
+
+Known peculiar behavior: generates and stores plantIds on first page render in local storage 
+*/
+
+const getPlantId = () => {
+  // get the generated plant id from local-storage if available otherwise generate
+  const ids = localStorage.getItem('plant');
+  console.log(ids);
+  if (ids) return JSON.parse(ids);
+
+  const plantId = Math.floor(Math.random() * plantsList.length);
+  const randomPlant = plantsList[plantId];
+  const bodyId = Math.floor(Math.random() * randomPlant.body.length);
+  const eyesId = Math.floor(Math.random() * randomPlant.eyes.length);
+  const hairId = Math.floor(Math.random() * randomPlant.hair.length);
+  const headId = Math.floor(Math.random() * randomPlant.head.length);
+  const backLeavesId = Math.floor(
+    Math.random() * randomPlant.backLeaves.length,
+  );
+  const frontLeavesId = Math.floor(
+    Math.random() * randomPlant.frontLeaves.length,
+  );
+  const patternsId = Math.floor(Math.random() * randomPlant.patterns.length);
+  const seedId = Math.floor(Math.random() * randomPlant.seed.length);
+
+  const plantObj = {
+    type: randomPlant.type,
+    plantId,
+    bodyId,
+    eyesId,
+    hairId,
+    headId,
+    backLeavesId,
+    frontLeavesId,
+    patternsId,
+    seedId,
+  };
+
+  //storage generated plant id for future reference
+  localStorage.setItem('plant', JSON.stringify(plantObj));
+  return plantObj;
+};
+
+const generatedPlantId = getPlantId();
+
+const randomPlant = plantsList[generatedPlantId.plantId];
+
+export const Body = styled(randomPlant.body[generatedPlantId.bodyId])`
   position: absolute;
   top: 45%;
   width: 96%;
@@ -14,7 +81,7 @@ export const Body = styled(randomPlant.body[2])`
   left: 0;
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
-export const Eye = styled(randomPlant.eyes[2])`
+export const Eye = styled(randomPlant.eyes[generatedPlantId.eyesId])`
   position: absolute;
   height: 50%;
   z-index: 2;
@@ -23,7 +90,7 @@ export const Eye = styled(randomPlant.eyes[2])`
   top: -11%;
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
-export const Hair = styled(randomPlant.hair[0])`
+export const Hair = styled(randomPlant.hair[generatedPlantId.hairId])`
   position: absolute;
   top: -18px;
   height: 45%;
@@ -33,7 +100,7 @@ export const Hair = styled(randomPlant.hair[0])`
   transform: translate(14px, 10px);
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
-export const Head = styled(randomPlant.head[0])`
+export const Head = styled(randomPlant.head[generatedPlantId.headId])`
   height: 100%;
   position: absolute;
   left: 24.5%;
@@ -41,7 +108,9 @@ export const Head = styled(randomPlant.head[0])`
   width: 80%;
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
-export const BackLeaves = styled(randomPlant.backLeaves[0])`
+export const BackLeaves = styled(
+  randomPlant.backLeaves[generatedPlantId.backLeavesId],
+)`
   position: absolute;
   top: 60%;
   width: 96%;
@@ -50,7 +119,9 @@ export const BackLeaves = styled(randomPlant.backLeaves[0])`
   left: 1px;
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
-export const FrontLeaves = styled(randomPlant.frontLeaves[0])`
+export const FrontLeaves = styled(
+  randomPlant.frontLeaves[generatedPlantId.frontLeavesId],
+)`
       position: absolute;
     top: 69%;
     width: 86%;
@@ -59,7 +130,9 @@ export const FrontLeaves = styled(randomPlant.frontLeaves[0])`
     transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 }
 `;
-export const Pattern = styled(randomPlant.patterns[0])`
+export const Pattern = styled(
+  randomPlant.patterns[generatedPlantId.patternsId],
+)`
   position: absolute;
   height: 15%;
   z-index: 2;
@@ -113,7 +186,7 @@ const Glow = styled.div`
     width: 250px;
   }
 `;
-const Seed = styled(randomPlant.seed[0])`
+const Seed = styled(randomPlant.seed[generatedPlantId.seedId])`
   width: 100%;
   position: absolute;
   top: 23%;
