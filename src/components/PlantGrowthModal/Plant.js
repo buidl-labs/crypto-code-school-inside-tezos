@@ -32,7 +32,8 @@ Known peculiar behavior: generates and stores plantIds on first page render in l
 
 const getPlantId = () => {
   // get the generated plant id from local-storage if available otherwise generate
-  const ids = localStorage.getItem('plant');
+  const ids =
+    typeof localStorage !== 'undefined' && localStorage.getItem('plant');
   console.log(ids);
   if (ids) return JSON.parse(ids);
 
@@ -65,7 +66,8 @@ const getPlantId = () => {
   };
 
   //storage generated plant id for future reference
-  localStorage.setItem('plant', JSON.stringify(plantObj));
+  typeof localStorage != 'undefined' &&
+    localStorage.setItem('plant', JSON.stringify(plantObj));
   return plantObj;
 };
 
