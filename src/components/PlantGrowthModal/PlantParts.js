@@ -1,12 +1,6 @@
-import React from 'react';
-import { getPlantId } from './utils';
 import styled from '@emotion/styled';
-import plantsList from '../Plants/index';
 
-const generatedPlantId = getPlantId();
-const randomPlant = plantsList[generatedPlantId.plantId];
-
-export const Body = styled(randomPlant.body[generatedPlantId.bodyId])`
+export const Body = styled.svg`
   position: absolute;
   top: 45%;
   width: 96%;
@@ -14,7 +8,7 @@ export const Body = styled(randomPlant.body[generatedPlantId.bodyId])`
   left: 0;
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
-export const Eye = styled(randomPlant.eyes[generatedPlantId.eyesId])`
+export const Eye = styled.svg`
   position: absolute;
   height: 50%;
   z-index: 2;
@@ -23,7 +17,7 @@ export const Eye = styled(randomPlant.eyes[generatedPlantId.eyesId])`
   top: -11%;
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
-export const Hair = styled(randomPlant.hair[generatedPlantId.hairId])`
+export const Hair = styled.svg`
   position: absolute;
   top: -18px;
   height: 45%;
@@ -33,7 +27,7 @@ export const Hair = styled(randomPlant.hair[generatedPlantId.hairId])`
   transform: translate(14px, 10px);
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
-export const Head = styled(randomPlant.head[generatedPlantId.headId])`
+export const Head = styled.svg`
   height: 100%;
   position: absolute;
   left: 24.5%;
@@ -41,9 +35,7 @@ export const Head = styled(randomPlant.head[generatedPlantId.headId])`
   width: 80%;
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
-export const BackLeaves = styled(
-  randomPlant.backLeaves[generatedPlantId.backLeavesId],
-)`
+export const BackLeaves = styled.svg`
   position: absolute;
   top: 60%;
   width: 96%;
@@ -52,10 +44,8 @@ export const BackLeaves = styled(
   left: 1px;
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
-export const FrontLeaves = styled(
-  randomPlant.frontLeaves[generatedPlantId.frontLeavesId],
-)`
-      position: absolute;
+export const FrontLeaves = styled.svg`
+    position: absolute;
     top: 69%;
     width: 86%;
     height: 30%;
@@ -63,9 +53,7 @@ export const FrontLeaves = styled(
     transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 }
 `;
-export const Pattern = styled(
-  randomPlant.patterns[generatedPlantId.patternsId],
-)`
+export const Pattern = styled.svg`
   position: absolute;
   height: 15%;
   z-index: 2;
@@ -74,7 +62,6 @@ export const Pattern = styled(
   top: 20%;
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
-
 export const Plant = styled.div`
   position: absolute;
   top: 41%;
@@ -92,19 +79,3 @@ export const Plant = styled.div`
     height: 30vw;
   }
 `;
-
-function GrownPlant() {
-  return (
-    <Plant style={{ top: ' 51%', left: '53%' }}>
-      <Body />
-      <Eye />
-      <Head />
-      <Hair />
-      <BackLeaves />
-      <FrontLeaves />
-      <Pattern />
-    </Plant>
-  );
-}
-
-export default GrownPlant;

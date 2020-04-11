@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { keyframes } from '@emotion/core';
 import plantsList from '../Plants/index';
 import { useSpring, animated, config } from 'react-spring';
-
+import { getPlantId } from './utils';
 /*
 Check if plant has already been generated
   //if yes --> get the generated plant id from local-storage
@@ -30,46 +30,46 @@ Check if plant has already been generated
 Known peculiar behavior: generates and stores plantIds on first page render in local storage 
 */
 
-const getPlantId = () => {
-  // get the generated plant id from local-storage if available otherwise generate
-  const ids =
-    typeof localStorage !== 'undefined' && localStorage.getItem('plant');
-  console.log(ids);
-  if (ids) return JSON.parse(ids);
+// const getPlantId = () => {
+//   // get the generated plant id from local-storage if available otherwise generate
+//   const ids =
+//     typeof localStorage !== 'undefined' && localStorage.getItem('plant');
+//   console.log(ids);
+//   if (ids) return JSON.parse(ids);
 
-  const plantId = Math.floor(Math.random() * plantsList.length);
-  const randomPlant = plantsList[plantId];
-  const bodyId = Math.floor(Math.random() * randomPlant.body.length);
-  const eyesId = Math.floor(Math.random() * randomPlant.eyes.length);
-  const hairId = Math.floor(Math.random() * randomPlant.hair.length);
-  const headId = Math.floor(Math.random() * randomPlant.head.length);
-  const backLeavesId = Math.floor(
-    Math.random() * randomPlant.backLeaves.length,
-  );
-  const frontLeavesId = Math.floor(
-    Math.random() * randomPlant.frontLeaves.length,
-  );
-  const patternsId = Math.floor(Math.random() * randomPlant.patterns.length);
-  const seedId = Math.floor(Math.random() * randomPlant.seed.length);
+//   const plantId = Math.floor(Math.random() * plantsList.length);
+//   const randomPlant = plantsList[plantId];
+//   const bodyId = Math.floor(Math.random() * randomPlant.body.length);
+//   const eyesId = Math.floor(Math.random() * randomPlant.eyes.length);
+//   const hairId = Math.floor(Math.random() * randomPlant.hair.length);
+//   const headId = Math.floor(Math.random() * randomPlant.head.length);
+//   const backLeavesId = Math.floor(
+//     Math.random() * randomPlant.backLeaves.length,
+//   );
+//   const frontLeavesId = Math.floor(
+//     Math.random() * randomPlant.frontLeaves.length,
+//   );
+//   const patternsId = Math.floor(Math.random() * randomPlant.patterns.length);
+//   const seedId = Math.floor(Math.random() * randomPlant.seed.length);
 
-  const plantObj = {
-    type: randomPlant.type,
-    plantId,
-    bodyId,
-    eyesId,
-    hairId,
-    headId,
-    backLeavesId,
-    frontLeavesId,
-    patternsId,
-    seedId,
-  };
+//   const plantObj = {
+//     type: randomPlant.type,
+//     plantId,
+//     bodyId,
+//     eyesId,
+//     hairId,
+//     headId,
+//     backLeavesId,
+//     frontLeavesId,
+//     patternsId,
+//     seedId,
+//   };
 
-  //storage generated plant id for future reference
-  typeof localStorage != 'undefined' &&
-    localStorage.setItem('plant', JSON.stringify(plantObj));
-  return plantObj;
-};
+//   //storage generated plant id for future reference
+//   typeof localStorage != 'undefined' &&
+//     localStorage.setItem('plant', JSON.stringify(plantObj));
+//   return plantObj;
+// };
 
 const generatedPlantId = getPlantId();
 
