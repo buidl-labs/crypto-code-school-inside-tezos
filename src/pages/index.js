@@ -15,17 +15,20 @@ import { Link } from 'gatsby';
 import { keyframes } from '@emotion/core';
 import Footer from '../components/Footer';
 
-const move = keyframes`
-  0% { transform: translateX(30%); opacity: 0.9; }
-  100% { transform: translateX(-100%); opacity: 0.9; }
+const moveLeft = keyframes`
+  0% { transform: translateX(-20%); opacity: 0.9; }
+  100% { transform: translateX(-100vw); opacity: 0.9; }
+`;
+const moveRight = keyframes`
+  0% { transform: translateX(10%); opacity: 0.9; }
+  100% { transform: translateX(100vw); opacity: 0.9; }
 `;
 
 const LeftCloud = styled(LeftCloudSvg)`
-  animation-name: ${move};
-  animation-duration: 40s;
+  animation-name: ${moveRight};
+  animation-duration: 400s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
-  animation-direction: reverse;
   position: absolute;
   z-index: -1;
   left: 10px;
@@ -34,8 +37,8 @@ const LeftCloud = styled(LeftCloudSvg)`
 `;
 
 const RightCloud = styled(RightCloudSvg)`
-  animation-name: ${move};
-  animation-duration: 30s;
+  animation-name: ${moveLeft};
+  animation-duration: 300s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
   position: absolute;
@@ -56,8 +59,8 @@ const HomePage = () => {
     no-repeat center center fixed`}
     >
       <HomepageHeroImage>
-        {/* <RightCloud /> */}
-        {/* <LeftCloud /> */}
+        <RightCloud />
+        <LeftCloud />
         <HeroContainer>
           <div>
             <Logo />
