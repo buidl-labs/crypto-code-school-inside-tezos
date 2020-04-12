@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout/layout';
 import { FaChevronLeft } from 'react-icons/fa';
 import Theme from '../assets/theme.svg';
 import IceSeed from '../assets/ice_seed.svg';
 import StartIcon from '../assets/start_icon.svg';
 import useChapters from '../hooks/use-chapters';
+import { Link } from 'gatsby';
 import {
   Container,
   BackLink,
@@ -12,9 +13,35 @@ import {
   StartLink,
   OverviewContainer,
 } from '../PagesStyle/OverviewPage/styled';
+import Completed from '../assets/completed.svg';
 
 function LessonsOverview() {
   const chapters = useChapters();
+  const [chapterList, updateChapterList] = useState(chapters);
+
+  useEffect(() => {
+    //get the previous stored if available otherwise create a new one
+    let list = [];
+    const listJSON =
+      typeof window != 'undefined' && localStorage.getItem('lesson-1');
+    if (listJSON !== null) {
+      list = JSON.parse(listJSON);
+    }
+    const newChapterList = chapters.map(chapter => {
+      const chapterAlreadyExists = list.some(savedChapter => {
+        return savedChapter.chapterSlug === chapter.slug;
+      });
+      return {
+        title: chapter.title,
+        chapter: chapter.chapter,
+        slug: chapter.slug,
+        excerpt: chapter.excerpt,
+        completed: chapterAlreadyExists,
+      };
+    });
+
+    updateChapterList(newChapterList);
+  }, []);
   return (
     <Layout
       background={`radial-gradient(
@@ -61,12 +88,15 @@ function LessonsOverview() {
               </StartLink>
             </div>
             <ul>
-              {chapters.map(chapter => {
+              {chapterList.map((chapter, index) => {
                 return (
-                  <li>
-                    <p>
+                  <li key={index}>
+                    <Link to={`/lesson/${chapter.slug}`}>
+                      {chapter.completed ? (
+                        <Completed width="38" height="38" />
+                      ) : null}{' '}
                       {chapter.chapter} - {chapter.title}
-                    </p>
+                    </Link>
                     <hr />
                   </li>
                 );

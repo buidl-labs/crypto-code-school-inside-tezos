@@ -63,13 +63,22 @@ export const OverviewContainer = styled.div`
       padding: 0;
 
       li {
-        p {
+        a {
+          display: block;
+          text-decoration: none;
           font-size: 1.5rem;
           font-family: Roboto;
           color: #ffffff;
           margin-top: 2rem;
           margin-bottom: 3rem;
           line-height: 2rem;
+
+          > svg {
+            display: inline-block;
+            vertical-align: middle;
+            margin-top: -2px;
+            margin-right: 40px;
+          }
         }
         hr {
           background: rgba(255, 255, 255, 0.05);
