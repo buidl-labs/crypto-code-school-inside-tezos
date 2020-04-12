@@ -33,6 +33,29 @@ export const query = graphql`
   }
 `;
 
+/*
+Saving user progress locally
+if user successfully completes the chapter: validation.success === true
+save user code and chapter success status via local-storage
+[{chapterSlug: "", completed: true/false, code: ""}]
+
+mapping stored progress with current chapter/ chapter list
+chapters view
+loop over chapters list
+  //compare if chapterslug matches then show tick icon if true
+learning interface
+  //check if saved code is available for current slug then show the 
+  //saved code otherwise show starting code for the current chapter
+Retrieving stored progress
+//learning interface
+//check if chapter is already completed or not
+  //if yes --> show code
+//chapters view
+  // show tick icon if chapter completed successfully
+//This feature will act as a foundation
+  // for tracking users via analytics
+*/
+
 const ChapterTemplate = ({ data: { mdx: chapter } }) => {
   const chapterList = useChapters();
   const [showModal, setModal] = useState(false);
@@ -54,9 +77,23 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
     error: [''],
   });
 
-  const [editorInputValue, setEditorInputValue] = useState(
-    `${chapter.frontmatter.editor.startingCode}`,
-  );
+  const [editorInputValue, setEditorInputValue] = useState(() => {
+    let list = [];
+    const listJSON =
+      typeof window != 'undefined' && localStorage.getItem('lesson-1');
+    if (listJSON !== null) {
+      list = JSON.parse(listJSON);
+    }
+    if (list.length > 0) {
+      const savedChapter = list.find(chapter => {
+        return chapter.chapterSlug === chapterList[index.current - 1].slug;
+      });
+      if (savedChapter) {
+        return savedChapter.code;
+      }
+    }
+    return `${chapter.frontmatter.editor.startingCode}`;
+  });
   const [showOutput, setShowOutput] = useState(false);
   const [buttonClicked, setButtonClicked] = useState(false);
   var [editorHeight, setEditorHeight] = useState(
@@ -109,6 +146,35 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
         break;
     }
   }, [index.current]);
+
+  useEffect(() => {
+    if (validation.success) {
+      const chapter = {
+        chapterSlug: chapterList[index.current - 1].slug,
+        completed: true,
+        code: editorInputValue,
+      };
+
+      //get the previous stored if available otherwise create a new one
+      let list = [];
+      const listJSON = localStorage.getItem('lesson-1');
+      if (listJSON !== null) {
+        list = JSON.parse(listJSON);
+      }
+      //update user stored progress
+      //only store progress if chapter has not been already completed before
+      const chapterAlreadyExists = list.some(chapter => {
+        return chapter.chapterSlug === chapterList[index.current - 1].slug;
+      });
+
+      //only update locally stored progress if chapter completion is already stored
+      if (!chapterAlreadyExists) {
+        list.push(chapter);
+      }
+      localStorage.setItem('lesson-1', JSON.stringify(list));
+      // console.log(list);
+    }
+  }, [validation.success]);
 
   return (
     <Layout>
