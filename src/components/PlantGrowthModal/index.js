@@ -88,7 +88,7 @@ const PlantGrowthModalView = ({ currentChapter, nextSlug }) => {
                 Proceed <FaChevronRight />
               </ProceedLink>
             ) : (
-              <ProceedLink to={`/`}>
+              <ProceedLink to={`/up-next`}>
                 Proceed <FaChevronRight />
               </ProceedLink>
             )}
