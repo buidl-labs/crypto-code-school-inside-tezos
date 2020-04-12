@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Plant,
   Body,
@@ -11,7 +11,16 @@ import {
 } from './Plant';
 
 function GrownPlant() {
-  return (
+  //wait till window object is available
+  const [renderPlant, setPlant] = useState(null);
+  useEffect(() => {
+    const result = typeof window !== 'undefined';
+    if (result) {
+      setPlant(true);
+    }
+  }, []);
+
+  return renderPlant ? (
     <Plant style={{ top: ' 51%', left: '53%' }}>
       <Body />
       <Eye />
@@ -21,7 +30,7 @@ function GrownPlant() {
       <FrontLeaves />
       <Pattern />
     </Plant>
-  );
+  ) : null;
 }
 
 export default GrownPlant;
