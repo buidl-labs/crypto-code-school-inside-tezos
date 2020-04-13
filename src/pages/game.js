@@ -44,12 +44,11 @@ const Game = () => {
   const keyboardInput = event => {
     if (event.keyCode === 32) {
       event.preventDefault();
-      console.log('event');
-      // shooter.classList.add('fire-animation')
-      // setTimeout(() => {
-      //   fireBall();
-      //   shooter.classList.remove('fire-animation');
-      // }, 700);
+      shooter.current.classList.add('fire-animation');
+      setTimeout(() => {
+        fireBall();
+        shooter.current.classList.remove('fire-animation');
+      }, 700);
     }
   };
 
@@ -62,7 +61,6 @@ const Game = () => {
   };
 
   const moveZombie = zombie => {
-    console.log('test passed');
     let moveZombieInterval = setInterval(() => {
       let xPosition = parseInt(
         window.getComputedStyle(zombie).getPropertyValue('left'),
@@ -71,7 +69,6 @@ const Game = () => {
         zombie.remove();
       }
       if (xPosition <= 200) {
-        console.log('game over');
         gameOver();
       } else {
         zombie.style.left = `${xPosition - 2}px`;
@@ -90,53 +87,50 @@ const Game = () => {
   };
 
   const fireBall = () => {
-    // const fire = createFireElement();
-    // gameContainer.appendChild(fire);
-    // moveFireBall(fire);
+    const fire = createFireElement();
+    gameContainer.current.appendChild(fire);
+    moveFireBall(fire);
   };
 
   const createFireElement = () => {
-    // let xPosition = parseInt(
-    //   window.getComputedStyle(shooter).getPropertyValue('left')
-    // );
-    // let newFireBall = document.createElement('img');
+    let xPosition = parseInt(
+      window.getComputedStyle(shooter.current).getPropertyValue('left'),
+    );
+    let newFireBall = document.createElement('div'); // TODO img
     // newFireBall.src = 'images/fireball.svg';
-    // newFireBall.classList.add('fireball');
-    // newFireBall.style.position = 'absolute';
-    // newFireBall.style.left = `${xPosition + 154.5}px`;
-    // newFireBall.style.bottom = '36.5%';
-    // return newFireBall;
+    newFireBall.classList.add('fireball');
+    newFireBall.style.position = 'absolute';
+    newFireBall.style.left = `${xPosition + 154.5}px`;
+    newFireBall.style.bottom = '36.5%';
+    return newFireBall;
   };
 
   const moveFireBall = fire => {
-    // let moveFirballInterval = setInterval(() => {
-    //   let zombie = document.querySelectorAll('.zombie')[0];
-    //   let xPosition = parseInt(fire.style.left);
-    //   // console.log(zombies)
-    //   // zombies.forEach((zombie) => {
-    //   if (checkFireballCollision(fire, zombie)) {
-    //     //   zombie.remove()
-    //     // zombie.src = 'images/explosion.png';
-    //     zombie.classList.remove('zombie');
-    //     zombie.classList.add('dead-zombie');
-    //     fire.remove();
-    //     clearInterval(moveFirballInterval);
-    //   }
-    //   // });
-    //   else if (xPosition > 800) {
-    //     fire.remove();
-    //   } else {
-    //     fire.style.left = `${xPosition + 3}px`;
-    //   }
-    // }, 17);
+    let moveFirballInterval = setInterval(() => {
+      let zombie = document.querySelectorAll('.zombie')[0];
+      let xPosition = parseInt(fire.style.left);
+
+      // check collision
+      if (checkFireballCollision(fire, zombie)) {
+        zombie.classList.remove('zombie');
+        zombie.classList.add('dead-zombie');
+        fire.remove();
+        clearInterval(moveFirballInterval);
+      } else if (xPosition > 800) {
+        fire.remove();
+      } else {
+        fire.style.left = `${xPosition + 3}px`;
+      }
+    }, 17);
   };
 
   const checkFireballCollision = (fire, zombie) => {
-    // let fireballLeft = parseInt(fire.style.left);
-    // let zombieLeft = parseInt(zombie.style.left);
-    // //   if (fireballLeft + 20 >= zombieLeft) return true;
-    // if (fireballLeft < 800 && fireballLeft - 20 >= zombieLeft) return true;
-    // else return false;
+    let fireballLeft = parseInt(fire.style.left);
+    let zombieLeft = parseInt(zombie.style.left);
+
+    // collision logic
+    if (fireballLeft < 800 && fireballLeft - 20 >= zombieLeft) return true;
+    else return false;
   };
 
   return (
