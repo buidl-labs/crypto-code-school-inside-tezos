@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 // components from external libraries
 import { Link } from 'gatsby';
 import { FaChevronLeft } from 'react-icons/fa';
+import Title from '../assets/GameAssets/title.svg';
 
 // custom styles
 import Layout from '../components/Layout/layout';
@@ -11,8 +12,10 @@ import {
   Header,
   Footer,
   GameContainer,
+  StartButton,
+  Instructions,
+  Plant
 } from '../PagesStyle/GamePage/styled';
-
 
 const Game = () => {
   useEffect(() => {}, []);
@@ -27,8 +30,14 @@ const Game = () => {
       no-repeat center center fixed`}
     >
       <MainContainer>
-        <Header />
-        <GameContainer></GameContainer>
+        <Header>
+          <Title />
+        </Header>
+        <GameContainer>
+          <StartButton>Start</StartButton>
+          <Instructions>Press SPACEBAR to throw the fireball</Instructions>
+          <Plant />
+        </GameContainer>
         <Footer />
       </MainContainer>
     </Layout>
