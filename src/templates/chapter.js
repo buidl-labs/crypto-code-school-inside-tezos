@@ -15,7 +15,6 @@ import useChapters from '../hooks/use-chapters';
 import { getChaptersIndex } from '../utils/index';
 import { Container, Output } from './chapter.styled';
 import PlantGrowthModalView from '../components/PlantGrowthModal';
-import amplitude from 'amplitude-js';
 
 export const query = graphql`
   query($slug: String!) {
@@ -177,10 +176,14 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
       if (!chapterAlreadyExists) {
         list.push(chapter);
         //track user progress on successful chapter completion
-        amplitude.getInstance().init('9f25945960748d67e7f7cf101ece3422');
-        amplitude.getInstance().logEvent('Chapter-Completed', {
-          chapterSlug: chapterList[index.current - 1].slug,
-        });
+        if (typeof window !== 'undefined') {
+          import('amplitude-js').then(amplitude => {
+            amplitude.getInstance().init('9f25945960748d67e7f7cf101ece3422');
+            amplitude.getInstance().logEvent('Chapter-Completed', {
+              chapterSlug: chapterList[index.current - 1].slug,
+            });
+          });
+        }
       }
       localStorage.setItem('lesson-1', JSON.stringify(list));
       // console.log(list);
