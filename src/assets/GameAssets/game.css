@@ -1,30 +1,52 @@
 .zombie {
-    position: absolute;
-    bottom: 20%;
-    left: 100%;
-    z-index: 5;
-    opacity: 1;
-    width: 143px;
-    height: 223px;
-    /* background: url('plant.svg'); */
-    background: black;
-    animation: play 0.8s steps(9) infinite;
+  position: absolute;
+  bottom: 20%;
+  left: 100%;
+  z-index: 5;
+  opacity: 1;
+  width: 143px;
+  height: 223px;
+  /* background: url('plant.svg'); */
+  background: black;
+  animation: play 0.8s steps(9) infinite;
+}
+
+@keyframes play {
+  100% {
+    background-position: -1288px;
   }
-  
-  @keyframes play {
-    100% {
-      background-position: -1288px;
-    }
+}
+
+.dead-zombie {
+  position: absolute;
+  /* background: url('walkingZombie.png'); */
+  background: black;
+  opacity: 0;
+  z-index: 5;
+}
+
+.zombie-transition {
+  transition: opacity 0.5s ease-out;
+}
+
+.fireball {
+  position: absolute;
+  bottom: 175px;
+  z-index: 5;
+  background: red;
+}
+
+.fire-animation {
+  /* animation: fire 0.8s steps(9) 0.8s;  */
+  animation-name: fire;
+  animation-timing-function: steps(9);
+  animation-duration: 0.8s;
+  animation-iteration-count: 1;
+  animation-delay: 0s;
+}
+
+@keyframes fire {
+  100% {
+    background-position: -1617px;
   }
-  
-  .dead-zombie {
-    position: absolute;
-    /* background: url('walkingZombie.png'); */
-    background: black;
-    opacity: 0;
-    z-index: 5;
-  }
-  
-  .zombie-transition {
-    transition: opacity 0.5s ease-out;
-  }
+}
