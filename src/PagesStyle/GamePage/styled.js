@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { jsx, css, keyframes } from '@emotion/core';
 
 // import plant from '../../assets/GameAssets/plantShooter.png';
 import plant from '../../images/forest.png';
@@ -68,4 +69,30 @@ export const Plant = styled.div`
   background: url(${plant});
   width: 180px;
   height: 280px;
+`;
+
+const play = keyframes`
+  100% {
+    background-position: -1288px;
+  }
+`;
+
+export const Zombie = styled.div`
+  position: absolute;
+  bottom: 20%;
+  left: 100%;
+  z-index: 5;
+  opacity: 1;
+  width: 143px;
+  height: 223px;
+  background: url('images/zombiewalking.svg');
+  animation: ${play} 0.8s steps(9) infinite;
+  transition: opacity 0.5s ease-out;
+`;
+
+export const deadZombie = styled.div`
+  position: absolute;
+  background: url('images/zombiewalking.svg');
+  opacity: 0;
+  z-index: 5;
 `;
