@@ -1,0 +1,30 @@
+.zombie {
+    position: absolute;
+    bottom: 20%;
+    left: 100%;
+    z-index: 5;
+    opacity: 1;
+    width: 143px;
+    height: 223px;
+    /* background: url('plant.svg'); */
+    background: black;
+    animation: play 0.8s steps(9) infinite;
+  }
+  
+  @keyframes play {
+    100% {
+      background-position: -1288px;
+    }
+  }
+  
+  .dead-zombie {
+    position: absolute;
+    /* background: url('walkingZombie.png'); */
+    background: black;
+    opacity: 0;
+    z-index: 5;
+  }
+  
+  .zombie-transition {
+    transition: opacity 0.5s ease-out;
+  }
