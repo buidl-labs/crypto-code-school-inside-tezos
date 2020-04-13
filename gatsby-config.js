@@ -117,6 +117,12 @@ module.exports = {
         },
       },
     },
+    {
+      resolve: `gatsby-plugin-metomic`,
+      options: {
+        clientId: 'prj:328a9ae4-b11d-4e2f-a5e3-4525fd629176',
+      },
+    },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
