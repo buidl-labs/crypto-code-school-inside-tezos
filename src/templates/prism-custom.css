@@ -36,7 +36,7 @@ code[class*='language-'],
 pre[class*='language-'] {
   font-family: Inconsolata, monospace;
   font-size: 1.2rem;
-  line-height: 1.5rem;
+  line-height: 1.75rem;
 }
 
 /* .token.function, */
