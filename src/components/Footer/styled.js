@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { Link } from 'gatsby';
 
 export const Footer = styled.footer`
   background: #1a2a28;
@@ -103,4 +104,17 @@ export const LinkContainer = styled.div`
   @media only screen and (max-width: 321px) {
     margin: 0rem;
   }
+`;
+
+export const NavigationLink = styled(Link)`
+  text-decoration: none;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 22px;
+  line-height: 26px;
+  margin-top: 2rem;
+  /* identical to box height */
+
+  color: #768987;
 `;

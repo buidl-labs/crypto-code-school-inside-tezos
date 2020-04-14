@@ -1,5 +1,6 @@
 import React from 'react';
-import { Footer, FooterInner, LinkContainer } from './styled';
+import { Footer, FooterInner, LinkContainer, NavigationLink } from './styled';
+
 function FooterPage() {
   return (
     <Footer>
@@ -12,7 +13,11 @@ function FooterPage() {
           <LinkContainer>
             <h4>Navigation</h4>
             <ul>
-              <li>Home</li>
+              <li>
+                <NavigationLink to="/privacy-policy">
+                  Privacy Policy
+                </NavigationLink>
+              </li>
               <li>About</li>
               <li>Blog</li>
             </ul>
