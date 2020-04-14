@@ -1,6 +1,9 @@
 import styled from '@emotion/styled';
 import { jsx, css, keyframes } from '@emotion/core';
 
+import LeftCloudSvg from '../../assets/left_cloud.svg';
+import RightCloudSvg from '../../assets/right_cloud.svg';
+
 export const MainContainer = styled.section`
   width: 100%;
   height: 100%;
@@ -40,6 +43,7 @@ export const GameContainer = styled.section`
     #258c86 100%
   );
   z-index: 1;
+  overflow-y: hidden;
 `;
 
 export const StartButton = styled.button`
@@ -60,11 +64,9 @@ export const Instructions = styled.h1`
 
 export const PlantContainer = styled.div`
   position: absolute;
-  bottom: 15%;
-  left: 200px;
+  bottom: 20%;
+  left: 250px;
   z-index: 6;
-  width: 180px;
-  height: 280px;
 `;
 
 const play = keyframes`
@@ -91,4 +93,37 @@ export const deadZombie = styled.div`
   background: url('images/zombiewalking.svg');
   opacity: 0;
   z-index: 5;
+`;
+
+export const moveLeft = keyframes`
+  0% { transform: translateX(-20%); opacity: 0.9; }
+  100% { transform: translateX(-100vw); opacity: 0.9; }
+`;
+export const moveRight = keyframes`
+  0% { transform: translateX(10%); opacity: 0.9; }
+  100% { transform: translateX(100vw); opacity: 0.9; }
+`;
+
+export const LeftCloud = styled(LeftCloudSvg)`
+  animation-name: ${moveRight};
+  animation-duration: 400s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  position: absolute;
+  z-index: -1;
+  left: 10px;
+  right: 10;
+  top: 5rem;
+`;
+
+export const RightCloud = styled(RightCloudSvg)`
+  animation-name: ${moveLeft};
+  animation-duration: 300s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  position: absolute;
+  z-index: -1;
+  right: 10px;
+  right: 10;
+  top: 10rem;
 `;

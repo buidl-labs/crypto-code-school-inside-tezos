@@ -6,8 +6,12 @@ import '../assets/GameAssets/game.css';
 // components from external libraries
 import { Link } from 'gatsby';
 import { FaChevronLeft } from 'react-icons/fa';
-import Title from '../assets/GameAssets/title.svg';
 import GrownPlant from '../components/PlantGrowthModal/GrownPlant';
+
+// Images
+import Title from '../assets/GameAssets/title.svg';
+import House from '../assets/GameAssets/house.svg';
+import ForestLand from '../assets/GameAssets/forestland.svg';
 
 // custom styles
 import Layout from '../components/Layout/layout';
@@ -19,7 +23,8 @@ import {
   StartButton,
   Instructions,
   PlantContainer,
-  Zombie,
+  RightCloud,
+  LeftCloud,
 } from '../PagesStyle/GamePage/styled';
 
 const Game = () => {
@@ -149,6 +154,8 @@ const Game = () => {
           <Title />
         </Header>
         <GameContainer ref={gameContainer} id="game-container">
+          <RightCloud />
+          <LeftCloud />
           <StartButton ref={startButton} id="start" onClick={() => playGame()}>
             Start
           </StartButton>
@@ -156,6 +163,8 @@ const Game = () => {
           <PlantContainer id="plant-shooter" ref={shooter}>
             <GrownPlant stage={6} />
           </PlantContainer>
+          <House className="house-img" />
+          <ForestLand className="forest-land-img" />
         </GameContainer>
         <Footer />
       </MainContainer>
