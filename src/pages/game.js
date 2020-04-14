@@ -7,6 +7,7 @@ import '../assets/GameAssets/game.css';
 import { Link } from 'gatsby';
 import { FaChevronLeft } from 'react-icons/fa';
 import Title from '../assets/GameAssets/title.svg';
+import GrownPlant from '../components/PlantGrowthModal/GrownPlant';
 
 // custom styles
 import Layout from '../components/Layout/layout';
@@ -17,7 +18,7 @@ import {
   GameContainer,
   StartButton,
   Instructions,
-  Plant,
+  PlantContainer,
   Zombie,
 } from '../PagesStyle/GamePage/styled';
 
@@ -28,6 +29,7 @@ const Game = () => {
   const gameContainer = useRef(null);
   const startButton = useRef(null);
   const shooter = useRef(null);
+  // console.log(shooter);
 
   let zombieInterval;
 
@@ -100,7 +102,7 @@ const Game = () => {
     // newFireBall.src = 'images/fireball.svg';
     newFireBall.classList.add('fireball');
     newFireBall.style.position = 'absolute';
-    newFireBall.style.left = `${xPosition + 154.5}px`;
+    newFireBall.style.left = `${154.5}px`;
     newFireBall.style.bottom = '36.5%';
     return newFireBall;
   };
@@ -151,7 +153,9 @@ const Game = () => {
             Start
           </StartButton>
           <Instructions>Press SPACEBAR to throw the fireball</Instructions>
-          <Plant ref={shooter} id="plant-shooter" />
+          <PlantContainer id="plant-shooter" ref={shooter}>
+            <GrownPlant stage={6} />
+          </PlantContainer>
         </GameContainer>
         <Footer />
       </MainContainer>
