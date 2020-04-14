@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Layout from '../components/Layout/layout';
 import Footer from '../components/Footer';
 import BackLink from '../components/BackLink';
@@ -7,8 +7,12 @@ import styled from '@emotion/styled';
 import { Link } from 'gatsby';
 import LockSVG from '../assets/lock.svg';
 import GrownPlant from '../components/PlantGrowthModal/GrownPlant';
+import { trackEvent } from '../utils/analytics';
 
 function UpNextPage() {
+  useEffect(() => {
+    trackEvent('Up-Next-View');
+  }, []);
   return (
     <Layout
       background={`radial-gradient(

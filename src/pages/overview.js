@@ -14,10 +14,15 @@ import {
   OverviewContainer,
 } from '../PagesStyle/OverviewPage/styled';
 import Completed from '../assets/completed.svg';
+import { trackEvent } from '../utils/analytics';
 
 function LessonsOverview() {
   const chapters = useChapters();
   const [chapterList, updateChapterList] = useState(chapters);
+
+  useEffect(() => {
+    trackEvent('Chapters-Overview-View');
+  }, []);
 
   useEffect(() => {
     //get the previous stored if available otherwise create a new one
