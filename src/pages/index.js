@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Layout from '../components/Layout/layout';
 import styled from '@emotion/styled';
 import LogoSVG from '../assets/theme.svg';
@@ -14,6 +14,7 @@ import { FaChevronRight } from 'react-icons/fa';
 import { Link } from 'gatsby';
 import { keyframes } from '@emotion/core';
 import Footer from '../components/Footer';
+import { trackEvent } from '../utils/analytics';
 
 const moveLeft = keyframes`
   0% { transform: translateX(-20%); opacity: 0.9; }
@@ -49,6 +50,10 @@ const RightCloud = styled(RightCloudSvg)`
 `;
 
 const HomePage = () => {
+  useEffect(() => {
+    trackEvent('Chapters-Overview-View');
+  }, []);
+
   return (
     <Layout
       background={`radial-gradient(

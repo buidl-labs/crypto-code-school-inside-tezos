@@ -15,6 +15,7 @@ import useChapters from '../hooks/use-chapters';
 import { getChaptersIndex } from '../utils/index';
 import { Container, Output } from './chapter.styled';
 import PlantGrowthModalView from '../components/PlantGrowthModal';
+import { trackEventWithProperties } from '../utils/analytics';
 export const query = graphql`
   query($slug: String!) {
     mdx(frontmatter: { slug: { eq: $slug } }) {
@@ -54,6 +55,10 @@ Retrieving stored progress
   // show tick icon if chapter completed successfully
 //This feature will act as a foundation
   // for tracking users via analytics
+    // for tracking users via analytics
+    //tracking individual chapters
+      //if all chapter are completed --> lesson was successfully completed
+    //tracking --> homeview, chapters-view, learning-interface-view, up-next-view, game-view 
 */
 
 const ChapterTemplate = ({ data: { mdx: chapter } }) => {
@@ -170,6 +175,10 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
       //only update locally stored progress if chapter completion is already stored
       if (!chapterAlreadyExists) {
         list.push(chapter);
+        //track user progress on successful chapter completion
+        trackEventWithProperties('Chapter-Completed', {
+          chapterSlug: chapterList[index.current - 1].slug,
+        });
       }
       localStorage.setItem('lesson-1', JSON.stringify(list));
       // console.log(list);

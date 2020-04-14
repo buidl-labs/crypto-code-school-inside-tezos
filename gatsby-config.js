@@ -4,6 +4,7 @@ module.exports = {
     description: `Interactive Code School for onboarding newcomers to the Tezos Ecosystem using smartpy`,
   },
   plugins: [
+    `gatsby-plugin-netlify`,
     `gatsby-plugin-portal`,
     `gatsby-plugin-emotion`,
     `gatsby-plugin-react-helmet`,
@@ -92,6 +93,36 @@ module.exports = {
     },
     {
       resolve: `gatsby-plugin-typescript`,
+    },
+    {
+      resolve: `gatsby-plugin-amplitude-analytics`,
+      options: {
+        // API key for your Amplitude Project (required)
+        apiKey: '9f25945960748d67e7f7cf101ece3422',
+        // Puts tracking script in the head instead of the body (optional)
+        head: true,
+        // Prevents loading Amplitude and logging events if visitors have "Do Not Track" enabled (optional)
+        respectDNT: true,
+        // Avoids sending pageview hits from custom paths (optional)
+        exclude: ['/preview/**', '/do-not-track/me/too/'],
+        // Override the default event types (optional)
+        eventTypes: {
+          outboundLinkClick: 'OUTBOUND_LINK_CLICK',
+          pageView: 'PAGE_VIEW',
+        },
+        // Amplitude JS SDK configuration options (optional)
+        amplitudeConfig: {
+          saveEvents: true,
+          includeUtm: true,
+          includeReferrer: true,
+        },
+      },
+    },
+    {
+      resolve: `gatsby-plugin-metomic`,
+      options: {
+        clientId: 'prj:328a9ae4-b11d-4e2f-a5e3-4525fd629176',
+      },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
