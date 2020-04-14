@@ -4,6 +4,8 @@ import { jsx, css, keyframes } from '@emotion/core';
 import LeftCloudSvg from '../../assets/left_cloud.svg';
 import RightCloudSvg from '../../assets/right_cloud.svg';
 
+import { Link } from 'gatsby';
+
 export const MainContainer = styled.section`
   width: 100%;
   height: 100%;
@@ -19,7 +21,7 @@ export const Header = styled.section`
   width: 100%;
   background-color: black;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 `;
 
@@ -126,4 +128,29 @@ export const RightCloud = styled(RightCloudSvg)`
   right: 10px;
   right: 10;
   top: 10rem;
+`;
+
+export const BackLink = styled(Link)`
+  display: inline-block;
+  color: #fff;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  text-decoration: none;
+  font-size: 23px;
+  line-height: 175%;
+  margin: 0 10px;
+  width: 120px;
+
+  > span {
+    margin-left: 6px;
+    margin-top: 10px;
+    display: inline-block;
+  }
+
+  > svg {
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: -2px;
+  }
 `;

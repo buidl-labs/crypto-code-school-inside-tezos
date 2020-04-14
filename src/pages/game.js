@@ -13,7 +13,7 @@ import Title from '../assets/GameAssets/title.svg';
 import House from '../assets/GameAssets/house.svg';
 import ForestLand from '../assets/GameAssets/forestland.svg';
 
-// custom styles
+// Custom styles and styled images
 import Layout from '../components/Layout/layout';
 import {
   MainContainer,
@@ -25,6 +25,7 @@ import {
   PlantContainer,
   RightCloud,
   LeftCloud,
+  BackLink,
 } from '../PagesStyle/GamePage/styled';
 
 const Game = () => {
@@ -34,7 +35,6 @@ const Game = () => {
   const gameContainer = useRef(null);
   const startButton = useRef(null);
   const shooter = useRef(null);
-  // console.log(shooter);
 
   let zombieInterval;
 
@@ -45,7 +45,6 @@ const Game = () => {
     zombieInterval = setInterval(() => {
       createZombie();
     }, 4000);
-    // window.requestAnimationFrame(createZombie);
   };
 
   const keyboardInput = event => {
@@ -88,9 +87,7 @@ const Game = () => {
     clearInterval(zombieInterval);
     clearInterval(moveZombieInterval);
     //   clearInterval(moveFirballInterval);
-    // setTimeout(() => {
     console.log(`Game Over! The zombies made it to Earth!`);
-    // }, 1000);
   };
 
   const fireBall = () => {
@@ -141,17 +138,15 @@ const Game = () => {
   };
 
   return (
-    <Layout
-      background={`radial-gradient(
-        198.67% 198.67% at 53.06% -50.22%,
-        #13282d 53.32%,
-        #296460 100%
-      )
-      no-repeat center center fixed`}
-    >
+    <Layout>
       <MainContainer>
         <Header>
+          <BackLink to={`/`}>
+            <FaChevronLeft />
+            <span>Back</span>
+          </BackLink>
           <Title />
+          <div style={{ width: '120px' }} />
         </Header>
         <GameContainer ref={gameContainer} id="game-container">
           <RightCloud />
