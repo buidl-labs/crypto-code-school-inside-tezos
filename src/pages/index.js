@@ -160,7 +160,7 @@ const Plant = styled(PlantSVG)`
 
 const Logo = styled(LogoSVG)`
   max-width: 100%;
-  width: 500px;
+  width: 400px;
   height: auto;
 `;
 

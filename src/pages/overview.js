@@ -15,6 +15,7 @@ import {
 } from '../PagesStyle/OverviewPage/styled';
 import Completed from '../assets/completed.svg';
 import { trackEvent } from '../utils/analytics';
+import Footer from '../components/Footer';
 
 function LessonsOverview() {
   const chapters = useChapters();
@@ -110,6 +111,7 @@ function LessonsOverview() {
           </div>
         </OverviewContainer>
       </Container>
+      <Footer />
     </Layout>
   );
 }
