@@ -89,7 +89,11 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
     error: [''],
   });
 
-  const [editorInputValue, setEditorInputValue] = useState(() => {
+  /**
+   * Returns default editor value that is the starting point or completed code
+   * if  individual chapter is already completed
+   */
+  const getDefaultEditorValue = () => {
     let list = [];
     const listJSON =
       typeof window != 'undefined' && localStorage.getItem('lesson-1');
@@ -105,7 +109,11 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
       }
     }
     return `${chapter.frontmatter.editor.startingCode}`;
-  });
+  };
+
+  const [editorInputValue, setEditorInputValue] = useState(
+    getDefaultEditorValue,
+  );
   const [showOutput, setShowOutput] = useState(false);
   const [buttonClicked, setButtonClicked] = useState(false);
   var [editorHeight, setEditorHeight] = useState(
@@ -192,6 +200,10 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
     }
   }, [validation.success]);
 
+  const resetEditor = () => {
+    setEditorInputValue(getDefaultEditorValue);
+  };
+
   return (
     <Layout>
       {validation.success && showModal ? (
@@ -236,6 +248,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           chapterIndex={index}
           updateValidation={updateValidation}
           editorInputValue={editorInputValue}
+          resetEditor={resetEditor}
         >
           <ControlledEditor
             height={`${editorHeight}`}

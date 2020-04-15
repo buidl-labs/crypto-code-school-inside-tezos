@@ -1,9 +1,19 @@
 import styled from '@emotion/styled';
 
 export const ContractFile = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   grid-area: contractFile;
   background: #112425;
   height: 50px;
+
+  span {
+    margin-right: 10px;
+    :hover {
+      cursor: pointer;
+    }
+  }
 
   @media only screen and (min-width: 768px) {
     width: calc(100vw - (100vw / 2.4));

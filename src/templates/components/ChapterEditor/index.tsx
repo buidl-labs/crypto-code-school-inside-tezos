@@ -10,12 +10,14 @@ import {
   CheckAnswerButton,
 } from './styled';
 import { useMediaQuery } from 'react-responsive';
+import RefreshSVG from '../../../assets/refresh.svg';
 
 interface Props {
   children: React.ReactNode;
   setShowOutput(input: boolean): void;
   setButtonClicked(input: boolean): void;
   setEditorHeight(input: string): void;
+  resetEditor(): void;
   chapterIndex: {
     current: number;
     total: number;
@@ -34,6 +36,7 @@ function ChapterEditor({
   chapterIndex,
   updateValidation,
   editorInputValue,
+  resetEditor,
 }: Props) {
   const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
 
@@ -41,6 +44,9 @@ function ChapterEditor({
     <>
       <ContractFile>
         <p>Contract.py</p>
+        <span onClick={() => resetEditor()}>
+          <RefreshSVG />
+        </span>
       </ContractFile>
       <Editor>{children}</Editor>
       <Option>
