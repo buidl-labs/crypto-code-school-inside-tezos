@@ -53,6 +53,7 @@ const Game = () => {
 
   const startAnimations = () => {
     document.getElementById('lightening').remove();
+    document.getElementById('instructions').style.display = 'block';
   }
 
   const keyboardInput = event => {
@@ -160,7 +161,7 @@ const Game = () => {
           <Lightening id="lightening" />
           <RightCloud />
           <LeftCloud />
-          {/* <Instructions>Press SPACEBAR to throw the fireball</Instructions> */}
+          <Instructions id="instructions">Use Spacebar to shoot</Instructions>
           <StartSymbolContainer
             ref={startButton}
             id="start"

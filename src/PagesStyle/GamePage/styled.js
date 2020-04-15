@@ -58,11 +58,19 @@ export const StartButton = styled.button`
   text-shadow: 2px 2px black;
 `;
 
-export const Instructions = styled.h1`
+export const Instructions = styled.div`
+  display: none;
   position: absolute;
-  color: white;
-  left: 30%;
-  top: 120px;
+  left: 40%;
+  top: 30px;
+  width: 20%;
+  min-width: 300px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 40px;
+  font-size: 1.2rem;
+  text-align: center;
+  padding: 1rem;
+  color: #ffffff;
 `;
 
 export const PlantContainer = styled.div`
