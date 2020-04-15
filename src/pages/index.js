@@ -252,7 +252,7 @@ const StartLink = styled(Link)`
   }
 
   :hover {
-    background: rgba(41, 203, 106, 0.41);
+    box-shadow: 0 0 0 0.4rem rgba(102, 204, 167, 0.25);
   }
 `;
 

@@ -251,6 +251,7 @@ const BattleLink = styled(Link)`
 
   :hover {
     cursor: pointer;
+    box-shadow: 0 0 0 0.4rem rgba(102, 204, 167, 0.25);
   }
 `;
 
