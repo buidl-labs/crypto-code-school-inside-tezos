@@ -8,6 +8,7 @@ import { Link } from 'gatsby';
 import { FaChevronLeft } from 'react-icons/fa';
 import GrownPlant from '../components/PlantGrowthModal/GrownPlant';
 import StartSymbol from '../assets/GameAssets/start.svg';
+import Zombie from '../components/GameComponents/Zombie';
 
 // Images
 import Title from '../assets/GameAssets/title.svg';
@@ -54,7 +55,7 @@ const Game = () => {
   const startAnimations = () => {
     document.getElementById('lightening').remove();
     document.getElementById('instructions').style.display = 'block';
-  }
+  };
 
   const keyboardInput = event => {
     if (event.keyCode === 32) {
@@ -172,6 +173,9 @@ const Game = () => {
           <PlantContainer id="plant-shooter" ref={shooter}>
             <GrownPlant stage={6} />
           </PlantContainer>
+          <div id="initialzombie">
+            <Zombie />
+          </div>
           <House className="house-img" />
           <ForestLand className="forest-land-img" />
         </GameContainer>

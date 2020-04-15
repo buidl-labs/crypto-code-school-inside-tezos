@@ -115,9 +115,19 @@ export const moveRight = keyframes`
   100% { transform: translateX(100vw); opacity: 0.9; }
 `;
 
+const thunder = keyframes`
+
+  0% { opacity: 1; } 
+    2% { opacity: 0; }
+    3% { opacity: 0.6; }
+    4% { opacity: 0.2; }
+    6% { opacity: .9; } 
+    100% { opacity: 1; }
+`;
+
 const slideInFromTop = keyframes`
-  0% { transform: translateY(-50vh); }
-  100% { transform: translateY(0); }
+0% { transform: translateY(-50vh); }
+100% { transform: translateY(0); }
 `;
 
 const fadeIn = keyframes`
@@ -149,15 +159,19 @@ export const RightCloud = styled(RightCloudSvg)`
   top: 10rem;
 `;
 
+// animation-name: ${thunder};
+// animation-duration: 10s;
+// animation-iteration-count: 1;
+// animation-timing-function: ease-out;
+// animation-delay: 2s;
+
 export const Lightening = styled(LighteningSvg)`
   position: absolute;
   z-index: 7;
   left: calc(50% - 220px);
   top: -10%;
-  animation-name: ${slideInFromTop};
-  animation-duration: 0.5s;
-  animation-iteration-count: 1;
-  animation-timing-function: cubic-bezier(0.43, 0.13, 0.15, 0.99);
+  animation: ${thunder} 10s ease-out 1 1s,
+    ${slideInFromTop} 0.25s ease 1 alternate;
 `;
 
 export const StartSymbolContainer = styled.div`
@@ -169,7 +183,7 @@ export const StartSymbolContainer = styled.div`
   width: 20%;
   animation-name: ${fadeIn};
   animation-duration: 1s;
-  animation-delay: 0.5s;
+  animation-delay: 3s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
   animation-timing-function: cubic-bezier(0.43, 0.13, 0.15, 0.99);
