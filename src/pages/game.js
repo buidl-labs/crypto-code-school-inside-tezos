@@ -26,6 +26,7 @@ import {
   RightCloud,
   LeftCloud,
   BackLink,
+  Lightening,
 } from '../PagesStyle/GamePage/styled';
 
 const Game = () => {
@@ -149,6 +150,7 @@ const Game = () => {
           <div style={{ width: '120px' }} />
         </Header>
         <GameContainer ref={gameContainer} id="game-container">
+          <Lightening />
           <RightCloud />
           <LeftCloud />
           <StartButton ref={startButton} id="start" onClick={() => playGame()}>
