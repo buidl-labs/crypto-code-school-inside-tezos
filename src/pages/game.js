@@ -7,6 +7,7 @@ import '../assets/GameAssets/game.css';
 import { Link } from 'gatsby';
 import { FaChevronLeft } from 'react-icons/fa';
 import GrownPlant from '../components/PlantGrowthModal/GrownPlant';
+import StartSymbol from '../assets/GameAssets/start.svg';
 
 // Images
 import Title from '../assets/GameAssets/title.svg';
@@ -27,6 +28,7 @@ import {
   LeftCloud,
   BackLink,
   Lightening,
+  StartSymbolContainer,
 } from '../PagesStyle/GamePage/styled';
 
 const Game = () => {
@@ -40,6 +42,7 @@ const Game = () => {
   let zombieInterval;
 
   const playGame = () => {
+    startAnimations();
     startButton.current.style.display = 'none';
     window.addEventListener('keydown', keyboardInput);
     createZombie();
@@ -47,6 +50,10 @@ const Game = () => {
       createZombie();
     }, 4000);
   };
+
+  const startAnimations = () => {
+    document.getElementById('lightening').remove();
+  }
 
   const keyboardInput = event => {
     if (event.keyCode === 32) {
@@ -150,13 +157,17 @@ const Game = () => {
           <div style={{ width: '120px' }} />
         </Header>
         <GameContainer ref={gameContainer} id="game-container">
-          <Lightening />
+          <Lightening id="lightening" />
           <RightCloud />
           <LeftCloud />
-          <StartButton ref={startButton} id="start" onClick={() => playGame()}>
-            Start
-          </StartButton>
-          <Instructions>Press SPACEBAR to throw the fireball</Instructions>
+          {/* <Instructions>Press SPACEBAR to throw the fireball</Instructions> */}
+          <StartSymbolContainer
+            ref={startButton}
+            id="start"
+            onClick={() => playGame()}
+          >
+            <StartSymbol />
+          </StartSymbolContainer>
           <PlantContainer id="plant-shooter" ref={shooter}>
             <GrownPlant stage={6} />
           </PlantContainer>

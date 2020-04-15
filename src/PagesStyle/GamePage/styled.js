@@ -112,6 +112,11 @@ const slideInFromTop = keyframes`
   100% { transform: translateY(0); }
 `;
 
+const fadeIn = keyframes`
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+`;
+
 export const LeftCloud = styled(LeftCloudSvg)`
   animation-name: ${moveRight};
   animation-duration: 400s;
@@ -144,6 +149,21 @@ export const Lightening = styled(LighteningSvg)`
   animation-name: ${slideInFromTop};
   animation-duration: 0.5s;
   animation-iteration-count: 1;
+  animation-timing-function: cubic-bezier(0.43, 0.13, 0.15, 0.99);
+`;
+
+export const StartSymbolContainer = styled.div`
+  position: absolute;
+  z-index: 7;
+  left: 37.5%;
+  opacity: 0;
+  top: 30%;
+  width: 20%;
+  animation-name: ${fadeIn};
+  animation-duration: 1s;
+  animation-delay: 0.5s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
   animation-timing-function: cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
 
