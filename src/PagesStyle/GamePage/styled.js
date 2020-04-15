@@ -3,6 +3,7 @@ import { jsx, css, keyframes } from '@emotion/core';
 
 import LeftCloudSvg from '../../assets/left_cloud.svg';
 import RightCloudSvg from '../../assets/right_cloud.svg';
+import LighteningSvg from '../../assets/GameAssets/lightening.svg';
 
 import { Link } from 'gatsby';
 
@@ -71,12 +72,6 @@ export const PlantContainer = styled.div`
   z-index: 6;
 `;
 
-const play = keyframes`
-  100% {
-    background-position: -1288px;
-  }
-`;
-
 export const Zombie = styled.div`
   position: absolute;
   bottom: 20%;
@@ -97,6 +92,12 @@ export const deadZombie = styled.div`
   z-index: 5;
 `;
 
+const play = keyframes`
+  100% {
+    background-position: -1288px;
+  }
+`;
+
 export const moveLeft = keyframes`
   0% { transform: translateX(-20%); opacity: 0.9; }
   100% { transform: translateX(-100vw); opacity: 0.9; }
@@ -104,6 +105,11 @@ export const moveLeft = keyframes`
 export const moveRight = keyframes`
   0% { transform: translateX(10%); opacity: 0.9; }
   100% { transform: translateX(100vw); opacity: 0.9; }
+`;
+
+const slideInFromTop = keyframes`
+  0% { transform: translateY(-50vh); }
+  100% { transform: translateY(0); }
 `;
 
 export const LeftCloud = styled(LeftCloudSvg)`
@@ -128,6 +134,17 @@ export const RightCloud = styled(RightCloudSvg)`
   right: 10px;
   right: 10;
   top: 10rem;
+`;
+
+export const Lightening = styled(LighteningSvg)`
+  position: absolute;
+  z-index: 7;
+  left: calc(50% - 220px);
+  top: -10%;
+  animation-name: ${slideInFromTop};
+  animation-duration: 0.5s;
+  animation-iteration-count: 1;
+  animation-timing-function: cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
 
 export const BackLink = styled(Link)`
