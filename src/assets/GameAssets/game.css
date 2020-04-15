@@ -67,3 +67,41 @@
   left: 0;
   z-index: 6;
 }
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-400px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+#plant-shooter {
+  animation-name: slideInFromLeft;
+  animation-duration: 0.5s;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-out;
+}
+
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(400px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+#initialzombie {
+  animation-name: slideInFromRight;
+  animation-duration: 0.5s;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+  /* animation-delay: 1s; */
+  z-index: 9;
+  position: absolute;
+  bottom: 20%;
+  right: 250px;
+}

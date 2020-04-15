@@ -14,7 +14,7 @@ const rotateFace = keyframes`
 
 const Zombie = styled.div`
   position: absolute;
-  bottom: 10%;
+  bottom: 8%;
   right: 10%;
   width: 16vw;
   height: 20vw;
@@ -35,7 +35,7 @@ const Face = styled(zombieAnatomyList.face)`
   top: 0%;
   width: 100px;
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
-  z-index: 7;
+  z-index: 8;
   animation-name: ${rotateFace};
   animation-duration: 1s;
   animation-direction: alternate;
