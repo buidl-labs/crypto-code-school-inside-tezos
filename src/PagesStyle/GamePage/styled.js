@@ -49,15 +49,6 @@ export const GameContainer = styled.section`
   overflow-y: hidden;
 `;
 
-export const StartButton = styled.button`
-  position: absolute;
-  color: white;
-  width: 100px;
-  left: calc(50% - 50px);
-  top: 60px;
-  text-shadow: 2px 2px black;
-`;
-
 export const Instructions = styled.div`
   display: none;
   position: absolute;
@@ -75,8 +66,8 @@ export const Instructions = styled.div`
 
 export const PlantContainer = styled.div`
   position: absolute;
-  bottom: 20%;
-  left: 250px;
+  bottom: 15%;
+  left: 225px;
   z-index: 6;
 `;
 

@@ -105,3 +105,22 @@
   bottom: 20%;
   right: 250px;
 }
+
+@keyframes sway {
+  0% {
+    -webkit-transform: rotate(-5deg);
+    transform: rotate(-5deg);
+  }
+  50% {
+    -webkit-transform: rotate(2.5deg);
+    transform: rotate(2.5deg);
+  }
+}
+
+#plant-top-body {
+  width: 100%;
+  height: 100%;
+  transform-origin: bottom center;
+  transition: all 0.25s cubic-bezier(0.43, 0.13, 0.15, 0.99);
+  animation: sway 3s infinite alternate;
+}
