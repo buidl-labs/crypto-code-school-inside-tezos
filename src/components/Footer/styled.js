@@ -8,6 +8,7 @@ export const Footer = styled.footer`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  padding-top: 30px;
 
   p {
     background: #1a2a28;
@@ -15,7 +16,7 @@ export const Footer = styled.footer`
     font-family: Roboto;
     font-style: normal;
     font-weight: normal;
-    font-size: 17px;
+    font-size: 15px;
     line-height: 20px;
     /* identical to box height */
 
@@ -37,7 +38,7 @@ export const FooterInner = styled.div`
       font-family: Roboto;
       font-style: normal;
       font-weight: bold;
-      font-size: 34px;
+      font-size: 30px;
       line-height: 40px;
 
       color: #ffffff;
@@ -78,7 +79,7 @@ export const LinkContainer = styled.div`
     font-family: Roboto;
     font-style: normal;
     font-weight: bold;
-    font-size: 22px;
+    font-size: 20px;
     line-height: 26px;
     color: #ffffff;
   }
@@ -92,7 +93,7 @@ export const LinkContainer = styled.div`
       font-family: Roboto;
       font-style: normal;
       font-weight: normal;
-      font-size: 22px;
+      font-size: 20px;
       line-height: 26px;
       margin-top: 2rem;
       /* identical to box height */
