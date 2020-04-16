@@ -68,7 +68,7 @@ export const PlantContainer = styled.div`
   position: absolute;
   bottom: 15%;
   left: 225px;
-  z-index: 6;
+  z-index: 7;
 `;
 
 export const Zombie = styled.div`
@@ -174,7 +174,7 @@ export const StartSymbolContainer = styled.div`
   width: 20%;
   animation-name: ${fadeIn};
   animation-duration: 1s;
-  animation-delay: 3s;
+  animation-delay: 2s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
   animation-timing-function: cubic-bezier(0.43, 0.13, 0.15, 0.99);

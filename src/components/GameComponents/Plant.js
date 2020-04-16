@@ -13,20 +13,12 @@ import {
 
 // Styles
 import styled from '@emotion/styled';
-import { keyframes } from '@emotion/core';
 
-// Animations
-const rotateFace = keyframes`
-    0% { transform: rotate(-5deg); }
-    100% { transform: rotate(5deg); }
-`;
-
-const PlantContainer = styled.div`
+const PlantBox = styled.div`
   width: 16vw;
   height: 20vw;
   max-width: 150px;
   max-height: 210px;
-  z-index: 7;
 
   @media only screen and (max-width: 425px) {
     width: 25vw;
@@ -36,7 +28,7 @@ const PlantContainer = styled.div`
 
 const Plant = () => {
   return (
-    <PlantContainer>
+    <PlantBox>
       <div id="plant-top-body">
         <Body />
         <Eye />
@@ -46,7 +38,7 @@ const Plant = () => {
       </div>
       <BackLeaves />
       <FrontLeaves />
-    </PlantContainer>
+    </PlantBox>
   );
 };
 
