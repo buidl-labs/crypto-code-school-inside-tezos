@@ -9,6 +9,11 @@ export const Container = styled.div`
     )
     no-repeat center center fixed;
   background-size: cover;
+
+  > div:first-of-type {
+    margin-left: 30px;
+    margin-top: 10px;
+  }
 `;
 
 export const ThemeContainer = styled.div`
@@ -33,12 +38,20 @@ export const OverviewContainer = styled.div`
       color: #ded9d9;
       font-family: Roboto;
       font-weight: 100;
-      margin: 1rem;
+      width: 80%;
+      margin: 1rem auto;
     }
 
     div {
       display: flex;
       justify-content: center;
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+      max-width: 280px;
+      max-height: 280px;
     }
   }
 
@@ -70,7 +83,7 @@ export const OverviewContainer = styled.div`
           font-family: Roboto;
           color: #ffffff;
           margin-top: 2rem;
-          margin-bottom: 3rem;
+          margin-bottom: 1rem;
           line-height: 2rem;
 
           > svg {
@@ -83,7 +96,7 @@ export const OverviewContainer = styled.div`
         hr {
           background: rgba(255, 255, 255, 0.05);
           border: none;
-          height: 5px;
+          height: 1px;
         }
       }
     }
