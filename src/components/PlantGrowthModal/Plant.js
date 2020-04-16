@@ -86,7 +86,7 @@ export const Eye = styled(randomPlant.eyes[generatedPlantId.eyesId])`
   z-index: 2;
   width: 45%;
   left: 35.5%;
-  top: -11%;
+  top: -15%;
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
 export const Hair = styled(randomPlant.hair[generatedPlantId.hairId])`
@@ -102,9 +102,9 @@ export const Hair = styled(randomPlant.hair[generatedPlantId.hairId])`
 export const Head = styled(randomPlant.head[generatedPlantId.headId])`
   height: 100%;
   position: absolute;
-  left: 24.5%;
-  top: -22%;
-  width: 80%;
+  left: 22.5%;
+  top: -25%;
+  width: 90%;
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
 export const BackLeaves = styled(
