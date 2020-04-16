@@ -43,12 +43,9 @@ const getPlantId = () => {
   const eyesId = Math.floor(Math.random() * randomPlant.eyes.length);
   const hairId = Math.floor(Math.random() * randomPlant.hair.length);
   const headId = Math.floor(Math.random() * randomPlant.head.length);
-  const backLeavesId = Math.floor(
-    Math.random() * randomPlant.backLeaves.length,
-  );
-  const frontLeavesId = Math.floor(
-    Math.random() * randomPlant.frontLeaves.length,
-  );
+  const leavesId = Math.floor(Math.random() * randomPlant.backLeaves.length);
+  const backLeavesId = leavesId;
+  const frontLeavesId = leavesId;
   const patternsId = Math.floor(Math.random() * randomPlant.patterns.length);
   const seedId = Math.floor(Math.random() * randomPlant.seed.length);
 
