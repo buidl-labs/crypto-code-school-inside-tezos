@@ -108,7 +108,7 @@ const MidContainer = styled.div`
     h2 {
       font-family: Roboto;
       font-style: normal;
-      font-weight: 500;
+      font-weight: 300;
       font-size: 44px;
       line-height: 52px;
       /* identical to box height */
@@ -253,7 +253,7 @@ const BattleLink = styled(Link)`
 
   :hover {
     cursor: pointer;
-    box-shadow: 0 0 0 0.4rem rgba(102, 204, 167, 0.25);
+    box-shadow: 0 0 0 0.25rem rgba(41, 203, 106, 0.2);
   }
 `;
 
