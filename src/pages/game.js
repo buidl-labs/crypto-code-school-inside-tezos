@@ -6,9 +6,9 @@ import '../assets/GameAssets/game.css';
 // components from external libraries
 import { Link } from 'gatsby';
 import { FaChevronLeft } from 'react-icons/fa';
-import GrownPlant from '../components/PlantGrowthModal/GrownPlant';
 import StartSymbol from '../assets/GameAssets/start.svg';
 import Zombie from '../components/GameComponents/Zombie';
+import Plant from '../components/GameComponents/Plant';
 
 // Images
 import Title from '../assets/GameAssets/title.svg';
@@ -22,7 +22,6 @@ import {
   Header,
   Footer,
   GameContainer,
-  StartButton,
   Instructions,
   PlantContainer,
   RightCloud,
@@ -171,7 +170,7 @@ const Game = () => {
             <StartSymbol />
           </StartSymbolContainer>
           <PlantContainer id="plant-shooter" ref={shooter}>
-            <GrownPlant stage={6} />
+            <Plant />
           </PlantContainer>
           <div id="initialzombie">
             <Zombie />
