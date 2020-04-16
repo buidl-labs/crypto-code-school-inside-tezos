@@ -12,6 +12,26 @@ const rotateFace = keyframes`
     100% { transform: rotate(5deg); }
 `;
 
+const backHandMovement = keyframes`
+0% { transform: rotate(-5deg); }
+100% { transform: rotate(5deg); }
+`;
+
+const frontHandMovement = keyframes`
+0% { transform: rotate(5deg); }
+100% { transform: rotate(-5deg); }
+`;
+
+const backLegMovement = keyframes`
+0% { transform: rotate(-1deg); }
+100% { transform: rotate(1deg); }
+`;
+
+const frontLegMovement = keyframes`
+0% { transform: rotate(5deg); }
+100% { transform: rotate(-5deg); }
+`;
+
 const Zombie = styled.div`
   position: absolute;
   bottom: 8%;
@@ -61,7 +81,8 @@ const BackHand = styled(zombieAnatomyList.backHand)`
   left: 38px;
   transform: rotate(25deg);
   transform-origin: top right;
-  transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
+  transition: all 0.5s cubic-bezier(0.43, 0.13, 0.15, 0.99);
+  animation: ${backHandMovement} 1s 1s infinite alternate;
 `;
 
 const BackLeg = styled(zombieAnatomyList.backLeg)`
@@ -73,6 +94,7 @@ const BackLeg = styled(zombieAnatomyList.backLeg)`
   left: 50px;
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
   z-index: 4;
+  animation: ${backLegMovement} 0.5s 1s infinite alternate;
 `;
 
 const FrontHand = styled(zombieAnatomyList.frontHand)`
@@ -85,18 +107,20 @@ const FrontHand = styled(zombieAnatomyList.frontHand)`
   transform-origin: top right;
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
   z-index: 8;
+  animation: ${frontHandMovement} 0.5s infinite alternate;
 `;
 
 const FrontLeg = styled(zombieAnatomyList.frontLeg)`
   position: absolute;
   top: 130px;
-  width: 60px;
-  height: 120px;
+  width: 50px;
+  height: 110px;
   transform: rotate(-15deg);
   transform-origin: top left;
   left: 82px;
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
   z-index: 5;
+  animation: ${frontLegMovement} 0.5s infinite alternate;
 `;
 
 const ZombieContainer = () => {

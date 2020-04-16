@@ -6,7 +6,6 @@ import '../assets/GameAssets/game.css';
 // components from external libraries
 import { Link } from 'gatsby';
 import { FaChevronLeft } from 'react-icons/fa';
-import StartSymbol from '../assets/GameAssets/start.svg';
 import Zombie from '../components/GameComponents/Zombie';
 import Plant from '../components/GameComponents/Plant';
 
@@ -14,6 +13,7 @@ import Plant from '../components/GameComponents/Plant';
 import Title from '../assets/GameAssets/title.svg';
 import House from '../assets/GameAssets/house.svg';
 import ForestLand from '../assets/GameAssets/forestland.svg';
+import StartSymbol from '../assets/GameAssets/start.svg';
 
 // Custom styles and styled images
 import Layout from '../components/Layout/layout';
@@ -38,6 +38,7 @@ const Game = () => {
   const gameContainer = useRef(null);
   const startButton = useRef(null);
   const shooter = useRef(null);
+  const zombieRef = useRef(null);
 
   let zombieInterval;
 
@@ -45,15 +46,19 @@ const Game = () => {
     startAnimations();
     startButton.current.style.display = 'none';
     window.addEventListener('keydown', keyboardInput);
-    createZombie();
-    zombieInterval = setInterval(() => {
-      createZombie();
-    }, 4000);
+    for (let i = 0; i < 4; i++) {
+      (function(i) {
+        zombieInterval = setTimeout(function() {
+          createZombie(i);
+        }, 5000 * i);
+      })(i);
+    }
   };
 
   const startAnimations = () => {
     document.getElementById('lightening').remove();
     document.getElementById('instructions').style.display = 'block';
+    // document.getElementById('initialzombie').remove();
   };
 
   const keyboardInput = event => {
@@ -67,8 +72,12 @@ const Game = () => {
     }
   };
 
-  const createZombie = () => {
-    let newZombie = document.createElement('div');
+  const createZombie = zombieIndex => {
+    let newZombie = zombieRef.current.cloneNode(true);
+    newZombie.id = `zombie-${zombieIndex}`;
+    // console.log(newZombie);
+    // let newZombie = document.createElement('div');
+    // console.log(newZombie, zombieRef.current);
     newZombie.classList.add('zombie');
     newZombie.classList.add('zombie-transition');
     gameContainer.current.appendChild(newZombie);
@@ -86,7 +95,7 @@ const Game = () => {
       if (xPosition <= 200) {
         gameOver();
       } else {
-        zombie.style.left = `${xPosition - 2}px`;
+        zombie.style.left = `${xPosition - 1}px`;
       }
     }, 30);
   };
@@ -172,7 +181,7 @@ const Game = () => {
           <PlantContainer id="plant-shooter" ref={shooter}>
             <Plant />
           </PlantContainer>
-          <div id="initialzombie">
+          <div id="intialzombie" ref={zombieRef}>
             <Zombie />
           </div>
           <House className="house-img" />
