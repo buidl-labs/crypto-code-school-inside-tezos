@@ -50,7 +50,7 @@ export const ChapterLink = styled(Link)`
   color: #fff;
   text-align: left;
   padding: 0.5rem;
-  font-size: 22px;
+  font-size: 20px;
   padding: 20px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   font-weight: 300;

@@ -19,6 +19,7 @@ export const BackLink = styled.button`
   transition: 0.3s;
   padding: 0.8rem;
   border-radius: 50%;
+  outline: none;
   :hover {
     background: rgba(255, 255, 255, 0.1);
   }

@@ -42,7 +42,7 @@ export const PrevLink = styled(Link)`
   font-style: normal;
   font-weight: normal;
   text-decoration: none;
-
+  outline: none;
   > span {
     margin-left: 6px;
   }
@@ -72,7 +72,7 @@ export const NextLink = styled(Link)`
   font-style: normal;
   font-weight: normal;
   text-decoration: none;
-  > svg {
+  outline: none > svg {
     display: inline-block;
     vertical-align: middle;
   }
