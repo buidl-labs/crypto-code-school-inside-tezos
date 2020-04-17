@@ -72,7 +72,8 @@ export const NextLink = styled(Link)`
   font-style: normal;
   font-weight: normal;
   text-decoration: none;
-  outline: none > svg {
+  outline: none;
+  > svg {
     display: inline-block;
     vertical-align: middle;
   }
