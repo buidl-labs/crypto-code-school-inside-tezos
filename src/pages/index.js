@@ -23,6 +23,7 @@ import {
   Plant,
   Logo,
 } from '../PagesStyle/LandingPage/styled';
+import SEO from '../components/Seo';
 
 const HomePage = () => {
   useEffect(() => {
@@ -38,6 +39,10 @@ const HomePage = () => {
     )
     no-repeat center center fixed`}
     >
+      <SEO
+        title="Crypto Code School"
+        keywords={[`smartpy`, `python`, `interactive`]}
+      />
       <HomepageHeroImage>
         <RightCloud />
         <LeftCloud />

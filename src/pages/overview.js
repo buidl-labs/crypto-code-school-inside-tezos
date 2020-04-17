@@ -16,7 +16,7 @@ import {
 import Completed from '../assets/completed.svg';
 import { trackEvent } from '../utils/analytics';
 import Footer from '../components/Footer';
-
+import SEO from '../components/Seo';
 function LessonsOverview() {
   const chapters = useChapters();
   const [chapterList, updateChapterList] = useState(chapters);
@@ -57,6 +57,7 @@ function LessonsOverview() {
       )
       no-repeat center center fixed`}
     >
+      <SEO title="Chapters Overview" />
       <Container>
         <div>
           <BackLink to={`/`}>
