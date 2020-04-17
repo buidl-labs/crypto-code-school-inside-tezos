@@ -3,8 +3,7 @@ import React, { useEffect, useRef } from 'react';
 // CSS
 import '../assets/GameAssets/game.css';
 
-// components from external libraries
-import { Link } from 'gatsby';
+// Components
 import { FaChevronLeft } from 'react-icons/fa';
 import Zombie from '../components/GameComponents/Zombie';
 import Plant from '../components/GameComponents/Plant';
@@ -77,9 +76,6 @@ const Game = () => {
   const createZombie = zombieIndex => {
     let newZombie = zombieRef.current.cloneNode(true);
     newZombie.id = `zombie-${zombieIndex}`;
-    // console.log(newZombie);
-    // let newZombie = document.createElement('div');
-    // console.log(newZombie, zombieRef.current);
     newZombie.classList.add('zombie');
     newZombie.classList.add('zombie-transition');
     newZombie.style.bottom = `${randomNumber(12, 16)}%`;
@@ -137,8 +133,14 @@ const Game = () => {
 
       // check collision
       if (checkFireballCollision(fire, zombie)) {
-        zombie.classList.remove('zombie');
-        zombie.classList.add('dead-zombie');
+        // zombie.classList.remove('zombie');
+        // zombie.classList.add('dead-zombie');
+
+        // Zombie head fly away animation
+        zombie.children[0].children[0].classList.add('demo-dot-y')
+        zombie.children[0].children[0].children[0].classList.add('demo-dot-x')
+
+        setTimeout(() => zombie.remove(), 1000)
         fire.remove();
         clearInterval(moveFirballInterval);
       } else if (xPosition > 800) {
@@ -150,8 +152,8 @@ const Game = () => {
   };
 
   const checkFireballCollision = (fire, zombie) => {
-    let fireballLeft = parseInt(fire.style.left);
-    let zombieLeft = parseInt(zombie.style.left);
+    let fireballLeft = parseInt(fire.style.left) || 0;
+    let zombieLeft = parseInt(zombie.style.left) || 0;
 
     // collision logic
     if (fireballLeft < 800 && fireballLeft - 20 >= zombieLeft) return true;

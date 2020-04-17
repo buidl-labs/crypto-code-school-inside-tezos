@@ -126,7 +126,11 @@ const FrontLeg = styled(zombieAnatomyList.frontLeg)`
 const ZombieContainer = () => {
   return (
     <Zombie>
-      <Face />
+      <div>
+        <div>
+          <Face />
+        </div>
+      </div>
       <BackHand />
       <Body />
       <FrontHand />
