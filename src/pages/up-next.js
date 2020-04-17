@@ -8,7 +8,6 @@ import { Link } from 'gatsby';
 import LockSVG from '../assets/lock.svg';
 import GrownPlant from '../components/PlantGrowthModal/GrownPlant';
 import { trackEvent } from '../utils/analytics';
-import SEO from '../components/Seo';
 
 function UpNextPage() {
   useEffect(() => {
@@ -23,7 +22,6 @@ function UpNextPage() {
     )
     no-repeat center center fixed`}
     >
-      <SEO title="Up Next" />
       <TopContainer>
         <BackLink />
         <div>

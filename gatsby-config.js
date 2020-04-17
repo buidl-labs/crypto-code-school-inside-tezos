@@ -1,17 +1,7 @@
-const siteUrl =
-  process.env.URL ||
-  process.env.DEPLOY_URL ||
-  `https://blissful-mcnulty-82f253.netlify.com/`;
-
 module.exports = {
   siteMetadata: {
-    title: `Crypto Code School`,
-    author: `Buidl Labs`,
+    title: `Crypto Plants vs Zombies`,
     description: `Interactive Code School for onboarding newcomers to the Tezos Ecosystem using smartpy`,
-    siteUrl,
-    social: {
-      twitter: `BuidlLabs`,
-    },
   },
   plugins: [
     `gatsby-plugin-netlify`,
