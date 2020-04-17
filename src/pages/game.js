@@ -58,7 +58,7 @@ const Game = () => {
   const startAnimations = () => {
     document.getElementById('lightening').remove();
     document.getElementById('instructions').style.display = 'block';
-    // document.getElementById('initialzombie').remove();
+    document.getElementById('initialzombie').remove();
   };
 
   const keyboardInput = event => {
@@ -181,7 +181,7 @@ const Game = () => {
           <PlantContainer id="plant-shooter" ref={shooter}>
             <Plant />
           </PlantContainer>
-          <div id="intialzombie" ref={zombieRef}>
+          <div id="initialzombie" ref={zombieRef}>
             <Zombie />
           </div>
           <House className="house-img" />
