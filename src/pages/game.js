@@ -50,7 +50,7 @@ const Game = () => {
       (function(i) {
         zombieInterval = setTimeout(function() {
           createZombie(i);
-        }, 5000 * i);
+        }, (5000 * i) + (3000 / i));
       })(i);
     }
   };
@@ -60,6 +60,8 @@ const Game = () => {
     document.getElementById('instructions').style.display = 'block';
     document.getElementById('initialzombie').remove();
   };
+
+  const randomNumber = (start, end) => Math.floor(Math.random() * end) + start;
 
   const keyboardInput = event => {
     if (event.keyCode === 32) {
@@ -80,6 +82,7 @@ const Game = () => {
     // console.log(newZombie, zombieRef.current);
     newZombie.classList.add('zombie');
     newZombie.classList.add('zombie-transition');
+    newZombie.style.bottom = `${randomNumber(12, 16)}%`;
     gameContainer.current.appendChild(newZombie);
     moveZombie(newZombie);
   };

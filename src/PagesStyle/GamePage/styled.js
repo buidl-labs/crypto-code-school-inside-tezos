@@ -73,7 +73,6 @@ export const PlantContainer = styled.div`
 
 export const Zombie = styled.div`
   position: absolute;
-  bottom: 20%;
   left: 100%;
   z-index: 5;
   opacity: 1;
