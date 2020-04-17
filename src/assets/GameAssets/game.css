@@ -55,9 +55,8 @@
   position: absolute;
   bottom: 175px;
   z-index: 5;
-  background: red;
   height: 40px;
-  width: 40px;
+  width: auto;
 }
 
 .fire-animation {
