@@ -26,7 +26,7 @@ import {
 
 const HomePage = () => {
   useEffect(() => {
-    trackEvent('Chapters-Overview-View');
+    trackEvent('Homepage-View');
   }, []);
 
   return (
