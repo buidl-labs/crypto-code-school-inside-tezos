@@ -34,7 +34,7 @@ const frontLegMovement = keyframes`
 
 const Zombie = styled.div`
   position: absolute;
-  bottom: 8%;
+  bottom: 0;
   right: 10%;
   width: 16vw;
   height: 20vw;

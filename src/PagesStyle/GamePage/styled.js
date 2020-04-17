@@ -79,7 +79,6 @@ export const Zombie = styled.div`
   width: 143px;
   height: 223px;
   background: url('images/zombiewalking.svg');
-  animation: ${play} 0.8s steps(9) infinite;
   transition: opacity 0.5s ease-out;
 `;
 
@@ -88,12 +87,6 @@ export const deadZombie = styled.div`
   background: url('images/zombiewalking.svg');
   opacity: 0;
   z-index: 5;
-`;
-
-const play = keyframes`
-  100% {
-    background-position: -1288px;
-  }
 `;
 
 export const moveLeft = keyframes`
