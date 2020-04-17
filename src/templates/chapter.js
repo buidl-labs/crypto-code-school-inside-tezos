@@ -16,6 +16,7 @@ import { getChaptersIndex } from '../utils/index';
 import { Container, Output } from './chapter.styled';
 import PlantGrowthModalView from '../components/PlantGrowthModal';
 import { trackEventWithProperties } from '../utils/analytics';
+import SEO from '../components/Seo';
 export const query = graphql`
   query($slug: String!) {
     mdx(frontmatter: { slug: { eq: $slug } }) {
@@ -206,6 +207,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
 
   return (
     <Layout>
+      <SEO title={`Chapter: ${index.current} - Learning Interface`} />
       {validation.success && showModal ? (
         <PlantGrowthModalView
           currentChapter={index.current}
