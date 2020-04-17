@@ -32,6 +32,10 @@ import {
 
 // shooter balls
 import iceBall from '../assets/GameAssets/shooters/ice.png';
+import fireBall from '../assets/GameAssets/shooters/fire.png';
+import waterBall from '../assets/GameAssets/shooters/water.png';
+import grassBall from '../assets/GameAssets/shooters/grass.png';
+import electricBall from '../assets/GameAssets/shooters/electric.png';
 
 const Game = () => {
   useEffect(() => {}, []);
@@ -52,7 +56,7 @@ const Game = () => {
       (function(i) {
         zombieInterval = setTimeout(function() {
           createZombie(i);
-        }, (5000 * i) + (3000 / i));
+        }, 5000 * i + 3000 / i);
       })(i);
     }
   };
@@ -121,12 +125,36 @@ const Game = () => {
       window.getComputedStyle(shooter.current).getPropertyValue('left'),
     );
     let newShooterBall = document.createElement('img');
-    newShooterBall.src = iceBall;
+    setBallImage(newShooterBall); // according to Plant type
     newShooterBall.classList.add('fireball');
     newShooterBall.style.position = 'absolute';
     newShooterBall.style.left = `${254.5}px`;
     newShooterBall.style.bottom = '36.5%';
     return newShooterBall;
+  };
+
+  const setBallImage = ball => {
+    const plantType = JSON.parse(localStorage.getItem('plant'));
+    switch (plantType.type) {
+      case 'electric':
+        ball.src = electricBall;
+        break;
+      case 'ice':
+        ball.src = iceBall;
+        break;
+      case 'water':
+        ball.src = waterBall;
+        break;
+      case 'grass':
+        ball.src = grassBall;
+        break;
+      case 'fire':
+        ball.src = fireBall;
+        break;
+      default:
+        ball.src = grassBall;
+        break;
+    }
   };
 
   const moveShooterBall = ball => {
@@ -140,10 +168,10 @@ const Game = () => {
         // zombie.classList.add('dead-zombie');
 
         // Zombie head fly away animation
-        zombie.children[0].children[0].classList.add('demo-dot-y')
-        zombie.children[0].children[0].children[0].classList.add('demo-dot-x')
+        zombie.children[0].children[0].classList.add('demo-dot-y');
+        zombie.children[0].children[0].children[0].classList.add('demo-dot-x');
 
-        setTimeout(() => zombie.remove(), 1000)
+        setTimeout(() => zombie.remove(), 1000);
         ball.remove();
         clearInterval(moveShooterBallInterval);
       } else if (xPosition > 800) {
@@ -159,7 +187,8 @@ const Game = () => {
     let zombieLeft = parseInt(zombie.style.left) || 0;
 
     // collision logic
-    if (shooterBallLeft < 800 && shooterBallLeft - 20 >= zombieLeft) return true;
+    if (shooterBallLeft < 800 && shooterBallLeft - 20 >= zombieLeft)
+      return true;
     else return false;
   };
 
