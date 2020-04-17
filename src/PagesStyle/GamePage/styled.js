@@ -171,6 +171,7 @@ export const StartSymbolContainer = styled.div`
   opacity: 0;
   top: 30%;
   width: 20%;
+  cursor: pointer;
   animation-name: ${fadeIn};
   animation-duration: 1s;
   animation-delay: 2s;
