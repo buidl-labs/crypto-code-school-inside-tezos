@@ -4,7 +4,7 @@ import zombieAnatomyList from './ZombieParts';
 // Styles
 import styled from '@emotion/styled';
 import { keyframes } from '@emotion/core';
-import { useSpring, animated, config } from 'react-spring';
+// import { useSpring, animated, config } from 'react-spring';
 
 // Animations
 const rotateFace = keyframes`
@@ -128,14 +128,18 @@ const ZombieContainer = () => {
     <Zombie>
       <div>
         <div>
-          <Face />
+          <div>
+            <Face />
+          </div>
         </div>
       </div>
-      <BackHand />
-      <Body />
-      <FrontHand />
-      <BackLeg />
-      <FrontLeg />
+      <div style={{ height: '100%' }}>
+        <BackHand />
+        <Body />
+        <FrontHand />
+        <BackLeg />
+        <FrontLeg />
+      </div>
     </Zombie>
   );
 };

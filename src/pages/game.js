@@ -166,28 +166,35 @@ const Game = () => {
       if (checkShooterballCollision(ball, zombie)) {
         // zombie.classList.remove('zombie');
         // zombie.classList.add('dead-zombie');
+        zombieDeathAnimations(zombie);
 
-        // Zombie head fly away animation
-        zombie.children[0].children[0].classList.add('demo-dot-y');
-        zombie.children[0].children[0].children[0].classList.add('demo-dot-x');
-
-        setTimeout(() => zombie.remove(), 1000);
+        setTimeout(() => zombie.remove(), 1250);
         ball.remove();
         clearInterval(moveShooterBallInterval);
       } else if (xPosition > 800) {
         ball.remove();
       } else {
-        ball.style.left = `${xPosition + 3}px`;
+        ball.style.left = `${xPosition + 4}px`;
       }
     }, 17);
   };
+
+  const zombieDeathAnimations = zombie => {
+    // Zombie head fly away animation (layered animation)
+    zombie.children[0].children[0].classList.add('demo-dot-y');
+    zombie.children[0].children[0].children[0].classList.add('demo-dot-x');
+    // Zombie body fall down animation
+    zombie.children[0].children[1].classList.add('fall-down');
+    // Zombie face rotetes animation
+    zombie.children[0].children[0].children[0].children[0].classList.add('role-face');
+  }
 
   const checkShooterballCollision = (ball, zombie) => {
     let shooterBallLeft = parseInt(ball.style.left) || 0;
     let zombieLeft = parseInt(zombie.style.left) || 0;
 
     // collision logic
-    if (shooterBallLeft < 800 && shooterBallLeft - 20 >= zombieLeft)
+    if (shooterBallLeft < 800 && shooterBallLeft + 40 >= zombieLeft)
       return true;
     else return false;
   };
