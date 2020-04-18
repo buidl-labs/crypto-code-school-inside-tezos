@@ -40,8 +40,16 @@ const HomePage = () => {
     no-repeat center center fixed`}
     >
       <SEO
-        title="Crypto Code School"
-        keywords={[`smartpy`, `python`, `interactive`]}
+        title="Smartpy tutorial and tezos blockchain programming course"
+        keywords={[
+          `smartpy`,
+          `python`,
+          `interactive`,
+          `programming`,
+          `tutorial`,
+          `tezos`,
+          `blockchain`,
+        ]}
       />
       <HomepageHeroImage>
         <RightCloud />
