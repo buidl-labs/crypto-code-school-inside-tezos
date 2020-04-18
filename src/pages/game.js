@@ -76,10 +76,17 @@ const Game = () => {
     if (event.keyCode === 32) {
       event.preventDefault();
       shooter.current.classList.add('fire-animation');
+      shooter.current.children[0].children[0].style.animation = 'none';
+      shooter.current.children[0].children[0].children[0].classList.add('shoot-animation')
+      // shooter.current.children[0].children[0].children[0].WebkitAnimationPlayState = "running";
       setTimeout(() => {
         shooterBall();
         shooter.current.classList.remove('fire-animation');
       }, 700);
+      setTimeout(() => {
+        shooter.current.children[0].children[0].children[0].classList.remove('shoot-animation')
+        shooter.current.children[0].children[0].style.animation = 'sway 3s infinite alternate';
+      }, 3000);
     }
   };
 

@@ -30,11 +30,13 @@ const Plant = () => {
   return (
     <PlantBox>
       <div id="plant-top-body">
-        <Body />
-        <Eye />
-        <Head />
-        <Hair />
-        <Pattern />
+        <div style={{ height: '100%' }}>
+          <Body />
+          <Eye />
+          <Head />
+          <Hair />
+          <Pattern />
+        </div>
       </div>
       <BackLeaves />
       <FrontLeaves />
