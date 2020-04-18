@@ -24,6 +24,7 @@ import {
   Logo,
 } from '../PagesStyle/LandingPage/styled';
 import SEO from '../components/Seo';
+import LearningInterfaceImage from '../components/image';
 
 const HomePage = () => {
   useEffect(() => {
@@ -86,7 +87,7 @@ const HomePage = () => {
       >
         <GridContainer style={{ paddingTop: '10rem' }}>
           <div>
-            <img src={learningInterface} width="90%" height="90%" />
+            <LearningInterfaceImage />
           </div>
           <FlexContainer>
             <h2>The Interactive School to master Smartpy</h2>
