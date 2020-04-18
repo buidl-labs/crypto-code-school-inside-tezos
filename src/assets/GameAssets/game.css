@@ -64,8 +64,12 @@
 }
 
 @keyframes roleFace {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .zombie-transition {
@@ -166,4 +170,18 @@
   transform-origin: bottom center;
   transition: all 0.25s cubic-bezier(0.43, 0.13, 0.15, 0.99);
   animation: sway 3s infinite alternate;
+}
+
+#back-btn {
+  background: green;
+  width: 100%;
+  margin: 1rem;
+  background-color: #06d19c;
+  border: none;
+  color: #fff;
+  font-size: 12px !important;
+  font-weight: 700;
+  border-radius: 4px;
+  padding: 0 1rem;
+  padding-bottom: 10px;
 }

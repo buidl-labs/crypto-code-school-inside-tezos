@@ -197,3 +197,42 @@ export const BackLink = styled(Link)`
     margin-top: -2px;
   }
 `;
+
+export const ModalWrapper = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  animation-name: ${fadeIn};
+  animation-duration: 3s;
+  animation-delay: 2s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-timing-function: cubic-bezier(0.43, 0.13, 0.15, 0.99);
+  z-index: 14;
+  opacity: 0;
+`;
+
+export const ModalMask = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  z-index: 15;
+  position: absolute;
+  opacity: 0.5;
+`;
+
+export const Modal = styled.div`
+  opacity: 1;
+  width: 70%;
+  height: 70%;
+  background-color: white;
+  z-index: 16;
+  position: absolute;
+  border-radius: 8px;
+  left: 15%;
+  top: 15%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  text-align: center;
+`;

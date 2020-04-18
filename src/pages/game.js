@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 // CSS
 import '../assets/GameAssets/game.css';
@@ -7,6 +7,7 @@ import '../assets/GameAssets/game.css';
 import { FaChevronLeft } from 'react-icons/fa';
 import Zombie from '../components/GameComponents/Zombie';
 import Plant from '../components/GameComponents/Plant';
+import WinnerModal from '../components/GameComponents/Modal';
 
 // Images
 import Title from '../assets/GameAssets/title.svg';
@@ -47,6 +48,8 @@ const Game = () => {
   const zombieRef = useRef(null);
 
   let zombieInterval;
+
+  const [totalDeadZombies, updateDeadZombieCount] = useState(0);
 
   const playGame = () => {
     startAnimations();
@@ -159,22 +162,27 @@ const Game = () => {
 
   const moveShooterBall = ball => {
     let moveShooterBallInterval = setInterval(() => {
-      let zombie = document.querySelectorAll('.zombie')[0];
-      let xPosition = parseInt(ball.style.left);
+      let zombie = document.querySelectorAll('.zombie')[0] || 0;
+      let xPosition = parseInt(ball.style.left) || 0;
 
-      // check collision
-      if (checkShooterballCollision(ball, zombie)) {
-        // zombie.classList.remove('zombie');
-        // zombie.classList.add('dead-zombie');
-        zombieDeathAnimations(zombie);
+      if (zombie) {
+        // check collision
+        if (checkShooterballCollision(ball, zombie)) {
+          // zombie.classList.remove('zombie');
+          // zombie.classList.add('dead-zombie');
 
-        setTimeout(() => zombie.remove(), 1250);
-        ball.remove();
-        clearInterval(moveShooterBallInterval);
-      } else if (xPosition > 800) {
-        ball.remove();
-      } else {
-        ball.style.left = `${xPosition + 4}px`;
+          zombieDeathAnimations(zombie);
+
+          updateDeadZombieCount(count => count + 1);
+          
+          setTimeout(() => zombie.remove(), 1250);
+          ball.remove();
+          clearInterval(moveShooterBallInterval);
+        } else if (xPosition > 800) {
+          ball.remove();
+        } else {
+          ball.style.left = `${xPosition + 4}px`;
+        }
       }
     }, 17);
   };
@@ -186,8 +194,10 @@ const Game = () => {
     // Zombie body fall down animation
     zombie.children[0].children[1].classList.add('fall-down');
     // Zombie face rotetes animation
-    zombie.children[0].children[0].children[0].children[0].classList.add('role-face');
-  }
+    zombie.children[0].children[0].children[0].children[0].classList.add(
+      'role-face',
+    );
+  };
 
   const checkShooterballCollision = (ball, zombie) => {
     let shooterBallLeft = parseInt(ball.style.left) || 0;
@@ -211,6 +221,7 @@ const Game = () => {
           <div style={{ width: '120px' }} />
         </Header>
         <GameContainer ref={gameContainer} id="game-container">
+          <WinnerModal totalDeadZombies={totalDeadZombies} />
           <Lightening id="lightening" />
           <RightCloud />
           <LeftCloud />
