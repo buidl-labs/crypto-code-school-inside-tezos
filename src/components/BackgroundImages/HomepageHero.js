@@ -31,6 +31,7 @@ const HomepageHeroImage = ({ className, children }) => {
       className={className}
       // To style via external CSS see layout.css last examples:
       // className="test"
+      fadeIn={false}
       fluid={imageData}
       // Title get's passed to both container and noscriptImg.
       title="gbitest"
