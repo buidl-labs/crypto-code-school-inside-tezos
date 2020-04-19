@@ -52,7 +52,7 @@ export const StartLearning = styled(StartLearningSVG)`
   height: auto;
   max-width: 278px;
 
-  :hover {
+  g:hover {
     cursor: pointer;
     transform: scale(1.1) rotate(-5deg);
   }
