@@ -1,11 +1,9 @@
 import styled from '@emotion/styled';
-import { jsx, css, keyframes } from '@emotion/core';
+import { keyframes } from '@emotion/core';
 
 import LeftCloudSvg from '../../assets/left_cloud.svg';
 import RightCloudSvg from '../../assets/right_cloud.svg';
 import LighteningSvg from '../../assets/GameAssets/lightening.svg';
-
-import { Link } from 'gatsby';
 
 export const MainContainer = styled.section`
   width: 100%;
@@ -171,31 +169,6 @@ export const StartSymbolContainer = styled.div`
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
   animation-timing-function: cubic-bezier(0.43, 0.13, 0.15, 0.99);
-`;
-
-export const BackLink = styled(Link)`
-  display: inline-block;
-  color: #fff;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  text-decoration: none;
-  font-size: 23px;
-  line-height: 175%;
-  margin: 0 10px;
-  width: 120px;
-
-  > span {
-    margin-left: 6px;
-    margin-top: 10px;
-    display: inline-block;
-  }
-
-  > svg {
-    display: inline-block;
-    vertical-align: middle;
-    margin-top: -2px;
-  }
 `;
 
 export const ModalWrapper = styled.div`

@@ -4,10 +4,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import '../assets/GameAssets/game.css';
 
 // Components
-import { FaChevronLeft } from 'react-icons/fa';
 import Zombie from '../components/GameComponents/Zombie';
 import Plant from '../components/GameComponents/Plant';
 import GameOverModal from '../components/GameComponents/Modal';
+import BackLink from '../components/BackLink';
 
 // Images
 import Title from '../assets/GameAssets/title.svg';
@@ -26,7 +26,6 @@ import {
   PlantContainer,
   RightCloud,
   LeftCloud,
-  BackLink,
   Lightening,
   StartSymbolContainer,
 } from '../PagesStyle/GamePage/styled';
@@ -242,7 +241,6 @@ const Game = () => {
       <MainContainer>
         <Header>
           <BackLink to={`/up-next`}>
-            <FaChevronLeft />
             <span>Back</span>
           </BackLink>
           <Title />
