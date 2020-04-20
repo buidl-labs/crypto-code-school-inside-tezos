@@ -23,8 +23,8 @@ const frontHandMovement = keyframes`
 `;
 
 const backLegMovement = keyframes`
-0% { transform: rotate(-1deg); }
-100% { transform: rotate(1deg); }
+0% { transform: rotate(0deg); }
+100% { transform: rotate(-5deg); }
 `;
 
 const frontLegMovement = keyframes`
@@ -94,7 +94,7 @@ const BackLeg = styled(zombieAnatomyList.backLeg)`
   left: 50px;
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
   z-index: 4;
-  animation: ${backLegMovement} 0.5s 1s infinite alternate;
+  animation: ${backLegMovement} 0.5s 0.5s infinite alternate;
 `;
 
 const FrontHand = styled(zombieAnatomyList.frontHand)`
