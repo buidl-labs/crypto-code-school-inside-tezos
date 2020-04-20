@@ -9,24 +9,24 @@ import LeftCloudSvg from '../../assets/left_cloud.svg';
 import RightCloudSvg from '../../assets/right_cloud.svg';
 
 const moveLeft = keyframes`
-  0% { transform: translateX(-20%); opacity: 0.9; }
-  100% { transform: translateX(-100vw); opacity: 0.9; }
+  0% { transform: translateX(-20vw); opacity: 0.9; }
+  100% { transform: translateX(-90vw); opacity: 0.9; }
 `;
 const moveRight = keyframes`
-  0% { transform: translateX(10%); opacity: 0.9; }
-  100% { transform: translateX(100vw); opacity: 0.9; }
+  0% { transform: translateX(10vw); opacity: 0.9; }
+  100% { transform: translateX(90vw); opacity: 0.9; }
 `;
 
 export const LeftCloud = styled(LeftCloudSvg)`
   animation-name: ${moveRight};
-  animation-duration: 150s;
+  animation-duration: 100s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
   position: absolute;
   z-index: -1;
   left: 10px;
   right: 10px;
-  top: 5rem;
+  top: 50px;
 
   @media only screen and (max-width: 425px) {
     display: none;
@@ -35,14 +35,13 @@ export const LeftCloud = styled(LeftCloudSvg)`
 
 export const RightCloud = styled(RightCloudSvg)`
   animation-name: ${moveLeft};
-  animation-duration: 100s;
+  animation-duration: 80s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
   position: absolute;
   z-index: -1;
   right: 10px;
-  right: 10px;
-  top: 14rem;
+  top: 150px;
 
   @media only screen and (max-width: 425px) {
     display: none;
@@ -50,15 +49,13 @@ export const RightCloud = styled(RightCloudSvg)`
 `;
 
 export const Zombie = styled(ZombieSVG)`
-  width: 75%;
-  max-width: 193px;
-  height: auto;
+  max-width: 15vw;
+  max-height: 30vh;
 `;
 
 export const StartLearning = styled(StartLearningSVG)`
-  width: 75%;
-  height: auto;
-  max-width: 278px;
+  max-width: 25vw;
+  max-height: 25vh;
 
   :hover {
     cursor: pointer;
@@ -67,15 +64,14 @@ export const StartLearning = styled(StartLearningSVG)`
 `;
 
 export const Plant = styled(PlantSVG)`
-  width: 75%;
-  height: auto;
-  max-width: 202px;
+  max-width: 15vw;
+  max-height: 25vh;
 `;
 
 export const Logo = styled(LogoSVG)`
-  max-width: 100%;
-  width: 400px;
-  height: auto;
+  max-width: 30vw;
+  max-height: 25vh;
+  margin: 40px 0;
 `;
 
 export const HeroContainer = styled.div`
@@ -103,18 +99,19 @@ export const HeroContainer = styled.div`
 export const HeroTitle = styled.h1`
   font-family: Roboto;
   font-style: normal;
-  font-weight: bold;
+  font-weight: 500;
   font-size: 40px;
   line-height: 95.69%;
   text-align: center;
   color: #ffffff;
   max-width: 800px;
+  width: 50%;
 `;
 
 export const HeroSubheading = styled.p`
   font-family: Roboto;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 17px;
   line-height: 162.69%;
   /* or 31px */
@@ -133,7 +130,6 @@ export const InnerContainer = styled.div`
   bottom: 0;
 
   > div:first-of-type {
-    margin-left: 4%;
   }
 `;
 
@@ -173,7 +169,7 @@ export const StartLink = styled(Link)`
 export const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
-  margin: 2rem;
+  margin-bottom: 10rem;
 `;
 
 export const GridContainer = styled.div`
@@ -181,6 +177,12 @@ export const GridContainer = styled.div`
   grid-template-columns: 1fr 1fr;
   grid-gap: 1rem;
   margin: 0 1rem 1rem 1rem;
+
+  > div:first-of-type {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
   @media only screen and (max-width: 425px) {
     grid-template-columns: 1fr;
@@ -203,14 +205,14 @@ export const FlexContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 1rem;
-
+  width: 80%;
+  margin 1rem auto;
   h2 {
     font-family: Roboto;
     font-style: normal;
-    font-weight: bold;
-    font-size: 40px;
-    line-height: 95.69%;
+    font-weight: 500;
+    font-size: 35px;
+    line-height: 1;
     /* or 43px */
     color: #ffffff;
     margin-bottom: 1rem;
@@ -219,8 +221,8 @@ export const FlexContainer = styled.div`
   p {
     font-family: Roboto;
     font-style: normal;
-    font-weight: 500;
-    font-size: 17px;
+    font-weight: 400;
+    font-size: 16px;
     line-height: 162.69%;
     /* or 31px */
     color: #98a4a6;
