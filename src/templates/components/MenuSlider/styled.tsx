@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { Link } from 'gatsby';
+import CloseIconSVG from '../../../assets/IconSet/close.svg';
 
 export const SideDrawer = styled.div`
   height: 100%;
@@ -67,4 +68,10 @@ export const SliderHeader = styled.div`
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+`;
+
+export const CloseIcon = styled(CloseIconSVG)`
+  height: 48px;
+  width: 48px;
+  margin: 1rem;
 `;

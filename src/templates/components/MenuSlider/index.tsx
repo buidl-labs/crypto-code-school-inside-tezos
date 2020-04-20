@@ -6,8 +6,8 @@ import {
   Title,
   ChapterLink,
   SliderHeader,
+  CloseIcon,
 } from './styled';
-import { IoIosClose } from 'react-icons/io';
 
 interface Props {
   openDrawer: boolean;
@@ -22,10 +22,7 @@ const ContentMenu = ({ openDrawer = false, toggle }: Props) => {
       <SideDrawer show={openDrawer}>
         <SliderHeader>
           <Title>Chapters</Title>
-          <IoIosClose
-            style={{ margin: '1rem' }}
-            color="#fff"
-            size={48}
+          <CloseIcon
             onClick={toggle}
           />
         </SliderHeader>

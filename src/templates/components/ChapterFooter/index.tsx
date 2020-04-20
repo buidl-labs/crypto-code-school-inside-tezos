@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { IoIosMenu } from 'react-icons/io';
 import ContentMenuSlider from '../MenuSlider/index';
 import {
   Footer,
