@@ -32,7 +32,7 @@ function UpNextPage() {
             margin-top: 10px;
           `}
         >
-          <BackLink />
+          <BackLink to="/overview" />
         </div>
         <ThemeContainer>
           <Theme />
