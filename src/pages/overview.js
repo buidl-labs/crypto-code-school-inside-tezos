@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout/layout';
-import { FaChevronLeft } from 'react-icons/fa';
 import Theme from '../assets/theme.svg';
 import IceSeed from '../assets/Seeds/Ice.svg';
 import ElectricSeed from '../assets/Seeds/electricity.svg';
