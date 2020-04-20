@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { IoIosMenu } from 'react-icons/io';
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import ContentMenuSlider from '../MenuSlider/index';
 import {
   Footer,
@@ -9,6 +8,8 @@ import {
   PrevLink,
   ContentIndex,
   NextLink,
+  LeftArrow,
+  RightArrow,
 } from './styled';
 interface Props {
   chapter: string;
@@ -46,7 +47,7 @@ function ChapterFooter({
       <div>
         {prevSlug ? (
           <PrevLink to={`/lesson/${prevSlug}`}>
-            <FaChevronLeft />
+            <LeftArrow />
             <span>Prev</span>
           </PrevLink>
         ) : null}
@@ -56,11 +57,11 @@ function ChapterFooter({
         </ContentIndex>
         {nextSlug ? (
           <NextLink to={`/lesson/${nextSlug}`}>
-            <span>Next</span> <FaChevronRight />
+            <span>Next</span> <RightArrow />
           </NextLink>
         ) : (
           <NextLink to="/up-next">
-            <span>Finish</span> <FaChevronRight />
+            <span>Finish</span> <RightArrow />
           </NextLink>
         )}
       </div>

@@ -1,5 +1,8 @@
 import styled from '@emotion/styled';
 import { Link } from 'gatsby';
+import LeftArrowSVG from '../../../assets/IconSet/left_arrow.svg';
+import RightArrowSVG from '../../../assets/IconSet/right_arrow.svg';
+
 export const Footer = styled.footer`
   grid-area: footer;
   background: #0e1817;
@@ -84,4 +87,14 @@ export const NextLink = styled(Link)`
       display: none;
     }
   }
+`;
+
+export const LeftArrow = styled(LeftArrowSVG)`
+  height: 16px;
+  width: 16px;
+`;
+
+export const RightArrow = styled(RightArrowSVG)`
+  height: 16px;
+  width: 16px;
 `;
