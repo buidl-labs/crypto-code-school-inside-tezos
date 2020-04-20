@@ -59,6 +59,17 @@
   }
 }
 
+@keyframes fadeOut {
+  100% {
+    animation-timing-function: cubic-bezier(0.3, 0.27, 0.07, 1.64);
+    opacity: 0;
+  }
+}
+
+.fade-out {
+  animation: fadeOut 1.5s 1 ease-out forwards;
+}
+
 .role-face {
   animation: roleFace 3s 1 linear;
 }

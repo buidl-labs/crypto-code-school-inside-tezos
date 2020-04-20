@@ -153,7 +153,7 @@ const Game = () => {
     let newShooterBall = document.createElement('img');
     setBallImage(newShooterBall); // according to Plant type
     newShooterBall.classList.add('shooter-ball');
-    newShooterBall.style.left = `${xPosition + 75}px`;
+    newShooterBall.style.left = `${xPosition + 95}px`;
     newShooterBall.style.bottom = '35.5%';
     setTimeout(() => {
       newShooterBall.style.transform = 'scale(1)';
@@ -203,7 +203,12 @@ const Game = () => {
         } else if (xPosition > 800) {
           ball.remove();
         } else {
-          ball.style.left = `${xPosition + 4}px`;
+          if (xPosition > 560) {
+            ball.classList.add('fade-out');
+            ball.style.left = `${xPosition + 4}px`;
+          } else {
+            ball.style.left = `${xPosition + 4}px`;
+          }
         }
       }
     }, 17);
@@ -226,7 +231,7 @@ const Game = () => {
     let zombieLeft = parseInt(zombie.style.left) || 0;
 
     // collision logic
-    if (shooterBallLeft < 800 && shooterBallLeft + 40 >= zombieLeft)
+    if (shooterBallLeft < 800 && shooterBallLeft + 20 >= zombieLeft)
       return true;
     else return false;
   };
