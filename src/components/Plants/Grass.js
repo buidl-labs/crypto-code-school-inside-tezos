@@ -41,8 +41,10 @@ import Pattern4 from '../../assets/PlantsType/Grass/Pattern_4.svg';
 import GrassSeed from '../../assets/PlantsType/Seed/Seed_grass.svg';
 
 //Grass Type Plant
+import { PLANT_TYPES } from './PLANT_TYPES';
+
 export default {
-  type: 'grass',
+  type: PLANT_TYPES.GRASS,
   body: [Body1, Body2, Body3, Body4, Body5],
   eyes: [Eye1, Eye2, Eye3, Eye4, Eye5, Eye6, Eye7, Eye8],
   hair: [Hair1, Hair2, Hair3, Hair4, Hair5],

@@ -41,8 +41,10 @@ import Pattern4 from '../../assets/PlantsType/Ice/Pattern_4.svg';
 import IceSeed from '../../assets/PlantsType/Seed/Seed_ice.svg';
 
 //Ice Type Plant
+import { PLANT_TYPES } from './PLANT_TYPES';
+
 export default {
-  type: 'ice',
+  type: PLANT_TYPES.ICE,
   body: [Body1, Body2, Body3, Body4, Body5],
   eyes: [Eye1, Eye2, Eye3, Eye4, Eye5, Eye6, Eye7, Eye8],
   hair: [Hair1, Hair2, Hair3, Hair4, Hair5],

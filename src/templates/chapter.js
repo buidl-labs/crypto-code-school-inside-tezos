@@ -205,11 +205,16 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
     setEditorInputValue(getDefaultEditorValue);
   };
 
+  const onToggle = () => {
+    setModal(prevState => !prevState);
+  };
+
   return (
     <Layout>
       <SEO title={`Chapter: ${index.current} - Learning Interface`} />
       {validation.success && showModal ? (
         <PlantGrowthModalView
+          onToggle={onToggle}
           currentChapter={index.current}
           nextSlug={index.nextSlug}
         />

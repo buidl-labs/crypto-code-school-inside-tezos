@@ -50,12 +50,13 @@ export const ChapterLink = styled(Link)`
   color: #fff;
   text-align: left;
   padding: 0.5rem;
-  font-size: 22px;
+  font-size: 18px;
   padding: 20px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   font-weight: 300;
   text-decoration: none;
   color: #fff;
+  transition: 0.25s ease-in;
 
   :hover {
     background: #202c2a;

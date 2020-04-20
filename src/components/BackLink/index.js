@@ -1,11 +1,14 @@
 import React from 'react';
 import { BackLink } from './styled';
 import { FaChevronLeft } from 'react-icons/fa';
-function BackLinkContainer() {
+import { navigate } from 'gatsby';
+
+function BackLinkContainer({ to = null }) {
   return (
     <BackLink
       onClick={() => {
-        typeof history !== 'undefined' && history.go(-1);
+        console.log('to', to);
+        to ? navigate(to) : typeof history !== 'undefined' && history.go(-1);
       }}
     >
       <FaChevronLeft />

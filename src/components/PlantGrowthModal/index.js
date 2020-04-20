@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import { FaChevronRight } from 'react-icons/fa';
 import { Link } from 'gatsby';
 import React, { useEffect, useState } from 'react';
+import { IoIosClose } from 'react-icons/io';
 
 const stages = [
   {
@@ -44,7 +45,7 @@ const stages = [
   },
 ];
 
-const PlantGrowthModalView = ({ currentChapter, nextSlug }) => {
+const PlantGrowthModalView = ({ currentChapter, nextSlug, onToggle }) => {
   const [stage, updateStage] = useState(0);
   useEffect(() => {
     setTimeout(() => {
@@ -71,6 +72,16 @@ const PlantGrowthModalView = ({ currentChapter, nextSlug }) => {
   return (
     <Portal>
       <div>
+        <div style={{ position: 'absolute', top: 0, right: 0 }}>
+          <IoIosClose
+            style={{ margin: '1rem' }}
+            color="#fff"
+            size={48}
+            onClick={() => {
+              onToggle();
+            }}
+          />
+        </div>
         <div>
           <PlantContainer stage={stage} />
         </div>

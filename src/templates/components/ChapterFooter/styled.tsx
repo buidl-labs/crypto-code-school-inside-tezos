@@ -19,6 +19,7 @@ export const MenuButton = styled.button`
   border: none;
   cursor: pointer;
   transition: 0.3s;
+  outline: none;
 `;
 
 export const ChapterTitle = styled.p`
@@ -42,7 +43,7 @@ export const PrevLink = styled(Link)`
   font-style: normal;
   font-weight: normal;
   text-decoration: none;
-
+  outline: none;
   > span {
     margin-left: 6px;
   }
@@ -72,6 +73,7 @@ export const NextLink = styled(Link)`
   font-style: normal;
   font-weight: normal;
   text-decoration: none;
+  outline: none;
   > svg {
     display: inline-block;
     vertical-align: middle;
