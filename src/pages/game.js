@@ -49,6 +49,7 @@ const Game = () => {
 
   let zombieInterval;
 
+  const [canShoot, updateCanShoot] = useState(true);
   const [totalDeadZombies, updateDeadZombieCount] = useState(0);
 
   const playGame = () => {
@@ -75,18 +76,30 @@ const Game = () => {
   const keyboardInput = event => {
     if (event.keyCode === 32) {
       event.preventDefault();
-      shooter.current.classList.add('fire-animation');
-      shooter.current.children[0].children[0].style.animation = 'none';
-      shooter.current.children[0].children[0].children[0].classList.add('shoot-animation')
-      // shooter.current.children[0].children[0].children[0].WebkitAnimationPlayState = "running";
+      shooterBall();
+      shootingPlantAnimation();
+    }
+  };
+
+  const shootingPlantAnimation = () => {
+    if (canShoot) {
+      const plantUpperBody = shooter.current.children[0].children[0];
+      updateCanShoot(false);
+
+      plantUpperBody.style.animation = 'none';
       setTimeout(() => {
-        shooterBall();
-        shooter.current.classList.remove('fire-animation');
-      }, 700);
+        plantUpperBody.style.transform = 'rotate(-10deg)';
+      }, 50);
       setTimeout(() => {
-        shooter.current.children[0].children[0].children[0].classList.remove('shoot-animation')
-        shooter.current.children[0].children[0].style.animation = 'sway 3s infinite alternate';
-      }, 3000);
+        plantUpperBody.style.transform = 'rotate(5deg)';
+      }, 800);
+      setTimeout(() => {
+        plantUpperBody.style.transform = 'rotate(-5deg)';
+        plantUpperBody.style.animation = 'sway 3s infinite alternate';
+      }, 1800);
+      setTimeout(() => {
+        updateCanShoot(true);
+      }, 2500);
     }
   };
 
@@ -127,19 +140,24 @@ const Game = () => {
   const shooterBall = () => {
     const ball = createShooterBallElement();
     gameContainer.current.appendChild(ball);
-    moveShooterBall(ball);
+    setTimeout(() => {
+      moveShooterBall(ball);
+    }, 800);
   };
 
   const createShooterBallElement = () => {
     let xPosition = parseInt(
       window.getComputedStyle(shooter.current).getPropertyValue('left'),
     );
+    console.log(xPosition);
     let newShooterBall = document.createElement('img');
     setBallImage(newShooterBall); // according to Plant type
-    newShooterBall.classList.add('fireball');
-    newShooterBall.style.position = 'absolute';
-    newShooterBall.style.left = `${254.5}px`;
-    newShooterBall.style.bottom = '36.5%';
+    newShooterBall.classList.add('shooter-ball');
+    newShooterBall.style.left = `${xPosition + 75}px`;
+    newShooterBall.style.bottom = '35.5%';
+    setTimeout(() => {
+      newShooterBall.style.transform = 'scale(1)';
+    }, 100);
     return newShooterBall;
   };
 
@@ -175,13 +193,10 @@ const Game = () => {
       if (zombie) {
         // check collision
         if (checkShooterballCollision(ball, zombie)) {
-          // zombie.classList.remove('zombie');
-          // zombie.classList.add('dead-zombie');
-
           zombieDeathAnimations(zombie);
 
           updateDeadZombieCount(count => count + 1);
-          
+
           setTimeout(() => zombie.remove(), 1250);
           ball.remove();
           clearInterval(moveShooterBallInterval);

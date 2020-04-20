@@ -76,27 +76,18 @@
   transition: opacity 0.5s ease-out;
 }
 
-.fireball {
+.shooter-ball {
   position: absolute;
-  bottom: 175px;
-  z-index: 5;
   height: 40px;
   width: auto;
-}
-
-.fire-animation {
-  /* animation: fire 0.8s steps(9) 0.8s;  */
-  animation-name: fire;
-  animation-timing-function: steps(9);
-  animation-duration: 0.8s;
-  animation-iteration-count: 1;
-  animation-delay: 0s;
-}
-
-@keyframes fire {
-  100% {
-    background-position: -1617px;
-  }
+  -webkit-transform: scale(0);
+  -ms-transform: scale(0);
+  transform: scale(0);
+  z-index: 7;
+  -webkit-transition: transform 0.5s cubic-bezier(0.43, 0.13, 0.15, 0.99);
+  -moz-transition: transform 0.5s cubic-bezier(0.43, 0.13, 0.15, 0.99);
+  -o-transition: transform 0.5s cubic-bezier(0.43, 0.13, 0.15, 0.99);
+  transition: transform 0.5s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 }
 
 .forest-land-img {
@@ -194,6 +185,7 @@
   transition: all 0.5s cubic-bezier(0.43, 0.13, 0.15, 0.99);
   animation: sway 3s infinite alternate;
   transform-origin: bottom center;
+  /* animation: 3s ease 0s infinite normal none running sway; */
 }
 
 #back-btn {
