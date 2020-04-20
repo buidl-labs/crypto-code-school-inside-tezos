@@ -1,5 +1,8 @@
 import styled from '@emotion/styled';
 
+import CheckMarkIconSVG from '../../../assets/IconSet/check.svg';
+import QuestionMarkSVG from '../../../assets/IconSet/ques_mark.svg';
+
 export const ContractFile = styled.div`
   display: flex;
   justify-content: space-between;
@@ -96,3 +99,13 @@ export const ShowAnswerButton = styled.button`
     padding: 1rem 2rem;
   }
 `;
+
+export const CheckMarkIcon = styled(CheckMarkIconSVG)`
+  height: 20px;
+  width: 20px;
+`;
+
+export const QuestionMarkIcon = styled(QuestionMarkSVG)`
+  height: 24px;
+  width: 24px;
+`; 

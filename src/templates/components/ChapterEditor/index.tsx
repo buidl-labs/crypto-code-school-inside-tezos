@@ -1,6 +1,4 @@
 import React from 'react';
-import { TiTick } from 'react-icons/ti';
-import { AiOutlineQuestion } from 'react-icons/ai';
 import { checkCode } from '../../../utils/compiler';
 import {
   ContractFile,
@@ -8,6 +6,8 @@ import {
   Option,
   ShowAnswerButton,
   CheckAnswerButton,
+  CheckMarkIcon,
+  QuestionMarkIcon,
 } from './styled';
 import { useMediaQuery } from 'react-responsive';
 import RefreshSVG from '../../../assets/refresh.svg';
@@ -63,7 +63,7 @@ function ChapterEditor({
             );
           }}
         >
-          <AiOutlineQuestion /> <span>Show Answer</span>
+          <QuestionMarkIcon /> <span>Show Answer</span>
         </ShowAnswerButton>
         <CheckAnswerButton
           onClick={() => {
@@ -81,7 +81,7 @@ function ChapterEditor({
             updateValidation(result);
           }}
         >
-          <TiTick /> <span>Check</span>
+          <CheckMarkIcon /> <span>Check</span>
         </CheckAnswerButton>
       </Option>
     </>
