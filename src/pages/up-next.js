@@ -48,7 +48,7 @@ function UpNextPage() {
             You have successfully evolved your plant to face the incoming wave
             of zombie attack.
           </p>
-          <BattleLink>
+          <BattleLink to="/game">
             <span />
             Battle it out
           </BattleLink>

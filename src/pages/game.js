@@ -235,11 +235,13 @@ const Game = () => {
     else return false;
   };
 
+  //TODO: Limit shooting one ball at a time, other wise lead to weird bugs
+
   return (
     <Layout>
       <MainContainer>
         <Header>
-          <BackLink to={`/`}>
+          <BackLink to={`/up-next`}>
             <FaChevronLeft />
             <span>Back</span>
           </BackLink>
