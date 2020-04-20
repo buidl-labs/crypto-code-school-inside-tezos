@@ -19,6 +19,7 @@ export const MenuButton = styled.button`
   border: none;
   cursor: pointer;
   transition: 0.3s;
+  outline: none;
 `;
 
 export const ChapterTitle = styled.p`
