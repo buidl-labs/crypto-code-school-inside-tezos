@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 // Plant parts
 import {
@@ -27,7 +27,16 @@ const PlantBox = styled.div`
 `;
 
 const Plant = () => {
-  return (
+  const [renderPlant, setPlant] = useState(null);
+
+  useEffect(() => {
+    const result = typeof window !== 'undefined';
+    if (result) {
+      setPlant(true);
+    }
+  }, []);
+
+  return renderPlant ? (
     <PlantBox>
       <div id="plant-top-body">
         <div style={{ height: '100%' }}>
@@ -41,7 +50,7 @@ const Plant = () => {
       <BackLeaves />
       <FrontLeaves />
     </PlantBox>
-  );
+  ) : null;
 };
 
 export default Plant;
