@@ -43,12 +43,9 @@ const getPlantId = () => {
   const eyesId = Math.floor(Math.random() * randomPlant.eyes.length);
   const hairId = Math.floor(Math.random() * randomPlant.hair.length);
   const headId = Math.floor(Math.random() * randomPlant.head.length);
-  const backLeavesId = Math.floor(
-    Math.random() * randomPlant.backLeaves.length,
-  );
-  const frontLeavesId = Math.floor(
-    Math.random() * randomPlant.frontLeaves.length,
-  );
+  const leavesId = Math.floor(Math.random() * randomPlant.backLeaves.length);
+  const backLeavesId = leavesId;
+  const frontLeavesId = leavesId;
   const patternsId = Math.floor(Math.random() * randomPlant.patterns.length);
   const seedId = Math.floor(Math.random() * randomPlant.seed.length);
 
@@ -89,7 +86,7 @@ export const Eye = styled(randomPlant.eyes[generatedPlantId.eyesId])`
   z-index: 2;
   width: 45%;
   left: 35.5%;
-  top: -11%;
+  top: -15%;
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
 export const Hair = styled(randomPlant.hair[generatedPlantId.hairId])`
@@ -105,9 +102,9 @@ export const Hair = styled(randomPlant.hair[generatedPlantId.hairId])`
 export const Head = styled(randomPlant.head[generatedPlantId.headId])`
   height: 100%;
   position: absolute;
-  left: 24.5%;
-  top: -22%;
-  width: 80%;
+  left: 22.5%;
+  top: -25%;
+  width: 90%;
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
 export const BackLeaves = styled(
@@ -310,7 +307,11 @@ const PlantContainer = ({ stage }) => {
           style={{ transform: `${stage >= 3 ? 'scale(1)' : 'scale(0)'}` }}
         />
         <Hair
-          style={{ transform: `${stage >= 5 ? 'scale(1)' : 'scale(0)'}` }}
+          style={{
+            transform: `${
+              stage >= 5 ? 'scale(1) translate(14px, 10px)' : 'scale(0)'
+            }`,
+          }}
         />
         <BackLeaves
           style={{ transform: `${stage >= 1 ? 'scale(1)' : 'scale(0)'}` }}

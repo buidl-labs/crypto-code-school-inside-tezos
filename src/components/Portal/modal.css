@@ -35,3 +35,9 @@ body {
   padding: 15px;
   border-radius: 10px;
 }
+
+@media only screen and (min-width: 768px) {
+  #portal > div > div {
+    overflow-y: auto;
+  }
+}

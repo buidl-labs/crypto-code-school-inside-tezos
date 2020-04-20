@@ -16,6 +16,7 @@ import { getChaptersIndex } from '../utils/index';
 import { Container, Output } from './chapter.styled';
 import PlantGrowthModalView from '../components/PlantGrowthModal';
 import { trackEventWithProperties } from '../utils/analytics';
+import SEO from '../components/Seo';
 export const query = graphql`
   query($slug: String!) {
     mdx(frontmatter: { slug: { eq: $slug } }) {
@@ -77,12 +78,23 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
     };
   });
 
+  useEffect(() => {
+    trackEventWithProperties('Learning_Interface_View', {
+      slug: chapterList[index.current - 1].slug,
+      title: chapterList[index.current - 1].title,
+    });
+  }, [index.current]);
+
   const [validation, updateValidation] = useState({
     success: false,
     error: [''],
   });
 
-  const [editorInputValue, setEditorInputValue] = useState(() => {
+  /**
+   * Returns default editor value that is the starting point or completed code
+   * if  individual chapter is already completed
+   */
+  const getDefaultEditorValue = () => {
     let list = [];
     const listJSON =
       typeof window != 'undefined' && localStorage.getItem('lesson-1');
@@ -98,7 +110,11 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
       }
     }
     return `${chapter.frontmatter.editor.startingCode}`;
-  });
+  };
+
+  const [editorInputValue, setEditorInputValue] = useState(
+    getDefaultEditorValue,
+  );
   const [showOutput, setShowOutput] = useState(false);
   const [buttonClicked, setButtonClicked] = useState(false);
   var [editorHeight, setEditorHeight] = useState(
@@ -185,10 +201,20 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
     }
   }, [validation.success]);
 
+  const resetEditor = () => {
+    setEditorInputValue(getDefaultEditorValue);
+  };
+
+  const onToggle = () => {
+    setModal(prevState => !prevState);
+  };
+
   return (
     <Layout>
+      <SEO title={`Chapter: ${index.current} - Learning Interface`} />
       {validation.success && showModal ? (
         <PlantGrowthModalView
+          onToggle={onToggle}
           currentChapter={index.current}
           nextSlug={index.nextSlug}
         />
@@ -229,6 +255,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           chapterIndex={index}
           updateValidation={updateValidation}
           editorInputValue={editorInputValue}
+          resetEditor={resetEditor}
         >
           <ControlledEditor
             height={`${editorHeight}`}

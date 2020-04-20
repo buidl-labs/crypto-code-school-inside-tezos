@@ -1,7 +1,17 @@
+const siteUrl =
+  process.env.URL ||
+  process.env.DEPLOY_URL ||
+  `https://blissful-mcnulty-82f253.netlify.com/`;
+
 module.exports = {
   siteMetadata: {
-    title: `Crypto Plants vs Zombies`,
+    title: `Crypto Code School`,
+    author: `Buidl Labs`,
     description: `Interactive Code School for onboarding newcomers to the Tezos Ecosystem using smartpy`,
+    siteUrl,
+    social: {
+      twitter: `BuidlLabs`,
+    },
   },
   plugins: [
     `gatsby-plugin-netlify`,
@@ -30,13 +40,13 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `gatsby-starter-default`,
-        short_name: `starter`,
+        name: `Crypto Code School`,
+        short_name: `CSS`,
         start_url: `/`,
-        background_color: `#663399`,
-        theme_color: `#663399`,
+        background_color: `#162F30`,
+        theme_color: `#162F30`,
         display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+        icon: `src/assets/theme.svg`, // This path is relative to the root of the site.
       },
     },
     {
