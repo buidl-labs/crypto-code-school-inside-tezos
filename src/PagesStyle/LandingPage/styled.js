@@ -164,6 +164,21 @@ export const StartLink = styled(Link)`
   :hover {
     box-shadow: 0 0 0 0.25rem rgba(41, 203, 106, 0.2);
   }
+
+  :before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: red;
+    transform: scale(0.9);
+    -webkit-filter: blur(15px);
+    opacity: 0.5;
+    z-index: -1;
+    transition: all 0.4s cubic-bezier(0.43, 0.13, 0.15, 0.99);
+  }
 `;
 
 export const ButtonContainer = styled.div`
@@ -187,7 +202,7 @@ export const GridContainer = styled.div`
   @media only screen and (max-width: 425px) {
     grid-template-columns: 1fr;
 
-    >div: first-of-type {
+    .render-second-in-mobile-view {
       grid-row: 2;
     }
 

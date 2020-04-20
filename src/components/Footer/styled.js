@@ -57,6 +57,11 @@ export const FooterInner = styled.div`
     > div:last-of-type {
       display: flex;
       flex-direction: column;
+      margin: 4rem 0;
+
+      > div:last-of-type {
+        margin-top: 4rem;
+      }
 
       ul {
         display: flex;

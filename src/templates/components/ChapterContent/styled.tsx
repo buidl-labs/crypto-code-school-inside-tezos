@@ -20,7 +20,7 @@ export const ContentFrontmatterTitle = styled.p`
   display: block;
   font-family: Roboto;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 31px;
   line-height: 36px;
   color: #0e1817;

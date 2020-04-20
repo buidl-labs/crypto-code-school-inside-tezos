@@ -85,7 +85,7 @@ const HomePage = () => {
         }}
       >
         <GridContainer style={{ paddingTop: '10rem' }}>
-          <div>
+          <div className="render-second-in-mobile-view">
             <img src={learningInterface} width="90%" height="90%" />
           </div>
           <FlexContainer>
