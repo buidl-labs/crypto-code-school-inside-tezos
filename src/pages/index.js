@@ -22,6 +22,7 @@ import {
   StartLearning,
   Plant,
   Logo,
+  RightArrow,
 } from '../PagesStyle/LandingPage/styled';
 import SEO from '../components/Seo';
 
@@ -114,7 +115,7 @@ const HomePage = () => {
         </GridContainer>
         <ButtonContainer>
           <StartLink to="/overview">
-            Start Now <FaChevronRight />
+            Start Now <RightArrow />
           </StartLink>
         </ButtonContainer>
       </div>

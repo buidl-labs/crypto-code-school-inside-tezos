@@ -7,6 +7,7 @@ import PlantSVG from '../../assets/plant.svg';
 import ZombieSVG from '../../assets/zombie.svg';
 import LeftCloudSvg from '../../assets/left_cloud.svg';
 import RightCloudSvg from '../../assets/right_cloud.svg';
+import RightArrowSvg from '../../assets/IconSet/right_arrow.svg';
 
 const moveLeft = keyframes`
   0% { transform: translateX(-20vw); opacity: 0.9; }
@@ -242,4 +243,9 @@ export const FlexContainer = styled.div`
     /* or 31px */
     color: #98a4a6;
   }
+`;
+
+export const RightArrow = styled(RightArrowSvg)`
+  width: 20px;
+  height: 20px;
 `;
