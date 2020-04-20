@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { Link } from 'gatsby';
 import LeftArrowSVG from '../../../assets/IconSet/left_arrow.svg';
 import RightArrowSVG from '../../../assets/IconSet/right_arrow.svg';
+import MenuIconSVG from '../../../assets/IconSet/menu.svg';
 
 export const Footer = styled.footer`
   grid-area: footer;
@@ -97,4 +98,9 @@ export const LeftArrow = styled(LeftArrowSVG)`
 export const RightArrow = styled(RightArrowSVG)`
   height: 16px;
   width: 16px;
+`;
+
+export const MenuIcon = styled(MenuIconSVG)`
+  height: 36px;
+  width: 36px;
 `;

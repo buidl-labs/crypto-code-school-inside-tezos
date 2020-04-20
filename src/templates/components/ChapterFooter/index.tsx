@@ -10,6 +10,7 @@ import {
   NextLink,
   LeftArrow,
   RightArrow,
+  MenuIcon,
 } from './styled';
 interface Props {
   chapter: string;
@@ -35,7 +36,7 @@ function ChapterFooter({
     <Footer>
       <div>
         <MenuButton>
-          <IoIosMenu onClick={toggle} size={36} color="#fff" />
+          <MenuIcon onClick={toggle} />
           <ContentMenuSlider openDrawer={openDrawer} toggle={toggle} />
         </MenuButton>
         <ChapterTitle>
