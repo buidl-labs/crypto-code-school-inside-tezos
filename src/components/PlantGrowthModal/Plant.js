@@ -307,7 +307,11 @@ const PlantContainer = ({ stage }) => {
           style={{ transform: `${stage >= 3 ? 'scale(1)' : 'scale(0)'}` }}
         />
         <Hair
-          style={{ transform: `${stage >= 5 ? 'scale(1)' : 'scale(0)'}` }}
+          style={{
+            transform: `${
+              stage >= 5 ? 'scale(1) translate(14px, 10px)' : 'scale(0)'
+            }`,
+          }}
         />
         <BackLeaves
           style={{ transform: `${stage >= 1 ? 'scale(1)' : 'scale(0)'}` }}
