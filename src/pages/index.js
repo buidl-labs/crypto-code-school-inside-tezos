@@ -3,7 +3,6 @@ import Layout from '../components/Layout/layout';
 import Plants from '../assets/plants.svg';
 import learningInterface from '../images/Interface.png';
 import HomepageHeroImage from '../components/BackgroundImages/HomepageHero';
-import { FaChevronRight } from 'react-icons/fa';
 import { Link } from 'gatsby';
 import Footer from '../components/Footer';
 import { trackEvent } from '../utils/analytics';
