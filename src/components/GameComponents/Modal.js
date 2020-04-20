@@ -10,7 +10,7 @@ import {
 } from '../../PagesStyle/GamePage/styled';
 import { FaChevronLeft } from 'react-icons/fa';
 
-const WinnerModal = ({ totalDeadZombies }) => {
+const GameOverModal = ({ totalDeadZombies = 4, status = 'lost' }) => {
   return (
     <>
       {totalDeadZombies === 4 ? (
@@ -22,8 +22,8 @@ const WinnerModal = ({ totalDeadZombies }) => {
                 <WinnersImg />
               </div>
               <div>
-                <h1>Congratulations !</h1>
-                <p>You won the game</p>
+                <h1>{status === 'won' ? 'Congratulations !' : ' Oops !'}</h1>
+                <p>{status === 'won' ? 'You won the game' : 'You lose the game'}</p>
                 <BackLink to={`/`} id="back-btn">
                   <FaChevronLeft />
                   <span>Go to HomePage</span>
@@ -39,4 +39,4 @@ const WinnerModal = ({ totalDeadZombies }) => {
   );
 };
 
-export default WinnerModal;
+export default GameOverModal;

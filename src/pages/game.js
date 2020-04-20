@@ -7,7 +7,7 @@ import '../assets/GameAssets/game.css';
 import { FaChevronLeft } from 'react-icons/fa';
 import Zombie from '../components/GameComponents/Zombie';
 import Plant from '../components/GameComponents/Plant';
-import WinnerModal from '../components/GameComponents/Modal';
+import GameOverModal from '../components/GameComponents/Modal';
 
 // Images
 import Title from '../assets/GameAssets/title.svg';
@@ -49,6 +49,7 @@ const Game = () => {
 
   let zombieInterval;
 
+  const [isGameLost, updateGameStatus] = useState(false);
   const [canShoot, updateCanShoot] = useState(true);
   const [totalDeadZombies, updateDeadZombieCount] = useState(0);
 
@@ -121,7 +122,8 @@ const Game = () => {
       if (Array.from(zombie.classList).includes('dead-zombie')) {
         zombie.remove();
       }
-      if (xPosition <= 200) {
+      if (xPosition <= 300) {
+        clearInterval(moveZombieInterval);
         gameOver();
       } else {
         zombie.style.left = `${xPosition - 1}px`;
@@ -131,10 +133,8 @@ const Game = () => {
 
   const gameOver = () => {
     window.removeEventListener('keydown', keyboardInput);
+    updateGameStatus(true);
     clearInterval(zombieInterval);
-    clearInterval(moveZombieInterval);
-    //   clearInterval(moveShooterBallInterval);
-    console.log(`Game Over! The zombies made it to Earth!`);
   };
 
   const shooterBall = () => {
@@ -149,7 +149,6 @@ const Game = () => {
     let xPosition = parseInt(
       window.getComputedStyle(shooter.current).getPropertyValue('left'),
     );
-    console.log(xPosition);
     let newShooterBall = document.createElement('img');
     setBallImage(newShooterBall); // according to Plant type
     newShooterBall.classList.add('shooter-ball');
@@ -248,7 +247,11 @@ const Game = () => {
           <div style={{ width: '120px' }} />
         </Header>
         <GameContainer ref={gameContainer} id="game-container">
-          <WinnerModal totalDeadZombies={totalDeadZombies} />
+          {isGameLost ? (
+            <GameOverModal status="lost" />
+          ) : (
+            <GameOverModal totalDeadZombies={totalDeadZombies} status="won" />
+          )}
           <Lightening id="lightening" />
           <RightCloud />
           <LeftCloud />
