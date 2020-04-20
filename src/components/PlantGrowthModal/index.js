@@ -1,10 +1,10 @@
 import Portal from '../Portal/index';
 import PlantContainer from './Plant';
 import styled from '@emotion/styled';
-import { FaChevronRight } from 'react-icons/fa';
 import { Link } from 'gatsby';
 import React, { useEffect, useState } from 'react';
-import { IoIosClose } from 'react-icons/io';
+import CloseIconSVG from '../../assets/IconSet/close.svg';
+import RightArrowSVG from '../../assets/IconSet/right_arrow.svg';
 
 const stages = [
   {
@@ -73,10 +73,7 @@ const PlantGrowthModalView = ({ currentChapter, nextSlug, onToggle }) => {
     <Portal>
       <div>
         <div style={{ position: 'absolute', top: 0, right: 0 }}>
-          <IoIosClose
-            style={{ margin: '1rem' }}
-            color="#fff"
-            size={48}
+          <CloseIcon
             onClick={() => {
               onToggle();
             }}
@@ -96,11 +93,11 @@ const PlantGrowthModalView = ({ currentChapter, nextSlug, onToggle }) => {
             </p>
             {nextSlug ? (
               <ProceedLink to={`/lesson/${nextSlug}`}>
-                Proceed <FaChevronRight />
+                Proceed <RightArrow />
               </ProceedLink>
             ) : (
               <ProceedLink to={`/up-next`}>
-                Proceed <FaChevronRight />
+                Proceed <RightArrow />
               </ProceedLink>
             )}
           </ContentContainer>
@@ -178,6 +175,17 @@ const ProceedLink = styled(Link)`
   :hover {
     background: #18a472;
   }
+`;
+
+const CloseIcon = styled(CloseIconSVG)`
+  height: 48px;
+  width: 48px;
+  margin: 1rem;
+`;
+
+const RightArrow = styled(RightArrowSVG)`
+  height: 26px;
+  width: 26px;
 `;
 
 export default PlantGrowthModalView;
