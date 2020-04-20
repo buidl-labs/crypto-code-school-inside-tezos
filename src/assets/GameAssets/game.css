@@ -1,0 +1,214 @@
+.zombie {
+  position: absolute;
+  bottom: 16%;
+  left: 100%;
+  z-index: 5;
+  opacity: 1;
+  width: 143px;
+  height: 223px;
+  /* background: url('./zombiewalking.svg'); */
+  /* background: black; */
+  /* animation: play 0.8s steps(9) infinite; */
+}
+
+@keyframes play {
+  100% {
+    background-position: -1288px;
+  }
+}
+
+.dead-zombie {
+  position: absolute;
+  /* background: url('walkingZombie.png'); */
+  /* background: black; */
+  opacity: 0;
+  z-index: 5;
+}
+
+.demo-dot-x {
+  animation: xAxis 5s 1 cubic-bezier(0.02, 0.01, 0.21, 1);
+}
+
+.demo-dot-y {
+  animation: yAxis 5s 1 cubic-bezier(0.3, 0.27, 0.07, 1.64);
+}
+
+@keyframes yAxis {
+  50% {
+    animation-timing-function: cubic-bezier(0.02, 0.01, 0.21, 1);
+    transform: translateY(200px);
+  }
+}
+
+@keyframes xAxis {
+  50% {
+    animation-timing-function: cubic-bezier(0.3, 0.27, 0.07, 1.64);
+    transform: translateX(400px);
+  }
+}
+
+.fall-down {
+  animation: fallDown 3s 1 cubic-bezier(0.3, 0.27, 0.07, 1.64);
+  transform-origin: bottom center;
+}
+
+@keyframes fallDown {
+  50% {
+    animation-timing-function: cubic-bezier(0.3, 0.27, 0.07, 1.64);
+    transform: rotate(90deg);
+  }
+}
+
+@keyframes fadeOut {
+  100% {
+    animation-timing-function: cubic-bezier(0.3, 0.27, 0.07, 1.64);
+    opacity: 0;
+  }
+}
+
+.fade-out {
+  animation: fadeOut 1.5s 1 ease-out forwards;
+}
+
+.role-face {
+  animation: roleFace 3s 1 linear;
+}
+
+@keyframes roleFace {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.zombie-transition {
+  transition: opacity 0.5s ease-out;
+}
+
+.shooter-ball {
+  position: absolute;
+  height: 40px;
+  width: auto;
+  -webkit-transform: scale(0);
+  -ms-transform: scale(0);
+  transform: scale(0);
+  z-index: 7;
+  -webkit-transition: transform 0.5s cubic-bezier(0.43, 0.13, 0.15, 0.99);
+  -moz-transition: transform 0.5s cubic-bezier(0.43, 0.13, 0.15, 0.99);
+  -o-transition: transform 0.5s cubic-bezier(0.43, 0.13, 0.15, 0.99);
+  transition: transform 0.5s cubic-bezier(0.43, 0.13, 0.15, 0.99);
+}
+
+.forest-land-img {
+  width: 100%;
+  position: absolute;
+  bottom: -10%;
+  left: 0;
+  z-index: 5;
+}
+
+.house-img {
+  position: absolute;
+  bottom: -10%;
+  left: 0;
+  z-index: 6;
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-400px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+#plant-shooter {
+  animation-name: slideInFromLeft;
+  animation-duration: 0.5s;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-out;
+}
+
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(400px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+#initialzombie {
+  animation-name: slideInFromRight;
+  animation-duration: 0.5s;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+  /* animation-delay: 1s; */
+  z-index: 9;
+  position: absolute;
+  bottom: 20%;
+  right: 250px;
+  /* display: none; */
+}
+
+@keyframes sway {
+  0% {
+    -webkit-transform: rotate(-5deg);
+    transform: rotate(-5deg);
+  }
+  50% {
+    -webkit-transform: rotate(2.5deg);
+    transform: rotate(2.5deg);
+  }
+}
+
+@keyframes shoot {
+  0% {
+    -webkit-transform: rotate(-10deg);
+    transform: rotate(-10deg);
+  }
+  40% {
+    -webkit-transform: rotate(5deg);
+    transform: rotate(5deg);
+  }
+  100% {
+    -webkit-transform: rotate(-5deg);
+    transform: rotate(-5deg);
+  }
+}
+
+.shoot-animation {
+  animation-name: shoot;
+  animation-duration: 2.5s;
+  animation-iteration-count: 1;
+  /* animation-timing-function: ease-out;
+  animation-fill-mode: forwards; */
+  transform-origin: bottom center;
+}
+
+#plant-top-body {
+  width: 100%;
+  height: 100%;
+  transition: all 0.5s cubic-bezier(0.43, 0.13, 0.15, 0.99);
+  animation: sway 3s infinite alternate;
+  transform-origin: bottom center;
+  /* animation: 3s ease 0s infinite normal none running sway; */
+}
+
+#back-btn {
+  background: green;
+  width: 100%;
+  margin: 1rem;
+  background-color: #06d19c;
+  border: none;
+  color: #fff;
+  font-size: 12px !important;
+  font-weight: 700;
+  border-radius: 4px;
+  padding: 0 1rem;
+  padding-bottom: 10px;
+}
