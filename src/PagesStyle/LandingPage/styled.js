@@ -19,26 +19,34 @@ const moveRight = keyframes`
 
 export const LeftCloud = styled(LeftCloudSvg)`
   animation-name: ${moveRight};
-  animation-duration: 400s;
+  animation-duration: 150s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
   position: absolute;
   z-index: -1;
   left: 10px;
-  right: 10;
+  right: 10px;
   top: 5rem;
+
+  @media only screen and (max-width: 425px) {
+    display: none;
+  }
 `;
 
 export const RightCloud = styled(RightCloudSvg)`
   animation-name: ${moveLeft};
-  animation-duration: 300s;
+  animation-duration: 100s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
   position: absolute;
   z-index: -1;
   right: 10px;
-  right: 10;
-  top: 10rem;
+  right: 10px;
+  top: 14rem;
+
+  @media only screen and (max-width: 425px) {
+    display: none;
+  }
 `;
 
 export const Zombie = styled(ZombieSVG)`
@@ -158,7 +166,7 @@ export const StartLink = styled(Link)`
   }
 
   :hover {
-    box-shadow: 0 0 0 0.4rem rgba(102, 204, 167, 0.25);
+    box-shadow: 0 0 0 0.25rem rgba(41, 203, 106, 0.2);
   }
 `;
 
