@@ -2,7 +2,12 @@ import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout/layout';
 import { FaChevronLeft } from 'react-icons/fa';
 import Theme from '../assets/theme.svg';
-import IceSeed from '../assets/ice_seed.svg';
+import IceSeed from '../assets/Seeds/Ice.svg';
+import ElectricSeed from '../assets/Seeds/electricity.svg';
+import FireSeed from '../assets/Seeds/fire.svg';
+import GrassSeed from '../assets/Seeds/grass.svg';
+import WaterSeed from '../assets/Seeds/water.svg';
+
 import StartIcon from '../assets/start_icon.svg';
 import useChapters from '../hooks/use-chapters';
 import { Link } from 'gatsby';
@@ -17,9 +22,12 @@ import Completed from '../assets/completed.svg';
 import { trackEvent } from '../utils/analytics';
 import Footer from '../components/Footer';
 import SEO from '../components/Seo';
+import { PLANT_TYPES } from '../components/Plants/PLANT_TYPES';
+
 function LessonsOverview() {
   const chapters = useChapters();
   const [chapterList, updateChapterList] = useState(chapters);
+  const [plantType, setPlantTypeSeed] = useState(null);
 
   useEffect(() => {
     trackEvent('Chapters-Overview-View');
@@ -48,6 +56,33 @@ function LessonsOverview() {
 
     updateChapterList(newChapterList);
   }, []);
+
+  useEffect(() => {
+    let plantType = null;
+    const plantJSON =
+      typeof window != 'undefined' && localStorage.getItem('plant');
+    if (plantJSON !== null) {
+      plantType = JSON.parse(plantJSON).type;
+    }
+    setPlantTypeSeed(plantType);
+  }, []);
+
+  const renderPlantTypeSeed = (plantType = null) => {
+    switch (plantType) {
+      case PLANT_TYPES.ICE:
+        return <IceSeed />;
+      case PLANT_TYPES.ELECTRIC:
+        return <ElectricSeed />;
+      case PLANT_TYPES.GRASS:
+        return <GrassSeed />;
+      case PLANT_TYPES.WATER:
+        return <WaterSeed />;
+      case PLANT_TYPES.FIRE:
+        return <FireSeed />;
+      default:
+        return null;
+    }
+  };
   return (
     <Layout
       background={`radial-gradient(
@@ -70,9 +105,7 @@ function LessonsOverview() {
         </ThemeContainer>
         <OverviewContainer>
           <div>
-            <div>
-              <IceSeed />
-            </div>
+            <div>{renderPlantTypeSeed(plantType)}</div>
             <p>
               In Lesson 1, you're going to incubate your plant to fight against
               zombie apocalypse at end of the lesson.
