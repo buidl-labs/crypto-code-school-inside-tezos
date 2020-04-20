@@ -2,14 +2,15 @@ import React, { useEffect } from 'react';
 import Layout from '../components/Layout/layout';
 import Footer from '../components/Footer';
 import BackLink from '../components/BackLink';
-import Logo from '../assets/theme.svg';
+import Theme from '../assets/theme.svg';
 import styled from '@emotion/styled';
 import { Link } from 'gatsby';
 import LockSVG from '../assets/lock.svg';
 import GrownPlant from '../components/PlantGrowthModal/GrownPlant';
 import { trackEvent } from '../utils/analytics';
 import SEO from '../components/Seo';
-
+import { ThemeContainer } from '../PagesStyle/OverviewPage/styled';
+import { css } from '@emotion/core';
 function UpNextPage() {
   useEffect(() => {
     trackEvent('Up-Next-View');
@@ -24,12 +25,19 @@ function UpNextPage() {
     no-repeat center center fixed`}
     >
       <SEO title="Up Next" />
-      <TopContainer>
-        <BackLink />
-        <div>
-          <Logo />
+      <>
+        <div
+          css={css`
+            margin-left: 30px;
+            margin-top: 10px;
+          `}
+        >
+          <BackLink />
         </div>
-      </TopContainer>
+        <ThemeContainer>
+          <Theme />
+        </ThemeContainer>
+      </>
       <MidContainer>
         <div>
           <h2>Success</h2>

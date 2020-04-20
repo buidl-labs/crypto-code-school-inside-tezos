@@ -11,9 +11,9 @@ import WaterSeed from '../assets/Seeds/water.svg';
 import StartIcon from '../assets/start_icon.svg';
 import useChapters from '../hooks/use-chapters';
 import { Link } from 'gatsby';
+import BackLink from '../components/BackLink';
 import {
   Container,
-  BackLink,
   ThemeContainer,
   StartLink,
   OverviewContainer,
@@ -95,10 +95,7 @@ function LessonsOverview() {
       <SEO title="Chapters Overview" />
       <Container>
         <div>
-          <BackLink to={`/`}>
-            <FaChevronLeft />
-            <span>Back</span>
-          </BackLink>
+          <BackLink to="/" />
         </div>
         <ThemeContainer>
           <Theme />

@@ -12,6 +12,7 @@ export const BackLink = styled.button`
   margin: 10px;
   background: none;
   border: none;
+  outline: none;
 
   > span {
     margin-left: 6px;

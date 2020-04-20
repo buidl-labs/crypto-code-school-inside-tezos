@@ -19,13 +19,14 @@ export const Container = styled.div`
 export const ThemeContainer = styled.div`
   display: flex;
   justify-content: center;
+  margin-bottom: 4rem;
 `;
 
 export const OverviewContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 3rem;
-  margin: 2rem;
+  margin: 0rem 2rem 6rem 2rem;
 
   > div:first-of-type {
     background: rgba(0, 0, 0, 0.25);
@@ -82,7 +83,7 @@ export const OverviewContainer = styled.div`
           font-size: 1.5rem;
           font-family: Roboto;
           color: #ffffff;
-          margin-top: 2rem;
+          margin-top: 1rem;
           margin-bottom: 1rem;
           line-height: 2rem;
 
