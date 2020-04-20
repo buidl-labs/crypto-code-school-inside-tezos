@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import LeftArrowSVG from '../../../assets/IconSet/left_arrow.svg';
 
 export const Header = styled.header`
   grid-area: header;
@@ -62,4 +63,9 @@ export const HelpButton = styled.button`
     background-color: #fff;
     color: #0e1817;
   }
+`;
+
+export const LeftArrow = styled(LeftArrowSVG)`
+  height: 30px;
+  width: 30px;
 `;
