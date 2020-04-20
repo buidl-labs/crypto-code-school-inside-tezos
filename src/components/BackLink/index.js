@@ -1,6 +1,5 @@
 import React from 'react';
-import { BackLink } from './styled';
-import { FaChevronLeft } from 'react-icons/fa';
+import { BackLink, LeftArrow } from './styled';
 import { navigate } from 'gatsby';
 
 function BackLinkContainer({ to = null }) {
@@ -11,7 +10,7 @@ function BackLinkContainer({ to = null }) {
         to ? navigate(to) : typeof history !== 'undefined' && history.go(-1);
       }}
     >
-      <FaChevronLeft />
+      <LeftArrow />
       <span>Back</span>
     </BackLink>
   );

@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import LeftArrowSVG from '../../assets/IconSet/left_arrow.svg';
 
 export const BackLink = styled.button`
   display: inline-block;
@@ -16,7 +17,6 @@ export const BackLink = styled.button`
 
   > span {
     margin-left: 6px;
-    margin-top: 10px;
     display: inline-block;
   }
 
@@ -29,4 +29,9 @@ export const BackLink = styled.button`
   :hover {
     cursor: pointer;
   }
+`;
+
+export const LeftArrow = styled(LeftArrowSVG)`
+  height: 23px;
+  width: 23px;
 `;
