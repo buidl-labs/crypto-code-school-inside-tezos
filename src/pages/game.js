@@ -122,7 +122,7 @@ const Game = () => {
       if (Array.from(zombie.classList).includes('dead-zombie')) {
         zombie.remove();
       }
-      if (xPosition <= 300) {
+      if (xPosition <= 350) {
         clearInterval(moveZombieInterval);
         gameOver();
       } else {
