@@ -48,6 +48,14 @@ export const FooterInner = styled.div`
     margin: 4rem;
   }
 
+  @media only screen and (min-width: 800px) {
+    > div:last-of-type {
+      > div:first-of-type {
+        margin-right: 5rem;
+      }
+    }
+  }
+
   @media only screen and (max-width: 550px) {
     display: grid;
     > div:first-of-type {
