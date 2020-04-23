@@ -276,6 +276,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
               fontSize: 18,
               fontFamily: 'Inconsolata',
               wordWrap: true,
+              wordBasedSuggestions: false,
             }}
           />
           {buttonClicked ? (
