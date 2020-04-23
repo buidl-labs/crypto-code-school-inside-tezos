@@ -28,17 +28,6 @@ export const OverviewContainer = styled.div`
   grid-gap: 3rem;
   margin: 0rem 2rem 6rem 2rem;
 
-  h1 {
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 43px;
-    line-height: 175%;
-    /* or 75px */
-    text-align: center;
-    color: #ffffff;
-  }
-
   > div:first-of-type {
     background: rgba(0, 0, 0, 0.25);
     border-radius: 20px;
@@ -51,7 +40,7 @@ export const OverviewContainer = styled.div`
       font-family: Roboto;
       font-weight: 100;
       width: 80%;
-      margin: 2rem auto;
+      margin: 1rem auto;
     }
 
     div {

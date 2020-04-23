@@ -46,27 +46,7 @@ const stages = [
 ];
 
 const PlantGrowthModalView = ({ currentChapter, nextSlug, onToggle }) => {
-  const [stage, updateStage] = useState(() => {
-    let stage = 0;
-    switch (currentChapter) {
-      case 1:
-        stage = 0;
-        break;
-      case 3:
-        stage = 1;
-        break;
-      case 6:
-        stage = 2;
-        break;
-      case 11:
-        stage = 3;
-        break;
-      case 14:
-        stage = 4;
-        break;
-    }
-    return stage;
-  });
+  const [stage, updateStage] = useState(0);
   useEffect(() => {
     setTimeout(() => {
       switch (currentChapter) {
@@ -86,22 +66,22 @@ const PlantGrowthModalView = ({ currentChapter, nextSlug, onToggle }) => {
           updateStage(5);
           break;
       }
-    }, 2000);
+    }, 1000);
   }, [currentChapter]);
 
   return (
     <Portal>
       <div>
-        <CloseIconContainer>
+        <div style={{ position: 'absolute', top: 0, right: 0 }}>
           <IoIosClose
-            style={{ margin: '5px' }}
+            style={{ margin: '1rem' }}
             color="#fff"
             size={48}
             onClick={() => {
               onToggle();
             }}
           />
-        </CloseIconContainer>
+        </div>
         <div>
           <PlantContainer stage={stage} />
         </div>
@@ -132,21 +112,11 @@ const PlantGrowthModalView = ({ currentChapter, nextSlug, onToggle }) => {
 
 const Container = styled.div`
   position: absolute;
+  width: 729px;
+  height: 710px;
   max-width: 90%;
   max-height: calc(100% - 200px);
   transform: translate(-2%, 50%);
-`;
-
-const CloseIconContainer = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin: 0.5rem;
-  :hover {
-    cursor: pointer;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-  }
 `;
 
 const ContentContainer = styled.div`

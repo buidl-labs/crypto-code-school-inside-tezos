@@ -236,7 +236,6 @@ const Game = () => {
   };
 
   //TODO: Limit shooting one ball at a time, other wise lead to weird bugs
-  //[if more than 1 ball hits a single zombie it will end the game there and then]
 
   return (
     <Layout>
