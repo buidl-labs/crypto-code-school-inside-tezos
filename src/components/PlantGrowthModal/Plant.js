@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { keyframes } from '@emotion/core';
 import plantsList from '../Plants/index';
 import { useSpring, animated, config } from 'react-spring';
-
+import IncubatorSVG from '../../assets/incubator.svg';
 /*
 Check if plant has already been generated
   //if yes --> get the generated plant id from local-storage
@@ -186,14 +186,39 @@ const Glow = styled.div`
   }
 `;
 const Seed = styled(randomPlant.seed[generatedPlantId.seedId])`
-  width: 100%;
+  width: 50%;
+  height: 50%;
   position: absolute;
   top: 23%;
-  left: 10%;
+  left: 23%;
   transform: translate(-25%, -25%) scale(0);
   transition: all 0.5s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
 
+const Incubator = styled(IncubatorSVG)`
+  height: 100%;
+  position: absolute;
+  left: 3.5%;
+  top: -13%;
+  width: 90%;
+  transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
+`;
+
+const IncubatorContainer = styled.div`
+  position: absolute;
+  top: 70%;
+  left: 56%;
+  transform: translate(-55%, -70%);
+  width: 16vw;
+  height: 20vw;
+  max-width: 150px;
+  max-height: 210px;
+
+  @media only screen and (max-width: 425px) {
+    width: 25vw;
+    height: 30vw;
+  }
+`;
 /*
 Glow colors
 ice: light: rgba(208, 252, 255, 0.25), dark: rgba(208, 252, 255, 0.8);
@@ -283,8 +308,7 @@ const PlantContainer = ({ stage }) => {
   });
 
   const seedAnimation = useSpring({
-    delay: 100,
-    config: config.wobbly,
+    config: config.slow,
   });
 
   return (
@@ -293,12 +317,22 @@ const PlantContainer = ({ stage }) => {
         <Light style={props} />
         <Glow />
         {/*TODO: replace with incubated seed */}
-        <Seed
+        <IncubatorContainer
           style={{
             seedAnimation,
-            transform: `${stage === 0 ? 'scale(1)' : 'scale(0)'}`,
           }}
-        />
+        >
+          <Incubator
+            style={{
+              transform: `${stage <= 0 ? 'scale(1)' : 'scale(0)'}`,
+            }}
+          />
+          <Seed
+            style={{
+              transform: `${stage <= 0 ? 'scale(1)' : 'scale(0)'}`,
+            }}
+          />
+        </IncubatorContainer>
         <Body
           style={{ transform: `${stage >= 2 ? 'scale(1)' : 'scale(0)'}` }}
         />

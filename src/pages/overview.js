@@ -6,7 +6,6 @@ import ElectricSeed from '../assets/Seeds/electricity.svg';
 import FireSeed from '../assets/Seeds/fire.svg';
 import GrassSeed from '../assets/Seeds/grass.svg';
 import WaterSeed from '../assets/Seeds/water.svg';
-
 import StartIcon from '../assets/start_icon.svg';
 import useChapters from '../hooks/use-chapters';
 import { Link } from 'gatsby';
