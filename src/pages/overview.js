@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout/layout';
-import { FaChevronLeft } from 'react-icons/fa';
 import Theme from '../assets/theme.svg';
 import IceSeed from '../assets/Seeds/Ice.svg';
 import ElectricSeed from '../assets/Seeds/electricity.svg';
 import FireSeed from '../assets/Seeds/fire.svg';
 import GrassSeed from '../assets/Seeds/grass.svg';
 import WaterSeed from '../assets/Seeds/water.svg';
-
 import StartIcon from '../assets/start_icon.svg';
 import useChapters from '../hooks/use-chapters';
 import { Link } from 'gatsby';
@@ -23,6 +21,7 @@ import { trackEvent } from '../utils/analytics';
 import Footer from '../components/Footer';
 import SEO from '../components/Seo';
 import { PLANT_TYPES } from '../components/Plants/PLANT_TYPES';
+import styled from '@emotion/styled';
 
 function LessonsOverview() {
   const chapters = useChapters();
@@ -102,6 +101,7 @@ function LessonsOverview() {
         </ThemeContainer>
         <OverviewContainer>
           <div>
+            <h1>The Challenge Beings</h1>
             <div>{renderPlantTypeSeed(plantType)}</div>
             <p>
               In Lesson 1, you're going to incubate your plant to fight against
@@ -116,6 +116,9 @@ function LessonsOverview() {
               smart contract in SmartPy which can be deployed on tezos
               blockchain.
             </p>
+            <StartLessonLink to="/lesson/chapter-01">
+              Start Lesson
+            </StartLessonLink>
           </div>
           <div>
             <div>
@@ -146,5 +149,34 @@ function LessonsOverview() {
     </Layout>
   );
 }
+
+const StartLessonLink = styled(Link)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+
+  border: 5px solid rgba(41, 203, 106, 0.41);
+  background: #29cb6a;
+  border-radius: 7px;
+  width: 187px;
+  height: 74px;
+
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 97.69%;
+  /* identical to box height, or 20px */
+  color: #ffffff;
+  transition: 0.3s;
+  cursor: pointer;
+
+  margin: 3rem auto 3rem auto;
+
+  :hover {
+    box-shadow: 0 0 0 0.25rem rgba(41, 203, 106, 0.2);
+  }
+`;
 
 export default LessonsOverview;

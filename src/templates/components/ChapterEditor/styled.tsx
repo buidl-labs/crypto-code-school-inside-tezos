@@ -58,6 +58,7 @@ export const CheckAnswerButton = styled.button`
   border: none;
   cursor: pointer;
   transition: 0.3s;
+  outline: none;
   :hover {
     background: #66cca7;
     color: #fff;
@@ -84,6 +85,7 @@ export const ShowAnswerButton = styled.button`
   border: none;
   transition: 0.3s;
   cursor: pointer;
+  outline: none;
   :hover {
     background: #436061;
     color: #fff;
