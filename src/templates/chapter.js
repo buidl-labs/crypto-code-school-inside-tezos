@@ -273,8 +273,8 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
               scrollbar: { vertical: 'hidden', verticalScrollbarSize: 0 },
               folding: true,
               readOnly: false,
-              fontSize: 18,
-              fontFamily: 'Inconsolata',
+              fontSize: 16,
+              fontFamily: "'Inconsolata', monospace",
               wordWrap: true,
               wordBasedSuggestions: false,
             }}
@@ -300,8 +300,8 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                     scrollbar: { vertical: 'hidden', verticalScrollbarSize: 0 },
                     folding: false,
                     readOnly: true,
-                    fontSize: 18,
-                    fontFamily: 'Inconsolata',
+                    fontSize: 16,
+                    fontFamily: "'Inconsolata', monospace",
                     renderSideBySide: false,
                     wordWrap: true,
                   }}
