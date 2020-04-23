@@ -4,6 +4,7 @@ import { jsx, css, keyframes } from '@emotion/core';
 import LeftCloudSvg from '../../assets/left_cloud.svg';
 import RightCloudSvg from '../../assets/right_cloud.svg';
 import LighteningSvg from '../../assets/GameAssets/lightening.svg';
+import SuccessLightsSvg from '../../assets/GameAssets/success_lights.svg';
 
 import { Link } from 'gatsby';
 
@@ -223,16 +224,51 @@ export const ModalMask = styled.div`
 
 export const Modal = styled.div`
   opacity: 1;
-  width: 70%;
-  height: 70%;
-  background-color: white;
+  width: 50%;
+  height: 90%;
+  background-color: #080e0e;
   z-index: 16;
   position: absolute;
-  border-radius: 8px;
-  left: 15%;
-  top: 15%;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
+  left: 25%;
+  top: 5%;
   text-align: center;
+  box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+`;
+
+export const ModalBottom = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 45%;
+  left: 0;
+  bottom: 0;
+  background-color: #060707;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+`;
+
+export const Heading = styled.p`
+  font-family: Sigmar One;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 3rem;
+  line-height: 77px;
+  text-align: center;
+  letter-spacing: -0.1em;
+  color: #29cb6a;
+`;
+
+export const SubHeading = styled.p`
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1rem;
+  line-height: 27px;
+  text-align: center;
+  color: #ffffff;
+`;
+
+export const SuccessLights = styled(SuccessLightsSvg)`
+  height: 100%;
+  width: 100%;
 `;
