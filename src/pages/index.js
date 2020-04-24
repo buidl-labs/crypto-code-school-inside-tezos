@@ -24,6 +24,7 @@ import {
   Logo,
 } from '../PagesStyle/LandingPage/styled';
 import SEO from '../components/Seo';
+import gameNight from '../images/game_night.jpg';
 
 const HomePage = () => {
   useEffect(() => {
@@ -50,6 +51,11 @@ const HomePage = () => {
           `tezos`,
           `blockchain`,
         ]}
+        image={{
+          src: gameNight,
+          width: 560,
+          height: 300,
+        }}
       />
       <HomepageHeroImage>
         <RightCloud />
