@@ -39,6 +39,7 @@ export const GameContainer = styled.section`
   width: 100%;
   height: 80%;
   position: absolute;
+  overflow-x: hidden;
   top: 10%;
   left: 0;
   background: radial-gradient(
