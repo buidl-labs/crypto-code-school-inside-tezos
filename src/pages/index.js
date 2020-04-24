@@ -24,7 +24,7 @@ import {
   Logo,
 } from '../PagesStyle/LandingPage/styled';
 import SEO from '../components/Seo';
-import gameNight from '../images/game_night.jpg';
+import landingPage from '../images/landing_page.jpg';
 
 const HomePage = () => {
   useEffect(() => {
@@ -52,7 +52,7 @@ const HomePage = () => {
           `blockchain`,
         ]}
         image={{
-          src: gameNight,
+          src: landingPage,
           width: 560,
           height: 300,
         }}
