@@ -161,13 +161,20 @@ const Game = () => {
   };
 
   const createShooterBallElement = () => {
-    let xPosition = parseInt(
-      window.getComputedStyle(shooter.current).getPropertyValue('left'),
+    const plantHead =
+      shooter.current.children[0].children[0].children[0].children[2];
+    let xPositionPercentage = parseInt(
+      window.getComputedStyle(plantHead).getPropertyValue('left'),
     );
+    // let yPositionPercentage = 
+    //   window.getComputedStyle(plantHead).getPropertyValue('top')
+    // ;
+    // console.log(yPositionPercentage);
+    let xPosition = (xPositionPercentage * window.innerWidth) / 100;
     let newShooterBall = document.createElement('img');
     setBallImage(newShooterBall); // according to Plant type
     newShooterBall.classList.add('shooter-ball');
-    newShooterBall.style.left = `${xPosition + 95}px`;
+    newShooterBall.style.left = `${xPosition}px`;
     newShooterBall.style.bottom = '35.5%';
     setTimeout(() => {
       newShooterBall.style.transform = 'scale(1)';
@@ -222,6 +229,8 @@ const Game = () => {
         } else {
           ball.style.left = `${xPosition + 5}px`;
         }
+      } else {
+        ball.style.left = `${xPosition + 5}px`;
       }
     }, 17);
   };
