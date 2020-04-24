@@ -50,13 +50,12 @@ const Game = () => {
   let zombieInterval;
 
   const [isGameLost, updateGameStatus] = useState(false);
-  const [canShoot, updateCanShoot] = useState(true);
   const [totalDeadZombies, updateDeadZombieCount] = useState(0);
 
   const playGame = () => {
     startAnimations();
     startButton.current.style.display = 'none';
-    window.addEventListener('keydown', keyboardInput);
+    window.addEventListener('keydown', debounce(keyboardInput, 500));
     for (let i = 0; i < 4; i++) {
       (function(i) {
         zombieInterval = setTimeout(function() {
@@ -82,26 +81,42 @@ const Game = () => {
     }
   };
 
-  const shootingPlantAnimation = () => {
-    if (canShoot) {
-      const plantUpperBody = shooter.current.children[0].children[0];
-      updateCanShoot(false);
+  const debounce = (func, wait, immediate) => {
+    let timeout;
 
-      plantUpperBody.style.animation = 'none';
-      setTimeout(() => {
-        plantUpperBody.style.transform = 'rotate(-10deg)';
-      }, 50);
-      setTimeout(() => {
-        plantUpperBody.style.transform = 'rotate(5deg)';
-      }, 800);
-      setTimeout(() => {
-        plantUpperBody.style.transform = 'rotate(-5deg)';
-        plantUpperBody.style.animation = 'sway 3s infinite alternate';
-      }, 1800);
-      setTimeout(() => {
-        updateCanShoot(true);
-      }, 2500);
-    }
+    return function executedFunction() {
+      const context = this;
+      const args = arguments;
+
+      const later = () => {
+        timeout = null;
+        if (!immediate) func.apply(context, args);
+      };
+
+      const callNow = immediate && !timeout;
+
+      clearTimeout(timeout);
+
+      timeout = setTimeout(later, wait);
+
+      if (callNow) func.apply(context, args);
+    };
+  };
+
+  const shootingPlantAnimation = () => {
+    const plantUpperBody = shooter.current.children[0].children[0];
+
+    plantUpperBody.style.animation = 'none';
+    setTimeout(() => {
+      plantUpperBody.style.transform = 'rotate(-10deg)';
+    }, 50);
+    setTimeout(() => {
+      plantUpperBody.style.transform = 'rotate(5deg)';
+    }, 800);
+    setTimeout(() => {
+      plantUpperBody.style.transform = 'rotate(-5deg)';
+      plantUpperBody.style.animation = 'sway 3s infinite alternate';
+    }, 1800);
   };
 
   const createZombie = zombieIndex => {
