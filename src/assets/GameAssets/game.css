@@ -67,7 +67,7 @@
 }
 
 .fade-out {
-  animation: fadeOut 1.5s 1 ease-out forwards;
+  animation: fadeOut 0.5s 1 ease-out forwards;
 }
 
 .role-face {

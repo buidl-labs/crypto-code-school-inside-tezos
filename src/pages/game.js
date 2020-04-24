@@ -211,18 +211,16 @@ const Game = () => {
 
           updateDeadZombieCount(count => count + 1);
 
+          ball.classList.add('fade-out');
           setTimeout(() => zombie.remove(), 1250);
-          ball.remove();
+          setTimeout(() => ball.remove(), 500);
+
           clearInterval(moveShooterBallInterval);
         } else if (xPosition > 800) {
-          ball.remove();
+          ball.classList.add('fade-out');
+          setTimeout(() => ball.remove(), 500);
         } else {
-          if (xPosition > 560) {
-            ball.classList.add('fade-out');
-            ball.style.left = `${xPosition + 4}px`;
-          } else {
-            ball.style.left = `${xPosition + 4}px`;
-          }
+          ball.style.left = `${xPosition + 5}px`;
         }
       }
     }, 17);
