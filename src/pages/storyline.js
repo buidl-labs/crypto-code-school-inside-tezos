@@ -29,6 +29,9 @@ const Game = () => {
   const [plantType, setPlantTypeSeed] = useState(null);
   const [showStoryModal, setStoryModalDisplay] = useState(false);
 
+  const gameContainer = useRef(null);
+  const zombieRef = useRef(null);
+
   useEffect(() => {
     let plantType = null;
     const plantJSON =
@@ -38,10 +41,43 @@ const Game = () => {
     }
     setPlantTypeSeed(plantType);
 
-    setTimeout(() => {
-        setStoryModalDisplay(true);
-    }, 5000)
+    for (let i = 0; i < 8; i++) {
+      (function(i) {
+        setTimeout(function() {
+          createZombie(i);
+        }, 4000 * i + 3000 / i);
+      })(i);
+    }
   }, []);
+
+  const createZombie = zombieIndex => {
+    let newZombie = zombieRef.current.cloneNode(true);
+    newZombie.id = `zombie-${zombieIndex}`;
+    newZombie.style.display = 'block';
+    newZombie.classList.add('zombie');
+    newZombie.classList.add('zombie-transition');
+    newZombie.style.bottom = `${randomNumber(12, 16)}%`;
+    gameContainer.current.appendChild(newZombie);
+    moveZombie(newZombie);
+  };
+
+  const moveZombie = zombie => {
+    let moveZombieInterval = setInterval(() => {
+      let xPosition = parseInt(
+        window.getComputedStyle(zombie).getPropertyValue('left'),
+      );
+      if (xPosition <= window.innerWidth / 2) {
+        zombie.style.left = `${xPosition - 1}px`;
+        clearInterval(moveZombieInterval);
+        setStoryModalDisplay(true);
+        setTimeout(() => zombie.remove(), 3500)
+      } else {
+        zombie.style.left = `${xPosition - 1}px`;
+      }
+    }, 30);
+  };
+
+  const randomNumber = (start, end) => Math.floor(Math.random() * end) + start;
 
   return (
     <Layout>
@@ -56,11 +92,11 @@ const Game = () => {
             <span>Skip ></span>
           </BackLink>
         </Header>
-        <GameContainer id="game-container">
+        <GameContainer id="game-container" ref={gameContainer}>
           <StoryTeller display={showStoryModal} plantType={plantType} />
           <RightCloud />
           <LeftCloud />
-          <div id="initialzombie">
+          <div id="initialzombie" ref={zombieRef} style={{ display: 'none' }}>
             <Zombie />
           </div>
           <House className="house-img" />
