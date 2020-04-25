@@ -320,7 +320,12 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                   }}
                 >
                   {validation.success ? (
-                    <div style={{ fontFamily: 'Inconsolata', padding: 10 }}>
+                    <div
+                      style={{
+                        fontFamily: "'Inconsolata', monospace",
+                        padding: 10,
+                      }}
+                    >
                       <p style={{ color: '#18b77e', paddingBottom: 5 }}>
                         <span> > </span>Great, you got it right!
                       </p>
@@ -341,7 +346,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                           <p
                             key={index}
                             style={{
-                              fontFamily: 'Inconsolata',
+                              fontFamily: "'Inconsolata', monospace",
                               color: '#d0454c',
                               paddingBottom: 5,
                             }}

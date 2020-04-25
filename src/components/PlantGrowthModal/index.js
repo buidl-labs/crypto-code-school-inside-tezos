@@ -9,38 +9,62 @@ import { IoIosClose } from 'react-icons/io';
 const stages = [
   {
     stage: 0,
-    description:
-      'You have successfully completed the chapter and your seed has been set in the incubator',
+    description: {
+      before:
+        'You have successfully completed the chapter and your seed has been set in the incubator',
+      after:
+        'You have successfully completed the chapter and your seed has been set in the incubator',
+    },
     nextChapterLink: '',
   },
   {
     stage: 1,
-    description:
-      "You have successfully completed the chapter and evolved your plant's seed  into leaves",
+    description: {
+      before:
+        'You have successfully completed the chapter and you can now evolve your plant',
+      after:
+        "You have successfully completed the chapter and evolved your plant's seed  into leaves",
+    },
     nextChapterLink: '',
   },
   {
     stage: 2,
-    description:
-      "You have successfully completed the chapter and evolved your plant's body",
+    description: {
+      before:
+        'You have successfully completed the chapter and you can now evolve your plant',
+      after:
+        "You have successfully completed the chapter and evolved your plant's body",
+    },
     nextChapterLink: '',
   },
   {
     stage: 3,
-    description:
-      "You have successfully completed the chapter and evolved your plant's head",
+    description: {
+      before:
+        'You have successfully completed the chapter and you can now evolve your plant',
+      after:
+        "You have successfully completed the chapter and evolved your plant's head",
+    },
     nextChapterLink: '',
   },
   {
     stage: 4,
-    description:
-      "You have successfully completed the chapter and evolved your plant's eyes",
+    description: {
+      before:
+        'You have successfully completed the chapter and you can now evolve your plant',
+      after:
+        "You have successfully completed the chapter and evolved your plant's eyes",
+    },
     nextChapterLink: '',
   },
   {
     stage: 5,
-    description:
-      'You have successfully completed the chapter and evolved your plant to defend against the zombies.',
+    description: {
+      before:
+        'You have successfully completed the chapter and you can now evolve your plant',
+      after:
+        'You have successfully completed the chapter and evolved your plant to defend against the zombies.',
+    },
     nextChapterLink: '',
   },
 ];
@@ -67,27 +91,30 @@ const PlantGrowthModalView = ({ currentChapter, nextSlug, onToggle }) => {
     }
     return stage;
   });
+  const [isEvolved, setEvolved] = useState(false);
   useEffect(() => {
-    setTimeout(() => {
-      switch (currentChapter) {
-        case 1:
-          updateStage(1);
-          break;
-        case 3:
-          updateStage(2);
-          break;
-        case 6:
-          updateStage(3);
-          break;
-        case 11:
-          updateStage(4);
-          break;
-        case 14:
-          updateStage(5);
-          break;
-      }
-    }, 2000);
-  }, [currentChapter]);
+    if (isEvolved) {
+      setTimeout(() => {
+        switch (currentChapter) {
+          case 1:
+            updateStage(1);
+            break;
+          case 3:
+            updateStage(2);
+            break;
+          case 6:
+            updateStage(3);
+            break;
+          case 11:
+            updateStage(4);
+            break;
+          case 14:
+            updateStage(5);
+            break;
+        }
+      }, 100);
+    }
+  }, [isEvolved]);
 
   return (
     <Portal>
@@ -112,9 +139,19 @@ const PlantGrowthModalView = ({ currentChapter, nextSlug, onToggle }) => {
               {stage > 6
                 ? `You have successfully completed the chapter and evolved your
               plants to defend against the zombies.`
-                : stages[stage].description}
+                : !isEvolved
+                ? stages[stage].description.before
+                : stages[stage].description.after}
             </p>
-            {nextSlug ? (
+            {!isEvolved ? (
+              <EvolutionButton
+                onClick={() => {
+                  setEvolved(true);
+                }}
+              >
+                Evolve
+              </EvolutionButton>
+            ) : nextSlug ? (
               <ProceedLink to={`/lesson/${nextSlug}`}>
                 Proceed <FaChevronRight />
               </ProceedLink>
@@ -123,6 +160,7 @@ const PlantGrowthModalView = ({ currentChapter, nextSlug, onToggle }) => {
                 Proceed <FaChevronRight />
               </ProceedLink>
             )}
+            <NextLink to={`/lesson/${nextSlug}`}>Skip and Continue</NextLink>
           </ContentContainer>
         </Container>
       </div>
@@ -198,6 +236,7 @@ const ProceedLink = styled(Link)`
   line-height: 30px;
   color: #fff;
   transition: 0.3s;
+  outline: none;
 
   > svg {
     display: inline-block;
@@ -207,6 +246,29 @@ const ProceedLink = styled(Link)`
 
   :hover {
     background: #18a472;
+    cursor: pointer;
+  }
+`;
+
+const EvolutionButton = ProceedLink.withComponent('button');
+
+const NextLink = styled(Link)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  margin-top: 10px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 30px;
+  color: #fff;
+  transition: 0.3s;
+  outline: none;
+
+  :hover {
+    cursor: pointer;
   }
 `;
 
