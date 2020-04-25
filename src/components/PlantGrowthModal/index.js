@@ -170,7 +170,12 @@ const PlantGrowthModalView = ({ currentChapter, nextSlug, onToggle }) => {
                 Proceed <FaChevronRight />
               </ProceedLink>
             )}
-            <NextLink to={`/lesson/${nextSlug}`}>Skip and Continue</NextLink>
+
+            {nextSlug ? (
+              <NextLink to={`/lesson/${nextSlug}`}>Skip and Continue</NextLink>
+            ) : (
+              <NextLink to={`/up-next`}>Skip and Continue</NextLink>
+            )}
           </ContentContainer>
         </Container>
       </div>
