@@ -5,6 +5,8 @@ import { FaChevronRight } from 'react-icons/fa';
 import { Link } from 'gatsby';
 import React, { useEffect, useState } from 'react';
 import { IoIosClose } from 'react-icons/io';
+import { FaTwitter } from 'react-icons/fa';
+import { OutboundLink } from 'gatsby-plugin-amplitude-analytics';
 
 const stages = [
   {
@@ -119,6 +121,14 @@ const PlantGrowthModalView = ({ currentChapter, nextSlug, onToggle }) => {
   return (
     <Portal>
       <div>
+        <StyledOutboundLink
+          rel="noopener"
+          target="_blank"
+          href={`https://twitter.com/intent/tweet?text=I just completed Chapter ${currentChapter}! %23CryptoCodeSchool%20I Evolved my plant and learned more about %23Smartpy development. Evolve your own plant and battle out zombie apocalypse: &url=https://cryptocodeschool.in/`}
+        >
+          <FaTwitter />
+          <span>Tweet</span>
+        </StyledOutboundLink>
         <CloseIconContainer>
           <IoIosClose
             style={{ margin: '5px' }}
@@ -269,6 +279,29 @@ const NextLink = styled(Link)`
 
   :hover {
     cursor: pointer;
+  }
+`;
+
+const StyledOutboundLink = styled(OutboundLink)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 1rem;
+  background: #1b95e0;
+  color: white;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem;
+  border-radius: 5px;
+
+  > svg {
+    margin-right: 5px;
+  }
+
+  :hover {
+    background: #2ea6f1;
   }
 `;
 
