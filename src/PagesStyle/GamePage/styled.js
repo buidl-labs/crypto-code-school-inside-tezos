@@ -246,6 +246,7 @@ export const ModalBottom = styled.div`
   background-color: #060707;
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
+  overflow-y: scroll;
 `;
 
 export const Heading = styled.p`
