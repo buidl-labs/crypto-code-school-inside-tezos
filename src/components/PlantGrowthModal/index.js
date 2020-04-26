@@ -166,7 +166,7 @@ const PlantGrowthModalView = ({ currentChapter, nextSlug, onToggle }) => {
                 Proceed <FaChevronRight />
               </ProceedLink>
             ) : (
-              <ProceedLink to={`/up-next`}>
+              <ProceedLink to={`/game`}>
                 Proceed <FaChevronRight />
               </ProceedLink>
             )}
@@ -174,7 +174,7 @@ const PlantGrowthModalView = ({ currentChapter, nextSlug, onToggle }) => {
             {nextSlug ? (
               <NextLink to={`/lesson/${nextSlug}`}>Skip and Continue</NextLink>
             ) : (
-              <NextLink to={`/up-next`}>Skip and Continue</NextLink>
+              <NextLink to={`/game`}>Skip and Continue</NextLink>
             )}
           </ContentContainer>
         </Container>

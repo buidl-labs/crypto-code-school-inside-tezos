@@ -1,9 +1,10 @@
 import styled from '@emotion/styled';
 import { jsx, css, keyframes } from '@emotion/core';
-
+import { animated } from 'react-spring';
 import LeftCloudSvg from '../../assets/left_cloud.svg';
 import RightCloudSvg from '../../assets/right_cloud.svg';
 import LighteningSvg from '../../assets/GameAssets/lightening.svg';
+import SuccessLightsSvg from '../../assets/GameAssets/success_lights.svg';
 
 import { Link } from 'gatsby';
 
@@ -15,7 +16,7 @@ export const MainContainer = styled.section`
   left: 0;
 `;
 
-export const Header = styled.section`
+export const Header = styled(animated.section)`
   position: absolute;
   top: 0;
   height: 10%;
@@ -26,7 +27,7 @@ export const Header = styled.section`
   align-items: center;
 `;
 
-export const Footer = styled.section`
+export const Footer = styled(animated.section)`
   position: absolute;
   bottom: 0;
   height: 10%;
@@ -34,10 +35,11 @@ export const Footer = styled.section`
   background-color: black;
 `;
 
-export const GameContainer = styled.section`
+export const GameContainer = styled(animated.section)`
   width: 100%;
   height: 80%;
   position: absolute;
+  overflow-x: hidden;
   top: 10%;
   left: 0;
   background: radial-gradient(
@@ -203,8 +205,8 @@ export const ModalWrapper = styled.div`
   width: 100%;
   height: 100%;
   animation-name: ${fadeIn};
-  animation-duration: 3s;
-  animation-delay: 2s;
+  animation-duration: 2s;
+  animation-delay: 0.5s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
   animation-timing-function: cubic-bezier(0.43, 0.13, 0.15, 0.99);
@@ -223,16 +225,52 @@ export const ModalMask = styled.div`
 
 export const Modal = styled.div`
   opacity: 1;
-  width: 70%;
-  height: 70%;
-  background-color: white;
+  width: 50%;
+  height: 90%;
+  background-color: #080e0e;
   z-index: 16;
   position: absolute;
-  border-radius: 8px;
-  left: 15%;
-  top: 15%;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
+  left: 25%;
+  top: 5%;
   text-align: center;
+  box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+`;
+
+export const ModalBottom = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 45%;
+  left: 0;
+  bottom: 0;
+  background-color: #060707;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  overflow-y: scroll;
+`;
+
+export const Heading = styled.p`
+  font-family: Sigmar One;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 3rem;
+  line-height: 77px;
+  text-align: center;
+  letter-spacing: -0.1em;
+  color: #29cb6a;
+`;
+
+export const SubHeading = styled.p`
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1rem;
+  line-height: 27px;
+  text-align: center;
+  color: #ffffff;
+`;
+
+export const SuccessLights = styled(SuccessLightsSvg)`
+  height: 100%;
+  width: 100%;
 `;

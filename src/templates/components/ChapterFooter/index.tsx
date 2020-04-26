@@ -59,7 +59,7 @@ function ChapterFooter({
             <span>Next</span> <FaChevronRight />
           </NextLink>
         ) : (
-          <NextLink to="/up-next">
+          <NextLink to="/game">
             <span>Finish</span> <FaChevronRight />
           </NextLink>
         )}

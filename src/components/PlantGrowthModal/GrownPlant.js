@@ -10,7 +10,7 @@ import {
   Pattern,
 } from './Plant';
 
-function GrownPlant() {
+function GrownPlant({ positionTop = '51%', positionLeft = '53%' }) {
   //wait till window object is available
   const [renderPlant, setPlant] = useState(null);
   useEffect(() => {
@@ -21,7 +21,7 @@ function GrownPlant() {
   }, []);
 
   return renderPlant ? (
-    <Plant style={{ top: ' 51%', left: '53%' }}>
+    <Plant style={{ top: positionTop, left: positionLeft }}>
       <Body />
       <Eye />
       <Head />

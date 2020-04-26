@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import '../assets/GameAssets/game.css';
 
 // Components
-import { FaChevronLeft } from 'react-icons/fa';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import Zombie from '../components/GameComponents/Zombie';
 import Plant from '../components/GameComponents/Plant';
 import GameOverModal from '../components/GameComponents/Modal';
@@ -50,13 +50,12 @@ const Game = () => {
   let zombieInterval;
 
   const [isGameLost, updateGameStatus] = useState(false);
-  const [canShoot, updateCanShoot] = useState(true);
   const [totalDeadZombies, updateDeadZombieCount] = useState(0);
 
   const playGame = () => {
     startAnimations();
     startButton.current.style.display = 'none';
-    window.addEventListener('keydown', keyboardInput);
+    window.addEventListener('keydown', debounce(keyboardInput, 500));
     for (let i = 0; i < 4; i++) {
       (function(i) {
         zombieInterval = setTimeout(function() {
@@ -82,26 +81,42 @@ const Game = () => {
     }
   };
 
-  const shootingPlantAnimation = () => {
-    if (canShoot) {
-      const plantUpperBody = shooter.current.children[0].children[0];
-      updateCanShoot(false);
+  const debounce = (func, wait, immediate) => {
+    let timeout;
 
-      plantUpperBody.style.animation = 'none';
-      setTimeout(() => {
-        plantUpperBody.style.transform = 'rotate(-10deg)';
-      }, 50);
-      setTimeout(() => {
-        plantUpperBody.style.transform = 'rotate(5deg)';
-      }, 800);
-      setTimeout(() => {
-        plantUpperBody.style.transform = 'rotate(-5deg)';
-        plantUpperBody.style.animation = 'sway 3s infinite alternate';
-      }, 1800);
-      setTimeout(() => {
-        updateCanShoot(true);
-      }, 2500);
-    }
+    return function executedFunction() {
+      const context = this;
+      const args = arguments;
+
+      const later = () => {
+        timeout = null;
+        if (!immediate) func.apply(context, args);
+      };
+
+      const callNow = immediate && !timeout;
+
+      clearTimeout(timeout);
+
+      timeout = setTimeout(later, wait);
+
+      if (callNow) func.apply(context, args);
+    };
+  };
+
+  const shootingPlantAnimation = () => {
+    const plantUpperBody = shooter.current.children[0].children[0];
+
+    plantUpperBody.style.animation = 'none';
+    setTimeout(() => {
+      plantUpperBody.style.transform = 'rotate(-10deg)';
+    }, 50);
+    setTimeout(() => {
+      plantUpperBody.style.transform = 'rotate(5deg)';
+    }, 800);
+    setTimeout(() => {
+      plantUpperBody.style.transform = 'rotate(-5deg)';
+      plantUpperBody.style.animation = 'sway 3s infinite alternate';
+    }, 1800);
   };
 
   const createZombie = zombieIndex => {
@@ -122,7 +137,7 @@ const Game = () => {
       if (Array.from(zombie.classList).includes('dead-zombie')) {
         zombie.remove();
       }
-      if (xPosition <= 300) {
+      if (xPosition <= 350) {
         clearInterval(moveZombieInterval);
         gameOver();
       } else {
@@ -146,13 +161,20 @@ const Game = () => {
   };
 
   const createShooterBallElement = () => {
-    let xPosition = parseInt(
-      window.getComputedStyle(shooter.current).getPropertyValue('left'),
+    const plantHead =
+      shooter.current.children[0].children[0].children[0].children[2];
+    let xPositionPercentage = parseInt(
+      window.getComputedStyle(plantHead).getPropertyValue('left'),
     );
+    // let yPositionPercentage =
+    //   window.getComputedStyle(plantHead).getPropertyValue('top')
+    // ;
+    // console.log(yPositionPercentage);
+    let xPosition = (xPositionPercentage * window.innerWidth) / 100;
     let newShooterBall = document.createElement('img');
     setBallImage(newShooterBall); // according to Plant type
     newShooterBall.classList.add('shooter-ball');
-    newShooterBall.style.left = `${xPosition + 95}px`;
+    newShooterBall.style.left = `${xPosition}px`;
     newShooterBall.style.bottom = '35.5%';
     setTimeout(() => {
       newShooterBall.style.transform = 'scale(1)';
@@ -196,19 +218,19 @@ const Game = () => {
 
           updateDeadZombieCount(count => count + 1);
 
+          ball.classList.add('fade-out');
           setTimeout(() => zombie.remove(), 1250);
-          ball.remove();
+          setTimeout(() => ball.remove(), 500);
+
           clearInterval(moveShooterBallInterval);
         } else if (xPosition > 800) {
-          ball.remove();
+          ball.classList.add('fade-out');
+          setTimeout(() => ball.remove(), 500);
         } else {
-          if (xPosition > 560) {
-            ball.classList.add('fade-out');
-            ball.style.left = `${xPosition + 4}px`;
-          } else {
-            ball.style.left = `${xPosition + 4}px`;
-          }
+          ball.style.left = `${xPosition + 5}px`;
         }
+      } else {
+        ball.style.left = `${xPosition + 5}px`;
       }
     }, 17);
   };
@@ -242,12 +264,15 @@ const Game = () => {
     <Layout>
       <MainContainer>
         <Header>
-          <BackLink to={`/up-next`}>
+          <BackLink to={`/lesson/chapter-14`}>
             <FaChevronLeft />
             <span>Back</span>
           </BackLink>
           <Title />
-          <div style={{ width: '120px' }} />
+          <BackLink to={`/up-next`}>
+            <span>Skip</span>
+            <FaChevronRight />
+          </BackLink>
         </Header>
         <GameContainer ref={gameContainer} id="game-container">
           {isGameLost ? (
