@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { jsx, css, keyframes } from '@emotion/core';
-
+import { animated } from 'react-spring';
 import LeftCloudSvg from '../../assets/left_cloud.svg';
 import RightCloudSvg from '../../assets/right_cloud.svg';
 import LighteningSvg from '../../assets/GameAssets/lightening.svg';
@@ -16,7 +16,7 @@ export const MainContainer = styled.section`
   left: 0;
 `;
 
-export const Header = styled.section`
+export const Header = styled(animated.section)`
   position: absolute;
   top: 0;
   height: 10%;
@@ -27,7 +27,7 @@ export const Header = styled.section`
   align-items: center;
 `;
 
-export const Footer = styled.section`
+export const Footer = styled(animated.section)`
   position: absolute;
   bottom: 0;
   height: 10%;
@@ -35,7 +35,7 @@ export const Footer = styled.section`
   background-color: black;
 `;
 
-export const GameContainer = styled.section`
+export const GameContainer = styled(animated.section)`
   width: 100%;
   height: 80%;
   position: absolute;
@@ -205,8 +205,8 @@ export const ModalWrapper = styled.div`
   width: 100%;
   height: 100%;
   animation-name: ${fadeIn};
-  animation-duration: 3s;
-  animation-delay: 2s;
+  animation-duration: 2s;
+  animation-delay: 0.5s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
   animation-timing-function: cubic-bezier(0.43, 0.13, 0.15, 0.99);

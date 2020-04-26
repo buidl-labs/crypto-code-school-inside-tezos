@@ -18,6 +18,8 @@ import {
   BackLink,
 } from '../../PagesStyle/GamePage/styled';
 
+import styled from '@emotion/styled';
+
 const StoryTeller = ({ display, plantType }) => {
   const renderPlantTypeSeed = (plantType = null) => {
     switch (plantType) {
@@ -66,40 +68,7 @@ const StoryTeller = ({ display, plantType }) => {
                 </SubHeading>
                 <br />
                 <div>
-                  <BackLink to={`/overview`}>
-                    <button
-                      style={{
-                        outline: 'none',
-                        border: 'none',
-                        borderRadius: 5,
-                        padding: '15px',
-                        background: '#1B2121',
-                        margin: '20px',
-                        color: '#fff',
-                        minWidth: '130px',
-                        cursor: 'pointer',
-                      }}
-                    >
-                      Skip
-                    </button>
-                  </BackLink>
-                  <BackLink to={`/overview`}>
-                    <button
-                      style={{
-                        outline: 'none',
-                        border: 'none',
-                        borderRadius: 5,
-                        padding: '15px',
-                        background: '#29cb6a',
-                        margin: '20px',
-                        color: '#fff',
-                        minWidth: '130px',
-                        cursor: 'pointer',
-                      }}
-                    >
-                      Proceed
-                    </button>
-                  </BackLink>
+                  <ProceedLink to={`/overview`}>Proceed</ProceedLink>
                 </div>
               </ModalBottom>
             </Modal>
@@ -111,5 +80,21 @@ const StoryTeller = ({ display, plantType }) => {
     </>
   );
 };
+
+const ProceedLink = styled(BackLink)`
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  padding: 15px;
+  background: #29cb6a;
+  margin: 20px;
+  color: #fff;
+  min-width: 130px;
+  cursor: pointer;
+
+  :hover {
+    box-shadow: 0 0 0 0.25rem rgba(41, 203, 106, 0.2);
+  }
+`;
 
 export default StoryTeller;

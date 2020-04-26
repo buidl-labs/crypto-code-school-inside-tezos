@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 // import '../assets/GameAssets/game.css';
 
 // Components
-import { FaChevronLeft } from 'react-icons/fa';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import Zombie from '../components/GameComponents/Zombie';
 import StoryTeller from '../components/GameComponents/Storyteller';
 
@@ -24,7 +24,7 @@ import {
   LeftCloud,
   BackLink,
 } from '../PagesStyle/GamePage/styled';
-
+import { useSpring, config } from 'react-spring';
 const Game = () => {
   const [plantType, setPlantTypeSeed] = useState(null);
   const [showStoryModal, setStoryModalDisplay] = useState(false);
@@ -56,7 +56,7 @@ const Game = () => {
     newZombie.style.display = 'block';
     newZombie.classList.add('zombie');
     newZombie.classList.add('zombie-transition');
-    newZombie.style.bottom = `${randomNumber(12, 16)}%`;
+    newZombie.style.bottom = `${randomNumber(8, 12)}%`;
     gameContainer.current.appendChild(newZombie);
     moveZombie(newZombie);
   };
@@ -70,7 +70,7 @@ const Game = () => {
         zombie.style.left = `${xPosition - 1}px`;
         clearInterval(moveZombieInterval);
         setStoryModalDisplay(true);
-        setTimeout(() => zombie.remove(), 3500)
+        setTimeout(() => zombie.remove(), 3500);
       } else {
         zombie.style.left = `${xPosition - 1}px`;
       }
@@ -79,20 +79,49 @@ const Game = () => {
 
   const randomNumber = (start, end) => Math.floor(Math.random() * end) + start;
 
+  const props = useSpring({
+    delay: 4000,
+    config: config.stiff,
+    from: {
+      top: '0%',
+      height: '100%',
+    },
+    to: async (next, cancel) => {
+      await next({
+        height: '80%',
+        top: '10%',
+      });
+    },
+  });
+
+  const slideLeftToRight = useSpring({
+    delay: 5000,
+    config: config.gentle,
+    from: {
+      transform: 'translateX(-100%)',
+    },
+    to: async (next, cancel) => {
+      await next({
+        transform: 'translateX(0)',
+      });
+    },
+  });
+
   return (
     <Layout>
       <MainContainer>
-        <Header>
+        <Header style={slideLeftToRight}>
           <BackLink to={`/`}>
             <FaChevronLeft />
             <span>Back</span>
           </BackLink>
           <Title />
           <BackLink to={`/overview`}>
-            <span>Skip ></span>
+            <span>Skip</span>
+            <FaChevronRight />
           </BackLink>
         </Header>
-        <GameContainer id="game-container" ref={gameContainer}>
+        <GameContainer style={props} id="game-container" ref={gameContainer}>
           <StoryTeller display={showStoryModal} plantType={plantType} />
           <RightCloud />
           <LeftCloud />
@@ -102,7 +131,7 @@ const Game = () => {
           <House className="house-img" />
           <ForestLand className="forest-land-img" />
         </GameContainer>
-        <Footer />
+        <Footer style={slideLeftToRight} />
       </MainContainer>
     </Layout>
   );
