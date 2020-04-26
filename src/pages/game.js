@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import '../assets/GameAssets/game.css';
 
 // Components
-import { FaChevronLeft } from 'react-icons/fa';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import Zombie from '../components/GameComponents/Zombie';
 import Plant from '../components/GameComponents/Plant';
 import GameOverModal from '../components/GameComponents/Modal';
@@ -166,7 +166,7 @@ const Game = () => {
     let xPositionPercentage = parseInt(
       window.getComputedStyle(plantHead).getPropertyValue('left'),
     );
-    // let yPositionPercentage = 
+    // let yPositionPercentage =
     //   window.getComputedStyle(plantHead).getPropertyValue('top')
     // ;
     // console.log(yPositionPercentage);
@@ -264,12 +264,15 @@ const Game = () => {
     <Layout>
       <MainContainer>
         <Header>
-          <BackLink to={`/up-next`}>
+          <BackLink to={`/lesson/chapter-14`}>
             <FaChevronLeft />
             <span>Back</span>
           </BackLink>
           <Title />
-          <div style={{ width: '120px' }} />
+          <BackLink to={`/up-next`}>
+            <span>Skip</span>
+            <FaChevronRight />
+          </BackLink>
         </Header>
         <GameContainer ref={gameContainer} id="game-container">
           {isGameLost ? (

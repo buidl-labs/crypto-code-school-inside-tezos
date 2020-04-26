@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { navigate } from 'gatsby';
 import {
   Modal,
   ModalMask,
@@ -11,6 +11,7 @@ import {
 } from '../../PagesStyle/GamePage/styled';
 import PlantCircle from '../../components/PlantGrowthModal/Plant';
 import Plant from '../../components/PlantGrowthModal/GrownPlant';
+import styled from '@emotion/styled';
 
 const GameOverModal = ({ totalDeadZombies = 4, status = 'lost' }) => {
   return (
@@ -42,22 +43,17 @@ const GameOverModal = ({ totalDeadZombies = 4, status = 'lost' }) => {
                     </SubHeading>
                   </>
                 )}
-                <button
+                <Button
                   onClick={() => {
-                    typeof window !== 'undefined' && window.location.reload();
-                  }}
-                  style={{
-                    outline: 'none',
-                    border: 'none',
-                    borderRadius: 5,
-                    padding: '20px 40px',
-                    background: '#1B2121',
-                    margin: '20px',
-                    color: '#fff',
+                    if (status === 'won') {
+                      navigate('/up-next');
+                    } else {
+                      typeof window !== 'undefined' && window.location.reload();
+                    }
                   }}
                 >
-                  Continue
-                </button>
+                  {status === 'won' ? 'Continue' : 'Retry'}
+                </Button>
               </ModalBottom>
             </Modal>
           </ModalWrapper>
@@ -68,5 +64,21 @@ const GameOverModal = ({ totalDeadZombies = 4, status = 'lost' }) => {
     </>
   );
 };
+
+const Button = styled.button`
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  padding: 20px 40px;
+  background: #1b2121;
+  margin: 20px;
+  color: #fff;
+  transition: all 0.3s;
+
+  :hover {
+    box-shadow: 0 0 0 0.25rem rgb(59, 66, 66);
+    cursor: pointer;
+  }
+`;
 
 export default GameOverModal;
