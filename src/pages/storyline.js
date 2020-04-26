@@ -66,11 +66,13 @@ const Game = () => {
       let xPosition = parseInt(
         window.getComputedStyle(zombie).getPropertyValue('left'),
       );
-      if (xPosition <= window.innerWidth / 2) {
+      if (xPosition <= window.innerWidth / 1.5) {
         zombie.style.left = `${xPosition - 1}px`;
-        clearInterval(moveZombieInterval);
         setStoryModalDisplay(true);
-        setTimeout(() => zombie.remove(), 3500);
+        setTimeout(() => {
+          clearInterval(moveZombieInterval);
+          zombie.remove();
+        }, 3500);
       } else {
         zombie.style.left = `${xPosition - 1}px`;
       }
@@ -116,12 +118,12 @@ const Game = () => {
             <span>Back</span>
           </BackLink>
           <Title />
-          <BackLink to={`/overview`}>
-            <span>Skip</span>
-            <FaChevronRight />
-          </BackLink>
+          <div style={{ width: '120px' }}></div>
         </Header>
         <GameContainer style={props} id="game-container" ref={gameContainer}>
+          <BackLink style={{ float: 'right' }} to={`/overview`}>
+            <span>Skip</span>
+          </BackLink>
           <StoryTeller display={showStoryModal} plantType={plantType} />
           <RightCloud />
           <LeftCloud />
