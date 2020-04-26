@@ -30,7 +30,7 @@ Check if plant has already been generated
 Known peculiar behavior: generates and stores plantIds on first page render in local storage 
 */
 
-const getPlantId = () => {
+export const getPlantId = () => {
   // get the generated plant id from local-storage if available otherwise generate
   const ids =
     typeof localStorage !== 'undefined' && localStorage.getItem('plant');

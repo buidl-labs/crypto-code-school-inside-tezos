@@ -25,12 +25,19 @@ import {
   BackLink,
 } from '../PagesStyle/GamePage/styled';
 import { useSpring, config } from 'react-spring';
+import { getPlantId } from '../components/PlantGrowthModal/Plant';
+
 const Game = () => {
   const [plantType, setPlantTypeSeed] = useState(null);
   const [showStoryModal, setStoryModalDisplay] = useState(false);
 
   const gameContainer = useRef(null);
   const zombieRef = useRef(null);
+
+  //generate plant type at random if not already have been
+  useEffect(() => {
+    getPlantId();
+  });
 
   useEffect(() => {
     let plantType = null;
