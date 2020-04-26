@@ -4,7 +4,7 @@ import Plants from '../assets/plants.svg';
 import learningInterface from '../images/Interface.png';
 import HomepageHeroImage from '../components/BackgroundImages/HomepageHero';
 import { FaChevronRight } from 'react-icons/fa';
-import { Link } from 'gatsby';
+import { Link, useStaticQuery } from 'gatsby';
 import Footer from '../components/Footer';
 import { trackEvent } from '../utils/analytics';
 import {
@@ -24,6 +24,7 @@ import {
   Logo,
 } from '../PagesStyle/LandingPage/styled';
 import SEO from '../components/Seo';
+import landingPage from '../images/landing_page.jpg';
 
 const HomePage = () => {
   useEffect(() => {
@@ -50,6 +51,11 @@ const HomePage = () => {
           `tezos`,
           `blockchain`,
         ]}
+        image={{
+          src: landingPage,
+          width: 560,
+          height: 300,
+        }}
       />
       <HomepageHeroImage>
         <RightCloud />

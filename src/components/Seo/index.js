@@ -14,6 +14,7 @@ function SEO({ description, lang, image, meta, keywords, title, pathname }) {
           image && image.src
             ? `${data.site.siteMetadata.siteUrl}${image.src}`
             : null;
+        console.log('metaImage', metaImage);
         const metaUrl = `${data.site.siteMetadata.siteUrl}${pathname}`;
         return (
           <Helmet

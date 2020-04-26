@@ -5,42 +5,68 @@ import { FaChevronRight } from 'react-icons/fa';
 import { Link } from 'gatsby';
 import React, { useEffect, useState } from 'react';
 import { IoIosClose } from 'react-icons/io';
+import { FaTwitter } from 'react-icons/fa';
+import { OutboundLink } from 'gatsby-plugin-amplitude-analytics';
 
 const stages = [
   {
     stage: 0,
-    description:
-      'You have successfully completed the chapter and your seed has been set in the incubator',
+    description: {
+      before:
+        'You have successfully completed the chapter and your seed has been set in the incubator',
+      after:
+        'You have successfully completed the chapter and your seed has been set in the incubator',
+    },
     nextChapterLink: '',
   },
   {
     stage: 1,
-    description:
-      "You have successfully completed the chapter and evolved your plant's seed  into leaves",
+    description: {
+      before:
+        'You have successfully completed the chapter and you can now evolve your plant',
+      after:
+        "You have successfully completed the chapter and evolved your plant's seed  into leaves",
+    },
     nextChapterLink: '',
   },
   {
     stage: 2,
-    description:
-      "You have successfully completed the chapter and evolved your plant's body",
+    description: {
+      before:
+        'You have successfully completed the chapter and you can now evolve your plant',
+      after:
+        "You have successfully completed the chapter and evolved your plant's body",
+    },
     nextChapterLink: '',
   },
   {
     stage: 3,
-    description:
-      "You have successfully completed the chapter and evolved your plant's head",
+    description: {
+      before:
+        'You have successfully completed the chapter and you can now evolve your plant',
+      after:
+        "You have successfully completed the chapter and evolved your plant's head",
+    },
     nextChapterLink: '',
   },
   {
     stage: 4,
-    description:
-      "You have successfully completed the chapter and evolved your plant's eyes",
+    description: {
+      before:
+        'You have successfully completed the chapter and you can now evolve your plant',
+      after:
+        "You have successfully completed the chapter and evolved your plant's eyes",
+    },
     nextChapterLink: '',
   },
   {
     stage: 5,
-    description:
-      'You have successfully completed the chapter and evolved your plant to defend against the zombies.',
+    description: {
+      before:
+        'You have successfully completed the chapter and you can now evolve your plant',
+      after:
+        'You have successfully completed the chapter and evolved your plant to defend against the zombies.',
+    },
     nextChapterLink: '',
   },
 ];
@@ -67,31 +93,42 @@ const PlantGrowthModalView = ({ currentChapter, nextSlug, onToggle }) => {
     }
     return stage;
   });
+  const [isEvolved, setEvolved] = useState(false);
   useEffect(() => {
-    setTimeout(() => {
-      switch (currentChapter) {
-        case 1:
-          updateStage(1);
-          break;
-        case 3:
-          updateStage(2);
-          break;
-        case 6:
-          updateStage(3);
-          break;
-        case 11:
-          updateStage(4);
-          break;
-        case 14:
-          updateStage(5);
-          break;
-      }
-    }, 2000);
-  }, [currentChapter]);
+    if (isEvolved) {
+      setTimeout(() => {
+        switch (currentChapter) {
+          case 1:
+            updateStage(1);
+            break;
+          case 3:
+            updateStage(2);
+            break;
+          case 6:
+            updateStage(3);
+            break;
+          case 11:
+            updateStage(4);
+            break;
+          case 14:
+            updateStage(5);
+            break;
+        }
+      }, 100);
+    }
+  }, [isEvolved]);
 
   return (
     <Portal>
       <div>
+        <StyledOutboundLink
+          rel="noopener"
+          target="_blank"
+          href={`https://twitter.com/intent/tweet?text=I just completed Chapter ${currentChapter}! %23CryptoCodeSchool%20I Evolved my plant and learned more about %23Smartpy development. Evolve your own plant and battle out zombie apocalypse: &url=https://cryptocodeschool.in/`}
+        >
+          <FaTwitter />
+          <span>Tweet</span>
+        </StyledOutboundLink>
         <CloseIconContainer>
           <IoIosClose
             style={{ margin: '5px' }}
@@ -112,9 +149,19 @@ const PlantGrowthModalView = ({ currentChapter, nextSlug, onToggle }) => {
               {stage > 6
                 ? `You have successfully completed the chapter and evolved your
               plants to defend against the zombies.`
-                : stages[stage].description}
+                : !isEvolved
+                ? stages[stage].description.before
+                : stages[stage].description.after}
             </p>
-            {nextSlug ? (
+            {!isEvolved ? (
+              <EvolutionButton
+                onClick={() => {
+                  setEvolved(true);
+                }}
+              >
+                Evolve
+              </EvolutionButton>
+            ) : nextSlug ? (
               <ProceedLink to={`/lesson/${nextSlug}`}>
                 Proceed <FaChevronRight />
               </ProceedLink>
@@ -122,6 +169,12 @@ const PlantGrowthModalView = ({ currentChapter, nextSlug, onToggle }) => {
               <ProceedLink to={`/up-next`}>
                 Proceed <FaChevronRight />
               </ProceedLink>
+            )}
+
+            {nextSlug ? (
+              <NextLink to={`/lesson/${nextSlug}`}>Skip and Continue</NextLink>
+            ) : (
+              <NextLink to={`/up-next`}>Skip and Continue</NextLink>
             )}
           </ContentContainer>
         </Container>
@@ -198,6 +251,7 @@ const ProceedLink = styled(Link)`
   line-height: 30px;
   color: #fff;
   transition: 0.3s;
+  outline: none;
 
   > svg {
     display: inline-block;
@@ -207,6 +261,52 @@ const ProceedLink = styled(Link)`
 
   :hover {
     background: #18a472;
+    cursor: pointer;
+  }
+`;
+
+const EvolutionButton = ProceedLink.withComponent('button');
+
+const NextLink = styled(Link)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  margin-top: 10px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 30px;
+  color: #fff;
+  transition: 0.3s;
+  outline: none;
+
+  :hover {
+    cursor: pointer;
+  }
+`;
+
+const StyledOutboundLink = styled(OutboundLink)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 1rem;
+  background: #1b95e0;
+  color: white;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem;
+  border-radius: 5px;
+
+  > svg {
+    margin-right: 5px;
+  }
+
+  :hover {
+    background: #2ea6f1;
   }
 `;
 

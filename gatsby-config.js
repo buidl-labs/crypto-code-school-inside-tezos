@@ -1,7 +1,5 @@
 const siteUrl =
-  process.env.URL ||
-  process.env.DEPLOY_URL ||
-  `https://blissful-mcnulty-82f253.netlify.com/`;
+  process.env.URL || process.env.DEPLOY_URL || `https://cryptocodeschool.in/`;
 
 module.exports = {
   siteMetadata: {
@@ -14,6 +12,7 @@ module.exports = {
     },
   },
   plugins: [
+    `gatsby-plugin-sitemap`,
     `gatsby-plugin-netlify`,
     `gatsby-plugin-portal`,
     `gatsby-plugin-emotion`,
