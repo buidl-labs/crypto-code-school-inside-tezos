@@ -68,7 +68,8 @@ const HomePage = () => {
           <HeroTitle>Learn to Code Blockchain apps in SmartPy</HeroTitle>
           <HeroSubheading>
             Explore interactive code school and learn to create smart contract
-            in smartpy which can be deployed on tezos blockchain.
+            in smartpy which can be deployed on tezos blockchain by growing your
+            own plant to fight against upcoming zombie apocalypse.
           </HeroSubheading>
           <InnerContainer>
             <div>
