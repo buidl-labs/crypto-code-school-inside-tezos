@@ -27,6 +27,7 @@ export const LeftCloud = styled(LeftCloudSvg)`
   left: 10px;
   right: 10px;
   top: 50px;
+  overflow-x: hidden;
 
   @media only screen and (max-width: 425px) {
     display: none;
@@ -42,6 +43,7 @@ export const RightCloud = styled(RightCloudSvg)`
   z-index: -1;
   right: 10px;
   top: 150px;
+  overflow-x: hidden;
 
   @media only screen and (max-width: 425px) {
     display: none;

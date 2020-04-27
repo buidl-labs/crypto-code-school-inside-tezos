@@ -33,7 +33,7 @@ const HomepageHeroImage = ({ className, children }) => {
       // className="test"
       fluid={imageData}
       // Title get's passed to both container and noscriptImg.
-      title="gbitest"
+      title=""
       id="gbitest"
       role="img"
       aria-label="gbitest"
