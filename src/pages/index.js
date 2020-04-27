@@ -74,7 +74,7 @@ const HomePage = () => {
               <Plant />
             </div>
             <div>
-              <Link to="/storyline">
+              <Link to="/overview">
                 <StartLearning />
               </Link>
             </div>

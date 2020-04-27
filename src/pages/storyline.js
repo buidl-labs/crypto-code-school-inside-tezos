@@ -84,14 +84,14 @@ const Game = () => {
       } else {
         zombie.style.left = `${xPosition - 1}px`;
       }
-    }, 30);
+    }, 15);
   };
 
   const randomNumber = (start, end) => Math.floor(Math.random() * end) + start;
 
   const props = useSpring({
     delay: 4000,
-    config: config.stiff,
+    config: { ...config.molasses, duration: 2500 },
     from: {
       top: '0%',
       height: '100%',
@@ -104,34 +104,34 @@ const Game = () => {
     },
   });
 
-  const slideLeftToRight = useSpring({
-    delay: 5000,
-    config: config.gentle,
-    from: {
-      transform: 'translateX(-100%)',
-    },
-    to: async (next, cancel) => {
-      await next({
-        transform: 'translateX(0)',
-      });
-    },
-  });
+  // const slideLeftToRight = useSpring({
+  //   delay: 5000,
+  //   config: config.gentle,
+  //   from: {
+  //     transform: 'translateX(-100%)',
+  //   },
+  //   to: async (next, cancel) => {
+  //     await next({
+  //       transform: 'translateX(0)',
+  //     });
+  //   },
+  // });
 
   return (
     <Layout>
       <MainContainer>
-        <Header style={slideLeftToRight}>
+        <Header>
           <BackLink to={`/`}>
             <FaChevronLeft />
             <span>Back</span>
           </BackLink>
           <Title />
-          <div style={{ width: '120px' }}></div>
+          <BackLink to={`/lesson/chapter-01`}>
+            <span>Skip</span>
+            <FaChevronRight />
+          </BackLink>
         </Header>
         <GameContainer style={props} id="game-container" ref={gameContainer}>
-          <BackLink style={{ float: 'right' }} to={`/overview`}>
-            <span>Skip</span>
-          </BackLink>
           <StoryTeller display={showStoryModal} plantType={plantType} />
           <RightCloud />
           <LeftCloud />
@@ -141,7 +141,7 @@ const Game = () => {
           <House className="house-img" />
           <ForestLand className="forest-land-img" />
         </GameContainer>
-        <Footer style={slideLeftToRight} />
+        <Footer />
       </MainContainer>
     </Layout>
   );

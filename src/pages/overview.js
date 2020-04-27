@@ -101,8 +101,7 @@ function LessonsOverview() {
         </ThemeContainer>
         <OverviewContainer>
           <div>
-            <h1>The Challenge Beings</h1>
-            <div>{renderPlantTypeSeed(plantType)}</div>
+            <h1>The Challenge Begins</h1>
             <p>
               In Lesson 1, you're going to incubate your plant to fight against
               zombie apocalypse at end of the lesson.
@@ -116,18 +115,22 @@ function LessonsOverview() {
               smart contract in SmartPy which can be deployed on tezos
               blockchain.
             </p>
-            <StartLessonLink to="/lesson/chapter-01">
-              Start Lesson
-            </StartLessonLink>
+            <StartLessonLink to="/storyline">Start Lesson</StartLessonLink>
           </div>
           <div>
             <div>
               <h2>Chapters</h2>
-              <StartLink to="/lesson/chapter-01">
+              <StartLink to="/storyline">
                 <StartIcon />
               </StartLink>
             </div>
             <ul>
+              <li>
+                <Link to={`/storyline`}>
+                  Chapter 0 - Zombie Apocalypse Begins
+                </Link>
+                <hr />
+              </li>
               {chapterList.map((chapter, index) => {
                 return (
                   <li key={index}>
