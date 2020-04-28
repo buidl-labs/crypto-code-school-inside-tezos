@@ -22,7 +22,6 @@ import Footer from '../components/Footer';
 import SEO from '../components/Seo';
 import { PLANT_TYPES } from '../components/Plants/PLANT_TYPES';
 import styled from '@emotion/styled';
-import StyledLink from '../components/StyledLink';
 
 function LessonsOverview() {
   const chapters = useChapters();
@@ -116,9 +115,7 @@ function LessonsOverview() {
               smart contract in SmartPy which can be deployed on tezos
               blockchain.
             </p>
-            <div style={{ position: 'relative' }}>
-              <StyledLink to="/storyline">Start Lesson</StyledLink>
-            </div>
+            <StartLessonLink to="/storyline">Start Lesson</StartLessonLink>
           </div>
           <div>
             <div>

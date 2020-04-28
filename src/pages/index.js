@@ -25,7 +25,6 @@ import {
 } from '../PagesStyle/LandingPage/styled';
 import SEO from '../components/Seo';
 import landingPage from '../images/landing_page.jpg';
-import StyledLink from '../components/StyledLink';
 
 const HomePage = () => {
   useEffect(() => {
@@ -121,7 +120,9 @@ const HomePage = () => {
           </div>
         </GridContainer>
         <ButtonContainer>
-          <StyledLink to="/overview">Start Now</StyledLink>
+          <StartLink to="/overview">
+            Start Now <FaChevronRight />
+          </StartLink>
         </ButtonContainer>
       </div>
       <Footer />
