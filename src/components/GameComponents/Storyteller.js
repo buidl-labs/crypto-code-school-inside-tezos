@@ -6,7 +6,7 @@ import ElectricSeed from '../../assets/Seeds/electricity.svg';
 import FireSeed from '../../assets/Seeds/fire.svg';
 import GrassSeed from '../../assets/Seeds/grass.svg';
 import WaterSeed from '../../assets/Seeds/water.svg';
-
+import { navigate } from 'gatsby';
 import {
   Modal,
   ModalMask,
@@ -67,8 +67,23 @@ const StoryTeller = ({ display, plantType }) => {
                   deployed on tezos blockchain.
                 </SubHeading>
                 <br />
-                <div>
-                  <ProceedLink to={`/overview`}>Proceed</ProceedLink>
+                <div
+                  style={{
+                    position: 'absolute',
+                    left: '50%',
+                    transform: 'translate(-50%, 0)',
+                    margin: '2rem 0',
+                  }}
+                >
+                  <ProceedLink
+                    onClick={() => {
+                      typeof window != 'undefined' &&
+                        localStorage.setItem('chapter-0', true);
+                      navigate(`/lesson/chapter-01`);
+                    }}
+                  >
+                    Proceed
+                  </ProceedLink>
                 </div>
               </ModalBottom>
             </Modal>
@@ -81,19 +96,45 @@ const StoryTeller = ({ display, plantType }) => {
   );
 };
 
-const ProceedLink = styled(BackLink)`
-  outline: none;
-  border: none;
-  border-radius: 5px;
-  padding: 15px;
+const ProceedLink = styled.button`
+  padding: 18px 30px;
   background: #29cb6a;
-  margin: 20px;
+  border: none;
+  outline: none;
+  font-weight: 500;
   color: #fff;
-  min-width: 130px;
   cursor: pointer;
+  letter-spacing: 2px;
+  border-radius: 5px;
+  transition: all 0.4s cubic-bezier(0.43, 0.13, 0.15, 0.99);
+  font-size: 1.2rem;
+  width: inherit;
+
+  :before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: #29cb6a;
+    transform: scale(0.9);
+    filter: blur(15px);
+    opacity: 0.5;
+    z-index: -1;
+    transition: all 0.4s cubic-bezier(0.43, 0.13, 0.15, 0.99);
+  }
 
   :hover {
-    box-shadow: 0 0 0 0.25rem rgba(41, 203, 106, 0.2);
+    box-shadow: 0 0 0 0.4rem rgba(102, 204, 167, 0.25);
+  }
+
+  :hover:before {
+    top: 20px;
+  }
+
+  :active {
+    transform: scale(0.8);
   }
 `;
 

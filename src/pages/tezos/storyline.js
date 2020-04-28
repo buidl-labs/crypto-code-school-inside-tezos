@@ -5,16 +5,16 @@ import React, { useEffect, useRef, useState } from 'react';
 
 // Components
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import Zombie from '../components/GameComponents/Zombie';
-import StoryTeller from '../components/GameComponents/Storyteller';
+import Zombie from 'src/components/GameComponents/Zombie';
+import StoryTeller from 'src/components/GameComponents/Storyteller';
 
 // Images
-import Title from '../assets/GameAssets/title.svg';
-import House from '../assets/GameAssets/house.svg';
-import ForestLand from '../assets/GameAssets/forestland.svg';
+import Title from 'src/assets/GameAssets/title.svg';
+import House from 'src/assets/GameAssets/house.svg';
+import ForestLand from 'src/assets/GameAssets/forestland.svg';
 
 // Custom styles and styled images
-import Layout from '../components/Layout/layout';
+import Layout from 'src/components/Layout/layout';
 import {
   MainContainer,
   Header,
@@ -23,9 +23,9 @@ import {
   RightCloud,
   LeftCloud,
   BackLink,
-} from '../PagesStyle/GamePage/styled';
+} from 'src/PagesStyle/GamePage/styled';
 import { useSpring, config } from 'react-spring';
-import { getPlantId } from '../components/PlantGrowthModal/Plant';
+import { getPlantId } from 'src/components/PlantGrowthModal/Plant';
 
 const Game = () => {
   const [plantType, setPlantTypeSeed] = useState(null);
@@ -84,14 +84,14 @@ const Game = () => {
       } else {
         zombie.style.left = `${xPosition - 1}px`;
       }
-    }, 30);
+    }, 20);
   };
 
   const randomNumber = (start, end) => Math.floor(Math.random() * end) + start;
 
   const props = useSpring({
     delay: 4000,
-    config: config.stiff,
+    config: { ...config.molasses, duration: 2500 },
     from: {
       top: '0%',
       height: '100%',
@@ -104,34 +104,34 @@ const Game = () => {
     },
   });
 
-  const slideLeftToRight = useSpring({
-    delay: 5000,
-    config: config.gentle,
-    from: {
-      transform: 'translateX(-100%)',
-    },
-    to: async (next, cancel) => {
-      await next({
-        transform: 'translateX(0)',
-      });
-    },
-  });
+  // const slideLeftToRight = useSpring({
+  //   delay: 5000,
+  //   config: config.gentle,
+  //   from: {
+  //     transform: 'translateX(-100%)',
+  //   },
+  //   to: async (next, cancel) => {
+  //     await next({
+  //       transform: 'translateX(0)',
+  //     });
+  //   },
+  // });
 
   return (
     <Layout>
       <MainContainer>
-        <Header style={slideLeftToRight}>
-          <BackLink to={`/`}>
+        <Header>
+          <BackLink to={`/tezos`}>
             <FaChevronLeft />
             <span>Back</span>
           </BackLink>
           <Title />
-          <div style={{ width: '120px' }}></div>
+          <BackLink to={`/lesson/chapter-01`}>
+            <span>Skip</span>
+            <FaChevronRight />
+          </BackLink>
         </Header>
         <GameContainer style={props} id="game-container" ref={gameContainer}>
-          <BackLink style={{ float: 'right' }} to={`/overview`}>
-            <span>Skip</span>
-          </BackLink>
           <StoryTeller display={showStoryModal} plantType={plantType} />
           <RightCloud />
           <LeftCloud />
@@ -141,7 +141,7 @@ const Game = () => {
           <House className="house-img" />
           <ForestLand className="forest-land-img" />
         </GameContainer>
-        <Footer style={slideLeftToRight} />
+        <Footer />
       </MainContainer>
     </Layout>
   );

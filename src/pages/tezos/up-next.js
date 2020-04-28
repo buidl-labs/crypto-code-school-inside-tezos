@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
-import Layout from '../components/Layout/layout';
-import Footer from '../components/Footer';
-import BackLink from '../components/BackLink';
-import Theme from '../assets/theme.svg';
+import Layout from 'src/components/Layout/layout';
+import Footer from 'src/components/Footer';
+import BackLink from 'src/components/BackLink';
+import Theme from 'src/assets/theme.svg';
 import styled from '@emotion/styled';
 import { Link } from 'gatsby';
-import LockSVG from '../assets/lock.svg';
-import GrownPlant from '../components/PlantGrowthModal/GrownPlant';
-import { trackEvent } from '../utils/analytics';
-import SEO from '../components/Seo';
-import { ThemeContainer } from '../PagesStyle/OverviewPage/styled';
+import LockSVG from 'src/assets/lock.svg';
+import GrownPlant from 'src/components/PlantGrowthModal/GrownPlant';
+import { trackEvent } from 'src/utils/analytics';
+import SEO from 'src/components/Seo';
+import { ThemeContainer } from 'src/PagesStyle/OverviewPage/styled';
 import { css } from '@emotion/core';
 function UpNextPage() {
   useEffect(() => {
@@ -48,7 +48,7 @@ function UpNextPage() {
             You have successfully evolved your plant to face the incoming wave
             of zombie attack.
           </p>
-          <BattleLink to="/game">
+          <BattleLink to="/tezos/game">
             <span />
             Battle it out
           </BattleLink>

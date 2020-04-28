@@ -1,32 +1,43 @@
 import React, { useState, useEffect } from 'react';
-import Layout from '../components/Layout/layout';
-import Theme from '../assets/theme.svg';
-import IceSeed from '../assets/Seeds/Ice.svg';
-import ElectricSeed from '../assets/Seeds/electricity.svg';
-import FireSeed from '../assets/Seeds/fire.svg';
-import GrassSeed from '../assets/Seeds/grass.svg';
-import WaterSeed from '../assets/Seeds/water.svg';
-import StartIcon from '../assets/start_icon.svg';
-import useChapters from '../hooks/use-chapters';
+import Layout from 'src/components/Layout/layout';
+import Theme from 'src/assets/theme.svg';
+import IceSeed from 'src/assets/Seeds/Ice.svg';
+import ElectricSeed from 'src/assets/Seeds/electricity.svg';
+import FireSeed from 'src/assets/Seeds/fire.svg';
+import GrassSeed from 'src/assets/Seeds/grass.svg';
+import WaterSeed from 'src/assets/Seeds/water.svg';
+import StartIcon from 'src/assets/start_icon.svg';
+import useChapters from 'src/hooks/use-chapters';
 import { Link } from 'gatsby';
-import BackLink from '../components/BackLink';
+import BackLink from 'src/components/BackLink';
 import {
   Container,
   ThemeContainer,
   StartLink,
   OverviewContainer,
-} from '../PagesStyle/OverviewPage/styled';
-import Completed from '../assets/completed.svg';
-import { trackEvent } from '../utils/analytics';
-import Footer from '../components/Footer';
-import SEO from '../components/Seo';
-import { PLANT_TYPES } from '../components/Plants/PLANT_TYPES';
+} from 'src/PagesStyle/OverviewPage/styled';
+import Completed from 'src/assets/completed.svg';
+import { trackEvent } from 'src/utils/analytics';
+import Footer from 'src/components/Footer';
+import SEO from 'src/components/Seo';
+import { PLANT_TYPES } from 'src/components/Plants/PLANT_TYPES';
 import styled from '@emotion/styled';
+import StyledLink from 'src/components/StyledLink';
 
 function LessonsOverview() {
   const chapters = useChapters();
   const [chapterList, updateChapterList] = useState(chapters);
   const [plantType, setPlantTypeSeed] = useState(null);
+  const [chapterZeroCompleted, setZeroChapterCompleted] = useState(() => {
+    let result = false;
+    const isChapterZeroCompleted =
+      typeof window != 'undefined' && localStorage.getItem('chapter-0');
+    if (isChapterZeroCompleted !== null) {
+      result = isChapterZeroCompleted;
+    }
+
+    return result;
+  });
 
   useEffect(() => {
     trackEvent('Chapters-Overview-View');
@@ -94,18 +105,17 @@ function LessonsOverview() {
       <SEO title="Chapters Overview" />
       <Container>
         <div>
-          <BackLink to="/" />
+          <BackLink to="/tezos" />
         </div>
         <ThemeContainer>
           <Theme />
         </ThemeContainer>
         <OverviewContainer>
           <div>
-            <h1>The Challenge Beings</h1>
-            <div>{renderPlantTypeSeed(plantType)}</div>
+            <h1>The Challenge Begins</h1>
             <p>
-              In Lesson 1, you're going to incubate your plant to fight against
-              zombie apocalypse at end of the lesson.
+              In Lesson 1, you're going to growing your plant to fight against
+              upcoming zombie apocalypse at end of the lesson.
             </p>
             <p>
               A zombie apocalypse has begun. You’ve luckily found the seed of a
@@ -116,18 +126,32 @@ function LessonsOverview() {
               smart contract in SmartPy which can be deployed on tezos
               blockchain.
             </p>
-            <StartLessonLink to="/lesson/chapter-01">
-              Start Lesson
-            </StartLessonLink>
+            <div>
+              <StyledLink
+                style={{ padding: '15px 35px' }}
+                to="/tezos/storyline"
+              >
+                Start Lesson
+              </StyledLink>
+            </div>
           </div>
           <div>
             <div>
               <h2>Chapters</h2>
-              <StartLink to="/lesson/chapter-01">
+              <StartLink to="/tezos/storyline">
                 <StartIcon />
               </StartLink>
             </div>
             <ul>
+              <li>
+                <Link to={`/tezos/storyline`}>
+                  {chapterZeroCompleted ? (
+                    <Completed width="38" height="38" />
+                  ) : null}
+                  Chapter 0 - Zombie Apocalypse Begins
+                </Link>
+                <hr />
+              </li>
               {chapterList.map((chapter, index) => {
                 return (
                   <li key={index}>
