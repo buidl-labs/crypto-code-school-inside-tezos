@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { keyframes } from '@emotion/core';
 import plantsList from '../Plants/index';
@@ -191,7 +191,7 @@ const Seed = styled(randomPlant.seed[generatedPlantId.seedId])`
   position: absolute;
   top: 23%;
   left: 23%;
-  transform: translate(-25%, -25%) scale(0);
+  transform: translate(0, 0) scale(1);
   transition: all 0.5s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
 
@@ -269,20 +269,20 @@ const getPlantTypeGlowLight = randomPlant => {
   return color;
 };
 
-const Light = styled(animated.div)`
+const Light = styled.div`
   background: ${getPlantTypeGlowLight(randomPlant).light};
-  height: 300px;
-  width: 300px;
   position: absolute;
   top: 35%;
   left: 49%;
-  filter: blur(50px);
-  animation: ${glowAnimation} 3s infinite;
+  filter: blur(100px);
   border-radius: 100%;
   top: 45%;
   left: 48%;
-  transition: all 0.2s cubic-bezier(0.43, 0.13, 0.15, 0.99);
   z-index: -1;
+  transform: translate(-50%, -50%);
+  height: 50px;
+  width: 50px;
+  transition: all 2s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
 
 // chapter 1 --> `*(Animation of seed being set in an incubator)*`(optional)
@@ -292,7 +292,8 @@ const Light = styled(animated.div)`
 //chapter 11 `*(Animation of  growing)*`
 //chapter 14 `*(Animation of hair growing)*` --> plant has fully grown --> to battle zombie apocalypse
 
-const PlantContainer = ({ stage }) => {
+const PlantContainer = ({ stage, isEvolved }) => {
+  const [evolved, setEvolved] = useState(false);
   const props = useSpring({
     opacity: 0,
     width: 300,
@@ -308,13 +309,29 @@ const PlantContainer = ({ stage }) => {
   });
 
   const seedAnimation = useSpring({
-    config: config.slow,
+    config: config.stiff,
   });
+
+  useEffect(() => {
+    setEvolved(true);
+    setTimeout(() => {
+      setEvolved(false);
+    }, 5000);
+  }, [isEvolved]);
 
   return (
     <>
       <Plant>
-        <Light style={props} />
+        <Light
+          style={{
+            background:
+              evolved && isEvolved
+                ? `${getPlantTypeGlowLight(randomPlant).dark}`
+                : `${getPlantTypeGlowLight(randomPlant).light}`,
+            height: evolved && isEvolved ? 200 : 50,
+            width: evolved && isEvolved ? 200 : 50,
+          }}
+        />
         <Glow />
         {/*TODO: replace with incubated seed */}
         <IncubatorContainer
@@ -324,12 +341,12 @@ const PlantContainer = ({ stage }) => {
         >
           <Incubator
             style={{
-              transform: `${stage <= 0 ? 'scale(1)' : 'scale(0)'}`,
+              opacity: `${stage <= 0 ? '1' : '0'}`,
             }}
           />
           <Seed
             style={{
-              transform: `${stage <= 0 ? 'scale(1)' : 'scale(0)'}`,
+              opacity: `${stage <= 0 ? '1' : '0'}`,
             }}
           />
         </IncubatorContainer>

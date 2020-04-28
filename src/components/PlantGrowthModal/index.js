@@ -114,7 +114,7 @@ const PlantGrowthModalView = ({ currentChapter, nextSlug, onToggle }) => {
             updateStage(5);
             break;
         }
-      }, 100);
+      }, 2000);
     }
   }, [isEvolved]);
 
@@ -124,7 +124,7 @@ const PlantGrowthModalView = ({ currentChapter, nextSlug, onToggle }) => {
         <StyledOutboundLink
           rel="noopener"
           target="_blank"
-          href={`https://twitter.com/intent/tweet?text=I just completed Chapter ${currentChapter}! %23CryptoCodeSchool%20I Evolved my plant and learned more about %23Smartpy development. Evolve your own plant and battle out zombie apocalypse: &url=https://cryptocodeschool.in/`}
+          href={`https://twitter.com/intent/tweet?text=I just completed Chapter ${currentChapter}! %23CryptoCodeSchool%20I Evolved my plant and learned more about %23Smartpy development. Evolve your own plant and battle out zombie apocalypse: &url=https://cryptocodeschool.in/tezos`}
         >
           <FaTwitter />
           <span>Tweet</span>
@@ -140,7 +140,7 @@ const PlantGrowthModalView = ({ currentChapter, nextSlug, onToggle }) => {
           />
         </CloseIconContainer>
         <div>
-          <PlantContainer stage={stage} />
+          <PlantContainer isEvolved={isEvolved} stage={stage} />
         </div>
         <Container>
           <ContentContainer>
