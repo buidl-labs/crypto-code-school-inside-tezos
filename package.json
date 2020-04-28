@@ -21,6 +21,7 @@
     "gatsby-plugin-metomic": "0.0.2",
     "gatsby-plugin-netlify": "^2.2.1",
     "gatsby-plugin-offline": "^3.0.32",
+    "gatsby-plugin-page-transitions": "^1.0.8",
     "gatsby-plugin-portal": "^1.0.7",
     "gatsby-plugin-prefetch-google-fonts": "^1.4.3",
     "gatsby-plugin-react-helmet": "^3.1.21",

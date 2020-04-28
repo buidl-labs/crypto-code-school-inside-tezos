@@ -5,7 +5,6 @@ import LeftCloudSvg from '../../assets/left_cloud.svg';
 import RightCloudSvg from '../../assets/right_cloud.svg';
 import LighteningSvg from '../../assets/GameAssets/lightening.svg';
 import SuccessLightsSvg from '../../assets/GameAssets/success_lights.svg';
-
 import { Link } from 'gatsby';
 
 export const MainContainer = styled.section`

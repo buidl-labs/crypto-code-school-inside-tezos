@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import PageTransition from 'gatsby-plugin-page-transitions';
 
 // CSS
 // import '../assets/GameAssets/game.css';
@@ -90,8 +91,8 @@ const Game = () => {
   const randomNumber = (start, end) => Math.floor(Math.random() * end) + start;
 
   const props = useSpring({
-    delay: 4000,
-    config: { ...config.molasses, duration: 2500 },
+    delay: 5000,
+    config: { ...config.gentle },
     from: {
       top: '0%',
       height: '100%',
@@ -104,46 +105,60 @@ const Game = () => {
     },
   });
 
-  // const slideLeftToRight = useSpring({
-  //   delay: 5000,
-  //   config: config.gentle,
-  //   from: {
-  //     transform: 'translateX(-100%)',
-  //   },
-  //   to: async (next, cancel) => {
-  //     await next({
-  //       transform: 'translateX(0)',
-  //     });
-  //   },
-  // });
+  const slideFromTop = useSpring({
+    delay: 4000,
+    config: { ...config.gentle },
+    from: {
+      height: '0%',
+    },
+    to: async (next, cancel) => {
+      await next({
+        height: '10%',
+        zIndex: 200,
+      });
+    },
+  });
 
   return (
-    <Layout>
-      <MainContainer>
-        <Header>
-          <BackLink to={`/tezos`}>
-            <FaChevronLeft />
-            <span>Back</span>
-          </BackLink>
-          <Title />
-          <BackLink to={`/lesson/chapter-01`}>
-            <span>Skip</span>
-            <FaChevronRight />
-          </BackLink>
-        </Header>
-        <GameContainer style={props} id="game-container" ref={gameContainer}>
-          <StoryTeller display={showStoryModal} plantType={plantType} />
-          <RightCloud />
-          <LeftCloud />
-          <div id="initialzombie" ref={zombieRef} style={{ display: 'none' }}>
-            <Zombie />
-          </div>
-          <House className="house-img" />
-          <ForestLand className="forest-land-img" />
-        </GameContainer>
-        <Footer />
-      </MainContainer>
-    </Layout>
+    <PageTransition
+      defaultStyle={{
+        transition: 'opacity 5s ease-out',
+        opacity: '0.1',
+      }}
+      transitionStyles={{
+        entering: { opacity: '0' },
+        entered: { opacity: '1' },
+        exiting: { opacity: '0' },
+      }}
+      transitionTime={800}
+    >
+      <Layout>
+        <MainContainer style={{ background: 'black' }}>
+          <Header style={{ ...slideFromTop }}>
+            <BackLink to={`/tezos/overview`}>
+              <FaChevronLeft />
+              <span>Back</span>
+            </BackLink>
+            <Title />
+            <BackLink to={`/lesson/chapter-01`}>
+              <span>Skip</span>
+              <FaChevronRight />
+            </BackLink>
+          </Header>
+          <GameContainer style={props} id="game-container" ref={gameContainer}>
+            <StoryTeller display={showStoryModal} plantType={plantType} />
+            <RightCloud />
+            <LeftCloud />
+            <div id="initialzombie" ref={zombieRef} style={{ display: 'none' }}>
+              <Zombie />
+            </div>
+            <House className="house-img" />
+            <ForestLand className="forest-land-img" />
+          </GameContainer>
+          <Footer style={{ ...slideFromTop }} />
+        </MainContainer>
+      </Layout>
+    </PageTransition>
   );
 };
 
