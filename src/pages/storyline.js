@@ -84,7 +84,7 @@ const Game = () => {
       } else {
         zombie.style.left = `${xPosition - 1}px`;
       }
-    }, 15);
+    }, 20);
   };
 
   const randomNumber = (start, end) => Math.floor(Math.random() * end) + start;

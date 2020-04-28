@@ -6,7 +6,7 @@ import ElectricSeed from '../../assets/Seeds/electricity.svg';
 import FireSeed from '../../assets/Seeds/fire.svg';
 import GrassSeed from '../../assets/Seeds/grass.svg';
 import WaterSeed from '../../assets/Seeds/water.svg';
-
+import { navigate } from 'gatsby';
 import {
   Modal,
   ModalMask,
@@ -75,7 +75,15 @@ const StoryTeller = ({ display, plantType }) => {
                     margin: '2rem 0',
                   }}
                 >
-                  <ProceedLink to={`/lesson/chapter-01`}>Proceed</ProceedLink>
+                  <ProceedLink
+                    onClick={() => {
+                      typeof window != 'undefined' &&
+                        localStorage.setItem('chapter-0', true);
+                      navigate(`/lesson/chapter-01`);
+                    }}
+                  >
+                    Proceed
+                  </ProceedLink>
                 </div>
               </ModalBottom>
             </Modal>
@@ -88,7 +96,7 @@ const StoryTeller = ({ display, plantType }) => {
   );
 };
 
-const ProceedLink = styled(BackLink)`
+const ProceedLink = styled.button`
   padding: 18px 30px;
   background: #29cb6a;
   border: none;

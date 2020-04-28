@@ -22,11 +22,22 @@ import Footer from '../components/Footer';
 import SEO from '../components/Seo';
 import { PLANT_TYPES } from '../components/Plants/PLANT_TYPES';
 import styled from '@emotion/styled';
+import StyledLink from '../components/StyledLink';
 
 function LessonsOverview() {
   const chapters = useChapters();
   const [chapterList, updateChapterList] = useState(chapters);
   const [plantType, setPlantTypeSeed] = useState(null);
+  const [chapterZeroCompleted, setZeroChapterCompleted] = useState(() => {
+    let result = false;
+    const isChapterZeroCompleted =
+      typeof window != 'undefined' && localStorage.getItem('chapter-0');
+    if (isChapterZeroCompleted !== null) {
+      result = isChapterZeroCompleted;
+    }
+
+    return result;
+  });
 
   useEffect(() => {
     trackEvent('Chapters-Overview-View');
@@ -103,8 +114,8 @@ function LessonsOverview() {
           <div>
             <h1>The Challenge Begins</h1>
             <p>
-              In Lesson 1, you're going to incubate your plant to fight against
-              zombie apocalypse at end of the lesson.
+              In Lesson 1, you're going to growing your plant to fight against
+              upcoming zombie apocalypse at end of the lesson.
             </p>
             <p>
               A zombie apocalypse has begun. You’ve luckily found the seed of a
@@ -115,7 +126,11 @@ function LessonsOverview() {
               smart contract in SmartPy which can be deployed on tezos
               blockchain.
             </p>
-            <StartLessonLink to="/storyline">Start Lesson</StartLessonLink>
+            <div>
+              <StyledLink style={{ padding: '15px 35px' }} to="/storyline">
+                Start Lesson
+              </StyledLink>
+            </div>
           </div>
           <div>
             <div>
@@ -127,6 +142,9 @@ function LessonsOverview() {
             <ul>
               <li>
                 <Link to={`/storyline`}>
+                  {chapterZeroCompleted ? (
+                    <Completed width="38" height="38" />
+                  ) : null}
                   Chapter 0 - Zombie Apocalypse Begins
                 </Link>
                 <hr />

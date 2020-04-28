@@ -1,8 +1,12 @@
 import { Link } from 'gatsby';
 import styled from '@emotion/styled';
 
-const StyledLink = ({ to = '/', children }) => {
-  return <CustomLink to={to}>{children}</CustomLink>;
+const StyledLink = ({ to = '/', children, style }) => {
+  return (
+    <CustomLink style={style} to={to}>
+      {children}
+    </CustomLink>
+  );
 };
 
 const CustomLink = styled(Link)`
