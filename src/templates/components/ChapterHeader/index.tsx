@@ -9,7 +9,7 @@ function ChapterHeader() {
         <FaChevronLeft size={30} />
       </BackLink>
       <LessonTitle>Lesson: Introduction to SmartPy</LessonTitle>
-      <HelpButton>Get Help</HelpButton>
+      <div style={{ width: 120 }} />
     </Header>
   );
 }
