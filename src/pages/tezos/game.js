@@ -124,7 +124,7 @@ const Game = () => {
     newZombie.id = `zombie-${zombieIndex}`;
     newZombie.classList.add('zombie');
     newZombie.classList.add('zombie-transition');
-    newZombie.style.bottom = `${randomNumber(12, 16)}%`;
+    newZombie.style.bottom = `${randomNumber(8, 12)}%`;
     gameContainer.current.appendChild(newZombie);
     moveZombie(newZombie);
   };
