@@ -3,8 +3,7 @@ import Layout from '../components/Layout/layout';
 import Plants from '../assets/plants.svg';
 import learningInterface from '../images/Interface.png';
 import HomepageHeroImage from '../components/BackgroundImages/HomepageHero';
-import { FaChevronRight } from 'react-icons/fa';
-import { Link, useStaticQuery } from 'gatsby';
+import { Link } from 'gatsby';
 import Footer from '../components/Footer';
 import { trackEvent } from '../utils/analytics';
 import {
@@ -15,7 +14,6 @@ import {
   HeroSubheading,
   FlexContainer,
   InnerContainer,
-  StartLink,
   GridContainer,
   ButtonContainer,
   Zombie,
@@ -25,6 +23,8 @@ import {
 } from '../PagesStyle/LandingPage/styled';
 import SEO from '../components/Seo';
 import landingPage from '../images/landing_page.jpg';
+import StyledLink from '../components/StyledLink';
+import { RightArrow } from '../components/IconSet';
 
 const HomePage = () => {
   useEffect(() => {
@@ -120,9 +120,9 @@ const HomePage = () => {
           </div>
         </GridContainer>
         <ButtonContainer>
-          <StartLink to="/overview">
-            Start Now <FaChevronRight />
-          </StartLink>
+          <StyledLink to="/overview">
+            Start Now <RightArrow />
+          </StyledLink>
         </ButtonContainer>
       </div>
       <Footer />
