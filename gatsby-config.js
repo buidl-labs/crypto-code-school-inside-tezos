@@ -1,3 +1,4 @@
+const path = require('path');
 const siteUrl =
   process.env.URL || process.env.DEPLOY_URL || `https://cryptocodeschool.in/`;
 
@@ -132,6 +133,9 @@ module.exports = {
       options: {
         clientId: 'prj:328a9ae4-b11d-4e2f-a5e3-4525fd629176',
       },
+    },
+    {
+      resolve: 'gatsby-plugin-root-import',
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline

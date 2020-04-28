@@ -5,16 +5,16 @@ import React, { useEffect, useRef, useState } from 'react';
 
 // Components
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import Zombie from '../components/GameComponents/Zombie';
-import StoryTeller from '../components/GameComponents/Storyteller';
+import Zombie from 'src/components/GameComponents/Zombie';
+import StoryTeller from 'src/components/GameComponents/Storyteller';
 
 // Images
-import Title from '../assets/GameAssets/title.svg';
-import House from '../assets/GameAssets/house.svg';
-import ForestLand from '../assets/GameAssets/forestland.svg';
+import Title from 'src/assets/GameAssets/title.svg';
+import House from 'src/assets/GameAssets/house.svg';
+import ForestLand from 'src/assets/GameAssets/forestland.svg';
 
 // Custom styles and styled images
-import Layout from '../components/Layout/layout';
+import Layout from 'src/components/Layout/layout';
 import {
   MainContainer,
   Header,
@@ -23,9 +23,9 @@ import {
   RightCloud,
   LeftCloud,
   BackLink,
-} from '../PagesStyle/GamePage/styled';
+} from 'src/PagesStyle/GamePage/styled';
 import { useSpring, config } from 'react-spring';
-import { getPlantId } from '../components/PlantGrowthModal/Plant';
+import { getPlantId } from 'src/components/PlantGrowthModal/Plant';
 
 const Game = () => {
   const [plantType, setPlantTypeSeed] = useState(null);
@@ -121,7 +121,7 @@ const Game = () => {
     <Layout>
       <MainContainer>
         <Header>
-          <BackLink to={`/`}>
+          <BackLink to={`/tezos`}>
             <FaChevronLeft />
             <span>Back</span>
           </BackLink>

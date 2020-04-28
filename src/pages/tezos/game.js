@@ -1,22 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 // CSS
-import '../assets/GameAssets/game.css';
+import 'src/assets/GameAssets/game.css';
 
 // Components
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import Zombie from '../components/GameComponents/Zombie';
-import Plant from '../components/GameComponents/Plant';
-import GameOverModal from '../components/GameComponents/Modal';
+import Zombie from 'src/components/GameComponents/Zombie';
+import Plant from 'src/components/GameComponents/Plant';
+import GameOverModal from 'src/components/GameComponents/Modal';
 
 // Images
-import Title from '../assets/GameAssets/title.svg';
-import House from '../assets/GameAssets/house.svg';
-import ForestLand from '../assets/GameAssets/forestland.svg';
-import StartSymbol from '../assets/GameAssets/start.svg';
+import Title from 'src/assets/GameAssets/title.svg';
+import House from 'src/assets/GameAssets/house.svg';
+import ForestLand from 'src/assets/GameAssets/forestland.svg';
+import StartSymbol from 'src/assets/GameAssets/start.svg';
 
 // Custom styles and styled images
-import Layout from '../components/Layout/layout';
+import Layout from 'src/components/Layout/layout';
 import {
   MainContainer,
   Header,
@@ -29,14 +29,14 @@ import {
   BackLink,
   Lightening,
   StartSymbolContainer,
-} from '../PagesStyle/GamePage/styled';
+} from 'src/PagesStyle/GamePage/styled';
 
 // shooter balls
-import iceBall from '../assets/GameAssets/shooters/ice.png';
-import fireBall from '../assets/GameAssets/shooters/fire.png';
-import waterBall from '../assets/GameAssets/shooters/water.png';
-import grassBall from '../assets/GameAssets/shooters/grass.png';
-import electricBall from '../assets/GameAssets/shooters/electric.png';
+import iceBall from 'src/assets/GameAssets/shooters/ice.png';
+import fireBall from 'src/assets/GameAssets/shooters/fire.png';
+import waterBall from 'src/assets/GameAssets/shooters/water.png';
+import grassBall from 'src/assets/GameAssets/shooters/grass.png';
+import electricBall from 'src/assets/GameAssets/shooters/electric.png';
 
 const Game = () => {
   useEffect(() => {}, []);
@@ -269,7 +269,7 @@ const Game = () => {
             <span>Back</span>
           </BackLink>
           <Title />
-          <BackLink to={`/up-next`}>
+          <BackLink to={`/tezos/up-next`}>
             <span>Skip</span>
             <FaChevronRight />
           </BackLink>

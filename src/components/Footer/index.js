@@ -14,7 +14,7 @@ function FooterPage() {
             <h4>Navigation</h4>
             <ul>
               <li>
-                <NavigationLink to="/privacy-policy">
+                <NavigationLink to="/tezos/privacy-policy">
                   Privacy Policy
                 </NavigationLink>
               </li>
