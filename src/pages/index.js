@@ -1,5 +1,12 @@
+import { useEffect } from 'react';
+import { navigate } from 'gatsby';
+
+//redirect homepage view to /tezos
 const HomePage = () => {
-  return <div>HomePage</div>;
+  useEffect(() => {
+    navigate('/tezos');
+  });
+  return '';
 };
 
 export default HomePage;
