@@ -91,16 +91,16 @@ const Game = () => {
   const randomNumber = (start, end) => Math.floor(Math.random() * end) + start;
 
   const props = useSpring({
-    delay: 5000,
-    config: { ...config.slow },
+    delay: 4000,
+    config: { tension: 300, friction: 60 },
     from: {
-      top: '0%',
-      height: '100%',
+      height: '0%',
+      display: 'none',
     },
     to: async (next, cancel) => {
       await next({
-        height: '80%',
-        top: '10%',
+        height: '10%',
+        display: 'flex',
       });
     },
   });
@@ -122,12 +122,12 @@ const Game = () => {
   return (
     <PageTransition
       defaultStyle={{
-        transition: 'opacity 3s ease-out',
-        opacity: '0.4',
+        transition: 'opacity 4s ease-out',
+        opacity: '0.2',
         background: '#000',
       }}
       transitionStyles={{
-        entering: { opacity: '0.4' },
+        entering: { opacity: '0.2' },
         entered: { opacity: '1' },
         exiting: { opacity: '0' },
       }}
@@ -135,7 +135,7 @@ const Game = () => {
     >
       <Layout background="#000">
         <MainContainer style={{ background: 'black' }}>
-          <Header style={{ ...slideFromTop }}>
+          <Header style={props}>
             <BackLink to={`/tezos/overview`}>
               <LeftArrow />
               <span>Back</span>
@@ -146,7 +146,7 @@ const Game = () => {
               <RightArrow />
             </BackLink>
           </Header>
-          <GameContainer style={props} id="game-container" ref={gameContainer}>
+          <GameContainer id="game-container" ref={gameContainer}>
             <StoryTeller display={showStoryModal} plantType={plantType} />
             <RightCloud />
             <LeftCloud />
@@ -156,7 +156,7 @@ const Game = () => {
             <House className="house-img" />
             <ForestLand className="forest-land-img" />
           </GameContainer>
-          <Footer style={{ ...slideFromTop }} />
+          <Footer style={props} />
         </MainContainer>
       </Layout>
     </PageTransition>
