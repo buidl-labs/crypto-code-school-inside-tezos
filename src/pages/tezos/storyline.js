@@ -122,11 +122,11 @@ const Game = () => {
   return (
     <PageTransition
       defaultStyle={{
-        transition: 'opacity 5s ease-out',
-        opacity: '0.1',
+        transition: 'opacity 4s ease-out',
+        opacity: '0.2',
       }}
       transitionStyles={{
-        entering: { opacity: '0' },
+        entering: { opacity: '0.2' },
         entered: { opacity: '1' },
         exiting: { opacity: '0' },
       }}
