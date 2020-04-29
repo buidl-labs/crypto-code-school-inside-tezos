@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { IoIosMenu } from 'react-icons/io';
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import ContentMenuSlider from '../MenuSlider/index';
 import {
   Footer,
@@ -11,6 +10,7 @@ import {
   NextLink,
 } from './styled';
 import { RightArrow, LeftArrow } from '../../../components/IconSet';
+import ReactTooltip from 'react-tooltip';
 interface Props {
   chapter: string;
   title: string;
@@ -35,7 +35,13 @@ function ChapterFooter({
     <Footer>
       <div>
         <MenuButton>
-          <IoIosMenu onClick={toggle} size={36} color="#fff" />
+          <IoIosMenu
+            data-delay-show="600"
+            data-tip="menu"
+            onClick={toggle}
+            size={36}
+            color="#fff"
+          />
           <ContentMenuSlider openDrawer={openDrawer} toggle={toggle} />
         </MenuButton>
         <ChapterTitle>

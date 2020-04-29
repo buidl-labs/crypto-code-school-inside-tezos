@@ -6,7 +6,11 @@ import { LeftArrow } from '../../../components/IconSet';
 function ChapterHeader() {
   return (
     <Header>
-      <BackLink onClick={() => navigate('/tezos/overview')}>
+      <BackLink
+        data-delay-show="600"
+        data-tip="go back"
+        onClick={() => navigate('/tezos/overview')}
+      >
         <LeftArrow />
       </BackLink>
       <LessonTitle>Lesson: Introduction to SmartPy</LessonTitle>

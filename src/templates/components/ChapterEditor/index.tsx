@@ -12,6 +12,8 @@ import {
 import { useMediaQuery } from 'react-responsive';
 import RefreshSVG from '../../../assets/refresh.svg';
 import { Check, ShowAnswer } from '../../../components/IconSet';
+import ReactTooltip from 'react-tooltip';
+
 interface Props {
   children: React.ReactNode;
   setShowOutput(input: boolean): void;
@@ -42,9 +44,14 @@ function ChapterEditor({
 
   return (
     <>
+      <ReactTooltip place="left" type="light" effect="float" />
       <ContractFile>
         <p>Contract.py</p>
-        <span onClick={() => resetEditor()}>
+        <span
+          data-delay-show="600"
+          data-tip="reset editor content"
+          onClick={() => resetEditor()}
+        >
           <RefreshSVG />
         </span>
       </ContractFile>
