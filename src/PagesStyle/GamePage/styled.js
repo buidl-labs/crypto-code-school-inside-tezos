@@ -18,12 +18,16 @@ export const MainContainer = styled.section`
 export const Header = styled(animated.section)`
   position: absolute;
   top: 0;
-  height: -10%;
+  height: 10%;
   width: 100%;
   background-color: black;
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
+
+export const StorylineHeader = styled(Header)`
+  height: -10%;
   z-index: 200;
 `;
 
@@ -38,10 +42,10 @@ export const Footer = styled(animated.section)`
 
 export const GameContainer = styled(animated.section)`
   width: 100%;
-  height: 100%;
+  height: 80%;
   position: absolute;
   overflow-x: hidden;
-  top: 0%;
+  top: 10%;
   left: 0;
   background: radial-gradient(
     198.67% 198.67% at 53.06% -50.22%,
@@ -50,6 +54,13 @@ export const GameContainer = styled(animated.section)`
   );
   z-index: 1;
   overflow-y: hidden;
+`;
+
+export const StoryLineContainer = styled(GameContainer)`
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0;
 `;
 
 export const Instructions = styled.div`

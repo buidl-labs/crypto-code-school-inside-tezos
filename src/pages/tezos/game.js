@@ -122,6 +122,7 @@ const Game = () => {
   };
 
   const createZombie = zombieIndex => {
+    if (!zombieRef.current || typeof zombieRef.current == 'undefined') return;
     let newZombie = zombieRef.current.cloneNode(true);
     newZombie.id = `zombie-${zombieIndex}`;
     newZombie.classList.add('zombie');

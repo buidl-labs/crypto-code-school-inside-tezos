@@ -18,9 +18,9 @@ import ForestLand from 'src/assets/GameAssets/forestland.svg';
 import Layout from 'src/components/Layout/layout';
 import {
   MainContainer,
-  Header,
   Footer,
-  GameContainer,
+  StoryLineContainer,
+  StorylineHeader,
   RightCloud,
   LeftCloud,
   BackLink,
@@ -135,7 +135,7 @@ const Game = () => {
     >
       <Layout background="#000">
         <MainContainer style={{ background: 'black' }}>
-          <Header style={props}>
+          <StorylineHeader style={props}>
             <BackLink to={`/tezos/overview`}>
               <LeftArrow />
               <span>Back</span>
@@ -145,8 +145,8 @@ const Game = () => {
               <span>Skip</span>
               <RightArrow />
             </BackLink>
-          </Header>
-          <GameContainer id="game-container" ref={gameContainer}>
+          </StorylineHeader>
+          <StoryLineContainer id="game-container" ref={gameContainer}>
             <StoryTeller display={showStoryModal} plantType={plantType} />
             <RightCloud />
             <LeftCloud />
@@ -155,7 +155,7 @@ const Game = () => {
             </div>
             <House className="house-img" />
             <ForestLand className="forest-land-img" />
-          </GameContainer>
+          </StoryLineContainer>
           <Footer style={props} />
         </MainContainer>
       </Layout>
