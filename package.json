@@ -21,6 +21,7 @@
     "gatsby-plugin-metomic": "0.0.2",
     "gatsby-plugin-netlify": "^2.2.1",
     "gatsby-plugin-offline": "^3.0.32",
+    "gatsby-plugin-page-transitions": "^1.0.8",
     "gatsby-plugin-portal": "^1.0.7",
     "gatsby-plugin-prefetch-google-fonts": "^1.4.3",
     "gatsby-plugin-react-helmet": "^3.1.21",
@@ -43,7 +44,8 @@
     "react-helmet": "^5.2.1",
     "react-icons": "^3.9.0",
     "react-responsive": "^8.0.3",
-    "react-spring": "^8.0.27"
+    "react-spring": "^8.0.27",
+    "react-tooltip": "^4.2.5"
   },
   "devDependencies": {
     "@types/node": "^12.12.31",

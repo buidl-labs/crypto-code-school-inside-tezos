@@ -13,9 +13,9 @@ const stages = [
     stage: 0,
     description: {
       before:
-        'You have successfully completed the chapter and your seed has been set in the incubator',
+        'You have successfully completed this chapter. You can now try to evolve your plant to stage one.',
       after:
-        'You have successfully completed the chapter and your seed has been set in the incubator',
+        'You have successfully completed this chapter. You can now try to evolve your plant to stage one.',
     },
     nextChapterLink: '',
   },
@@ -23,7 +23,7 @@ const stages = [
     stage: 1,
     description: {
       before:
-        'You have successfully completed the chapter and you can now evolve your plant',
+        'You have successfully completed this chapter. You can now try to evolve your plant to stage two.',
       after:
         "You have successfully completed the chapter and evolved your plant's seed  into leaves",
     },
@@ -33,7 +33,7 @@ const stages = [
     stage: 2,
     description: {
       before:
-        'You have successfully completed the chapter and you can now evolve your plant',
+        'You have successfully completed this chapter. You can now try to evolve your plant to stage three.',
       after:
         "You have successfully completed the chapter and evolved your plant's body",
     },
@@ -43,7 +43,7 @@ const stages = [
     stage: 3,
     description: {
       before:
-        'You have successfully completed the chapter and you can now evolve your plant',
+        'You have successfully completed this chapter. You can now try to evolve your plant to stage four.',
       after:
         "You have successfully completed the chapter and evolved your plant's head",
     },
@@ -53,7 +53,7 @@ const stages = [
     stage: 4,
     description: {
       before:
-        'You have successfully completed the chapter and you can now evolve your plant',
+        'You have successfully completed this chapter. You can now try to evolve your plant to stage five.',
       after:
         "You have successfully completed the chapter and evolved your plant's eyes",
     },
@@ -63,7 +63,7 @@ const stages = [
     stage: 5,
     description: {
       before:
-        'You have successfully completed the chapter and you can now evolve your plant',
+        'You have successfully completed this chapter. You can now try to evolve your plant to final stage.',
       after:
         'You have successfully completed the chapter and evolved your plant to defend against the zombies.',
     },

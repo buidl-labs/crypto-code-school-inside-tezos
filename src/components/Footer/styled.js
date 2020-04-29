@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Link } from 'gatsby';
-
+import { OutboundLink } from 'gatsby-plugin-amplitude-analytics';
 export const Footer = styled.footer`
   height: 100%;
   max-height: 400px;
@@ -51,7 +51,7 @@ export const FooterInner = styled.div`
   @media only screen and (min-width: 800px) {
     > div:last-of-type {
       > div:first-of-type {
-        margin-right: 5rem;
+        ${'' /* margin-right: 5rem; */}
       }
     }
   }
@@ -132,5 +132,59 @@ export const NavigationLink = styled(Link)`
   transition: 0.25s ease-in;
   :hover {
     color: #fff;
+  }
+`;
+
+export const StyledOutboundLink = styled(OutboundLink)`
+  text-decoration: none;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 26px;
+  margin-top: 2rem;
+  /* identical to box height */
+
+  color: #768987;
+  transition: 0.25s ease-in;
+  :hover {
+    color: #fff;
+  }
+`;
+
+export const LOGO = styled.a`
+  display: flex;
+  text-decoration: none;
+
+  img {
+    display: inline-block;
+    vertical-align: middle;
+    max-width: 30%;
+    width: 48px;
+    height: 60px;
+  }
+  div {
+    margin-left: 20px;
+    h3 {
+      font-family: bebas-kai, sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 3rem;
+      margin-top: 20px;
+      margin-left: 10px;
+    }
+
+    h4 {
+      color: #d0d0d0;
+      line-height: 1;
+      font-weight: 200;
+      font-size: 1.6875rem;
+      margin-left: 10px;
+      margin-top: 1px;
+    }
+  }
+
+  :hover {
+    cursor: pointer;
   }
 `;

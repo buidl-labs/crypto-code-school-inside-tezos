@@ -58,8 +58,7 @@ export const Zombie = styled(ZombieSVG)`
 export const StartLearning = styled(StartLearningSVG)`
   max-width: 25vw;
   max-height: 25vh;
-
-  :hover {
+  g :hover {
     cursor: pointer;
     transform: scale(1.1) rotate(-5deg);
   }

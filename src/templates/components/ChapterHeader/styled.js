@@ -11,13 +11,13 @@ export const Header = styled.header`
 
 export const BackLink = styled.button`
   color: white;
-  margin-left: 1rem;
+  margin-left: 2rem;
   text-decoration: none;
   background: #0e1817;
   border: none;
   cursor: pointer;
   transition: 0.3s;
-  padding: 0.8rem;
+  padding: 0.6rem;
   border-radius: 50%;
   outline: none;
   :hover {

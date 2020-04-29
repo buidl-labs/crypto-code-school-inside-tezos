@@ -1,16 +1,46 @@
 import React from 'react';
-import { Footer, FooterInner, LinkContainer, NavigationLink } from './styled';
+import {
+  Footer,
+  FooterInner,
+  LinkContainer,
+  NavigationLink,
+  StyledOutboundLink,
+  LOGO,
+} from './styled';
 
+import BuidlLabsLogo from '../../images/buidl_labs_logo.png';
+import Tezos from '../../images/tezos.png';
 function FooterPage() {
   return (
     <Footer>
       <FooterInner>
         <div>
-          <h3>BUIDL LABS</h3>
-          <h3>LOGO X Tezos</h3>
+          <div></div>
+          <LOGO rel="noopener" target="_blank" href="https://tezos.com/">
+            <img src={Tezos} alt="build labs logo" />
+            <div>
+              <h3>Tezos</h3>
+            </div>
+          </LOGO>
+          <LOGO
+            style={{ marginTop: 20 }}
+            rel="noopener"
+            target="_blank"
+            href="https://buidllabs.io/"
+          >
+            <img
+              style={{ marginTop: '1rem' }}
+              src={BuidlLabsLogo}
+              alt="build labs logo"
+            />
+            <div>
+              <h3>BUIDL</h3>
+              <h4>LABS</h4>
+            </div>
+          </LOGO>
         </div>
         <div>
-          <LinkContainer>
+          <LinkContainer style={{ width: 200 }}>
             <h4>Navigation</h4>
             <ul>
               <li>
@@ -18,21 +48,43 @@ function FooterPage() {
                   Privacy Policy
                 </NavigationLink>
               </li>
-              <li>About</li>
-              <li>Blog</li>
+              <li>
+                <NavigationLink to="/tezos">Home Page</NavigationLink>
+              </li>
+              <li>
+                <NavigationLink to="/tezos/overview">
+                  Lesson Overview
+                </NavigationLink>
+              </li>
             </ul>
           </LinkContainer>
           <LinkContainer>
             <h4>Social</h4>
             <ul>
-              <li>Github</li>
-              <li>Twitter</li>
+              <li>
+                <StyledOutboundLink
+                  rel="noopener"
+                  target="_blank"
+                  href="https://github.com/buidl-labs/crypto-code-school-inside-tezos"
+                >
+                  Github
+                </StyledOutboundLink>
+              </li>
+              <li>
+                <StyledOutboundLink
+                  rel="noopener"
+                  target="_blank"
+                  href="https://twitter.com/BuidlLabs"
+                >
+                  Twitter
+                </StyledOutboundLink>
+              </li>
               <li>ProductHunt</li>
             </ul>
           </LinkContainer>
         </div>
       </FooterInner>
-      <p>2020 | Footnote</p>
+      <p>2020 | Made with ❤️ by people @ BUIDL Labs</p>
     </Footer>
   );
 }

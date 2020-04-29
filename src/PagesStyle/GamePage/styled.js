@@ -5,7 +5,6 @@ import LeftCloudSvg from '../../assets/left_cloud.svg';
 import RightCloudSvg from '../../assets/right_cloud.svg';
 import LighteningSvg from '../../assets/GameAssets/lightening.svg';
 import SuccessLightsSvg from '../../assets/GameAssets/success_lights.svg';
-
 import { Link } from 'gatsby';
 
 export const MainContainer = styled.section`
@@ -19,12 +18,13 @@ export const MainContainer = styled.section`
 export const Header = styled(animated.section)`
   position: absolute;
   top: 0;
-  height: 10%;
+  height: -10%;
   width: 100%;
   background-color: black;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 200;
 `;
 
 export const Footer = styled(animated.section)`
@@ -33,14 +33,15 @@ export const Footer = styled(animated.section)`
   height: 10%;
   width: 100%;
   background-color: black;
+  z-index: 200;
 `;
 
 export const GameContainer = styled(animated.section)`
   width: 100%;
-  height: 80%;
+  height: 100%;
   position: absolute;
   overflow-x: hidden;
-  top: 10%;
+  top: 0%;
   left: 0;
   background: radial-gradient(
     198.67% 198.67% at 53.06% -50.22%,
@@ -176,7 +177,8 @@ export const StartSymbolContainer = styled.div`
 `;
 
 export const BackLink = styled(Link)`
-  display: inline-block;
+  display: flex;
+  align-items: center;
   color: #fff;
   font-family: Roboto;
   font-style: normal;
@@ -189,15 +191,14 @@ export const BackLink = styled(Link)`
 
   > span {
     margin-left: 6px;
-    margin-top: 10px;
     display: inline-block;
   }
 
-  > svg {
+  ${'' /* > svg {
     display: inline-block;
     vertical-align: middle;
     margin-top: -2px;
-  }
+  } */}
 `;
 
 export const ModalWrapper = styled.div`

@@ -43,7 +43,7 @@ const StoryTeller = ({ display, plantType }) => {
         <div>
           <ModalWrapper>
             <ModalMask />
-            <Modal>
+            <Modal style={{ height: '75%', top: '12%' }}>
               <SuccessLights />
               <div
                 style={{

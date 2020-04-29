@@ -35,6 +35,7 @@ export const ChapterTitle = styled.p`
 `;
 
 export const PrevLink = styled(Link)`
+  display: flex;
   color: #fff;
   margin-left: 1rem;
   margin-right: 1rem;
@@ -45,13 +46,14 @@ export const PrevLink = styled(Link)`
   text-decoration: none;
   outline: none;
   > span {
-    margin-left: 6px;
+    margin-left: 3px;
+    align-self: center;
   }
 
-  > svg {
+  ${'' /* > svg {
     display: inline-block;
     vertical-align: middle;
-  }
+  } */}
 
   @media only screen and (max-width: 767px) {
     span {
@@ -61,10 +63,12 @@ export const PrevLink = styled(Link)`
 `;
 
 export const ContentIndex = styled.span`
+  align-self: center;
   color: #fff;
 `;
 
 export const NextLink = styled(Link)`
+  display: flex;
   color: #fff;
   margin-left: 1rem;
   margin-right: 1rem;
@@ -74,10 +78,21 @@ export const NextLink = styled(Link)`
   font-weight: normal;
   text-decoration: none;
   outline: none;
-  > svg {
+  transition: 0.3s;
+
+  span {
+    align-self: center;
+    margin-right: 3px;
+  }
+
+  :hover {
+    color: rgba(238, 234, 234, 0.88);
+  }
+
+  ${'' /* > svg {
     display: inline-block;
     vertical-align: middle;
-  }
+  } */}
 
   @media only screen and (max-width: 767px) {
     span {
