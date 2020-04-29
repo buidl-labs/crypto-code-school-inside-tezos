@@ -38,6 +38,8 @@ import waterBall from 'src/assets/GameAssets/shooters/water.png';
 import grassBall from 'src/assets/GameAssets/shooters/grass.png';
 import electricBall from 'src/assets/GameAssets/shooters/electric.png';
 
+import { LeftArrow, RightArrow } from '../../components/IconSet';
+
 const Game = () => {
   useEffect(() => {}, []);
 
@@ -265,13 +267,13 @@ const Game = () => {
       <MainContainer>
         <Header>
           <BackLink to={`/lesson/chapter-14`}>
-            <FaChevronLeft />
+            <LeftArrow />
             <span>Back</span>
           </BackLink>
           <Title />
           <BackLink to={`/tezos/up-next`}>
             <span>Skip</span>
-            <FaChevronRight />
+            <RightArrow />
           </BackLink>
         </Header>
         <GameContainer ref={gameContainer} id="game-container">

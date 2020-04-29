@@ -23,6 +23,8 @@ const ContentMenu = ({ openDrawer = false, toggle }: Props) => {
         <SliderHeader>
           <Title>Chapters</Title>
           <IoIosClose
+            data-delay-show="600"
+            data-tip="close"
             style={{ margin: '1rem' }}
             color="#fff"
             size={48}

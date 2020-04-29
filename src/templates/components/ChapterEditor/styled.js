@@ -46,6 +46,8 @@ export const Option = styled.div`
   }
 `;
 export const CheckAnswerButton = styled.button`
+  display: flex;
+  padding: 0 30px 0 25px;
   height: 60px;
   background-color: #18b77e;
   font-family: Roboto;
@@ -53,12 +55,17 @@ export const CheckAnswerButton = styled.button`
   font-weight: normal;
   font-size: 20px;
   color: #fff;
-  padding: 1rem 0.5rem;
   margin: 0 15px;
   border: none;
   cursor: pointer;
   transition: 0.3s;
   outline: none;
+
+  span {
+    align-self: center;
+    vertical-align: middle;
+  }
+
   :hover {
     background: #66cca7;
     color: #fff;
@@ -73,6 +80,8 @@ export const CheckAnswerButton = styled.button`
   }
 `;
 export const ShowAnswerButton = styled.button`
+  display: flex;
+  padding: 0 30px 0 20px;
   height: 60px;
   background-color: #162f30;
   font-family: Roboto;
@@ -81,11 +90,16 @@ export const ShowAnswerButton = styled.button`
   font-size: 20px;
   color: #fff;
   margin: 0 10px;
-  padding: 1rem 0.5rem;
   border: none;
   transition: 0.3s;
   cursor: pointer;
   outline: none;
+
+  span {
+    align-self: center;
+    vertical-align: middle;
+  }
+
   :hover {
     background: #436061;
     color: #fff;
