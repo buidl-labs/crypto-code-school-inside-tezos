@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 // CSS
 import 'src/assets/GameAssets/game.css';
@@ -40,8 +40,6 @@ import grassBall from 'src/assets/GameAssets/shooters/grass.png';
 import electricBall from 'src/assets/GameAssets/shooters/electric.png';
 
 const Game = () => {
-  useEffect(() => {}, []);
-
   // DOM controllers which will direct the game
   const gameContainer = useRef(null);
   const startButton = useRef(null);
@@ -57,7 +55,7 @@ const Game = () => {
   const playGame = () => {
     startAnimations();
     startButton.current.style.display = 'none';
-    window.addEventListener('keydown', debounce(keyboardInput, 500));
+    window.addEventListener('keydown', debounce(keyboardInput, 1000));
     for (let i = 0; i < 4; i++) {
       (function(i) {
         zombieInterval = setTimeout(function() {
@@ -126,7 +124,7 @@ const Game = () => {
     newZombie.id = `zombie-${zombieIndex}`;
     newZombie.classList.add('zombie');
     newZombie.classList.add('zombie-transition');
-    newZombie.style.bottom = `${randomNumber(8, 12)}%`;
+    newZombie.style.bottom = `${randomNumber(9, 12)}%`;
     gameContainer.current.appendChild(newZombie);
     moveZombie(newZombie);
   };
@@ -225,14 +223,14 @@ const Game = () => {
           setTimeout(() => ball.remove(), 500);
 
           clearInterval(moveShooterBallInterval);
-        } else if (xPosition > (0.75 * window.innerWidth)) {
+        } else if (xPosition > 0.75 * window.innerWidth) {
           ball.classList.add('fade-out');
           setTimeout(() => ball.remove(), 500);
         } else {
-          ball.style.left = `${xPosition + 5}px`;
+          ball.style.left = `${xPosition + 4}px`;
         }
       } else {
-        ball.style.left = `${xPosition + 5}px`;
+        ball.style.left = `${xPosition + 4}px`;
       }
     }, 17);
   };
@@ -254,7 +252,10 @@ const Game = () => {
     let zombieLeft = parseInt(zombie.style.left) || 0;
 
     // collision logic
-    if (shooterBallLeft < (0.75 * window.innerWidth) && shooterBallLeft + 20 >= zombieLeft)
+    if (
+      shooterBallLeft < 0.75 * window.innerWidth &&
+      shooterBallLeft + 20 >= zombieLeft
+    )
       return true;
     else return false;
   };

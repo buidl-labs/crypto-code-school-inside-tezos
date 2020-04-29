@@ -11,7 +11,6 @@ import {
 } from '../../PagesStyle/GamePage/styled';
 
 const WelcomeModal = ({ display = false, changeDisplay }) => {
-  console.log(display);
   return (
     <>
       {display === true ? (
