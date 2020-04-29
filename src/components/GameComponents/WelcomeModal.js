@@ -11,20 +11,21 @@ import {
 } from '../../PagesStyle/GamePage/styled';
 
 const WelcomeModal = ({ display = false, changeDisplay }) => {
-  console.log(display)
+  console.log(display);
   return (
     <>
       {display === true ? (
         <div>
           <ModalWrapper>
             <ModalMask />
-            <Modal style={{ height: '45%', top: '25%' }}>
-              <ModalBottom style={{ height: '100%' }}>
-                <Heading style={{ paddingTop: '1.25rem' }}>Congratulations!</Heading>
-                <SubHeading style={{ padding: '1rem 4rem' }}>
-                  You have successfully completed the task of incubating the
-                  seed and evolve before the zombies reaches you. Use your plant
-                  to defend against the zombie apocalyspe.
+            <Modal style={{ height: '60%', top: '20%' }}>
+              <ModalBottom style={{ height: '100%', borderRadius: '10px' }}>
+                <Heading style={{ paddingTop: '2rem' }}>
+                  Congratulations!
+                </Heading>
+                <SubHeading style={{ padding: '2rem 4rem' }}>
+                  You have successfully evolved your plant, battle it out to
+                  defend against the upcoming zombie apocalypse.
                 </SubHeading>
                 <div
                   style={{
@@ -34,7 +35,9 @@ const WelcomeModal = ({ display = false, changeDisplay }) => {
                     margin: '1rem 0',
                   }}
                 >
-                  <ProceedLink onClick={() => changeDisplay()}>Battle it Out</ProceedLink>
+                  <ProceedLink onClick={() => changeDisplay()}>
+                    Battle it Out
+                  </ProceedLink>
                 </div>
               </ModalBottom>
             </Modal>
