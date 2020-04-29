@@ -187,18 +187,23 @@ const Game = () => {
     switch (plantType.type) {
       case 'electric':
         ball.src = electricBall;
+        ball.style.height = '50px';
         break;
       case 'ice':
         ball.src = iceBall;
+        ball.style.height = '40px';
         break;
       case 'water':
         ball.src = waterBall;
+        ball.style.height = '50px';
         break;
       case 'grass':
         ball.src = grassBall;
+        ball.style.height = '40px';
         break;
       case 'fire':
         ball.src = fireBall;
+        ball.style.height = '50px';
         break;
       default:
         ball.src = grassBall;
