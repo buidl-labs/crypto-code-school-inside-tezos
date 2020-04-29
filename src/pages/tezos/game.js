@@ -225,7 +225,7 @@ const Game = () => {
           setTimeout(() => ball.remove(), 500);
 
           clearInterval(moveShooterBallInterval);
-        } else if (xPosition > 800) {
+        } else if (xPosition > (0.75 * window.innerWidth)) {
           ball.classList.add('fade-out');
           setTimeout(() => ball.remove(), 500);
         } else {
@@ -254,7 +254,7 @@ const Game = () => {
     let zombieLeft = parseInt(zombie.style.left) || 0;
 
     // collision logic
-    if (shooterBallLeft < 800 && shooterBallLeft + 20 >= zombieLeft)
+    if (shooterBallLeft < (0.75 * window.innerWidth) && shooterBallLeft + 20 >= zombieLeft)
       return true;
     else return false;
   };
