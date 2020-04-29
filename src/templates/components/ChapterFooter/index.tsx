@@ -10,6 +10,7 @@ import {
   ContentIndex,
   NextLink,
 } from './styled';
+import { RightArrow, LeftArrow } from '../../../components/IconSet';
 interface Props {
   chapter: string;
   title: string;
@@ -46,7 +47,7 @@ function ChapterFooter({
       <div>
         {prevSlug ? (
           <PrevLink to={`/lesson/${prevSlug}`}>
-            <FaChevronLeft />
+            <LeftArrow small />
             <span>Prev</span>
           </PrevLink>
         ) : null}
@@ -56,11 +57,11 @@ function ChapterFooter({
         </ContentIndex>
         {nextSlug ? (
           <NextLink to={`/lesson/${nextSlug}`}>
-            <span>Next</span> <FaChevronRight />
+            <span>Next</span> <RightArrow small />
           </NextLink>
         ) : (
           <NextLink to="/tezos/game">
-            <span>Finish</span> <FaChevronRight />
+            <span>Finish</span> <RightArrow small />
           </NextLink>
         )}
       </div>

@@ -11,8 +11,8 @@ export const Container = styled.div`
   background-size: cover;
 
   > div:first-of-type {
-    margin-left: 30px;
-    margin-top: 10px;
+    margin-left: 10px;
+    margin-top: 20px;
   }
 `;
 

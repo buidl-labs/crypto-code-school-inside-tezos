@@ -175,7 +175,8 @@ export const StartSymbolContainer = styled.div`
 `;
 
 export const BackLink = styled(Link)`
-  display: inline-block;
+  display: flex;
+  align-items: center;
   color: #fff;
   font-family: Roboto;
   font-style: normal;
@@ -188,15 +189,14 @@ export const BackLink = styled(Link)`
 
   > span {
     margin-left: 6px;
-    margin-top: 10px;
     display: inline-block;
   }
 
-  > svg {
+  ${'' /* > svg {
     display: inline-block;
     vertical-align: middle;
     margin-top: -2px;
-  }
+  } */}
 `;
 
 export const ModalWrapper = styled.div`

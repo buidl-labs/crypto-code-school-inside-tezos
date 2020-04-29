@@ -27,7 +27,7 @@ import {
 } from 'src/PagesStyle/GamePage/styled';
 import { useSpring, config } from 'react-spring';
 import { getPlantId } from 'src/components/PlantGrowthModal/Plant';
-
+import { LeftArrow, RightArrow } from '../../components/IconSet';
 const Game = () => {
   const [plantType, setPlantTypeSeed] = useState(null);
   const [showStoryModal, setStoryModalDisplay] = useState(false);
@@ -136,13 +136,13 @@ const Game = () => {
         <MainContainer style={{ background: 'black' }}>
           <Header style={{ ...slideFromTop }}>
             <BackLink to={`/tezos/overview`}>
-              <FaChevronLeft />
+              <LeftArrow />
               <span>Back</span>
             </BackLink>
             <Title />
             <BackLink to={`/lesson/chapter-01`}>
               <span>Skip</span>
-              <FaChevronRight />
+              <RightArrow />
             </BackLink>
           </Header>
           <GameContainer style={props} id="game-container" ref={gameContainer}>

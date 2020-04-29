@@ -1,7 +1,9 @@
 import styled from '@emotion/styled';
 
 export const BackLink = styled.button`
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #fff;
   font-family: Roboto;
   font-style: normal;
@@ -16,7 +18,6 @@ export const BackLink = styled.button`
 
   > span {
     margin-left: 6px;
-    margin-top: 10px;
     display: inline-block;
   }
 

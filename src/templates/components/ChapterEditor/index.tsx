@@ -11,7 +11,7 @@ import {
 } from './styled';
 import { useMediaQuery } from 'react-responsive';
 import RefreshSVG from '../../../assets/refresh.svg';
-
+import { Check, ShowAnswer } from '../../../components/IconSet';
 interface Props {
   children: React.ReactNode;
   setShowOutput(input: boolean): void;
@@ -63,7 +63,7 @@ function ChapterEditor({
             );
           }}
         >
-          <AiOutlineQuestion /> <span>Show Answer</span>
+          <ShowAnswer /> <span>Show Answer</span>
         </ShowAnswerButton>
         <CheckAnswerButton
           onClick={() => {
@@ -81,7 +81,7 @@ function ChapterEditor({
             updateValidation(result);
           }}
         >
-          <TiTick /> <span>Check</span>
+          <Check /> <span>Check</span>
         </CheckAnswerButton>
       </Option>
     </>
