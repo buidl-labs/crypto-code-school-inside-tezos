@@ -316,3 +316,19 @@ export const ProceedLink = styled.button`
     transform: scale(0.8);
   }
 `;
+
+export const Button = styled.button`
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  padding: 20px 40px;
+  background: #1b2121;
+  margin: 20px;
+  color: #fff;
+  transition: all 0.3s;
+
+  :hover {
+    box-shadow: 0 0 0 0.25rem rgb(59, 66, 66);
+    cursor: pointer;
+  }
+`;

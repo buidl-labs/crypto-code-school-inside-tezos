@@ -123,9 +123,9 @@ const FrontLeg = styled(zombieAnatomyList.frontLeg)`
   animation: ${frontLegMovement} 0.5s infinite alternate;
 `;
 
-const ZombieContainer = () => {
+const ZombieContainer = ({ positionBottom = '0', positionRight = '20%' }) => {
   return (
-    <Zombie>
+    <Zombie style={{ bottom: positionBottom, right: positionRight }}>
       <div>
         <div>
           <div>
