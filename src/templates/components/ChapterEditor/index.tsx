@@ -39,6 +39,7 @@ function ChapterEditor({
   updateValidation,
   editorInputValue,
   resetEditor,
+  chapterCompletedSuccessfully,
 }: Props) {
   const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
 
@@ -47,13 +48,15 @@ function ChapterEditor({
       <ReactTooltip place="left" type="light" effect="float" />
       <ContractFile>
         <p>Contract.py</p>
-        <span
-          data-delay-show="600"
-          data-tip="reset editor content"
-          onClick={() => resetEditor()}
-        >
-          <RefreshSVG />
-        </span>
+        {!chapterCompletedSuccessfully ? (
+          <span
+            data-delay-show="600"
+            data-tip="reset editor content"
+            onClick={() => resetEditor()}
+          >
+            <RefreshSVG />
+          </span>
+        ) : null}
       </ContractFile>
       <Editor>{children}</Editor>
       <Option>
