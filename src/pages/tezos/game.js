@@ -8,6 +8,7 @@ import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import Zombie from 'src/components/GameComponents/Zombie';
 import Plant from 'src/components/GameComponents/Plant';
 import GameOverModal from 'src/components/GameComponents/Modal';
+import WelcomeModal from 'src/components/GameComponents/WelcomeModal';
 
 // Images
 import Title from 'src/assets/GameAssets/title.svg';
@@ -31,7 +32,7 @@ import {
   StartSymbolContainer,
 } from 'src/PagesStyle/GamePage/styled';
 
-// shooter balls
+// Shooter balls
 import iceBall from 'src/assets/GameAssets/shooters/ice.png';
 import fireBall from 'src/assets/GameAssets/shooters/fire.png';
 import waterBall from 'src/assets/GameAssets/shooters/water.png';
@@ -51,6 +52,7 @@ const Game = () => {
 
   const [isGameLost, updateGameStatus] = useState(false);
   const [totalDeadZombies, updateDeadZombieCount] = useState(0);
+  const [showWelcomeModal, updateWelcomeModalDisplay] = useState(true);
 
   const playGame = () => {
     startAnimations();
@@ -280,23 +282,32 @@ const Game = () => {
           ) : (
             <GameOverModal totalDeadZombies={totalDeadZombies} status="won" />
           )}
-          <Lightening id="lightening" />
           <RightCloud />
           <LeftCloud />
           <Instructions id="instructions">Use Spacebar to shoot</Instructions>
-          <StartSymbolContainer
-            ref={startButton}
-            id="start"
-            onClick={() => playGame()}
-          >
-            <StartSymbol />
-          </StartSymbolContainer>
-          <PlantContainer id="plant-shooter" ref={shooter}>
-            <Plant />
-          </PlantContainer>
-          <div id="initialzombie" ref={zombieRef}>
-            <Zombie />
-          </div>
+          {showWelcomeModal ? (
+            <WelcomeModal
+              display
+              changeDisplay={() => updateWelcomeModalDisplay(false)}
+            />
+          ) : (
+            <>
+              <Lightening id="lightening" />
+              <StartSymbolContainer
+                ref={startButton}
+                id="start"
+                onClick={() => playGame()}
+              >
+                <StartSymbol />
+              </StartSymbolContainer>
+              <PlantContainer id="plant-shooter" ref={shooter}>
+                <Plant />
+              </PlantContainer>
+              <div id="initialzombie" ref={zombieRef}>
+                <Zombie />
+              </div>
+            </>
+          )}
           <House className="house-img" />
           <ForestLand className="forest-land-img" />
         </GameContainer>
