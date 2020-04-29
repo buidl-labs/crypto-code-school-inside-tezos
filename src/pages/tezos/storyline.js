@@ -92,7 +92,7 @@ const Game = () => {
 
   const props = useSpring({
     delay: 5000,
-    config: { ...config.gentle },
+    config: { ...config.slow },
     from: {
       top: '0%',
       height: '100%',
@@ -122,17 +122,18 @@ const Game = () => {
   return (
     <PageTransition
       defaultStyle={{
-        transition: 'opacity 4s ease-out',
-        opacity: '0.2',
+        transition: 'opacity 3s ease-out',
+        opacity: '0.4',
+        background: '#000',
       }}
       transitionStyles={{
-        entering: { opacity: '0.2' },
+        entering: { opacity: '0.4' },
         entered: { opacity: '1' },
         exiting: { opacity: '0' },
       }}
       transitionTime={800}
     >
-      <Layout>
+      <Layout background="#000">
         <MainContainer style={{ background: 'black' }}>
           <Header style={{ ...slideFromTop }}>
             <BackLink to={`/tezos/overview`}>
