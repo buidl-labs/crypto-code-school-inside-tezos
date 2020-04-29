@@ -18,12 +18,16 @@ export const MainContainer = styled.section`
 export const Header = styled(animated.section)`
   position: absolute;
   top: 0;
-  height: -10%;
+  height: 10%;
   width: 100%;
   background-color: black;
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
+
+export const StorylineHeader = styled(Header)`
+  height: -10%;
   z-index: 200;
 `;
 
@@ -38,10 +42,10 @@ export const Footer = styled(animated.section)`
 
 export const GameContainer = styled(animated.section)`
   width: 100%;
-  height: 100%;
+  height: 80%;
   position: absolute;
   overflow-x: hidden;
-  top: 0%;
+  top: 10%;
   left: 0;
   background: radial-gradient(
     198.67% 198.67% at 53.06% -50.22%,
@@ -50,6 +54,13 @@ export const GameContainer = styled(animated.section)`
   );
   z-index: 1;
   overflow-y: hidden;
+`;
+
+export const StoryLineContainer = styled(GameContainer)`
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0;
 `;
 
 export const Instructions = styled.div`
@@ -274,4 +285,62 @@ export const SubHeading = styled.p`
 export const SuccessLights = styled(SuccessLightsSvg)`
   height: 100%;
   width: 100%;
+`;
+
+export const ProceedLink = styled.button`
+  padding: 18px 30px;
+  background: #29cb6a;
+  border: none;
+  outline: none;
+  font-weight: 500;
+  color: #fff;
+  cursor: pointer;
+  letter-spacing: 2px;
+  border-radius: 5px;
+  transition: all 0.4s cubic-bezier(0.43, 0.13, 0.15, 0.99);
+  font-size: 1.2rem;
+  width: inherit;
+
+  :before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: #29cb6a;
+    transform: scale(0.9);
+    filter: blur(15px);
+    opacity: 0.5;
+    z-index: -1;
+    transition: all 0.4s cubic-bezier(0.43, 0.13, 0.15, 0.99);
+  }
+
+  :hover {
+    box-shadow: 0 0 0 0.4rem rgba(102, 204, 167, 0.25);
+  }
+
+  :hover:before {
+    top: 20px;
+  }
+
+  :active {
+    transform: scale(0.8);
+  }
+`;
+
+export const Button = styled.button`
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  padding: 20px 40px;
+  background: #1b2121;
+  margin: 20px;
+  color: #fff;
+  transition: all 0.3s;
+
+  :hover {
+    box-shadow: 0 0 0 0.25rem rgb(59, 66, 66);
+    cursor: pointer;
+  }
 `;

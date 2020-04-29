@@ -89,8 +89,8 @@
 
 .shooter-ball {
   position: absolute;
-  height: 40px;
-  width: auto;
+  /* height: 40px; */
+  /* width: auto; */
   -webkit-transform: scale(0);
   -ms-transform: scale(0);
   transform: scale(0);

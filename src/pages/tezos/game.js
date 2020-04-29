@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 // CSS
 import 'src/assets/GameAssets/game.css';
@@ -8,6 +8,7 @@ import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import Zombie from 'src/components/GameComponents/Zombie';
 import Plant from 'src/components/GameComponents/Plant';
 import GameOverModal from 'src/components/GameComponents/Modal';
+import WelcomeModal from 'src/components/GameComponents/WelcomeModal';
 
 // Images
 import Title from 'src/assets/GameAssets/title.svg';
@@ -31,7 +32,7 @@ import {
   StartSymbolContainer,
 } from 'src/PagesStyle/GamePage/styled';
 
-// shooter balls
+// Shooter balls
 import iceBall from 'src/assets/GameAssets/shooters/ice.png';
 import fireBall from 'src/assets/GameAssets/shooters/fire.png';
 import waterBall from 'src/assets/GameAssets/shooters/water.png';
@@ -41,8 +42,6 @@ import electricBall from 'src/assets/GameAssets/shooters/electric.png';
 import { LeftArrow, RightArrow } from '../../components/IconSet';
 
 const Game = () => {
-  useEffect(() => {}, []);
-
   // DOM controllers which will direct the game
   const gameContainer = useRef(null);
   const startButton = useRef(null);
@@ -53,11 +52,12 @@ const Game = () => {
 
   const [isGameLost, updateGameStatus] = useState(false);
   const [totalDeadZombies, updateDeadZombieCount] = useState(0);
+  const [showWelcomeModal, updateWelcomeModalDisplay] = useState(true);
 
   const playGame = () => {
     startAnimations();
     startButton.current.style.display = 'none';
-    window.addEventListener('keydown', debounce(keyboardInput, 500));
+    window.addEventListener('keydown', debounce(keyboardInput, 1000));
     for (let i = 0; i < 4; i++) {
       (function(i) {
         zombieInterval = setTimeout(function() {
@@ -122,11 +122,12 @@ const Game = () => {
   };
 
   const createZombie = zombieIndex => {
+    if (!zombieRef.current || typeof zombieRef.current == 'undefined') return;
     let newZombie = zombieRef.current.cloneNode(true);
     newZombie.id = `zombie-${zombieIndex}`;
     newZombie.classList.add('zombie');
     newZombie.classList.add('zombie-transition');
-    newZombie.style.bottom = `${randomNumber(12, 16)}%`;
+    newZombie.style.bottom = `${randomNumber(9, 12)}%`;
     gameContainer.current.appendChild(newZombie);
     moveZombie(newZombie);
   };
@@ -189,18 +190,23 @@ const Game = () => {
     switch (plantType.type) {
       case 'electric':
         ball.src = electricBall;
+        ball.style.height = '50px';
         break;
       case 'ice':
         ball.src = iceBall;
+        ball.style.height = '40px';
         break;
       case 'water':
         ball.src = waterBall;
+        ball.style.height = '50px';
         break;
       case 'grass':
         ball.src = grassBall;
+        ball.style.height = '40px';
         break;
       case 'fire':
         ball.src = fireBall;
+        ball.style.height = '50px';
         break;
       default:
         ball.src = grassBall;
@@ -225,14 +231,14 @@ const Game = () => {
           setTimeout(() => ball.remove(), 500);
 
           clearInterval(moveShooterBallInterval);
-        } else if (xPosition > 800) {
+        } else if (xPosition > 0.75 * window.innerWidth) {
           ball.classList.add('fade-out');
           setTimeout(() => ball.remove(), 500);
         } else {
-          ball.style.left = `${xPosition + 5}px`;
+          ball.style.left = `${xPosition + 4}px`;
         }
       } else {
-        ball.style.left = `${xPosition + 5}px`;
+        ball.style.left = `${xPosition + 4}px`;
       }
     }, 17);
   };
@@ -254,7 +260,10 @@ const Game = () => {
     let zombieLeft = parseInt(zombie.style.left) || 0;
 
     // collision logic
-    if (shooterBallLeft < 800 && shooterBallLeft + 20 >= zombieLeft)
+    if (
+      shooterBallLeft < 0.75 * window.innerWidth &&
+      shooterBallLeft + 20 >= zombieLeft
+    )
       return true;
     else return false;
   };
@@ -282,23 +291,32 @@ const Game = () => {
           ) : (
             <GameOverModal totalDeadZombies={totalDeadZombies} status="won" />
           )}
-          <Lightening id="lightening" />
           <RightCloud />
           <LeftCloud />
           <Instructions id="instructions">Use Spacebar to shoot</Instructions>
-          <StartSymbolContainer
-            ref={startButton}
-            id="start"
-            onClick={() => playGame()}
-          >
-            <StartSymbol />
-          </StartSymbolContainer>
-          <PlantContainer id="plant-shooter" ref={shooter}>
-            <Plant />
-          </PlantContainer>
-          <div id="initialzombie" ref={zombieRef}>
-            <Zombie />
-          </div>
+          {showWelcomeModal ? (
+            <WelcomeModal
+              display
+              changeDisplay={() => updateWelcomeModalDisplay(false)}
+            />
+          ) : (
+            <>
+              <Lightening id="lightening" />
+              <StartSymbolContainer
+                ref={startButton}
+                id="start"
+                onClick={() => playGame()}
+              >
+                <StartSymbol />
+              </StartSymbolContainer>
+              <PlantContainer id="plant-shooter" ref={shooter}>
+                <Plant />
+              </PlantContainer>
+              <div id="initialzombie" ref={zombieRef}>
+                <Zombie />
+              </div>
+            </>
+          )}
           <House className="house-img" />
           <ForestLand className="forest-land-img" />
         </GameContainer>

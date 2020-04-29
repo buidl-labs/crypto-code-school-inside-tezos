@@ -1,5 +1,11 @@
 import React from 'react';
 import { navigate } from 'gatsby';
+
+// Components
+import PlantCircle from '../../components/PlantGrowthModal/Plant';
+import Plant from '../../components/PlantGrowthModal/GrownPlant';
+import Zombie from '../../components/GameComponents/Zombie';
+
 import {
   Modal,
   ModalMask,
@@ -8,10 +14,8 @@ import {
   Heading,
   SubHeading,
   SuccessLights,
+  Button,
 } from '../../PagesStyle/GamePage/styled';
-import PlantCircle from '../../components/PlantGrowthModal/Plant';
-import Plant from '../../components/PlantGrowthModal/GrownPlant';
-import styled from '@emotion/styled';
 
 const GameOverModal = ({ totalDeadZombies = 4, status = 'lost' }) => {
   return (
@@ -23,7 +27,11 @@ const GameOverModal = ({ totalDeadZombies = 4, status = 'lost' }) => {
             <Modal>
               <SuccessLights />
               <PlantCircle />
-              <Plant positionTop="40%" positionLeft="50%" />
+              {status === 'won' ? (
+                <Plant positionTop="40%" positionLeft="50%" />
+              ) : (
+                <Zombie positionBottom="50%" positionRight="calc(50% - 5vw)" />
+              )}
               <ModalBottom>
                 {status === 'won' ? (
                   <>
@@ -36,7 +44,7 @@ const GameOverModal = ({ totalDeadZombies = 4, status = 'lost' }) => {
                   </>
                 ) : (
                   <>
-                    <Heading>You Lose</Heading>
+                    <Heading>Battle Lost</Heading>
                     <SubHeading>
                       Your plant was defeated in the first wave of the zombie
                       apocalypse. <br /> Are you ready to try again?
@@ -46,7 +54,7 @@ const GameOverModal = ({ totalDeadZombies = 4, status = 'lost' }) => {
                 <Button
                   onClick={() => {
                     if (status === 'won') {
-                      navigate('/up-next');
+                      navigate('/tezos/up-next');
                     } else {
                       typeof window !== 'undefined' && window.location.reload();
                     }
@@ -64,21 +72,5 @@ const GameOverModal = ({ totalDeadZombies = 4, status = 'lost' }) => {
     </>
   );
 };
-
-const Button = styled.button`
-  outline: none;
-  border: none;
-  border-radius: 5px;
-  padding: 20px 40px;
-  background: #1b2121;
-  margin: 20px;
-  color: #fff;
-  transition: all 0.3s;
-
-  :hover {
-    box-shadow: 0 0 0 0.25rem rgb(59, 66, 66);
-    cursor: pointer;
-  }
-`;
 
 export default GameOverModal;
