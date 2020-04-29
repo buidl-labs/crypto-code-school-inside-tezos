@@ -11,6 +11,7 @@ import { trackEvent } from 'src/utils/analytics';
 import SEO from 'src/components/Seo';
 import { ThemeContainer } from 'src/PagesStyle/OverviewPage/styled';
 import { css } from '@emotion/core';
+import StyledLink from '../../components/StyledLink';
 function UpNextPage() {
   useEffect(() => {
     trackEvent('Up-Next-View');
@@ -48,10 +49,9 @@ function UpNextPage() {
             You have successfully evolved your plant to face the incoming wave
             of zombie attack.
           </p>
-          <BattleLink to="/tezos/game">
-            <span />
+          <StyledLink style={{ padding: '15px 30px' }} to="/tezos/game">
             Battle it out
-          </BattleLink>
+          </StyledLink>
         </div>
         <div>
           <h2>Learn Next</h2>
