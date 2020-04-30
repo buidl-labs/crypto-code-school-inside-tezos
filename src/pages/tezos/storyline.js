@@ -75,7 +75,7 @@ const Game = () => {
       let xPosition = parseInt(
         window.getComputedStyle(zombie).getPropertyValue('left'),
       );
-      if (xPosition <= window.innerWidth / 1.5) {
+      if (xPosition <= window.innerWidth / 1.1) {
         zombie.style.left = `${xPosition - 1}px`;
         setStoryModalDisplay(true);
         setTimeout(() => {
@@ -91,7 +91,7 @@ const Game = () => {
   const randomNumber = (start, end) => Math.floor(Math.random() * end) + start;
 
   const props = useSpring({
-    delay: 4000,
+    delay: 2000,
     config: { tension: 300, friction: 60 },
     from: {
       height: '0%',
@@ -122,7 +122,7 @@ const Game = () => {
   return (
     <PageTransition
       defaultStyle={{
-        transition: 'opacity 4s ease-out',
+        transition: 'opacity 1s ease-out',
         opacity: '0.1',
         background: '#000',
       }}

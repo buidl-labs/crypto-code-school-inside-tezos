@@ -28,6 +28,7 @@ function LessonsOverview() {
   const chapters = useChapters();
   const [chapterList, updateChapterList] = useState(chapters);
   const [plantType, setPlantTypeSeed] = useState(null);
+  const [continuationLink, setContinuationLink] = useState('/tezos/storyline');
   const [chapterZeroCompleted, setZeroChapterCompleted] = useState(() => {
     let result = false;
     const isChapterZeroCompleted =
@@ -38,6 +39,46 @@ function LessonsOverview() {
 
     return result;
   });
+
+  useEffect(() => {
+    //get the previous stored if available otherwise create a new one
+    let list = [];
+    const listJSON =
+      typeof window != 'undefined' && localStorage.getItem('lesson-1');
+    if (listJSON !== null) {
+      list = JSON.parse(listJSON);
+      //handle backward compatibility by removing chapters where current key isn't available
+      list = list.filter(chapter => chapter && chapter.current);
+      typeof window != 'undefined' &&
+        localStorage.setItem('lesson-1', JSON.stringify(list));
+      // console.log('updatedList', updatedList);
+      // console.log('chapters', chapters);
+    }
+    //Generate chapter continuation route link
+    //check if first chapter zero is successfully completed or not
+    if (!chapterZeroCompleted) {
+      console.log('storyline');
+      setContinuationLink('/tezos/storyline');
+      return;
+    }
+    //Go to next chapter route link from last successfully completed chapter
+    // if no chapter completed --> show first-chapter
+    console.log('list', list);
+    if (list.length === 0) {
+      setContinuationLink('/lesson/chapter-01');
+    } else if (list.length > 0) {
+      const chapterSlug =
+        chapters[list[list.length - 1].current] &&
+        chapters[list[list.length - 1].current].slug;
+      if (!chapterSlug) {
+        // if if last chapter completed --> show up-next page
+        setContinuationLink('/tezos/game');
+      } else {
+        // if 1st chapter completed show --> next chapter i.e 2nd chapter and so on
+        setContinuationLink(`/lesson/${chapterSlug}`);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     trackEvent('Chapters-Overview-View');
@@ -93,6 +134,7 @@ function LessonsOverview() {
         return null;
     }
   };
+
   return (
     <Layout
       background={`radial-gradient(
@@ -138,7 +180,7 @@ function LessonsOverview() {
           <div>
             <div>
               <h2>Chapters</h2>
-              <StartLink to="/tezos/storyline">
+              <StartLink to={continuationLink}>
                 <StartIcon />
               </StartLink>
             </div>

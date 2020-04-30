@@ -33,7 +33,7 @@ function UpNextPage() {
             margin-top: 10px;
           `}
         >
-          <BackLink to="/lesson/chapter-14" />
+          <BackLink to="/tezos/overview" />
         </div>
         <ThemeContainer>
           <Theme />

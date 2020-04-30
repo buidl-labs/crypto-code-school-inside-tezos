@@ -65,6 +65,9 @@ Retrieving stored progress
 const ChapterTemplate = ({ data: { mdx: chapter } }) => {
   const chapterList = useChapters();
   const [showModal, setModal] = useState(false);
+  const [chapterCompletedSuccessfully, setChapterCompletionState] = useState(
+    false,
+  );
   const [index] = useState(() => {
     const { current, total, nextSlug, prevSlug } = getChaptersIndex(
       chapterList,
@@ -106,6 +109,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
         return chapter.chapterSlug === chapterList[index.current - 1].slug;
       });
       if (savedChapter) {
+        setChapterCompletionState(true);
         return savedChapter.code;
       }
     }
@@ -174,6 +178,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
         chapterSlug: chapterList[index.current - 1].slug,
         completed: true,
         code: editorInputValue,
+        current: index.current,
       };
 
       //get the previous stored if available otherwise create a new one
@@ -256,6 +261,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           updateValidation={updateValidation}
           editorInputValue={editorInputValue}
           resetEditor={resetEditor}
+          chapterCompletedSuccessfully={chapterCompletedSuccessfully}
         >
           <ControlledEditor
             height={`${editorHeight}`}
