@@ -48,7 +48,7 @@ const Game = () => {
   const shooter = useRef(null);
   const zombieRef = useRef(null);
 
-  let zombieInterval;
+  let zombieInterval, deadZombieList = [];
 
   const [isGameLost, updateGameStatus] = useState(false);
   const [totalDeadZombies, updateDeadZombieCount] = useState(0);
@@ -57,7 +57,7 @@ const Game = () => {
   const playGame = () => {
     startAnimations();
     startButton.current.style.display = 'none';
-    window.addEventListener('keydown', debounce(keyboardInput, 1000));
+    window.addEventListener('keydown', debounce(keyboardInput, 500));
     for (let i = 0; i < 4; i++) {
       (function(i) {
         zombieInterval = setTimeout(function() {
@@ -224,7 +224,8 @@ const Game = () => {
         if (checkShooterballCollision(ball, zombie)) {
           zombieDeathAnimations(zombie);
 
-          updateDeadZombieCount(count => count + 1);
+          // increases dead zombie count if it's unique
+          uniqueDeadZombieCount(zombie.id);
 
           ball.classList.add('fade-out');
           setTimeout(() => zombie.remove(), 1250);
@@ -235,12 +236,21 @@ const Game = () => {
           ball.classList.add('fade-out');
           setTimeout(() => ball.remove(), 500);
         } else {
-          ball.style.left = `${xPosition + 4}px`;
+          ball.style.left = `${xPosition + 5}px`;
         }
       } else {
-        ball.style.left = `${xPosition + 4}px`;
+        ball.style.left = `${xPosition + 5}px`;
       }
     }, 17);
+  };
+
+  const uniqueDeadZombieCount = zombieID => {
+    if (!deadZombieList.includes(zombieID)) {
+      deadZombieList.push(zombieID);
+      updateDeadZombieCount(count => count + 1);
+    } else {
+      return;
+    }
   };
 
   const zombieDeathAnimations = zombie => {
