@@ -176,7 +176,6 @@ export const LOGO = styled.a`
 
     h4 {
       color: #d0d0d0;
-      line-height: 1;
       font-weight: 200;
       font-size: 1.6875rem;
       margin-left: 10px;

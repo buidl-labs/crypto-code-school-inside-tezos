@@ -8,10 +8,10 @@ function ChapterHeader() {
     <Header>
       <BackLink
         data-delay-show="600"
-        data-tip="go back"
+        data-tip="Go Back"
         onClick={() => navigate('/tezos/overview')}
       >
-        <LeftArrow />
+        <LeftArrow style={{ maxWidth: '40px' }} />
       </BackLink>
       <LessonTitle>Lesson: Introduction to SmartPy</LessonTitle>
       <div style={{ width: 120 }} />

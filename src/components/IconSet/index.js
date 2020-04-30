@@ -8,7 +8,7 @@ import ShowAnswerSVG from '../../assets/Iconset/show_answer.svg';
 import styled from '@emotion/styled';
 
 export const RightArrow = styled(RightArrowSVG)`
-  max-width: ${props => (props.small ? '20px' : '40px')};
+  max-width: ${props => (props.small ? '20px' : '25px')};
   max-height: 40px;
 
   rect {
@@ -17,7 +17,7 @@ export const RightArrow = styled(RightArrowSVG)`
 `;
 
 export const LeftArrow = styled(LeftArrowSVG)`
-  max-width: ${props => (props.small ? '20px' : '40px')};
+  max-width: ${props => (props.small ? '20px' : '25px')};
   max-height: 40px;
 
   rect {
@@ -26,7 +26,7 @@ export const LeftArrow = styled(LeftArrowSVG)`
 `;
 
 export const Check = styled(CheckSVG)`
-  max-width: 40px;
+  max-width: 25px;
   max-height: 40px;
 
   rect {
@@ -62,7 +62,7 @@ export const Hint = styled(HintsSVG)`
 `;
 
 export const ShowAnswer = styled(ShowAnswerSVG)`
-  max-width: 40px;
+  max-width: 25px;
   max-height: 40px;
 
   rect {
