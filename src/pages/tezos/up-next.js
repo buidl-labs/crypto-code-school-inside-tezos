@@ -29,8 +29,8 @@ function UpNextPage() {
       <>
         <div
           css={css`
-            margin-left: 30px;
-            margin-top: 10px;
+            margin-left: 10px;
+            margin-top: 20px;
           `}
         >
           <BackLink to="/tezos/overview" />
