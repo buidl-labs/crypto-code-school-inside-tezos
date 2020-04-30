@@ -19,24 +19,32 @@ editor:
 
 Starting with the absolute basics:
 
-You'll learn how to interact with the SmartPy, a python library using in-browser editor. This perfectly simulates how you can interact with a REAL tezos testnet today. In Later lessons, we'll show you how to deploy it to a testnet.
+The fundamental component of any smart contract application is a `contract`. All `variables` and `functions` belong to a `contract`, and this will be the starting point of all your projects/DApps.
 
-Smart contracts are small programs that are stored and executed on the blockchain, smart contracts in Tezos are unique, as they’re written in Michelson. In addition, Tezos supports formal verification, which guarantees the correctness of smart contract code with respect to a specification. Smart contract code can be proved mathematically according to certain properties. Using formal verification, the Tezos project makes smart contracts more secure and reliable.
- — all variables and functions belong to a contract, and this will be the starting point of all your projects.
+An basic contract definition for the contract `HelloWorld` would look like this: 
 
-We define a Python class lets call it `HelloWorld` that inherits from the `Contract` class of SmartPy. This class will represent our smart contract and enclose all of the storage initialization, entry points.
-
-An empty contract named HelloWorld would look like this:
+An empty `contract` named `HelloWorld` would look like this:
 ```python
 class HelloWorld(sp.Contract):
     pass
 ```
 
-## Put it to code
+As you can see: 
+* we define a Python class and name it  `HelloWorld`. 
+* in brackets we inherit the `Contract` class from SmartPy library, the library that we imported in the previous chapter. 
 
-Putting it together, here is a bare-bones starting contract — the first thing you'll write every time you create a new contract:
+This class will represent our smart contract and enclose all of the storage initialization, entry points.
 
-1) Declare a class named Plant,
+## Put it to code: 
+After incubating the seed, the next step is create the basic structure of the cryto plant, which will be enhancing in the coming chapters. 
 
-2) Extend SmartPy contract 
+Steps: 
 
+1. Declare a `class` named `Plant`.
+2. Extend the `Plant` class by inheriting `Contract` class from `smartpy` library. 
+
+<br />
+
+When you're finished: 
+* Click on "Check" to check your submission with the correct answer. 
+* Click on "Show Answer" in case you get stuck. 

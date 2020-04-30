@@ -60,14 +60,13 @@ const StoryTeller = ({ display, plantType }) => {
                 }}
               >
                 <Heading>Save the Planet</Heading>
-                <SubHeading style={{ padding: '0 4rem' }}>
-                  A zombie apocalypse has begun. You’ve luckily found the seed
-                  of a plant that is known to stop zombies. Your task is to
-                  incubate the seed and help it evolve before the zombies reach
-                  you. In the lesson, you’re going build a simple smart contract
-                  in smartpy which can be deployed on tezos blockchain by
-                  evolving your plant and train it to defend against the
-                  incoming apocalypse.
+                <SubHeading style={{ padding: '0 2rem' }}>
+                  The school has bestowed upon you the <b> {plantType} </b>seed!
+                  <br /> <br /> Your task now is to incubate the seed and help
+                  it evolve before the zombies reach you.
+                  <br />
+                  After completing all chapters, you will help your
+                  fully-evolved plant in aiming to kill the zombies!
                 </SubHeading>
                 <br />
                 <div
@@ -86,7 +85,7 @@ const StoryTeller = ({ display, plantType }) => {
                       navigate(`/lesson/chapter-01`);
                     }}
                   >
-                    Proceed
+                    Proceed to chapter 1!
                   </ProceedLink>
                 </div>
               </ModalBottom>

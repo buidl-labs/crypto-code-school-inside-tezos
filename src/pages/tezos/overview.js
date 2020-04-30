@@ -154,26 +154,36 @@ function LessonsOverview() {
         </ThemeContainer>
         <OverviewContainer>
           <div>
-            <h1>The Challenge Begins</h1>
+            <h1>Your mission's briefing:</h1>
+            <p> 🚨 A zombie apocalypse is incoming! 🚨</p>
             <p>
-              In Lesson 1, you're going to growing your plant to fight against
-              upcoming zombie apocalypse at end of the lesson.
+              At the starting of your journey, the school bestowes upon you a
+              unique seed of a plant that is known to stop zombies!
             </p>
             <p>
-              A zombie apocalypse has begun. You’ve luckily found the seed of a
-              plant that is known to stop zombies. Your task is to incubate the
-              seed and help it evolve before the zombies reach you. In the
-              lesson, you’re going to learn how to evolve your plant and train
-              it to defend against the incoming apocalypse by building a simple
-              smart contract in SmartPy which can be deployed on tezos
+              But the seed needs to grow into a full plant to battle the zombie
+              apocalypse
+            </p>
+            <p>
+              Your mission is to evolve the seed into a plant to fight the
+              incoming zombie apocalypse by progressing through the chapters!
+            </p>
+            <p>
+              In this lesson, you’re going to learn how to evolve your plant and
+              train it to defend against the incoming apocalypse by building a
+              simple smart contract in SmartPy which can be deployed on tezos
               blockchain.
+            </p>
+            <p>
+              At the end of lesson, you will help your fully-evolved plant in
+              aiming to kill the zombies!
             </p>
             <div>
               <StyledLink
                 style={{ padding: '15px 35px' }}
                 to="/tezos/storyline"
               >
-                Start Lesson
+                Let's roll!
               </StyledLink>
             </div>
           </div>

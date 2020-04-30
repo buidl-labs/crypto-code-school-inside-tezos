@@ -64,11 +64,13 @@ const HomePage = () => {
           <div>
             <Logo />
           </div>
-          <HeroTitle>Learn to Code Blockchain apps in SmartPy</HeroTitle>
+          <HeroTitle>
+            Learn to code Tezos blockchain DApps in Smartpy <br />
+          </HeroTitle>
           <HeroSubheading>
-            Explore interactive code school and learn to create smart contract
-            in smartpy which can be deployed on tezos blockchain by growing your
-            own plant to fight against upcoming zombie apocalypse.
+            Crypto Plants Vs Zombies teaches you to write smart contracts in
+            SmartPy by evolving a crypto-plant that unleashes hell on the
+            incoming zombie apocalypse!
           </HeroSubheading>
           <InnerContainer>
             <div>
@@ -96,23 +98,36 @@ const HomePage = () => {
             <img src={learningInterface} width="90%" height="90%" />
           </div>
           <FlexContainer>
-            <h2>The Interactive School to master Smartpy</h2>
+            <h2>Interactive Code School to master Smartpy</h2>
             <p>
-              Interactive In-Browser based code editor, with step-by-step
-              chapter to help you with an intuitive and effective Smart contract
-              language smartpy to creating your own simple smart contract by the
-              end of Lesson 1, by end you'll know enough to call your self a
-              tezos blockchain developer.
+              The school walks you through the very basics of SmartPy to
+              kickstart your smart contract development journey in the Tezos
+              ecosystem!
+              <br />
+              <br />
+              By the end of Lesson 1, you'll know enough to officially call
+              yourself a Tezos Blockchain developer!
             </p>
           </FlexContainer>
         </GridContainer>
         <GridContainer>
           <FlexContainer>
-            <h2>Evolve your plant to fight against a zombie apocalypse</h2>
+            <h2>Evolve your plant to fight against a zombie apocalypse!</h2>
             <p>
-              As you progress through the chapters, you will grow your plant
-              which will be generated automatically to help you fight against
-              upcoming zombie apocalypse at the end of lessons 1.
+              At the starting of your journey, the school bestowes upon you a
+              unique seed of a plant that is known to stop zombies! *ooh
+              exciting*
+              <br />
+              <br />
+              But the seed needs to grow into a full plant to battle the zombie
+              apocalypse! *oh no! what do I have to do?*
+              <br />
+              <br />
+              Your mission is to evolve the seed into a plant to fight the
+              incoming zombie apocalypse by progressing through the chapters!
+              <br />
+              <br />
+              Are you ready? The world's hope is in your hands!
             </p>
           </FlexContainer>
           <div>
@@ -121,7 +136,7 @@ const HomePage = () => {
         </GridContainer>
         <ButtonContainer>
           <StyledLink to="/tezos/overview">
-            Start Now <RightArrow />
+            I'm ready. Take me to my mission! <RightArrow />
           </StyledLink>
         </ButtonContainer>
       </div>
