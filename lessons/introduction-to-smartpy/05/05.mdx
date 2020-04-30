@@ -21,18 +21,31 @@ editor:
             self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True)
 ---
 
-SmartPy has `sp.TBool`: The type of boolean values, True, False, sp.bool(True) and sp.bool(False)
+In this chapter, we are going to add `is_alive` attribute to check whether the plant is alive or not. This will allow us to easily check whether the plant is alive or dead if the Zombies got to it!
+
+As you can see, this is a going to be a boolean value and hence in this chapter we will learn how Smartpy handles the `boolean` type. 
+
+## How SmartPy handles boolean values?
+<br /> 
+
+SmartPy has `sp.TBool`:
+
+* `True` is handled as `sp.bool(True)`
+* `False` is handled as `sp.bool(False)`
 
 In SmartPy, all the bitwise operators work the same way as in python, so for example, `True == ~False` is correct in SmartPy as well.
 
-## Put it to code
+## Put it to code: 
 
-Your Plant is alive as its health is 100, 
+<br /> 
 
-1) Declare boolean attribute `is_alive` and Initilize with `True` inside your contract storage.
+1. Declare boolean attribute `is_alive` 
+2. Initilize with `True` inside your contract storage.
 
-```python
-is_alive = True
-```
 
+<br /> 
+
+When you're finished: 
+* Click on "Check" to check your submission with the correct answer. 
+* Click on "Show Answer" in case you get stuck. 
 
