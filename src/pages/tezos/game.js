@@ -164,21 +164,11 @@ const Game = () => {
   };
 
   const createShooterBallElement = () => {
-    const plantHead =
-      shooter.current.children[0].children[0].children[0].children[2];
-    let xPositionPercentage = parseInt(
-      window.getComputedStyle(plantHead).getPropertyValue('left'),
-    );
-    // let yPositionPercentage =
-    //   window.getComputedStyle(plantHead).getPropertyValue('top')
-    // ;
-    // console.log(yPositionPercentage);
-    let xPosition = (xPositionPercentage * window.innerWidth) / 100;
     let newShooterBall = document.createElement('img');
     setBallImage(newShooterBall); // according to Plant type
     newShooterBall.classList.add('shooter-ball');
-    newShooterBall.style.left = `${xPosition}px`;
-    newShooterBall.style.bottom = '35.5%';
+    newShooterBall.style.left = `360px`;
+    newShooterBall.style.bottom = '36%';
     setTimeout(() => {
       newShooterBall.style.transform = 'scale(1)';
     }, 100);
@@ -217,7 +207,7 @@ const Game = () => {
   const moveShooterBall = ball => {
     let moveShooterBallInterval = setInterval(() => {
       let zombie = document.querySelectorAll('.zombie')[0] || 0;
-      let xPosition = parseInt(ball.style.left) || 0;
+      let xPosition = parseInt(ball.style.left) || 375;
 
       if (zombie) {
         // check collision
