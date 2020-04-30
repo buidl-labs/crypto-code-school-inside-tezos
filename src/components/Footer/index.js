@@ -44,16 +44,16 @@ function FooterPage() {
             <h4>Navigation</h4>
             <ul>
               <li>
-                <NavigationLink to="/tezos/privacy-policy">
-                  Privacy Policy
-                </NavigationLink>
-              </li>
-              <li>
                 <NavigationLink to="/tezos">Home Page</NavigationLink>
               </li>
               <li>
                 <NavigationLink to="/tezos/overview">
-                  Lesson Overview
+                  Curriculum Overview
+                </NavigationLink>
+              </li>
+              <li>
+                <NavigationLink to="/tezos/privacy-policy">
+                  Privacy Policy
                 </NavigationLink>
               </li>
             </ul>
@@ -70,7 +70,7 @@ function FooterPage() {
                   Github
                 </StyledOutboundLink>
               </li>
-              <li>
+              {/* <li>
                 <StyledOutboundLink
                   rel="noopener"
                   target="_blank"
@@ -78,8 +78,8 @@ function FooterPage() {
                 >
                   Twitter
                 </StyledOutboundLink>
-              </li>
-              <li>ProductHunt</li>
+              </li> */}
+              {/* <li>ProductHunt</li> */}
             </ul>
           </LinkContainer>
         </div>

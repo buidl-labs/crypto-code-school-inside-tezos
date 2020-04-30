@@ -102,11 +102,11 @@ export const HeroTitle = styled.h1`
   font-style: normal;
   font-weight: 500;
   font-size: 40px;
-  line-height: 95.69%;
+  line-height: 1.2;
   text-align: center;
   color: #ffffff;
-  max-width: 800px;
-  width: 50%;
+  max-width: 900px;
+  width: 80%;
 `;
 
 export const HeroSubheading = styled.p`

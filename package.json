@@ -1,7 +1,7 @@
 {
   "name": "tezos-buidl",
   "private": true,
-  "description": "Interactive Code School for onboarding newcomers to the Tezos Ecosystem using smartpy",
+  "description": "Interactive Code School for onboarding new smart contract developers to the Tezos Ecosystem",
   "version": "0.1.0",
   "author": "",
   "dependencies": {

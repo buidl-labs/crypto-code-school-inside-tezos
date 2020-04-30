@@ -18,21 +18,53 @@ editor:
     class Plant(sp.Contract):
         def __init__(self, name):
             # Initialize state variables
-            self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100))
+            self.init(name = name, range = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100))
 ---
 
-Container constructor names are uncapitalized, example: `(sp.int(-42))` and their types are capitalized, example `(sp.TInt)`
 
- - sp.TInt: The type of integer values, e.g: -42 or sp.int(-42).
- - sp.TNat: The type of non-negative integer values, e.g: sp.nat(42).
- - sp.TIntOrNat: The type of integer values whose type is still undetermined between sp.TInt or sp.TNat, e.g: 42 or sp.intOrNat(42).
+Continuing with adding attributes to our `Plant` contract, this chapter deals with adding more exciting attributes. Namely we will be adding the following attributes: 
 
-In SmartPy, we have three possible types for integer: `int, nat, and intOrNat`. When writing a number (say, 12), as you can see, it can be of type sp.TInt or sp.TNat which makes it important to explicitly mention the type in such cases. If you don’t know whether it is an int or a nat then you type it as intOrNat (sp.TIntOrNat). Its exact type will be determined at a later stage. This determination is necessary for the Michelson compiler because Michelson needs to make this precise determination.
-
-## Put it to code
-
-Now you'll intialize growth_rate attribute and health for your plant to grow.
-
-1) Declare state variables `attack`, `defense`, `growth_rate` and `health` all of type `sp.TNat` and initialize then with 10, 10, 10, 100 respectively.
+1. Health: an indicator of the current health of the plant. 
+   * Ranges from 0 to 100 where 0 = dead and 100 = full health. 
+2. Attack: a qualitative indicator of plant's attack capability for comparing various plants. 
+3. Defense:  a qualitative indicator of plant's defense capability for comparing various plants.
+4. Growth Rate: rate at which the plant evolves. 
 
 
+Since these attributes will be defined using integers, we will learn how to handle them inside SmartPy. 
+
+
+## How SmartPy handles integers: 
+
+<br /> 
+There are three types of integers in SmartPy: 
+
+ - sp.TInt: The type of integer values, e.g: `sp.int(-42)`.
+ - sp.TNat: The type of non-negative integer values, e.g: `sp.nat(42)`.
+ - sp.TIntOrNat: The type of integer values whose type is still undetermined between sp.TInt or sp.TNat, eg: `sp.intOrNat(42)`. 
+
+
+An example of defining an state variable with an non-negative integer: 
+
+```python
+    self.data.age == sp.nat(42)
+```
+
+
+## Put it to code:
+
+<br /> 
+
+1. Declare the following state variables with type `sp.TNat`: 
+    * `health`
+    * `attack` 
+    * `defense`, 
+    * `growth_rate` 
+2. Initialize all the above with the values of 10, 10, 10, 100 respectively.
+
+
+<br /> 
+
+When you're finished: 
+* Click on "Check" to check your submission with the correct answer. 
+* Click on "Show Answer" in case you get stuck. 

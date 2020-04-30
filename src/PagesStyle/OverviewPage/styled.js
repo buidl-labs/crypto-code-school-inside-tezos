@@ -35,7 +35,8 @@ export const OverviewContainer = styled.div`
     font-size: 43px;
     line-height: 175%;
     /* or 75px */
-    text-align: center;
+    margin: 2rem auto;
+    width: 80%;
     color: #ffffff;
   }
 
