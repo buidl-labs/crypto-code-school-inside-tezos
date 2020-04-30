@@ -48,7 +48,7 @@ const Game = () => {
   const shooter = useRef(null);
   const zombieRef = useRef(null);
 
-  let zombieInterval;
+  let zombieInterval, deadZombieList = [];
 
   const [isGameLost, updateGameStatus] = useState(false);
   const [totalDeadZombies, updateDeadZombieCount] = useState(0);
@@ -57,7 +57,7 @@ const Game = () => {
   const playGame = () => {
     startAnimations();
     startButton.current.style.display = 'none';
-    window.addEventListener('keydown', debounce(keyboardInput, 1000));
+    window.addEventListener('keydown', debounce(keyboardInput, 500));
     for (let i = 0; i < 4; i++) {
       (function(i) {
         zombieInterval = setTimeout(function() {
@@ -164,21 +164,11 @@ const Game = () => {
   };
 
   const createShooterBallElement = () => {
-    const plantHead =
-      shooter.current.children[0].children[0].children[0].children[2];
-    let xPositionPercentage = parseInt(
-      window.getComputedStyle(plantHead).getPropertyValue('left'),
-    );
-    // let yPositionPercentage =
-    //   window.getComputedStyle(plantHead).getPropertyValue('top')
-    // ;
-    // console.log(yPositionPercentage);
-    let xPosition = (xPositionPercentage * window.innerWidth) / 100;
     let newShooterBall = document.createElement('img');
     setBallImage(newShooterBall); // according to Plant type
     newShooterBall.classList.add('shooter-ball');
-    newShooterBall.style.left = `${xPosition}px`;
-    newShooterBall.style.bottom = '35.5%';
+    newShooterBall.style.left = `360px`;
+    newShooterBall.style.bottom = '36%';
     setTimeout(() => {
       newShooterBall.style.transform = 'scale(1)';
     }, 100);
@@ -217,14 +207,15 @@ const Game = () => {
   const moveShooterBall = ball => {
     let moveShooterBallInterval = setInterval(() => {
       let zombie = document.querySelectorAll('.zombie')[0] || 0;
-      let xPosition = parseInt(ball.style.left) || 0;
+      let xPosition = parseInt(ball.style.left) || 375;
 
       if (zombie) {
         // check collision
         if (checkShooterballCollision(ball, zombie)) {
           zombieDeathAnimations(zombie);
 
-          updateDeadZombieCount(count => count + 1);
+          // increases dead zombie count if it's unique
+          uniqueDeadZombieCount(zombie.id);
 
           ball.classList.add('fade-out');
           setTimeout(() => zombie.remove(), 1250);
@@ -235,12 +226,21 @@ const Game = () => {
           ball.classList.add('fade-out');
           setTimeout(() => ball.remove(), 500);
         } else {
-          ball.style.left = `${xPosition + 4}px`;
+          ball.style.left = `${xPosition + 5}px`;
         }
       } else {
-        ball.style.left = `${xPosition + 4}px`;
+        ball.style.left = `${xPosition + 5}px`;
       }
     }, 17);
+  };
+
+  const uniqueDeadZombieCount = zombieID => {
+    if (!deadZombieList.includes(zombieID)) {
+      deadZombieList.push(zombieID);
+      updateDeadZombieCount(count => count + 1);
+    } else {
+      return;
+    }
   };
 
   const zombieDeathAnimations = zombie => {

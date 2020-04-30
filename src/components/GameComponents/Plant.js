@@ -16,13 +16,13 @@ import styled from '@emotion/styled';
 
 const PlantBox = styled.div`
   width: 16vw;
-  height: 20vw;
+  height: 25vh;
   max-width: 150px;
   max-height: 210px;
 
   @media only screen and (max-width: 425px) {
     width: 25vw;
-    height: 30vw;
+    height: 50vh;
   }
 `;
 
