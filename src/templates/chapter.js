@@ -178,6 +178,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
         chapterSlug: chapterList[index.current - 1].slug,
         completed: true,
         code: editorInputValue,
+        current: index.current,
       };
 
       //get the previous stored if available otherwise create a new one
