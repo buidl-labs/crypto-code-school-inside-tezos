@@ -20,6 +20,7 @@ interface Props {
   setButtonClicked(input: boolean): void;
   setEditorHeight(input: string): void;
   resetEditor(): void;
+  chapterCompletedSuccessfully: boolean;
   chapterIndex: {
     current: number;
     total: number;
@@ -49,11 +50,7 @@ function ChapterEditor({
       <ContractFile>
         <p>Contract.py</p>
         {!chapterCompletedSuccessfully ? (
-          <span
-            data-delay-show="600"
-            data-tip="reset editor content"
-            onClick={() => resetEditor()}
-          >
+          <span data-tip="Reset Editor Content" onClick={() => resetEditor()}>
             <RefreshSVG />
           </span>
         ) : null}

@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { OutboundLink } from 'gatsby-plugin-amplitude-analytics';
 
 export const Header = styled.header`
   grid-area: header;
@@ -43,7 +44,11 @@ export const LessonTitle = styled.h1`
   }
 `;
 
-export const HelpButton = styled.button`
+export const HelpButton = styled(OutboundLink)`
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: 2px solid #ffffff;
   box-sizing: border-box;
   width: 118px;

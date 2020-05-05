@@ -17,7 +17,7 @@ function FooterPage() {
         <div>
           <div></div>
           <LOGO rel="noopener" target="_blank" href="https://tezos.com/">
-            <img src={Tezos} alt="build labs logo" />
+            <img src={Tezos} alt="tezos logo" />
             <div>
               <h3>Tezos</h3>
             </div>
@@ -70,15 +70,15 @@ function FooterPage() {
                   Github
                 </StyledOutboundLink>
               </li>
-              {/* <li>
+              <li>
                 <StyledOutboundLink
                   rel="noopener"
                   target="_blank"
-                  href="https://twitter.com/BuidlLabs"
+                  href="https://t.me/joinchat/Q4N7fRQPfT1YQvNL1G3xOw"
                 >
-                  Twitter
+                  Telegram
                 </StyledOutboundLink>
-              </li> */}
+              </li>
               {/* <li>ProductHunt</li> */}
             </ul>
           </LinkContainer>

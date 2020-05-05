@@ -14,7 +14,13 @@ function ChapterHeader() {
         <LeftArrow />
       </BackLink>
       <LessonTitle>Lesson: Introduction to SmartPy</LessonTitle>
-      <div style={{ width: 120 }} />
+      <HelpButton
+        rel="noopener"
+        target="_blank"
+        href="https://t.me/joinchat/Q4N7fRQPfT1YQvNL1G3xOw"
+      >
+        Ask Question
+      </HelpButton>
     </Header>
   );
 }

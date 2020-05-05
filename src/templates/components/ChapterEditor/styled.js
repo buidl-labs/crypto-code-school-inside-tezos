@@ -26,8 +26,8 @@ export const ContractFile = styled.div`
     margin-left: 1rem;
     color: #729e9f;
     padding-top: 14px;
-    padding-right: 8px;
-    padding-left: 8px;
+    padding-right: 25px;
+    padding-left: 25px;
   }
 `;
 export const Editor = styled.div`
