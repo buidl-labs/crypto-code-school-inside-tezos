@@ -12,7 +12,7 @@ export const Content = styled.div`
 
 export const ContentHeader = styled.div`
   background: #f1f1f1;
-  height: 119px;
+  height: auto;
   padding: 1.5rem;
 `;
 

@@ -14,7 +14,7 @@
  * update all of code elements style i.e inline code block created using ``
  */
 code.language-pythontext {
-  color: #333;
+  color: #18b77e;
   padding: 0.2em 0.5em !important;
   font-size: 85%;
   background-color: #f7f7f7 !important;
@@ -64,4 +64,24 @@ code.language-pythontext {
 /* token.function */
 .token.function {
   color: #795da3;
+}
+
+table tr th {
+  background: #222;
+  color: #fff;
+  padding: 0;
+  text-align: center;
+  font-weight: bold;
+}
+table tr td {
+  border: 1px #ccc solid;
+  padding: 5px;
+}
+table tr td.rightright {
+  background: #eee;
+}
+table tr td h4 {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
 }

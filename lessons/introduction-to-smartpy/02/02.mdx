@@ -1,50 +1,156 @@
 ---
-title: Scaffolding A Contract
+title: Quick primer on blockchain & smart contract concepts
 chapter: Chapter 2
 slug: chapter-02
 editor:
   language: python
   startingCode: |
-    import smartpy as sp
-
-    # Initialize a python class
+   
 
   answer: |  
-    import smartpy as sp
-
-    # Initialize a python class
-    class Plant(sp.Contract):
-        pass
+   
 ---
 
-Starting with the absolute basics:
+### Intro: 
 
-The fundamental component of any smart contract application is a `contract`. All `variables` and `functions` belong to a `contract`, and this will be the starting point of all your projects/DApps.
+Before we kick start writing code, this chapter serves as a helpful primer to quickly ramp up why blockchain and smart contracts are game changing technologies. Readers who are familiar with these concepts can feel free to skip to the next chapter.
 
-An basic contract definition for the contract `HelloWorld` would look like this: 
 
-An empty `contract` named `HelloWorld` would look like this:
+## Why read this chapter?
+We hope to provide readers with a convincing argument as to why combination of smart contracts and blockchain technology is going to revolutionize how humans cooperate between themselves. 
+
+
+We have also embedded links to books/videos/blogposts that were helpful to us when we started our learning about these concepts. 
+
+Readers who are familiar with these concepts can feel free to skip to the next chapter. 
+
+## What is a blockchain? 
+At some point in your life, you would have kept a track of:
+
+1. The money that you are earning (i.e income) 
+2. and where are you spending it (i.e expenses) 
+3. to figure out whether you have money left over (i.e savings) to buy your favorite things! 
+
+You can imagine a table that has rows that keeps logs of transactions. These tables are conceptually called ledger’s. 
+
+Some real world examples: 
+
+1. Record books used by accountants that record business transactions.
+2. Property Registry which keeps track of who owns the house that you live in 
+3. Your bank account statement which records your personal transactions. 
+
+**At their most basic level, blockchains are digital ledgers.**   
+
+
+### We have ledgers in the real world, why use a blockchain?
+
+The problem with the current ledgers in the world is that they are usually maintained by a person/institution (third party) which leads to an inordinate amount of trust put upon one person/institution. 
+
+An example of this problem is that you rely on your bank and hope that these guys won’t change/empty your account with your hard earned money! 
+
+Ever wonder why do you need a bank in the first place? 
+
+You use a bank primarily for: 
+
+1. Saving your hard earned money. 
+2. Transferring money to your friends and family as well as to buy things. 
+
+**What if you can do all this, without needing the bank?** 
+
+That’s where blockchain come in whose fundamental usecase is to maintain a single ledger without relying on a single trusted third party. 
+
+How blockchains work under the hood is out of scope of this course, though we recommend reading through the following 101 resources: 
+
+1. [Blockchain for Dummies - A Simple Blockchain Explanation for Everyone](https://taylorpearson.me/blockchain-for-dummies/)
+2. [Blockchain Expert Explains One Concept in 5 Levels of Difficulty | WIRED](https://www.youtube.com/watch?v=hYip_Vuv8J0)
+3. [How Does Blockchain Work?](https://www.binance.vision/blockchain/how-does-blockchain-work)
+
+
+Examples of blockchains include: 
+
+1. The Bitcoin blockchain - on which the Bitcoin cryptocurrency runs on. 
+2. The Ethereum blockchain. 
+3. [The Tezos blockchain](https://tezos.com/) - the blockchain on which you are learning to deploy apps on through this course. 
+
+
+## What are smart contracts? 
+
+Smart contracts are simple agreements written in code which are stored on the blockchain.
+
+That’s a lot to take in, let us break it down: 
+
+1. **“Smart contracts are simple agreements”:** 
+    * A bet between friends is a perfect example of a simple agreement.
+        * Let us say you decide to bet $100 with your friend that tomorrow it will rain. 
+        * 2 possible odds: 
+            * If it rains => you get to keep the $100.
+            * If it doesn’t rain  => then you have to give $100 to your friend.
+      * This agreement is the equation above.
+    * The contract encloses the agreement between you and your friend that both you will not cheat if the bet doesn’t go your way.  
+
+2. **“Written in code”:** 
+    * The contract like the bet shown above is a simple “if..else” program. 
+    * The smart in the word “smart contract” arises from the logic inducing capabilities of the contract. 
+
+3. **“Stored on the blockchain”:** the blockchain acts as the database that stores them securely. 
+
+
+The best examples of contracts are found in the law and legal industry for eg:
+
 ```python
-class HelloWorld(sp.Contract):
-    pass
+if (found_guilty_for_robbery): 
+    print("Verdict: Jail for 5 years")
+else:
+    print("Verdict: Release the person")
+
 ```
 
-As you can see: 
-* we define a Python class and name it  `HelloWorld`. 
-* in brackets we inherit the `Contract` class from SmartPy library, the library that we imported in the previous chapter. 
 
-This class will represent our smart contract and enclose all of the storage initialization, entry points.
+### What are some use cases of smart contracts? 
 
-## Put it to code: 
-After incubating the seed, the next step is create the basic structure of the cryto plant, which will be enhancing in the coming chapters. 
+Some popular use cases are: 
 
-Steps: 
+1. Insurance like contracts
+2. Decentralized finance: reimagining the current finance industry to a more trustless and decentralized version. 
+3. Prediction Markets. 
 
-1. Declare a `class` named `Plant`.
-2. Extend the `Plant` class by inheriting `Contract` class from `smartpy` library. 
+## Why (smart contracts + blockchains) == game changing technology?
 
-<br />
+In banks, the system at a very fundamental level comprises of: 
 
-When you're finished: 
-* Click on "Check" to check your submission with the correct answer. 
-* Click on "Show Answer" in case you get stuck. 
+1. The ledger a.k.a  the record book that maintains how much money you have, your parents have, and all the people who have an account in that bank. 
+2. The transactions between people i.e when you transfer money to your friend. 
+
+
+If you want to replace the bank with a complete software protocol which doesn’t rely on any trusted third parties, you can do it by:  
+
+1. Replacing the ledger with a blockchain. 
+2. Replacing the transaction system with smart contracts. 
+
+A transaction where I send $100 dollars to my friend in pseudo code would like the following: 
+
+```python
+ if(my_account_balance >= 100):
+     tranfer_money_to(friend_account, 100)
+  else: 
+     print("Insufficient balance")
+
+```
+
+It may not sound a big deal until **you focus on the part where you don’t need to rely on any trusted third party to manage and maintain this system.** 
+
+**Imagine all the big banks buildings in the world are now equivalent to a software protocol. That’s game changing.** 
+
+## What are accounts on a blockchain: 
+
+
+The blockchain is also made up of accounts which are pretty similar to real world bank accounts. 
+
+In the **Tezos blockchain**, an account has a balance of **XTZ** (the currency used on the Tezos blockchain), and you can send and receive payments in XTZ, just like your bank account can wire transfer money to other bank accounts. 
+
+Each account has an address, which you can think of like a bank account number. It’s a unique identifier that points to an account on the blockchain and it looks like this: 
+
+```css
+tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj
+```
+
