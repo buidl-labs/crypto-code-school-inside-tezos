@@ -1,5 +1,5 @@
 ---
-title: Integers
+title: Scaffolding a basic contract in Smartpy
 chapter: Chapter 4
 slug: chapter-04
 editor:
@@ -7,64 +7,61 @@ editor:
   startingCode: |
     import smartpy as sp
 
-    class Plant(sp.Contract):
-        def __init__(self, name):
-            # Initialize state variables
-            self.init(name = name) 
-
+    # Add Plant class below: 
+  
   answer: |  
     import smartpy as sp
 
+    # Add Plant class below:
     class Plant(sp.Contract):
-        def __init__(self, name):
-            # Initialize state variables
-            self.init(name = name, range = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100))
+        pass
 ---
 
+### Intro: 
 
-Continuing with adding attributes to our `Plant` contract, this chapter deals with adding more exciting attributes. Namely we will be adding the following attributes: 
+In this chapter, we will start to lay down the foundation of our `Plant` contract! 
 
-1. Health: an indicator of the current health of the plant. 
-   * Ranges from 0 to 100 where 0 = dead and 100 = full health. 
-2. Attack: a qualitative indicator of plant's attack capability for comparing various plants. 
-3. Defense:  a qualitative indicator of plant's defense capability for comparing various plants.
-4. Growth Rate: rate at which the plant evolves. 
+Throughout the course, you will be evolving your `Plant` by building in abilities that help it in fighting zombies! 
 
 
-Since these attributes will be defined using integers, we will learn how to handle them inside SmartPy. 
 
+## Study Time: 
 
-## How SmartPy handles integers: 
+### What is a Smartpy contract? 
+A SmartPy contract is the fundamental component of any smart contract application that you build using Smartpy. 
 
-<br /> 
-There are three types of integers in SmartPy: 
+All variables and functions belong to a contract, and this will be the starting point of all your projects/DApps.
 
- - sp.TInt: The type of integer values, e.g: `sp.int(-42)`.
- - sp.TNat: The type of non-negative integer values, e.g: `sp.nat(42)`.
- - sp.TIntOrNat: The type of integer values whose type is still undetermined between sp.TInt or sp.TNat, eg: `sp.intOrNat(42)`. 
-
-
-An example of defining an state variable with an non-negative integer: 
+### Show me an example: 
+A basic contract definition for the contract `Bank` would look like this:
 
 ```python
-    self.data.age == sp.nat(42)
+import smartpy as sp
+
+class Bank(sp.Contract):
+    pass
 ```
 
+Explaining the code above: 
 
-## Put it to code:
+1. We first import the `smartpy` library as `sp` as we did in the previous chapter. 
+2. We use the Python `class` to define the basic structure of the `Bank` contract. 
+3. To mold this `class` into a smart contract, we use the concept of class inheritance to inherit from `sp.Contract`. 
 
-<br /> 
-
-1. Declare the following state variables with type `sp.TNat`: 
-    * `health`
-    * `attack` 
-    * `defense`, 
-    * `growth_rate` 
-2. Initialize all the above with the values of 10, 10, 10, 100 respectively.
+Think of this as `smartpy` library lending smart contract superpowers to a basic Python's `class`!
 
 
-<br /> 
+### Python concept refresher: 
 
-When you're finished: 
-* Click on "Check" to check your submission with the correct answer. 
-* Click on "Show Answer" in case you get stuck. 
+Helpul links that may help in refreshing your Python concepts: 
+
+1. [Python classes.](https://docs.python.org/3/tutorial/classes.html)
+2. [Python class inheritance.](https://docs.python.org/3/tutorial/classes.html#inheritance)
+
+
+## #buidl-ing time:
+Let us create the our `Plant`'s basic contract structure by doing the following: 
+
+1. Declare a `class` named `Plant`.
+2. Extend the `Plant` class by inheriting `sp.Contract` from the `smartpy` library.
+

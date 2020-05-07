@@ -254,6 +254,17 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                   }}
                 />
               ),
+              li: props => (
+                <li
+                  {...props}
+                  style={{
+                    marginBottom: 10,
+                    marginTop: 10,
+                    lineHeight: '1.75rem',
+                    color: '#333',
+                  }}
+                />
+              ),
               h2: props => (
                 <h2
                   {...props}
@@ -276,6 +287,18 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                     marginBottom: 16,
                     color: '#000',
                     fontSize: '1.25rem',
+                    fontWeight: 500,
+                  }}
+                />
+              ),
+              h4: props => (
+                <h4
+                  {...props}
+                  style={{
+                    marginTop: 30,
+                    marginBottom: 16,
+                    color: '#000',
+                    fontSize: '1.1rem',
                     fontWeight: 500,
                   }}
                 />

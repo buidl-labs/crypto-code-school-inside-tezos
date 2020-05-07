@@ -46,7 +46,7 @@ export const OverviewContainer = styled.div`
     padding: 1rem;
 
     p {
-      font-size: 1.3rem;
+      font-size: 1rem;
       line-height: 175%;
       color: #ded9d9;
       font-family: Roboto;
@@ -92,7 +92,7 @@ export const OverviewContainer = styled.div`
         a {
           display: block;
           text-decoration: none;
-          font-size: 1.5rem;
+          font-size: 1rem;
           font-family: Roboto;
           color: #ffffff;
           margin-top: 1rem;

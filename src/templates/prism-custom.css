@@ -66,6 +66,10 @@ code.language-pythontext {
   color: #795da3;
 }
 
+table {
+  margin-bottom: 20px;
+}
+
 table tr th {
   background: #222;
   color: #fff;
