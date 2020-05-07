@@ -245,7 +245,12 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
               h2: props => (
                 <h2
                   {...props}
-                  style={{ marginTop: 40, marginBottom: 5, color: '#2e2d2d' }}
+                  style={{
+                    marginTop: 40,
+                    marginBottom: 5,
+                    color: '#2e2d2d',
+                    textDecoration: 'underline',
+                  }}
                 />
               ),
             }}
