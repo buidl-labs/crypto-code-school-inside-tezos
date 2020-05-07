@@ -16,18 +16,29 @@ class Plant(sp.Contract):
     pass`;
 
 // state variable
-export const l3 = `import smartpy as sp
+export const l3 = `
+import smartpy as sp
 
 class Plant(sp.Contract):
-    def __init__(self, name):
-        self.init(name = name)`;
+    def __init__(self):
+        self.init(name = "peashooter")
+`;
 
 //integers
-export const l4 = `import smartpy as sp
+export const l4 = `
+import smartpy as sp
 
 class Plant(sp.Contract):
-    def __init__(self, name):
-        self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100))`;
+    def __init__(self):
+        self.init(name = "peashooter")
+    
+
+@sp.add_test(name = "Test Plant Contract")
+def test():
+    scenario = sp.test_scenario()
+    plant_test_contract = Plant()
+    scenario += plant_test_contract
+`;
 
 // booleans
 export const l5 = `import smartpy as sp
@@ -244,6 +255,7 @@ var errors = {
   22: 'invalid assignment of state variable',
 };
 
+//TODO: add line by validation for solution
 var missing = {
   'import smartpy as sp': 'import statement missing or invalid',
 
@@ -253,10 +265,7 @@ var missing = {
   'def __init__(self):':
     'class initialization missing or invalid or `self` parameter is not provided',
 
-  'def __init__(self, name):':
-    'class initialization require a `name & self`  parameter',
-
-  'self.init(name = name)':
+  'self.init(name = "peashooter")':
     'name of type `sp.TString` initialization is missing or is invalid',
 
   'self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100))':
@@ -407,7 +416,7 @@ export function checkCode(get, lesson) {
   // console.log("USER2", user)
 
   // removing new lines and white spaces from the user's code
-  var userArray = user.filter(function (entry) {
+  var userArray = user.filter(function(entry) {
     return entry.trim() !== '';
   });
 
@@ -465,18 +474,60 @@ export function checkCode(get, lesson) {
 
   // updating user array and removing invalid comments as well
   // var userArray = userArray.filter(x => !x.trim().includes('//', 0));
-  var userRemoveInvalidCommentArray = userArray.filter(x => !x.trim().includes('//', 0));
-
+  var userRemoveInvalidCommentArray = userArray.filter(
+    x => !x.trim().includes('//', 0),
+  );
 
   // dict = {withoutSpace : withspaceOriginal}
-  userArray = {}
+  userArray = {};
 
   // replacing all spaces in lines
   for (var a in userRemoveInvalidCommentArray) {
-    userArray[userRemoveInvalidCommentArray[a].split(` , `).join(`,`).split(`, `).join(`,`).split(` ,`).join(`,`).split(` ~ `).join(`~`).split(`~ `).join(`~`).split(` ~`).join(`~`).split(` : `).join(`:`).split(`: `).join(`:`).split(` :`).join(`:`).split(`( `).join(`(`).split(` )`).join(`)`).split(` = `).join(`=`).split(`= `).join(`=`).split(` =`).join(`=`).split(` ' `).join(`'`).split(` '`).join(`'`).split(`' `).join(`'`).split(` " `).join(`"`).split(` "`).join(`"`).split(`" `).join(`"`)] = userRemoveInvalidCommentArray[a]
+    userArray[
+      userRemoveInvalidCommentArray[a]
+        .split(` , `)
+        .join(`,`)
+        .split(`, `)
+        .join(`,`)
+        .split(` ,`)
+        .join(`,`)
+        .split(` ~ `)
+        .join(`~`)
+        .split(`~ `)
+        .join(`~`)
+        .split(` ~`)
+        .join(`~`)
+        .split(` : `)
+        .join(`:`)
+        .split(`: `)
+        .join(`:`)
+        .split(` :`)
+        .join(`:`)
+        .split(`( `)
+        .join(`(`)
+        .split(` )`)
+        .join(`)`)
+        .split(` = `)
+        .join(`=`)
+        .split(`= `)
+        .join(`=`)
+        .split(` =`)
+        .join(`=`)
+        .split(` ' `)
+        .join(`'`)
+        .split(` '`)
+        .join(`'`)
+        .split(`' `)
+        .join(`'`)
+        .split(` " `)
+        .join(`"`)
+        .split(` "`)
+        .join(`"`)
+        .split(`" `)
+        .join(`"`)
+    ] = userRemoveInvalidCommentArray[a];
     // userArray[userRemoveInvalidCommentArray[a].substr(0,userRemoveInvalidCommentArray[a].length - userRemoveInvalidCommentArray[a].trimLeft().length) + userRemoveInvalidCommentArray[a].split(" ").join("")] = userRemoveInvalidCommentArray[a];
   }
-
 
   // console.log("USER", userArray);
   // --------------------------------
@@ -486,20 +537,60 @@ export function checkCode(get, lesson) {
 
   // removing new lines and white spaces from the correct code
   // var correctCodeArray = code.filter(function (entry) {
-  var correctCodeArrayWithSpace = code.filter(function (entry) {
+  var correctCodeArrayWithSpace = code.filter(function(entry) {
     return entry.trim() !== '';
   });
 
   // dict = {withoutSpace : withspaceOriginal}
-  var correctCodeArray = {}
+  var correctCodeArray = {};
 
   // replacing all spaces in lines
   for (var a in correctCodeArrayWithSpace) {
-    correctCodeArray[correctCodeArrayWithSpace[a].split(` , `).join(`,`).split(`, `).join(`,`).split(` ,`).join(`,`).split(` ~ `).join(`~`).split(`~ `).join(`~`).split(` ~`).join(`~`).split(` : `).join(`:`).split(`: `).join(`:`).split(` :`).join(`:`).split(`( `).join(`(`).split(` )`).join(`)`).split(` = `).join(`=`).split(`= `).join(`=`).split(` =`).join(`=`).split(` ' `).join(`'`).split(` '`).join(`'`).split(`' `).join(`'`).split(` " `).join(`"`).split(` "`).join(`"`).split(`" `).join(`"`)] = correctCodeArrayWithSpace[a];
+    correctCodeArray[
+      correctCodeArrayWithSpace[a]
+        .split(` , `)
+        .join(`,`)
+        .split(`, `)
+        .join(`,`)
+        .split(` ,`)
+        .join(`,`)
+        .split(` ~ `)
+        .join(`~`)
+        .split(`~ `)
+        .join(`~`)
+        .split(` ~`)
+        .join(`~`)
+        .split(` : `)
+        .join(`:`)
+        .split(`: `)
+        .join(`:`)
+        .split(` :`)
+        .join(`:`)
+        .split(`( `)
+        .join(`(`)
+        .split(` )`)
+        .join(`)`)
+        .split(` = `)
+        .join(`=`)
+        .split(`= `)
+        .join(`=`)
+        .split(` =`)
+        .join(`=`)
+        .split(` ' `)
+        .join(`'`)
+        .split(` '`)
+        .join(`'`)
+        .split(`' `)
+        .join(`'`)
+        .split(` " `)
+        .join(`"`)
+        .split(` "`)
+        .join(`"`)
+        .split(`" `)
+        .join(`"`)
+    ] = correctCodeArrayWithSpace[a];
     // correctCodeArray[correctCodeArrayWithSpace[a].substr(0,correctCodeArrayWithSpace[a].length - correctCodeArrayWithSpace[a].trimLeft().length) + correctCodeArrayWithSpace[a].split(" ").join("")] = correctCodeArrayWithSpace[a];
   }
-
-
 
   // console.log("CODE", correctCodeArray);
   // length of the array of user's code
@@ -511,20 +602,18 @@ export function checkCode(get, lesson) {
   // list of lines (code) that user didn't write
   // var missingFromUser = correctCodeArray.filter(w => !userArray.includes(w));
   var missingFromUser = []; // it has code without space
-  for(a in correctCodeArray){
-    if(userArray[a] === undefined){
+  for (a in correctCodeArray) {
+    if (userArray[a] === undefined) {
       missingFromUser.push(a);
-    }
-    else{
-      continue
+    } else {
+      continue;
     }
   }
-
 
   if (
     missingFromUser.indexOf('        pass') === -1 &&
     _.countBy(correctCodeArrayWithSpace)['        pass'] >
-    _.countBy(userRemoveInvalidCommentArray)['        pass']
+      _.countBy(userRemoveInvalidCommentArray)['        pass']
     // _.countBy(correctCodeArray)['        pass'] >
     // _.countBy(userArray)['        pass']
   ) {
@@ -534,7 +623,7 @@ export function checkCode(get, lesson) {
   if (
     missingFromUser.indexOf('    @sp.entry_point') === -1 &&
     _.countBy(correctCodeArrayWithSpace)['    @sp.entry_point'] >
-    _.countBy(userRemoveInvalidCommentArray)['    @sp.entry_point']
+      _.countBy(userRemoveInvalidCommentArray)['    @sp.entry_point']
   ) {
     missingFromUser.push('    @sp.entry_point');
   }
@@ -550,12 +639,11 @@ export function checkCode(get, lesson) {
   // list of extra lines (code) thats user wrote
   // var extraInUser = userArray.filter(w => !correctCodeArray.includes(w));
   var extraInUser = []; // it has code without space
-  for(a in userArray){
-    if(correctCodeArray[a] === undefined){
+  for (a in userArray) {
+    if (correctCodeArray[a] === undefined) {
       extraInUser.push(a);
-    }
-    else{
-      continue
+    } else {
+      continue;
     }
   }
 
@@ -575,7 +663,7 @@ export function checkCode(get, lesson) {
   for (i in extraInUser) {
     if ((lesson === l11 || lesson === l7) && extraInUser[i].trim() === 'pass') {
       result[user.indexOf(userArray[extraInUser[i]]) + 1] =
-      // result[user.indexOf(extraInUser[i]) + 1] =
+        // result[user.indexOf(extraInUser[i]) + 1] =
         'Invalid statement, remove `pass and update the function with appropriate statement`';
       //console.log("RESULT", result);
     } else {
@@ -614,10 +702,8 @@ export function checkCode(get, lesson) {
 
     return FINAL_RESULT;
   } else {
-
     if (404 in result) {
-
-      RR = RR.filter(function (value) {
+      RR = RR.filter(function(value) {
         return value < 404;
       });
 
@@ -664,9 +750,7 @@ export function checkCode(get, lesson) {
       };
 
       return FINAL_RESULT;
-    }
-    else if (!(404 in result)) {
-
+    } else if (!(404 in result)) {
       var resFinal = [];
       var len = RR.length;
       for (var w = 0; w < len; w++) {

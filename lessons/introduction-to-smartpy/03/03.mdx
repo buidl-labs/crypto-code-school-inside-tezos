@@ -1,7 +1,8 @@
 ---
-title: Initialization of contract with storage
+title: Defining the initial storage of the contract
 chapter: Chapter 3
 slug: chapter-03
+filterBy: lesson-1
 editor:
   language: python
   startingCode: |
@@ -15,82 +16,53 @@ editor:
 
     class Plant(sp.Contract):
         # Code from below
-        def __init__(self, name):
-            self.init(name = name)
+        def __init__(self):
+            self.init(name = "peashooter")
 ---
 
-Great job! 
+Chapter Intro: 
 
-Now that we've got a basic `contract` for `Plant` down, we have the foundation ready to give the plant attributes like name, health, normal moves, special moves that give it the ability to fight with the zombies! 
+In this chapter, we will give our plant a name and store it inside the contract!
 
-Let us start small and give our plant a name first, before moving to the exciting attributes like special moves! 😉
+Let us break the above down to arrive at what concepts you will be learning: 
 
-In order to achieve our goal of giving plant the name, we need to learn
+1. “Give our plant a name” - we will need to learn about variables. In the space of smart contracts, variables are more commonly referred to as state variables. 
+2. “And store it inside the contract” - we will need to learn about the concept of contract storage.  
 
-1. how to initialize our `Plant` contract with a constructor? 
-1. how to pass a `name` variable to our constructor function?
+We will need to learn them in the reverse order since that is how the concepts relate with each other. 
+
+## Concepts we learn in this chapter: 
+
+<br/>
+
+### What is contract storage?
+Think of this as your contract’s personal database.
+
+### What are state variables? 
+State variables act as a single slot in the “contract storage”. These can be queried and altered by functions inside the contract, which you will be learning in TODO: add link here: <Chapter 9>
 
 
-```
-Todo: 
-Split initilization and variables into 2 parts. 
-```
-
-## What are state variables? 
-State variables are permanently stored in contract storage. This means they're written to the Tezos blockchain. Think of them like writing to a DB.
-
-Variables have types that determines the values that the variable can have and the operations that can be performed on it.
-
-Though one of the great benefits of using SmartPy in writing smart contracts is that SmartyPy does most of type inference under the hood. Just like in Python, most of the of the time there is no need to specify types while writing smart contracts using SmartPy. 
-
-In practice this means that information about an expression is gathered according to its usage. 
-
-For example, when somewhere in your contract you write: 
+## Show me an example:
 
 ```python
-    self.data.x == "abc"
-```
-SmartPy will automatically determine and remember that `self.data.x` is a `string`.
+import smartpy as sp
 
-
-## How to initialize our contract with state variables? 
-
-An example of constructor function: 
-
-```python
-class Shoe(sp.Contract):    
-    def __init__(self, brand):
-        self.init(brand = brand)
+class Bank(sp.Contract):
+    def __init__(self):
+        self.init(name = "World Bank")
 ```
 
+Explaining the code above: 
 
-Let's dig deep on what we are doing above: 
+1. We scaffold the `Bank` contract as we learnt in the previous chapter. 
+2. Next, we define an initialization method for `Bank` that determines the initial storage during contract origination. 
+3. _init_ calls self.init() which assigns `name`, a state variable, with “World Bank” and stores it inside the “contract storage”
 
-1. We define an initialization method for `HelloWorld` that determines the initial storage during contract origination. 
-2. `__init__()` accepts one argument, `brand` and calls `self.init()` to assign its value to the newly-created `brand` variable field. 
+## Coding time!:
+Now let us practice what we learned so far on our `Plant` contract`!
 
-```
-Todo + Feedback: 
-1. Explain type coercion? like name = sp.string(name)
-2. How best to explain types given people are from python background. 
-```
-
-## Put it to code: 
-
-<br /> 
-
-1. Declare an `__init__` function in the plant class to initialize the class. 
-2. Pass a parameter `name` in the initialization function. 
-3. Declare a state variable `name` and initialize it with the class parameter `name`. 
-
-<br /> 
-
-Note: 
-Since we know our intentions beforehand that we want to give the `Plant` a name which will be of type string, when the contract is initialized, SmartPy will automatically figure out that `name` is of type `sp.TString`. 
-
-
-When you're finished: 
-* Click on "Check" to check your submission with the correct answer. 
-* Click on "Show Answer" in case you get stuck. 
+Steps: 
+1. Define initialization function of your `Plant` contract. 
+2. Define `name` variable and initialize it’s value with “peashooter” since that is the name of the species of the plant that you are growing. 
 
 

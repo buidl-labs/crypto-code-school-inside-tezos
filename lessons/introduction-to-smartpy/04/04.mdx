@@ -1,70 +1,118 @@
 ---
-title: Integers
+title: Simulating initialization of contract with basic testing
 chapter: Chapter 4
 slug: chapter-04
+filterBy: lesson-1
 editor:
   language: python
   startingCode: |
     import smartpy as sp
 
     class Plant(sp.Contract):
-        def __init__(self, name):
-            # Initialize state variables
-            self.init(name = name) 
-
+        def __init__(self):
+            self.init(name = "peashooter") 
   answer: |  
     import smartpy as sp
 
     class Plant(sp.Contract):
-        def __init__(self, name):
-            # Initialize state variables
-            self.init(name = name, range = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100))
+    def __init__(self):
+        self.init(name = "peashooter")
+        
+ 
+    @sp.add_test(name = "Test Plant Contract")
+    def test():
+        scenario = sp.test_scenario()
+        plant_test_contract = Plant()
+        scenario += plant_test_contract
 ---
 
 
-Continuing with adding attributes to our `Plant` contract, this chapter deals with adding more exciting attributes. Namely we will be adding the following attributes: 
+## Chapter Intro:
 
-1. Health: an indicator of the current health of the plant. 
-   * Ranges from 0 to 100 where 0 = dead and 100 = full health. 
-2. Attack: a qualitative indicator of plant's attack capability for comparing various plants. 
-3. Defense:  a qualitative indicator of plant's defense capability for comparing various plants.
-4. Growth Rate: rate at which the plant evolves. 
+We know that testing is generally important while writing any kind of code. But with smart contracts - whose main use case is found in dealing with exchanging digital value be it in the form of money, property rights, agreements etc - bugs can result in major loss of funds or breach of trust! 
 
+Hence writing test code to supplement your smart contract is one of the most important concepts to learn! Testing also helps you simulate your smart contract - of how it would be used in action. 
 
-Since these attributes will be defined using integers, we will learn how to handle them inside SmartPy. 
+## Conceptual Overview:
 
+### Python concepts being used in chapter: 
+1. Decorator
 
-## How SmartPy handles integers: 
+### We will learn testing in 3 steps: 
 
-<br /> 
-There are three types of integers in SmartPy: 
+1. First we will add a test. 
+2. Then we will define a scenario for our test. 
+3. Then we will simulate initialization of a contract. 
 
- - sp.TInt: The type of integer values, e.g: `sp.int(-42)`.
- - sp.TNat: The type of non-negative integer values, e.g: `sp.nat(42)`.
- - sp.TIntOrNat: The type of integer values whose type is still undetermined between sp.TInt or sp.TNat, eg: `sp.intOrNat(42)`. 
-
-
-An example of defining an state variable with an non-negative integer: 
+### Adding a Test
+Tests in your smart contract are added by doing the following. 
 
 ```python
-    self.data.age == sp.nat(42)
+import smartpy as sp
+
+class Bank(sp.Contract):
+   ....
+    
+        
+@sp.add_test(name = "Test Bank Contract")
+def test():
+   ....
 ```
 
+Explaining the code above: 
 
-## Put it to code:
+1. As you can see, we add all the code for testing at the end of the contract. 
+2. We add a `@sp.add_test` decorator with a `name` variable to instruct the compiler that the code block after this will be used for testing. 
+3. We then follow up the `@sp.add_test` with `test` function definition. Inside this we will be writing the code to test our application.  
 
-<br /> 
+### Defining a scenario for our test: 
+Think of the times you have bet in the future and then you are calculating possible “scenarios” where you win. This is exactly what the intent behind using a scenario in with testing. A scenario let’s us create a boxed simulation environment where we can tinker with our smart contract.
 
-1. Declare the following state variables with type `sp.TNat`: 
-    * `health`
-    * `attack` 
-    * `defense`, 
-    * `growth_rate` 
-2. Initialize all the above with the values of 10, 10, 10, 100 respectively.
+We add a scenario to our test by doing the following: 
+
+```python
+@sp.add_test(name = "Test Bank Contract")
+def test():
+    scenario = sp.test_scenario()
+```
+
+Explaining the code above: 
+
+1. We call `sp.test_scenario` - a functionality offered by the `smartpy` library. 
+2. And we store the instance of the test scenario we created into `scenario` variable. 
+
+Simulating initialization: 
+
+```python
+@sp.add_test(name = "Test Bank Contract")
+def test():
+    scenario = sp.test_scenario()
+    
+    bank_test_contract =  Bank()
+    
+    scenario += bank_test_contract
+```
+
+Explaining the code above. 
+
+1. We need to add our contract to the simulation environment we had created before so that we can tinker with it. 
+2. To do the above, we first created a new initialized instance contract from our `Bank` class and stored it in `bank_test_contract`
+3. Then we add this instance to the scenario to drop our contract inside our simulation environment. 
 
 
-<br /> 
+You can also tinker around with the above code on Smartpy’s online IDE. Try running the test by clicking on the run button. 
 
-When you're finished: 
-* Click on "Check" to check your submission with the correct answer. 
-* Click on "Show Answer" in case you get stuck. 
+## Coding time!:
+
+Now let us practise what we learned so far on our `Plant` contract`: 
+
+1. Add a test with the name of “Test Plant Contract” using `@sp.add_test` decorator. 
+2. Then define a scenario by calling  `sp.test_scenario()`
+3. Initialize an instance of the `Plant` contract
+4. Add the initialized instance of the `Plant` contract to our scenario created in step 2. 
+
+
+
+
+
+
