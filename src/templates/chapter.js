@@ -317,6 +317,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           editorInputValue={editorInputValue}
           resetEditor={resetEditor}
           chapterCompletedSuccessfully={chapterCompletedSuccessfully}
+          chapterSolution={chapter.frontmatter.editor.answer}
         >
           <ControlledEditor
             height={`${editorHeight}`}

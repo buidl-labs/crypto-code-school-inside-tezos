@@ -195,6 +195,7 @@ const CloseIconContainer = styled.div`
   top: 0;
   right: 0;
   margin: 0.5rem;
+  height: 60px;
   :hover {
     cursor: pointer;
     background: rgba(255, 255, 255, 0.1);

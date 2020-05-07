@@ -41,6 +41,7 @@ function ChapterEditor({
   editorInputValue,
   resetEditor,
   chapterCompletedSuccessfully,
+  chapterSolution,
 }: Props) {
   const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
 
@@ -83,7 +84,7 @@ function ChapterEditor({
                   : `calc(100vh - (250px + 200px + 40px))`
               }`,
             );
-            const result = checkCode(editorInputValue, chapterIndex.current);
+            const result = checkCode(editorInputValue, chapterSolution);
             // console.log('result', result);
             updateValidation(result);
           }}
