@@ -1,5 +1,5 @@
 ---
-title: Scaffolding A Contract
+title: Scaffolding a basic contract in Smartpy
 chapter: Chapter 2
 slug: chapter-02
 editor:
@@ -17,31 +17,38 @@ editor:
         pass
 ---
 
-Starting with the absolute basics:
 
-The fundamental component of any smart contract application is a `contract`. All `variables` and `functions` belong to a `contract`, and this will be the starting point of all your projects/DApps.
+In this chapter, we will start to define our `Plant` contract which will serve as the incubation of the seed you got from the school. 
 
-An basic contract definition for the contract `HelloWorld` would look like this: 
+## What is a Smartpy contract? 
 
-An empty `contract` named `HelloWorld` would look like this:
+A SmartPy contract is the fundamental component of any smart contract application that you build using Smartpy. All variables and functions belong to a contract, and this will be the starting point of all your projects/DApps.
+
+## Show me an example: 
+
+A basic contract definition for the contract `Bank` would look like this:
+
 ```python
-class HelloWorld(sp.Contract):
+import smartpy as sp
+
+class Bank(sp.Contract):
     pass
 ```
 
-As you can see: 
-* we define a Python class and name it  `HelloWorld`. 
-* in brackets we inherit the `Contract` class from SmartPy library, the library that we imported in the previous chapter. 
+Explaining the code above: 
 
-This class will represent our smart contract and enclose all of the storage initialization, entry points.
+1. We first import the `smartpy` library as `sp` as we did in the previous chapter. 
+2. We use the Python `class` `to define the basic structure of the `Bank` contract. 
+3. To mold this `class` into a smart contract, we use the concept of class inheritance to inherit from `sp.Contract`. Think of this as giving smart contract superpowers to your code. 
 
 ## Put it to code: 
-After incubating the seed, the next step is create the basic structure of the cryto plant, which will be enhancing in the coming chapters. 
+Let us create the basic structure of the crypto plant, which will be evolving in the coming chapters!
 
-Steps: 
+Steps:
 
-1. Declare a `class` named `Plant`.
-2. Extend the `Plant` class by inheriting `Contract` class from `smartpy` library. 
+1. Declare a `class` named Plant.
+2. Extend the Plant class by inheriting `sp.Contract` from the `smartpy` library.
+ 
 
 <br />
 
