@@ -47,6 +47,19 @@ var missing = {
   'self.init(name = "peashooter")':
     'name of type `sp.TString` initialization is missing or is invalid',
 
+  pass: 'cannot have an empty function (add `pass`)',
+
+  '@sp.add_test(name = "Test Plant Contract")':
+    '@sp.add_test decorator missing or invalid',
+
+  'def test():': 'test function declaration error',
+  'scenario = sp.test_scenario()':
+    'invalid or missing  test scenario declaration',
+  'plant_test_contract = Plant()':
+    'invalid or missing Plant class initialization',
+  'scenario += plant_test_contract':
+    'invalid or missing plant contract assignment',
+
   // 'self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100))':
   //   'state variables initialization is missing or is invalid',
 
@@ -73,8 +86,6 @@ var missing = {
   //   'invalid or missing statement in attack function',
   // 'self.data.player[sp.sender].attack += params.attack':
   //   'invalid or missing statement in attack function',
-
-  pass: 'cannot have an empty function (add `pass`)',
 
   // 'def defense(self):': 'defense function declaration error',
   // 'def defense(self, params):': 'defense function declaration error',
