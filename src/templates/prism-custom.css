@@ -1,45 +1,67 @@
+* {
+  line-height: 1.75rem;
+  letter-spacing: 0.025em;
+}
+
+/**
+ * add modified color all the css template code ```css <code> ```
+ */
+.gatsby-highlight code[class*='language-pythoncss'] {
+  color: #a71d5d;
+}
+
+/**
+ * update all of code elements style i.e inline code block created using ``
+ */
+code.language-pythontext {
+  color: #333;
+  padding: 0.2em 0.5em !important;
+  font-size: 85%;
+  background-color: #f7f7f7 !important;
+  border-radius: 3px;
+}
+
 /**
  * Add back the container background-color, border-radius, padding, margin
  * and overflow that we removed from <pre>.
  */
 .gatsby-highlight {
-  background-color: #f1f1f1;
-  border-radius: 0.3em;
-  margin: 0.5em 0;
-  padding: 1em;
-  overflow-y: auto;
-  overflow-x: auto;
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f7f7f7;
+  border-radius: 3px;
+  margin-bottom: 16px;
 }
 
 /**
- * Remove the default PrismJS theme background-color, border-radius, margin,
- * padding and overflow.
- * 1. Make the element just wide enough to fit its content.
- * 2. Always fill the visible space in .gatsby-highlight.
- * 3. Adjust the position of the line numbers
- */
+   * Remove the default PrismJS theme background-color, border-radius, margin,
+   * padding and overflow.
+   * 1. Make the element just wide enough to fit its content.
+   * 2. Always fill the visible space in .gatsby-highlight.
+   * 3. Adjust the position of the line numbers
+   */
 .gatsby-highlight pre[class*='language-'] {
   background-color: transparent;
   margin: 0;
   padding: 0;
-  overflow-y: auto;
-  overflow-x: auto;
+  overflow: initial;
   float: left; /* 1 */
   min-width: 100%; /* 2 */
 }
 
+/* token python keywords */
 .token.keyword {
-  color: #ea4192;
+  color: #a71d5d;
 }
 
-code[class*='language-'],
-pre[class*='language-'] {
-  font-family: Inconsolata, monospace;
-  font-size: 1.2rem;
-  line-height: 1.75rem;
-}
-
-/* .token.function, */
+/* token class name*/
 .token.class-name {
-  color: #29cb6a;
+  color: #795da3;
+}
+
+/* token.function */
+.token.function {
+  color: #795da3;
 }
