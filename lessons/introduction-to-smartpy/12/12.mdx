@@ -1,5 +1,5 @@
 ---
-title: Lists
+title: Dealing with addresses in Smartpy
 chapter: Chapter 12
 slug: chapter-12
 editor:
@@ -8,68 +8,213 @@ editor:
     import smartpy as sp
 
     class Plant(sp.Contract):
-        def __init__(self):
-            # Initialize state variable
-            self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True))
     
-        @sp.entry_point
-        def attack(self, params):
-            self.data.player[sp.sender].attack += params.attack
+        # Pass manager_address as argument to the initialization function
+        def __init__(self, life_state):
+            
+            self.init(
+                # Add plant_manager variable below
+            
+                name = "peashooter",
+                is_alive = life_state,
+                
+                coordinate_x = sp.int(0), 
+                coordinate_y = sp.nat(0), 
+                
+                bullet_seed_count = 5,
 
+                record_zombie_kills = {
+                    "simple_zombie": sp.nat(0), 
+                    "boss_zombie": sp.nat(0), 
+                }
+                
+                )
+            
         @sp.entry_point
-        def defense(self, params):
-            self.data.player[sp.sender].defense += params.defense
-
+        def change_name(self, params): 
+            self.data.name = params.new_name
+        
         @sp.entry_point
-        def assignChararter(self, params):
-            self.data.player[sp.sender] = self.data.stat
-            self.data.player[sp.sender].name = params.name
+        def move_horizontally(self, update_to):
+            self.data.coordinate_x += update_to
+        
+        @sp.entry_point
+        def move_vertically(self, update_to):
+            self.data.coordinate_y += update_to
 
-        # Code from below
+            
+        @sp.entry_point
+        def shoot_zombie(self, zombie_type):   
+            self.data.bullet_seed_count -= 1
+            
+            self.data.record_zombie_kills[zombie_type] += 1
+        
+        
+            
+    @sp.add_test(name = "Test shooting")
+    def test():
+        scenario = sp.test_scenario()
+        
+        ## Define my_address variable below
+        ## and give it the address value of tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj
+        
+        ## Pass my_address as value to manager_address and then use it to invoke the class
+        plant_test_contract =  Plant(life_state = True)
+    
+        
+        scenario += plant_test_contract
+        
+        scenario += plant_test_contract.change_name(new_name = "punky peashooter")
+        
+        scenario.verify(plant_test_contract.data.is_alive == True)
+        
+        scenario += plant_test_contract.move_horizontally(2)
+        
+        scenario += plant_test_contract.move_vertically(1)
+        
+        scenario += plant_test_contract.shoot_zombie("simple_zombie")
+        
+        scenario += plant_test_contract.shoot_zombie("boss_zombie")
+
 
   answer: |  
     import smartpy as sp
 
     class Plant(sp.Contract):
-        def __init__(self):
-            # Initialize state variable            
-            self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True, special_moves = []))
+    
+        # Pass manager_address as argument to the initialization function
+        def __init__(self, manager_address, life_state):
+            
+            self.init(
+                # Add plant_manager variable below
+                plant_manager = manager_address,
+                name = "peashooter",
+                is_alive = life_state,
+                
+                coordinate_x = sp.int(0), 
+                coordinate_y = sp.nat(0), 
+                
+                bullet_seed_count = 5,
 
+                record_zombie_kills = {
+                    "simple_zombie": sp.nat(0), 
+                    "boss_zombie": sp.nat(0), 
+                }
+                
+                )
+            
         @sp.entry_point
-        def attack(self, params):
-            self.data.player[sp.sender].attack += params.attack
+        def change_name(self, params): 
+            self.data.name = params.new_name
+        
+        @sp.entry_point
+        def move_horizontally(self, update_to):
+            self.data.coordinate_x += update_to
+        
+        @sp.entry_point
+        def move_vertically(self, update_to):
+            self.data.coordinate_y += update_to
 
+            
         @sp.entry_point
-        def defense(self, params):
-            self.data.player[sp.sender].defense += params.defense
-
-        @sp.entry_point
-        def assignChararter(self, params):
-            self.data.player[sp.sender] = self.data.stat
-            self.data.player[sp.sender].name = params.name
-
-        # Code from below
-        @sp.entry_point
-        def createMove(self, params):
-            self.data.player[sp.sender].special_moves = params.moves
+        def shoot_zombie(self, zombie_type):   
+            self.data.bullet_seed_count -= 1
+            
+            self.data.record_zombie_kills[zombie_type] += 1
+        
+        
+            
+    @sp.add_test(name = "Test shooting")
+    def test():
+        scenario = sp.test_scenario()
+        
+        ## Define my_address variable below
+        ## and give it the address value of tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj
+        my_address = sp.address("tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj")
+        
+        ## Pass my_address as value to manager_address and then use it to invoke the class
+        plant_test_contract =  Plant(manager_address = my_address, life_state = True)
+        
+        scenario += plant_test_contract
+        
+        scenario += plant_test_contract.change_name(new_name = "punky peashooter")
+        
+        scenario.verify(plant_test_contract.data.is_alive == True)
+        
+        scenario += plant_test_contract.move_horizontally(2)
+        
+        scenario += plant_test_contract.move_vertically(1)
+        
+        scenario += plant_test_contract.shoot_zombie("simple_zombie")
+        
+        scenario += plant_test_contract.shoot_zombie("boss_zombie")
 ---
 
-Lists are the collection of object/values which are of same type in SmartPy.
+### Intro:
 
-List in SmartPy are of type sp.TList but are initialized in the same manner as in python.
-There is no array in SmartPy because they are missing in Michelson, we use maps instead.
-example:
-`list = []`
-Values can be added to the list by using `push` function
+In Chapter 2,  we read that a blockchain is made up of accounts and each account has an address serving as a unique identifier. 
 
-Example:
-`list.push(value)`
-In your contract, list will be used to store all the attacks of your plant which will create a special move.
+The unique identifier points to an account on the blockchain and it looks like this: 
 
-## Put it to code
+```css
+tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj
+```
 
-1) declare an empty list `special_moves` inside the stat record
+In this chapter we are going to learn how `smartpy` handles addresses under the hood. In the later half of the chapter, we will add the ability to add ownership rights to our plant! 
 
-`special_moves = []`
+## Study time: 
 
-2) Create a callable function `createMove` which will take a list of `sp.TPair` type and name it `moves` as parameter and will store that list in `special_moves`.
+Addresses can be of two types: 
+
+1. An address of a user account eg: address of your tezos wallet which you use to transfer XTZ to your friends. 
+2. An address of a smart contract eg: address of your `Plant` contract. 
+
+
+Addresses are represented by type `sp.TAddress` in `smartpy`. 
+
+```python
+## plant_manager is a variable 
+## that stores the address of the user 
+## who manages the plant. 
+
+my_address = sp.address("tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj")
+
+self.init(plant_manager = my_address)
+
+## Update plant_manager value 
+## in case you decide to sell your plant
+self.data.plant_manager = sp.address("tz1dFyuNkiSabQrU1ie9yTKbiTje3YbuXjX1")
+
+```
+
+
+Notes: 
+
+1. Since addresses are fundamentally string values, we call `sp.address` on an address string to explicitly tell the compiler that this is an address value, and not a string. 
+
+
+
+## buidl-ing time:
+
+#### New feature request!
+
+In our current  `Plant` contract implementation, there is no way to tell that you are the maker and manager of this `Plant`. 
+
+You are spending so much time evolving the plant’s abilities, that you had forgotten about this tiny but crucial detail! 
+
+
+#### Step by step walkthrough: 
+ 
+1. Add a `plant_manager` state variable to the contract's storage that will hold the address of the owner. 
+
+2. Pass `manager_address` as argument to the initialization function and assign it to `plant_manager`
+ 
+
+
+#### Testing our code: 
+
+1. Define `my_address` variable and give it the address value of `tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj`
+
+2. Pass `my_address` as value to `manager_address` function argument and then use it to invoke the `Plant` contract. 
+    
+
