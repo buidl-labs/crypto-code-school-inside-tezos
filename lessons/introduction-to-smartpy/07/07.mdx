@@ -2,7 +2,9 @@
 title: Creating a basic entry point function
 chapter: Chapter 7
 slug: chapter-07
+filterBy: lesson-1
 editor:
+  showEditor: true
   language: python
   startingCode: |
     import smartpy as sp
@@ -11,18 +13,15 @@ editor:
     def __init__(self):
         self.init(name = "peashooter")
     
-        ## Add change_name entry function below
+        # Add change_name entry function below
         
             
     @sp.add_test(name = "Testing giving plant a new name")
     def test():
         scenario = sp.test_scenario()
-        
         plant_test_contract =  Plant()
-        
         scenario += plant_test_contract
-        
-        ## Test change_name function
+        # Test change_name function below
 
   answer: |  
     import smartpy as sp
@@ -31,7 +30,7 @@ editor:
     def __init__(self):
         self.init(name = "peashooter")
     
-        ## Add change_name entry function below
+        # Add change_name entry function below
         @sp.entry_point
         def change_name(self, params): 
             self.data.name = params.new_name
@@ -40,12 +39,9 @@ editor:
     @sp.add_test(name = "Testing giving plant a new name")
     def test():
         scenario = sp.test_scenario()
-        
         plant_test_contract =  Plant()
-        
         scenario += plant_test_contract
-        
-        ## Test change_name function
+        # Test change_name function below
         scenario += plant_test_contract.change_name(new_name = "funky peashooter")
 ---
 

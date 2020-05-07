@@ -53,13 +53,24 @@ var missing = {
     '@sp.add_test decorator missing or invalid',
 
   'def test():': 'test function declaration error',
+
   'scenario = sp.test_scenario()':
     'invalid or missing  test scenario declaration',
+
   'plant_test_contract = Plant()':
     'invalid or missing Plant class initialization',
+
   'scenario += plant_test_contract':
     'invalid or missing plant contract assignment',
 
+  '@sp.entry_point': '@sp.entry_point decorator missing or invalid',
+
+  'def change_name(self, params):': 'change_name function declaration error',
+
+  'self.data.name = params.new_name': 'invalid or missing name assignment',
+
+  'scenario += plant_test_contract.change_name(new_name = "funky peashooter")':
+    'invalid or missing change_name entry point function initialization',
   // 'self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100))':
   //   'state variables initialization is missing or is invalid',
 
@@ -126,8 +137,8 @@ var missing = {
 
 /**
  *
- * @param {*} get --> value
- * @param {*} lesson --> current lesson number
+ * @param {*} get --> user input value
+ * @param {*} lesson --> current chapter solution
  * @returns {} {
  *  success: true/false
  *  error: `result[404][0] "at line" result[0].key(line number)`
@@ -407,11 +418,11 @@ export function checkCode(get, lesson) {
     }
   }
 
-  console.log('USER ARRAY', userArray);
-  console.log('CORRECT ARRAY', correctCodeArray);
+  // console.log('USER ARRAY', userArray);
+  // console.log('CORRECT ARRAY', correctCodeArray);
 
-  console.log('MISSING', missingFromUser);
-  console.log('EXTRA', extraInUser);
+  // console.log('MISSING', missingFromUser);
+  // console.log('EXTRA', extraInUser);
 
   //l9 get pass
   // if (lesson === l9) {
@@ -557,3 +568,5 @@ export function checkCode(get, lesson) {
   //     return result;
   // }
 }
+
+//Default error message: Error: Unexpected identifier at line x
