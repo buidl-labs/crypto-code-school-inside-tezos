@@ -1,5 +1,5 @@
 ---
-title: Address
+title: Dealing with maps in Smartpy
 chapter: Chapter 11
 slug: chapter-11
 editor:
@@ -8,64 +8,212 @@ editor:
     import smartpy as sp
 
     class Plant(sp.Contract):
-        def __init__(self):
-            self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True))
 
-        @sp.entry_point
-        def attack(self, params):
-            # Update the function
-            pass
+        def __init__(self, life_state):
+            
+            self.init(
+                name = "peashooter",
+                is_alive = life_state,
+                
+                coordinate_x = sp.int(0), 
+                coordinate_y = sp.nat(0), 
+                
+                ## Add bullet_seed_count with 5 bullets:
+                
+                ## Add record_zombie_kills below:
+            )
+            
+            @sp.entry_point
+            def change_name(self, params): 
+                self.data.name = params.new_name
+            
+            @sp.entry_point
+            def move_horizontally(self, update_to):
+                self.data.coordinate_x += update_to
+            
+            @sp.entry_point
+            def move_vertically(self, update_to):
+                self.data.coordinate_y += update_to
 
-        @sp.entry_point
-        def defense(self, params):
-            # Update the function
-            pass
+                
+            ## Add shoot_zombie function below
+            @sp.entry_point
+            def shoot_zombie(self, zombie_type): 
+                
+                ## Reduce bullet_seed_count by 1
+                
+                ## Use zombie_type as key to access it's value 
+                ## and then increase it by 1
+        
+            
+    @sp.add_test(name = "Test shooting")
+    def test():
+        scenario = sp.test_scenario()
+        
+        plant_test_contract =  Plant(life_state = True)
+        
+        scenario += plant_test_contract
+        
+        scenario += plant_test_contract.change_name(new_name = "punky peashooter")
+        
+        scenario.verify(plant_test_contract.data.is_alive == True)
+        
+        scenario += plant_test_contract.move_horizontally(2)
+        
+        scenario += plant_test_contract.move_vertically(1)
+        
+        ## Use shoot_zombie to kill 1 simple zombies and 1 boss zombie 
+    
 
-        @sp.entry_point
-        def assignChararter(self, params):
-            self.data.player[params.sender] = self.data.stat
-            self.data.player[params.sender].name = params.name
 
   answer: |  
     import smartpy as sp
 
     class Plant(sp.Contract):
-        def __init__(self):
-            self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True))
-
+        
+        def __init__(self, life_state):
+            
+            self.init(
+                name = "peashooter",
+                is_alive = life_state,
+                
+                coordinate_x = sp.int(0), 
+                coordinate_y = sp.nat(0), 
+                
+                ## Add bullet_seed_count with 5 bullets:
+                bullet_seed_count = 5,
+                
+                ## Add record_zombie_kills below:
+                record_zombie_kills = {
+                    "simple_zombie": sp.nat(0), 
+                    "boss_zombie": sp.nat(0), 
+                }
+                
+                )
+            
         @sp.entry_point
-        def attack(self, params):
-            # Update the function
-            self.data.player[sp.sender].attack += params.attack
-
+        def change_name(self, params): 
+            self.data.name = params.new_name
+        
         @sp.entry_point
-        def defense(self, params):
-            # Update the function
-            self.data.player[sp.sender].defense += params.defense
-
+        def move_horizontally(self, update_to):
+            self.data.coordinate_x += update_to
+        
         @sp.entry_point
-        def assignChararter(self, params):
-            self.data.player[sp.sender] = self.data.stat
-            self.data.player[sp.sender].name = params.name
+        def move_vertically(self, update_to):
+            self.data.coordinate_y += update_to
+
+            
+        ## Add shoot_zombie function below
+        @sp.entry_point
+        def shoot_zombie(self, zombie_type): 
+            
+            ## Reduce bullet_seed_count by fire_shot_count
+            self.data.bullet_seed_count -= 1
+            
+            ## Record the zombie that was shot
+            self.data.record_zombie_kills[zombie_type] += 1
+        
+        
+    @sp.add_test(name = "Test shooting")
+    def test():
+        scenario = sp.test_scenario()
+        
+        plant_test_contract =  Plant(life_state = True)
+        
+        scenario += plant_test_contract
+        
+        scenario += plant_test_contract.change_name(new_name = "punky peashooter")
+        
+        scenario.verify(plant_test_contract.data.is_alive == True)
+        
+        scenario += plant_test_contract.move_horizontally(2)
+        
+        scenario += plant_test_contract.move_vertically(1)
+        
+        ## Use shoot_zombie to kill 1 simple zombies and 1 boss zombie 
+        scenario += plant_test_contract.shoot_zombie("simple_zombie")
+        
+        scenario += plant_test_contract.shoot_zombie("boss_zombie")
 ---
 
-`sp.sender` is a global variable that is availble to all function.
+### Intro: 
+Let us quickly understand how maps are handled under the hood in Smartpy! 
 
-It is of type `sp.TAddress` and it refers to the address of the user who is calling the function.
+In the later half of the chapter, you will adding the ability to shoot as well as the ability to record zombie kills! 
 
-Example:
+
+## Study Time: 
+
+### Maps:
+
+Maps are containers that store elements formed by a combination of a key and a mapped value. An example: 
+
 ```python
-@sp.entry_point
-def makeOwner():
-    isOwner[sp.sender] = True
-# if `tz1234` calls this function,
-# then he will become the owner.    
+{“a”: 1, “b”: 2} 
 ```
 
-## Put it to code
+You might recognize the familiarity with Python’s [dictionaries](https://docs.python.org/3/tutorial/datastructures.html#dictionaries). 
 
-1) remove `params.sender` from `assignCharacter` function.
+Maps are represented by type `sp.TMap(key, value)` in Smartpy. 
 
-2) use `sp.sender` to assign character to the function caller.
+```python
+## record_zombie_kills is a variable that records your kill count for various types of zombies. 
+self.init(
+            record_zombie_kills = {
+                    "simple_zombie": sp.nat(0), 
+                    "boss_zombie": sp.nat(0)
+            }
+         )
 
-3) Also update the previously defined `attack` & `defense` functions in the same manner.
+## Update simple_zombie_kill_count by 1. 
+self.data.record_zombie_kills["simple_zombie"] += 1  
+
+## You can also explicitly give map type by doing the following:
+self.init(record_zombie_kills = sp.map({...}) )
+```
+
+
+
+Notes: 
+
+1. Since we know beforehand that kill counts cannot be negative, kill counts are given the type `sp.TNat` using `sp.nat`
+2. As you can see, map is a container data type that can hold simple data types like strings, int, boolean etc. 
+3. By that logic, the inferred type of `record_zombie_kills` is  `sp.TMap(sp.TString, sp.TNat)`
+5. You can read more in depth about how Smartpy handles maps [here](https://smartpy.io/demo/reference.html#_maps_and_big_maps). 
+
+
+
+ 
+
+## #buidl-ing time:
+
+#### New Feature request:
+
+Your `Plant` seems to be missing the most important ability: the ability to kill! Without it your plant is as good as dead 💀
+
+Let’s also add the ability to record zombie kills. This is going to be important to analyze how your `Plant` is fairing in respect to other `Plant`'s in the world. 
+
+ 
+
+#### Step-by-step walkthrough: 
+
+1. Add `bullet_seed_count ` to our contract's storage and initialize with 5 bullets. 
+2. Add `record_zombie_kills` to our contract's storage and initialize with: 
+    * key `simple_zombie` and it's value as 0 of type `sp.TNat`
+
+    * key `boss_zombie` and it's value as 0 of type `sp.TNat`
+
+3. Complete the `shoot_zombie` function's code by adding code: 
+    * to reduce `bullet_seed_count` by 1
+    * use `zombie_type` argument as key to access it's value in `record_zombie_kills` map and increase it by 1. 
+
+
+ 
+
+#### Testing our code:
+
+Let us test our `shoot_zombie` function by  shoot 2 bullet seeds, 1 aimed at simple zombie and 1 aimed towards boss zombie respectively: 
+
+1. Call `shoot_zombie` and pass it the value of `"simple_zombie"` 
+2. Call `shoot_zombie` and pass it the value of `"boss_zombie"` 

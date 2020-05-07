@@ -11,7 +11,7 @@ editor:
     def __init__(self):
         self.init(name = "peashooter")
     
-    ## Add change_name entry function below
+        ## Add change_name entry function below
         
             
     @sp.add_test(name = "Testing giving plant a new name")
@@ -31,10 +31,10 @@ editor:
     def __init__(self):
         self.init(name = "peashooter")
     
-    ## Add change_name entry function below
-    @sp.entry_point
-    def change_name(self, params): 
-        self.data.name = params.new_name
+        ## Add change_name entry function below
+        @sp.entry_point
+        def change_name(self, params): 
+            self.data.name = params.new_name
         
             
     @sp.add_test(name = "Testing giving plant a new name")

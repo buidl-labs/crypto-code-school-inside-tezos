@@ -1,5 +1,5 @@
 ---
-title: Records
+title: Dealing with string and boolean types in Smartpy
 chapter: Chapter 9
 slug: chapter-09
 editor:
@@ -8,55 +8,157 @@ editor:
     import smartpy as sp
 
     class Plant(sp.Contract):
-        # Update contract initialization
-        def __init__(self, name):
-            # Update state variables
-            self.init(name = name, growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True, power_move = sp.pair("Bullet Seed", 95))
+        
+        #2. Add life_state as an argument to the the __init__ function:
+        def __init__(self, ):
+            self.init(
+                name = "peashooter",
+                #1. add is_alive state variable beneath
+                
+                #3.^Give is_alive the value of life_state
 
+                )
+            
         @sp.entry_point
-        def attack(self, params):
-            # Update the function
-            self.data.attack += params.attack
+        def change_name(self, params): 
+            self.data.name = params.new_name
+        
+            
+    @sp.add_test(name = "Test whether plant is alive or not")
+    def test():
+        scenario = sp.test_scenario()
+        
+        #4. Pass life_state = True to `Plant`’s class invocation:
+        plant_test_contract =  Plant()
+        
+        scenario += plant_test_contract
 
-        @sp.entry_point
-        def defense(self, params):
-            # Update the function
-            self.data.defense += params.defense
+        scenario += plant_test_contract.change_name(new_name = "punky peashooter")
+        
+        #5. Test for whether the plant is alive or not beneath: 
+
 
   answer: |  
     import smartpy as sp
 
     class Plant(sp.Contract):
-        # Update contract initialization
-        def __init__(self):
-            # Update state variables
-            self.init(stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True))
-
+        #2. Add life_state as an argument to the the __init__ function:
+        def __init__(self, life_state):
+            self.init(
+                name = "peashooter",
+                
+                #1. add is_alive state variable beneath
+                is_alive = life_state
+                
+                #3.^Give is_alive the value of life_state
+                )
+            
         @sp.entry_point
-        def attack(self, params):
-            # Update the function
-            pass
+        def change_name(self, params): 
+            self.data.name = params.new_name
+        
+            
+    @sp.add_test(name = "Testing giving plant a new name")
+    def test():
+        scenario = sp.test_scenario()
+        
+        #4. Pass life_state = True to `Plant`’s class invocation:
+        plant_test_contract =  Plant(life_state = True)
+        
+        scenario += plant_test_contract
 
-        @sp.entry_point
-        def defense(self, params):
-            # Update the function
-            pass
+        scenario += plant_test_contract.change_name(new_name = "punky peashooter")
+        
+        #5. Test for whether the plant is alive or not beneath: 
+        scenario.verify(plant_test_contract.data.is_alive == True)
 ---
 
-Python doesn't have concepts of structures so to compensate for the same, SmartPy has Records which act as structs. This not only makes the contract more readable and understandable but also makes it much more logical.
+### Intro: 
 
-Records in SmartPy contract are declared in the following manner `Record = sp.record()`
+Let us quickly understand how strings and boolean types are handled in Smartpy!
 
-## Put it to code
+In the later half of the chapter, you also will learn to add the ability to know whether your `Plant` is dead or alive when you are away! 
 
-1) Remove the various Plant attributes which were initialized earlier,
+ 
+## Study Time: 
 
-2) Remove statements in `attack()` and `defense()`, as we remove state variables and `pass` the functions. These functions will be updated in the upcoming lessons,
+### String: 
+A string is traditionally a sequence of characters eg: “peashooter”.  
 
-3) Remove `name` variable from `__init__`, as you will be providing name to your Plant explicitly later on,
-
-4) Create a variable named `stat` of type `sp.TRecord` which contains all the previously initialized attributes of your Plant
+String type is represented by type `sp.TString` in Smartpy. 
 
 ```python
-self.init(stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True))
+## Here name has type of "sp.TString" 
+## which Smartpy automatically infers by it’s use
+self.init(name = "World Bank")
+
+## You can also explicitly give 
+## the string type by doing the following:
+self.data.name = sp.string("peashooter")
 ```
+
+Notes: 
+
+1. You would rarely use the `sp.string(“...”) syntax in practise. 
+2. You can read more in depth about how Smartpy handles strings [here](https://smartpy.io/demo/reference.html#_strings). 
+
+
+### Boolean:
+
+The type of boolean values i.e `True`, `False`. 
+
+Boolean type is represented by type `sp.TBool` in Smartpy. 
+
+```python
+## plant_is_alive is a variable that stores 
+## whether the plant is alive or got eaten by a Zombie!. 
+
+## Here plant_is_alive has type of "sp.TBool" 
+## which Smartpy automatically infers by its use. 
+self.init(plant_is_alive = True)
+
+## You can also explicitly give the 
+## bool type by doing the following:
+self.data.plant_is_alive = sp.bool("True")
+```
+
+Notes: 
+
+1. You would rarely use the `sp.bool(“...”)` syntax in practise. 
+2. You can read more in depth about how Smartpy handles boolean [here](https://smartpy.io/demo/reference.html#_strings). 
+
+
+
+## #buidl-ing time:
+
+
+#### New feature Request!
+
+Do you know that your plant can keep fighting zombies 24*7 while you can netflix and chill? 
+
+How is that possible?
+
+1. The Tezos blockchain runs 24*7 round the year. 
+2. Since your `Plant` contract is going to be deployed on the Tezos blockchain, using the rules you have defined in your `Plant` contract, the plant can keep fighting without requiring your mindspace. ⚔️
+
+That’s the power of smart contracts! 
+
+But at the moment, there is no way to know whether your plant is dead or alive while you are away. You should get alerted if your plant dies! 💀
+
+
+
+#### Step by step walkthrough: 
+
+1. Let us add `is_alive` variable to our `Plant` contract storage which takes in the current state of life from the user at the time of contract initialization. 
+
+2. Since we want to let user initialize `is_alive` value at class invocation time, add `life_state` as an argument to the `__init__` function. 
+
+3. Assign `life_state` argument to `is_alive` state variable. 
+ 
+
+
+#### Testing our code: 
+
+1. In our test function, pass `life_state = True` as an argument when invoking `Plant` class 
+
+2. Using `scenario.verify`, a helper method provided by `sp.test_scenario`, we will check whether the current value of `is_alive` state variable is `True`,  in order to check whether the plant is alive. 

@@ -1,5 +1,5 @@
 ---
-title: If/Else
+title: Using verify in Smartpy
 chapter: Chapter 13
 slug: chapter-13
 editor:
@@ -8,77 +8,180 @@ editor:
     import smartpy as sp
 
     class Plant(sp.Contract):
-        def __init__(self):
-            self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True, special_moves = []))
+    
+        def __init__(self, manager_address):
+            
+            self.init(
+                plant_manager = manager_address, 
+                
+                bullet_seed_count = 5, 
+
+                record_zombie_kills = {
+                    "simple_zombie": sp.nat(0), 
+                    "boss_zombie": sp.nat(0), 
+                }
+
+                )
 
         @sp.entry_point
-        def attack(self, params):
-            self.data.player[sp.sender].attack += params.attack
+        def shoot_zombie(self, zombie_type):
+            
+            ## Use sp.verify to check 
+            ## whether caller's address is equal 
+            ## to plant_manager's address
+            
+            
+            self.data.bullet_seed_count -= 1
+            
+            self.data.record_zombie_kills[zombie_type] += 1
+        
+        
+            
+    @sp.add_test(name = "Testing entry functions only callable by plant manager")
+    def test():
+        scenario = sp.test_scenario()
+        
+        my_address = sp.address("tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj")
 
-        @sp.entry_point
-        def defense(self, params):
-            self.data.player[sp.sender].defense += params.defense
-
-        @sp.entry_point
-        def assignChararter(self, params):
-            # Update the function
-            self.data.player[sp.sender] = self.data.stat
-            self.data.player[sp.sender].name = params.name
-
-        @sp.entry_point
-        def createMove(self, params):
-            self.data.player[sp.sender].special_moves = params.moves
+        plant_test_contract =  Plant(manager_address = my_address)
+        
+        scenario += plant_test_contract
+        
+        ## Use run method on both functions below and pass sender = my_address to it. 
+        scenario += plant_test_contract.shoot_zombie("simple_zombie")
+        
+        scenario += plant_test_contract.shoot_zombie("boss_zombie")
 
   answer: |  
     import smartpy as sp
 
     class Plant(sp.Contract):
-        def __init__(self):
-            self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True, special_moves = []))
+    
+        def __init__(self, manager_address):
+            
+            self.init(
+                plant_manager = manager_address, 
+                
+                bullet_seed_count = 5, 
+
+                record_zombie_kills = {
+                    "simple_zombie": sp.nat(0), 
+                    "boss_zombie": sp.nat(0), 
+                }
+
+                )
 
         @sp.entry_point
-        def attack(self, params):
-            self.data.player[sp.sender].attack += params.attack
+        def shoot_zombie(self, zombie_type):
+            
+            ## Use sp.verify to check 
+            ## whether caller's address is equal to plant_manager's address
+            sp.verify(
+                self.data.plant_manager == sp.sender, 
+                message = "Error: you are not the manager of this plant"
+                )
 
-        @sp.entry_point
-        def defense(self, params):
-            self.data.player[sp.sender].defense += params.defense
+            self.data.bullet_seed_count -= 1
+            
+            self.data.record_zombie_kills[zombie_type] += 1
+        
+        
+            
+    @sp.add_test(name = "Testing entry functions only callable by plant manager")
+    def test():
+        scenario = sp.test_scenario()
+        
+        my_address = sp.address("tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj")
 
-        @sp.entry_point
-        def assignChararter(self, params):
-            # Update the function
-            sp.if ~ self.data.player.contains(sp.sender):
-                self.data.player[sp.sender] = self.data.stat
-                self.data.player[sp.sender].name = params.name
-            sp.else:
-                pass
-
-        @sp.entry_point
-        def createMove(self, params):
-            self.data.player[sp.sender].special_moves = params.moves
+        plant_test_contract =  Plant(manager_address = my_address)
+        
+        scenario += plant_test_contract
+        
+        ## Use run method on both functions below and pass sender = my_address to it. 
+        scenario += plant_test_contract.shoot_zombie("simple_zombie").run(sender = my_address)
+        
+        scenario += plant_test_contract.shoot_zombie("boss_zombie").run(sender = my_address)
 ---
 
-If/else statements are the conditional statements which are used to check condition and run the chunk of code only if the conditions are met. 
+### Intro: 
+In this chapter we are going to learn about `verify` and specifically `sp.verify` which lets us write conditional code. 
 
-In SmartPy, if/else comamands are `sp.if, sp.else`.
+`sp.verify` comes in handy to prevent an entry function from proceeding if certain conditions are not met. 
+
+Examples of usecases where `sp.verify` can help: 
+1. To check whether your account has enough money to transfer before initiating transfer. 
+2. To add barriers to your entry functions so that they are only callable by the owner. 
+
+In the later half of the chapter, we will use `sp.verify` to all of our entry point functions so that they are only callable by the `plant_manager`!
+
+
+
+## Study Time: 
+
+
+The syntax to use verify looks like this: 
 
 ```python
-sp.if [condition]:
-    # execute code if condition met
+sp.verify(condition, message = "fail msg"​)
 
-sp.else:
-    # execute code if condition didn't met
+## example: 
+sp.verify(2 + 2 == 4)
+sp.verify(4 > 5, message = "5 > 4")
+
 ```
 
-You will use these condition statements to check if the sender address is already assigned with a character or not. This will ensure that one user has only one character
+Notes: 
+1. `sp.verify` checks whether the `condition` evaluated to `True` and raises an error if it doesn't. The condition can be anything as long as the final outcome results in a boolean. 
+2. An optional parameter message is raised if condition is not met.
 
-## Put it to code
 
-Check if the sender is already assigned using `.contains()` function of `sp.TMap` in `assignChararter` function.
+To specifically check for equality conditions, you can use `sp.verify_equal`. 
 
 ```python
-    sp.if ~ self.data.player.contains(sp.sender):
-        .....
-    sp.else:
-        pass
+sp.verify_equal(v1, v2, message = "fail msg"​)
+
+## eg: 
+
+sp.verify_equal(2 + 2, 4)
+
 ```
+
+It serves the same purpose by checking equality between `v1 and v2. 
+
+
+## #buidl-ing time:
+
+#### New feature request!
+
+Currently, entry functions of your `Plant` contract i.e it's abilities are callable by anybody in the world! 
+
+In theory that means anybody can:
+1. change your plant’s name 
+2. move the plant anywhere in the world 
+3. as well as empty all your bullets without your permission!
+
+Let us first learn to solve the third problem by allowing only `plant_manager`'s to shoot zombies. We have removed all the rest of the code that doesn't have anything to do with `shoot_zombie` function to help you focus. 
+
+#### Step by step walkthrough: 
+
+Let's start: 
+
+1. In the `shoot_zombie` entry point function add `sp.verify`. 
+2. In the `sp.verify`'s condition field: 
+    * use `self.data.plant_manager` to access the address stored inside `plant_manager`. 
+    * check it's equivalency with `sp.sender` - which Smartpy automatically populates with the address that called the current entry point. 
+ 
+3. In the `sp.verify`'s `message` field: 
+    * pass an error message on the lines of "Error: you are not the manager of this plant". 
+    * This will be sent to users who are trying to be sneaky by calling our `Plant`'s `shoot_zombie` function! That will show them who is the boss! 😎
+
+#### Testing our code: 
+Now since we have added that only the address stored inside `plant_manager` is able to call `shoot_zombie` entry point function, we would also need to modify `shoot_zombie` calls in our testing function: 
+
+* As you remember, we had stored our user account address in `my_address`
+* We will reference it when we are call our `shoot_zombie` function by using the `run` method. Syntax: `shoot_zombie("<zombie type>").run(sender = my_address)`
+* The above code tells Smartpy that we are calling `shoot_zombie` with `sender` value as `my_address`. 
+* Smartpy takes whatever address that was sent to `sender` and populates `sp.sender` in our `shoot_zombie`'s function defintion. Didn't we say that Smartpy is awesome! 
+
+
+The implementation for all entry functions will remain the same and we leve that as an excersise to the user! 
