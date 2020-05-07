@@ -8,35 +8,45 @@ editor:
     import smartpy as sp
 
     class Plant(sp.Contract):
-        def __init__(self, name):
-            self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True)
-   
-        @sp.entry_point
-        def attack(self):
-            # Update the function
-            pass
-
-        @sp.entry_point
-        def defense(self):
-            # Update the function
-            pass
+    def __init__(self):
+        self.init(name = "peashooter")
+    
+    ## Add change_name entry function below
+        
+            
+    @sp.add_test(name = "Testing giving plant a new name")
+    def test():
+        scenario = sp.test_scenario()
+        
+        plant_test_contract =  Plant()
+        
+        scenario += plant_test_contract
+        
+        ## Test change_name function
 
   answer: |  
     import smartpy as sp
 
     class Plant(sp.Contract):
-        def __init__(self, name):
-            self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True)
-   
-        @sp.entry_point
-        def attack(self, params):
-            # Update the function
-            self.data.attack += params.attack
-
-        @sp.entry_point
-        def defense(self, params):
-            # Update the function
-            self.data.defense += params.defense
+    def __init__(self):
+        self.init(name = "peashooter")
+    
+    ## Add change_name entry function below
+    @sp.entry_point
+    def change_name(self, params): 
+        self.data.name = params.new_name
+        
+            
+    @sp.add_test(name = "Testing giving plant a new name")
+    def test():
+        scenario = sp.test_scenario()
+        
+        plant_test_contract =  Plant()
+        
+        scenario += plant_test_contract
+        
+        ## Test change_name function
+        scenario += plant_test_contract.change_name(new_name = "funky peashooter")
 ---
 
 ### Intro: 
