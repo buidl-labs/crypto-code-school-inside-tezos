@@ -157,6 +157,11 @@ export const Plant = styled.div`
     width: 25vw;
     height: 30vw;
   }
+
+  @media only screen and (max-height: 700px) {
+    width: 10vw;
+    height: 15vw;
+  }
 `;
 const glowAnimation = keyframes`
 0% {
@@ -183,6 +188,11 @@ const Glow = styled.div`
   @media only screen and (max-width: 425px) {
     height: 250px;
     width: 250px;
+  }
+
+  @media only screen and (max-height: 700px) {
+    height: 200px;
+    width: 200px;
   }
 `;
 const Seed = styled(randomPlant.seed[generatedPlantId.seedId])`
@@ -217,6 +227,10 @@ const IncubatorContainer = styled.div`
   @media only screen and (max-width: 425px) {
     width: 25vw;
     height: 30vw;
+  }
+
+  @media only screen and (max-height: 700px) {
+    width: 10vw;
   }
 `;
 /*

@@ -7,7 +7,7 @@ import Plant from '../../components/PlantGrowthModal/GrownPlant';
 import Zombie from '../../components/GameComponents/Zombie';
 
 import {
-  Modal,
+  GameEndModal,
   ModalMask,
   ModalWrapper,
   ModalBottom,
@@ -24,7 +24,7 @@ const GameOverModal = ({ totalDeadZombies = 4, status = 'lost' }) => {
         <div>
           <ModalWrapper>
             <ModalMask />
-            <Modal>
+            <GameEndModal>
               <SuccessLights />
               <PlantCircle />
               {status === 'won' ? (
@@ -63,7 +63,7 @@ const GameOverModal = ({ totalDeadZombies = 4, status = 'lost' }) => {
                   {status === 'won' ? 'Continue' : 'Retry'}
                 </Button>
               </ModalBottom>
-            </Modal>
+            </GameEndModal>
           </ModalWrapper>
         </div>
       ) : (

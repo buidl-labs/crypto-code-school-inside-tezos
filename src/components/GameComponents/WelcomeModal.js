@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {
-  Modal,
+  WelcomeModalContainer,
   ModalMask,
   ModalWrapper,
   ModalBottom,
@@ -17,7 +17,7 @@ const WelcomeModal = ({ display = false, changeDisplay }) => {
         <div>
           <ModalWrapper>
             <ModalMask />
-            <Modal style={{ height: '60%', top: '20%' }}>
+            <WelcomeModalContainer>
               <ModalBottom style={{ height: '100%', borderRadius: '10px' }}>
                 <Heading style={{ paddingTop: '2rem' }}>
                   Congratulations!
@@ -39,7 +39,7 @@ const WelcomeModal = ({ display = false, changeDisplay }) => {
                   </ProceedLink>
                 </div>
               </ModalBottom>
-            </Modal>
+            </WelcomeModalContainer>
           </ModalWrapper>
         </div>
       ) : (
