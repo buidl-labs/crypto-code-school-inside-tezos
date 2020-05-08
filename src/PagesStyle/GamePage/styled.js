@@ -249,6 +249,16 @@ export const Modal = styled.div`
   border-radius: 10px;
 `;
 
+export const WelcomeModalContainer = styled(Modal)`
+  height: 60%;
+  top: 20%;
+
+  @media only screen and (max-height: 700px) {
+    height: 70%;
+    top: 15%;
+  }
+`;
+
 export const GameModal = styled(Modal)`
   height: 75%;
   top: 12.5%;
@@ -256,6 +266,13 @@ export const GameModal = styled(Modal)`
   @media only screen and (max-height: 700px) {
     height: 79%;
     top: 10.5%;
+  }
+`;
+
+export const GameEndModal = styled(Modal)`
+  @media only screen and (max-height: 700px) {
+    height: 100%;
+    top: 1%;
   }
 `;
 
@@ -352,5 +369,9 @@ export const Button = styled.button`
   :hover {
     box-shadow: 0 0 0 0.25rem rgb(59, 66, 66);
     cursor: pointer;
+  }
+
+  @media only screen and (max-height: 700px) {
+    margin: 20px 0 0 0;
   }
 `;
