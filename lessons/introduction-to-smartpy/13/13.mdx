@@ -1,5 +1,5 @@
 ---
-title: Using verify in Smartpy
+title: Tinkering with conditionals in Smartpy - sp.verify
 chapter: Chapter 13
 slug: chapter-13
 editor:
@@ -109,6 +109,7 @@ In this chapter we are going to learn about `verify` and specifically `sp.verify
 `sp.verify` comes in handy to prevent an entry function from proceeding if certain conditions are not met. 
 
 Examples of usecases where `sp.verify` can help: 
+
 1. To check whether your account has enough money to transfer before initiating transfer. 
 2. To add barriers to your entry functions so that they are only callable by the owner. 
 
@@ -178,10 +179,12 @@ Let's start:
 #### Testing our code: 
 Now since we have added that only the address stored inside `plant_manager` is able to call `shoot_zombie` entry point function, we would also need to modify `shoot_zombie` calls in our testing function: 
 
-* As you remember, we had stored our user account address in `my_address`
-* We will reference it when we are call our `shoot_zombie` function by using the `run` method. Syntax: `shoot_zombie("<zombie type>").run(sender = my_address)`
-* The above code tells Smartpy that we are calling `shoot_zombie` with `sender` value as `my_address`. 
-* Smartpy takes whatever address that was sent to `sender` and populates `sp.sender` in our `shoot_zombie`'s function defintion. Didn't we say that Smartpy is awesome! 
+1. As you remember, we had stored our user account address in `my_address`
+2. We will reference it when we are call our `shoot_zombie` function by using the `run` method. 
+    * Syntax: `shoot_zombie("<zombie type>").run(sender = my_address)`
+3. The above code tells Smartpy that we are calling `shoot_zombie` with `sender` value as `my_address`. 
+4. Smartpy takes whatever address that was sent to `sender` and populates `sp.sender` in our `shoot_zombie`'s function defintion. 
+    * Didn't we already mention that Smartpy is awesome! 
 
 
 The implementation for all entry functions will remain the same and we leve that as an excersise to the user! 
