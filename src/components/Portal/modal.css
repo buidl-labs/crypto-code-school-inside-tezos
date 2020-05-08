@@ -41,3 +41,9 @@ body {
     overflow-y: auto;
   }
 }
+
+@media only screen and (max-height: 700px) {
+  #portal > div > div {
+    max-height: calc(100% - 170px);
+  }
+}

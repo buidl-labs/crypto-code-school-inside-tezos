@@ -219,17 +219,30 @@ const ContentContainer = styled.div`
     text-align: center;
     color: #ffffff;
     margin: 10px 0;
+
+    @media only screen and (max-height: 700px) {
+      font-size: 30px;
+      line-height: 30px;
+    }
   }
 
   p {
     font-family: Roboto;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 100;
     font-size: 20px;
     line-height: 23px;
     text-align: center;
     margin-top: 0;
     max-width: 600px;
+
+    @media only screen and (max-height: 700px) {
+      font-size: 16px;
+    }
+  }
+
+  @media only screen and (max-height: 700px) {
+    margin-top: 1rem;
   }
 `;
 
@@ -263,6 +276,13 @@ const ProceedLink = styled(Link)`
   :hover {
     background: #18a472;
     cursor: pointer;
+  }
+
+  @media only screen and (max-height: 700px) {
+    width: inherit;
+    height: inherit;
+    padding: 5px 15px;
+    font-size: 22px;
   }
 `;
 
