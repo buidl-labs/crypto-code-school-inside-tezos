@@ -303,6 +303,9 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                   }}
                 />
               ),
+              a: props => (
+                <a {...props} target="_blank" rel="noopener noreferrer" />
+              ),
             }}
           >
             <MDXRenderer>{chapter.body}</MDXRenderer>
