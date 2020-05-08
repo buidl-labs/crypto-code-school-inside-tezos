@@ -130,8 +130,16 @@ var missing = {
     'invalid or missing run method initialization',
   'scenario += plant_test_contract.shoot_zombie("boss_zombie").run(sender = my_address)':
     'invalid or missing run method initialization',
+
+  //For chapter 14
+  'sp.else:': 'missing else block',
+  'sp.failwith("Error: you ran out of bullets! Please buy more!")':
+    'invalid or missing sp.failwith method initialization',
+  'sp.if self.data.bullet_seed_count >=1:':
+    'invalid or missing sp.if block initialization',
+
   // 'self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100))':
-  //   'state variables initialization is missing or is invalid',
+  // 'state variables initialization is missing or is invalid',
 
   // 'self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True)':
   //   'is_alive of type `sp.TBoolean` initialization is missing or is invalid',
