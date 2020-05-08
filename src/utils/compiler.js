@@ -197,11 +197,55 @@ var missing = {
  * }
  */
 
+/**
+ * Ignore Comments, semicolons, handle (double)"" and single('') quotes
+ */
+// TODO: refactor code logic for maintenance
+//In Progress
+// function getFilteredCode(code) {
+//   // splitting user's code to get array of lines
+//   let splittedCode = code.split('\n');
+
+//   // removing '\r' from the end of each element(line).
+//   for (const x in splittedCode) {
+//     splittedCode[x] = splittedCode[x].replace('\r', '');
+//   }
+
+//   // removing ; as it doesnot gives error
+//   for (const x in splittedCode) {
+//     splittedCode[x] = splittedCode[x].replace(';', '');
+//   }
+
+//   // replacing tabs with spaces
+//   for (const a in splittedCode) {
+//     splittedCode[a] = splittedCode[a].replace('\t', '  ');
+//   }
+
+//   // removing extra spaces from the end of line
+//   for (const a in splittedCode) {
+//     splittedCode[a] = splittedCode[a].trimRight();
+//   }
+
+//   // replacing (single quotes '') with (double quotes ")
+//   for (const a in splittedCode) {
+//     splittedCode[a] = splittedCode[a].split(`'`).join(`"`);
+//   }
+
+//   // removing new lines and white spaces from the user's code
+//   let filteredCode = splittedCode.filter(function(entry) {
+//     return entry.trim() !== '';
+//   });
+
+//   // removing valid python comments starting with #
+//   filteredCode = filteredCode.filter(x => x.trim()[0] !== '#');
+//   console.log('filteredCode', filteredCode);
+//   return filteredCode;
+// }
+
 //remove blank spaces from user input
 export function checkCode(get, lesson) {
   // user - this is the array of each line of the code which user types in the editor,
   // lesson - this is the code from the above variables, ex: for lesson 1, use l1, lesson 3 - l2 and so on...
-
   // result to be print result[line_number] = error message
   var result = {};
 
@@ -282,7 +326,7 @@ export function checkCode(get, lesson) {
   //   }
   // }
   // removing valid python comments starting with #
-  // userArray = userArray.filter(x => x.trim()[0] !== '#');
+  userArray = userArray.filter(x => x.trim()[0] !== '#');
 
   // getting all invalid comments `//` as valid comments `#` are already removed
   var commentsTest = userArray.filter(line => line.trim().includes('//', 0));
@@ -363,6 +407,10 @@ export function checkCode(get, lesson) {
   var correctCodeArrayWithSpace = code.filter(function(entry) {
     return entry.trim() !== '';
   });
+
+  correctCodeArrayWithSpace = correctCodeArrayWithSpace.filter(
+    x => x.trim()[0] !== '#',
+  );
 
   // dict = {withoutSpace : withspaceOriginal}
   var correctCodeArray = {};
