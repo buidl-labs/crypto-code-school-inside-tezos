@@ -17,10 +17,10 @@ This project aims to help beginners build a simple smart contract in smartpy whi
 
 ![Learning interface](https://user-images.githubusercontent.com/16613455/77852099-634d6280-71fa-11ea-862d-cf62fab512e4.png)
 
-### Lessons Overview <a id="project_overview"></a>
+### Project Overview <a id="project_overview"></a>
 
-Lessons overview in detail can be found in [LESSONS_OVERVIEW](./PROJECT_OVERVIEW.md).
+Project overview in detail can be found in [here](./PROJECT_OVERVIEW.md).
 
 ## Contributing <a id="contributing"></a>
 
-Guidelines are provided in [CONTRIBUTING](./.github/CONTRIBUTING.md).
+Guidelines are provided in [here](./.github/CONTRIBUTING.md).
