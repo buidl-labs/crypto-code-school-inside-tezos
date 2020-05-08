@@ -81,7 +81,24 @@ var missing = {
     'life_state of type `sp.TBool` initialization is missing or invalid',
 
   'scenario.verify(plant_test_contract.data.is_alive == True)':
-    'invalid or missing scenario.verify method initialization ',
+    'invalid or missing scenario.verify method initialization',
+  //For chapter 10
+  'coordinate_x = sp.int(0),':
+    'coordinate_x of type `sp.TInt` initialization is missing or invalid',
+  'coordinate_y = sp.nat(0)':
+    'coordinate_y of type `sp.TNat` initialization is missing or invalid',
+  'def move_horizontally(self, update_to):':
+    'move_horizontally function declaration error',
+  'self.data.coordinate_x += update_to':
+    'invalid or missing coordinate_x assignment',
+  'def move_vertically(self, update_to):':
+    'move_vertically function declaration error',
+  'self.data.coordinate_y += update_to':
+    'invalid or missing coordinate_y assignment',
+  'scenario += plant_test_contract.move_horizontally(2)':
+    'invalid or missing move_horizontally method initialization',
+  'scenario += plant_test_contract.move_vertically(1)':
+    'invalid or missing move_vertically method initialization',
   // 'self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100))':
   //   'state variables initialization is missing or is invalid',
 

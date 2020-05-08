@@ -2,97 +2,80 @@
 title: Tinkering with integers and basic math in Smartpy
 chapter: Chapter 10
 slug: chapter-10
+filterBy: lesson-1
 editor:
+  showEditor: true
   language: python
   startingCode: |
     import smartpy as sp
 
     class Plant(sp.Contract):
-        
         def __init__(self, is_alive):
-            
             self.init(
                 name = "peashooter",
                 is_alive = is_alive,
-                
-                ## Add coordinate_x and coordinate_y variables
-                ## Init both with 0
+                # Add coordinate_x and coordinate_y variables
+                # Init both with 0
+
                 )
             
         @sp.entry_point
         def change_name(self, params): 
             self.data.name = params.new_name
         
-        ## Define move_horizontally entry point function
+        # Define move_horizontally entry point function
         
         
-        ## Define move_vertically entry point function
-        
-            
+        # Define move_vertically entry point function
+
     @sp.add_test(name = "Test plants movement")
     def test():
         scenario = sp.test_scenario()
-        
         plant_test_contract =  Plant(is_alive = True)
-        
         scenario += plant_test_contract
-        
         scenario += plant_test_contract.change_name(new_name = "punky peashooter")
-        
         scenario.verify(plant_test_contract.data.is_alive == True)
-        
-        ## Test your movement entry functions below
-        ## Move plant forward by 2 and vertically by 1
-
+        # Test your movement entry functions below
+        # Move plant forward by 2 and vertically by 1
 
   answer: |  
     import smartpy as sp
 
     class Plant(sp.Contract):
-        
-    def __init__(self, is_alive):
-        
-        self.init(
-            name = "peashooter",
-            is_alive = is_alive,
-            
-            ## Add coordinate_x and coordinate_y variables
-            ## Init both with 0
-            coordinate_x = sp.int(0), 
-            coordinate_y = sp.nat(0)
-            )
+        def __init__(self, is_alive):
+            self.init(
+                name = "peashooter",
+                is_alive = is_alive,
+                # Add coordinate_x and coordinate_y variables
+                # Init both with 0
+                coordinate_x = sp.int(0), 
+                coordinate_y = sp.nat(0)
+                )
         
         @sp.entry_point
         def change_name(self, params): 
             self.data.name = params.new_name
         
-        ## Define move_horizontally entry point function
+        # Define move_horizontally entry point function
         @sp.entry_point
         def move_horizontally(self, update_to):
             self.data.coordinate_x += update_to
         
-        ## Define move_vertically entry point function
+        # Define move_vertically entry point function
         @sp.entry_point
         def move_vertically(self, update_to):
             self.data.coordinate_y += update_to
-       
-        
+ 
     @sp.add_test(name = "Test plants movement")
     def test():
         scenario = sp.test_scenario()
-        
         plant_test_contract =  Plant(is_alive = True)
-        
         scenario += plant_test_contract
-        
         scenario += plant_test_contract.change_name(new_name = "punky peashooter")
-        
         scenario.verify(plant_test_contract.data.is_alive == True)
-        
-        ## Test your movement entry functions below
-        ## Move plant forward by 2 and vertically by 1
+        # Test your movement entry functions below
+        # Move plant forward by 2 and vertically by 1
         scenario += plant_test_contract.move_horizontally(2)
-        
         scenario += plant_test_contract.move_vertically(1)
 ---
 
