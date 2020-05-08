@@ -36,10 +36,10 @@ var missing = {
     'class (Contract) declaration missing or invalid',
 
   'def __init__(self):':
-    'class initialization missing or invalid or `self` parameter is not provided',
+    'constructor initialization missing or invalid or `self` parameter is not provided',
 
   'def __init__(self, name):':
-    'class initialization require a `name & self`  parameter',
+    'constructor initialization require a `name & self` parameter',
 
   'self.init(name = name)':
     'name of type `sp.TString` initialization is missing or is invalid',
@@ -71,6 +71,17 @@ var missing = {
 
   'scenario += plant_test_contract.change_name(new_name = "funky peashooter")':
     'invalid or missing change_name entry point function initialization',
+
+  'def __init__(self, life_state):':
+    'constructor initialization require a `self and life_state` parameter',
+
+  'is_alive = life_state': 'invalid or missing is_alive assignment',
+
+  'plant_test_contract =  Plant(life_state = True)':
+    'life_state of type `sp.TBool` initialization is missing or invalid',
+
+  'scenario.verify(plant_test_contract.data.is_alive == True)':
+    'invalid or missing scenario.verify method initialization ',
   // 'self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100))':
   //   'state variables initialization is missing or is invalid',
 

@@ -2,21 +2,21 @@
 title: Tinkering with strings & boolean types in Smartpy
 chapter: Chapter 9
 slug: chapter-09
+filterBy: lesson-1
 editor:
+  showEditor: true
   language: python
   startingCode: |
     import smartpy as sp
 
     class Plant(sp.Contract):
-        
-        #2. Add life_state as an argument to the the __init__ function:
-        def __init__(self, ):
+        #2. Add life_state as a parameter to the the __init__ function:
+        def __init__(self):
             self.init(
                 name = "peashooter",
                 #1. add is_alive state variable beneath
                 
                 #3.^Give is_alive the value of life_state
-
                 )
             
         @sp.entry_point
@@ -27,14 +27,10 @@ editor:
     @sp.add_test(name = "Test whether plant is alive or not")
     def test():
         scenario = sp.test_scenario()
-        
         #4. Pass life_state = True to `Plant`’s class invocation:
         plant_test_contract =  Plant()
-        
         scenario += plant_test_contract
-
         scenario += plant_test_contract.change_name(new_name = "punky peashooter")
-        
         #5. Test for whether the plant is alive or not beneath: 
 
 
@@ -42,14 +38,12 @@ editor:
     import smartpy as sp
 
     class Plant(sp.Contract):
-        #2. Add life_state as an argument to the the __init__ function:
+        #2. Add life_state as a parameter to the the __init__ function:
         def __init__(self, life_state):
             self.init(
                 name = "peashooter",
-                
                 #1. add is_alive state variable beneath
                 is_alive = life_state
-                
                 #3.^Give is_alive the value of life_state
                 )
             
@@ -58,17 +52,13 @@ editor:
             self.data.name = params.new_name
         
             
-    @sp.add_test(name = "Testing giving plant a new name")
+    @sp.add_test(name = "Test whether plant is alive or not")
     def test():
         scenario = sp.test_scenario()
-        
         #4. Pass life_state = True to `Plant`’s class invocation:
         plant_test_contract =  Plant(life_state = True)
-        
         scenario += plant_test_contract
-
         scenario += plant_test_contract.change_name(new_name = "punky peashooter")
-        
         #5. Test for whether the plant is alive or not beneath: 
         scenario.verify(plant_test_contract.data.is_alive == True)
 ---
