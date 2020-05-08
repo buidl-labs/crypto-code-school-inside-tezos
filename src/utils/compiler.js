@@ -123,6 +123,13 @@ var missing = {
   'plant_test_contract =  Plant(life_state = True, manager_address = my_address)':
     'invalid or missing plant_test_contract variable assignment',
 
+  //For chapter 13
+  'sp.verify(self.data.plant_manager == sp.sender, message = "Error: you are not the manager of this plant")':
+    'invalid or missing sp.verify method initialization',
+  'scenario += plant_test_contract.shoot_zombie("simple_zombie").run(sender = my_address)':
+    'invalid or missing run method initialization',
+  'scenario += plant_test_contract.shoot_zombie("boss_zombie").run(sender = my_address)':
+    'invalid or missing run method initialization',
   // 'self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100))':
   //   'state variables initialization is missing or is invalid',
 
