@@ -1,5 +1,5 @@
 ---
-title: Verify
+title: Tinkering with decision making via if & sp.if in Smartpy
 chapter: Chapter 14
 slug: chapter-14
 editor:
@@ -8,88 +8,192 @@ editor:
     import smartpy as sp
 
     class Plant(sp.Contract):
-        def __init__(self):
-            self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True, special_moves = []))
+    
+        def __init__(self, manager_address):
+            
+            self.init(
+                plant_manager = manager_address,
+                bullet_seed_count = 5,
+
+                record_zombie_kills = {
+                    "simple_zombie": sp.nat(0), 
+                    "boss_zombie": sp.nat(0), 
+                }
+                
+                )
 
         @sp.entry_point
-        def attack(self, params):
-            self.data.player[sp.sender].attack += params.attack
-
+        def change_name(self, params): 
+            self.data.name = params.new_name
+        
         @sp.entry_point
-        def defense(self, params):
-            self.data.player[sp.sender].defense += params.defense
-
+        def move_horizontally(self, update_to):
+            self.data.coordinate_x += update_to
+        
         @sp.entry_point
-        def assignChararter(self, params):
-            # Update the function
-            sp.if ~ self.data.player.contains(sp.sender):
-                self.data.player[sp.sender] = self.data.stat
-                self.data.player[sp.sender].name = params.name
-            sp.else:
-                pass
+        def move_vertically(self, update_to):
+            self.data.coordinate_y += update_to
 
+            
         @sp.entry_point
-        def createMove(self, params):
-            self.data.player[sp.sender].special_moves = params.moves
+        def shoot_zombie(self, zombie_type):
+            
+            sp.verify(
+                self.data.plant_manager == sp.sender, 
+                message = "Error: you are not the manager of this plant"
+                )
 
-        # Code from below
+            ## Using sp.if add a condition to check bullet_seed_count >= 1
+                
+                self.data.bullet_seed_count -= 1
+                
+                self.data.record_zombie_kills[zombie_type] += 1
+                
+            ## Use sp.else to run code when the above condition fails. 
+            ## Use sp.failwith to return an error message. `
+
 
   answer: |  
+
     import smartpy as sp
 
     class Plant(sp.Contract):
-        def __init__(self):
-            self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True, special_moves = []))
+    
+        def __init__(self, manager_address):
+            
+            self.init(
+                plant_manager = manager_address,
+                bullet_seed_count = 5,
+
+                record_zombie_kills = {
+                    "simple_zombie": sp.nat(0), 
+                    "boss_zombie": sp.nat(0), 
+                }
+                
+                )
 
         @sp.entry_point
-        def attack(self, params):
-            self.data.player[sp.sender].attack += params.attack
-
+        def change_name(self, params): 
+            self.data.name = params.new_name
+        
         @sp.entry_point
-        def defense(self, params):
-            self.data.player[sp.sender].defense += params.defense
-
+        def move_horizontally(self, update_to):
+            self.data.coordinate_x += update_to
+        
         @sp.entry_point
-        def assignChararter(self, params):
-            # Update the function
-            sp.verify(~ self.data.player.contains(sp.sender), "User already has a plant")
-            self.data.player[sp.sender] = self.data.stat
-            self.data.player[sp.sender].name = params.name
+        def move_vertically(self, update_to):
+            self.data.coordinate_y += update_to
 
+            
         @sp.entry_point
-        def createMove(self, params):
-            self.data.player[sp.sender].special_moves = params.moves
+        def shoot_zombie(self, zombie_type):
+            
+            sp.verify(
+                self.data.plant_manager == sp.sender, 
+                message = "Error: you are not the manager of this plant"
+                )
 
-        # Code from below
-        @sp.entry_point
-        def endGame(self, params):
-            sp.verify(self.data.player[sp.sender].health == 0, "You are alive!!!")
-            self.data.player[sp.sender].is_alive = False
+            ## Using sp.if add a condition to check bullet_seed_count >= 1
+            sp.if self.data.bullet_seed_count >=1:
+                
+                self.data.bullet_seed_count -= 1
+                
+                self.data.record_zombie_kills[zombie_type] += 1
+                
+            ## Use sp.else to run code when the above condition fails. 
+            ## Use sp.failwith to return an error message. 
+            sp.else: 
+                
+                sp.failwith("Error: you ran out of bullets! Please buy more!")
+        
 ---
 
-Assertion statements are also a kind of condition checking statements but they are very useful in smart contracts because unlike if/else statements, they revert back the transaction and hence saving the gas/transaction fees as well.
+### Intro: 
 
-Assertion command can be as follows in SmartPy: 
+You would be already be pretty familiar with basic decision making in Python using `if...else` statements.  
+
+In this chapter, we are going to understand how to go about writing decision making code inside smart contracts using Smartpy's `sp.if..sp.else` statements. 
+
+In later half of the chapter, we design an alerting system to ping us when our `Plant` runs out of Bullet Seeds! 
+
+![Alert Text](https://media.giphy.com/media/Tdpbuz8KP0EpQfJR3T/giphy.gif)
+
+
+## Study Time: 
+
+### Why use sp.if over plain if? 
+
+We use `sp.if` over plain `if` for the following reasons: 
+
+1. In smart contracts, most of decision making tends to happen via placing conditions over values stored inside contract's storage. 
+    * Since decision making evaluation in smart contracts actually happens when smart contract's are being simulated or finally deployed to the Tezos blockchain, `sp.if` let's us execute decision making with contract's latest values in it's storage. 
+     * Since plain `if` doesn't have Smartpy's superpowers, you won't be able to bet whether it is executing on contract's latest updated values or not. 
+2. The difference between both comes from the enviroment in which they finally get to execute. 
+
+Hence whenever in doubt or you are running in weird errors, trust in Smartpy's superpowers and use the prefix `sp.`
+
+### Show me an example: 
+
+Remember `coordinate_x`which stores our plant's current x coordinate? 
+
+We had specified a range for it that the plant can only move between `[-10, 10]`. 
+
+
+Though currently our `move_horizontally` currently allows to move to any aribtrary value since we don't check whether `update_to` is in the range of `[-10, 10]`!
+
+
 ```python
-sp.verify(condition, message="")
-# message is an optional parameter
-``` 
+@sp.entry_point
+def move_horizontally(self, update_to):
+   self.data.coordinate_x += update_to
 
-We can use verify command at the beginning of any entry_point to check the required conditions. 
-
-In our example previously, if/else commands was used. That is not an efficient way of doing things as you may have noticed, if the condition is not met and the code goes to else statement, it has nothing to execute and the gas/transaction fee will be wasted. 
-
-To overcome this, you will be using `sp.verify()` statement.
-
-## Put it to code
-
-1) Remove if/else statment from the previous code,
-
-2) Include `sp.verify()` statement to check the condition instead,
-
-```python
-sp.verify(~ self.data.player.contains(sp.sender), 
-"User already has a plant")
 ```
 
-3) Create a callable function `endGame` that will verify the health of the player with a message "You are alive!!!". If health of the player is 0, change `is_alive` to `False`.
+We don't want the plant to start running away do we? 😰 
+
+Let us use `sp.if` to check whether `update_to` is in the range of `[-10, 10]`:
+
+
+```python
+@sp.entry_point
+def move_horizontally(self, update_to):
+   sp.if (update_to >= -10) & (update_to <=10): 
+       self.data.coordinate_x += update_to
+   sp.else: 
+       sp.failwith("Error: movement out of bounds")
+
+```
+
+Explaining the code above: 
+
+1. The code is mostly straightforward to read where we basically instead of using `if`, we use `sp.if` to put condition over `update_to`
+2. If the condition fails, we use `sp.failwith` - a Smartpy helper method - to send back a relevant error message. 
+
+Read more in depth about: 
+
+1. technical pov of using `sp.if` over `if` in your smart contract code - under reference manual's "Control & Syntatical Sugar" section [here.](https://smartpy.io/demo/reference.html#_control_and_syntactic_sugar)
+2. why you cannot use `and`, `or`, `not` in your smart contract code and instead need to use `&`, `|`, `~` respectively - under reference manual's "Boolean" section [here.](https://smartpy.io/demo/reference.html#_booleans)
+
+
+## #buidl-ing time:
+
+### New feature request!
+
+Currently if you run out of bullets, your `shoot_zombie` function will still be able to run without alerting you that there are no bullets left!
+
+Imagine your plant standing in a front of zombie with no seeds left.. 
+
+![Alt Text](https://media.giphy.com/media/8FGMkJzTl8m5efHvw0/giphy.gif)
+
+Yikes! 
+
+### Step by step walkthrough:
+
+Let's use `sp.if` to proceed forward with shooting only when `bullet_seed_count` is greater than 1. If not, we will use `sp.failwith` to alert you that you run out of bullets!
+
+1. Using `sp.if` add a condition to check `bullet_seed_count` >= 1. Use `self.data.bullet_seed_count` to access it. 
+2. Move the shooting code inside `sp.if` scope. 
+3. Add `sp.else` and inside it's scope use `sp.failwith` to return with `"Error: you ran out of bullets! Please buy more!"` error message. 
+
+
+You can tinker around with the tests for the above code [here](https://smartpy.io/demo/index.html?code=eJzdVFFr1EAQfr9fMU1fcliD1VrKwYlQBKEIgtUHRZa5ZHK3drMTdzc9Uul_dzfZXHPXs1XQFxcul02@@XbyzXwjq5qNA1uhcXULaMHWk0mu0Fp4r1C71NbZOWtnMHfT2QQAwq@gEoSQWjohUkuqPIIKNS7JCCwKQ9b2WIj4sAIsCyHp8CSsOhwiYjDMd2mOYAwe3y8apcgJS1SInBvtfPBLDx9jDOVsCnHD1UKSuJJKWY_6MYaElVhZ1YoiLpl5DTKNLn023T6@wy7Y2keRt1tpTLvda48lL2QrapbaDTLaFbOLhFHKmK9ra9rIGP88xzUZWbZbInbSFugw25FzHgIs6YLMdoKV19ZDvBrJG2PYzKDlBtAQaHbgVjQUArj0W2n7QiX3P6tPSpajJO6X5tX8eDYKHd0@FPV0DsePRe0p8ZeRfl_hyV6SUAtlaQa_4K@zEqVaS7dKxwIZ1MCNC6L06doDbxNCS37fQsWGDpLpbudviCehB3xnC0fWpRqrrgCXfiP1ErrmgLLRuZOsLbBWLeSoFC6U52_7EgyF8ceE9umYYpfYnDQaydCVPbwRw6O0T6q7VO3grh4YN2nibo4_tM2LC8w_n@XtyfOzUzy5xnPid279_dPF2yvkb0mset9o3Rl5HA@eLc6MHRMHW2_OHCWyydfXaA_fHfDwEC69NI57t8DpoP7v0GRbDtvx@jQzjU57h@xJ88@ox6PhrxL_9zkPVf6oc64qb4RuBJWsFK@DNcbUnSUAdREwGjxvB865IMAlSp3BZRhYaz8LYCmv_VMNFDwcj_lnCt19ysOXn3uOSng-). Try to add more `shoot_zombie` calls to see see your code giving you the error message. 

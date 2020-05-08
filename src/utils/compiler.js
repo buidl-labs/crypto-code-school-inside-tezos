@@ -2,221 +2,6 @@
 
 var _ = require('lodash');
 
-//  intro
-export const l1 = `import smartpy as sp`;
-
-// export const l2 = `import smartpy as sp
-
-// #`;
-
-//scaffolding contract
-export const l2 = `import smartpy as sp
-
-class Plant(sp.Contract):
-    pass`;
-
-// state variable
-export const l3 = `import smartpy as sp
-
-class Plant(sp.Contract):
-    def __init__(self, name):
-        self.init(name = name)`;
-
-//integers
-export const l4 = `import smartpy as sp
-
-class Plant(sp.Contract):
-    def __init__(self, name):
-        self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100))`;
-
-// booleans
-export const l5 = `import smartpy as sp
-
-class Plant(sp.Contract):
-    def __init__(self, name):
-        self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True)`;
-
-// creating a entry_point function
-export const l6 = `import smartpy as sp
-
-class Plant(sp.Contract):
-    def __init__(self, name):
-        self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True)
-
-    @sp.entry_point
-    def attack(self):
-        pass
-
-    @sp.entry_point
-    def defense(self):
-        pass`;
-
-// math operations
-export const l7 = `import smartpy as sp
-
-class Plant(sp.Contract):
-    def __init__(self, name):
-        self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True)
-        
-    @sp.entry_point
-    def attack(self, params):
-        self.data.attack += params.attack
-
-    @sp.entry_point
-    def defense(self, params):
-        self.data.defense += params.defense`;
-
-// pairs
-export const l8 = `import smartpy as sp
-
-class Plant(sp.Contract):
-    def __init__(self, name):
-        self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True, power_move = ("Bullet Seed", 95))
-        
-    @sp.entry_point
-    def attack(self, params):
-        self.data.attack += params.attack
-
-    @sp.entry_point
-    def defense(self, params):
-        self.data.defense += params.defense`;
-
-// records
-export const l9 = `import smartpy as sp
-
-class Plant(sp.Contract):
-    def __init__(self):
-        self.init(stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True))
-        
-    @sp.entry_point
-    def attack(self, params):
-        pass
-
-    @sp.entry_point
-    def defense(self, params):
-        pass`;
-
-//map
-export const l10 = `import smartpy as sp
-
-class Plant(sp.Contract):
-    def __init__(self):
-        self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True))
-    
-    @sp.entry_point
-    def attack(self, params):
-        pass
-
-    @sp.entry_point
-    def defense(self, params):
-        pass
-
-    @sp.entry_point
-    def assignCharacter(self, params):
-        self.data.player[params.sender] = self.data.stat
-        self.data.player[params.sender].name = params.name`;
-
-//address
-export const l11 = `import smartpy as sp
-
-class Plant(sp.Contract):
-    def __init__(self):
-        self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True))
-    
-    @sp.entry_point
-    def attack(self, params):
-        self.data.player[sp.sender].attack += params.attack
-
-    @sp.entry_point
-    def defense(self, params):
-        self.data.player[sp.sender].defense += params.defense
-
-    @sp.entry_point
-    def assignChararter(self, params):
-        self.data.player[sp.sender] = self.data.stat
-        self.data.player[sp.sender].name = params.name`;
-
-//list
-export const l12 = `import smartpy as sp
-
-class Plant(sp.Contract):
-    def __init__(self):
-        self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True, special_moves = []))
-    
-    @sp.entry_point
-    def attack(self, params):
-        self.data.player[sp.sender].attack += params.attack
-
-    @sp.entry_point
-    def defense(self, params):
-        self.data.player[sp.sender].defense += params.defense
-
-    @sp.entry_point
-    def assignChararter(self, params):
-        self.data.player[sp.sender] = self.data.stat
-        self.data.player[sp.sender].name = params.name
-    
-    @sp.entry_point
-    def createMove(self, params):
-        self.data.player[sp.sender].special_moves = params.moves`;
-
-//if\else
-export const l13 = `import smartpy as sp
-
-class Plant(sp.Contract):
-    def __init__(self):
-        self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True, special_moves = []))
-    
-    @sp.entry_point
-    def attack(self, params):
-        self.data.player[sp.sender].attack += params.attack
-
-    @sp.entry_point
-    def defense(self, params):
-        self.data.player[sp.sender].defense += params.defense
-
-    @sp.entry_point
-    def assignChararter(self, params):
-        sp.if ~ self.data.player.contains(sp.sender):
-            self.data.player[sp.sender] = self.data.stat
-            self.data.player[sp.sender].name = params.name
-        sp.else:
-            pass
-    
-    @sp.entry_point
-    def createMove(self, params):
-        self.data.player[sp.sender].special_moves = params.moves`;
-
-//verify
-export const l15 = `import smartpy as sp
-
-class Plant(sp.Contract):
-    def __init__(self):
-        self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True, special_moves = []))
-    
-    @sp.entry_point
-    def attack(self, params):
-        self.data.player[sp.sender].attack += params.attack
-
-    @sp.entry_point
-    def defense(self, params):
-        self.data.player[sp.sender].defense += params.defense
-
-    @sp.entry_point
-    def assignChararter(self, params):
-        sp.verify(~ self.data.player.contains(sp.sender), "User already has a plant")
-        self.data.player[sp.sender] = self.data.stat
-        self.data.player[sp.sender].name = params.name
-    
-    @sp.entry_point
-    def createMove(self, params):
-        self.data.player[sp.sender].special_moves = params.moves
-
-    @sp.entry_point
-    def endGame(self, params):
-        sp.verify(self.data.player[sp.sender].health == 0, "You are alive!!!")
-        self.data.player[sp.sender].is_alive = False`;
-
 //-----Error messages for each line------//
 
 var errors = {
@@ -251,84 +36,137 @@ var missing = {
     'class (Contract) declaration missing or invalid',
 
   'def __init__(self):':
-    'class initialization missing or invalid or `self` parameter is not provided',
+    'constructor initialization missing or invalid or `self` parameter is not provided',
 
   'def __init__(self, name):':
-    'class initialization require a `name & self`  parameter',
+    'constructor initialization require a `name & self` parameter',
 
   'self.init(name = name)':
     'name of type `sp.TString` initialization is missing or is invalid',
 
-  'self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100))':
-    'state variables initialization is missing or is invalid',
-
-  'self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True)':
-    'is_alive of type `sp.TBoolean` initialization is missing or is invalid',
-
-  'self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True, power_move = ("Bullet Seed", 95))':
-    'power_move of type `sp.TPair` initialization is missing or is invalid',
-
-  'self.init(stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True))':
-    'stat of type `sp.TRecord` initialization is missing or is invalid',
-
-  'self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True))':
-    'player of type `sp.TMap` initialization is missing or is invalid',
-
-  'self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True, special_moves = []))':
-    'special_moves array (sp.TList) initialization is missing or is invalid',
-
-  '@sp.entry_point': '@sp.entry_point decorator missing or invalid',
-
-  'def attack(self):': 'attack function declaration error',
-  'def attack(self, params):': 'attack function declaration error',
-  'self.data.attack += params.attack':
-    'invalid or missing statement in attack function',
-  'self.data.player[sp.sender].attack += params.attack':
-    'invalid or missing statement in attack function',
+  'self.init(name = "peashooter")':
+    'name of type `sp.TString` initialization is missing or is invalid',
 
   pass: 'cannot have an empty function (add `pass`)',
 
-  'def defense(self):': 'defense function declaration error',
-  'def defense(self, params):': 'defense function declaration error',
-  'self.data.defense += params.defense':
-    'invalid or missing statement in defense function',
-  'self.data.player[sp.sender].defense += params.defense':
-    'invalid or missing statement in defense function',
+  '@sp.add_test(name = "Test Plant Contract")':
+    '@sp.add_test decorator missing or invalid',
 
-  'def assignChararter(self, params):':
-    'assignChararter function declaration error',
-  'self.data.player[params.sender] = self.data.stat':
-    'invalid or missing assignment statement in assignChararter()',
-  'self.data.player[sp.sender] = self.data.stat':
-    'invalid or missing assignment statement in assignChararter()',
-  'self.data.player[params.sender].name = params.name':
-    'invalid or missing assignment statement in assignChararter()',
-  'self.data.player[sp.sender].name = params.name':
-    'invalid or missing assignment statement in assignChararter()',
-  'sp.verify(~ self.data.player.contains(sp.sender), "User already has a plant")':
-    'missing or invalid verification in assignChararter()',
+  'def test():': 'test function declaration error',
 
-  'def endGame(self, params):': 'endGame function declaration error',
-  'self.data.player[sp.sender].is_alive = False':
-    'missing or invalid assignment in endGame function',
-  'sp.verify(self.data.player[sp.sender].health == 0, "You are alive!!!")':
-    'missing or invalid verification in endGame()',
+  'scenario = sp.test_scenario()':
+    'invalid or missing  test scenario declaration',
 
-  'def createMove(self, params):': 'createMove function declaration error',
-  'self.data.player[sp.sender].special_moves = params.moves':
-    'invalid or missing statmenet in createMove()',
+  'plant_test_contract = Plant()':
+    'invalid or missing Plant class initialization',
 
-  'sp.if ~ self.data.player.contains(sp.sender):':
-    'invalid or missing condition in `if` statement',
-  'sp.else:': 'missing else block',
+  'scenario += plant_test_contract':
+    'invalid or missing plant contract assignment',
+
+  '@sp.entry_point': '@sp.entry_point decorator missing or invalid',
+
+  'def change_name(self, params):': 'change_name function declaration error',
+
+  'self.data.name = params.new_name': 'invalid or missing name assignment',
+
+  'scenario += plant_test_contract.change_name(new_name = "funky peashooter")':
+    'invalid or missing change_name entry point function initialization',
+
+  'def __init__(self, life_state):':
+    'constructor initialization require a `self and life_state` parameter',
+
+  'is_alive = life_state': 'invalid or missing is_alive assignment',
+
+  'plant_test_contract =  Plant(life_state = True)':
+    'life_state of type `sp.TBool` initialization is missing or invalid',
+
+  'scenario.verify(plant_test_contract.data.is_alive == True)':
+    'invalid or missing scenario.verify method initialization',
+  //For chapter 10
+  'coordinate_x = sp.int(0),':
+    'coordinate_x of type `sp.TInt` initialization is missing or invalid',
+  'coordinate_y = sp.nat(0)':
+    'coordinate_y of type `sp.TNat` initialization is missing or invalid',
+  'def move_horizontally(self, update_to):':
+    'move_horizontally function declaration error',
+  'self.data.coordinate_x += update_to':
+    'invalid or missing coordinate_x assignment',
+  'def move_vertically(self, update_to):':
+    'move_vertically function declaration error',
+  'self.data.coordinate_y += update_to':
+    'invalid or missing coordinate_y assignment',
+  'scenario += plant_test_contract.move_horizontally(2)':
+    'invalid or missing move_horizontally method initialization',
+  'scenario += plant_test_contract.move_vertically(1)':
+    'invalid or missing move_vertically method initialization',
+  // 'self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100))':
+  //   'state variables initialization is missing or is invalid',
+
+  // 'self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True)':
+  //   'is_alive of type `sp.TBoolean` initialization is missing or is invalid',
+
+  // 'self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True, power_move = ("Bullet Seed", 95))':
+  //   'power_move of type `sp.TPair` initialization is missing or is invalid',
+
+  // 'self.init(stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True))':
+  //   'stat of type `sp.TRecord` initialization is missing or is invalid',
+
+  // 'self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True))':
+  //   'player of type `sp.TMap` initialization is missing or is invalid',
+
+  // 'self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True, special_moves = []))':
+  //   'special_moves array (sp.TList) initialization is missing or is invalid',
+
+  // '@sp.entry_point': '@sp.entry_point decorator missing or invalid',
+
+  // 'def attack(self):': 'attack function declaration error',
+  // 'def attack(self, params):': 'attack function declaration error',
+  // 'self.data.attack += params.attack':
+  //   'invalid or missing statement in attack function',
+  // 'self.data.player[sp.sender].attack += params.attack':
+  //   'invalid or missing statement in attack function',
+
+  // 'def defense(self):': 'defense function declaration error',
+  // 'def defense(self, params):': 'defense function declaration error',
+  // 'self.data.defense += params.defense':
+  //   'invalid or missing statement in defense function',
+  // 'self.data.player[sp.sender].defense += params.defense':
+  //   'invalid or missing statement in defense function',
+
+  // 'def assignChararter(self, params):':
+  //   'assignChararter function declaration error',
+  // 'self.data.player[params.sender] = self.data.stat':
+  //   'invalid or missing assignment statement in assignChararter()',
+  // 'self.data.player[sp.sender] = self.data.stat':
+  //   'invalid or missing assignment statement in assignChararter()',
+  // 'self.data.player[params.sender].name = params.name':
+  //   'invalid or missing assignment statement in assignChararter()',
+  // 'self.data.player[sp.sender].name = params.name':
+  //   'invalid or missing assignment statement in assignChararter()',
+  // 'sp.verify(~ self.data.player.contains(sp.sender), "User already has a plant")':
+  //   'missing or invalid verification in assignChararter()',
+
+  // 'def endGame(self, params):': 'endGame function declaration error',
+  // 'self.data.player[sp.sender].is_alive = False':
+  //   'missing or invalid assignment in endGame function',
+  // 'sp.verify(self.data.player[sp.sender].health == 0, "You are alive!!!")':
+  //   'missing or invalid verification in endGame()',
+
+  // 'def createMove(self, params):': 'createMove function declaration error',
+  // 'self.data.player[sp.sender].special_moves = params.moves':
+  //   'invalid or missing statmenet in createMove()',
+
+  // 'sp.if ~ self.data.player.contains(sp.sender):':
+  //   'invalid or missing condition in `if` statement',
+  // 'sp.else:': 'missing else block',
 };
 
 //-----Function to check user code and return error as object type {`line number`: `error message`}-----//
 
 /**
  *
- * @param {*} get --> value
- * @param {*} lesson --> current lesson number
+ * @param {*} get --> user input value
+ * @param {*} lesson --> current chapter solution
  * @returns {} {
  *  success: true/false
  *  error: `result[404][0] "at line" result[0].key(line number)`
@@ -337,36 +175,6 @@ var missing = {
 
 //remove blank spaces from user input
 export function checkCode(get, lesson) {
-  if (lesson === 1) {
-    lesson = l1;
-  } else if (lesson === 2) {
-    lesson = l2;
-  } else if (lesson === 3) {
-    lesson = l3;
-  } else if (lesson === 4) {
-    lesson = l4;
-  } else if (lesson === 5) {
-    lesson = l5;
-  } else if (lesson === 6) {
-    lesson = l6;
-  } else if (lesson === 7) {
-    lesson = l7;
-  } else if (lesson === 8) {
-    lesson = l8;
-  } else if (lesson === 9) {
-    lesson = l9;
-  } else if (lesson === 10) {
-    lesson = l10;
-  } else if (lesson === 11) {
-    lesson = l11;
-  } else if (lesson === 12) {
-    lesson = l12;
-  } else if (lesson === 13) {
-    lesson = l13;
-  } else if (lesson === 14) {
-    lesson = l15;
-  }
-
   // user - this is the array of each line of the code which user types in the editor,
   // lesson - this is the code from the above variables, ex: for lesson 1, use l1, lesson 3 - l2 and so on...
 
@@ -407,7 +215,7 @@ export function checkCode(get, lesson) {
   // console.log("USER2", user)
 
   // removing new lines and white spaces from the user's code
-  var userArray = user.filter(function (entry) {
+  var userArray = user.filter(function(entry) {
     return entry.trim() !== '';
   });
 
@@ -450,7 +258,7 @@ export function checkCode(get, lesson) {
   //   }
   // }
   // removing valid python comments starting with #
-  userArray = userArray.filter(x => x.trim()[0] !== '#');
+  // userArray = userArray.filter(x => x.trim()[0] !== '#');
 
   // getting all invalid comments `//` as valid comments `#` are already removed
   var commentsTest = userArray.filter(line => line.trim().includes('//', 0));
@@ -465,18 +273,60 @@ export function checkCode(get, lesson) {
 
   // updating user array and removing invalid comments as well
   // var userArray = userArray.filter(x => !x.trim().includes('//', 0));
-  var userRemoveInvalidCommentArray = userArray.filter(x => !x.trim().includes('//', 0));
-
+  var userRemoveInvalidCommentArray = userArray.filter(
+    x => !x.trim().includes('//', 0),
+  );
 
   // dict = {withoutSpace : withspaceOriginal}
-  userArray = {}
+  userArray = {};
 
   // replacing all spaces in lines
   for (var a in userRemoveInvalidCommentArray) {
-    userArray[userRemoveInvalidCommentArray[a].split(` , `).join(`,`).split(`, `).join(`,`).split(` ,`).join(`,`).split(` ~ `).join(`~`).split(`~ `).join(`~`).split(` ~`).join(`~`).split(` : `).join(`:`).split(`: `).join(`:`).split(` :`).join(`:`).split(`( `).join(`(`).split(` )`).join(`)`).split(` = `).join(`=`).split(`= `).join(`=`).split(` =`).join(`=`).split(` ' `).join(`'`).split(` '`).join(`'`).split(`' `).join(`'`).split(` " `).join(`"`).split(` "`).join(`"`).split(`" `).join(`"`)] = userRemoveInvalidCommentArray[a]
+    userArray[
+      userRemoveInvalidCommentArray[a]
+        .split(` , `)
+        .join(`,`)
+        .split(`, `)
+        .join(`,`)
+        .split(` ,`)
+        .join(`,`)
+        .split(` ~ `)
+        .join(`~`)
+        .split(`~ `)
+        .join(`~`)
+        .split(` ~`)
+        .join(`~`)
+        .split(` : `)
+        .join(`:`)
+        .split(`: `)
+        .join(`:`)
+        .split(` :`)
+        .join(`:`)
+        .split(`( `)
+        .join(`(`)
+        .split(` )`)
+        .join(`)`)
+        .split(` = `)
+        .join(`=`)
+        .split(`= `)
+        .join(`=`)
+        .split(` =`)
+        .join(`=`)
+        .split(` ' `)
+        .join(`'`)
+        .split(` '`)
+        .join(`'`)
+        .split(`' `)
+        .join(`'`)
+        .split(` " `)
+        .join(`"`)
+        .split(` "`)
+        .join(`"`)
+        .split(`" `)
+        .join(`"`)
+    ] = userRemoveInvalidCommentArray[a];
     // userArray[userRemoveInvalidCommentArray[a].substr(0,userRemoveInvalidCommentArray[a].length - userRemoveInvalidCommentArray[a].trimLeft().length) + userRemoveInvalidCommentArray[a].split(" ").join("")] = userRemoveInvalidCommentArray[a];
   }
-
 
   // console.log("USER", userArray);
   // --------------------------------
@@ -486,20 +336,60 @@ export function checkCode(get, lesson) {
 
   // removing new lines and white spaces from the correct code
   // var correctCodeArray = code.filter(function (entry) {
-  var correctCodeArrayWithSpace = code.filter(function (entry) {
+  var correctCodeArrayWithSpace = code.filter(function(entry) {
     return entry.trim() !== '';
   });
 
   // dict = {withoutSpace : withspaceOriginal}
-  var correctCodeArray = {}
+  var correctCodeArray = {};
 
   // replacing all spaces in lines
   for (var a in correctCodeArrayWithSpace) {
-    correctCodeArray[correctCodeArrayWithSpace[a].split(` , `).join(`,`).split(`, `).join(`,`).split(` ,`).join(`,`).split(` ~ `).join(`~`).split(`~ `).join(`~`).split(` ~`).join(`~`).split(` : `).join(`:`).split(`: `).join(`:`).split(` :`).join(`:`).split(`( `).join(`(`).split(` )`).join(`)`).split(` = `).join(`=`).split(`= `).join(`=`).split(` =`).join(`=`).split(` ' `).join(`'`).split(` '`).join(`'`).split(`' `).join(`'`).split(` " `).join(`"`).split(` "`).join(`"`).split(`" `).join(`"`)] = correctCodeArrayWithSpace[a];
+    correctCodeArray[
+      correctCodeArrayWithSpace[a]
+        .split(` , `)
+        .join(`,`)
+        .split(`, `)
+        .join(`,`)
+        .split(` ,`)
+        .join(`,`)
+        .split(` ~ `)
+        .join(`~`)
+        .split(`~ `)
+        .join(`~`)
+        .split(` ~`)
+        .join(`~`)
+        .split(` : `)
+        .join(`:`)
+        .split(`: `)
+        .join(`:`)
+        .split(` :`)
+        .join(`:`)
+        .split(`( `)
+        .join(`(`)
+        .split(` )`)
+        .join(`)`)
+        .split(` = `)
+        .join(`=`)
+        .split(`= `)
+        .join(`=`)
+        .split(` =`)
+        .join(`=`)
+        .split(` ' `)
+        .join(`'`)
+        .split(` '`)
+        .join(`'`)
+        .split(`' `)
+        .join(`'`)
+        .split(` " `)
+        .join(`"`)
+        .split(` "`)
+        .join(`"`)
+        .split(`" `)
+        .join(`"`)
+    ] = correctCodeArrayWithSpace[a];
     // correctCodeArray[correctCodeArrayWithSpace[a].substr(0,correctCodeArrayWithSpace[a].length - correctCodeArrayWithSpace[a].trimLeft().length) + correctCodeArrayWithSpace[a].split(" ").join("")] = correctCodeArrayWithSpace[a];
   }
-
-
 
   // console.log("CODE", correctCodeArray);
   // length of the array of user's code
@@ -511,20 +401,18 @@ export function checkCode(get, lesson) {
   // list of lines (code) that user didn't write
   // var missingFromUser = correctCodeArray.filter(w => !userArray.includes(w));
   var missingFromUser = []; // it has code without space
-  for(a in correctCodeArray){
-    if(userArray[a] === undefined){
+  for (a in correctCodeArray) {
+    if (userArray[a] === undefined) {
       missingFromUser.push(a);
-    }
-    else{
-      continue
+    } else {
+      continue;
     }
   }
-
 
   if (
     missingFromUser.indexOf('        pass') === -1 &&
     _.countBy(correctCodeArrayWithSpace)['        pass'] >
-    _.countBy(userRemoveInvalidCommentArray)['        pass']
+      _.countBy(userRemoveInvalidCommentArray)['        pass']
     // _.countBy(correctCodeArray)['        pass'] >
     // _.countBy(userArray)['        pass']
   ) {
@@ -534,7 +422,7 @@ export function checkCode(get, lesson) {
   if (
     missingFromUser.indexOf('    @sp.entry_point') === -1 &&
     _.countBy(correctCodeArrayWithSpace)['    @sp.entry_point'] >
-    _.countBy(userRemoveInvalidCommentArray)['    @sp.entry_point']
+      _.countBy(userRemoveInvalidCommentArray)['    @sp.entry_point']
   ) {
     missingFromUser.push('    @sp.entry_point');
   }
@@ -550,32 +438,31 @@ export function checkCode(get, lesson) {
   // list of extra lines (code) thats user wrote
   // var extraInUser = userArray.filter(w => !correctCodeArray.includes(w));
   var extraInUser = []; // it has code without space
-  for(a in userArray){
-    if(correctCodeArray[a] === undefined){
+  for (a in userArray) {
+    if (correctCodeArray[a] === undefined) {
       extraInUser.push(a);
-    }
-    else{
-      continue
+    } else {
+      continue;
     }
   }
 
-  //console.log('USER ARRAY', userArray);
-  //console.log('CORRECT ARRAY', correctCodeArray);
+  // console.log('USER ARRAY', userArray);
+  // console.log('CORRECT ARRAY', correctCodeArray);
 
   // console.log('MISSING', missingFromUser);
   // console.log('EXTRA', extraInUser);
 
   //l9 get pass
-  if (lesson === l9) {
-    missing['pass'] =
-      'Remove assignment statement in attack and defense functions as they are not valid at this moment. Add `pass`';
-  }
+  // if (lesson === l9) {
+  //   missing['pass'] =
+  //     'Remove assignment statement in attack and defense functions as they are not valid at this moment. Add `pass`';
+  // }
 
   // invalid statements of extra line of codes
   for (i in extraInUser) {
-    if ((lesson === l11 || lesson === l7) && extraInUser[i].trim() === 'pass') {
+    if (extraInUser[i].trim() === 'pass') {
       result[user.indexOf(userArray[extraInUser[i]]) + 1] =
-      // result[user.indexOf(extraInUser[i]) + 1] =
+        // result[user.indexOf(extraInUser[i]) + 1] =
         'Invalid statement, remove `pass and update the function with appropriate statement`';
       //console.log("RESULT", result);
     } else {
@@ -614,10 +501,8 @@ export function checkCode(get, lesson) {
 
     return FINAL_RESULT;
   } else {
-
     if (404 in result) {
-
-      RR = RR.filter(function (value) {
+      RR = RR.filter(function(value) {
         return value < 404;
       });
 
@@ -664,9 +549,7 @@ export function checkCode(get, lesson) {
       };
 
       return FINAL_RESULT;
-    }
-    else if (!(404 in result)) {
-
+    } else if (!(404 in result)) {
       var resFinal = [];
       var len = RR.length;
       for (var w = 0; w < len; w++) {
@@ -713,3 +596,5 @@ export function checkCode(get, lesson) {
   //     return result;
   // }
 }
+
+//Default error message: Error: Unexpected identifier at line x

@@ -1,51 +1,82 @@
 ---
-title: Booleans
+title: Initializing contract's storage
 chapter: Chapter 5
 slug: chapter-05
+filterBy: lesson-1
 editor:
+  showEditor: true
   language: python
   startingCode: |
     import smartpy as sp
 
     class Plant(sp.Contract):
-        def __init__(self, name):
-            # Initilize the required attribute
-            self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100))
+        # Define initialization function below
 
   answer: |  
     import smartpy as sp
 
     class Plant(sp.Contract):
-        def __init__(self, name):
-            # Initilize the required attribute
-            self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True)
+        # Define initialization function below
+        def __init__(self):
+            self.init(name = "peashooter")
 ---
 
-In this chapter, we are going to add `is_alive` attribute to check whether the plant is alive or not. This will allow us to easily check whether the plant is alive or dead if the Zombies got to it!
+### Intro:
 
-As you can see, this is a going to be a boolean value and hence in this chapter we will learn how Smartpy handles the `boolean` type. 
+In this chapter, we will give our plant a name and store it inside the contract!
 
-## How SmartPy handles boolean values?
-<br /> 
+Let us break the above down to arrive at what concepts you will be learning: 
 
-SmartPy has `sp.TBool`:
-
-* `True` is handled as `sp.bool(True)`
-* `False` is handled as `sp.bool(False)`
-
-In SmartPy, all the bitwise operators work the same way as in python, so for example, `True == ~False` is correct in SmartPy as well.
-
-## Put it to code: 
-
-<br /> 
-
-1. Declare boolean attribute `is_alive` 
-2. Initilize with `True` inside your contract storage.
+1. “Give our plant a name” - we will need to learn about variables. In the world of smart contracts, variables are more commonly referred to as state variables. 
+2. “And store it inside the contract” - we will need to learn about the concept of contract storage.  
 
 
-<br /> 
+Let's learn them in the reverse order since that is how the concepts relate with each other. 
 
-When you're finished: 
-* Click on "Check" to check your submission with the correct answer. 
-* Click on "Show Answer" in case you get stuck. 
 
+## Study Time: 
+
+### What is contract storage?
+
+Think of this as your contract’s personal database. Here is where your variables current state get stored. 
+
+When you deploy the contract on the blockchain, this storage becomes part of the global storage of all the contracts in the world! 
+
+
+## What are state variables? 
+
+State variables act as a single slot in the "contract storage”. 
+
+These can be queried and altered by functions inside the contract, which will be learning in [Chapter 7.](/Xkhpi7kAQQykEYbuY4_OsA)
+
+### Show me an example:
+
+```python
+import smartpy as sp
+
+class Bank(sp.Contract):
+    def __init__(self):
+        self.init(name = "World Bank")
+
+```
+
+Explaining the code above: 
+
+1. We scaffold the `Bank` contract as we had learnt in the previous chapter. 
+2. Next, using `__init__` we define an initialization method for `Bank` that determines the initial storage during contract origination. 
+3. `_init_` calls `self.init()` which assigns `name`, a state variable, with “World Bank” and stores it inside the “contract storage”. 
+
+
+### Python concept refresher: 
+
+Helpul links that may help in refreshing your Python concepts: 
+
+1. [Initializing a Python class.](https://docs.python.org/3/tutorial/classes.html#class-objects)
+
+
+
+## #buidl-ing time:
+Now let us practise what we learned so far and give a name to `Plant` contract`!
+
+1. Using `__init__`, define the initialization function of your `Plant` contract. 
+2. Define `name` variable and initialize it’s value with “peashooter” since that is the name of the species of the plant that you are growing. 

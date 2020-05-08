@@ -216,7 +216,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
 
   return (
     <Layout>
-      <SEO title={`Chapter: ${index.current} - Learning Interface`} />
+      <SEO title={`Ch ${index.current}: ${chapter.frontmatter.title}`} />
       {validation.success && showModal ? (
         <PlantGrowthModalView
           onToggle={onToggle}
@@ -243,14 +243,36 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                   }}
                 />
               ),
+              ol: props => (
+                <ol
+                  {...props}
+                  style={{
+                    marginBottom: 16,
+                    marginTop: 5,
+                    lineHeight: '1.75rem',
+                    color: '#333',
+                  }}
+                />
+              ),
+              li: props => (
+                <li
+                  {...props}
+                  style={{
+                    marginBottom: 10,
+                    marginTop: 10,
+                    lineHeight: '1.75rem',
+                    color: '#333',
+                  }}
+                />
+              ),
               h2: props => (
                 <h2
                   {...props}
                   style={{
                     marginTop: 40,
                     marginBottom: 16,
-                    color: '#333',
-                    fontWeight: 400,
+                    color: '#000',
+                    fontWeight: 700,
                     fontSize: '1.5rem',
                     paddingBottom: '0.3rem',
                     borderBottom: '1px solid #eee',
@@ -262,12 +284,27 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                   {...props}
                   style={{
                     marginTop: 40,
-                    marginBottom: 5,
-                    color: '#333',
+                    marginBottom: 16,
+                    color: '#000',
                     fontSize: '1.25rem',
-                    fontWeight: 400,
+                    fontWeight: 500,
                   }}
                 />
+              ),
+              h4: props => (
+                <h4
+                  {...props}
+                  style={{
+                    marginTop: 30,
+                    marginBottom: 16,
+                    color: '#000',
+                    fontSize: '1.1rem',
+                    fontWeight: 500,
+                  }}
+                />
+              ),
+              a: props => (
+                <a {...props} target="_blank" rel="noopener noreferrer" />
               ),
             }}
           >
@@ -283,6 +320,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           editorInputValue={editorInputValue}
           resetEditor={resetEditor}
           chapterCompletedSuccessfully={chapterCompletedSuccessfully}
+          chapterSolution={chapter.frontmatter.editor.answer}
         >
           <ControlledEditor
             height={`${editorHeight}`}

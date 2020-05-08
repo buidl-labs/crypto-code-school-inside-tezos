@@ -1,76 +1,57 @@
 ---
-title: Pairs
+title: Understanding how Smartpy infers data types
 chapter: Chapter 8
 slug: chapter-08
+filterBy: lesson-1
 editor:
+  showEditor: false
   language: python
   startingCode: |
-    import smartpy as sp
-
-    class Plant(sp.Contract):
-        def __init__(self, name):
-            # Initialize the required variable
-            self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True)
-
-        @sp.entry_point
-        def attack(self, params):
-            self.data.attack += params.attack
-
-        @sp.entry_point
-        def defense(self, params):
-            self.data.defense += params.defense
-
-  answer: |  
-    import smartpy as sp
-
-    class Plant(sp.Contract):
-        def __init__(self, name):
-            # Initialize the required variable
-            self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True, power_move = ("Bullet Seed", 95))
-
-        @sp.entry_point
-        def attack(self, params):
-            self.data.attack += params.attack
-
-        @sp.entry_point
-        def defense(self, params):
-            self.data.defense += params.defense
+  answer: |
 ---
 
-`Pair` is a unique datatype in SmartPy which is nothing but a pair of 2 values. It can be taken as a python tuple with only 2 values. These values can be of any primitive datatype and need not be the same. Its type is also inferred automatically.
+### Intro: 
+As readers familiar with Python would know that Python is a dynamically typed language. This is in contrast to languages like C, Rust, OCaml (the language with which Tezos blockchain is built in) which are statically typed languages. 
 
-To initialize a pair:
-```python
-example = ("", 0) 
-# this will initialize a pair with first element
-# as type of sp.TString and second as sp.TInt
-```
-Elements of a pair can be called by using `sp.fst(..)` to get the first element and `sp.snd(..)` to get the second element.
+For example, let us contrast how one would define a variable that stores the number 5 in C and Python. 
 
-Example:
+C Code: 
 
-```python
-sp.fst(example) # this will return the first value
-sp.snd(example) # this will return the second value
+```cpp
+int number = 5
 ```
 
-Elements of a `pair` is immutable, that means, you cannot reassign values to it's unique elements.
+Python Code: 
 
-Example:
 ```python
-sp.fst(test) = "change"
-# this will throw an error
+number = 5
 ```
 
-## Put it to code
-Declare and initialize a variable of type `(sp.TString, sp.TInt)` `power_move`, (attack_name, attack_power). 
-In this case as well, the type will be automatically inferred as `sp.TPair`
+As you can see, in Python you don’t need to define the type of `number` beforehand. The compiler does the heavy lifting to infer types for you. 
 
-1) Variable name: `power_move`,
+For more information on type checking in Python, we recommend skimming through this [article](https://realpython.com/python-type-checking/). 
 
-2) Name of the move: `Bullet Seed`
 
-3) Attack power: `95`
+## Study Time: 
 
+### Why bother learning about types? 
+Just like in Python, most of the time there is no need to specify the types in SmartPy. For a number of reasons (e.g. because SmartPy’s target language, Michelson, requires types), each SmartPy expression does however need a type.
+
+While most of the time you will not write many types explicitly it is beneficial to at least have a basic understanding of what they are. 
+
+**Understanding of types in Smartpy greatly helps in understanding & debugging error messages while writing smart contracts.**
+
+### How does Smartpy deal with types? 
+SmartPy uses type inference in order to determine each expression's type. In practice this means that information about an expression is gathered according to its usage. 
+
+Remember, that in Chapter 5 we learnt how to give our `Plant` a name?
+
+```python
+class Plant(sp.Contract):
+   def __init__(self):
+       self.init(name = "peashooter")
+```
+
+Here, Smartpy automatically determines and remembers that `name` is a variable that has `string` data type
 
 

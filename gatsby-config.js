@@ -71,6 +71,10 @@ module.exports = {
             family: `Sigmar One`,
             subsets: [`latin`],
           },
+          {
+            family: `Inter`,
+            variants: [`400`, `500`, `700`],
+          },
         ],
       },
     },

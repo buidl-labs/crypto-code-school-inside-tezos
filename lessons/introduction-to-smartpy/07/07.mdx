@@ -1,65 +1,143 @@
 ---
-title: Math Operations
+title: Creating a basic entry point function
 chapter: Chapter 7
 slug: chapter-07
+filterBy: lesson-1
 editor:
+  showEditor: true
   language: python
   startingCode: |
     import smartpy as sp
 
     class Plant(sp.Contract):
-        def __init__(self, name):
-            self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True)
-   
-        @sp.entry_point
-        def attack(self):
-            # Update the function
-            pass
-
-        @sp.entry_point
-        def defense(self):
-            # Update the function
-            pass
+    def __init__(self):
+        self.init(name = "peashooter")
+    
+        # Add change_name entry function below
+        
+            
+    @sp.add_test(name = "Testing giving plant a new name")
+    def test():
+        scenario = sp.test_scenario()
+        plant_test_contract =  Plant()
+        scenario += plant_test_contract
+        # Test change_name function below
 
   answer: |  
     import smartpy as sp
 
     class Plant(sp.Contract):
-        def __init__(self, name):
-            self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True)
-   
+    def __init__(self):
+        self.init(name = "peashooter")
+    
+        # Add change_name entry function below
         @sp.entry_point
-        def attack(self, params):
-            # Update the function
-            self.data.attack += params.attack
-
-        @sp.entry_point
-        def defense(self, params):
-            # Update the function
-            self.data.defense += params.defense
+        def change_name(self, params): 
+            self.data.name = params.new_name
+        
+            
+    @sp.add_test(name = "Testing giving plant a new name")
+    def test():
+        scenario = sp.test_scenario()
+        plant_test_contract =  Plant()
+        scenario += plant_test_contract
+        # Test change_name function below
+        scenario += plant_test_contract.change_name(new_name = "funky peashooter")
 ---
 
-The arithmetic operators +, -, *, %, // behave just like in Python.
+### Intro: 
 
-In SmartPy, type inference of arithmetic operators imposes that both sides have the same type.
+Now that you know how to define and test your `Plant` contract, time to start giving it small abilities!
 
-> For example, If zombie attack your plant, the plant's health will decrease.
-`self.data.health -= params.attack`, here both attack and health is assumed to be of type int.
+Previously you had given the name of `peashooter` to our `Plant` contract. But then, if you come up with a cooler name in the future, how do you go about changing the plant’s name? 
 
-## Put it to code
-Complete the attack and defense functions and upgrade attack and defense of your plant.
+In this chapter, you will learn to add a functionality that enables you to change your plant’s name using entry point functions!  
 
-1) Add other parameter `params` in `attack` and `defense` functions,
 
-2) Add `attack` points in the state variable `attack` using `attack` function
-```python 
-self.data.attack += params.attack
-```
+## Study Time: 
 
-3) Add `defense` points in the state variable `defense` using `defense` function
+### What are entry point functions? 
+
+Entry functions are basically class methods with the added superpowers to modify a contract's local storage! 
+
+These functions are mainly used to access and modify a contract's local storage after the contract is deployed. 
+
+### Show me an example: 
+
+Remember the example of our `Bank` contract from previous chapters:
+
 
 ```python
-self.data.defense += params.defense
+class Bank(sp.Contract):
+   def __init__(self):
+       self.init(name = "World Bank")
 ```
 
+Let us add an entry point function to the above contract so that we can modify `name`'s value:
+
+```python
+class Bank(sp.Contract):
+   def __init__(self):
+       self.init(name = "World Bank")
+   
+   @sp.entry_point
+   def modify_name(self, params):
+       self.data.name = params.new_name
+```
+
+Explaining the code above:
+
+1. We add a `@sp.entry_point` decorator to instruct the compiler that the following function is an entry point function.  
+
+2. We then define the `modify_name` function and pass `self` and a `params` argument. 
+    * `params` will contain the `new_name` that we would pass to this function
+
+3. Then we access `name`, which is a variable stored inside our contract storage, by using `self.data`. **This is an important concept to remember, for you anytime you need to access anything from the contract storage, you need to use `self.data`.**
+
+4. We then access `new_name` from the `params` and assign it to `self.data.name`. This code will change the `name` contents to whatever you send in the `new_name` variable! 
+
+Simple, right? Let us use our testing skills that we gained from Chapter 5 to test our newly created `modify_name` function! 
+
+
+```python
+class Bank(sp.Contract):
+   def __init__(self):
+       self.init(name = "World Bank")
+   
+   @sp.entry_point
+   def modify_name(self, params):
+       self.data.name = params.new_name
+    
+@sp.add_test(name = "Test Bank Contract")
+def test():
+    scenario = sp.test_scenario()
+ 
+    bank_test_contract =  Bank()
+    
+    scenario += bank_test_contract
+    scenario += bank_test_contract.modify_name(new_name = "Local Bank")
+```
+
+Explaining the code above:
+
+1. We had previously given our `Bank` contract the name of “World Bank”. 
+2. In our `test` function, we call the `modify_name` entry point function on `bank_test_contract`, which is an instance of `Bank`, and pass it a key `new_name` with it’s value set as “Local bank”. 
+
+
+The above code when run, will change the `name` variable's content from “World Bank” to “Local Bank”
+
+
+You can also tinker around with the above code on [Smartpy’s online IDE](https://smartpy.io/demo/index.html?code=eJyNUkFq5DAQvPsVRXKZYYMfEBjIJtc9LuSodKT2RKzcMpImYfL6SO1xbEIWYrBBcndVV3X5cYqpII@UynQGZeSp62ygnHFP8m@Xp_4hSklky_62A@B4gDFefDFmlzkM83V72qlvf3ZCI@OAq8eYglOgq32rau9dheSKeDZT9FIWzDE6P5xN61TYG0yUaMwr_PVM4KgQfMYps0OJIGu5TmsvUyKXmOjIPZa@tZ@P_YrR65CJB04sFQLlhaF3r5Q8PQdWKHZrv5fsHWvhVzrEQXWutF@IDhc9vfCbqtS6ruuaH@ScKZxX4_7Wg@Jhcb8a2GzSqosn2bLUUWNtqBjtj1mudvvuU_o1HhmDTxXRJqbCINQh0DblKfj36mNVVqi6sOoaUhwRTwlPbYwnaCYu6p7rjc5rPssPmPOy5f0trnkleGO4FKd68JtF1eVHZch@PAUqPorKA8urT1FGntOx6vx1@IZ6Q_hAIXg56oI2eYLGDRo3DCexM1WEfSE5zkv_AVG_jeiyxbasP9FS2KQc__18AI8cFc4-). Try running the test by clicking on the ▶️ button. 
+
+
+## #buidl-ing time:
+
+Let’s change our plant’s name from “peashooter” to “punky peashooter” by doing the following: 
+
+1. Add a `change_name` entry point function just after the scope of `__init__` initialization function finishes. 
+     * Pass `self` and `params` as arguments to `change_name` function. 
+     * Use `self.data.name` to access `Plant` contract’s internal storage. And assign it the value of `params.new_name`. 
+
+2. Test your newly created `change_name` function by calling `change_name` on `plant_test_contract`. 
+      * Pass `new_name` = “funky peashooter” as function argument. 
 

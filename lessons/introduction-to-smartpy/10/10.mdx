@@ -1,94 +1,164 @@
 ---
-title: Maps
+title: Tinkering with integers and basic math in Smartpy
 chapter: Chapter 10
 slug: chapter-10
+filterBy: lesson-1
 editor:
+  showEditor: true
   language: python
   startingCode: |
     import smartpy as sp
 
     class Plant(sp.Contract):
-        def __init__(self):
-            # Initialize state variable
-            self.init(stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True))
+        def __init__(self, is_alive):
+            self.init(
+                name = "peashooter",
+                is_alive = is_alive,
+                # Add coordinate_x and coordinate_y variables
+                # Init both with 0
 
+                )
+            
         @sp.entry_point
-        def attack(self, params):
-            pass
+        def change_name(self, params): 
+            self.data.name = params.new_name
+        
+        # Define move_horizontally entry point function
+        
+        
+        # Define move_vertically entry point function
 
-        @sp.entry_point
-        def defense(self, params):
-            pass
-
-        # Code from below
+    @sp.add_test(name = "Test plants movement")
+    def test():
+        scenario = sp.test_scenario()
+        plant_test_contract =  Plant(is_alive = True)
+        scenario += plant_test_contract
+        scenario += plant_test_contract.change_name(new_name = "punky peashooter")
+        scenario.verify(plant_test_contract.data.is_alive == True)
+        # Test your movement entry functions below
+        # Move plant forward by 2 and vertically by 1
 
   answer: |  
     import smartpy as sp
 
     class Plant(sp.Contract):
-        def __init__(self):
-            # Initialize state variable
-            self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True))
-    
+        def __init__(self, is_alive):
+            self.init(
+                name = "peashooter",
+                is_alive = is_alive,
+                # Add coordinate_x and coordinate_y variables
+                # Init both with 0
+                coordinate_x = sp.int(0), 
+                coordinate_y = sp.nat(0)
+                )
+        
         @sp.entry_point
-        def attack(self, params):
-            pass
-
+        def change_name(self, params): 
+            self.data.name = params.new_name
+        
+        # Define move_horizontally entry point function
         @sp.entry_point
-        def defense(self, params):
-            pass
-
-        # Code from below
+        def move_horizontally(self, update_to):
+            self.data.coordinate_x += update_to
+        
+        # Define move_vertically entry point function
         @sp.entry_point
-        def assignCharacter(self, params):
-            self.data.player[params.sender] = self.data.stat
-            self.data.player[params.sender].name = params.name
+        def move_vertically(self, update_to):
+            self.data.coordinate_y += update_to
+ 
+    @sp.add_test(name = "Test plants movement")
+    def test():
+        scenario = sp.test_scenario()
+        plant_test_contract =  Plant(is_alive = True)
+        scenario += plant_test_contract
+        scenario += plant_test_contract.change_name(new_name = "punky peashooter")
+        scenario.verify(plant_test_contract.data.is_alive == True)
+        # Test your movement entry functions below
+        # Move plant forward by 2 and vertically by 1
+        scenario += plant_test_contract.move_horizontally(2)
+        scenario += plant_test_contract.move_vertically(1)
 ---
 
-Maps are data structures that store key-value pairs. As a result, they enable smart contracts to create valuable associations between related information.
 
-Maps in SmartPy can be declared in the following manner:
+
+### Intro: 
+Let us quickly understand how integers are handled under the hood in Smartpy! 
+
+In the later half of the chapter, you will also learn to add movement ability to our `Plant`! 
+
+Watch out Zombies! 
+
+![Alt Text](https://media.giphy.com/media/qSOGIn9rUZEuA/giphy.gif)
+ 
+
+## Study Time: 
+
+### Integer:
+The type of integer values i.e `-42`, `4`, `10000`. 
+
+Most common use cases of integers are represented by the following types: 
+
+1. Non-negative integers: eg: 4 is represented by `sp.TInt`
+2. Signed integers: eg: -42 is represented by by `sp.TNat`
+
 ```python
-sp.TMap:  e.g. {'A': 65, 'B': 66, 'C'; 67}
+
+## x_coordinate is a variable that 
+## stores the current x coordinate of your plant. 
+## Range between [-10, 10]. 
+## Useful when you want to move your plant horizontally. 
+self.init(coordinate_x = 0)
+
+## y_coordinate is a variable 
+## that stores the current y coordinate of your plant. 
+## Range between [1, 5].  
+## Useful when you want to move your plant vertically.
+self.init(coordinate_y = 1)
+
+## Move 4 steps backward. 
+self.data.coordinate_x -= 4  
+
+## You can also explicitly give type by doing the following:
+self.data.coordinate_x = sp.int(-2)
+self.data.coordinate_y = sp.nat(3)
 ```
 
-sp.map(l = …, tkey = …, tvalue = …): Defines a map of (optional) elements in l with optional key type tkey and optional value type tvalue.
+Notes: 
 
-or either by
+1. In contrast with string and bool, if possible we recommend to set explicit type for integer values. 
+2. There is a third type as well called `sp.TIntOrNat` whose type is undetermined between `sp.TInt` or `sp.TNat`. This is an advanced concept which will be taught in later chapters. 
+3. You can read more in depth about how Smartpy handles integers [here](https://smartpy.io/demo/reference.html#_integers). 
 
-```python
-sp.TBigMap: e.g. {'A': 65, 'B': 66, 'C'; 67}
-```
+ 
 
-sp.big_map(l = …, tkey = …, tvalue = …): Defines a big_map of (optional) elements in l with optional key type tkey and optional value type tvalue.
+## #buidl-ing time:
 
-```python
-Example:
-sp.map(l={one: 1, two: 2}, tkey=sp.TString, tvalue=sp.TInt)
-```
-Container constructor names are uncapitalized, example: `{'A': 1, 'B': 2, 'C': 3}` 
+#### New feature request: 
 
-and their types are capitalized: `(sp.TMap) or (sp.TBigMap)`
+Our current plant lacks the ability to move! It is basically like this package at the moment: 
 
-SmartPy has an inbuilt function `map.contains(key)` to check if a certain key is already available in the mapping or not. If the key is present, then it will return `True`, otherwise `False`.
+![Alt Text](https://media.giphy.com/media/TeinpBGRY5UOc/giphy.gif)
 
-Mapping will be used to point your tezos wallet address with your character.
 
-## Put it to code
+How do you imagine a plant to hide and seek zombies without it being able to move? 
 
-1) Declare a variable `player` of type `sp.TMap`,
+#### Step by step walkthrough: 
 
-2) Create a callable function `assignCharacter` of type `self`, `params`,
+1. Let’s add `coordinate_x`, `coordinate_y` state variables to act as the initial coordinate of our `Plant`.
 
-3) Inside the function, assign the `stat` variable to the `sender's` using player `mapping` 
+    * Initialize `coordinate_x` with `sp.int(0)` as we know coordinate x can range from [-10, 10] i.e coordinate x can hold signed integers. 
 
-```python
-self.data.player[params.sender] = self.data.stat
-``` 
-   
-4) Inside the function, assign name to player's plant's name
+    * Initialize `coordinate_y` with `sp.nat(0)` as we know coordinate y can range from [0, 5] i.e coordinate y can only hold non-negative integers. 
 
-```python
-self.data.player[params.sender].name = params.name
-```
-which will take one string parameter `name` which will be name of your plant.
+2. Then add two entry point functions `move_horizontally` and `move_vertically` which will update the coordinates of our plant. 
+    * Both these functions take an argument `update_to`  which is used to update the coordinate's values. 
+
+We have left this exercise a little vauge so that you can practise working with state variables and entry point functions. Check out Chapter 5 and Chapter 7 for a quick refresher.  
+
+
+#### Testing our code: 
+
+Let us test our movement ability by moving it forward by 2 and vertically by 1: 
+
+1. Call `move_horizontally` and pass the value `2` 
+2. Call `move_vertically` and pass the value `1`

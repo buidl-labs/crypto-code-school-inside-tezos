@@ -1,48 +1,143 @@
 ---
-title: Creating A Entry Point Function
+title: Simulating initialization of contract with basic testing
 chapter: Chapter 6
 slug: chapter-06
+filterBy: lesson-1
 editor:
+  showEditor: true
   language: python
   startingCode: |
     import smartpy as sp
 
     class Plant(sp.Contract):
-        def __init__(self, name):
-            self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True)
+    def __init__(self):
+        self.init(name = "peashooter")
+        
+    # Add testing code below
 
-        # Code from below
 
   answer: |  
     import smartpy as sp
 
     class Plant(sp.Contract):
-        def __init__(self, name):
-            self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True)
-
-        # Code from below
-        @sp.entry_point
-        def attack(self):
-            pass
-
-        @sp.entry_point
-        def defense(self):
-            pass
+    def __init__(self):
+        self.init(name = "peashooter")
+        
+    # Add testing code below
+    @sp.add_test(name = "Test Plant Contract")
+    def test():
+        scenario = sp.test_scenario()
+        plant_test_contract = Plant()
+        scenario += plant_test_contract
 ---
 
-Entry Point is a method of a contract class that can be called from the outside. They must take a `self` parameter and an optional parameter `params` if the method takes user input. They need to be marked with the `@sp.entry_point` decorator. For example the following entry point checks that the argument given is greater than 2 or not.
+### Intro: 
+
+We know that testing is generally important while writing any kind of code. 
+
+But with smart contracts - whose main use case is found in dealing with exchanging digital value be it in the form of money, property rights, agreements etc - bugs can result in major loss of funds or breach of trust!
+
+Some major loss of funds due to bugs in smart contract code: 
+
+
+| Incidence | Loss of funds Hacked |
+| --------- | -------------- |
+| Infamous hack of [The DAO](https://hackingdistributed.com/2016/06/18/analysis-of-the-dao-exploit/)      | $150 million            |
+| Bug in Parity's Mulit-Sig Wallet caused | $150 million and above|
+
+
+Hence writing test code is an extremely crucial skill to learn to prevent hackers exploiting your code. Testing let's you simulate how of your smart contract will behave when finally deployed. 
+
+![Alt Text](https://media.giphy.com/media/YQitE4YNQNahy/giphy.gif)
+
+## Study Time: 
+
+We will learn testing in 3 steps: 
+
+1. First we create a testing enviroment. 
+2. Then we will define a scenario in our newly created testing environment. 
+3. Then we will use this scenario to simulate our `Plant` contract's initialization. 
+
+### Show me an example: 
+
+#### Step 1: Creating a test enviroment: 
+
+A test enviroment is added at the end of your smart contract's code. 
 
 ```python
-@sp.entry_point
-def checkValue(self, params):
-   sp.verify(params.x > 2)
+import smartpy as sp
+
+class Bank(sp.Contract):
+   ....
+    
+@sp.add_test(name = "Test Bank Contract")
+def test():
+   ....
+   
 ```
 
-## Put it to code
-Now let's create shell for attack and defense entry point function for your plant.
+Explaining the code above: 
 
-1) Declare an empty callable function `attack` with `self` parameter,
+1. We add a `@sp.add_test` decorator with a `name` variable to instruct the compiler that the code block after this will be used for testing. 
+2. We then follow it up with `test` function definition that creates our testing enviroment. 
+3. Inside this newly created testing enviroment, we will be writing the code to test our smart contract. 
 
-2) Declare an empty callable function `defense` with `self` parameter
+#### Step 2: Defining a scenario: 
 
+Think of the times you have run possible simulation of your odds when betting with your friends! 
+
+![Alt Text](https://media.giphy.com/media/BmmfETghGOPrW/giphy.gif)
+
+That's the exact intent behind creating a scenario as it let’s us create a boxed simulation environment where we can tinker with our smart contract!
+
+
+We add a scenario to our test by doing the following: 
+
+```python
+@sp.add_test(name = "Test Bank Contract")
+def test():
+    scenario = sp.test_scenario()
+```
+
+Explaining the code above: 
+
+1. We call `sp.test_scenario` - a functionality offered by the `smartpy` library. 
+2. And we store the instance of the test scenario we created into the `scenario` variable. 
+
+#### Step 3: Simulating initalization of contract
+
+
+```python
+@sp.add_test(name = "Test Bank Contract")
+def test():
+    scenario = sp.test_scenario()
+    
+    bank_test_contract =  Bank()
+    
+    scenario += bank_test_contract
+
+```
+
+Explaining the code above: 
+
+1. We need to add our contract to the simulation environment we had created before so that we can tinker with it. 
+2. To do the above, we first created a new initialized instance contract from our `Bank` class and stored it in `bank_test_contract`. 
+3. Then we add this instance to the scenario to drop our contract inside our simulation environment. 
+
+You can also tinker around with the above code on [Smartpy’s online IDE](https://smartpy.io/demo/index.html?code=eJxtkEtqwzAQhvc@xU@6cSj4AAVDH1coZKlMpTEVtUZGmjS0p68kx00L0WKkef3fjHxYYlLkQEmXL1BGXrrOzpQznkk@@rwML1E0kdX9QwfA8QRjvHg1ps88T2u4nuoNNdMLBcaI3SGm2TWh3X6r2m50j0WcnDPK@dryWpzWgY1bWiu0VV1g2bJQ8rE0FI2aMVuoX0HN3OHAmHwqijYxKYMgfEad0dPsv9mVd1YSy7AXHKYUA@Ip4VjHOKL9xrAqvpVIm9f8lo9Yf@ov90kc9J0FZ4ZLcSmOz1eCF42NkH04zaQ@SlsPLJ8@RQks@n_P@_EG@gq8ZX4An5CSAw--). Try running the test by clicking on the ▶️ button!
+
+
+### Python concept refresher: 
+1. [Python decorators 101](https://realpython.com/primer-on-python-decorators/)
+
+
+## #buidl-ing time:
+
+Now let us practise what we learned so far on our `Plant` contract: 
+
+
+1. Add a test with the name of “Test Plant Contract” using `@sp.add_test` decorator. 
+2. Then define a scenario by calling  `sp.test_scenario()`
+3. Initialize an instance of the `Plant` contract. 
+4. Add the initialized instance of the `Plant` contract to our scenario created in step 2. 
 
