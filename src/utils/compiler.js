@@ -99,8 +99,47 @@ var missing = {
     'invalid or missing move_horizontally method initialization',
   'scenario += plant_test_contract.move_vertically(1)':
     'invalid or missing move_vertically method initialization',
+
+  //For chapter 11
+  'bullet_seed_count = 5,':
+    'invalid or missing bullet_seed_count variable assignment',
+  'record_zombie_kills = {"simple_zombie":sp.nat(0), "boss_zombie":sp.nat(0)}':
+    'invalid or missing record_zombie_kills variable assignment',
+  'self.data.bullet_seed_count -= 1':
+    'invalid or missing bullet_seed_count variable assignment',
+  'self.data.record_zombie_kills[zombie_type] += 1':
+    'invalid or missing record_zombie_kills variable assignment',
+  'scenario += plant_test_contract.shoot_zombie("simple_zombie")':
+    'invalid or missing shoot_zombie method initialization',
+  'scenario += plant_test_contract.shoot_zombie("boss_zombie")':
+    'invalid or missing shoot_zombie method initialization',
+  //For chapter 12
+  'def __init__(self, life_state, manager_address):':
+    'constructor initialization require a `self, life_state and manager_address` parameter',
+  'plant_manager = manager_address,':
+    'invalid or missing plant_manager variable assignment',
+  'my_address = sp.address("tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj")':
+    'my_address of type `sp.TAddress` assignment is missing or is invalid',
+  'plant_test_contract =  Plant(life_state = True, manager_address = my_address)':
+    'invalid or missing plant_test_contract variable assignment',
+
+  //For chapter 13
+  'sp.verify(self.data.plant_manager == sp.sender, message = "Error: you are not the manager of this plant")':
+    'invalid or missing sp.verify method initialization',
+  'scenario += plant_test_contract.shoot_zombie("simple_zombie").run(sender = my_address)':
+    'invalid or missing run method initialization',
+  'scenario += plant_test_contract.shoot_zombie("boss_zombie").run(sender = my_address)':
+    'invalid or missing run method initialization',
+
+  //For chapter 14
+  'sp.else:': 'missing else block',
+  'sp.failwith("Error: you ran out of bullets! Please buy more!")':
+    'invalid or missing sp.failwith method initialization',
+  'sp.if self.data.bullet_seed_count >=1:':
+    'invalid or missing sp.if block initialization',
+
   // 'self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100))':
-  //   'state variables initialization is missing or is invalid',
+  // 'state variables initialization is missing or is invalid',
 
   // 'self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True)':
   //   'is_alive of type `sp.TBoolean` initialization is missing or is invalid',
@@ -173,11 +212,55 @@ var missing = {
  * }
  */
 
+/**
+ * Ignore Comments, semicolons, handle (double)"" and single('') quotes
+ */
+// TODO: refactor code logic for maintenance
+//In Progress
+// function getFilteredCode(code) {
+//   // splitting user's code to get array of lines
+//   let splittedCode = code.split('\n');
+
+//   // removing '\r' from the end of each element(line).
+//   for (const x in splittedCode) {
+//     splittedCode[x] = splittedCode[x].replace('\r', '');
+//   }
+
+//   // removing ; as it doesnot gives error
+//   for (const x in splittedCode) {
+//     splittedCode[x] = splittedCode[x].replace(';', '');
+//   }
+
+//   // replacing tabs with spaces
+//   for (const a in splittedCode) {
+//     splittedCode[a] = splittedCode[a].replace('\t', '  ');
+//   }
+
+//   // removing extra spaces from the end of line
+//   for (const a in splittedCode) {
+//     splittedCode[a] = splittedCode[a].trimRight();
+//   }
+
+//   // replacing (single quotes '') with (double quotes ")
+//   for (const a in splittedCode) {
+//     splittedCode[a] = splittedCode[a].split(`'`).join(`"`);
+//   }
+
+//   // removing new lines and white spaces from the user's code
+//   let filteredCode = splittedCode.filter(function(entry) {
+//     return entry.trim() !== '';
+//   });
+
+//   // removing valid python comments starting with #
+//   filteredCode = filteredCode.filter(x => x.trim()[0] !== '#');
+//   console.log('filteredCode', filteredCode);
+//   return filteredCode;
+// }
+
 //remove blank spaces from user input
 export function checkCode(get, lesson) {
   // user - this is the array of each line of the code which user types in the editor,
   // lesson - this is the code from the above variables, ex: for lesson 1, use l1, lesson 3 - l2 and so on...
-
   // result to be print result[line_number] = error message
   var result = {};
 
@@ -258,7 +341,7 @@ export function checkCode(get, lesson) {
   //   }
   // }
   // removing valid python comments starting with #
-  // userArray = userArray.filter(x => x.trim()[0] !== '#');
+  userArray = userArray.filter(x => x.trim()[0] !== '#');
 
   // getting all invalid comments `//` as valid comments `#` are already removed
   var commentsTest = userArray.filter(line => line.trim().includes('//', 0));
@@ -339,6 +422,10 @@ export function checkCode(get, lesson) {
   var correctCodeArrayWithSpace = code.filter(function(entry) {
     return entry.trim() !== '';
   });
+
+  correctCodeArrayWithSpace = correctCodeArrayWithSpace.filter(
+    x => x.trim()[0] !== '#',
+  );
 
   // dict = {withoutSpace : withspaceOriginal}
   var correctCodeArray = {};

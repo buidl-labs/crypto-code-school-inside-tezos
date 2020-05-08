@@ -2,93 +2,72 @@
 title: Tinkering with maps in Smartpy
 chapter: Chapter 11
 slug: chapter-11
+filterBy: lesson-1
 editor:
+  showEditor: true
   language: python
   startingCode: |
     import smartpy as sp
 
     class Plant(sp.Contract):
-
         def __init__(self, life_state):
-            
             self.init(
                 name = "peashooter",
                 is_alive = life_state,
-                
                 coordinate_x = sp.int(0), 
                 coordinate_y = sp.nat(0), 
+                # Add bullet_seed_count with 5 bullets:
                 
-                ## Add bullet_seed_count with 5 bullets:
-                
-                ## Add record_zombie_kills below:
-            )
+                # Add record_zombie_kills below:
+                )
             
-            @sp.entry_point
-            def change_name(self, params): 
-                self.data.name = params.new_name
+        @sp.entry_point
+        def change_name(self, params): 
+            self.data.name = params.new_name
             
-            @sp.entry_point
-            def move_horizontally(self, update_to):
-                self.data.coordinate_x += update_to
+        @sp.entry_point
+        def move_horizontally(self, update_to):
+            self.data.coordinate_x += update_to
             
-            @sp.entry_point
-            def move_vertically(self, update_to):
-                self.data.coordinate_y += update_to
+        @sp.entry_point
+        def move_vertically(self, update_to):
+            self.data.coordinate_y += update_to
 
                 
-            ## Add shoot_zombie function below
-            @sp.entry_point
-            def shoot_zombie(self, zombie_type): 
+        # Add shoot_zombie function below
+        @sp.entry_point
+        def shoot_zombie(self, zombie_type): 
+            # Reduce bullet_seed_count by fire_shot_count
                 
-                ## Reduce bullet_seed_count by 1
-                
-                ## Use zombie_type as key to access it's value 
-                ## and then increase it by 1
+            # Record the zombie that was shot
+            # and then increase it by 1 below
         
             
     @sp.add_test(name = "Test shooting")
     def test():
         scenario = sp.test_scenario()
-        
         plant_test_contract =  Plant(life_state = True)
-        
         scenario += plant_test_contract
-        
         scenario += plant_test_contract.change_name(new_name = "punky peashooter")
-        
         scenario.verify(plant_test_contract.data.is_alive == True)
-        
         scenario += plant_test_contract.move_horizontally(2)
-        
         scenario += plant_test_contract.move_vertically(1)
-        
-        ## Use shoot_zombie to kill 1 simple zombies and 1 boss zombie 
-    
-
-
+        # Use shoot_zombie to kill 1 simple zombies and 1 boss zombie
   answer: |  
     import smartpy as sp
 
     class Plant(sp.Contract):
-        
         def __init__(self, life_state):
-            
             self.init(
                 name = "peashooter",
                 is_alive = life_state,
-                
                 coordinate_x = sp.int(0), 
                 coordinate_y = sp.nat(0), 
-                
-                ## Add bullet_seed_count with 5 bullets:
+                # Add bullet_seed_count with 5 bullets:
                 bullet_seed_count = 5,
                 
-                ## Add record_zombie_kills below:
-                record_zombie_kills = {
-                    "simple_zombie": sp.nat(0), 
-                    "boss_zombie": sp.nat(0), 
-                }
-                
+                # Add record_zombie_kills below:
+                record_zombie_kills = {"simple_zombie":sp.nat(0), "boss_zombie":sp.nat(0)}
                 )
             
         @sp.entry_point
@@ -104,36 +83,28 @@ editor:
             self.data.coordinate_y += update_to
 
             
-        ## Add shoot_zombie function below
+        # Add shoot_zombie function below
         @sp.entry_point
         def shoot_zombie(self, zombie_type): 
-            
-            ## Reduce bullet_seed_count by fire_shot_count
+            # Reduce bullet_seed_count by fire_shot_count
             self.data.bullet_seed_count -= 1
             
-            ## Record the zombie that was shot
+            # Record the zombie that was shot
+            # and then increase it by 1 below
             self.data.record_zombie_kills[zombie_type] += 1
         
         
     @sp.add_test(name = "Test shooting")
     def test():
         scenario = sp.test_scenario()
-        
         plant_test_contract =  Plant(life_state = True)
-        
         scenario += plant_test_contract
-        
         scenario += plant_test_contract.change_name(new_name = "punky peashooter")
-        
         scenario.verify(plant_test_contract.data.is_alive == True)
-        
         scenario += plant_test_contract.move_horizontally(2)
-        
         scenario += plant_test_contract.move_vertically(1)
-        
-        ## Use shoot_zombie to kill 1 simple zombies and 1 boss zombie 
+        # Use shoot_zombie to kill 1 simple zombies and 1 boss zombie
         scenario += plant_test_contract.shoot_zombie("simple_zombie")
-        
         scenario += plant_test_contract.shoot_zombie("boss_zombie")
 ---
 
