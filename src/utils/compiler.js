@@ -113,6 +113,16 @@ var missing = {
     'invalid or missing shoot_zombie method initialization',
   'scenario += plant_test_contract.shoot_zombie("boss_zombie")':
     'invalid or missing shoot_zombie method initialization',
+  //For chapter 12
+  'def __init__(self, life_state, manager_address):':
+    'constructor initialization require a `self, life_state and manager_address` parameter',
+  'plant_manager = manager_address,':
+    'invalid or missing plant_manager variable assignment',
+  'my_address = sp.address("tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj")':
+    'my_address of type `sp.TAddress` assignment is missing or is invalid',
+  'plant_test_contract =  Plant(life_state = True, manager_address = my_address)':
+    'invalid or missing plant_test_contract variable assignment',
+
   // 'self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100))':
   //   'state variables initialization is missing or is invalid',
 

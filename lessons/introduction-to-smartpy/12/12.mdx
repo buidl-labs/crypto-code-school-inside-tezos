@@ -8,26 +8,17 @@ editor:
     import smartpy as sp
 
     class Plant(sp.Contract):
-    
-        # Pass manager_address as argument to the initialization function
+        # Pass manager_address as a parameter to the initialization function
         def __init__(self, life_state):
-            
             self.init(
                 # Add plant_manager variable below
-            
+
                 name = "peashooter",
                 is_alive = life_state,
-                
                 coordinate_x = sp.int(0), 
                 coordinate_y = sp.nat(0), 
-                
                 bullet_seed_count = 5,
-
-                record_zombie_kills = {
-                    "simple_zombie": sp.nat(0), 
-                    "boss_zombie": sp.nat(0), 
-                }
-                
+                record_zombie_kills = {"simple_zombie":sp.nat(0), "boss_zombie":sp.nat(0)}
                 )
             
         @sp.entry_point
@@ -42,38 +33,26 @@ editor:
         def move_vertically(self, update_to):
             self.data.coordinate_y += update_to
 
-            
         @sp.entry_point
-        def shoot_zombie(self, zombie_type):   
+        def shoot_zombie(self, zombie_type): 
             self.data.bullet_seed_count -= 1
-            
             self.data.record_zombie_kills[zombie_type] += 1
-        
-        
-            
+         
     @sp.add_test(name = "Test shooting")
     def test():
         scenario = sp.test_scenario()
+        # Define my_address variable below
+        # and give it the address value of tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj
         
-        ## Define my_address variable below
-        ## and give it the address value of tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj
-        
-        ## Pass my_address as value to manager_address and then use it to invoke the class
+        # Pass my_address as value to manager_address
+        # and then use it to invoke the class
         plant_test_contract =  Plant(life_state = True)
-    
-        
         scenario += plant_test_contract
-        
         scenario += plant_test_contract.change_name(new_name = "punky peashooter")
-        
         scenario.verify(plant_test_contract.data.is_alive == True)
-        
         scenario += plant_test_contract.move_horizontally(2)
-        
         scenario += plant_test_contract.move_vertically(1)
-        
         scenario += plant_test_contract.shoot_zombie("simple_zombie")
-        
         scenario += plant_test_contract.shoot_zombie("boss_zombie")
 
 
@@ -81,26 +60,17 @@ editor:
     import smartpy as sp
 
     class Plant(sp.Contract):
-    
-        # Pass manager_address as argument to the initialization function
-        def __init__(self, manager_address, life_state):
-            
+        # Pass manager_address as a parameter to the initialization function
+        def __init__(self, life_state, manager_address):
             self.init(
                 # Add plant_manager variable below
                 plant_manager = manager_address,
                 name = "peashooter",
                 is_alive = life_state,
-                
                 coordinate_x = sp.int(0), 
                 coordinate_y = sp.nat(0), 
-                
                 bullet_seed_count = 5,
-
-                record_zombie_kills = {
-                    "simple_zombie": sp.nat(0), 
-                    "boss_zombie": sp.nat(0), 
-                }
-                
+                record_zombie_kills = {"simple_zombie":sp.nat(0), "boss_zombie":sp.nat(0)}
                 )
             
         @sp.entry_point
@@ -115,38 +85,27 @@ editor:
         def move_vertically(self, update_to):
             self.data.coordinate_y += update_to
 
-            
         @sp.entry_point
-        def shoot_zombie(self, zombie_type):   
+        def shoot_zombie(self, zombie_type): 
             self.data.bullet_seed_count -= 1
-            
             self.data.record_zombie_kills[zombie_type] += 1
         
-        
-            
     @sp.add_test(name = "Test shooting")
     def test():
         scenario = sp.test_scenario()
-        
-        ## Define my_address variable below
-        ## and give it the address value of tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj
+        # Define my_address variable below
+        # and give it the address value of tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj
         my_address = sp.address("tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj")
         
-        ## Pass my_address as value to manager_address and then use it to invoke the class
-        plant_test_contract =  Plant(manager_address = my_address, life_state = True)
-        
+        # Pass my_address as value to manager_address
+        # and then use it to invoke the class
+        plant_test_contract =  Plant(life_state = True, manager_address = my_address)
         scenario += plant_test_contract
-        
         scenario += plant_test_contract.change_name(new_name = "punky peashooter")
-        
         scenario.verify(plant_test_contract.data.is_alive == True)
-        
         scenario += plant_test_contract.move_horizontally(2)
-        
         scenario += plant_test_contract.move_vertically(1)
-        
         scenario += plant_test_contract.shoot_zombie("simple_zombie")
-        
         scenario += plant_test_contract.shoot_zombie("boss_zombie")
 ---
 
