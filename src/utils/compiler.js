@@ -99,6 +99,20 @@ var missing = {
     'invalid or missing move_horizontally method initialization',
   'scenario += plant_test_contract.move_vertically(1)':
     'invalid or missing move_vertically method initialization',
+
+  //For chapter 11
+  'bullet_seed_count = 5,':
+    'invalid or missing bullet_seed_count variable assignment',
+  'record_zombie_kills = {"simple_zombie":sp.nat(0), "boss_zombie":sp.nat(0)}':
+    'invalid or missing record_zombie_kills variable assignment',
+  'self.data.bullet_seed_count -= 1':
+    'invalid or missing bullet_seed_count variable assignment',
+  'self.data.record_zombie_kills[zombie_type] += 1':
+    'invalid or missing record_zombie_kills variable assignment',
+  'scenario += plant_test_contract.shoot_zombie("simple_zombie")':
+    'invalid or missing shoot_zombie method initialization',
+  'scenario += plant_test_contract.shoot_zombie("boss_zombie")':
+    'invalid or missing shoot_zombie method initialization',
   // 'self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100))':
   //   'state variables initialization is missing or is invalid',
 
