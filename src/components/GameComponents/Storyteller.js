@@ -8,7 +8,7 @@ import FireSeed from '../../assets/Seeds/fire.svg';
 import GrassSeed from '../../assets/Seeds/grass.svg';
 import WaterSeed from '../../assets/Seeds/water.svg';
 import {
-  Modal,
+  GameModal,
   ModalMask,
   ModalWrapper,
   ModalBottom,
@@ -42,7 +42,7 @@ const StoryTeller = ({ display, plantType }) => {
         <div>
           <ModalWrapper>
             <ModalMask />
-            <Modal style={{ height: '75%', top: '12.5%' }}>
+            <GameModal>
               <div
                 style={{
                   position: 'absolute',
@@ -62,8 +62,8 @@ const StoryTeller = ({ display, plantType }) => {
                 <Heading>Save the Planet</Heading>
                 <SubHeading style={{ padding: '0 2rem' }}>
                   The school has bestowed upon you the <b> {plantType} </b>seed!
-                  <br /> <br /> Your task now is to incubate the seed and help
-                  it evolve before the zombies reach you.
+                  <br /> Your task now is to incubate the seed and help it
+                  evolve before the zombies reach you.
                   <br />
                   After completing all chapters, you will help your
                   fully-evolved plant in aiming to kill the zombies!
@@ -89,7 +89,7 @@ const StoryTeller = ({ display, plantType }) => {
                   </ProceedLink>
                 </div>
               </ModalBottom>
-            </Modal>
+            </GameModal>
           </ModalWrapper>
         </div>
       ) : (

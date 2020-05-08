@@ -249,6 +249,16 @@ export const Modal = styled.div`
   border-radius: 10px;
 `;
 
+export const GameModal = styled(Modal)`
+  height: 75%;
+  top: 12.5%;
+
+  @media only screen and (max-height: 700px) {
+    height: 79%;
+    top: 10.5%;
+  }
+`;
+
 export const ModalBottom = styled.div`
   position: absolute;
   width: 100%;

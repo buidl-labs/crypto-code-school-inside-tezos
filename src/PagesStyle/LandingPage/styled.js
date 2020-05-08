@@ -74,6 +74,10 @@ export const Logo = styled(LogoSVG)`
   max-width: 30vw;
   max-height: 25vh;
   margin: 40px 0;
+
+  @media only screen and (max-height: 700px) {
+    margin: 40px 0 0 0;
+  }
 `;
 
 export const HeroContainer = styled.div`
