@@ -17,6 +17,7 @@ import { Container, Output } from './chapter.styled';
 import PlantGrowthModalView from '../components/PlantGrowthModal';
 import { trackEventWithProperties } from '../utils/analytics';
 import SEO from '../components/Seo';
+import { PLANT_GROWTH } from '../components/Plants/PLANT_GROWTH';
 export const query = graphql`
   query($slug: String!) {
     mdx(frontmatter: { slug: { eq: $slug } }) {
@@ -162,11 +163,11 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
 
   useEffect(() => {
     switch (index.current) {
-      case 1:
-      case 3:
-      case 6:
-      case 11:
-      case 14:
+      case PLANT_GROWTH.STAGE_1:
+      case PLANT_GROWTH.STAGE_2:
+      case PLANT_GROWTH.STAGE_3:
+      case PLANT_GROWTH.STAGE_4:
+      case PLANT_GROWTH.STAGE_5:
         setModal(true);
         break;
     }

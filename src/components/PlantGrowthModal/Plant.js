@@ -102,7 +102,7 @@ export const Hair = styled(randomPlant.hair[generatedPlantId.hairId])`
 export const Head = styled(randomPlant.head[generatedPlantId.headId])`
   height: 100%;
   position: absolute;
-  left: 22.5%;
+  left: 20%;
   top: -25%;
   width: 90%;
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);

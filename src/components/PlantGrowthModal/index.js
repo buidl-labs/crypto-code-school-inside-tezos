@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react';
 import { IoIosClose } from 'react-icons/io';
 import { FaTwitter } from 'react-icons/fa';
 import { OutboundLink } from 'gatsby-plugin-amplitude-analytics';
-
+import { PLANT_GROWTH } from '../Plants/PLANT_GROWTH';
 const stages = [
   {
     stage: 0,
@@ -75,19 +75,19 @@ const PlantGrowthModalView = ({ currentChapter, nextSlug, onToggle }) => {
   const [stage, updateStage] = useState(() => {
     let stage = 0;
     switch (currentChapter) {
-      case 1:
+      case PLANT_GROWTH.STAGE_1:
         stage = 0;
         break;
-      case 3:
+      case PLANT_GROWTH.STAGE_2:
         stage = 1;
         break;
-      case 6:
+      case PLANT_GROWTH.STAGE_3:
         stage = 2;
         break;
-      case 11:
+      case PLANT_GROWTH.STAGE_4:
         stage = 3;
         break;
-      case 14:
+      case PLANT_GROWTH.STAGE_5:
         stage = 4;
         break;
     }
@@ -98,19 +98,19 @@ const PlantGrowthModalView = ({ currentChapter, nextSlug, onToggle }) => {
     if (isEvolved) {
       setTimeout(() => {
         switch (currentChapter) {
-          case 1:
+          case PLANT_GROWTH.STAGE_1:
             updateStage(1);
             break;
-          case 3:
+          case PLANT_GROWTH.STAGE_2:
             updateStage(2);
             break;
-          case 6:
+          case PLANT_GROWTH.STAGE_3:
             updateStage(3);
             break;
-          case 11:
+          case PLANT_GROWTH.STAGE_4:
             updateStage(4);
             break;
-          case 14:
+          case PLANT_GROWTH.STAGE_5:
             updateStage(5);
             break;
         }
