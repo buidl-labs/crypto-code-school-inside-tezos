@@ -16,22 +16,18 @@ export const ContentHeader = styled.div`
   padding: 1.5rem;
 `;
 
-export const ContentFrontmatterTitle = styled.p`
+export const ContentFrontmatterTitle = styled.h2`
   display: block;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 31px;
-  line-height: 36px;
   color: #0e1817;
+  margin-bottom: 0;
 `;
 
 export const ContentFrontmatterChapter = styled.p`
   display: block;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 21px;
-  line-height: 25px;
   color: #0e1817;
+  margin-bottom: 0;
+`;
+
+export const InnerContent = styled.div`
+  margin: 20px;
 `;

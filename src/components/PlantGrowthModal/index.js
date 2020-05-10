@@ -8,6 +8,7 @@ import { IoIosClose } from 'react-icons/io';
 import { FaTwitter } from 'react-icons/fa';
 import { OutboundLink } from 'gatsby-plugin-amplitude-analytics';
 import { PLANT_GROWTH } from '../Plants/PLANT_GROWTH';
+import StyledLink, { CustomLink } from '../StyledLink';
 const stages = [
   {
     stage: 0,
@@ -162,9 +163,9 @@ const PlantGrowthModalView = ({ currentChapter, nextSlug, onToggle }) => {
                 Evolve
               </EvolutionButton>
             ) : nextSlug ? (
-              <ProceedLink to={`/lesson/${nextSlug}`}>
+              <StyledLink to={`/lesson/${nextSlug}`}>
                 Proceed <FaChevronRight />
-              </ProceedLink>
+              </StyledLink>
             ) : (
               <ProceedLink to={`/tezos/game`}>
                 Proceed <FaChevronRight />
@@ -211,11 +212,6 @@ const ContentContainer = styled.div`
   align-items: center;
 
   h3 {
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: 300;
-    font-size: 54px;
-    line-height: 63px;
     text-align: center;
     color: #ffffff;
     margin: 10px 0;
@@ -227,11 +223,6 @@ const ContentContainer = styled.div`
   }
 
   p {
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: 100;
-    font-size: 20px;
-    line-height: 23px;
     text-align: center;
     margin-top: 0;
     max-width: 600px;
@@ -258,11 +249,6 @@ const ProceedLink = styled(Link)`
   border: none;
   width: 196px;
   height: 68px;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 26px;
-  line-height: 30px;
   color: #fff;
   transition: 0.3s;
   outline: none;
@@ -286,7 +272,7 @@ const ProceedLink = styled(Link)`
   }
 `;
 
-const EvolutionButton = ProceedLink.withComponent('button');
+const EvolutionButton = CustomLink.withComponent('button');
 
 const NextLink = styled(Link)`
   display: flex;
@@ -294,17 +280,13 @@ const NextLink = styled(Link)`
   align-items: center;
   text-decoration: none;
   margin-top: 10px;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 16px;
-  line-height: 30px;
   color: #fff;
   transition: 0.3s;
   outline: none;
 
   :hover {
     cursor: pointer;
+    color: #fff;
   }
 `;
 
@@ -312,7 +294,7 @@ const StyledOutboundLink = styled(OutboundLink)`
   position: absolute;
   top: 0;
   left: 0;
-  padding: 1rem;
+  padding: 0.5rem 1rem;
   background: #1b95e0;
   color: white;
   text-decoration: none;
@@ -328,6 +310,7 @@ const StyledOutboundLink = styled(OutboundLink)`
 
   :hover {
     background: #2ea6f1;
+    color: #fff;
   }
 `;
 

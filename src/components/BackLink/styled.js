@@ -5,12 +5,7 @@ export const BackLink = styled.button`
   align-items: center;
   justify-content: center;
   color: #fff;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
   text-decoration: none;
-  font-size: 23px;
-  line-height: 175%;
   margin: 10px;
   background: none;
   border: none;
@@ -28,6 +23,7 @@ export const BackLink = styled.button`
   }
 
   :hover {
+    color: #fff;
     cursor: pointer;
   }
 `;

@@ -11,16 +11,9 @@ export const Footer = styled.footer`
   p {
     background: #152023;
     padding-bottom: 20px;
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 15px;
-    line-height: 20px;
-    /* identical to box height */
-
     text-align: center;
-
     color: #335a55;
+    margin-bottom: 0;
   }
 `;
 
@@ -33,12 +26,6 @@ export const FooterInner = styled.div`
   > div:first-of-type {
     margin: 4rem;
     h3 {
-      font-family: Roboto;
-      font-style: normal;
-      font-weight: bold;
-      font-size: 30px;
-      line-height: 40px;
-
       color: #ffffff;
     }
   }
@@ -87,11 +74,6 @@ export const LinkContainer = styled.div`
   margin: 0 2rem;
 
   h4 {
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 20px;
-    line-height: 26px;
     color: #ffffff;
   }
 
@@ -99,16 +81,9 @@ export const LinkContainer = styled.div`
     list-style: none;
     margin-top: 1.5rem;
     padding: 0;
+    margin-left: 0;
 
     li {
-      font-family: Roboto;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 18px;
-      line-height: 26px;
-      margin-top: 1.5rem;
-      /* identical to box height */
-
       color: #768987;
     }
   }
@@ -120,14 +95,7 @@ export const LinkContainer = styled.div`
 
 export const NavigationLink = styled(Link)`
   text-decoration: none;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 18px;
-  line-height: 26px;
   margin-top: 2rem;
-  /* identical to box height */
-
   color: #768987;
   transition: 0.25s ease-in;
   :hover {
@@ -137,13 +105,7 @@ export const NavigationLink = styled(Link)`
 
 export const StyledOutboundLink = styled(OutboundLink)`
   text-decoration: none;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 18px;
-  line-height: 26px;
   margin-top: 2rem;
-  /* identical to box height */
 
   color: #768987;
   transition: 0.25s ease-in;
@@ -169,7 +131,7 @@ export const LOGO = styled.a`
       font-family: bebas-kai, sans-serif;
       font-style: normal;
       font-weight: 400;
-      font-size: 3rem;
+      font-size: 1.5rem;
       margin-top: 20px;
       margin-left: 10px;
     }
@@ -178,7 +140,7 @@ export const LOGO = styled.a`
       color: #d0d0d0;
       line-height: 1;
       font-weight: 200;
-      font-size: 1.6875rem;
+      font-size: 1rem;
       margin-left: 10px;
       margin-top: 1px;
     }

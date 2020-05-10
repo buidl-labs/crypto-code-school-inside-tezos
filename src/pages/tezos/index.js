@@ -91,7 +91,6 @@ const HomePage = () => {
         <div
           style={{
             background: 'linear-gradient(180deg, #1C423C 0%, #366961 100%)',
-            paddingBottom: '2rem',
           }}
         >
           <GridContainer style={{ paddingTop: '10rem' }}>

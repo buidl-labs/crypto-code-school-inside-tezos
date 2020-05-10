@@ -392,10 +392,23 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                         padding: 10,
                       }}
                     >
-                      <p style={{ color: '#18b77e', paddingBottom: 5 }}>
+                      <p
+                        style={{
+                          color: '#18b77e',
+                          paddingBottom: 5,
+                          fontSize: '0.9rem',
+                          marginBottom: '0',
+                        }}
+                      >
                         <span> > </span>Great, you got it right!
                       </p>
-                      <p style={{ color: '#18b77e' }}>
+                      <p
+                        style={{
+                          color: '#18b77e',
+                          fontSize: '0.9rem',
+                          marginBottom: '0',
+                        }}
+                      >
                         <span> > </span>Click 'next >' to continue.
                       </p>
                     </div>
@@ -415,6 +428,8 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                               fontFamily: "'Inconsolata', monospace",
                               color: '#d0454c',
                               paddingBottom: 5,
+                              fontSize: '0.9rem',
+                              marginBottom: '0',
                             }}
                           >
                             <span> {errorMessage ? '>' : ''} </span>

@@ -92,22 +92,17 @@ export const HeroContainer = styled.div`
       margin: 0 1rem;
     }
 
-    h1 {
+    ${'' /* h1 {
       font-size: 27px;
     }
 
     p {
       font-size: 14px;
-    }
+    } */}
   }
 `;
 
 export const HeroTitle = styled.h1`
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 40px;
-  line-height: 1.2;
   text-align: center;
   color: #ffffff;
   max-width: 900px;
@@ -115,12 +110,6 @@ export const HeroTitle = styled.h1`
 `;
 
 export const HeroSubheading = styled.p`
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 17px;
-  line-height: 162.69%;
-  /* or 31px */
   text-align: center;
   color: #98a4a6;
   max-width: 650px;
@@ -148,15 +137,6 @@ export const StartLink = styled(Link)`
   border: 5px solid rgba(41, 203, 106, 0.41);
   background: #29cb6a;
   border-radius: 7px;
-  width: 187px;
-  height: 74px;
-
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 20px;
-  line-height: 97.69%;
-  /* identical to box height, or 20px */
   color: #ffffff;
   transition: 0.3s;
   cursor: pointer;
@@ -168,6 +148,7 @@ export const StartLink = styled(Link)`
   }
 
   :hover {
+    color: #ffffff;
     box-shadow: 0 0 0 0.25rem rgba(41, 203, 106, 0.2);
   }
 
@@ -190,7 +171,7 @@ export const StartLink = styled(Link)`
 export const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
-  margin-bottom: 10rem;
+  padding-bottom: 10vh;
 `;
 
 export const GridContainer = styled.div`
@@ -212,13 +193,13 @@ export const GridContainer = styled.div`
       grid-row: 2;
     }
 
-    h2 {
+    ${'' /* h2 {
       font-size: 33px;
     }
 
     p {
       font-size: 14px;
-    }
+    } */}
   }
 `;
 
@@ -229,23 +210,11 @@ export const FlexContainer = styled.div`
   width: 80%;
   margin 1rem auto;
   h2 {
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 35px;
-    line-height: 1;
-    /* or 43px */
     color: #ffffff;
     margin-bottom: 1rem;
   }
 
   p {
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 162.69%;
-    /* or 31px */
     color: #98a4a6;
   }
 `;
