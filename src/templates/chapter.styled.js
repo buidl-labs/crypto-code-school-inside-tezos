@@ -21,6 +21,8 @@ export const Container = styled.div`
 `;
 
 export const Output = styled.div`
+  display: flex;
+  justify-content: space-between;
   height: 40px;
   background: #112425;
 
@@ -34,5 +36,19 @@ export const Output = styled.div`
     border-top: 1px solid #112425;
     font-family: Roboto;
     margin: 1p;
+  }
+
+  span {
+    svg {
+      color: white;
+      align-self: center;
+      display: flex;
+      width: 48px;
+      height: 40px;
+
+      :hover {
+        cursor: pointer;
+      }
+    }
   }
 `;

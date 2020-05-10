@@ -36,6 +36,8 @@ export const query = graphql`
   }
 `;
 
+import { IoIosClose } from 'react-icons/io';
+
 /*
 Saving user progress locally
 if user successfully completes the chapter: validation.success === true
@@ -324,7 +326,11 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           chapterSolution={chapter.frontmatter.editor.answer}
         >
           <ControlledEditor
-            height={`${editorHeight}`}
+            height={`${
+              buttonClicked
+                ? `calc(100vh - (250px + 200px + 40px))`
+                : `calc(100vh - (210px + 40px))`
+            }`}
             marWidth={`calc(100vw)`}
             value={editorInputValue}
             onChange={(_, value) => {
@@ -350,6 +356,13 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
               <div>
                 <Output>
                   <div>output</div>
+                  <span
+                    onClick={() => {
+                      setButtonClicked(false);
+                    }}
+                  >
+                    <IoIosClose />
+                  </span>
                 </Output>
                 <DiffEditor
                   height="200px"
@@ -377,6 +390,13 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
               <div>
                 <Output>
                   <div>output</div>
+                  <span
+                    onClick={() => {
+                      setButtonClicked(false);
+                    }}
+                  >
+                    <IoIosClose />
+                  </span>
                 </Output>
                 <div
                   style={{
