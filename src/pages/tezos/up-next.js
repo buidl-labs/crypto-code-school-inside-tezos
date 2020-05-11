@@ -41,7 +41,7 @@ function UpNextPage() {
       </>
       <MidContainer>
         <div>
-          <h2>Success</h2>
+          <h1>Success</h1>
           <div style={{ background: 'rgba(208, 252, 255, 0.15)' }}>
             <GrownPlant />
           </div>
@@ -113,15 +113,11 @@ const MidContainer = styled.div`
     justify-content: center;
     align-items: center;
 
-    h2 {
-      font-family: Roboto;
-      font-style: normal;
-      font-weight: 300;
-      font-size: 44px;
-      line-height: 52px;
-      /* identical to box height */
+    h1 {
       color: #ffffff;
       text-align: center;
+      margin: 0;
+      font-size: 2.5rem;
     }
 
     div {
@@ -133,11 +129,6 @@ const MidContainer = styled.div`
     }
 
     p {
-      font-family: Roboto;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 22px;
-      line-height: 34px;
       color: #ffffff;
       width: 348px;
       max-width: 100%;
@@ -199,20 +190,10 @@ const LearnNextContainer = styled.div`
   > div:last-of-type {
     margin-left: 36px;
     h3 {
-      font-family: Roboto;
-      font-style: normal;
-      font-weight: bold;
-      font-size: 28px;
-      line-height: 110%;
       color: #ffffff;
     }
     p {
       margin-top: 13px;
-      font-family: Roboto;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 23px;
-      line-height: 110%;
       color: rgba(255, 255, 255, 0.7);
     }
   }
@@ -229,12 +210,12 @@ const LearnNextContainer = styled.div`
     }
 
     > div:last-of-type {
-      h3 {
+      ${'' /* h3 {
         font-size: 24px;
       }
       p {
         font-size: 18px;
-      }
+      } */}
     }
   }
 `;
@@ -251,11 +232,6 @@ const BattleLink = styled(Link)`
   border-radius: 10px;
   width: 228px;
   height: 70px;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: 900;
-  font-size: 19px;
-  line-height: 22px;
   color: #ffffff;
   transition: 0.3s;
 

@@ -30,14 +30,9 @@ export const BackLink = styled.button`
   }
 `;
 
-export const LessonTitle = styled.h1`
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 23px;
-  text-align: center;
-  line-height: 27px;
+export const LessonTitle = styled.h2`
   color: #ffffff;
+  margin-bottom: 0;
 
   @media only screen and (max-width: 767px) {
     display: none;
@@ -51,20 +46,16 @@ export const HelpButton = styled(OutboundLink)`
   align-items: center;
   border: 2px solid #ffffff;
   box-sizing: border-box;
-  width: 118px;
+  width: 150px;
   height: 45px;
   background-color: #0e1817;
   color: #fff;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 18px;
   transition: 0.3s;
   margin-right: 1rem;
   cursor: pointer;
 
   :hover {
-    background-color: #fff;
-    color: #0e1817;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
   }
 `;

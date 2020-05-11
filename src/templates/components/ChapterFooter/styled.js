@@ -24,14 +24,9 @@ export const MenuButton = styled.button`
 
 export const ChapterTitle = styled.p`
   color: #fff;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 1.1rem;
-  line-height: 27px;
   margin-left: 1rem;
-  display: flex;
   align-self: center;
+  margin-bottom: 5px;
 `;
 
 export const PrevLink = styled(Link)`
@@ -40,14 +35,20 @@ export const PrevLink = styled(Link)`
   margin-left: 1rem;
   margin-right: 1rem;
   margin-top: 1px;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
   text-decoration: none;
   outline: none;
   > span {
     margin-left: 3px;
     align-self: center;
+  }
+
+  svg {
+    display: flex;
+    align-self: center;
+  }
+
+  :hover {
+    color: #fff;
   }
 
   ${'' /* > svg {
@@ -73,9 +74,6 @@ export const NextLink = styled(Link)`
   margin-left: 1rem;
   margin-right: 1rem;
   margin-top: 1px;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
   text-decoration: none;
   outline: none;
   transition: 0.3s;
@@ -83,6 +81,11 @@ export const NextLink = styled(Link)`
   span {
     align-self: center;
     margin-right: 3px;
+  }
+
+  svg {
+    display: flex;
+    align-self: center;
   }
 
   :hover {

@@ -17,6 +17,7 @@ export const SideDrawer = styled.div`
   ul {
     list-style-type: none;
     padding: 0;
+    margin-left: 0;
   }
 
   @media only screen and (max-width: 767px) {
@@ -36,11 +37,7 @@ export const Backdrop = styled.div`
 `;
 
 export const Title = styled.h2`
-  font-style: normal;
-  font-weight: 400;
-  font-size: 36px;
-  line-height: 40px;
-  text-align: left;
+  align-self: center;
   margin: 1rem;
   color: #ffffff;
 `;
@@ -50,16 +47,15 @@ export const ChapterLink = styled(Link)`
   color: #fff;
   text-align: left;
   padding: 0.5rem;
-  font-size: 18px;
   padding: 20px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   font-weight: 300;
   text-decoration: none;
-  color: #fff;
   transition: 0.25s ease-in;
 
   :hover {
     background: #202c2a;
+    color: #fff;
   }
 `;
 

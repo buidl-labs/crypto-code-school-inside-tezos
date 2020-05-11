@@ -22,11 +22,6 @@ const Layout = ({ children, background }) => {
           } */}
           html,
           body {
-            margin: 0;
-            color: #555;
-            font-family: 'Roboto';
-            font-size: 16px;
-            line-height: 19px;
             background: ${background ? background : 'none'};
             /* remove margin for the main div that Gatsby mounts into */
             > div {
