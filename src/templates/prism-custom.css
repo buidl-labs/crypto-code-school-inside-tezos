@@ -73,7 +73,6 @@ code.language-pythontext {
 }
 
 table {
-  padding: 0;
   margin: 15px 0;
 }
 table tr {
@@ -89,13 +88,13 @@ table tr th {
   border: 1px solid #cccccc;
   text-align: left;
   margin: 0;
-  padding: 6px 13px;
+  padding: 6px 13px !important;
 }
 table tr td {
   border: 1px solid #cccccc;
   text-align: left;
   margin: 0;
-  padding: 6px 13px;
+  padding: 6px 13px !important;
 }
 table tr th :first-child,
 table tr td :first-child {

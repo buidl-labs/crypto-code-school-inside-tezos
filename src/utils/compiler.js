@@ -73,7 +73,7 @@ var missing = {
     'invalid or missing change_name entry point function initialization',
 
   'def __init__(self, life_state):':
-    'constructor initialization require a `self and life_state` parameter',
+    'constructor initialization require a `self` and `life_state` parameter',
 
   'is_alive = life_state': 'invalid or missing is_alive assignment',
 
@@ -113,6 +113,7 @@ var missing = {
     'invalid or missing shoot_zombie method initialization',
   'scenario += plant_test_contract.shoot_zombie("boss_zombie")':
     'invalid or missing shoot_zombie method initialization',
+
   //For chapter 12
   'def __init__(self, life_state, manager_address):':
     'constructor initialization require a `self, life_state and manager_address` parameter',
