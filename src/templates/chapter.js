@@ -348,7 +348,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                 ? `calc(100vh - (${HeaderHeight} + ${FooterHeight} + ${ContractFileHeight} + ${OptionHeight} + ${OutputHeaderHeight} + ${OutputContentHeight}))`
                 : `calc(100vh - (${HeaderHeight} + ${FooterHeight} + ${ContractFileHeight} + ${OptionHeight}))`
             }`}
-            marWidth={`calc(100vw)`}
+            width={`calc(100vw - (100vw / 2.4))`}
             value={editorInputValue}
             onChange={(_, value) => {
               setEditorInputValue(value);
