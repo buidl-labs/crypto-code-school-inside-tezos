@@ -1,12 +1,16 @@
 import styled from '@emotion/styled';
-
+import {
+  ContractFileHeight,
+  OptionHeight,
+  EditorContainerMinWidth,
+} from '../../chapter.styled';
 export const ContractFile = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   grid-area: contractFile;
   background: #112425;
-  height: 50px;
+  height: ${ContractFileHeight};
 
   span {
     margin-right: 10px;
@@ -15,20 +19,26 @@ export const ContractFile = styled.div`
     }
   }
 
+  svg {
+    align-self: center;
+    display: flex;
+  }
+
   @media only screen and (min-width: 768px) {
-    width: calc(100vw - (100vw / 2.4));
+    width: ${EditorContainerMinWidth};
   }
 
   > p {
     background: #1b3738;
-    height: 50px;
     display: inline-block;
     margin-left: 1rem;
     color: #729e9f;
-    padding-top: 10px;
+    padding-top: 5px;
     padding-right: 25px;
     padding-left: 25px;
     margin-bottom: 0;
+    height: 100%;
+    font-size: 0.85rem;
   }
 `;
 export const Editor = styled.div`
@@ -39,22 +49,17 @@ export const Editor = styled.div`
 export const Option = styled.div`
   grid-area: option;
   background: #112425;
-  height: 60px;
+  height: ${OptionHeight};
   display: flex;
   justify-content: flex-end;
   @media only screen and (min-width: 768px) {
-    width: calc(100vw - (100vw / 2.4));
+    width: ${EditorContainerMinWidth};
   }
 `;
 export const CheckAnswerButton = styled.button`
   display: flex;
   padding: 0 30px 0 25px;
-  height: 60px;
   background-color: #18b77e;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 20px;
   color: #fff;
   margin: 0 15px;
   border: none;
@@ -83,12 +88,7 @@ export const CheckAnswerButton = styled.button`
 export const ShowAnswerButton = styled.button`
   display: flex;
   padding: 0 30px 0 20px;
-  height: 60px;
   background-color: #162f30;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 20px;
   color: #fff;
   margin: 0 10px;
   border: none;
