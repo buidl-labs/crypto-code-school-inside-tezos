@@ -65,7 +65,7 @@ var missing = {
 
   '@sp.entry_point': '@sp.entry_point decorator missing or invalid',
 
-  'def change_name(self, params):': 'change_name function declaration error',
+  'def change_name(self, new_name):': 'change_name function declaration error',
 
   'self.data.name = params.new_name': 'invalid or missing name assignment',
 
@@ -159,20 +159,20 @@ var missing = {
   // '@sp.entry_point': '@sp.entry_point decorator missing or invalid',
 
   // 'def attack(self):': 'attack function declaration error',
-  // 'def attack(self, params):': 'attack function declaration error',
+  // 'def attack(self, new_name):': 'attack function declaration error',
   // 'self.data.attack += params.attack':
   //   'invalid or missing statement in attack function',
   // 'self.data.player[sp.sender].attack += params.attack':
   //   'invalid or missing statement in attack function',
 
   // 'def defense(self):': 'defense function declaration error',
-  // 'def defense(self, params):': 'defense function declaration error',
+  // 'def defense(self, new_name):': 'defense function declaration error',
   // 'self.data.defense += params.defense':
   //   'invalid or missing statement in defense function',
   // 'self.data.player[sp.sender].defense += params.defense':
   //   'invalid or missing statement in defense function',
 
-  // 'def assignChararter(self, params):':
+  // 'def assignChararter(self, new_name):':
   //   'assignChararter function declaration error',
   // 'self.data.player[params.sender] = self.data.stat':
   //   'invalid or missing assignment statement in assignChararter()',
@@ -185,13 +185,13 @@ var missing = {
   // 'sp.verify(~ self.data.player.contains(sp.sender), "User already has a plant")':
   //   'missing or invalid verification in assignChararter()',
 
-  // 'def endGame(self, params):': 'endGame function declaration error',
+  // 'def endGame(self, new_name):': 'endGame function declaration error',
   // 'self.data.player[sp.sender].is_alive = False':
   //   'missing or invalid assignment in endGame function',
   // 'sp.verify(self.data.player[sp.sender].health == 0, "You are alive!!!")':
   //   'missing or invalid verification in endGame()',
 
-  // 'def createMove(self, params):': 'createMove function declaration error',
+  // 'def createMove(self, new_name):': 'createMove function declaration error',
   // 'self.data.player[sp.sender].special_moves = params.moves':
   //   'invalid or missing statmenet in createMove()',
 

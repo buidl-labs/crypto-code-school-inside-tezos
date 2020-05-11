@@ -20,17 +20,20 @@ editor:
                 )
             
         @sp.entry_point
-        def change_name(self, params): 
-            self.data.name = params.new_name
-        
+        def change_name(self, new_name): 
+            self.data.name = new_name        
             
     @sp.add_test(name = "Test whether plant is alive or not")
     def test():
         scenario = sp.test_scenario()
+        
         #4. Pass life_state = True to `Plant`’s class invocation:
         plant_test_contract =  Plant()
+        
         scenario += plant_test_contract
-        scenario += plant_test_contract.change_name(new_name = "punky peashooter")
+        
+        scenario += plant_test_contract.change_name("punky peashooter")
+        
         #5. Test for whether the plant is alive or not beneath: 
 
 
@@ -48,17 +51,20 @@ editor:
                 )
             
         @sp.entry_point
-        def change_name(self, params): 
-            self.data.name = params.new_name
-        
+        def change_name(self, new_name): 
+            self.data.name = new_name        
             
     @sp.add_test(name = "Test whether plant is alive or not")
     def test():
         scenario = sp.test_scenario()
+        
         #4. Pass life_state = True to `Plant`’s class invocation:
         plant_test_contract =  Plant(life_state = True)
+        
         scenario += plant_test_contract
-        scenario += plant_test_contract.change_name(new_name = "punky peashooter")
+        
+        scenario += plant_test_contract.change_name("punky peashooter")
+        
         #5. Test for whether the plant is alive or not beneath: 
         scenario.verify(plant_test_contract.data.is_alive == True)
 ---
@@ -151,4 +157,23 @@ But at the moment, there is no way to know whether your plant is dead or alive w
 
 1. In our test function, pass `life_state = True` as an argument when invoking `Plant` class 
 
-2. Using `scenario.verify`, a helper method provided by `sp.test_scenario`, we will check whether the current value of `is_alive` state variable is `True`,  in order to check whether the plant is alive. 
+2. We will use `scenario.verify`, to check the current whether plant is alive or not by checking the current value of `is_alive` state variable:
+
+
+```python
+## Syntax for using `scenario.verify`: 
+
+scenario.verify(condition)
+
+## Example usecase: 
+## To check whether Bank's current name is World Bank or not. 
+scenario.verify(bank_test_contract.data.name == "World Bank")
+
+```
+
+<br />
+
+When you’re finished:
+
+1. Click on “Check” to check your submission with the correct answer.
+2. Click on “Show Answer” in case you get stuck.

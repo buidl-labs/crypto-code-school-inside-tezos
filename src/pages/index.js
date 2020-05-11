@@ -11,7 +11,7 @@ const HomePage = () => {
   return (
     <>
       <SEO
-        title="Smartpy tutorial and tezos blockchain programming course"
+        title="SmartPy tutorial and tezos blockchain programming course"
         keywords={[
           `smartpy`,
           `python`,

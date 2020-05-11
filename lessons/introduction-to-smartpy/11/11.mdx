@@ -22,9 +22,8 @@ editor:
                 )
             
         @sp.entry_point
-        def change_name(self, params): 
-            self.data.name = params.new_name
-            
+        def change_name(self, new_name): 
+            self.data.name = new_name            
         @sp.entry_point
         def move_horizontally(self, update_to):
             self.data.coordinate_x += update_to
@@ -48,7 +47,7 @@ editor:
         scenario = sp.test_scenario()
         plant_test_contract =  Plant(life_state = True)
         scenario += plant_test_contract
-        scenario += plant_test_contract.change_name(new_name = "punky peashooter")
+        scenario += plant_test_contract.change_name("punky peashooter")
         scenario.verify(plant_test_contract.data.is_alive == True)
         scenario += plant_test_contract.move_horizontally(2)
         scenario += plant_test_contract.move_vertically(1)
@@ -71,9 +70,8 @@ editor:
                 )
             
         @sp.entry_point
-        def change_name(self, params): 
-            self.data.name = params.new_name
-        
+        def change_name(self, new_name): 
+            self.data.name = new_name        
         @sp.entry_point
         def move_horizontally(self, update_to):
             self.data.coordinate_x += update_to
@@ -99,7 +97,7 @@ editor:
         scenario = sp.test_scenario()
         plant_test_contract =  Plant(life_state = True)
         scenario += plant_test_contract
-        scenario += plant_test_contract.change_name(new_name = "punky peashooter")
+        scenario += plant_test_contract.change_name("punky peashooter")
         scenario.verify(plant_test_contract.data.is_alive == True)
         scenario += plant_test_contract.move_horizontally(2)
         scenario += plant_test_contract.move_vertically(1)

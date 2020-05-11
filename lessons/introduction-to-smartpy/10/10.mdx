@@ -20,9 +20,8 @@ editor:
                 )
             
         @sp.entry_point
-        def change_name(self, params): 
-            self.data.name = params.new_name
-        
+        def change_name(self, new_name): 
+            self.data.name = new_name        
         # Define move_horizontally entry point function
         
         
@@ -33,7 +32,7 @@ editor:
         scenario = sp.test_scenario()
         plant_test_contract =  Plant(is_alive = True)
         scenario += plant_test_contract
-        scenario += plant_test_contract.change_name(new_name = "punky peashooter")
+        scenario += plant_test_contract.change_name("punky peashooter")
         scenario.verify(plant_test_contract.data.is_alive == True)
         # Test your movement entry functions below
         # Move plant forward by 2 and vertically by 1
@@ -53,9 +52,8 @@ editor:
                 )
         
         @sp.entry_point
-        def change_name(self, params): 
-            self.data.name = params.new_name
-        
+        def change_name(self, new_name): 
+            self.data.name = new_name        
         # Define move_horizontally entry point function
         @sp.entry_point
         def move_horizontally(self, update_to):
@@ -71,7 +69,7 @@ editor:
         scenario = sp.test_scenario()
         plant_test_contract =  Plant(is_alive = True)
         scenario += plant_test_contract
-        scenario += plant_test_contract.change_name(new_name = "punky peashooter")
+        scenario += plant_test_contract.change_name("punky peashooter")
         scenario.verify(plant_test_contract.data.is_alive == True)
         # Test your movement entry functions below
         # Move plant forward by 2 and vertically by 1
