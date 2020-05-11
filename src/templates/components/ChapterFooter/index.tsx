@@ -35,13 +35,7 @@ function ChapterFooter({
     <Footer>
       <div>
         <MenuButton>
-          <IoIosMenu
-            data-delay-show="600"
-            data-tip="menu"
-            onClick={toggle}
-            size={36}
-            color="#fff"
-          />
+          <IoIosMenu onClick={toggle} size={36} color="#fff" />
           <ContentMenuSlider openDrawer={openDrawer} toggle={toggle} />
         </MenuButton>
         <ChapterTitle>
