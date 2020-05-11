@@ -27,7 +27,9 @@ editor:
     @sp.add_test(name = "Test Plant Contract")
     def test():
         scenario = sp.test_scenario()
+
         plant_test_contract = Plant()
+        
         scenario += plant_test_contract
 ---
 
@@ -35,20 +37,24 @@ editor:
 
 We know that testing is generally important while writing any kind of code. 
 
-But with smart contracts - whose main use case is found in dealing with exchanging digital value be it in the form of money, property rights, agreements etc - bugs can result in major loss of funds or breach of trust!
+But with smart contracts - whose main use case is found in dealing with exchanging digital value be it in the form of money, property rights, agreements etc - **bugs can result in major loss of funds!**
 
-Some major loss of funds due to bugs in smart contract code: 
+Examples of bugs in smart contract code that resulted in major loss of funds: 
 
-
-| Incidence | Loss of funds Hacked |
+| Incidence | Loss of funds in $ |
 | --------- | -------------- |
-| Infamous hack of [The DAO](https://hackingdistributed.com/2016/06/18/analysis-of-the-dao-exploit/)      | $150 million            |
-| Bug in Parity's Mulit-Sig Wallet caused | $150 million and above|
+| Infamous hack of [The DAO](https://hackingdistributed.com/2016/06/18/analysis-of-the-dao-exploit/)      | $150,000,000 |
+| [Bug in Parity's Mulit-Sig Wallet exploited](https://cointelegraph.com/news/parity-multisig-wallet-hacked-or-how-come) | $154,000,000 (approx)|
+| [dForce smart contracts drained](https://www.coindesk.com/attacker-drains-decentralized-protocol-dforce-of-25m-in-weekend-attack) | $25,000,000|
+| [dForce smart contracts drained](https://www.coindesk.com/attacker-drains-decentralized-protocol-dforce-of-25m-in-weekend-attack) | $25,000,000 |
+| [bZx smart contracts attacked twice](https://cointelegraph.com/news/decentralized-lending-protocol-bzx-hacked-twice-in-a-matter-of-days) | $954,000  |
+
+![Alt Text](https://media.giphy.com/media/YQitE4YNQNahy/giphy.gif)
+
 
 
 Hence writing test code is an extremely crucial skill to learn to prevent hackers exploiting your code. Testing let's you simulate how of your smart contract will behave when finally deployed. 
 
-![Alt Text](https://media.giphy.com/media/YQitE4YNQNahy/giphy.gif)
 
 ## Study Time: 
 
@@ -124,7 +130,7 @@ Explaining the code above:
 2. To do the above, we first created a new initialized instance contract from our `Bank` class and stored it in `bank_test_contract`. 
 3. Then we add this instance to the scenario to drop our contract inside our simulation environment. 
 
-You can also tinker around with the above code on [Smartpy’s online IDE](https://smartpy.io/demo/index.html?code=eJxtkEtqwzAQhvc@xU@6cSj4AAVDH1coZKlMpTEVtUZGmjS0p68kx00L0WKkef3fjHxYYlLkQEmXL1BGXrrOzpQznkk@@rwML1E0kdX9QwfA8QRjvHg1ps88T2u4nuoNNdMLBcaI3SGm2TWh3X6r2m50j0WcnDPK@dryWpzWgY1bWiu0VV1g2bJQ8rE0FI2aMVuoX0HN3OHAmHwqijYxKYMgfEad0dPsv9mVd1YSy7AXHKYUA@Ip4VjHOKL9xrAqvpVIm9f8lo9Yf@ov90kc9J0FZ4ZLcSmOz1eCF42NkH04zaQ@SlsPLJ8@RQks@n_P@_EG@gq8ZX4An5CSAw--). Try running the test by clicking on the ▶️ button!
+You can also tinker around with the above code on [SmartPy’s online IDE](https://smartpy.io/demo/index.html?code=eJxtkEtqwzAQhvc@xU@6cSj4AAVDH1coZKlMpTEVtUZGmjS0p68kx00L0WKkef3fjHxYYlLkQEmXL1BGXrrOzpQznkk@@rwML1E0kdX9QwfA8QRjvHg1ps88T2u4nuoNNdMLBcaI3SGm2TWh3X6r2m50j0WcnDPK@dryWpzWgY1bWiu0VV1g2bJQ8rE0FI2aMVuoX0HN3OHAmHwqijYxKYMgfEad0dPsv9mVd1YSy7AXHKYUA@Ip4VjHOKL9xrAqvpVIm9f8lo9Yf@ov90kc9J0FZ4ZLcSmOz1eCF42NkH04zaQ@SlsPLJ8@RQks@n_P@_EG@gq8ZX4An5CSAw--). Try running the test by clicking on the ▶️ button!
 
 
 ### Python concept refresher: 
@@ -136,8 +142,16 @@ You can also tinker around with the above code on [Smartpy’s online IDE](https
 Now let us practise what we learned so far on our `Plant` contract: 
 
 
-1. Add a test with the name of “Test Plant Contract” using `@sp.add_test` decorator. 
-2. Then define a scenario by calling  `sp.test_scenario()`
-3. Initialize an instance of the `Plant` contract. 
-4. Add the initialized instance of the `Plant` contract to our scenario created in step 2. 
+1. Add a test with the **name of “Test Plant Contract”** using `@sp.add_test` decorator. 
+2. Then follow it up with `test` function whose scope contains your testing code. 
+3. Inside `test` function, initialize a test scenario by calling  `sp.test_scenario()` and store it inside a `scenario` variable. 
+4. Initialize an instance of the `Plant` contract and store it inside `plant_test_contract`
+5. Use the initialized instance of `Plant` stored in `plant_test_contract`  and add it to the scenario created in step 3.
 
+
+<br />
+
+When you’re finished:
+
+1. Click on “Check” to check your submission with the correct answer.
+2. Click on “Show Answer” in case you get stuck.

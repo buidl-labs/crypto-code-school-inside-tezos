@@ -1,5 +1,5 @@
 ---
-title: Tinkering with addresses in Smartpy
+title: Tinkering with addresses in SmartPy
 chapter: Chapter 12
 slug: chapter-12
 filterBy: lesson-1
@@ -17,16 +17,22 @@ editor:
 
                 name = "peashooter",
                 is_alive = life_state,
+                
                 coordinate_x = sp.int(0), 
                 coordinate_y = sp.nat(0), 
+                
                 bullet_seed_count = 5,
-                record_zombie_kills = {"simple_zombie":sp.nat(0), "boss_zombie":sp.nat(0)}
-                )
+                
+                record_zombie_kills = {
+                    "simple_zombie": sp.nat(0),
+                    "boss_zombie": sp.nat(0)
+                }
+               )
             
         @sp.entry_point
-        def change_name(self, params): 
-            self.data.name = params.new_name
-        
+        def change_name(self, new_name):
+            self.data.name = new_name
+                 
         @sp.entry_point
         def move_horizontally(self, update_to):
             self.data.coordinate_x += update_to
@@ -43,18 +49,19 @@ editor:
     @sp.add_test(name = "Test shooting")
     def test():
         scenario = sp.test_scenario()
+       
         # Define my_address variable below
         # and give it the address value of tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj
+
         
         # Pass my_address as value to manager_address
         # and then use it to invoke the class
         plant_test_contract =  Plant(life_state = True)
+       
         scenario += plant_test_contract
-        scenario += plant_test_contract.change_name(new_name = "punky peashooter")
-        scenario.verify(plant_test_contract.data.is_alive == True)
-        scenario += plant_test_contract.move_horizontally(2)
-        scenario += plant_test_contract.move_vertically(1)
+              
         scenario += plant_test_contract.shoot_zombie("simple_zombie")
+       
         scenario += plant_test_contract.shoot_zombie("boss_zombie")
 
 
@@ -67,18 +74,25 @@ editor:
             self.init(
                 # Add plant_manager variable below
                 plant_manager = manager_address,
+                
                 name = "peashooter",
                 is_alive = life_state,
+                
                 coordinate_x = sp.int(0), 
                 coordinate_y = sp.nat(0), 
+                
                 bullet_seed_count = 5,
-                record_zombie_kills = {"simple_zombie":sp.nat(0), "boss_zombie":sp.nat(0)}
-                )
+                
+                record_zombie_kills = {
+                    "simple_zombie": sp.nat(0),
+                    "boss_zombie": sp.nat(0)
+                }
+               )
             
         @sp.entry_point
-        def change_name(self, params): 
-            self.data.name = params.new_name
-        
+        def change_name(self, new_name):
+            self.data.name = new_name
+                   
         @sp.entry_point
         def move_horizontally(self, update_to):
             self.data.coordinate_x += update_to
@@ -95,6 +109,7 @@ editor:
     @sp.add_test(name = "Test shooting")
     def test():
         scenario = sp.test_scenario()
+       
         # Define my_address variable below
         # and give it the address value of tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj
         my_address = sp.address("tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj")
@@ -102,12 +117,11 @@ editor:
         # Pass my_address as value to manager_address
         # and then use it to invoke the class
         plant_test_contract =  Plant(life_state = True, manager_address = my_address)
+       
         scenario += plant_test_contract
-        scenario += plant_test_contract.change_name(new_name = "punky peashooter")
-        scenario.verify(plant_test_contract.data.is_alive == True)
-        scenario += plant_test_contract.move_horizontally(2)
-        scenario += plant_test_contract.move_vertically(1)
+              
         scenario += plant_test_contract.shoot_zombie("simple_zombie")
+       
         scenario += plant_test_contract.shoot_zombie("boss_zombie")
 ---
 
@@ -121,7 +135,7 @@ The unique identifier points to an account on the blockchain and it looks like t
 tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj
 ```
 
-In this chapter we are going to learn how Smartpy handles addresses under the hood. In the later half of the chapter, we will add the ability to add ownership rights to our plant! 
+In this chapter we are going to learn how SmartPy handles addresses under the hood. In the later half of the chapter, we will add the ability to add ownership rights to our plant! 
 
 ## Study time: 
 
@@ -177,5 +191,16 @@ You are spending so much time evolving the plant’s abilities, that you had for
 1. Define `my_address` variable and give it the address value of `tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj`
 
 2. Pass `my_address` as value to `manager_address` function argument and then use it to invoke the `Plant` contract. 
+
+
+<br />
+
+When you’re finished:
+
+1. Click on “Check” to check your submission with the correct answer.
+2. Click on “Show Answer” in case you get stuck.
+
+
+You can also tinker around with the final code on [SmartPy’s online IDE](https://smartpy.io/demo/index.html?code=eJydVF1v0zAUfc@vsLKXVpSKwUDTpEmg8YA0IU1i4gGErNvktjVz7GA7LSniv@_acdu4DVVFnnKTc33O_fARVa2NY7YC4@qWgWW2zrJCgrXsQYJyI1tP77RyBgo3vskYPRfswf@uQMECDYeyNEgx5QKrwUCFDg1zmrklMqGEEyDFBpzQis0bVfiXcFCJc8a5R3A@sijnEybFHLl14HBySBDZ_eOxU5832n3qhH0oS1Z72TwmsxUYATOJbIZSrxN4Crw95JtkCVpRXQTKawS71JpKzCcJQFhOda48qFdFAkmCQmtTCkUg_ptyqM@C2v1qPPknrO1g9H4MS4JZIyU6bhFLXuhGOUp8e0KKwYJI@EZXM4H8SUhpKeNPgvFPbkVVS4zA_Kan5hg709YOIBPg3360_xVe3lMK0uK1vNbUmd3GFEtQC@R@HnFpFK5DeLghJTiYxrltManOk0SVXiFfaiM2tP8gZRvpmrr003B6kC8Z64vbPTo7j3CFxonif@jalO4kVVjhOJ3IE6fv2poayQaojrfq5S27HAAOrNP33uk_vM6Yl3mBdOG4Q@tG2zv2SEEnUahFPs684gCILbAFKrrXursP_g_ffhqFLYo@9RHnQiGr2p1JDdjBBQNVsoW_ucIFz9qDZYNME_fm8kvbvLmH4tt10V69vn4HVyu4Q_3ZrX99vf_0BPpnOKvHFKTFYJSfc0I@3q_I1mPbvr12eshYD5yqVwbJV6yxXSma3HelnzAUFTw9IDvfC10rorOT2mj3e@uib4@mOfZh75Q7Wftu72ZCwx1g6N27c@DTZEEPfOds0oNT@o40zp4BbL8idw--). Try running the test by clicking on the ▶️ button!
     
 

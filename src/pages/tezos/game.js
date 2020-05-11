@@ -276,7 +276,7 @@ const Game = () => {
     <Layout>
       <MainContainer>
         <Header>
-          <BackLink to={`/lesson/chapter-14`}>
+          <BackLink to={`/lesson/chapter-15`}>
             <LeftArrow />
             <span>Back</span>
           </BackLink>

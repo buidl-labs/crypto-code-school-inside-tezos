@@ -33,110 +33,140 @@ var missing = {
   'import smartpy as sp': 'import statement missing or invalid',
 
   'class Plant(sp.Contract):':
-    'class (Contract) declaration missing or invalid',
+    'Error in smart contract code: class (Contract) declaration missing or invalid',
 
   'def __init__(self):':
-    'constructor initialization missing or invalid or `self` parameter is not provided',
+    'Error in smart contract code: constructor initialization missing or invalid or `self` parameter is not provided',
 
   'def __init__(self, name):':
-    'constructor initialization require a `name & self` parameter',
+    'Error in smart contract code: constructor initialization requires a `name & self` parameter',
 
   'self.init(name = name)':
-    'name of type `sp.TString` initialization is missing or is invalid',
+    'Error in smart contract code: name initialization is missing/invalid in contract storage',
 
   'self.init(name = "peashooter")':
-    'name of type `sp.TString` initialization is missing or is invalid',
+    'Error in smart contract code: name initialization is missing or is invalid in contract storage',
 
-  pass: 'cannot have an empty function (add `pass`)',
+  pass:
+    'Error in smart contract code: cannot have an empty function (add `pass`)',
 
   '@sp.add_test(name = "Test Plant Contract")':
-    '@sp.add_test decorator missing or invalid',
+    'Error in testing code: @sp.add_test decorator missing or invalid',
 
-  'def test():': 'test function declaration error',
+  'def test():': 'Error in testing code: test function declaration error',
 
   'scenario = sp.test_scenario()':
-    'invalid or missing  test scenario declaration',
+    'Error in testing code: invalid or missing test scenario declaration',
 
   'plant_test_contract = Plant()':
-    'invalid or missing Plant class initialization',
+    'Error in testing code: invalid or missing Plant class invokation',
 
   'scenario += plant_test_contract':
-    'invalid or missing plant contract assignment',
+    'Error in testing code: invalid or missing plant_test_contract assignment to scenario',
 
-  '@sp.entry_point': '@sp.entry_point decorator missing or invalid',
+  '@sp.entry_point':
+    'Error in smart contract code: @sp.entry_point decorator missing or invalid',
 
-  'def change_name(self, params):': 'change_name function declaration error',
+  'def change_name(self, new_name):':
+    'Error in smart contract code: change_name function declaration error',
 
-  'self.data.name = params.new_name': 'invalid or missing name assignment',
+  'self.data.name = new_name':
+    'Error in smart contract code: invalid or missing new_name assignment to self.data.name',
 
-  'scenario += plant_test_contract.change_name(new_name = "funky peashooter")':
-    'invalid or missing change_name entry point function initialization',
+  'scenario += plant_test_contract.change_name("funky peashooter")':
+    'Error in testing code: invalid or missing change_name test call',
 
   'def __init__(self, life_state):':
-    'constructor initialization require a `self and life_state` parameter',
+    'Error in smart contract code: constructor initialization require a `self` and `life_state` parameter',
 
-  'is_alive = life_state': 'invalid or missing is_alive assignment',
+  'is_alive = life_state':
+    'Error in smart contract code: invalid or missing is_alive assignment',
 
   'plant_test_contract =  Plant(life_state = True)':
-    'life_state of type `sp.TBool` initialization is missing or invalid',
+    'Error in testing code: life_state is missing or invalid in Plant invokation',
 
   'scenario.verify(plant_test_contract.data.is_alive == True)':
-    'invalid or missing scenario.verify method initialization',
-  //For chapter 10
-  'coordinate_x = sp.int(0),':
-    'coordinate_x of type `sp.TInt` initialization is missing or invalid',
-  'coordinate_y = sp.nat(0)':
-    'coordinate_y of type `sp.TNat` initialization is missing or invalid',
-  'def move_horizontally(self, update_to):':
-    'move_horizontally function declaration error',
-  'self.data.coordinate_x += update_to':
-    'invalid or missing coordinate_x assignment',
-  'def move_vertically(self, update_to):':
-    'move_vertically function declaration error',
-  'self.data.coordinate_y += update_to':
-    'invalid or missing coordinate_y assignment',
-  'scenario += plant_test_contract.move_horizontally(2)':
-    'invalid or missing move_horizontally method initialization',
-  'scenario += plant_test_contract.move_vertically(1)':
-    'invalid or missing move_vertically method initialization',
+    'Error in testing code: invalid or missing scenario.verify helper method call',
 
+  //******************/
+  //For chapter 10
+
+  'coordinate_x = sp.int(0),':
+    'Error in smart contract code: coordinate_x of type `sp.TInt` variable initialization is missing or invalid in contract storage',
+
+  'coordinate_y = sp.nat(0)':
+    'Error in smart contract code: coordinate_y of type `sp.TNat` variable initialization is missing or invalid in contract storage',
+
+  'def move_horizontally(self, update_to):':
+    'Error in smart contract code: move_horizontally function declaration error',
+
+  'self.data.coordinate_x += update_to':
+    'Error in smart contract code: invalid or missing coordinate_x assignment',
+
+  'def move_vertically(self, update_to):':
+    'Error in smart contract code: move_vertically function declaration error',
+
+  'self.data.coordinate_y += update_to':
+    'Error in smart contract code: invalid or missing coordinate_y assignment',
+
+  'scenario += plant_test_contract.move_horizontally(2)':
+    'Error in testing code: invalid or missing move_horizontally test call',
+
+  'scenario += plant_test_contract.move_vertically(1)':
+    'Error in testing code: invalid or missing move_vertically test call',
+
+  //******************/
   //For chapter 11
   'bullet_seed_count = 5,':
-    'invalid or missing bullet_seed_count variable assignment',
+    'Error with smart contract code: invalid or missing bullet_seed_count variable init. in contract storage',
+
   'record_zombie_kills = {"simple_zombie":sp.nat(0), "boss_zombie":sp.nat(0)}':
-    'invalid or missing record_zombie_kills variable assignment',
+    'Error with smart contract code: invalid or missing record_zombie_kills variable init. in contract storage',
+
   'self.data.bullet_seed_count -= 1':
-    'invalid or missing bullet_seed_count variable assignment',
+    'Error with smart contract code: invalid or missing bullet_seed_count usage in shoot_zombie entry point function scope',
+
   'self.data.record_zombie_kills[zombie_type] += 1':
-    'invalid or missing record_zombie_kills variable assignment',
+    'Error with smart contract code: invalid or missing record_zombie_kills usage in shoot_zombie entry point function scope',
+
   'scenario += plant_test_contract.shoot_zombie("simple_zombie")':
-    'invalid or missing shoot_zombie method initialization',
+    'Error with testing code: invalid or missing shoot_zombie test call to kill "simple_zombie"',
+
   'scenario += plant_test_contract.shoot_zombie("boss_zombie")':
-    'invalid or missing shoot_zombie method initialization',
+    'Error with testing code: invalid or missing shoot_zombie test call to kill "boss_zombie"',
+
+  //******************/
   //For chapter 12
   'def __init__(self, life_state, manager_address):':
-    'constructor initialization require a `self, life_state and manager_address` parameter',
+    'Error with smart contract code: constructor initialization require a `self`, `life_state` and `manager_address` function parameters',
+
   'plant_manager = manager_address,':
-    'invalid or missing plant_manager variable assignment',
+    'Error with smart contract code: plant_manager variable initialization is missing/invalid in contract storage',
+
   'my_address = sp.address("tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj")':
-    'my_address of type `sp.TAddress` assignment is missing or is invalid',
+    'Error with smart contract code: my_address of type `sp.TAddress` assignment is missing or is invalid',
+
   'plant_test_contract =  Plant(life_state = True, manager_address = my_address)':
-    'invalid or missing plant_test_contract variable assignment',
+    'Error with testing code: manager_address key missing or invaild in Plant invokation call',
 
   //For chapter 13
   'sp.verify(self.data.plant_manager == sp.sender, message = "Error: you are not the manager of this plant")':
-    'invalid or missing sp.verify method initialization',
+    'Error with smart contract code: invalid or missing sp.verify method call',
+
   'scenario += plant_test_contract.shoot_zombie("simple_zombie").run(sender = my_address)':
-    'invalid or missing run method initialization',
+    'Error with testing code: invalid or missing shoot_zombie call test call with my_address as caller',
+
   'scenario += plant_test_contract.shoot_zombie("boss_zombie").run(sender = my_address)':
-    'invalid or missing run method initialization',
+    'Error with testing code: invalid or missing shoot_zombie call test call with my_address as caller',
 
   //For chapter 14
-  'sp.else:': 'missing else block',
+  'sp.else:': 'Error in smart contract code: missing of invalid sp.else block',
+
   'sp.failwith("Error: you ran out of bullets! Please buy more!")':
-    'invalid or missing sp.failwith method initialization',
-  'sp.if self.data.bullet_seed_count >=1:':
-    'invalid or missing sp.if block initialization',
+    'Error in smart contract code: invalid or missing sp.failwith helper method call in sp.else block',
+
+  'sp.if self.data.bullet_seed_count >= 1:':
+    'Error in smart contract code: invalid or missing sp.if block initialization',
 
   // 'self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100))':
   // 'state variables initialization is missing or is invalid',
@@ -159,20 +189,20 @@ var missing = {
   // '@sp.entry_point': '@sp.entry_point decorator missing or invalid',
 
   // 'def attack(self):': 'attack function declaration error',
-  // 'def attack(self, params):': 'attack function declaration error',
+  // 'def attack(self, new_name):': 'attack function declaration error',
   // 'self.data.attack += params.attack':
   //   'invalid or missing statement in attack function',
   // 'self.data.player[sp.sender].attack += params.attack':
   //   'invalid or missing statement in attack function',
 
   // 'def defense(self):': 'defense function declaration error',
-  // 'def defense(self, params):': 'defense function declaration error',
+  // 'def defense(self, new_name):': 'defense function declaration error',
   // 'self.data.defense += params.defense':
   //   'invalid or missing statement in defense function',
   // 'self.data.player[sp.sender].defense += params.defense':
   //   'invalid or missing statement in defense function',
 
-  // 'def assignChararter(self, params):':
+  // 'def assignChararter(self, new_name):':
   //   'assignChararter function declaration error',
   // 'self.data.player[params.sender] = self.data.stat':
   //   'invalid or missing assignment statement in assignChararter()',
@@ -185,13 +215,13 @@ var missing = {
   // 'sp.verify(~ self.data.player.contains(sp.sender), "User already has a plant")':
   //   'missing or invalid verification in assignChararter()',
 
-  // 'def endGame(self, params):': 'endGame function declaration error',
+  // 'def endGame(self, new_name):': 'endGame function declaration error',
   // 'self.data.player[sp.sender].is_alive = False':
   //   'missing or invalid assignment in endGame function',
   // 'sp.verify(self.data.player[sp.sender].health == 0, "You are alive!!!")':
   //   'missing or invalid verification in endGame()',
 
-  // 'def createMove(self, params):': 'createMove function declaration error',
+  // 'def createMove(self, new_name):': 'createMove function declaration error',
   // 'self.data.player[sp.sender].special_moves = params.moves':
   //   'invalid or missing statmenet in createMove()',
 

@@ -1,5 +1,5 @@
 ---
-title: Tinkering with maps in Smartpy
+title: Tinkering with maps in SmartPy
 chapter: Chapter 11
 slug: chapter-11
 filterBy: lesson-1
@@ -16,15 +16,19 @@ editor:
                 is_alive = life_state,
                 coordinate_x = sp.int(0), 
                 coordinate_y = sp.nat(0), 
+                
                 # Add bullet_seed_count with 5 bullets:
+
                 
                 # Add record_zombie_kills below:
+
+
                 )
             
         @sp.entry_point
-        def change_name(self, params): 
-            self.data.name = params.new_name
-            
+        def change_name(self, new_name):
+            self.data.name = new_name
+          
         @sp.entry_point
         def move_horizontally(self, update_to):
             self.data.coordinate_x += update_to
@@ -38,6 +42,7 @@ editor:
         @sp.entry_point
         def shoot_zombie(self, zombie_type): 
             # Reduce bullet_seed_count by fire_shot_count
+
                 
             # Record the zombie that was shot
             # and then increase it by 1 below
@@ -46,13 +51,13 @@ editor:
     @sp.add_test(name = "Test shooting")
     def test():
         scenario = sp.test_scenario()
+        
         plant_test_contract =  Plant(life_state = True)
+        
         scenario += plant_test_contract
-        scenario += plant_test_contract.change_name(new_name = "punky peashooter")
-        scenario.verify(plant_test_contract.data.is_alive == True)
-        scenario += plant_test_contract.move_horizontally(2)
-        scenario += plant_test_contract.move_vertically(1)
+
         # Use shoot_zombie to kill 1 simple zombies and 1 boss zombie
+
   answer: |  
     import smartpy as sp
 
@@ -63,17 +68,22 @@ editor:
                 is_alive = life_state,
                 coordinate_x = sp.int(0), 
                 coordinate_y = sp.nat(0), 
+               
                 # Add bullet_seed_count with 5 bullets:
                 bullet_seed_count = 5,
                 
                 # Add record_zombie_kills below:
-                record_zombie_kills = {"simple_zombie":sp.nat(0), "boss_zombie":sp.nat(0)}
+                record_zombie_kills = {
+                    "simple_zombie": sp.nat(0),
+                    "boss_zombie": sp.nat(0)
+                }
+
                 )
             
         @sp.entry_point
-        def change_name(self, params): 
-            self.data.name = params.new_name
-        
+        def change_name(self, new_name):
+            self.data.name = new_name
+       
         @sp.entry_point
         def move_horizontally(self, update_to):
             self.data.coordinate_x += update_to
@@ -97,19 +107,18 @@ editor:
     @sp.add_test(name = "Test shooting")
     def test():
         scenario = sp.test_scenario()
+        
         plant_test_contract =  Plant(life_state = True)
+        
         scenario += plant_test_contract
-        scenario += plant_test_contract.change_name(new_name = "punky peashooter")
-        scenario.verify(plant_test_contract.data.is_alive == True)
-        scenario += plant_test_contract.move_horizontally(2)
-        scenario += plant_test_contract.move_vertically(1)
+      
         # Use shoot_zombie to kill 1 simple zombies and 1 boss zombie
         scenario += plant_test_contract.shoot_zombie("simple_zombie")
         scenario += plant_test_contract.shoot_zombie("boss_zombie")
 ---
 
 ### Intro: 
-Let us quickly understand how maps are handled under the hood in Smartpy! 
+Let us quickly understand how maps are handled under the hood in SmartPy! 
 
 In the later half of the chapter, you will adding the ability to shoot as well as the ability to record zombie kills! 
 
@@ -127,7 +136,7 @@ Maps are containers that store elements formed by a combination of a key and a m
 
 You might recognize the familiarity with Python’s [dictionaries](https://docs.python.org/3/tutorial/datastructures.html#dictionaries). 
 
-Maps are represented by type `sp.TMap(key, value)` in Smartpy. 
+Maps are represented by type `sp.TMap(key, value)` in SmartPy. 
 
 ```python
 ## record_zombie_kills is a variable that records your kill count for various types of zombies. 
@@ -152,7 +161,7 @@ Notes:
 1. Since we know beforehand that kill counts cannot be negative, kill counts are given the type `sp.TNat` using `sp.nat`
 2. As you can see, map is a container data type that can hold simple data types like strings, int, boolean etc. 
 3. By that logic, the inferred type of `record_zombie_kills` is  `sp.TMap(sp.TString, sp.TNat)`
-5. You can read more in depth about how Smartpy handles maps [here](https://smartpy.io/demo/reference.html#_maps_and_big_maps). 
+5. You can read more in depth about how SmartPy handles maps [here](https://smartpy.io/demo/reference.html#_maps_and_big_maps). 
 
 
 
@@ -170,22 +179,34 @@ Let’s also add the ability to record zombie kills. This is going to be importa
 
 #### Step-by-step walkthrough: 
 
-1. Add `bullet_seed_count ` to our contract's storage and initialize with 5 bullets. 
+1. Add `bullet_seed_count ` to our contract's storage and initialize with <span class="string-highlight">5</span> bullets. 
 2. Add `record_zombie_kills` to our contract's storage and initialize with: 
-    * key `simple_zombie` and it's value as 0 of type `sp.TNat`
+    * key `simple_zombie` and it's value as <span class="string-highlight">0</span> of type `sp.TNat`
 
-    * key `boss_zombie` and it's value as 0 of type `sp.TNat`
+    * key `boss_zombie` and it's value as <span class="string-highlight">0</span> of type `sp.TNat`
 
 3. Complete the `shoot_zombie` function's code by adding code: 
-    * to reduce `bullet_seed_count` by 1
-    * use `zombie_type` argument as key to access it's value in `record_zombie_kills` map and increase it by 1. 
+    * to reduce `bullet_seed_count` by <span class="string-highlight">1</span>.
+    * use `zombie_type` argument as key to access it's value in `record_zombie_kills` map and increase it by  <span class="string-highlight">1</span>. 
 
 
  
 
 #### Testing our code:
 
-Let us test our `shoot_zombie` function by  shoot 2 bullet seeds, 1 aimed at simple zombie and 1 aimed towards boss zombie respectively: 
+Let us test our `shoot_zombie` function by  shoot <span class="string-highlight">2</span> bullet seeds, <span class="string-highlight">1</span> aimed at simple zombie and <span class="string-highlight">1</span>  aimed towards boss zombie respectively: 
 
-1. Call `shoot_zombie` and pass it the value of `"simple_zombie"` 
-2. Call `shoot_zombie` and pass it the value of `"boss_zombie"` 
+1. Call `shoot_zombie` and pass it the value of <span class="string-highlight">"simple_zombie"</span>
+2. Call `shoot_zombie` and pass it the value of <span class="string-highlight">"boss_zombie"</span>
+
+<br />
+
+When you’re finished:
+
+1. Click on “Check” to check your submission with the correct answer.
+2. Click on “Show Answer” in case you get stuck.
+
+
+You can also tinker around with the final code on [SmartPy’s online IDE](https://smartpy.io/demo/index.html?code=eJydVMGO2yAQvfsrRsklVtOoOewlUqRW_YGq2p6qCmE8WaNisAAn9Vb99w42ic3a20bLCYY382aGx8i6MdaDq7n1TQfcgWuyTCjuHHxRXPuNa3afjfaWC58fMqBV4gkYk1p6xjYO1WkLSp6QOc89RkxY4WoXYJubKSzNa4QjrBrkrjLGo11tE4B0jCt5DqAxbgoRxthSarKzXwSjHCWl@iHfwmuwboDRfg5LDmv4VJZQtEqhZw6xZMK02sNF@goe4oU7JD5z9BEeiOR_LBYFJcieTV1IZD@lUg4KVOaShl@CHeF3gglr5WTdKIzA1WFS8BxbGOcWkAnwT5aWMN72m4_khSSNjjWG@n8Th6i4fkIWHjrqQ@OlP75UR8k930VBXDHZHQy1OSOrjJXPJE2uVBd52qYMj@3NIlGimnfHEX1fWT3pGa2X4i2UXUo518agif5PxIeBU6uFl0YPqvhndlO_mFoUjO8aavyovzV8xbIVuCDbooOTtPTlKorVmxZqmru9P8L@FbEHsqBe8BXGhGjL6T@FWUM0EyTXPUyD1MLSdECQfUr7SflpKgs_4_uk6h@h5fvsms_4zKGJvCyZR@c314H0SIehjVI_rfIsdLUHxJd1AjW30gyTJNywq2mTjwRNGJt9ZOrOMDjJI07TcaCR7dG2OHG8xaekF4KMwDV8o94kQvEGQvXUqmEGxFa7vqfUP_rs0XQP1S4R04uxkr8hwnTYxIr_Aglr7UY-). Try running the test by clicking on the ▶️ button!
+
+

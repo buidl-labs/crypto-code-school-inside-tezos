@@ -20,6 +20,9 @@ export const ContentFrontmatterTitle = styled.h2`
   display: block;
   color: #0e1817;
   margin-bottom: 0;
+  margin-top: 0;
+  font-size: 1.8rem;
+  border-bottom: none;
 `;
 
 export const ContentFrontmatterChapter = styled.p`

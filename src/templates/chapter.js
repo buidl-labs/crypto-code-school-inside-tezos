@@ -357,12 +357,12 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
             theme="myCustomTheme"
             options={{
               lineNumbers: true,
-              scrollBeyondLastLine: true,
+              scrollBeyondLastLine: false,
               minimap: { enabled: false },
               scrollbar: { vertical: 'hidden', verticalScrollbarSize: 0 },
               folding: true,
               readOnly: false,
-              fontSize: 16,
+              fontSize: 14,
               fontFamily: "'Inconsolata', monospace",
               wordWrap: true,
               wordBasedSuggestions: false,
@@ -391,12 +391,12 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                   theme="myCustomTheme"
                   options={{
                     lineNumbers: false,
-                    scrollBeyondLastLine: true,
+                    scrollBeyondLastLine: false,
                     minimap: { enabled: false },
                     scrollbar: { vertical: 'hidden', verticalScrollbarSize: 0 },
                     folding: false,
                     readOnly: true,
-                    fontSize: 16,
+                    fontSize: 14,
                     fontFamily: "'Inconsolata', monospace",
                     renderSideBySide: false,
                     wordWrap: true,
@@ -437,7 +437,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                           marginBottom: '0',
                         }}
                       >
-                        <span> > </span>Great, you got it right!
+                        <span> > </span>Bingo! You wrote the correct answer!
                       </p>
                       <p
                         style={{
@@ -446,7 +446,8 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                           marginBottom: '0',
                         }}
                       >
-                        <span> > </span>Click 'next >' to continue.
+                        <span> > </span>Proceed to the next chapter by clicking
+                        on 'next >' to continue
                       </p>
                     </div>
                   ) : (

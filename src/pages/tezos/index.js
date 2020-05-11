@@ -42,7 +42,7 @@ const HomePage = () => {
     >
       <div style={{ willChange: 'transform' }}>
         <SEO
-          title="Smartpy tutorial and tezos blockchain programming course"
+          title="SmartPy tutorial and tezos blockchain programming course"
           keywords={[
             `smartpy`,
             `python`,
@@ -66,7 +66,7 @@ const HomePage = () => {
               <Logo />
             </div>
             <HeroTitle>
-              Learn to code Tezos blockchain DApps in Smartpy <br />
+              Learn to code Tezos blockchain DApps in SmartPy <br />
             </HeroTitle>
             <HeroSubheading>
               Crypto Plants Vs Zombies teaches you to write smart contracts in
@@ -98,7 +98,7 @@ const HomePage = () => {
               <img src={learningInterface} width="90%" height="90%" />
             </div>
             <FlexContainer>
-              <h2>Interactive Code School to master Smartpy</h2>
+              <h2>Interactive Code School to master SmartPy</h2>
               <p>
                 The school walks you through the very basics of SmartPy to
                 kickstart your smart contract development journey in the Tezos

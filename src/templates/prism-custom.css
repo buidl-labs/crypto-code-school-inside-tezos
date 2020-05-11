@@ -17,8 +17,14 @@ code.language-pythontext {
   color: #18b77e;
   padding: 0.2em 0.5em !important;
   font-size: 85%;
+  font-weight: 700 !important;
   background-color: #f7f7f7 !important;
   border-radius: 3px;
+}
+
+.string-highlight {
+  color: #927501;
+  font-weight: 700;
 }
 
 /**
@@ -67,25 +73,34 @@ code.language-pythontext {
 }
 
 table {
-  margin-bottom: 20px;
+  margin: 15px 0;
 }
-
+table tr {
+  border-top: 1px solid #cccccc;
+  background-color: white;
+  margin: 0;
+}
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
 table tr th {
-  background: #222;
-  color: #fff;
-  padding: 0;
-  text-align: center;
   font-weight: bold;
+  border: 1px solid #cccccc;
+  text-align: left;
+  margin: 0;
+  padding: 6px 13px !important;
 }
 table tr td {
-  border: 1px #ccc solid;
-  padding: 5px;
-}
-table tr td.rightright {
-  background: #eee;
-}
-table tr td h4 {
+  border: 1px solid #cccccc;
+  text-align: left;
   margin: 0;
-  padding: 0;
-  font-weight: normal;
+  padding: 6px 13px !important;
+}
+table tr th :first-child,
+table tr td :first-child {
+  margin-top: 0;
+}
+table tr th :last-child,
+table tr td :last-child {
+  margin-bottom: 0;
 }

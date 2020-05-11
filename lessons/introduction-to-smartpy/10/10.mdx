@@ -1,5 +1,5 @@
 ---
-title: Tinkering with integers and basic math in Smartpy
+title: Tinkering with integers and basic math in SmartPy
 chapter: Chapter 10
 slug: chapter-10
 filterBy: lesson-1
@@ -14,15 +14,16 @@ editor:
             self.init(
                 name = "peashooter",
                 is_alive = is_alive,
-                # Add coordinate_x and coordinate_y variables
-                # Init both with 0
+
+                ## Add coordinate_x and coordinate_y variables
+                ## Init both with 0 using sp.int and sp.nat respectively 
 
                 )
             
         @sp.entry_point
-        def change_name(self, params): 
-            self.data.name = params.new_name
-        
+        def change_name(self, new_name):
+            self.data.name = new_name
+ 
         # Define move_horizontally entry point function
         
         
@@ -31,10 +32,11 @@ editor:
     @sp.add_test(name = "Test plants movement")
     def test():
         scenario = sp.test_scenario()
+        
         plant_test_contract =  Plant(is_alive = True)
+        
         scenario += plant_test_contract
-        scenario += plant_test_contract.change_name(new_name = "punky peashooter")
-        scenario.verify(plant_test_contract.data.is_alive == True)
+                
         # Test your movement entry functions below
         # Move plant forward by 2 and vertically by 1
 
@@ -46,16 +48,17 @@ editor:
             self.init(
                 name = "peashooter",
                 is_alive = is_alive,
-                # Add coordinate_x and coordinate_y variables
-                # Init both with 0
+
+                ## Add coordinate_x and coordinate_y variables
+                ## Init both with 0 using sp.int and sp.nat respectively 
                 coordinate_x = sp.int(0), 
                 coordinate_y = sp.nat(0)
                 )
         
         @sp.entry_point
-        def change_name(self, params): 
-            self.data.name = params.new_name
-        
+        def change_name(self, new_name):
+            self.data.name = new_name
+
         # Define move_horizontally entry point function
         @sp.entry_point
         def move_horizontally(self, update_to):
@@ -69,10 +72,11 @@ editor:
     @sp.add_test(name = "Test plants movement")
     def test():
         scenario = sp.test_scenario()
+       
         plant_test_contract =  Plant(is_alive = True)
+       
         scenario += plant_test_contract
-        scenario += plant_test_contract.change_name(new_name = "punky peashooter")
-        scenario.verify(plant_test_contract.data.is_alive == True)
+        
         # Test your movement entry functions below
         # Move plant forward by 2 and vertically by 1
         scenario += plant_test_contract.move_horizontally(2)
@@ -82,7 +86,7 @@ editor:
 
 
 ### Intro: 
-Let us quickly understand how integers are handled under the hood in Smartpy! 
+Let us quickly understand how integers are handled under the hood in SmartPy! 
 
 In the later half of the chapter, you will also learn to add movement ability to our `Plant`! 
 
@@ -94,12 +98,12 @@ Watch out Zombies!
 ## Study Time: 
 
 ### Integer:
-The type of integer values i.e `-42`, `4`, `10000`. 
+The type of integer values i.e <span class="string-highlight">-42</span>, <span class="string-highlight">4</span>, <span class="string-highlight">10000</span>. 
 
 Most common use cases of integers are represented by the following types: 
 
-1. Non-negative integers: eg: 4 is represented by `sp.TInt`
-2. Signed integers: eg: -42 is represented by by `sp.TNat`
+1. Non-negative integers: eg: <span class="string-highlight">4</span> is represented by `sp.TInt`
+2. Signed integers: eg: <span class="string-highlight">-42</span> is represented by by `sp.TNat`
 
 ```python
 
@@ -125,9 +129,9 @@ self.data.coordinate_y = sp.nat(3)
 
 Notes: 
 
-1. In contrast with string and bool, if possible we recommend to set explicit type for integer values. 
+1. You will rarely be setting types for integer values in your code. 
 2. There is a third type as well called `sp.TIntOrNat` whose type is undetermined between `sp.TInt` or `sp.TNat`. This is an advanced concept which will be taught in later chapters. 
-3. You can read more in depth about how Smartpy handles integers [here](https://smartpy.io/demo/reference.html#_integers). 
+3. You can read more in depth about how SmartPy handles integers [here](https://smartpy.io/demo/reference.html#_integers). 
 
  
 
@@ -146,14 +150,14 @@ How do you imagine a plant to hide and seek zombies without it being able to mov
 
 1. Let’s add `coordinate_x`, `coordinate_y` state variables to act as the initial coordinate of our `Plant`.
 
-    * Initialize `coordinate_x` with `sp.int(0)` as we know coordinate x can range from [-10, 10] i.e coordinate x can hold signed integers. 
+    * Initialize `coordinate_x` with `sp.int(0)` as we know coordinate x can range from <span class="string-highlight">[-10, 10]</span> i.e coordinate x can hold signed integers. 
 
-    * Initialize `coordinate_y` with `sp.nat(0)` as we know coordinate y can range from [0, 5] i.e coordinate y can only hold non-negative integers. 
+    * Initialize `coordinate_y` with `sp.nat(0)` as we know coordinate y can range from <span class="string-highlight">[0, 5]</span> i.e coordinate y can only hold non-negative integers. 
 
 2. Then add two entry point functions `move_horizontally` and `move_vertically` which will update the coordinates of our plant. 
     * Both these functions take an argument `update_to`  which is used to update the coordinate's values. 
 
-We have left this exercise a little vauge so that you can practise working with state variables and entry point functions. Check out Chapter 5 and Chapter 7 for a quick refresher.  
+We have left this exercise a little vauge so that you can practise working with state variables and entry point functions. Check out [Chapter 5](/lesson/chapter-05) and [Chapter 7](/lesson/chapter-07) for a quick refresher.  
 
 
 #### Testing our code: 
@@ -162,3 +166,14 @@ Let us test our movement ability by moving it forward by 2 and vertically by 1:
 
 1. Call `move_horizontally` and pass the value `2` 
 2. Call `move_vertically` and pass the value `1`
+
+
+<br />
+
+When you’re finished:
+
+1. Click on “Check” to check your submission with the correct answer.
+2. Click on “Show Answer” in case you get stuck.
+
+
+You can also tinker around with the final code on [SmartPy’s online IDE](https://smartpy.io/demo/index.html?code=eJylU8GO2yAQvfsrRsnFViNrd48rRWrVXnqo1MPeETHjDVobEOBkvV_fgWA7JGmVVTlYgN@8efOYkb3R1oPrufVmBO7AmaJoOu4c_O648qUz9XetvOWNr54LoCWwBcakkp6x0mHXbkA6xjt5wIQIK_yoA6icr8JSvEfYwsogd3utPdrVJgNMVASatpsiQ6zX8E0IaLS2Qirukb0DV9nFCAduJd916C5Df5Ik2Gm_h6OkzwMMTqpXKpvE@shDWyIBi85g4yl_N0LGkmXeptDyodr8FTaeYLQnWAZaTnHzlVBIbo_MaCKd_W72XL0iC@4lyxUe47F6htxzwT2vk80TaM4RoWv4ga1UCL0@INtrKz_ohXlHdcbcEHNDOygqX6t_CruiSPIGI0LhXl@2RJSXOfhlu6CL2Ylc5AGtl81_SFwIPitwzAUWIQ0Xgnl0vpza@YUOYMLAuJivJyGrqgjpIy4lcQ0qakx9aofwh01XZbXUHoliAtak2aOINJBnA_JiBzwLm9lJ8A2Ku4H1ebetzKDeyO9lXm9krMle2Y7lLbLo5yL6SvUaonmjHuxsXXrk6Xkd7LDTxwT_RaCTbGi1PXIrYDfCU5zdsz6hu8e7qr1u4af7Ta0vu@sxxf4BWB2wkg--). Try running the test by clicking on the ▶️ button!

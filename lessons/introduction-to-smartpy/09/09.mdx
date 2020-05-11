@@ -1,5 +1,5 @@
 ---
-title: Tinkering with strings & boolean types in Smartpy
+title: Tinkering with strings & boolean types in SmartPy
 chapter: Chapter 9
 slug: chapter-09
 filterBy: lesson-1
@@ -20,17 +20,18 @@ editor:
                 )
             
         @sp.entry_point
-        def change_name(self, params): 
-            self.data.name = params.new_name
-        
+        def change_name(self, new_name):
+            self.data.name = new_name
             
     @sp.add_test(name = "Test whether plant is alive or not")
     def test():
         scenario = sp.test_scenario()
+        
         #4. Pass life_state = True to `Plant`’s class invocation:
         plant_test_contract =  Plant()
+        
         scenario += plant_test_contract
-        scenario += plant_test_contract.change_name(new_name = "punky peashooter")
+               
         #5. Test for whether the plant is alive or not beneath: 
 
 
@@ -48,24 +49,25 @@ editor:
                 )
             
         @sp.entry_point
-        def change_name(self, params): 
-            self.data.name = params.new_name
-        
+        def change_name(self, new_name):
+            self.data.name = new_name
             
     @sp.add_test(name = "Test whether plant is alive or not")
     def test():
         scenario = sp.test_scenario()
+        
         #4. Pass life_state = True to `Plant`’s class invocation:
         plant_test_contract =  Plant(life_state = True)
+        
         scenario += plant_test_contract
-        scenario += plant_test_contract.change_name(new_name = "punky peashooter")
+                
         #5. Test for whether the plant is alive or not beneath: 
         scenario.verify(plant_test_contract.data.is_alive == True)
 ---
 
 ### Intro: 
 
-Let us quickly understand how strings and boolean types are handled in Smartpy!
+Let us quickly understand how strings and boolean types are handled in SmartPy!
 
 In the later half of the chapter, you also will learn to add the ability to know whether your `Plant` is dead or alive when you are away! 
 
@@ -73,13 +75,13 @@ In the later half of the chapter, you also will learn to add the ability to know
 ## Study Time: 
 
 ### String: 
-A string is traditionally a sequence of characters eg: “peashooter”.  
+A string is traditionally a sequence of characters eg: <span class="string-highlight">"peashooter”.</span>
 
-String type is represented by type `sp.TString` in Smartpy. 
+String type is represented by type `sp.TString` in SmartPy. 
 
 ```python
 ## Here name has type of "sp.TString" 
-## which Smartpy automatically infers by it’s use
+## which SmartPy automatically infers by it’s use
 self.init(name = "World Bank")
 
 ## You can also explicitly give 
@@ -89,22 +91,22 @@ self.data.name = sp.string("peashooter")
 
 Notes: 
 
-1. You would rarely use the `sp.string(“...”) syntax in practise. 
-2. You can read more in depth about how Smartpy handles strings [here](https://smartpy.io/demo/reference.html#_strings). 
+1. You would rarely use the `sp.string(“...”)` syntax in practise. 
+2. You can read more in depth about how SmartPy handles strings [here](https://smartpy.io/demo/reference.html#_strings). 
 
 
 ### Boolean:
 
 The type of boolean values i.e `True`, `False`. 
 
-Boolean type is represented by type `sp.TBool` in Smartpy. 
+Boolean type is represented by type `sp.TBool` in SmartPy. 
 
 ```python
 ## plant_is_alive is a variable that stores 
 ## whether the plant is alive or got eaten by a Zombie!. 
 
 ## Here plant_is_alive has type of "sp.TBool" 
-## which Smartpy automatically infers by its use. 
+## which SmartPy automatically infers by its use. 
 self.init(plant_is_alive = True)
 
 ## You can also explicitly give the 
@@ -115,7 +117,7 @@ self.data.plant_is_alive = sp.bool("True")
 Notes: 
 
 1. You would rarely use the `sp.bool(“...”)` syntax in practise. 
-2. You can read more in depth about how Smartpy handles boolean [here](https://smartpy.io/demo/reference.html#_strings). 
+2. You can read more in depth about how SmartPy handles boolean [here](https://smartpy.io/demo/reference.html#_strings). 
 
 
 
@@ -151,4 +153,23 @@ But at the moment, there is no way to know whether your plant is dead or alive w
 
 1. In our test function, pass `life_state = True` as an argument when invoking `Plant` class 
 
-2. Using `scenario.verify`, a helper method provided by `sp.test_scenario`, we will check whether the current value of `is_alive` state variable is `True`,  in order to check whether the plant is alive. 
+2. We will use `scenario.verify`, to check the current whether plant is alive or not by checking the current value of `is_alive` state variable:
+
+
+```python
+## Syntax for using `scenario.verify`: 
+
+scenario.verify(condition)
+
+## Example usecase: 
+## To check whether Bank's current name is World Bank or not. 
+scenario.verify(bank_test_contract.data.name == "World Bank")
+
+```
+
+<br />
+
+When you’re finished:
+
+1. Click on “Check” to check your submission with the correct answer.
+2. Click on “Show Answer” in case you get stuck.
