@@ -16,14 +16,19 @@ editor:
                 is_alive = life_state,
                 coordinate_x = sp.int(0), 
                 coordinate_y = sp.nat(0), 
+                
                 # Add bullet_seed_count with 5 bullets:
+
                 
                 # Add record_zombie_kills below:
+
+
                 )
             
         @sp.entry_point
-        def change_name(self, new_name): 
-            self.data.name = new_name            
+        def change_name(self, new_name):
+            self.data.name = new_name
+          
         @sp.entry_point
         def move_horizontally(self, update_to):
             self.data.coordinate_x += update_to
@@ -37,6 +42,7 @@ editor:
         @sp.entry_point
         def shoot_zombie(self, zombie_type): 
             # Reduce bullet_seed_count by fire_shot_count
+
                 
             # Record the zombie that was shot
             # and then increase it by 1 below
@@ -45,13 +51,21 @@ editor:
     @sp.add_test(name = "Test shooting")
     def test():
         scenario = sp.test_scenario()
+        
         plant_test_contract =  Plant(life_state = True)
+        
         scenario += plant_test_contract
+        
         scenario += plant_test_contract.change_name("punky peashooter")
+        
         scenario.verify(plant_test_contract.data.is_alive == True)
+        
         scenario += plant_test_contract.move_horizontally(2)
+        
         scenario += plant_test_contract.move_vertically(1)
+        
         # Use shoot_zombie to kill 1 simple zombies and 1 boss zombie
+
   answer: |  
     import smartpy as sp
 
@@ -62,16 +76,22 @@ editor:
                 is_alive = life_state,
                 coordinate_x = sp.int(0), 
                 coordinate_y = sp.nat(0), 
+               
                 # Add bullet_seed_count with 5 bullets:
                 bullet_seed_count = 5,
                 
                 # Add record_zombie_kills below:
-                record_zombie_kills = {"simple_zombie":sp.nat(0), "boss_zombie":sp.nat(0)}
+                record_zombie_kills = {
+                    "simple_zombie": sp.nat(0),
+                    "boss_zombie": sp.nat(0)
+                }
+
                 )
             
         @sp.entry_point
-        def change_name(self, new_name): 
-            self.data.name = new_name        
+        def change_name(self, new_name):
+            self.data.name = new_name
+       
         @sp.entry_point
         def move_horizontally(self, update_to):
             self.data.coordinate_x += update_to
@@ -95,12 +115,19 @@ editor:
     @sp.add_test(name = "Test shooting")
     def test():
         scenario = sp.test_scenario()
+        
         plant_test_contract =  Plant(life_state = True)
+        
         scenario += plant_test_contract
+        
         scenario += plant_test_contract.change_name("punky peashooter")
+        
         scenario.verify(plant_test_contract.data.is_alive == True)
+        
         scenario += plant_test_contract.move_horizontally(2)
+        
         scenario += plant_test_contract.move_vertically(1)
+        
         # Use shoot_zombie to kill 1 simple zombies and 1 boss zombie
         scenario += plant_test_contract.shoot_zombie("simple_zombie")
         scenario += plant_test_contract.shoot_zombie("boss_zombie")
@@ -168,22 +195,34 @@ Let’s also add the ability to record zombie kills. This is going to be importa
 
 #### Step-by-step walkthrough: 
 
-1. Add `bullet_seed_count ` to our contract's storage and initialize with 5 bullets. 
+1. Add `bullet_seed_count ` to our contract's storage and initialize with <span class="string-highlight">5</span> bullets. 
 2. Add `record_zombie_kills` to our contract's storage and initialize with: 
-    * key `simple_zombie` and it's value as 0 of type `sp.TNat`
+    * key `simple_zombie` and it's value as <span class="string-highlight">0</span> of type `sp.TNat`
 
-    * key `boss_zombie` and it's value as 0 of type `sp.TNat`
+    * key `boss_zombie` and it's value as <span class="string-highlight">0</span> of type `sp.TNat`
 
 3. Complete the `shoot_zombie` function's code by adding code: 
-    * to reduce `bullet_seed_count` by 1
-    * use `zombie_type` argument as key to access it's value in `record_zombie_kills` map and increase it by 1. 
+    * to reduce `bullet_seed_count` by <span class="string-highlight">1</span>.
+    * use `zombie_type` argument as key to access it's value in `record_zombie_kills` map and increase it by  <span class="string-highlight">1</span>. 
 
 
  
 
 #### Testing our code:
 
-Let us test our `shoot_zombie` function by  shoot 2 bullet seeds, 1 aimed at simple zombie and 1 aimed towards boss zombie respectively: 
+Let us test our `shoot_zombie` function by  shoot <span class="string-highlight">2</span> bullet seeds, <span class="string-highlight">1</span> aimed at simple zombie and <span class="string-highlight">1</span>  aimed towards boss zombie respectively: 
 
-1. Call `shoot_zombie` and pass it the value of `"simple_zombie"` 
-2. Call `shoot_zombie` and pass it the value of `"boss_zombie"` 
+1. Call `shoot_zombie` and pass it the value of <span class="string-highlight">"simple_zombie"</span>
+2. Call `shoot_zombie` and pass it the value of <span class="string-highlight">"boss_zombie"</span>
+
+<br />
+
+When you’re finished:
+
+1. Click on “Check” to check your submission with the correct answer.
+2. Click on “Show Answer” in case you get stuck.
+
+
+You can also tinker around with the final code on [SmartPy’s online IDE](https://smartpy.io/demo/index.html?code=eJydVMuO0zAU3ecrrtJNKkpEkWYzUiUQP4DQsELIcpObqTWOHdlOSwbx71wnbhNPMkOLV36c@_S5R9SNNg5szY1rOuAWbJMkheTWwlfJlctsk3_RyhleuPV9ArRKrIAxoYRjLLMoqw1IUSGzjjsMGL_8U@5h2eXKL8VrhB2kDXJ70NqhSTcRQFjGpTh60Og3hhRam1Ioume_CEY5Ckr1w3oDr8G6AUb7OSw6rOBzWcK@lRIds4glK3SrHJyEO8BdeLD3kc0cvYO7TfKvIAYLyo8963ovkD0JKS3sUepT7H0JtoPfEcav1Iq6kRiA6f2k3jl2r61dQEbAP0lcwvjabz6RFRIzOtZoav@FG8WBq0dk_p8DPRSe@uNLcpTc8Tzw4YxJrohQ6yOygzbimZjJpexCnLYp_V87vRgoIs273Yi@rqw@6BGNE8X_hOzikHNuDJzoRyJ8DFStKpzQamDFm9lN7UJqgTCua6jxI_9W8A3LtsAF1u47qIShiTuQr_5qoaa52fsdbF8huw_m2QvugCEh2nIaJy81FGaC5KqHKRCqMCQOCKJPaTspP05lYTJ@TKr@6Vu@TaKEEt9AXpbMoXXZWYse6DC0UKjHdJ34jvaA8Ku2QMWN0IOI@Bd2vsrWY4DGK2bvmTozaCZZBCEdtYzuHkyLE8OLf0p4wcnVwHw6e2nTqqcOJjq7EDEnRouqy5ac9T0e1fjWrPP5mH681Xoyb9uJ7Qq@Ez2iWXEaPAGILYMMBrbZnlZEIdK7cHVV9GieXijrDUXEbqaiu07@AocJRbQ-). Try running the test by clicking on the ▶️ button!
+
+

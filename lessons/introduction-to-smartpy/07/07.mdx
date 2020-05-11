@@ -35,10 +35,9 @@ editor:
     
         # Add change_name entry function below
         @sp.entry_point
-        def change_name(self, new_name): 
+        def change_name(self, new_name):
             self.data.name = new_name
-        
-            
+
     @sp.add_test(name = "Testing giving plant a new name")
     def test():
         scenario = sp.test_scenario()
