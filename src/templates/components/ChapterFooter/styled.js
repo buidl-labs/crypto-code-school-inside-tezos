@@ -10,12 +10,18 @@ export const Footer = styled.footer`
   justify-content: space-between;
   align-items: center;
 
+  div:first-of-type {
+    display: flex;
+    align-items: center;
+  }
+
   > div {
     display: flex;
   }
 `;
 
 export const MenuButton = styled.button`
+  height: 100%;
   margin-left: 1rem;
   background: #0e1817;
   border: none;
@@ -28,7 +34,9 @@ export const ChapterTitle = styled.p`
   color: #fff;
   margin-left: 1rem;
   align-self: center;
-  margin-bottom: 5px;
+  margin-bottom: 0;
+  font-size: 0.9rem;
+  align-self: center;
 `;
 
 export const PrevLink = styled(Link)`
