@@ -1,5 +1,26 @@
 import styled from '@emotion/styled';
 
+/**
+ * (Required) Learning UI Calculations
+ */
+//Header
+export const HeaderHeight = '70px';
+
+//Content
+export const ContentWidth = 'calc(((100vw) / 2.4))';
+export const ContentHeight = 'calc(100vh - 140px)';
+
+//Editor
+//Contract File Container
+export const ContractFileHeight = '50px';
+
+//Option(Check & Show Answer) Container
+export const OptionHeight = '60px';
+export const EditorContainerMinWidth = 'calc(100vw - (100vw / 2.4))';
+
+//Footer
+export const FooterHeight = '70px';
+
 export const Container = styled.div`
   display: grid;
   grid-template-areas:

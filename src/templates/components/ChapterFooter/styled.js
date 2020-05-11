@@ -1,9 +1,11 @@
 import styled from '@emotion/styled';
 import { Link } from 'gatsby';
+import { FooterHeight } from '../../chapter.styled';
+
 export const Footer = styled.footer`
   grid-area: footer;
   background: #0e1817;
-  height: 70px;
+  height: ${FooterHeight};
   display: flex;
   justify-content: space-between;
   align-items: center;

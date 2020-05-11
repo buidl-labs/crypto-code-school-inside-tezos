@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
 import { OutboundLink } from 'gatsby-plugin-amplitude-analytics';
-
+import { HeaderHeight } from '../../chapter.styled';
 export const Header = styled.header`
   grid-area: header;
-  height: 70px;
+  height: ${HeaderHeight};
   background-color: #0e1817;
   display: flex;
   justify-content: space-between;
@@ -46,13 +46,12 @@ export const HelpButton = styled(OutboundLink)`
   align-items: center;
   border: 2px solid #ffffff;
   box-sizing: border-box;
-  width: 150px;
-  height: 45px;
   background-color: #0e1817;
   color: #fff;
   transition: 0.3s;
   margin-right: 1rem;
   cursor: pointer;
+  padding: 5px 15px;
 
   :hover {
     background: rgba(255, 255, 255, 0.1);

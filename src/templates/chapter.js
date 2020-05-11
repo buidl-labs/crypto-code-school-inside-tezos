@@ -18,6 +18,14 @@ import PlantGrowthModalView from '../components/PlantGrowthModal';
 import { trackEventWithProperties } from '../utils/analytics';
 import SEO from '../components/Seo';
 import { PLANT_GROWTH } from '../components/Plants/PLANT_GROWTH';
+import { IoIosClose } from 'react-icons/io';
+import {
+  HeaderHeight,
+  FooterHeight,
+  ContractFileHeight,
+  OptionHeight,
+} from './chapter.styled';
+
 export const query = graphql`
   query($slug: String!) {
     mdx(frontmatter: { slug: { eq: $slug } }) {
@@ -35,8 +43,6 @@ export const query = graphql`
     }
   }
 `;
-
-import { IoIosClose } from 'react-icons/io';
 
 /*
 Saving user progress locally
