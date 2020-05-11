@@ -340,7 +340,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
             theme="myCustomTheme"
             options={{
               lineNumbers: true,
-              scrollBeyondLastLine: true,
+              scrollBeyondLastLine: false,
               minimap: { enabled: false },
               scrollbar: { vertical: 'hidden', verticalScrollbarSize: 0 },
               folding: true,
@@ -374,7 +374,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                   theme="myCustomTheme"
                   options={{
                     lineNumbers: false,
-                    scrollBeyondLastLine: true,
+                    scrollBeyondLastLine: false,
                     minimap: { enabled: false },
                     scrollbar: { vertical: 'hidden', verticalScrollbarSize: 0 },
                     folding: false,

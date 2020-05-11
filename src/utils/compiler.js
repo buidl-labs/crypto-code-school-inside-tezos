@@ -151,11 +151,13 @@ var missing = {
 
   //For chapter 13
   'sp.verify(self.data.plant_manager == sp.sender, message = "Error: you are not the manager of this plant")':
-    'invalid or missing sp.verify method call',
+    'Error with smart contract code: invalid or missing sp.verify method call',
+
   'scenario += plant_test_contract.shoot_zombie("simple_zombie").run(sender = my_address)':
-    'invalid or missing run method initialization',
+    'Error with testing code: invalid or missing shoot_zombie call test call with my_address as caller',
+
   'scenario += plant_test_contract.shoot_zombie("boss_zombie").run(sender = my_address)':
-    'invalid or missing run method initialization',
+    'Error with testing code: invalid or missing shoot_zombie call test call with my_address as caller',
 
   //For chapter 14
   'sp.else:': 'missing else block',
