@@ -19,6 +19,11 @@ export const ContractFile = styled.div`
     }
   }
 
+  svg {
+    align-self: center;
+    display: flex;
+  }
+
   @media only screen and (min-width: 768px) {
     width: ${EditorContainerMinWidth};
   }
@@ -28,11 +33,12 @@ export const ContractFile = styled.div`
     display: inline-block;
     margin-left: 1rem;
     color: #729e9f;
-    padding-top: 10px;
+    padding-top: 5px;
     padding-right: 25px;
     padding-left: 25px;
     margin-bottom: 0;
     height: 100%;
+    font-size: 0.85rem;
   }
 `;
 export const Editor = styled.div`

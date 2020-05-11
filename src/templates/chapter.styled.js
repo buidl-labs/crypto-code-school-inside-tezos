@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
  * (Required) Learning Interface UI Calculations
  */
 //Header
-export const HeaderHeight = '70px';
+export const HeaderHeight = '55px';
 
 //Content
 export const ContentWidth = 'calc(((100vw) / 2.4))';
@@ -12,17 +12,18 @@ export const ContentHeight = 'calc(100vh - 140px)';
 
 //Editor
 //Contract File Container
-export const ContractFileHeight = '50px';
+export const ContractFileHeight = '45px';
 
 //Option(Check & Show Answer) Container
-export const OptionHeight = '60px';
+export const OptionHeight = '50px';
 export const EditorContainerMinWidth = 'calc(100vw - (100vw / 2.4))';
 
 //Output Container
 export const OutputHeaderHeight = '40px';
-export const OutputContentHeight = '200px';
+export const OutputContentHeight = '180px';
+
 //Footer
-export const FooterHeight = '70px';
+export const FooterHeight = '55px';
 
 export const Container = styled.div`
   display: grid;
@@ -47,12 +48,11 @@ export const Container = styled.div`
 export const Output = styled.div`
   display: flex;
   justify-content: space-between;
-  height: 40px;
+  height: ${OutputHeaderHeight};
   background: #112425;
 
   > div {
     background: #1b3738;
-    height: 40px;
     display: inline-block;
     margin-left: 1rem;
     color: #729e9f;

@@ -26,7 +26,7 @@ export const LeftArrow = styled(LeftArrowSVG)`
 `;
 
 export const Check = styled(CheckSVG)`
-  max-width: 40px;
+  max-width: 25px;
   max-height: 40px;
 
   rect {
@@ -62,7 +62,7 @@ export const Hint = styled(HintsSVG)`
 `;
 
 export const ShowAnswer = styled(ShowAnswerSVG)`
-  max-width: 40px;
+  max-width: 25px;
   max-height: 40px;
 
   rect {
