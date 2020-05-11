@@ -32,7 +32,8 @@ export const BackLink = styled.button`
 
 export const LessonTitle = styled.h2`
   color: #ffffff;
-  margin-bottom: 0;
+  margin: 0;
+  padding: 0;
 
   @media only screen and (max-width: 767px) {
     display: none;
