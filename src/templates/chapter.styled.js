@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 /**
- * (Required) Learning UI Calculations
+ * (Required) Learning Interface UI Calculations
  */
 //Header
 export const HeaderHeight = '70px';
@@ -18,6 +18,9 @@ export const ContractFileHeight = '50px';
 export const OptionHeight = '60px';
 export const EditorContainerMinWidth = 'calc(100vw - (100vw / 2.4))';
 
+//Output Container
+export const OutputHeaderHeight = '40px';
+export const OutputContentHeight = '200px';
 //Footer
 export const FooterHeight = '70px';
 

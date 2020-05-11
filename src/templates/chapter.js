@@ -24,6 +24,8 @@ import {
   FooterHeight,
   ContractFileHeight,
   OptionHeight,
+  OutputHeaderHeight,
+  OutputContentHeight,
 } from './chapter.styled';
 
 export const query = graphql`
@@ -334,8 +336,8 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           <ControlledEditor
             height={`${
               buttonClicked
-                ? `calc(100vh - (250px + 200px + 40px))`
-                : `calc(100vh - (210px + 40px))`
+                ? `calc(100vh - (${HeaderHeight} + ${FooterHeight} + ${ContractFileHeight} + ${OptionHeight} + ${OutputHeaderHeight} + ${OutputContentHeight}))`
+                : `calc(100vh - (${HeaderHeight} + ${FooterHeight} + ${ContractFileHeight} + ${OptionHeight}))`
             }`}
             marWidth={`calc(100vw)`}
             value={editorInputValue}
@@ -371,7 +373,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                   </span>
                 </Output>
                 <DiffEditor
-                  height="200px"
+                  height={OutputContentHeight}
                   original={
                     showOutput ? chapter.frontmatter.editor.answer : 'MODIFIED'
                   }
@@ -406,7 +408,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                 </Output>
                 <div
                   style={{
-                    height: '200px',
+                    height: `${OutputContentHeight}`,
                     background: '#1B3738',
                     color: '#fff',
                   }}
