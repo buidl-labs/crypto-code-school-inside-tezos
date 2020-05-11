@@ -9,6 +9,12 @@ const useChapters = () => {
             title
             slug
             chapter
+            editor {
+              answer
+              showEditor
+              language
+              startingCode
+            }
           }
           excerpt
         }
@@ -20,6 +26,12 @@ const useChapters = () => {
     chapter: chapter.frontmatter.chapter,
     slug: chapter.frontmatter.slug,
     excerpt: chapter.excerpt,
+    editor: {
+      answer: chapter.frontmatter.editor.answer,
+      showEditor: chapter.frontmatter.editor.showEditor,
+      language: chapter.frontmatter.editor.language,
+      startingCode: chapter.frontmatter.editor.startingCode,
+    },
   }));
 };
 

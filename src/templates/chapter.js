@@ -120,6 +120,15 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
         return chapter.chapterSlug === chapterList[index.current - 1].slug;
       });
       if (savedChapter) {
+        if (!(savedChapter.code === chapter.frontmatter.editor.answer)) {
+          //remove saved chapter since it's out of sync from local storage
+          //with current correct answer and show starting code as default state
+          const updateList = list.filter(chapter => {
+            return !(chapter.chapterSlug === savedChapter.chapterSlug);
+          });
+          localStorage.setItem('lesson-1', JSON.stringify(updateList));
+          return `${chapter.frontmatter.editor.startingCode}`;
+        }
         setChapterCompletionState(true);
         return savedChapter.code;
       }
@@ -185,10 +194,10 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
 
   useEffect(() => {
     if (validation.success) {
-      const chapter = {
+      const ch = {
         chapterSlug: chapterList[index.current - 1].slug,
         completed: true,
-        code: editorInputValue,
+        code: chapter.frontmatter.editor.answer,
         current: index.current,
       };
 
@@ -206,7 +215,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
 
       //only update locally stored progress if chapter completion is already stored
       if (!chapterAlreadyExists) {
-        list.push(chapter);
+        list.push(ch);
         //track user progress on successful chapter completion
         trackEventWithProperties('Chapter-Completed', {
           chapterSlug: chapterList[index.current - 1].slug,
