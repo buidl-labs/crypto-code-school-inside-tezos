@@ -16,7 +16,7 @@ export const ContractFileHeight = '45px';
 
 //Option(Check & Show Answer) Container
 export const OptionHeight = '50px';
-export const EditorContainerMinWidth = 'calc(100vw - (100vw / 2.4))';
+export const EditorContainerMinWidth = 'calc(100vw - (100vw / 2))';
 
 //Output Container
 export const OutputHeaderHeight = '40px';

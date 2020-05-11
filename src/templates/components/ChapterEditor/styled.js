@@ -11,6 +11,7 @@ export const ContractFile = styled.div`
   grid-area: contractFile;
   background: #112425;
   height: ${ContractFileHeight};
+  width: 100% !important;
 
   span {
     margin-right: 10px;
@@ -52,6 +53,7 @@ export const Option = styled.div`
   height: ${OptionHeight};
   display: flex;
   justify-content: flex-end;
+  width: 100% !important;
   @media only screen and (min-width: 768px) {
     width: ${EditorContainerMinWidth};
   }
