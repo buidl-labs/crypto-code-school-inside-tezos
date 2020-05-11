@@ -135,15 +135,19 @@ var missing = {
   'scenario += plant_test_contract.shoot_zombie("boss_zombie")':
     'Error with testing code: invalid or missing shoot_zombie test call to kill "boss_zombie"',
 
+  //******************/
   //For chapter 12
   'def __init__(self, life_state, manager_address):':
-    'constructor initialization require a `self, life_state and manager_address` parameter',
+    'Error with smart contract code: constructor initialization require a `self`, `life_state` and `manager_address` function parameters',
+
   'plant_manager = manager_address,':
-    'invalid or missing plant_manager variable assignment',
+    'Error with smart contract code: plant_manager variable initialization is missing/invalid in contract storage',
+
   'my_address = sp.address("tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj")':
-    'my_address of type `sp.TAddress` assignment is missing or is invalid',
+    'Error with smart contract code: my_address of type `sp.TAddress` assignment is missing or is invalid',
+
   'plant_test_contract =  Plant(life_state = True, manager_address = my_address)':
-    'invalid or missing plant_test_contract variable assignment',
+    'Error with testing code: manager_address key missing or invaild in Plant invokation call',
 
   //For chapter 13
   'sp.verify(self.data.plant_manager == sp.sender, message = "Error: you are not the manager of this plant")':

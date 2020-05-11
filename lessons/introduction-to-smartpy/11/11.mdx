@@ -55,15 +55,7 @@ editor:
         plant_test_contract =  Plant(life_state = True)
         
         scenario += plant_test_contract
-        
-        scenario += plant_test_contract.change_name("punky peashooter")
-        
-        scenario.verify(plant_test_contract.data.is_alive == True)
-        
-        scenario += plant_test_contract.move_horizontally(2)
-        
-        scenario += plant_test_contract.move_vertically(1)
-        
+
         # Use shoot_zombie to kill 1 simple zombies and 1 boss zombie
 
   answer: |  
@@ -119,15 +111,7 @@ editor:
         plant_test_contract =  Plant(life_state = True)
         
         scenario += plant_test_contract
-        
-        scenario += plant_test_contract.change_name("punky peashooter")
-        
-        scenario.verify(plant_test_contract.data.is_alive == True)
-        
-        scenario += plant_test_contract.move_horizontally(2)
-        
-        scenario += plant_test_contract.move_vertically(1)
-        
+      
         # Use shoot_zombie to kill 1 simple zombies and 1 boss zombie
         scenario += plant_test_contract.shoot_zombie("simple_zombie")
         scenario += plant_test_contract.shoot_zombie("boss_zombie")
@@ -223,6 +207,6 @@ When you’re finished:
 2. Click on “Show Answer” in case you get stuck.
 
 
-You can also tinker around with the final code on [SmartPy’s online IDE](https://smartpy.io/demo/index.html?code=eJydVMuO0zAU3ecrrtJNKkpEkWYzUiUQP4DQsELIcpObqTWOHdlOSwbx71wnbhNPMkOLV36c@_S5R9SNNg5szY1rOuAWbJMkheTWwlfJlctsk3_RyhleuPV9ArRKrIAxoYRjLLMoqw1IUSGzjjsMGL_8U@5h2eXKL8VrhB2kDXJ70NqhSTcRQFjGpTh60Og3hhRam1Ioume_CEY5Ckr1w3oDr8G6AUb7OSw6rOBzWcK@lRIds4glK3SrHJyEO8BdeLD3kc0cvYO7TfKvIAYLyo8963ovkD0JKS3sUepT7H0JtoPfEcav1Iq6kRiA6f2k3jl2r61dQEbAP0lcwvjabz6RFRIzOtZoav@FG8WBq0dk_p8DPRSe@uNLcpTc8Tzw4YxJrohQ6yOygzbimZjJpexCnLYp_V87vRgoIs273Yi@rqw@6BGNE8X_hOzikHNuDJzoRyJ8DFStKpzQamDFm9lN7UJqgTCua6jxI_9W8A3LtsAF1u47qIShiTuQr_5qoaa52fsdbF8huw_m2QvugCEh2nIaJy81FGaC5KqHKRCqMCQOCKJPaTspP05lYTJ@TKr@6Vu@TaKEEt9AXpbMoXXZWYse6DC0UKjHdJ34jvaA8Ku2QMWN0IOI@Bd2vsrWY4DGK2bvmTozaCZZBCEdtYzuHkyLE8OLf0p4wcnVwHw6e2nTqqcOJjq7EDEnRouqy5ac9T0e1fjWrPP5mH681Xoyb9uJ7Qq@Ez2iWXEaPAGILYMMBrbZnlZEIdK7cHVV9GieXijrDUXEbqaiu07@AocJRbQ-). Try running the test by clicking on the ▶️ button!
+You can also tinker around with the final code on [SmartPy’s online IDE](https://smartpy.io/demo/index.html?code=eJydVMGO2yAQvfsrRsklVtOoOewlUqRW_YGq2p6qCmE8WaNisAAn9Vb99w42ic3a20bLCYY382aGx8i6MdaDq7n1TQfcgWuyTCjuHHxRXPuNa3afjfaWC58fMqBV4gkYk1p6xjYO1WkLSp6QOc89RkxY4WoXYJubKSzNa4QjrBrkrjLGo11tE4B0jCt5DqAxbgoRxthSarKzXwSjHCWl@iHfwmuwboDRfg5LDmv4VJZQtEqhZw6xZMK02sNF@goe4oU7JD5z9BEeiOR_LBYFJcieTV1IZD@lUg4KVOaShl@CHeF3gglr5WTdKIzA1WFS8BxbGOcWkAnwT5aWMN72m4_khSSNjjWG@n8Th6i4fkIWHjrqQ@OlP75UR8k930VBXDHZHQy1OSOrjJXPJE2uVBd52qYMj@3NIlGimnfHEX1fWT3pGa2X4i2UXUo518agif5PxIeBU6uFl0YPqvhndlO_mFoUjO8aavyovzV8xbIVuCDbooOTtPTlKorVmxZqmru9P8L@FbEHsqBe8BXGhGjL6T@FWUM0EyTXPUyD1MLSdECQfUr7SflpKgs_4_uk6h@h5fvsms_4zKGJvCyZR@c314H0SIehjVI_rfIsdLUHxJd1AjW30gyTJNywq2mTjwRNGJt9ZOrOMDjJI07TcaCR7dG2OHG8xaekF4KMwDV8o94kQvEGQvXUqmEGxFa7vqfUP_rs0XQP1S4R04uxkr8hwnTYxIr_Aglr7UY-). Try running the test by clicking on the ▶️ button!
 
 

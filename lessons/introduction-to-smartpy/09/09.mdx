@@ -31,9 +31,7 @@ editor:
         plant_test_contract =  Plant()
         
         scenario += plant_test_contract
-        
-        scenario += plant_test_contract.change_name("punky peashooter")
-        
+               
         #5. Test for whether the plant is alive or not beneath: 
 
 
@@ -62,9 +60,7 @@ editor:
         plant_test_contract =  Plant(life_state = True)
         
         scenario += plant_test_contract
-        
-        scenario += plant_test_contract.change_name("punky peashooter")
-        
+                
         #5. Test for whether the plant is alive or not beneath: 
         scenario.verify(plant_test_contract.data.is_alive == True)
 ---

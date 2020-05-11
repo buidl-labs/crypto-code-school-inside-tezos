@@ -10,8 +10,10 @@ editor:
     class Plant(sp.Contract):
         def __init__(self, manager_address):
             self.init(
-                plant_manager = manager_address, 
+                plant_manager = manager_address,
+
                 bullet_seed_count = 5, 
+                
                 record_zombie_kills = {
                     "simple_zombie": sp.nat(0), 
                     "boss_zombie": sp.nat(0), 
@@ -23,6 +25,8 @@ editor:
             # Use sp.verify to check 
             # whether caller's address is equal 
             # to plant_manager's address
+
+
             
             self.data.bullet_seed_count -= 1
             self.data.record_zombie_kills[zombie_type] += 1
@@ -30,9 +34,13 @@ editor:
     @sp.add_test(name = "Testing entry functions only callable by plant manager")
     def test():
         scenario = sp.test_scenario()
+        
         my_address = sp.address("tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj")
+        
         plant_test_contract =  Plant(manager_address = my_address)
+        
         scenario += plant_test_contract
+        
         # Use run method on both functions below and pass sender = my_address to it. 
         scenario += plant_test_contract.shoot_zombie("simple_zombie")
         scenario += plant_test_contract.shoot_zombie("boss_zombie")
@@ -45,7 +53,9 @@ editor:
         def __init__(self, manager_address):
             self.init(
                 plant_manager = manager_address, 
+                
                 bullet_seed_count = 5,
+                
                 record_zombie_kills = {
                     "simple_zombie": sp.nat(0), 
                     "boss_zombie": sp.nat(0), 
@@ -57,16 +67,23 @@ editor:
             # Use sp.verify to check 
             # whether caller's address is equal 
             # to plant_manager's address
-            sp.verify(self.data.plant_manager == sp.sender, message = "Error: you are not the manager of this plant")
+            
+            sp.verify(self.data.plant_manager == sp.sender, message = "Error: you are not the manager of 
+            this plant")
+            
             self.data.bullet_seed_count -= 1
             self.data.record_zombie_kills[zombie_type] += 1
 
     @sp.add_test(name = "Testing entry functions only callable by plant manager")
     def test():
         scenario = sp.test_scenario()
+        
         my_address = sp.address("tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj")
+        
         plant_test_contract =  Plant(manager_address = my_address)
+        
         scenario += plant_test_contract
+        
         # Use run method on both functions below and pass sender = my_address to it. 
         scenario += plant_test_contract.shoot_zombie("simple_zombie").run(sender = my_address)
         scenario += plant_test_contract.shoot_zombie("boss_zombie").run(sender = my_address)

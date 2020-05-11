@@ -36,11 +36,7 @@ editor:
         plant_test_contract =  Plant(is_alive = True)
         
         scenario += plant_test_contract
-        
-        scenario += plant_test_contract.change_name("punky peashooter")
-        
-        scenario.verify(plant_test_contract.data.is_alive == True)
-        
+                
         # Test your movement entry functions below
         # Move plant forward by 2 and vertically by 1
 
@@ -80,11 +76,7 @@ editor:
         plant_test_contract =  Plant(is_alive = True)
        
         scenario += plant_test_contract
-       
-        scenario += plant_test_contract.change_name("punky peashooter")
-       
-        scenario.verify(plant_test_contract.data.is_alive == True)
-       
+        
         # Test your movement entry functions below
         # Move plant forward by 2 and vertically by 1
         scenario += plant_test_contract.move_horizontally(2)
