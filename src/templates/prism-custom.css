@@ -17,8 +17,14 @@ code.language-pythontext {
   color: #18b77e;
   padding: 0.2em 0.5em !important;
   font-size: 85%;
+  font-weight: 700 !important;
   background-color: #f7f7f7 !important;
   border-radius: 3px;
+}
+
+.string-highlight {
+  color: #927501;
+  font-weight: 700;
 }
 
 /**
