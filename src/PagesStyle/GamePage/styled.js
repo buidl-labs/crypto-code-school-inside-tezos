@@ -72,7 +72,6 @@ export const Instructions = styled.div`
   min-width: 300px;
   background: rgba(0, 0, 0, 0.4);
   border-radius: 40px;
-  font-size: 1.2rem;
   text-align: center;
   padding: 1rem;
   color: #ffffff;
@@ -191,18 +190,16 @@ export const BackLink = styled(Link)`
   display: flex;
   align-items: center;
   color: #fff;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
   text-decoration: none;
-  font-size: 23px;
-  line-height: 175%;
   margin: 0 10px;
-  width: 120px;
 
   > span {
     margin-left: 6px;
     display: inline-block;
+  }
+
+  :hover {
+    color: #fff;
   }
 
   ${'' /* > svg {
@@ -285,7 +282,7 @@ export const ModalBottom = styled.div`
   background-color: #060707;
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
-  overflow-y: scroll;
+  overflow-y: auto;
 `;
 
 export const Heading = styled.p`
@@ -300,11 +297,6 @@ export const Heading = styled.p`
 `;
 
 export const SubHeading = styled.p`
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 1rem;
-  line-height: 27px;
   text-align: center;
   color: #ffffff;
 `;
@@ -319,13 +311,11 @@ export const ProceedLink = styled.button`
   background: #29cb6a;
   border: none;
   outline: none;
-  font-weight: 500;
   color: #fff;
   cursor: pointer;
   letter-spacing: 2px;
   border-radius: 5px;
   transition: all 0.4s cubic-bezier(0.43, 0.13, 0.15, 0.99);
-  font-size: 1.2rem;
   width: inherit;
 
   :before {

@@ -29,12 +29,6 @@ export const OverviewContainer = styled.div`
   margin: 0rem 2rem 6rem 2rem;
 
   h1 {
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 43px;
-    line-height: 175%;
-    /* or 75px */
     margin: 2rem auto;
     width: 80%;
     color: #ffffff;
@@ -46,11 +40,7 @@ export const OverviewContainer = styled.div`
     padding: 1rem;
 
     p {
-      font-size: 1rem;
-      line-height: 175%;
       color: #ded9d9;
-      font-family: Roboto;
-      font-weight: 100;
       width: 80%;
       margin: 2rem auto;
     }
@@ -75,11 +65,9 @@ export const OverviewContainer = styled.div`
       justify-content: space-between;
       h2 {
         font-family: 'Sigmar One';
-        font-style: normal;
-        font-weight: normal;
-        font-size: 41px;
-        line-height: 67px;
         color: #ffffff;
+        font-size: 3rem;
+        margin-left: 1.16rem;
       }
     }
 
@@ -92,12 +80,9 @@ export const OverviewContainer = styled.div`
         a {
           display: block;
           text-decoration: none;
-          font-size: 1rem;
-          font-family: Roboto;
           color: #ffffff;
           margin-top: 1rem;
           margin-bottom: 1rem;
-          line-height: 2rem;
 
           > svg {
             display: inline-block;
@@ -126,9 +111,9 @@ export const OverviewContainer = styled.div`
 
     > div:last-of-type {
       > div {
-        h2 {
+        ${'' /* h2 {
           font-size: 29px;
-        }
+        } */}
 
         svg {
           width: 56px;
@@ -142,12 +127,7 @@ export const OverviewContainer = styled.div`
 export const BackLink = styled(Link)`
   display: inline-block;
   color: #fff;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
   text-decoration: none;
-  font-size: 23px;
-  line-height: 175%;
   margin: 10px;
 
   > span {

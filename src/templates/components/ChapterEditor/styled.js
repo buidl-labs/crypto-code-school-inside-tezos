@@ -25,9 +25,10 @@ export const ContractFile = styled.div`
     display: inline-block;
     margin-left: 1rem;
     color: #729e9f;
-    padding-top: 14px;
+    padding-top: 10px;
     padding-right: 25px;
     padding-left: 25px;
+    margin-bottom: 0;
   }
 `;
 export const Editor = styled.div`

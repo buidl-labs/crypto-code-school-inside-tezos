@@ -48,7 +48,8 @@ const Game = () => {
   const shooter = useRef(null);
   const zombieRef = useRef(null);
 
-  let zombieInterval, deadZombieList = [];
+  let zombieInterval,
+    deadZombieList = [];
 
   const [isGameLost, updateGameStatus] = useState(false);
   const [totalDeadZombies, updateDeadZombieCount] = useState(0);
@@ -279,7 +280,7 @@ const Game = () => {
             <LeftArrow />
             <span>Back</span>
           </BackLink>
-          <Title />
+          <Title maxWidth="15vh" />
           <BackLink to={`/tezos/up-next`}>
             <span>Skip</span>
             <RightArrow />

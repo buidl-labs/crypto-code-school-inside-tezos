@@ -22,7 +22,7 @@ const WelcomeModal = ({ display = false, changeDisplay }) => {
                 <Heading style={{ paddingTop: '2rem' }}>
                   Congratulations!
                 </Heading>
-                <SubHeading style={{ padding: '2rem 4rem' }}>
+                <SubHeading style={{ padding: '0 4rem' }}>
                   You have successfully evolved your plant, battle it out to
                   defend against the upcoming zombie apocalypse.
                 </SubHeading>
