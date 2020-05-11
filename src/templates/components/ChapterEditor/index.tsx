@@ -62,13 +62,13 @@ function ChapterEditor({
           onClick={() => {
             setShowOutput(true);
             setButtonClicked(true);
-            setEditorHeight(
-              `${
-                isMobile
-                  ? `calc(100vh - (130px)) `
-                  : `calc(100vh - (250px + 200px + 40px))`
-              }`,
-            );
+            // setEditorHeight(
+            //   `${
+            //     isMobile
+            //       ? `calc(100vh - (130px)) `
+            //       : `calc(100vh - (250px + 200px + 40px))`
+            //   }`,
+            // );
           }}
         >
           <ShowAnswer /> <span>Show Answer</span>
@@ -77,13 +77,13 @@ function ChapterEditor({
           onClick={() => {
             setShowOutput(false);
             setButtonClicked(true);
-            setEditorHeight(
-              `${
-                isMobile
-                  ? `calc(100vh - (130px)) `
-                  : `calc(100vh - (250px + 200px + 40px))`
-              }`,
-            );
+            // setEditorHeight(
+            //   `${
+            //     isMobile
+            //       ? `calc(100vh - (130px)) `
+            //       : `calc(100vh - (250px + 200px + 40px))`
+            //   }`,
+            // );
             const result = checkCode(editorInputValue, chapterSolution);
             // console.log('result', result);
             updateValidation(result);
