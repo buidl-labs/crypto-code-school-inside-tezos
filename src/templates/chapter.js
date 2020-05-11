@@ -396,7 +396,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                     scrollbar: { vertical: 'hidden', verticalScrollbarSize: 0 },
                     folding: false,
                     readOnly: true,
-                    fontSize: 12,
+                    fontSize: 14,
                     fontFamily: "'Inconsolata', monospace",
                     renderSideBySide: false,
                     wordWrap: true,
