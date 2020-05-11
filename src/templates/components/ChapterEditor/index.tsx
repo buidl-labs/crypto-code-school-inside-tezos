@@ -47,7 +47,7 @@ function ChapterEditor({
 
   return (
     <>
-      <ReactTooltip place="left" type="light" effect="float" />
+      <ReactTooltip place="left" type="light" effect="solid" />
       <ContractFile>
         <p>Contract.py</p>
         {!chapterCompletedSuccessfully ? (
