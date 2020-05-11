@@ -31,6 +31,29 @@ const Layout = ({ children, background }) => {
           .react-icons {
             vertical-align: middle;
           }
+          /*Mixins and Essentials*/
+          ::-webkit-scrollbar {
+            width: 12px;
+            height: 5px;
+          }
+
+          ::-webkit-scrollbar-thumb {
+            height: 6px;
+            border: 3px solid rgba(0, 0, 0, 0);
+            background-clip: padding-box;
+            -webkit-border-radius: 7px;
+            background-color: rgba(0, 0, 0, 0.3);
+          }
+
+          ::-webkit-scrollbar-button {
+            width: 0;
+            height: 0;
+            display: none;
+          }
+
+          ::-webkit-scrollbar-corner {
+            background-color: transparent;
+          }
         `}
       />
       <Helmet>
