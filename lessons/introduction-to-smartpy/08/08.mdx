@@ -7,7 +7,31 @@ editor:
   showEditor: false
   language: python
   startingCode: |
+    ## 🚨Quiz Time 🚨
+
+    ## In Plant contract shown below, 
+    ## what is the type of `name` that SmartPy will automatically infer?
+
+    class Plant(sp.Contract):
+      def __init__(self):
+         self.init(name = "peashooter")
+    
+    ## Type your answer below this line: 
+
+
   answer: |
+    ## 🚨Quiz Time 🚨
+
+    ## In Plant contract shown below, 
+    ## what is the type of `name` that SmartPy will automatically infer?
+
+    class Plant(sp.Contract):
+      def __init__(self):
+         self.init(name = "peashooter")
+    
+    ## Type your answer below this line: 
+    string
+
 ---
 
 ### Intro: 
@@ -44,14 +68,23 @@ While most of the time you will not write many types explicitly it is beneficial
 ### How does SmartPy deal with types? 
 SmartPy uses type inference in order to determine each expression's type. In practice this means that information about an expression is gathered according to its usage. 
 
-Remember, that in Chapter 5 we learnt how to give our `Plant` a name?
+Remember, our `Bank` contract example?
 
 ```python
 class Plant(sp.Contract):
    def __init__(self):
-       self.init(name = "peashooter")
+       self.init(name = "World Bank")
 ```
 
 Here, SmartPy automatically determines and remembers that `name` is a variable that has `string` data type
 
+## Quiz Time: 
 
+Just to practise what you learnt above: 
+
+**In `Plant` contract shown to your left, what is the type of `name` that SmartPy will automatically infer?**  
+
+When you’re finished:
+
+1. Click on “Check” to check your submission with the correct answer.
+2. Click on “Show Answer” in case you get stuck.
