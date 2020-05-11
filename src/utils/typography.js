@@ -1,5 +1,5 @@
 import Typography from 'typography';
-import altonTheme from 'typography-theme-alton';
+import githubTheme from 'typography-theme-github';
 
-const typography = new Typography(altonTheme);
+const typography = new Typography(githubTheme);
 export default typography;
