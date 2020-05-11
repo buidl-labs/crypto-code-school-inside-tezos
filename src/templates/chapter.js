@@ -18,6 +18,16 @@ import PlantGrowthModalView from '../components/PlantGrowthModal';
 import { trackEventWithProperties } from '../utils/analytics';
 import SEO from '../components/Seo';
 import { PLANT_GROWTH } from '../components/Plants/PLANT_GROWTH';
+import { IoIosClose } from 'react-icons/io';
+import {
+  HeaderHeight,
+  FooterHeight,
+  ContractFileHeight,
+  OptionHeight,
+  OutputHeaderHeight,
+  OutputContentHeight,
+} from './chapter.styled';
+
 export const query = graphql`
   query($slug: String!) {
     mdx(frontmatter: { slug: { eq: $slug } }) {
@@ -35,8 +45,6 @@ export const query = graphql`
     }
   }
 `;
-
-import { IoIosClose } from 'react-icons/io';
 
 /*
 Saving user progress locally
@@ -112,6 +120,15 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
         return chapter.chapterSlug === chapterList[index.current - 1].slug;
       });
       if (savedChapter) {
+        if (!(savedChapter.code === chapter.frontmatter.editor.answer)) {
+          //remove saved chapter since it's out of sync from local storage
+          //with current correct answer and show starting code as default state
+          const updateList = list.filter(chapter => {
+            return !(chapter.chapterSlug === savedChapter.chapterSlug);
+          });
+          localStorage.setItem('lesson-1', JSON.stringify(updateList));
+          return `${chapter.frontmatter.editor.startingCode}`;
+        }
         setChapterCompletionState(true);
         return savedChapter.code;
       }
@@ -177,10 +194,10 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
 
   useEffect(() => {
     if (validation.success) {
-      const chapter = {
+      const ch = {
         chapterSlug: chapterList[index.current - 1].slug,
         completed: true,
-        code: editorInputValue,
+        code: chapter.frontmatter.editor.answer,
         current: index.current,
       };
 
@@ -198,7 +215,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
 
       //only update locally stored progress if chapter completion is already stored
       if (!chapterAlreadyExists) {
-        list.push(chapter);
+        list.push(ch);
         //track user progress on successful chapter completion
         trackEventWithProperties('Chapter-Completed', {
           chapterSlug: chapterList[index.current - 1].slug,
@@ -328,8 +345,8 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           <ControlledEditor
             height={`${
               buttonClicked
-                ? `calc(100vh - (250px + 200px + 40px))`
-                : `calc(100vh - (210px + 40px))`
+                ? `calc(100vh - (${HeaderHeight} + ${FooterHeight} + ${ContractFileHeight} + ${OptionHeight} + ${OutputHeaderHeight} + ${OutputContentHeight}))`
+                : `calc(100vh - (${HeaderHeight} + ${FooterHeight} + ${ContractFileHeight} + ${OptionHeight}))`
             }`}
             marWidth={`calc(100vw)`}
             value={editorInputValue}
@@ -365,7 +382,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                   </span>
                 </Output>
                 <DiffEditor
-                  height="200px"
+                  height={OutputContentHeight}
                   original={
                     showOutput ? chapter.frontmatter.editor.answer : 'MODIFIED'
                   }
@@ -400,7 +417,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                 </Output>
                 <div
                   style={{
-                    height: '200px',
+                    height: `${OutputContentHeight}`,
                     background: '#1B3738',
                     color: '#fff',
                   }}

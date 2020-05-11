@@ -57,13 +57,13 @@ function LessonsOverview() {
     //Generate chapter continuation route link
     //check if first chapter zero is successfully completed or not
     if (!chapterZeroCompleted) {
-      console.log('storyline');
+      // console.log('storyline');
       setContinuationLink('/tezos/storyline');
       return;
     }
     //Go to next chapter route link from last successfully completed chapter
     // if no chapter completed --> show first-chapter
-    console.log('list', list);
+    // console.log('list', list);
     if (list.length === 0) {
       setContinuationLink('/lesson/chapter-01');
     } else if (list.length > 0) {
@@ -102,11 +102,37 @@ function LessonsOverview() {
         slug: chapter.slug,
         excerpt: chapter.excerpt,
         completed: chapterAlreadyExists,
+        editor: chapter.editor,
       };
     });
 
     updateChapterList(newChapterList);
   }, []);
+
+  useEffect(() => {
+    SyncSavedUserProgressWithLatestUpdates();
+  }, []);
+
+  const SyncSavedUserProgressWithLatestUpdates = () => {
+    let list = [];
+    const listJSON =
+      typeof window != 'undefined' && localStorage.getItem('lesson-1');
+    if (listJSON !== null) {
+      list = JSON.parse(listJSON);
+    }
+    if (list.length > 0) {
+      const updateList = list.filter(currentSavedChapter => {
+        const result = chapterList.find(ch => {
+          return ch.editor.answer === currentSavedChapter.code;
+        });
+        return result;
+      });
+      // console.log('updateList', updateList);
+      //update stored user progress lesson chapters
+      //sync it according to latest content
+      localStorage.setItem('lesson-1', JSON.stringify(updateList));
+    }
+  };
 
   useEffect(() => {
     let plantType = null;
