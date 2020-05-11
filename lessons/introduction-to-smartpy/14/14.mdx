@@ -11,7 +11,9 @@ editor:
         def __init__(self, manager_address):
             self.init(
                 plant_manager = manager_address,
+               
                 bullet_seed_count = 5,
+               
                 record_zombie_kills = {
                     "simple_zombie": sp.nat(0), 
                     "boss_zombie": sp.nat(0), 
@@ -19,28 +21,35 @@ editor:
                 )
 
         @sp.entry_point
-        def change_name(self, new_name): 
-            self.data.name = new_name        
-        @sp.entry_point
-        def move_horizontally(self, update_to):
-            self.data.coordinate_x += update_to
-        
-        @sp.entry_point
-        def move_vertically(self, update_to):
-            self.data.coordinate_y += update_to
-
-        @sp.entry_point
         def shoot_zombie(self, zombie_type):
             sp.verify(
                 self.data.plant_manager == sp.sender, 
-                message = "Error: you are not the manager of this plant"
+                message = "Error: non manager call"
                 )
+            
+            
             # Using sp.if add a condition to check bullet_seed_count >= 1
                 
                 self.data.bullet_seed_count -= 1
                 self.data.record_zombie_kills[zombie_type] += 1
             # Use sp.else to run code when the above condition fails. 
             # Use sp.failwith to return an error message.
+
+
+
+    @sp.add_test(name = "Testing with sp.if")
+    def test():
+        scenario = sp.test_scenario()
+        
+        my_address = sp.address("tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj")
+        
+        plant_test_contract =  Plant(manager_address = my_address)
+        
+        scenario += plant_test_contract
+        
+        scenario += plant_test_contract.shoot_zombie("simple_zombie").run(sender = my_address)
+        scenario += plant_test_contract.shoot_zombie("boss_zombie").run(sender = my_address)
+
 
 
   answer: |
@@ -50,32 +59,24 @@ editor:
         def __init__(self, manager_address):
             self.init(
                 plant_manager = manager_address,
+
                 bullet_seed_count = 5,
+
                 record_zombie_kills = {
                     "simple_zombie": sp.nat(0), 
                     "boss_zombie": sp.nat(0), 
                 }
                 )
 
-        @sp.entry_point
-        def change_name(self, new_name): 
-            self.data.name = new_name        
-        @sp.entry_point
-        def move_horizontally(self, update_to):
-            self.data.coordinate_x += update_to
-        
-        @sp.entry_point
-        def move_vertically(self, update_to):
-            self.data.coordinate_y += update_to
 
         @sp.entry_point
         def shoot_zombie(self, zombie_type):
             sp.verify(
                 self.data.plant_manager == sp.sender, 
-                message = "Error: you are not the manager of this plant"
+                message = "Error: non manager call"
                 )
             # Using sp.if add a condition to check bullet_seed_count >= 1
-            sp.if self.data.bullet_seed_count >=1:
+            sp.if self.data.bullet_seed_count >= 1:
                 
                 self.data.bullet_seed_count -= 1
                 self.data.record_zombie_kills[zombie_type] += 1
@@ -83,6 +84,20 @@ editor:
             # Use sp.failwith to return an error message. 
             sp.else:
                 sp.failwith("Error: you ran out of bullets! Please buy more!")
+
+    @sp.add_test(name = "Testing with sp.if")
+    def test():
+        scenario = sp.test_scenario()
+        
+        my_address = sp.address("tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj")
+        
+        plant_test_contract =  Plant(manager_address = my_address)
+        
+        scenario += plant_test_contract
+        
+        scenario += plant_test_contract.shoot_zombie("simple_zombie").run(sender = my_address)
+        scenario += plant_test_contract.shoot_zombie("boss_zombie").run(sender = my_address)
+
 ---
 
 ### Intro: 
@@ -111,30 +126,45 @@ Hence whenever in doubt or you are running in weird errors, trust in SmartPy's s
 
 ### Show me an example: 
 
-Remember `coordinate_x`which stores our plant's current x coordinate? 
+Remember: 
 
-We had specified a range for it that the plant can only move between `[-10, 10]`. 
-
-
-Though currently our `move_horizontally` currently allows to move to any aribtrary value since we don't check whether `update_to` is in the range of `[-10, 10]`!
-
+1. `coordinate_x` which stores our plant's current x coordinate and 
+2. `move_horizontally` entry point function which is used to change `coordinate_x` state variable value?
 
 ```python
-@sp.entry_point
-def move_horizontally(self, update_to):
-   self.data.coordinate_x += update_to
+    class Plant(sp.Contract):
+        def __init__(self,):
+            self.init(
+                ....
+                coordinate_x = sp.int(0),
+                ... 
+                }
+
+                )
+            
+        ...
+        @sp.entry_point
+        def move_horizontally(self, update_to):
+            self.data.coordinate_x += update_to
+        ....
 
 ```
 
+
+1. We had specified a range for it that the plant can only move between <span class="string-highlight">[-10, 10]</span>. 
+2. Though currently our `move_horizontally` entry point function currently allows to move to any aribtrary value since we don't check whether `update_to` is in the range of <span class="string-highlight">[-10, 10]</span>!
+
 We don't want the plant to start running away do we? 😰 
 
-Let us use `sp.if` to check whether `update_to` is in the range of `[-10, 10]`:
+<br />
+
+Let us use `sp.if` to check whether `update_to` is in the range of <span class="string-highlight">[-10, 10]</span>!:
 
 
 ```python
 @sp.entry_point
 def move_horizontally(self, update_to):
-   sp.if (update_to >= -10) & (update_to <=10): 
+   sp.if (update_to >= -10) & (update_to <= 10): 
        self.data.coordinate_x += update_to
    sp.else: 
        sp.failwith("Error: movement out of bounds")
@@ -145,11 +175,6 @@ Explaining the code above:
 
 1. The code is mostly straightforward to read where we basically instead of using `if`, we use `sp.if` to put condition over `update_to`
 2. If the condition fails, we use `sp.failwith` - a SmartPy helper method - to send back a relevant error message. 
-
-Read more in depth about: 
-
-1. technical pov of using `sp.if` over `if` in your smart contract code - under reference manual's "Control & Syntatical Sugar" section [here.](https://smartpy.io/demo/reference.html#_control_and_syntactic_sugar)
-2. why you cannot use `and`, `or`, `not` in your smart contract code and instead need to use `&`, `|`, `~` respectively - under reference manual's "Boolean" section [here.](https://smartpy.io/demo/reference.html#_booleans)
 
 
 ## #buidl-ing time:
@@ -173,4 +198,20 @@ Let's use `sp.if` to proceed forward with shooting only when `bullet_seed_count`
 3. Add `sp.else` and inside it's scope use `sp.failwith` to return with `"Error: you ran out of bullets! Please buy more!"` error message. 
 
 
-You can tinker around with the tests for the above code [here](https://smartpy.io/demo/index.html?code=eJzdVFFr1EAQfr9fMU1fcliD1VrKwYlQBKEIgtUHRZa5ZHK3drMTdzc9Uul_dzfZXHPXs1XQFxcul02@@XbyzXwjq5qNA1uhcXULaMHWk0mu0Fp4r1C71NbZOWtnMHfT2QQAwq@gEoSQWjohUkuqPIIKNS7JCCwKQ9b2WIj4sAIsCyHp8CSsOhwiYjDMd2mOYAwe3y8apcgJS1SInBvtfPBLDx9jDOVsCnHD1UKSuJJKWY_6MYaElVhZ1YoiLpl5DTKNLn023T6@wy7Y2keRt1tpTLvda48lL2QrapbaDTLaFbOLhFHKmK9ra9rIGP88xzUZWbZbInbSFugw25FzHgIs6YLMdoKV19ZDvBrJG2PYzKDlBtAQaHbgVjQUArj0W2n7QiX3P6tPSpajJO6X5tX8eDYKHd0@FPV0DsePRe0p8ZeRfl_hyV6SUAtlaQa_4K@zEqVaS7dKxwIZ1MCNC6L06doDbxNCS37fQsWGDpLpbudviCehB3xnC0fWpRqrrgCXfiP1ErrmgLLRuZOsLbBWLeSoFC6U52_7EgyF8ceE9umYYpfYnDQaydCVPbwRw6O0T6q7VO3grh4YN2nibo4_tM2LC8w_n@XtyfOzUzy5xnPid279_dPF2yvkb0mset9o3Rl5HA@eLc6MHRMHW2_OHCWyydfXaA_fHfDwEC69NI57t8DpoP7v0GRbDtvx@jQzjU57h@xJ88@ox6PhrxL_9zkPVf6oc64qb4RuBJWsFK@DNcbUnSUAdREwGjxvB865IMAlSp3BZRhYaz8LYCmv_VMNFDwcj_lnCt19ysOXn3uOSng-). Try to add more `shoot_zombie` calls to see see your code giving you the error message. 
+<br />
+
+When you’re finished:
+
+1. Click on “Check” to check your submission with the correct answer.
+2. Click on “Show Answer” in case you get stuck.
+
+
+You can also tinker around with the final code on [SmartPy’s online IDE](https://smartpy.io/demo/index.html?code=eJzdVE2L2zAQvedXzDoXh6am226XJZBSWAqFpVDobg8tRSjyOFEjS64kb_CW_e8dKXZiJ6Ef0F6qg2PFb97MvPmQZWWsB1dy66sGuANXjUZCcefgveLap67Kro32lgs_mY2ATo4FMCa19IylDlUxhZJrvkTLeJ5bdK4FhhO@ZwGb7v4KpwrcrDWD@SHBlMAD_KJWCj1ziDkTptaebF4eoSwKY3P2YMqFRLaWSjnCfR9gwkmcLCuFLTCZUdKZ5j59NpnCMXhhnPs19HFwm4y62F6TAZJ@DauM1H6noFsZ41vaVsU2bt9U2Fewyu7RyqIZKhiFzbnn2YGW82DhUOdoD0IsSVnCkCTJG2uNnYE2upMeBFcqOUiiezt@GcOdk3oZfMkCqGzAQRidSy@J0xsQKxTrE3V7NYfzfm5kvU_lNHw28DxM_tjiad_BEHyiPz73RP8CT_q2IUUMIaKiX0rJ1ppyzBE2K6QcVwh8Ye6xl3fBpXIZHFOEDxvpV5EGfW01cA0YqtCVJeurElzOhlnsSdKufI2pwRKPqT2YohXbndHkIie_i7qB0lg8S6gdR6PQiVQo5tH5VPMyNsItXUIdcxTSydgOa7qTRWjSCG170QnU3EoDscHCF9b9lW47JT7KphviLbC9pIl_OP_Q1C9uuPh0JZqL51eX_OKeX6N55zffPt68XXPzNekRbds6@hHtAiLGdisd7IuwQXZ@exy7mKmwJ_j2wPEYbm0TqhPnEi47MX@HJhvM8sFymWTUNul2Hk@E@WfU_VX0V4n_@5i7Kt9pYcqSFnKc38IoZTZxj_Wo4yqk@cwDRsexD@A4@nzJpc7gdiUdbGiBwFLSBtjN8tbNP1Non8rPHz8ALlZvYQ--). Try running the test by clicking on the ▶️ button!
+
+
+## Optional Reading: 
+
+Read more in depth about: 
+
+1. Technical pov of using `sp.if` over `if` in your smart contract code - under reference manual's "Control & Syntatical Sugar" section [here.](https://smartpy.io/demo/reference.html#_control_and_syntactic_sugar)
+2. Why you cannot use `and`, `or`, `not` in your smart contract code and instead need to use `&`, `|`, `~` respectively - under reference manual's "Boolean" section [here.](https://smartpy.io/demo/reference.html#_booleans)

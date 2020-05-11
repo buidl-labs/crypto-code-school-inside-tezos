@@ -160,11 +160,13 @@ var missing = {
     'Error with testing code: invalid or missing shoot_zombie call test call with my_address as caller',
 
   //For chapter 14
-  'sp.else:': 'missing else block',
+  'sp.else:': 'Error in smart contract code: missing of invalid sp.else block',
+
   'sp.failwith("Error: you ran out of bullets! Please buy more!")':
-    'invalid or missing sp.failwith method initialization',
-  'sp.if self.data.bullet_seed_count >=1:':
-    'invalid or missing sp.if block initialization',
+    'Error in smart contract code: invalid or missing sp.failwith helper method call in sp.else block',
+
+  'sp.if self.data.bullet_seed_count >= 1:':
+    'Error in smart contract code: invalid or missing sp.if block initialization',
 
   // 'self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100))':
   // 'state variables initialization is missing or is invalid',
