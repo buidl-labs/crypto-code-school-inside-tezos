@@ -167,9 +167,9 @@ const PlantGrowthModalView = ({ currentChapter, nextSlug, onToggle }) => {
                 Proceed <FaChevronRight />
               </StyledLink>
             ) : (
-              <ProceedLink to={`/tezos/game`}>
+              <StyledLink to={`/tezos/game`}>
                 Proceed <FaChevronRight />
-              </ProceedLink>
+              </StyledLink>
             )}
 
             {nextSlug ? (
