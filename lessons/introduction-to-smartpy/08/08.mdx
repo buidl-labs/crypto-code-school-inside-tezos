@@ -1,5 +1,5 @@
 ---
-title: Understanding how Smartpy infers data types
+title: Understanding how SmartPy infers data types
 chapter: Chapter 8
 slug: chapter-08
 filterBy: lesson-1
@@ -39,9 +39,9 @@ Just like in Python, most of the time there is no need to specify the types in S
 
 While most of the time you will not write many types explicitly it is beneficial to at least have a basic understanding of what they are. 
 
-**Understanding of types in Smartpy greatly helps in understanding & debugging error messages while writing smart contracts.**
+**Understanding of types in SmartPy greatly helps in understanding & debugging error messages while writing smart contracts.**
 
-### How does Smartpy deal with types? 
+### How does SmartPy deal with types? 
 SmartPy uses type inference in order to determine each expression's type. In practice this means that information about an expression is gathered according to its usage. 
 
 Remember, that in Chapter 5 we learnt how to give our `Plant` a name?
@@ -52,6 +52,6 @@ class Plant(sp.Contract):
        self.init(name = "peashooter")
 ```
 
-Here, Smartpy automatically determines and remembers that `name` is a variable that has `string` data type
+Here, SmartPy automatically determines and remembers that `name` is a variable that has `string` data type
 
 

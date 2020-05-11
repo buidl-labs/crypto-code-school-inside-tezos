@@ -1,5 +1,5 @@
 ---
-title: Tinkering with conditional code in Smartpy - sp.verify
+title: Tinkering with conditional code in SmartPy - sp.verify
 chapter: Chapter 13
 slug: chapter-13
 editor:
@@ -139,7 +139,7 @@ Let's start:
 1. In the `shoot_zombie` entry point function add `sp.verify`. 
 2. In the `sp.verify`'s condition field: 
     * use `self.data.plant_manager` to access the address stored inside `plant_manager`. 
-    * check it's equivalency with `sp.sender` - which Smartpy automatically populates with the address that called the current entry point. 
+    * check it's equivalency with `sp.sender` - which SmartPy automatically populates with the address that called the current entry point. 
  
 3. In the `sp.verify`'s `message` field: 
     * pass an error message on the lines of "Error: you are not the manager of this plant". 
@@ -151,9 +151,9 @@ Now since we have added that only the address stored inside `plant_manager` is a
 1. As you remember, we had stored our user account address in `my_address`
 2. We will reference it when we are call our `shoot_zombie` function by using the `run` method. 
     * Syntax: `shoot_zombie("<zombie type>").run(sender = my_address)`
-3. The above code tells Smartpy that we are calling `shoot_zombie` with `sender` value as `my_address`. 
-4. Smartpy takes whatever address that was sent to `sender` and populates `sp.sender` in our `shoot_zombie`'s function defintion. 
-    * Didn't we already mention that Smartpy is awesome! 
+3. The above code tells SmartPy that we are calling `shoot_zombie` with `sender` value as `my_address`. 
+4. SmartPy takes whatever address that was sent to `sender` and populates `sp.sender` in our `shoot_zombie`'s function defintion. 
+    * Didn't we already mention that SmartPy is awesome! 
 
 
 The implementation for all entry functions will remain the same and we leve that as an excersise to the user! 

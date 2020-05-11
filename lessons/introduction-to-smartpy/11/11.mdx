@@ -1,5 +1,5 @@
 ---
-title: Tinkering with maps in Smartpy
+title: Tinkering with maps in SmartPy
 chapter: Chapter 11
 slug: chapter-11
 filterBy: lesson-1
@@ -109,7 +109,7 @@ editor:
 ---
 
 ### Intro: 
-Let us quickly understand how maps are handled under the hood in Smartpy! 
+Let us quickly understand how maps are handled under the hood in SmartPy! 
 
 In the later half of the chapter, you will adding the ability to shoot as well as the ability to record zombie kills! 
 
@@ -127,7 +127,7 @@ Maps are containers that store elements formed by a combination of a key and a m
 
 You might recognize the familiarity with Python’s [dictionaries](https://docs.python.org/3/tutorial/datastructures.html#dictionaries). 
 
-Maps are represented by type `sp.TMap(key, value)` in Smartpy. 
+Maps are represented by type `sp.TMap(key, value)` in SmartPy. 
 
 ```python
 ## record_zombie_kills is a variable that records your kill count for various types of zombies. 
@@ -152,7 +152,7 @@ Notes:
 1. Since we know beforehand that kill counts cannot be negative, kill counts are given the type `sp.TNat` using `sp.nat`
 2. As you can see, map is a container data type that can hold simple data types like strings, int, boolean etc. 
 3. By that logic, the inferred type of `record_zombie_kills` is  `sp.TMap(sp.TString, sp.TNat)`
-5. You can read more in depth about how Smartpy handles maps [here](https://smartpy.io/demo/reference.html#_maps_and_big_maps). 
+5. You can read more in depth about how SmartPy handles maps [here](https://smartpy.io/demo/reference.html#_maps_and_big_maps). 
 
 
 

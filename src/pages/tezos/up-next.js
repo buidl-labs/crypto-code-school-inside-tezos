@@ -78,7 +78,7 @@ function UpNextPage() {
               <LockSVG />
             </div>
             <div>
-              <h3>Advance concept in Smartpy</h3>
+              <h3>Advance concept in SmartPy</h3>
               <p>about the course</p>
             </div>
           </LearnNextContainer>

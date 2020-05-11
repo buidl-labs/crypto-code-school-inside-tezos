@@ -393,10 +393,11 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                       }}
                     >
                       <p style={{ color: '#18b77e', paddingBottom: 5 }}>
-                        <span> > </span>Great, you got it right!
+                        <span> > </span>Bingo! You wrote the correct answer!
                       </p>
                       <p style={{ color: '#18b77e' }}>
-                        <span> > </span>Click 'next >' to continue.
+                        <span> > </span>Proceed to the next chapter by clicking
+                        on 'next >' to continue
                       </p>
                     </div>
                   ) : (

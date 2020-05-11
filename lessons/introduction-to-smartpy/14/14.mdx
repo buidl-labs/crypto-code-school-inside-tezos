@@ -1,5 +1,5 @@
 ---
-title: Tinkering with decision making via if & sp.if in Smartpy
+title: Tinkering with decision making via if & sp.if in SmartPy
 chapter: Chapter 14
 slug: chapter-14
 editor:
@@ -91,7 +91,7 @@ editor:
 
 You would be already be pretty familiar with basic decision making in Python using `if...else` statements.  
 
-In this chapter, we are going to understand how to go about writing decision making code inside smart contracts using Smartpy's `sp.if..sp.else` statements. 
+In this chapter, we are going to understand how to go about writing decision making code inside smart contracts using SmartPy's `sp.if..sp.else` statements. 
 
 In later half of the chapter, we design an alerting system to ping us when our `Plant` runs out of Bullet Seeds! 
 
@@ -106,10 +106,10 @@ We use `sp.if` over plain `if` for the following reasons:
 
 1. In smart contracts, most of decision making tends to happen via placing conditions over values stored inside contract's storage. 
     * Since decision making evaluation in smart contracts actually happens when smart contract's are being simulated or finally deployed to the Tezos blockchain, `sp.if` let's us execute decision making with contract's latest values in it's storage. 
-     * Since plain `if` doesn't have Smartpy's superpowers, you won't be able to bet whether it is executing on contract's latest updated values or not. 
+     * Since plain `if` doesn't have SmartPy's superpowers, you won't be able to bet whether it is executing on contract's latest updated values or not. 
 2. The difference between both comes from the enviroment in which they finally get to execute. 
 
-Hence whenever in doubt or you are running in weird errors, trust in Smartpy's superpowers and use the prefix `sp.`
+Hence whenever in doubt or you are running in weird errors, trust in SmartPy's superpowers and use the prefix `sp.`
 
 ### Show me an example: 
 
@@ -146,7 +146,7 @@ def move_horizontally(self, update_to):
 Explaining the code above: 
 
 1. The code is mostly straightforward to read where we basically instead of using `if`, we use `sp.if` to put condition over `update_to`
-2. If the condition fails, we use `sp.failwith` - a Smartpy helper method - to send back a relevant error message. 
+2. If the condition fails, we use `sp.failwith` - a SmartPy helper method - to send back a relevant error message. 
 
 Read more in depth about: 
 
