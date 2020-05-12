@@ -60,15 +60,15 @@ Hence writing test code is an extremely crucial skill to learn to prevent hacker
 
 We will learn testing in 3 steps: 
 
-1. First we create a testing enviroment. 
+1. First we create a testing environment. 
 2. Then we will define a scenario in our newly created testing environment. 
 3. Then we will use this scenario to simulate our `Plant` contract's initialization. 
 
 ### Show me an example: 
 
-#### Step 1: Creating a test enviroment: 
+#### Step 1: Creating a test environment: 
 
-A test enviroment is added at the end of your smart contract's code. 
+A test environment is added at the end of your smart contract's code. 
 
 ```python
 import smartpy as sp
@@ -85,8 +85,8 @@ def test():
 Explaining the code above: 
 
 1. We add a `@sp.add_test` decorator with a `name` variable to instruct the compiler that the code block after this will be used for testing. 
-2. We then follow it up with `test` function definition that creates our testing enviroment. 
-3. Inside this newly created testing enviroment, we will be writing the code to test our smart contract. 
+2. We then follow it up with `test` function definition that creates our testing environment. 
+3. Inside this newly created testing environment, we will be writing the code to test our smart contract. 
 
 #### Step 2: Defining a scenario: 
 
@@ -110,7 +110,7 @@ Explaining the code above:
 1. We call `sp.test_scenario` - a functionality offered by the `smartpy` library. 
 2. And we store the instance of the test scenario we created into the `scenario` variable. 
 
-#### Step 3: Simulating initalization of contract
+#### Step 3: Simulating initialization of contract
 
 
 ```python
@@ -139,7 +139,7 @@ You can also tinker around with the above code on [SmartPy’s online IDE](https
 
 ## #buidl-ing time:
 
-Now let us practise what we learned so far on our `Plant` contract: 
+Now let us practice what we learned so far on our `Plant` contract: 
 
 
 1. Add a test with the **name of “Test Plant Contract”** using `@sp.add_test` decorator. 

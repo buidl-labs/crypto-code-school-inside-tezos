@@ -120,7 +120,7 @@ We use `sp.if` over plain `if` for the following reasons:
 1. In smart contracts, most of decision making tends to happen via placing conditions over values stored inside contract's storage. 
     * Since decision making evaluation in smart contracts actually happens when smart contract's are being simulated or finally deployed to the Tezos blockchain, `sp.if` let's us execute decision making with contract's latest values in it's storage. 
      * Since plain `if` doesn't have SmartPy's superpowers, you won't be able to bet whether it is executing on contract's latest updated values or not. 
-2. The difference between both comes from the enviroment in which they finally get to execute. 
+2. The difference between both comes from the environment in which they finally get to execute. 
 
 Hence whenever in doubt or you are running in weird errors, trust in SmartPy's superpowers and use the prefix `sp.`
 
@@ -152,7 +152,7 @@ Remember:
 
 
 1. We had specified a range for it that the plant can only move between <span class="string-highlight">[-10, 10]</span>. 
-2. Though currently our `move_horizontally` entry point function currently allows to move to any aribtrary value since we don't check whether `update_to` is in the range of <span class="string-highlight">[-10, 10]</span>!
+2. Though currently our `move_horizontally` entry point function currently allows to move to any arbitrary value since we don't check whether `update_to` is in the range of <span class="string-highlight">[-10, 10]</span>!
 
 We don't want the plant to start running away do we? 😰 
 
@@ -213,5 +213,5 @@ You can also tinker around with the final code on [SmartPy’s online IDE](https
 
 Read more in depth about: 
 
-1. Technical pov of using `sp.if` over `if` in your smart contract code - under reference manual's "Control & Syntatical Sugar" section [here.](https://smartpy.io/demo/reference.html#_control_and_syntactic_sugar)
+1. Technical pov of using `sp.if` over `if` in your smart contract code - under reference manual's "Control & Syntactical Sugar" section [here.](https://smartpy.io/demo/reference.html#_control_and_syntactic_sugar)
 2. Why you cannot use `and`, `or`, `not` in your smart contract code and instead need to use `&`, `|`, `~` respectively - under reference manual's "Boolean" section [here.](https://smartpy.io/demo/reference.html#_booleans)

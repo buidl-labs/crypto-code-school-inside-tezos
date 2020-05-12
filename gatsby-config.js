@@ -5,8 +5,8 @@ const siteUrl =
 module.exports = {
   siteMetadata: {
     title: `Crypto Code School`,
-    author: `Buidl Labs`,
-    description: `Interactive Code School for onboarding newcomers to the Tezos Ecosystem using smartpy`,
+    author: `BUIDL Labs`,
+    description: `Interactive Code School for learning smart contract development on the Tezos blockchain using SmartPy`,
     siteUrl,
     social: {
       twitter: `BuidlLabs`,
