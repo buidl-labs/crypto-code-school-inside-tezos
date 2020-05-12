@@ -41,7 +41,7 @@ editor:
         # Add shoot_zombie function below
         @sp.entry_point
         def shoot_zombie(self, zombie_type): 
-            # Reduce bullet_seed_count by fire_shot_count
+            # Reduce bullet_seed_count by 1
 
                 
             # Record the zombie that was shot
@@ -96,7 +96,7 @@ editor:
         # Add shoot_zombie function below
         @sp.entry_point
         def shoot_zombie(self, zombie_type): 
-            # Reduce bullet_seed_count by fire_shot_count
+            # Reduce bullet_seed_count by 1
             self.data.bullet_seed_count -= 1
             
             # Record the zombie that was shot

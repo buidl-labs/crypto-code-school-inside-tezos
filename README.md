@@ -11,7 +11,7 @@ Interactive Code School for learning smart contract development on the Tezos blo
 
 ## Description <a id="description"></a>
 
-This project aims to help beginners build a simple smart contract in smartpy which can be deployed on tezos blockchain via Interactive Coding Lessons.
+This project aims to help beginners build a simple smart contract using SmartPy which can be deployed on Tezos blockchain via interactive coding lessons.
 
 ### Interactive Learning Interface <a id="learning_interface"></a>
 
