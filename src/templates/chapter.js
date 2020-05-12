@@ -111,7 +111,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
   const getDefaultEditorValue = () => {
     let list = [];
     const listJSON =
-      typeof window != 'undefined' && localStorage.getItem('lesson-1');
+      typeof window != 'undefined' && localStorage.getItem('lesson-v1');
     if (listJSON !== null) {
       list = JSON.parse(listJSON);
     }
@@ -126,7 +126,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           const updateList = list.filter(chapter => {
             return !(chapter.chapterSlug === savedChapter.chapterSlug);
           });
-          localStorage.setItem('lesson-1', JSON.stringify(updateList));
+          localStorage.setItem('lesson-v1', JSON.stringify(updateList));
           return `${chapter.frontmatter.editor.startingCode}`;
         }
         setChapterCompletionState(true);
@@ -203,7 +203,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
 
       //get the previous stored if available otherwise create a new one
       let list = [];
-      const listJSON = localStorage.getItem('lesson-1');
+      const listJSON = localStorage.getItem('lesson-v1');
       if (listJSON !== null) {
         list = JSON.parse(listJSON);
       }
@@ -221,7 +221,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           chapterSlug: chapterList[index.current - 1].slug,
         });
       }
-      localStorage.setItem('lesson-1', JSON.stringify(list));
+      localStorage.setItem('lesson-v1', JSON.stringify(list));
       // console.log(list);
     }
   }, [validation.success]);

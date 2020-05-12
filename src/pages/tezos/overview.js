@@ -44,13 +44,13 @@ function LessonsOverview() {
     //get the previous stored if available otherwise create a new one
     let list = [];
     const listJSON =
-      typeof window != 'undefined' && localStorage.getItem('lesson-1');
+      typeof window != 'undefined' && localStorage.getItem('lesson-v1');
     if (listJSON !== null) {
       list = JSON.parse(listJSON);
       //handle backward compatibility by removing chapters where current key isn't available
       list = list.filter(chapter => chapter && chapter.current);
       typeof window != 'undefined' &&
-        localStorage.setItem('lesson-1', JSON.stringify(list));
+        localStorage.setItem('lesson-v1', JSON.stringify(list));
       // console.log('updatedList', updatedList);
       // console.log('chapters', chapters);
     }
@@ -88,7 +88,7 @@ function LessonsOverview() {
     //get the previous stored if available otherwise create a new one
     let list = [];
     const listJSON =
-      typeof window != 'undefined' && localStorage.getItem('lesson-1');
+      typeof window != 'undefined' && localStorage.getItem('lesson-v1');
     if (listJSON !== null) {
       list = JSON.parse(listJSON);
     }
@@ -116,7 +116,7 @@ function LessonsOverview() {
   const SyncSavedUserProgressWithLatestUpdates = () => {
     let list = [];
     const listJSON =
-      typeof window != 'undefined' && localStorage.getItem('lesson-1');
+      typeof window != 'undefined' && localStorage.getItem('lesson-v1');
     if (listJSON !== null) {
       list = JSON.parse(listJSON);
     }
@@ -130,7 +130,7 @@ function LessonsOverview() {
       // console.log('updateList', updateList);
       //update stored user progress lesson chapters
       //sync it according to latest content
-      localStorage.setItem('lesson-1', JSON.stringify(updateList));
+      localStorage.setItem('lesson-v1', JSON.stringify(updateList));
     }
   };
 
