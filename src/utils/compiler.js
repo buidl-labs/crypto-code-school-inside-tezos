@@ -522,8 +522,26 @@ export function checkCode(get, lesson) {
   // list of lines (code) that user didn't write
   // var missingFromUser = correctCodeArray.filter(w => !userArray.includes(w));
   var missingFromUser = []; // it has code without space
+  //Indentation message which will be shown to the user
+  const INDENTATION_ERROR = 'Indentation Error';
   for (a in correctCodeArray) {
     if (userArray[a] === undefined) {
+      // this is for checking if indentation error is present or not
+      // trim out all user inputted line[key + value] for checking if
+      const userTrimmed = {};
+      for (const x in userArray) {
+        const key = x.trim();
+        const value = userArray[x].trim();
+        userTrimmed[key] = value;
+      }
+      // trim correct code line for comparison with user code
+      const correctCodeTrimmed = a.trim();
+      //user code matched with correct answer code
+      //means error type is indentation error
+      if (userTrimmed[correctCodeTrimmed]) {
+        missingFromUser.push(INDENTATION_ERROR);
+        continue;
+      }
       missingFromUser.push(a);
     } else {
       continue;
@@ -597,7 +615,12 @@ export function checkCode(get, lesson) {
   if (missingFromUser.length !== 0) {
     result[404] = [];
     for (i in missingFromUser) {
-      result[404].push(missing[correctCodeArray[missingFromUser[i]].trim()]);
+      //check error type
+      if (missingFromUser[i] === INDENTATION_ERROR) {
+        result[404].push(missingFromUser[i]);
+      } else {
+        result[404].push(missing[correctCodeArray[missingFromUser[i]].trim()]);
+      }
       // result[404].push(missing[missingFromUser[i].trim()]);
     }
   }
