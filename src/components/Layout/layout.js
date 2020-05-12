@@ -54,6 +54,10 @@ const Layout = ({ children, background }) => {
           ::-webkit-scrollbar-corner {
             background-color: transparent;
           }
+
+          a:hover {
+            text-decoration: none;
+          }
         `}
       />
       <Helmet>
