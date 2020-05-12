@@ -83,7 +83,7 @@ var missing = {
     'Error in smart contract code: invalid or missing is_alive assignment',
 
   'plant_test_contract =  Plant(life_state = True)':
-    'Error in testing code: life_state is missing or invalid in Plant invokation',
+    'Error in testing code: life_state is missing or invalid in Plant invocation',
 
   'scenario.verify(plant_test_contract.data.is_alive == True)':
     'Error in testing code: invalid or missing scenario.verify helper method call',
@@ -167,6 +167,10 @@ var missing = {
 
   'sp.if self.data.bullet_seed_count >= 1:':
     'Error in smart contract code: invalid or missing sp.if block initialization',
+
+  //chapter 2
+  'name_of_currency_on_tezos_blockchain = "XTZ"':
+    'Invalid or missing name_of_currency_on_tezos_blockchain assignment',
 
   // 'self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100))':
   // 'state variables initialization is missing or is invalid',
