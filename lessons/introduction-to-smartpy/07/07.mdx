@@ -10,11 +10,12 @@ editor:
     import smartpy as sp
 
     class Plant(sp.Contract):
-    def __init__(self):
-        self.init(name = "peashooter")
-    
-        # Add change_name entry function below
+        def __init__(self):
+            self.init(name = "peashooter")
         
+        # Add change_name entry function below
+
+
             
     @sp.add_test(name = "Testing giving plant a new name")
     def test():
@@ -30,8 +31,8 @@ editor:
     import smartpy as sp
 
     class Plant(sp.Contract):
-    def __init__(self):
-        self.init(name = "peashooter")
+        def __init__(self):
+            self.init(name = "peashooter")
     
         # Add change_name entry function below
         @sp.entry_point
@@ -47,7 +48,7 @@ editor:
         scenario += plant_test_contract
        
         # Test change_name function below
-        scenario += plant_test_contract.change_name("funky peashooter")
+        scenario += plant_test_contract.change_name("punky peashooter")
 ---
 
 ### Intro: 
