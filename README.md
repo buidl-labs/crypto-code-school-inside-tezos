@@ -1,6 +1,6 @@
 # Crypto Plants vs Zombies
 
-Interactive Code School for onboarding newcomers to the Tezos Ecosystem
+Interactive Code School for learning smart contract development on the Tezos blockchain using SmartPy
 
 ## Table of contents
 
