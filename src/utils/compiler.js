@@ -73,7 +73,7 @@ var missing = {
   'self.data.name = new_name':
     'Error in smart contract code: invalid or missing new_name assignment to self.data.name',
 
-  'scenario += plant_test_contract.change_name("funky peashooter")':
+  'scenario += plant_test_contract.change_name("punky peashooter")':
     'Error in testing code: invalid or missing change_name test call',
 
   'def __init__(self, life_state):':
@@ -210,11 +210,6 @@ var missing = {
   //   'assignChararter function declaration error',
   // 'self.data.player[params.sender] = self.data.stat':
   //   'invalid or missing assignment statement in assignChararter()',
-  // 'self.data.player[sp.sender] = self.data.stat':
-  //   'invalid or missing assignment statement in assignChararter()',
-  // 'self.data.player[params.sender].name = params.name':
-  //   'invalid or missing assignment statement in assignChararter()',
-  // 'self.data.player[sp.sender].name = params.name':
   //   'invalid or missing assignment statement in assignChararter()',
   // 'sp.verify(~ self.data.player.contains(sp.sender), "User already has a plant")':
   //   'missing or invalid verification in assignChararter()',
