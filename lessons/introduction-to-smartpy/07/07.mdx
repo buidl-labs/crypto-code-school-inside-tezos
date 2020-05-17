@@ -148,11 +148,11 @@ You can also tinker around with the above code on [SmartPy’s online IDE](https
 Let’s change our plant’s name from <span class="string-highlight">"peashooter"</span> to <span class="string-highlight">"punky peashooter"</span> by doing the following: 
 
 1. Add a `change_name` entry point function just after the scope of `__init__` initialization function finishes. 
-     * Pass `self` and `params` as arguments to `change_name` function. 
-     * Use `self.data.name` to access `Plant` contract’s internal storage. And assign it the value of `params.new_name`. 
+     * Pass `self` and `new_name` as arguments to `change_name` function. 
+     * Use `self.data.name` to access `Plant` contract’s internal storage. And assign it the value of `new_name`. 
 
 2. Test your newly created `change_name` function by calling `change_name` on `plant_test_contract`. 
-      * Pass `new_name` = <span class="string-highlight">"funky peashooter"</span> as function argument. 
+      * Pass in <span class="string-highlight">"punky peashooter"</span> in `change_name`'s function call. 
 
 
 <br />
