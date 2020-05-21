@@ -171,355 +171,129 @@ var missing = {
   //chapter 2
   'name_of_currency_on_tezos_blockchain = "XTZ"':
     'Invalid or missing name_of_currency_on_tezos_blockchain assignment',
-
-  // 'self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100))':
-  // 'state variables initialization is missing or is invalid',
-
-  // 'self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True)':
-  //   'is_alive of type `sp.TBoolean` initialization is missing or is invalid',
-
-  // 'self.init(name = name, attack = sp.nat(10), defense = sp.nat(10), growth_rate = sp.nat(10), health = sp.nat(100), is_alive = True, power_move = ("Bullet Seed", 95))':
-  //   'power_move of type `sp.TPair` initialization is missing or is invalid',
-
-  // 'self.init(stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True))':
-  //   'stat of type `sp.TRecord` initialization is missing or is invalid',
-
-  // 'self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True))':
-  //   'player of type `sp.TMap` initialization is missing or is invalid',
-
-  // 'self.init(player = sp.map(), stat = sp.record(name = "", attack = sp.nat(10), defense = sp.nat(10), health = sp.nat(100), growth_rate = sp.nat(10), is_alive = True, special_moves = []))':
-  //   'special_moves array (sp.TList) initialization is missing or is invalid',
-
-  // '@sp.entry_point': '@sp.entry_point decorator missing or invalid',
-
-  // 'def attack(self):': 'attack function declaration error',
-  // 'def attack(self, new_name):': 'attack function declaration error',
-  // 'self.data.attack += params.attack':
-  //   'invalid or missing statement in attack function',
-  // 'self.data.player[sp.sender].attack += params.attack':
-  //   'invalid or missing statement in attack function',
-
-  // 'def defense(self):': 'defense function declaration error',
-  // 'def defense(self, new_name):': 'defense function declaration error',
-  // 'self.data.defense += params.defense':
-  //   'invalid or missing statement in defense function',
-  // 'self.data.player[sp.sender].defense += params.defense':
-  //   'invalid or missing statement in defense function',
-
-  // 'def assignChararter(self, new_name):':
-  //   'assignChararter function declaration error',
-  // 'self.data.player[params.sender] = self.data.stat':
-  //   'invalid or missing assignment statement in assignChararter()',
-  //   'invalid or missing assignment statement in assignChararter()',
-  // 'sp.verify(~ self.data.player.contains(sp.sender), "User already has a plant")':
-  //   'missing or invalid verification in assignChararter()',
-
-  // 'def endGame(self, new_name):': 'endGame function declaration error',
-  // 'self.data.player[sp.sender].is_alive = False':
-  //   'missing or invalid assignment in endGame function',
-  // 'sp.verify(self.data.player[sp.sender].health == 0, "You are alive!!!")':
-  //   'missing or invalid verification in endGame()',
-
-  // 'def createMove(self, new_name):': 'createMove function declaration error',
-  // 'self.data.player[sp.sender].special_moves = params.moves':
-  //   'invalid or missing statmenet in createMove()',
-
-  // 'sp.if ~ self.data.player.contains(sp.sender):':
-  //   'invalid or missing condition in `if` statement',
-  // 'sp.else:': 'missing else block',
 };
 
 //-----Function to check user code and return error as object type {`line number`: `error message`}-----//
+/**
+ * matches a line-feed (newline) character (ASCII 10)
+ * @param {*} code
+ */
+const SplitIntoNewLine = code => {
+  return code.split('\n');
+};
+
+/**
+ * matches a carriage return (ASCII 13)
+ * @param {*} code
+ */
+const removeCarriageReturn = code => {
+  return code.map(currentLine => currentLine.replace('\r', ''));
+};
+
+/**
+ * Ignore semi colons
+ * @param {*} code
+ */
+const ignoreSemiColons = code => {
+  return code.map(currentLine => currentLine.replace(';', ''));
+};
+/**
+ * Replace tab with space
+ * @param {*} code
+ */
+const replaceTabWithSpace = code => {
+  return code.map(currentLine => currentLine.replace('\t', '  '));
+};
+
+/**
+ * Removing extra spaces from the end of line
+ * @param {*} code
+ */
+const trimAtTheEndOfLine = code => {
+  return code.map(currentLine => currentLine.trimRight());
+};
+
+/**
+ * Replace single quotes(') with double quotes("")
+ * @param {*} code
+ */
+const replaceSingleQuotesWithDoubleQuotes = code => {
+  return code.map(currentLine => currentLine.split(`'`).join(`"`));
+};
+
+/**
+ * removing valid python comments starting with #
+ * @param {*} code
+ */
+const removeComments = code => {
+  return code.filter(currentLine => currentLine.trim()[0] !== '#');
+};
+
+const ignoreEmptyNewLines = code => {
+  return code.filter(currentLine => currentLine.trim() !== '');
+};
+
+const pipe = (arrayOfFunctions, value) => {
+  return arrayOfFunctions.reduce((accumulator, currentFunc) => {
+    return currentFunc(accumulator);
+  }, value);
+};
+
+const mapArrayToObject = code => {
+  const obj = {};
+  for (const currentLine of code) {
+    obj[currentLine] = currentLine;
+  }
+  return obj;
+};
 
 /**
  *
- * @param {*} get --> user input value
- * @param {*} lesson --> current chapter solution
- * @returns {} {
- *  success: true/false
- *  error: `result[404][0] "at line" result[0].key(line number)`
+ * @param {*} userInputtedCode - user input value
+ * @param {*} correctSolution - current chapter solution
+ * @returns {*} {
+ *  success: true/false,
+ *  error: array of errors
  * }
  */
+export function checkCode(userInputtedCode, correctSolution) {
+  const result = {};
 
-/**
- * Ignore Comments, semicolons, handle (double)"" and single('') quotes
- */
-// TODO: refactor code logic for maintenance
-//In Progress
-// function getFilteredCode(code) {
-//   // splitting user's code to get array of lines
-//   let splittedCode = code.split('\n');
-
-//   // removing '\r' from the end of each element(line).
-//   for (const x in splittedCode) {
-//     splittedCode[x] = splittedCode[x].replace('\r', '');
-//   }
-
-//   // removing ; as it doesnot gives error
-//   for (const x in splittedCode) {
-//     splittedCode[x] = splittedCode[x].replace(';', '');
-//   }
-
-//   // replacing tabs with spaces
-//   for (const a in splittedCode) {
-//     splittedCode[a] = splittedCode[a].replace('\t', '  ');
-//   }
-
-//   // removing extra spaces from the end of line
-//   for (const a in splittedCode) {
-//     splittedCode[a] = splittedCode[a].trimRight();
-//   }
-
-//   // replacing (single quotes '') with (double quotes ")
-//   for (const a in splittedCode) {
-//     splittedCode[a] = splittedCode[a].split(`'`).join(`"`);
-//   }
-
-//   // removing new lines and white spaces from the user's code
-//   let filteredCode = splittedCode.filter(function(entry) {
-//     return entry.trim() !== '';
-//   });
-
-//   // removing valid python comments starting with #
-//   filteredCode = filteredCode.filter(x => x.trim()[0] !== '#');
-//   console.log('filteredCode', filteredCode);
-//   return filteredCode;
-// }
-
-//remove blank spaces from user input
-export function checkCode(get, lesson) {
-  // user - this is the array of each line of the code which user types in the editor,
-  // lesson - this is the code from the above variables, ex: for lesson 1, use l1, lesson 3 - l2 and so on...
-  // result to be print result[line_number] = error message
-  var result = {};
-
-  // spliting user's code to get array of lines
-  var user = get.split('\n');
-  //console.log("SURAJ", user);
-
-  // removing '\r' from the end of each element(line).
-  for (var x in user) {
-    user[x] = user[x].replace('\r', '');
-  }
-
-  // removing ; as it doesnot gives error
-  for (var x in user) {
-    user[x] = user[x].replace(';', '');
-  }
-
-  // replacing tabs with spaces
-  for (var a in user) {
-    user[a] = user[a].replace('\t', '  ');
-  }
-
-  // removing extra spaces from the end of line
-  for (var a in user) {
-    user[a] = user[a].trimRight();
-  }
-
-  // console.log("USER", user);
-
-  // replacing ' with "
-  for (var a in user) {
-    user[a] = user[a].split(`'`).join(`"`);
-  }
-
-  // console.log("USER2", user)
-
-  // removing new lines and white spaces from the user's code
-  var userArray = user.filter(function(entry) {
-    return entry.trim() !== '';
-  });
-
-  // if (lesson === 'l2') {
-  //   // getting array from the correct code (each line is an element of the array)
-  //   var testl2 = l1.split('\n');
-
-  //   //console.log("TEST L2", testl2);
-
-  //   // removing new lines and white spaces from the correct code
-  //   var correctl2 = testl2.filter(function (entry) {
-  //     return entry.trim() !== '';
-  //   });
-
-  //   //console.log("2 TEST L2", correctl2);
-
-  //   var comment = userArray.filter(x => !correctl2.includes(x));
-
-  //   var final = comment.filter(z => z.trim()[0] === '#');
-  //   var com = comment.filter(z => z.trim()[0] !== '#');
-
-  //   //console.log("L2 COMMENT", comment);
-  //   //console.log("L2 FINAL", final);
-  //   //console.log("L2 COM", com);
-
-  //   var comError = [];
-
-  //   if (com.length > 0) {
-  //     for (var c in com) {
-  //       comError.push('Invalid code at line ' + (user.indexOf(com[c]) + 1));
-  //     }
-  //     return {
-  //       success: false,
-  //       error: comError,
-  //     };
-  //   } else if (final.length === 0) {
-  //     return { success: false, error: ['comment is required.'] };
-  //   } else {
-  //     return { success: true, error: ['No error'] };
-  //   }
-  // }
-  // removing valid python comments starting with #
-  userArray = userArray.filter(x => x.trim()[0] !== '#');
-
-  // getting all invalid comments `//` as valid comments `#` are already removed
-  var commentsTest = userArray.filter(line => line.trim().includes('//', 0));
-
-  //console.log('THIS IS COMMENT LINEs', commentsTest);
-
-  // error message for all the invalid comment lines
-  for (var comments in commentsTest) {
-    result[user.indexOf(commentsTest[comments]) + 1] =
-      'Comments in python starts with #';
-  }
-
-  // updating user array and removing invalid comments as well
-  // var userArray = userArray.filter(x => !x.trim().includes('//', 0));
-  var userRemoveInvalidCommentArray = userArray.filter(
-    x => !x.trim().includes('//', 0),
+  const filteredUserInputtedCode = pipe(
+    [
+      SplitIntoNewLine,
+      removeCarriageReturn,
+      ignoreSemiColons,
+      replaceTabWithSpace,
+      trimAtTheEndOfLine,
+      replaceSingleQuotesWithDoubleQuotes,
+      removeComments,
+      ignoreEmptyNewLines,
+    ],
+    userInputtedCode,
   );
 
-  // dict = {withoutSpace : withspaceOriginal}
-  userArray = {};
+  console.log('filteredUserInputtedCode', filteredUserInputtedCode);
 
-  // replacing all spaces in lines
-  for (var a in userRemoveInvalidCommentArray) {
-    userArray[
-      userRemoveInvalidCommentArray[a]
-        .split(` , `)
-        .join(`,`)
-        .split(`, `)
-        .join(`,`)
-        .split(` ,`)
-        .join(`,`)
-        .split(` ~ `)
-        .join(`~`)
-        .split(`~ `)
-        .join(`~`)
-        .split(` ~`)
-        .join(`~`)
-        .split(` : `)
-        .join(`:`)
-        .split(`: `)
-        .join(`:`)
-        .split(` :`)
-        .join(`:`)
-        .split(`( `)
-        .join(`(`)
-        .split(` )`)
-        .join(`)`)
-        .split(` = `)
-        .join(`=`)
-        .split(`= `)
-        .join(`=`)
-        .split(` =`)
-        .join(`=`)
-        .split(` ' `)
-        .join(`'`)
-        .split(` '`)
-        .join(`'`)
-        .split(`' `)
-        .join(`'`)
-        .split(` " `)
-        .join(`"`)
-        .split(` "`)
-        .join(`"`)
-        .split(`" `)
-        .join(`"`)
-    ] = userRemoveInvalidCommentArray[a];
-    // userArray[userRemoveInvalidCommentArray[a].substr(0,userRemoveInvalidCommentArray[a].length - userRemoveInvalidCommentArray[a].trimLeft().length) + userRemoveInvalidCommentArray[a].split(" ").join("")] = userRemoveInvalidCommentArray[a];
-  }
+  const userArray = mapArrayToObject(filteredUserInputtedCode);
 
-  // console.log("USER", userArray);
-  // --------------------------------
+  console.log('userArray', userArray);
 
-  // getting array from the correct code (each line is an element of the array)
-  var code = lesson.split('\n');
-
-  // removing new lines and white spaces from the correct code
-  // var correctCodeArray = code.filter(function (entry) {
-  var correctCodeArrayWithSpace = code.filter(function(entry) {
-    return entry.trim() !== '';
-  });
-
-  correctCodeArrayWithSpace = correctCodeArrayWithSpace.filter(
-    x => x.trim()[0] !== '#',
+  const filteredCorrectSolution = pipe(
+    [SplitIntoNewLine, removeComments, ignoreEmptyNewLines],
+    correctSolution,
   );
+  console.log('filteredCorrectSolution', filteredCorrectSolution);
 
-  // dict = {withoutSpace : withspaceOriginal}
-  var correctCodeArray = {};
+  const correctCodeArray = mapArrayToObject(filteredCorrectSolution);
 
-  // replacing all spaces in lines
-  for (var a in correctCodeArrayWithSpace) {
-    correctCodeArray[
-      correctCodeArrayWithSpace[a]
-        .split(` , `)
-        .join(`,`)
-        .split(`, `)
-        .join(`,`)
-        .split(` ,`)
-        .join(`,`)
-        .split(` ~ `)
-        .join(`~`)
-        .split(`~ `)
-        .join(`~`)
-        .split(` ~`)
-        .join(`~`)
-        .split(` : `)
-        .join(`:`)
-        .split(`: `)
-        .join(`:`)
-        .split(` :`)
-        .join(`:`)
-        .split(`( `)
-        .join(`(`)
-        .split(` )`)
-        .join(`)`)
-        .split(` = `)
-        .join(`=`)
-        .split(`= `)
-        .join(`=`)
-        .split(` =`)
-        .join(`=`)
-        .split(` ' `)
-        .join(`'`)
-        .split(` '`)
-        .join(`'`)
-        .split(`' `)
-        .join(`'`)
-        .split(` " `)
-        .join(`"`)
-        .split(` "`)
-        .join(`"`)
-        .split(`" `)
-        .join(`"`)
-    ] = correctCodeArrayWithSpace[a];
-    // correctCodeArray[correctCodeArrayWithSpace[a].substr(0,correctCodeArrayWithSpace[a].length - correctCodeArrayWithSpace[a].trimLeft().length) + correctCodeArrayWithSpace[a].split(" ").join("")] = correctCodeArrayWithSpace[a];
-  }
-
-  // console.log("CODE", correctCodeArray);
-  // length of the array of user's code
-  var i = userArray.length;
-
-  // length of the array of correct code
-  var j = correctCodeArray.length;
-
+  console.log('correctCodeArray', correctCodeArray);
   // list of lines (code) that user didn't write
   // var missingFromUser = correctCodeArray.filter(w => !userArray.includes(w));
   var missingFromUser = []; // it has code without space
   //Indentation message which will be shown to the user
   const INDENTATION_ERROR = 'Indentation Error';
-  for (a in correctCodeArray) {
+  for (const a in correctCodeArray) {
     if (userArray[a] === undefined) {
       // this is for checking if indentation error is present or not
       // trim out all user inputted line[key + value] for checking if
@@ -543,36 +317,13 @@ export function checkCode(get, lesson) {
     }
   }
 
-  if (
-    missingFromUser.indexOf('        pass') === -1 &&
-    _.countBy(correctCodeArrayWithSpace)['        pass'] >
-      _.countBy(userRemoveInvalidCommentArray)['        pass']
-    // _.countBy(correctCodeArray)['        pass'] >
-    // _.countBy(userArray)['        pass']
-  ) {
-    missingFromUser.push('        pass');
-  }
-
-  if (
-    missingFromUser.indexOf('    @sp.entry_point') === -1 &&
-    _.countBy(correctCodeArrayWithSpace)['    @sp.entry_point'] >
-      _.countBy(userRemoveInvalidCommentArray)['    @sp.entry_point']
-  ) {
-    missingFromUser.push('    @sp.entry_point');
-  }
-
-  // var correct = _.countBy(correctCodeArray);
-  // var user = _.countBy(userArray);
-
-  // //console.log(correct['        pass'])
-  // //console.log(user['        pass'])
-  // //console.log(correctCodeArray.indexOf('        pass'));
-  // //console.log(userArray.indexOf('        pass'));
+  console.log('missingFromUser', missingFromUser);
 
   // list of extra lines (code) thats user wrote
   // var extraInUser = userArray.filter(w => !correctCodeArray.includes(w));
+  //store very line which doesn't match with code solution
   var extraInUser = []; // it has code without space
-  for (a in userArray) {
+  for (const a in userArray) {
     if (correctCodeArray[a] === undefined) {
       extraInUser.push(a);
     } else {
@@ -580,36 +331,29 @@ export function checkCode(get, lesson) {
     }
   }
 
-  // console.log('USER ARRAY', userArray);
-  // console.log('CORRECT ARRAY', correctCodeArray);
-
-  // console.log('MISSING', missingFromUser);
-  // console.log('EXTRA', extraInUser);
-
-  //l9 get pass
-  // if (lesson === l9) {
-  //   missing['pass'] =
-  //     'Remove assignment statement in attack and defense functions as they are not valid at this moment. Add `pass`';
-  // }
+  console.log('extraInUser', extraInUser);
 
   // invalid statements of extra line of codes
-  for (i in extraInUser) {
+  for (const i in extraInUser) {
     if (extraInUser[i].trim() === 'pass') {
-      result[user.indexOf(userArray[extraInUser[i]]) + 1] =
+      result[filteredUserInputtedCode.indexOf(userArray[extraInUser[i]]) + 1] =
         // result[user.indexOf(extraInUser[i]) + 1] =
         'Invalid statement, remove `pass and update the function with appropriate statement`';
       //console.log("RESULT", result);
     } else {
-      result[user.indexOf(userArray[extraInUser[i]]) + 1] = 'Invalid statement';
+      result[
+        SplitIntoNewLine(userInputtedCode).indexOf(userArray[extraInUser[i]]) +
+          1
+      ] = 'Invalid statement';
       // result[user.indexOf(extraInUser[i]) + 1] = 'Invalid statement';
     }
   }
-  //console.log("RESULT2", result);
-  //console.log(missingFromUser.length);
+  console.log('RESULT_-2-', result);
+  console.log('missingFromUser.length', missingFromUser.length);
 
   if (missingFromUser.length !== 0) {
     result[404] = [];
-    for (i in missingFromUser) {
+    for (const i in missingFromUser) {
       //check error type
       if (missingFromUser[i] === INDENTATION_ERROR) {
         result[404].push(missingFromUser[i]);
@@ -619,7 +363,7 @@ export function checkCode(get, lesson) {
       // result[404].push(missing[missingFromUser[i].trim()]);
     }
   }
-  //console.log("RESULT3", result);
+  console.log('RESULT-3', result);
   //console.log(i, j);
 
   //console.log('RESULT', result);
@@ -631,6 +375,7 @@ export function checkCode(get, lesson) {
 
   var RR = Object.keys(result);
   //console.log('RR', RR);
+  console.log('RR', RR);
 
   if (RR.length === 0) {
     FINAL_RESULT = {
@@ -642,13 +387,18 @@ export function checkCode(get, lesson) {
   } else {
     if (404 in result) {
       RR = RR.filter(function(value) {
+        console.log('RR=Value', value);
         return value < 404;
       });
+
+      console.log('filtered RR', RR);
 
       var err = result[404];
 
       var lines = RR.length;
+      console.log('lines', lines);
       var errors = err.length;
+      console.log('errors', errors);
 
       var resFinal = [];
 
@@ -702,38 +452,6 @@ export function checkCode(get, lesson) {
       return FINAL_RESULT;
     }
   }
-
-  //   //console.log(Object.values(result));
-
-  //   return result;
-
-  // // if length of array is different then return the with the line number which is more that the expect code.
-  // if (i!==j){
-
-  //     // getting which code (array) has more number of lines are then getting line number and appropriate error message
-  //     i<j ? result[user.indexOf(userArray[i-1])+2] = "Missing Code":result[user.indexOf(userArray[j])+1] = "Invalid Code";
-
-  //     return result;
-  // }
-
-  // else{
-  //     // if both codes (arrays) has equal number of lines then iterate through array and check for the correctness
-  //     for(var k=0; k<i; k++){
-
-  //         // if user's element (line) is same as the correct code then continue with next element
-  //         if(correctCodeArray[k] === userArray[k]){
-  //             continue;
-  //         }
-
-  //         // if elements are not equal then get the line number of the line in code editor and push appropriate result in the dictinoary
-  //         else{
-  //             var idx = user.indexOf(userArray[k])+1;
-  //             result[idx] = errors[k+1];
-  //         }
-  //     }
-
-  //     return result;
-  // }
 }
 
 //Default error message: Error: Unexpected identifier at line x
