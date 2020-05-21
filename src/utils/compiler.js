@@ -29,7 +29,7 @@ var errors = {
   22: 'invalid assignment of state variable',
 };
 
-var missing = {
+const missing = {
   'import smartpy as sp': 'import statement missing or invalid',
 
   'class Plant(sp.Contract):':
@@ -229,8 +229,49 @@ const removeComments = code => {
   return code.filter(currentLine => currentLine.trim()[0] !== '#');
 };
 
+/**
+ * Ignore all empty lines
+ * @param {*} code
+ */
 const ignoreEmptyNewLines = code => {
   return code.filter(currentLine => currentLine.trim() !== '');
+};
+
+const handleIntraLineWhiteSpace = (code, TYPE = 'ARRAY') => {
+  const divider = ['=', ':', '==', '>=', '+=', '-=', ',', '"'];
+  switch (TYPE) {
+    case 'ARRAY':
+      return code.map(currentLine => {
+        return divider.reduce((acc, curr) => {
+          return acc
+            .split(curr)
+            .map((splittedCode, index, array) => {
+              if (index === 0) {
+                return splittedCode.trimRight();
+              }
+              if (array.length - 1 === index) {
+                return splittedCode.trimLeft();
+              }
+              return splittedCode.trim();
+            })
+            .join(curr);
+        }, currentLine);
+      });
+    case 'OBJECT':
+      const newObj = {};
+      Object.keys(code).forEach(currentKey => {
+        const modifiedKey = divider.reduce((acc, curr) => {
+          return acc
+            .split(curr)
+            .map(splittedCode => splittedCode.trim())
+            .join(curr);
+        }, currentKey);
+        newObj[modifiedKey] = code[currentKey];
+      });
+      return newObj;
+    default:
+      return null;
+  }
 };
 
 const pipe = (arrayOfFunctions, value) => {
@@ -246,6 +287,9 @@ const mapArrayToObject = code => {
   }
   return obj;
 };
+
+// TODO: Refactor whole custom validation logic with mapped logic state
+// STATUS: 1/3rd is completed
 
 /**
  *
@@ -269,25 +313,25 @@ export function checkCode(userInputtedCode, correctSolution) {
       replaceSingleQuotesWithDoubleQuotes,
       removeComments,
       ignoreEmptyNewLines,
+      handleIntraLineWhiteSpace,
     ],
     userInputtedCode,
   );
 
-  console.log('filteredUserInputtedCode', filteredUserInputtedCode);
-
   const userArray = mapArrayToObject(filteredUserInputtedCode);
 
-  console.log('userArray', userArray);
-
   const filteredCorrectSolution = pipe(
-    [SplitIntoNewLine, removeComments, ignoreEmptyNewLines],
+    [
+      SplitIntoNewLine,
+      removeComments,
+      ignoreEmptyNewLines,
+      handleIntraLineWhiteSpace,
+    ],
     correctSolution,
   );
-  console.log('filteredCorrectSolution', filteredCorrectSolution);
 
   const correctCodeArray = mapArrayToObject(filteredCorrectSolution);
 
-  console.log('correctCodeArray', correctCodeArray);
   // list of lines (code) that user didn't write
   // var missingFromUser = correctCodeArray.filter(w => !userArray.includes(w));
   var missingFromUser = []; // it has code without space
@@ -317,8 +361,6 @@ export function checkCode(userInputtedCode, correctSolution) {
     }
   }
 
-  console.log('missingFromUser', missingFromUser);
-
   // list of extra lines (code) thats user wrote
   // var extraInUser = userArray.filter(w => !correctCodeArray.includes(w));
   //store very line which doesn't match with code solution
@@ -331,25 +373,24 @@ export function checkCode(userInputtedCode, correctSolution) {
     }
   }
 
-  console.log('extraInUser', extraInUser);
-
   // invalid statements of extra line of codes
   for (const i in extraInUser) {
-    if (extraInUser[i].trim() === 'pass') {
-      result[filteredUserInputtedCode.indexOf(userArray[extraInUser[i]]) + 1] =
-        // result[user.indexOf(extraInUser[i]) + 1] =
-        'Invalid statement, remove `pass and update the function with appropriate statement`';
-      //console.log("RESULT", result);
-    } else {
-      result[
-        SplitIntoNewLine(userInputtedCode).indexOf(userArray[extraInUser[i]]) +
-          1
-      ] = 'Invalid statement';
-      // result[user.indexOf(extraInUser[i]) + 1] = 'Invalid statement';
-    }
+    const filtered = pipe(
+      [
+        SplitIntoNewLine,
+        removeCarriageReturn,
+        ignoreSemiColons,
+        replaceTabWithSpace,
+        trimAtTheEndOfLine,
+        replaceSingleQuotesWithDoubleQuotes,
+        handleIntraLineWhiteSpace,
+      ],
+      userInputtedCode,
+    );
+    result[filtered.indexOf(userArray[extraInUser[i]]) + 1] =
+      'Invalid statement';
+    // result[user.indexOf(extraInUser[i]) + 1] = 'Invalid statement';
   }
-  console.log('RESULT_-2-', result);
-  console.log('missingFromUser.length', missingFromUser.length);
 
   if (missingFromUser.length !== 0) {
     result[404] = [];
@@ -358,15 +399,16 @@ export function checkCode(userInputtedCode, correctSolution) {
       if (missingFromUser[i] === INDENTATION_ERROR) {
         result[404].push(missingFromUser[i]);
       } else {
-        result[404].push(missing[correctCodeArray[missingFromUser[i]].trim()]);
+        result[404].push(
+          handleIntraLineWhiteSpace(missing, 'OBJECT')[
+            correctCodeArray[missingFromUser[i]].trim()
+          ],
+        );
       }
       // result[404].push(missing[missingFromUser[i].trim()]);
     }
   }
-  console.log('RESULT-3', result);
-  //console.log(i, j);
-
-  //console.log('RESULT', result);
+  // console.log('RESULT-3', result);
 
   var FINAL_RESULT = {
     success: null,
@@ -375,7 +417,6 @@ export function checkCode(userInputtedCode, correctSolution) {
 
   var RR = Object.keys(result);
   //console.log('RR', RR);
-  console.log('RR', RR);
 
   if (RR.length === 0) {
     FINAL_RESULT = {
@@ -387,18 +428,18 @@ export function checkCode(userInputtedCode, correctSolution) {
   } else {
     if (404 in result) {
       RR = RR.filter(function(value) {
-        console.log('RR=Value', value);
+        // console.log('RR=Value', value);
         return value < 404;
       });
 
-      console.log('filtered RR', RR);
+      // console.log('filtered RR', RR);
 
       var err = result[404];
-
+      // console.log('err', err);
       var lines = RR.length;
-      console.log('lines', lines);
+      // console.log('lines', lines);
       var errors = err.length;
-      console.log('errors', errors);
+      // console.log('errors', errors);
 
       var resFinal = [];
 
