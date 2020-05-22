@@ -366,6 +366,8 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
               fontFamily: "'Inconsolata', monospace",
               wordWrap: true,
               wordBasedSuggestions: false,
+              autoIndent: true,
+              formatOnType: true,
             }}
           />
           {buttonClicked ? (
@@ -400,6 +402,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                     fontFamily: "'Inconsolata', monospace",
                     renderSideBySide: false,
                     wordWrap: true,
+                    renderIndicators: false,
                   }}
                 />
               </div>
