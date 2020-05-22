@@ -400,6 +400,9 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                     fontFamily: "'Inconsolata', monospace",
                     renderSideBySide: false,
                     wordWrap: true,
+                    ignoreTrimWhitespace: false,
+                    renderWhitespace: 'all',
+                    lineHeight: 26,
                   }}
                 />
               </div>
