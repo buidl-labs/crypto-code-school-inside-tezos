@@ -206,8 +206,7 @@ const Gem = styled(GrassRobot.gem[0])`
   top: 43%;
   left: 31.5%;
   z-index: 20;
-  transform: translate(0, 0) scale(1);
-  transition: all 0.5s cubic-bezier(0.43, 0.13, 0.15, 0.99);
+  transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
 
 const GemHolder = styled(GrassRobot.gemHolder[0])`
@@ -216,8 +215,7 @@ const GemHolder = styled(GrassRobot.gemHolder[0])`
   position: absolute;
   top: 42%;
   left: 30%;
-  transform: translate(0, 0) scale(1);
-  transition: all 0.5s cubic-bezier(0.43, 0.13, 0.15, 0.99);
+  transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
   z-index: 20;
 `;
 
@@ -381,23 +379,37 @@ const PlantContainer = ({ stage, isEvolved }) => {
           />
         </IncubatorContainer> */}
         {/*Gem Holder + Gem*/}
-        <GemHolder />
-        <Gem />
+        <GemHolder
+          style={{ transform: `${stage >= 5 ? 'scale(1)' : 'scale(0)'}` }}
+        />
+        <Gem style={{ transform: `${stage >= 5 ? 'scale(1)' : 'scale(0)'}` }} />
         {/* Eye */}
-        <Eye />
+        <Eye style={{ transform: `${stage >= 4 ? 'scale(1)' : 'scale(0)'}` }} />
         {/* Head */}
-        <Head />
+        <Head
+          style={{ transform: `${stage >= 4 ? 'scale(1)' : 'scale(0)'}` }}
+        />
         {/* Left hand */}
-        <LeftHand />
+        <LeftHand
+          style={{ transform: `${stage >= 3 ? 'scale(1)' : 'scale(0)'}` }}
+        />
         {/* Right hand */}
-        <RightHand />
+        <RightHand
+          style={{ transform: `${stage >= 3 ? 'scale(1)' : 'scale(0)'}` }}
+        />
         {/* Top */}
-        <Top />
+        <Top style={{ transform: `${stage >= 3 ? 'scale(1)' : 'scale(0)'}` }} />
         {/*bottom + lower_body */}
-        <LowerBottom />
-        <LowerBody />
+        <LowerBottom
+          style={{ transform: `${stage >= 2 ? 'scale(1)' : 'scale(0)'}` }}
+        />
+        <LowerBody
+          style={{ transform: `${stage >= 2 ? 'scale(1)' : 'scale(0)'}` }}
+        />
         {/* Feet */}
-        <Feet />
+        <Feet
+          style={{ transform: `${stage >= 1 ? 'scale(1)' : 'scale(0)'}` }}
+        />
         {/* <Body
           style={{ transform: `${stage >= 2 ? 'scale(1)' : 'scale(0)'}` }}
         />
