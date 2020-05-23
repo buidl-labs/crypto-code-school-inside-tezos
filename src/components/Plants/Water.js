@@ -49,7 +49,7 @@ import Top4 from '../../assets/RobotTypes/Water/Top_4.svg';
 import Top5 from '../../assets/RobotTypes/Water/Top_5.svg';
 
 //Water Gem
-import waterGem from '../../assets/gems/ice.svg';
+import waterGem from '../../assets/gems/water.svg';
 
 export default {
   type: PLANT_TYPES.WATER,

@@ -3,7 +3,7 @@ import { navigate } from 'gatsby';
 
 // Components
 import PlantCircle from '../../components/PlantGrowthModal/Plant';
-import Plant from '../../components/PlantGrowthModal/GrownPlant';
+import Robot from '../../components/PlantGrowthModal/GrownRobot';
 import Zombie from '../../components/GameComponents/Zombie';
 
 import {
@@ -28,7 +28,7 @@ const GameOverModal = ({ totalDeadZombies = 4, status = 'lost' }) => {
               <SuccessLights />
               <PlantCircle />
               {status === 'won' ? (
-                <Plant positionTop="40%" positionLeft="50%" />
+                <Robot positionTop="40%" positionLeft="50%" />
               ) : (
                 <Zombie positionBottom="50%" positionRight="calc(50% - 5vw)" />
               )}

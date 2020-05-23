@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { keyframes } from '@emotion/core';
-import plantsList from '../Plants/index';
+import robotsList from '../Plants/index';
 import { useSpring, animated, config } from 'react-spring';
-import IncubatorSVG from '../../assets/incubator.svg';
-import GrassRobot from '../Plants/Grass';
 /*
 Check if plant has already been generated
   //if yes --> get the generated plant id from local-storage
@@ -14,67 +12,76 @@ Check if plant has already been generated
 
   //get random plant from list of water, electric, grass, ice, fire
     //get random body, eyes, hair, backLeaves, frontLeaves, patterns part from selected plant type
-    
     store object example:
     {
       type: "",
-      plantId: [0-4],
-      bodyId: [0-4],
-      eyesId: [0-7],
-      hair: [0-4],
-      backLeaves: [0-3],
-      frontLeaves: [],
-      patterns: [],
-      seed: []
+      robotId: [0-4],
+      gemId: [0],
+      gemHolderId: [0],
+      headId: [0-4],
+      eyeId: [0-7],
+      leftHand: [0-4],
+      rightHand: [0-4],
+      top: [0-4],
+      lowerBottomId: [],
+      lowerBodyId: [],
+      feetId: [0-4],
+      gemSeed: []
     }
 
-Known peculiar behavior: generates and stores plantIds on first page render in local storage 
+Known peculiar behavior: generates and stores robotIds on first page render in local storage 
 */
 
-export const getPlantId = () => {
+export const getRobotId = () => {
   // get the generated plant id from local-storage if available otherwise generate
   const ids =
-    typeof localStorage !== 'undefined' && localStorage.getItem('plant');
+    typeof localStorage !== 'undefined' && localStorage.getItem('robot');
   console.log(ids);
   if (ids) return JSON.parse(ids);
+  const robotId = Math.floor(Math.random() * robotsList.length);
+  const randomRobot = robotsList[robotId];
+  const gemId = Math.floor(Math.random() * randomRobot.gem.length);
+  const gemHolderId = Math.floor(Math.random() * randomRobot.gemHolder.length);
+  const eyeId = Math.floor(Math.random() * randomRobot.eye.length);
+  const headId = Math.floor(Math.random() * randomRobot.head.length);
+  const leftHandId = Math.floor(Math.random() * randomRobot.leftHand.length);
+  const rightHandId = Math.floor(Math.random() * randomRobot.rightHand.length);
+  const topId = Math.floor(Math.random() * randomRobot.top.length);
+  const lowerBottomId = Math.floor(
+    Math.random() * randomRobot.lowerBottom.length,
+  );
+  const lowerBodyId = Math.floor(Math.random() * randomRobot.lowerBody.length);
+  const feetId = Math.floor(Math.random() * randomRobot.feet.length);
+  const gemSeedId = Math.floor(Math.random() * randomRobot.gemSeed.length);
 
-  const plantId = Math.floor(Math.random() * plantsList.length);
-  const randomPlant = plantsList[plantId];
-  const bodyId = Math.floor(Math.random() * randomPlant.body.length);
-  const eyesId = Math.floor(Math.random() * randomPlant.eyes.length);
-  const hairId = Math.floor(Math.random() * randomPlant.hair.length);
-  const headId = Math.floor(Math.random() * randomPlant.head.length);
-  const leavesId = Math.floor(Math.random() * randomPlant.backLeaves.length);
-  const backLeavesId = leavesId;
-  const frontLeavesId = leavesId;
-  const patternsId = Math.floor(Math.random() * randomPlant.patterns.length);
-  const seedId = Math.floor(Math.random() * randomPlant.seed.length);
-
-  const plantObj = {
-    type: randomPlant.type,
-    plantId,
-    bodyId,
-    eyesId,
-    hairId,
+  const robotObj = {
+    type: randomRobot.type,
+    robotId,
+    gemId,
+    gemHolderId,
+    eyeId,
     headId,
-    backLeavesId,
-    frontLeavesId,
-    patternsId,
-    seedId,
+    leftHandId,
+    rightHandId,
+    topId,
+    lowerBottomId,
+    lowerBodyId,
+    feetId,
+    gemSeedId,
   };
 
   //storage generated plant id for future reference
   typeof localStorage != 'undefined' &&
-    localStorage.setItem('plant', JSON.stringify(plantObj));
-  return plantObj;
+    localStorage.setItem('robot', JSON.stringify(robotObj));
+  return robotObj;
 };
 
-const generatedPlantId = getPlantId();
+const generatedPlantId = getRobotId();
 
-const randomPlant = plantsList[generatedPlantId.plantId];
-// randomPlant.body[generatedPlantId.bodyId]
+const randomRobot = robotsList[generatedPlantId.robotId];
+// randomRobot.body[generatedPlantId.bodyId]
 
-export const Eye = styled(GrassRobot.eye[0])`
+export const Eye = styled(randomRobot.eye[generatedPlantId.eyeId])`
   position: absolute;
   height: 35%;
   z-index: 2;
@@ -84,7 +91,9 @@ export const Eye = styled(GrassRobot.eye[0])`
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
   z-index: 14;
 `;
-export const RightHand = styled(GrassRobot.rightHand[0])`
+export const RightHand = styled(
+  randomRobot.rightHand[generatedPlantId.rightHandId],
+)`
   z-index: 10;
   position: absolute;
   height: 50%;
@@ -93,7 +102,7 @@ export const RightHand = styled(GrassRobot.rightHand[0])`
   top: 20%;
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
-export const Head = styled(GrassRobot.head[0])`
+export const Head = styled(randomRobot.head[generatedPlantId.headId])`
   height: 100%;
   position: absolute;
   left: 0%;
@@ -102,16 +111,18 @@ export const Head = styled(GrassRobot.head[0])`
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
   z-index: 13;
 `;
-export const LeftHand = styled(GrassRobot.leftHand[0])`
+export const LeftHand = styled(
+  randomRobot.leftHand[generatedPlantId.leftHandId],
+)`
   z-index: 13;
   position: absolute;
   height: 35%;
   width: 21%;
-  left: -13%;
-  top: 38%;
+  left: -8%;
+  top: 35%;
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
-export const Top = styled(GrassRobot.top[0])`
+export const Top = styled(randomRobot.top[generatedPlantId.topId])`
   z-index: 12;
   position: absolute;
   top: 19%;
@@ -120,7 +131,9 @@ export const Top = styled(GrassRobot.top[0])`
   left: -5%;
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
-export const LowerBottom = styled(GrassRobot.lowerBottom[0])`
+export const LowerBottom = styled(
+  randomRobot.lowerBottom[generatedPlantId.lowerBottomId],
+)`
   position: absolute;
   top: 42%;
   width: 50%;
@@ -129,7 +142,9 @@ export const LowerBottom = styled(GrassRobot.lowerBottom[0])`
   left: 5%;
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
-export const LowerBody = styled(GrassRobot.lowerBody[0])`
+export const LowerBody = styled(
+  randomRobot.lowerBody[generatedPlantId.lowerBodyId],
+)`
   position: absolute;
   z-index: 10;
   top: 31%;
@@ -138,7 +153,7 @@ export const LowerBody = styled(GrassRobot.lowerBody[0])`
   left: 10%;
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
-export const Feet = styled(GrassRobot.feet[0])`
+export const Feet = styled(randomRobot.feet[generatedPlantId.feetId])`
   position: absolute;
   top: 69%;
   width: 50%;
@@ -199,7 +214,7 @@ const Glow = styled.div`
     width: 200px;
   }
 `;
-const Gem = styled(GrassRobot.gem[0])`
+export const Gem = styled(randomRobot.gem[generatedPlantId.gemId])`
   width: 12%;
   height: 12%;
   position: absolute;
@@ -209,7 +224,9 @@ const Gem = styled(GrassRobot.gem[0])`
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
 
-const GemHolder = styled(GrassRobot.gemHolder[0])`
+export const GemHolder = styled(
+  randomRobot.gemHolder[generatedPlantId.gemHolderId],
+)`
   width: 15%;
   height: 15%;
   position: absolute;
@@ -219,7 +236,7 @@ const GemHolder = styled(GrassRobot.gemHolder[0])`
   z-index: 20;
 `;
 
-const GemSeed = styled(GrassRobot.gemSeed[0])`
+const GemSeed = styled(randomRobot.gemSeed[generatedPlantId.gemSeedId])`
   height: 100%;
   position: absolute;
   left: -10%;
@@ -256,12 +273,12 @@ fire: light:  rgba(203, 80, 41, 0.3);, dark:  rgba(203, 80, 41, 0.8);
 water: light:  rgba(41, 125, 203, 0.25);, dark:  rgba(41, 125, 203, 0.8);;
 */
 
-const getPlantTypeGlowLight = randomPlant => {
+const getPlantTypeGlowLight = randomRobot => {
   let color = {
     light: 'rgba(208, 252, 255, 0.25)',
     dark: 'rgba(208, 252, 255, 0.8)',
   };
-  switch (randomPlant.type) {
+  switch (randomRobot.type) {
     case 'ice':
       color = {
         light: 'rgba(208, 252, 255, 0.25)',
@@ -298,7 +315,7 @@ const getPlantTypeGlowLight = randomPlant => {
 };
 
 const Light = styled.div`
-  background: ${getPlantTypeGlowLight(randomPlant).light};
+  background: ${getPlantTypeGlowLight(randomRobot).light};
   position: absolute;
   top: 35%;
   left: 49%;
@@ -326,7 +343,7 @@ const PlantContainer = ({ stage, isEvolved }) => {
     opacity: 0,
     width: 300,
     height: 300,
-    background: `${getPlantTypeGlowLight(randomPlant).light}`,
+    background: `${getPlantTypeGlowLight(randomRobot).light}`,
     from: {
       opacity: 100,
       width: 200,
@@ -354,8 +371,8 @@ const PlantContainer = ({ stage, isEvolved }) => {
           style={{
             background:
               evolved && isEvolved
-                ? `${getPlantTypeGlowLight(randomPlant).dark}`
-                : `${getPlantTypeGlowLight(randomPlant).light}`,
+                ? `${getPlantTypeGlowLight(randomRobot).dark}`
+                : `${getPlantTypeGlowLight(randomRobot).light}`,
             height: evolved && isEvolved ? 200 : 50,
             width: evolved && isEvolved ? 200 : 50,
           }}
@@ -410,7 +427,7 @@ const PlantContainer = ({ stage, isEvolved }) => {
         <Feet
           style={{ transform: `${stage >= 1 ? 'scale(1)' : 'scale(0)'}` }}
         />
-
+        {/* Gem seed */}
         <GemSeed
           style={{
             opacity: `${stage <= 0 ? '1' : '0'}`,

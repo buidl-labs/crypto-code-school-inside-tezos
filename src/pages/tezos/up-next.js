@@ -6,7 +6,7 @@ import Theme from 'src/assets/theme.svg';
 import styled from '@emotion/styled';
 import { Link } from 'gatsby';
 import LockSVG from 'src/assets/lock.svg';
-import GrownPlant from 'src/components/PlantGrowthModal/GrownPlant';
+import GrownRobot from 'src/components/PlantGrowthModal/GrownRobot';
 import { trackEvent } from 'src/utils/analytics';
 import SEO from 'src/components/Seo';
 import { ThemeContainer } from 'src/PagesStyle/OverviewPage/styled';
@@ -43,7 +43,7 @@ function UpNextPage() {
         <div>
           <h1>Success</h1>
           <div style={{ background: 'rgba(208, 252, 255, 0.15)' }}>
-            <GrownPlant />
+            <GrownRobot />
           </div>
           <p>
             You have successfully evolved your plant to face the incoming wave

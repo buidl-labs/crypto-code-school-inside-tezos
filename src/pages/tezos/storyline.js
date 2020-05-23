@@ -26,7 +26,7 @@ import {
   BackLink,
 } from 'src/PagesStyle/GamePage/styled';
 import { useSpring, config } from 'react-spring';
-import { getPlantId } from 'src/components/PlantGrowthModal/Plant';
+import { getRobotId } from 'src/components/PlantGrowthModal/Plant';
 import { LeftArrow, RightArrow } from '../../components/IconSet';
 const Game = () => {
   const [plantType, setPlantTypeSeed] = useState(null);
@@ -37,7 +37,7 @@ const Game = () => {
 
   //generate plant type at random if not already have been
   useEffect(() => {
-    getPlantId();
+    getRobotId();
   });
 
   useEffect(() => {
