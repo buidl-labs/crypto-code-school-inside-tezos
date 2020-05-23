@@ -1,4 +1,4 @@
-//Grass Type Plant
+//Grass Type Robot
 import { PLANT_TYPES } from './PLANT_TYPES';
 
 // Body
@@ -48,6 +48,9 @@ import Top3 from '../../assets/RobotTypes/Grass/Top_3.svg';
 import Top4 from '../../assets/RobotTypes/Grass/Top_4.svg';
 import Top5 from '../../assets/RobotTypes/Grass/Top_5.svg';
 
+//Grass Gem
+import grassGem from '../../assets/gems/grass.svg';
+
 export default {
   type: PLANT_TYPES.GRASS,
   lowerBody: [Body1],
@@ -60,19 +63,8 @@ export default {
   leftHand: [LeftHand1, LeftHand2, LeftHand3, LeftHand4, LeftHand5],
   head: [Head1, Head2, Head3, Head4, Head5],
   top: [Top1, Top2, Top3, Top4, Top5],
+  gemSeed: [grassGem],
 };
-
-// export default {
-//   type: PLANT_TYPES.GRASS,
-//   body: [Body1, Body2, Body3, Body4, Body5],
-//   eyes: [Eye1, Eye2, Eye3, Eye4, Eye5, Eye6, Eye7, Eye8],
-//   hair: [Hair1, Hair2, Hair3, Hair4, Hair5],
-//   head: [Head],
-//   backLeaves: [BackLeaves1, BackLeaves2, BackLeaves3, BackLeaves4],
-//   frontLeaves: [FrontLeaves1, FrontLeaves2, FrontLeaves3, FrontLeaves4],
-//   patterns: [Pattern1, Pattern2, Pattern3, Pattern4],
-//   seed: [GrassSeed],
-// };
 
 /**
  * Head --> Eyes --> Top --> Gem Holder --> rightHand --> LeftHand --> Body + Bottom

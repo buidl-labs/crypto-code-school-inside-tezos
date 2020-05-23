@@ -1,56 +1,67 @@
-//Electric-Type-Plant
-//Body
-import Body1 from '../../assets/PlantsType/Electric/Body_1.svg';
-import Body2 from '../../assets/PlantsType/Electric/Body_2.svg';
-import Body3 from '../../assets/PlantsType/Electric/Body_3.svg';
-import Body4 from '../../assets/PlantsType/Electric/Body_4.svg';
-import Body5 from '../../assets/PlantsType/Electric/Body_5.svg';
-//Eyes
-import Eye1 from '../../assets/PlantsType/Electric/Eyes_1.svg';
-import Eye2 from '../../assets/PlantsType/Electric/Eyes_2.svg';
-import Eye3 from '../../assets/PlantsType/Electric/Eyes_3.svg';
-import Eye4 from '../../assets/PlantsType/Electric/Eyes_4.svg';
-import Eye5 from '../../assets/PlantsType/Electric/Eyes_5.svg';
-import Eye6 from '../../assets/PlantsType/Electric/Eyes_6.svg';
-import Eye7 from '../../assets/PlantsType/Electric/Eyes_7.svg';
-import Eye8 from '../../assets/PlantsType/Electric/Eyes_8.svg';
-//Hair
-import Hair1 from '../../assets/PlantsType/Electric/Hair_1.svg';
-import Hair2 from '../../assets/PlantsType/Electric/Hair_2.svg';
-import Hair3 from '../../assets/PlantsType/Electric/Hair_3.svg';
-import Hair4 from '../../assets/PlantsType/Electric/Hair_4.svg';
-import Hair5 from '../../assets/PlantsType/Electric/Hair_5.svg';
-//Head
-import Head from '../../assets/PlantsType/Electric/Head.svg';
-//BackLeaves
-import BackLeaves1 from '../../assets/PlantsType/Electric/Leaves_Back_1.svg';
-import BackLeaves2 from '../../assets/PlantsType/Electric/Leaves_Back_2.svg';
-import BackLeaves3 from '../../assets/PlantsType/Electric/Leaves_Back_3.svg';
-import BackLeaves4 from '../../assets/PlantsType/Electric/Leaves_Back_4.svg';
-//FrontLeaves
-import FrontLeaves1 from '../../assets/PlantsType/Electric/Leaves_Front_1.svg';
-import FrontLeaves2 from '../../assets/PlantsType/Electric/Leaves_Front_2.svg';
-import FrontLeaves3 from '../../assets/PlantsType/Electric/Leaves_Front_3.svg';
-import FrontLeaves4 from '../../assets/PlantsType/Electric/Leaves_Front_4.svg';
-//Patterns
-import Pattern1 from '../../assets/PlantsType/Electric/Pattern_1.svg';
-import Pattern2 from '../../assets/PlantsType/Electric/Pattern_2.svg';
-import Pattern3 from '../../assets/PlantsType/Electric/Pattern_3.svg';
-import Pattern4 from '../../assets/PlantsType/Electric/Pattern_4.svg';
-//Electric Seed
-import ElectricSeed from '../../assets/PlantsType/Seed/Seed_electric.svg';
-
-//Electric Type Plant
+//Electric Type Robot
 import { PLANT_TYPES } from './PLANT_TYPES';
+
+// Body
+import Body1 from '../../assets/RobotTypes/Electric/Body_1.svg';
+// Bottom
+import Bottom1 from '../../assets/RobotTypes/Electric/Bottom_1.svg';
+// Eyes
+import Eye1 from '../../assets/RobotTypes/Electric/Eyes_1.svg';
+import Eye2 from '../../assets/RobotTypes/Electric/Eyes_2.svg';
+import Eye3 from '../../assets/RobotTypes/Electric/Eyes_3.svg';
+import Eye4 from '../../assets/RobotTypes/Electric/Eyes_4.svg';
+import Eye5 from '../../assets/RobotTypes/Electric/Eyes_5.svg';
+import Eye6 from '../../assets/RobotTypes/Electric/Eyes_6.svg';
+import Eye7 from '../../assets/RobotTypes/Electric/Eyes_7.svg';
+import Eye8 from '../../assets/RobotTypes/Electric/Eyes_8.svg';
+// Feet
+import Feet1 from '../../assets/RobotTypes/Electric/Feet_1.svg';
+import Feet2 from '../../assets/RobotTypes/Electric/Feet_2.svg';
+import Feet3 from '../../assets/RobotTypes/Electric/Feet_3.svg';
+import Feet4 from '../../assets/RobotTypes/Electric/Feet_4.svg';
+import Feet5 from '../../assets/RobotTypes/Electric/Feet_5.svg';
+// Gem and Gem Holder
+import Gem from '../../assets/RobotTypes/Electric/Gem.svg';
+import Gem_Holder from '../../assets/RobotTypes/Electric/Gem_Holder.svg';
+// Left Hand/Back Hand
+import RightHand1 from '../../assets/RobotTypes/Electric/Hand_Back_1.svg';
+import RightHand2 from '../../assets/RobotTypes/Electric/Hand_Back_2.svg';
+import RightHand3 from '../../assets/RobotTypes/Electric/Hand_Back_3.svg';
+import RightHand4 from '../../assets/RobotTypes/Electric/Hand_Back_4.svg';
+import RightHand5 from '../../assets/RobotTypes/Electric/Hand_Back_5.svg';
+// Right Hand/Rest Hand
+import LeftHand1 from '../../assets/RobotTypes/Electric/Hand_Rest_1.svg';
+import LeftHand2 from '../../assets/RobotTypes/Electric/Hand_Rest_2.svg';
+import LeftHand3 from '../../assets/RobotTypes/Electric/Hand_Rest_3.svg';
+import LeftHand4 from '../../assets/RobotTypes/Electric/Hand_Rest_4.svg';
+import LeftHand5 from '../../assets/RobotTypes/Electric/Hand_Rest_5.svg';
+// Head
+import Head1 from '../../assets/RobotTypes/Electric/Head_1.svg';
+import Head2 from '../../assets/RobotTypes/Electric/Head_2.svg';
+import Head3 from '../../assets/RobotTypes/Electric/Head_3.svg';
+import Head4 from '../../assets/RobotTypes/Electric/Head_4.svg';
+import Head5 from '../../assets/RobotTypes/Electric/Head_5.svg';
+// Top
+import Top1 from '../../assets/RobotTypes/Electric/Top_1.svg';
+import Top2 from '../../assets/RobotTypes/Electric/Top_2.svg';
+import Top3 from '../../assets/RobotTypes/Electric/Top_3.svg';
+import Top4 from '../../assets/RobotTypes/Electric/Top_4.svg';
+import Top5 from '../../assets/RobotTypes/Electric/Top_5.svg';
+
+//Electricity Gem
+import electricityGem from '../../assets/gems/electricity.svg';
 
 export default {
   type: PLANT_TYPES.ELECTRIC,
-  body: [Body1, Body2, Body3, Body4, Body5],
-  eyes: [Eye1, Eye2, Eye3, Eye4, Eye5, Eye6, Eye7, Eye8],
-  hair: [Hair1, Hair2, Hair3, Hair4, Hair5],
-  head: [Head],
-  backLeaves: [BackLeaves1, BackLeaves2, BackLeaves3, BackLeaves4],
-  frontLeaves: [FrontLeaves1, FrontLeaves2, FrontLeaves3, FrontLeaves4],
-  patterns: [Pattern1, Pattern2, Pattern3, Pattern4],
-  seed: [ElectricSeed],
+  lowerBody: [Body1],
+  lowerBottom: [Bottom1],
+  eye: [Eye1, Eye2, Eye3, Eye4, Eye5, Eye6, Eye7, Eye8],
+  feet: [Feet1, Feet2, Feet3, Feet4, Feet5],
+  gem: [Gem],
+  gemHolder: [Gem_Holder],
+  rightHand: [RightHand1, RightHand2, RightHand3, RightHand4, RightHand5],
+  leftHand: [LeftHand1, LeftHand2, LeftHand3, LeftHand4, LeftHand5],
+  head: [Head1, Head2, Head3, Head4, Head5],
+  top: [Top1, Top2, Top3, Top4, Top5],
+  gemSeed: [electricityGem],
 };

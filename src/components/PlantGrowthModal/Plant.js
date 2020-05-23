@@ -219,11 +219,11 @@ const GemHolder = styled(GrassRobot.gemHolder[0])`
   z-index: 20;
 `;
 
-const Incubator = styled(IncubatorSVG)`
+const GemSeed = styled(GrassRobot.gemSeed[0])`
   height: 100%;
   position: absolute;
-  left: 3.5%;
-  top: -13%;
+  left: -10%;
+  top: 0;
   width: 90%;
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
@@ -409,6 +409,12 @@ const PlantContainer = ({ stage, isEvolved }) => {
         {/* Feet */}
         <Feet
           style={{ transform: `${stage >= 1 ? 'scale(1)' : 'scale(0)'}` }}
+        />
+
+        <GemSeed
+          style={{
+            opacity: `${stage <= 0 ? '1' : '0'}`,
+          }}
         />
         {/* <Body
           style={{ transform: `${stage >= 2 ? 'scale(1)' : 'scale(0)'}` }}
