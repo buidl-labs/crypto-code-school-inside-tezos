@@ -4,6 +4,7 @@ import { keyframes } from '@emotion/core';
 import plantsList from '../Plants/index';
 import { useSpring, animated, config } from 'react-spring';
 import IncubatorSVG from '../../assets/incubator.svg';
+import GrassRobot from '../Plants/Grass';
 /*
 Check if plant has already been generated
   //if yes --> get the generated plant id from local-storage
@@ -71,81 +72,86 @@ export const getPlantId = () => {
 const generatedPlantId = getPlantId();
 
 const randomPlant = plantsList[generatedPlantId.plantId];
+// randomPlant.body[generatedPlantId.bodyId]
 
-export const Body = styled(randomPlant.body[generatedPlantId.bodyId])`
+export const Eye = styled(GrassRobot.eye[0])`
   position: absolute;
-  top: 45%;
-  width: 96%;
   height: 35%;
-  left: 0;
+  z-index: 2;
+  width: 35%;
+  left: 17%;
+  top: 8%;
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
+  z-index: 14;
 `;
-export const Eye = styled(randomPlant.eyes[generatedPlantId.eyesId])`
+export const RightHand = styled(GrassRobot.rightHand[0])`
+  z-index: 10;
   position: absolute;
   height: 50%;
-  z-index: 2;
-  width: 45%;
-  left: 35.5%;
-  top: -15%;
-  transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
-`;
-export const Hair = styled(randomPlant.hair[generatedPlantId.hairId])`
-  position: absolute;
-  top: -18px;
-  height: 45%;
-  width: 54%;
-  z-index: -1;
-  left: -18%;
-  transform: translate(14px, 10px);
-  transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
-`;
-export const Head = styled(randomPlant.head[generatedPlantId.headId])`
-  height: 100%;
-  position: absolute;
-  left: 20%;
-  top: -25%;
-  width: 90%;
-  transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
-`;
-export const BackLeaves = styled(
-  randomPlant.backLeaves[generatedPlantId.backLeavesId],
-)`
-  position: absolute;
-  top: 60%;
-  width: 96%;
-  height: 30%;
-  z-index: -1;
-  left: 1px;
-  transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
-`;
-export const FrontLeaves = styled(
-  randomPlant.frontLeaves[generatedPlantId.frontLeavesId],
-)`
-      position: absolute;
-    top: 69%;
-    width: 86%;
-    height: 30%;
-    left: 6px;
-    transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
-}
-`;
-export const Pattern = styled(
-  randomPlant.patterns[generatedPlantId.patternsId],
-)`
-  position: absolute;
-  height: 15%;
-  z-index: 2;
-  width: 40%;
-  left: 20.5%;
+  width: 50%;
+  left: 47%;
   top: 20%;
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
+export const Head = styled(GrassRobot.head[0])`
+  height: 100%;
+  position: absolute;
+  left: 0%;
+  top: -27%;
+  width: 60%;
+  transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
+  z-index: 13;
+`;
+export const LeftHand = styled(GrassRobot.leftHand[0])`
+  z-index: 13;
+  position: absolute;
+  height: 35%;
+  width: 21%;
+  left: -13%;
+  top: 38%;
+  transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
+`;
+export const Top = styled(GrassRobot.top[0])`
+  z-index: 12;
+  position: absolute;
+  top: 19%;
+  width: 70%;
+  height: 50%;
+  left: -5%;
+  transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
+`;
+export const LowerBottom = styled(GrassRobot.lowerBottom[0])`
+  position: absolute;
+  top: 42%;
+  width: 50%;
+  height: 50%;
+  z-index: 10;
+  left: 5%;
+  transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
+`;
+export const LowerBody = styled(GrassRobot.lowerBody[0])`
+  position: absolute;
+  z-index: 10;
+  top: 31%;
+  width: 40%;
+  height: 50%;
+  left: 10%;
+  transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
+`;
+export const Feet = styled(GrassRobot.feet[0])`
+  position: absolute;
+  top: 69%;
+  width: 50%;
+  height: 50%;
+  left: 5%;
+  transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
+`;
 
-export const Plant = styled.div`
+export const Robot = styled.div`
   position: absolute;
   top: 41%;
   left: 50%;
-  transform: translate(-55%, -70%);
+  transform: translate(-40%, -85%);
   ${'' /* width: 150px; */}
   ${'' /* height: 210px; */}
   width: 16vw;
@@ -175,13 +181,11 @@ const Glow = styled.div`
   height: 300px;
   width: 300px;
   position: relative;
-  top: 35%;
-  left: 49%;
+  top: 54%;
+  left: 33%;
   animation: ${glowAnimation} 3s infinite;
   background: rgba(208, 252, 255, 0.15);
   border-radius: 100%;
-  top: 45%;
-  left: 48%;
   z-index: -2;
   transition: all 0.2s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 
@@ -195,14 +199,26 @@ const Glow = styled.div`
     width: 200px;
   }
 `;
-const Seed = styled(randomPlant.seed[generatedPlantId.seedId])`
-  width: 50%;
-  height: 50%;
+const Gem = styled(GrassRobot.gem[0])`
+  width: 12%;
+  height: 12%;
   position: absolute;
-  top: 23%;
-  left: 23%;
+  top: 43%;
+  left: 31.5%;
+  z-index: 20;
   transform: translate(0, 0) scale(1);
   transition: all 0.5s cubic-bezier(0.43, 0.13, 0.15, 0.99);
+`;
+
+const GemHolder = styled(GrassRobot.gemHolder[0])`
+  width: 15%;
+  height: 15%;
+  position: absolute;
+  top: 42%;
+  left: 30%;
+  transform: translate(0, 0) scale(1);
+  transition: all 0.5s cubic-bezier(0.43, 0.13, 0.15, 0.99);
+  z-index: 20;
 `;
 
 const Incubator = styled(IncubatorSVG)`
@@ -335,7 +351,7 @@ const PlantContainer = ({ stage, isEvolved }) => {
 
   return (
     <>
-      <Plant>
+      <Robot>
         <Light
           style={{
             background:
@@ -348,7 +364,7 @@ const PlantContainer = ({ stage, isEvolved }) => {
         />
         <Glow />
         {/*TODO: replace with incubated seed */}
-        <IncubatorContainer
+        {/* <IncubatorContainer
           style={{
             seedAnimation,
           }}
@@ -363,8 +379,26 @@ const PlantContainer = ({ stage, isEvolved }) => {
               opacity: `${stage <= 0 ? '1' : '0'}`,
             }}
           />
-        </IncubatorContainer>
-        <Body
+        </IncubatorContainer> */}
+        {/*Gem Holder + Gem*/}
+        <GemHolder />
+        <Gem />
+        {/* Eye */}
+        <Eye />
+        {/* Head */}
+        <Head />
+        {/* Left hand */}
+        <LeftHand />
+        {/* Right hand */}
+        <RightHand />
+        {/* Top */}
+        <Top />
+        {/*bottom + lower_body */}
+        <LowerBottom />
+        <LowerBody />
+        {/* Feet */}
+        <Feet />
+        {/* <Body
           style={{ transform: `${stage >= 2 ? 'scale(1)' : 'scale(0)'}` }}
         />
         <Eye style={{ transform: `${stage >= 4 ? 'scale(1)' : 'scale(0)'}` }} />
@@ -386,8 +420,8 @@ const PlantContainer = ({ stage, isEvolved }) => {
         />
         <Pattern
           style={{ transform: `${stage >= 5 ? 'scale(1)' : 'scale(0)'}` }}
-        />
-      </Plant>
+        /> */}
+      </Robot>
     </>
   );
 };

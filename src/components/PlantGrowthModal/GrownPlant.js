@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Plant,
-  Body,
-  Eye,
-  Hair,
-  Head,
-  BackLeaves,
-  FrontLeaves,
-  Pattern,
-} from './Plant';
+// import {
+//   Plant,
+//   Body,
+//   Eye,
+//   Hair,
+//   Head,
+//   BackLeaves,
+//   FrontLeaves,
+//   Pattern,
+// } from './Plant';
 
 function GrownPlant({ positionTop = '51%', positionLeft = '53%' }) {
   //wait till window object is available
@@ -20,17 +20,18 @@ function GrownPlant({ positionTop = '51%', positionLeft = '53%' }) {
     }
   }, []);
 
-  return renderPlant ? (
-    <Plant style={{ top: positionTop, left: positionLeft }}>
-      <Body />
-      <Eye />
-      <Head />
-      <Hair />
-      <BackLeaves />
-      <FrontLeaves />
-      <Pattern />
-    </Plant>
-  ) : null;
+  return renderPlant
+    ? null
+    : // <Plant style={{ top: positionTop, left: positionLeft }}>
+      //   <Body />
+      //   <Eye />
+      //   <Head />
+      //   <Hair />
+      //   <BackLeaves />
+      //   <FrontLeaves />
+      //   <Pattern />
+      // </Plant>
+      null;
 }
 
 export default GrownPlant;
