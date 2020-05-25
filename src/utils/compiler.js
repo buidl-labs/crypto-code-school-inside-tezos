@@ -32,11 +32,14 @@ var errors = {
 const missing = {
   'import smartpy as sp': 'import statement missing or invalid',
 
-  'class Plant(sp.Contract):':
+  // chapter 4
+  'class CryptoBot(sp.Contract):':
     'Error in smart contract code: class (Contract) declaration missing or invalid',
-
+  // chapter 5
   'def __init__(self):':
     'Error in smart contract code: constructor initialization missing or invalid or `self` parameter is not provided',
+  'self.init(name = "terminator")':
+    'Error in smart contract code: name initialization is missing or is invalid in contract storage',
 
   'def __init__(self, name):':
     'Error in smart contract code: constructor initialization requires a `name & self` parameter',
@@ -44,13 +47,10 @@ const missing = {
   'self.init(name = name)':
     'Error in smart contract code: name initialization is missing/invalid in contract storage',
 
-  'self.init(name = "peashooter")':
-    'Error in smart contract code: name initialization is missing or is invalid in contract storage',
-
   pass:
     'Error in smart contract code: cannot have an empty function (add `pass`)',
 
-  '@sp.add_test(name = "Test Plant Contract")':
+  '@sp.add_test(name = "Test CryptoBot Contract")':
     'Error in testing code: @sp.add_test decorator missing or invalid',
 
   'def test():': 'Error in testing code: test function declaration error',
@@ -58,11 +58,11 @@ const missing = {
   'scenario = sp.test_scenario()':
     'Error in testing code: invalid or missing test scenario declaration',
 
-  'plant_test_contract = Plant()':
-    'Error in testing code: invalid or missing Plant class invokation',
+  'crypto_bot_test_contract = CryptoBot()':
+    'Error in testing code: invalid or missing CryptoBot class invokation',
 
-  'scenario += plant_test_contract':
-    'Error in testing code: invalid or missing plant_test_contract assignment to scenario',
+  'scenario += crypto_bot_test_contract':
+    'Error in testing code: invalid or missing crypto_bot_test_contract assignment to scenario',
 
   '@sp.entry_point':
     'Error in smart contract code: @sp.entry_point decorator missing or invalid',
@@ -73,7 +73,7 @@ const missing = {
   'self.data.name = new_name':
     'Error in smart contract code: invalid or missing new_name assignment to self.data.name',
 
-  'scenario += plant_test_contract.change_name("punky peashooter")':
+  'scenario += crypto_bot_test_contract.change_name("punky terminator")':
     'Error in testing code: invalid or missing change_name test call',
 
   'def __init__(self, life_state):':
@@ -82,11 +82,15 @@ const missing = {
   'is_alive = life_state':
     'Error in smart contract code: invalid or missing is_alive assignment',
 
-  'plant_test_contract =  Plant(life_state = True)':
-    'Error in testing code: life_state is missing or invalid in Plant invocation',
+  'crypto_bot_test_contract =  CryptoBot(life_state = True)':
+    'Error in testing code: life_state is missing or invalid in CryptoBot invocation',
 
-  'scenario.verify(plant_test_contract.data.is_alive == True)':
+  'scenario.verify(crypto_bot_test_contract.data.is_alive == True)':
     'Error in testing code: invalid or missing scenario.verify helper method call',
+
+  //******************/
+  //For chapter 8
+  string: 'missing data type of "name"',
 
   //******************/
   //For chapter 10
@@ -109,10 +113,10 @@ const missing = {
   'self.data.coordinate_y += update_to':
     'Error in smart contract code: invalid or missing coordinate_y assignment',
 
-  'scenario += plant_test_contract.move_horizontally(2)':
+  'scenario += crypto_bot_test_contract.move_horizontally(2)':
     'Error in testing code: invalid or missing move_horizontally test call',
 
-  'scenario += plant_test_contract.move_vertically(1)':
+  'scenario += crypto_bot_test_contract.move_vertically(1)':
     'Error in testing code: invalid or missing move_vertically test call',
 
   //******************/
@@ -129,10 +133,10 @@ const missing = {
   'self.data.record_zombie_kills[zombie_type] += 1':
     'Error with smart contract code: invalid or missing record_zombie_kills usage in shoot_zombie entry point function scope',
 
-  'scenario += plant_test_contract.shoot_zombie("simple_zombie")':
+  'scenario += crypto_bot_test_contract.shoot_zombie("simple_zombie")':
     'Error with testing code: invalid or missing shoot_zombie test call to kill "simple_zombie"',
 
-  'scenario += plant_test_contract.shoot_zombie("boss_zombie")':
+  'scenario += crypto_bot_test_contract.shoot_zombie("boss_zombie")':
     'Error with testing code: invalid or missing shoot_zombie test call to kill "boss_zombie"',
 
   //******************/
@@ -140,23 +144,23 @@ const missing = {
   'def __init__(self, life_state, manager_address):':
     'Error with smart contract code: constructor initialization require a `self`, `life_state` and `manager_address` function parameters',
 
-  'plant_manager = manager_address,':
-    'Error with smart contract code: plant_manager variable initialization is missing/invalid in contract storage',
+  'crypto_bot_manager = manager_address,':
+    'Error with smart contract code: crypto_bot_manager variable initialization is missing/invalid in contract storage',
 
   'my_address = sp.address("tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj")':
     'Error with smart contract code: my_address of type `sp.TAddress` assignment is missing or is invalid',
 
-  'plant_test_contract =  Plant(life_state = True, manager_address = my_address)':
-    'Error with testing code: manager_address key missing or invaild in Plant invokation call',
+  'crypto_bot_test_contract =  CryptoBot(life_state = True, manager_address = my_address)':
+    'Error with testing code: manager_address key missing or invaild in CryptoBot invokation call',
 
   //For chapter 13
-  'sp.verify(self.data.plant_manager == sp.sender, message = "Error: you are not the manager of this plant")':
+  'sp.verify(self.data.crypto_bot_manager == sp.sender, message = "Error: you are not the manager of this CryptoBot")':
     'Error with smart contract code: invalid or missing sp.verify method call',
 
-  'scenario += plant_test_contract.shoot_zombie("simple_zombie").run(sender = my_address)':
+  'scenario += crypto_bot_test_contract.shoot_zombie("simple_zombie").run(sender = my_address)':
     'Error with testing code: invalid or missing shoot_zombie call test call with my_address as caller',
 
-  'scenario += plant_test_contract.shoot_zombie("boss_zombie").run(sender = my_address)':
+  'scenario += crypto_bot_test_contract.shoot_zombie("boss_zombie").run(sender = my_address)':
     'Error with testing code: invalid or missing shoot_zombie call test call with my_address as caller',
 
   //For chapter 14

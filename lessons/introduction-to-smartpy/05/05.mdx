@@ -9,7 +9,7 @@ editor:
   startingCode: |
     import smartpy as sp
 
-    class Plant(sp.Contract):
+    class CryptoBot(sp.Contract):
         ## Define initialization function below
         
 
@@ -23,10 +23,10 @@ editor:
   answer: |  
     import smartpy as sp
 
-    class Plant(sp.Contract):
+    class CryptoBot(sp.Contract):
         ## Define initialization function below
         def __init__(self):
-            self.init(name = "peashooter")
+            self.init(name = "terminator")
 
         ## Tip: Since we use Python 
         ## to write smart contracts code using SmartPy, 
@@ -38,11 +38,11 @@ editor:
 
 ### Intro:
 
-In this chapter, we will give our plant a name and store it inside the contract!
+In this chapter, we will give our CryptoBot a name and store it inside the contract!
 
 Let us break the above down to arrive at what concepts you will be learning: 
 
-1. “Give our plant a name” - we will need to learn about variables. In the world of smart contracts, variables are more commonly referred to as state variables. 
+1. “Give our CryptoBot a name” - we will need to learn about variables. In the world of smart contracts, variables are more commonly referred to as state variables. 
 2. “And store it inside the contract” - we will need to learn about the concept of contract storage.  
 
 
@@ -61,7 +61,7 @@ When you deploy the contract on the blockchain, this storage becomes part of the
 
 ### What is state in smart contract? 
 
-A "state" represents the current status of the smart contract like a visual screenshot. If you'd like your smart contract to do anything - like building shooting ability in your `Plant` contract - it will involve changing the contract's current state. 
+A "state" represents the current status of the smart contract like a visual screenshot. If you'd like your smart contract to do anything - like building shooting ability in your `CryptoBot` contract - it will involve changing the contract's current state. 
 
 ### What are state variables? 
 
@@ -141,10 +141,10 @@ Helpful links that may help in refreshing your Python concepts:
 
 
 ## #buidl-ing time:
-Now let us practice what we learned so far and give a name to `Plant` contract`!
+Now let us practice what we learned so far and give a name to `CryptoBot` contract`!
 
-1. Using `__init__`, define the initialization function of your `Plant` contract. 
-2. Define `name` variable and initialize it’s value with <span class="string-highlight">“peashooter”</span> since that is the name of the species of the plant that you are growing. 
+1. Using `__init__`, define the initialization function of your `CryptoBot` contract. 
+2. Define `name` variable and initialize it’s value with <span class="string-highlight">“terminator”</span> since that is the name of the species of the CryptoBot that you are growing. 
 
 <br />
 

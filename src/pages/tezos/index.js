@@ -69,9 +69,9 @@ const HomePage = () => {
               Learn to code Tezos blockchain DApps in SmartPy <br />
             </HeroTitle>
             <HeroSubheading>
-              Crypto Plants Vs Zombies teaches you to write smart contracts in
-              SmartPy by evolving a crypto-plant that unleashes hell on the
-              incoming zombie apocalypse!
+              Crypto bots Vs Aliens teaches you to write smart contracts in
+              SmartPy by evolving a crypto-bot that unleashes hell on the
+              incoming alien invasion!
             </HeroSubheading>
             <InnerContainer>
               <div>
@@ -112,19 +112,19 @@ const HomePage = () => {
           </GridContainer>
           <GridContainer>
             <FlexContainer>
-              <h2>Evolve your plant to fight against a zombie apocalypse!</h2>
+              <h2>Evolve your Crypto bot to fight against a alien invasion!</h2>
               <p>
                 At the starting of your journey, the school bestowes upon you a
-                unique seed of a plant that is known to stop zombies! *ooh
+                unique gem of a Crypto bot that is known to stop aliens! *ooh
                 exciting*
                 <br />
                 <br />
-                But the seed needs to grow into a full plant to battle the
-                zombie apocalypse! *oh no! what do I have to do?*
+                But the gem needs to grow into a full Crypto bot to battle the
+                alien invasion! *oh no! what do I have to do?*
                 <br />
                 <br />
-                Your mission is to evolve the seed into a plant to fight the
-                incoming zombie apocalypse by progressing through the chapters!
+                Your mission is to evolve the gem into a Crypto bot to fight the
+                incoming alien invasion by progressing through the chapters!
                 <br />
                 <br />
                 Are you ready? The world's hope is in your hands!

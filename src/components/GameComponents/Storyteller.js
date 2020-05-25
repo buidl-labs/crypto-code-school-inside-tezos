@@ -61,12 +61,12 @@ const StoryTeller = ({ display, plantType }) => {
               >
                 <Heading>Save the Planet</Heading>
                 <SubHeading style={{ padding: '0 2rem' }}>
-                  The school has bestowed upon you the <b> {plantType} </b>seed!
-                  <br /> Your task now is to incubate the seed and help it
-                  evolve before the zombies reach you.
+                  The school has bestowed upon you the <b> {plantType} </b>gem!
+                  <br /> Your task now is to incubate the gem and help it evolve
+                  before the aliens reach you.
                   <br />
                   After completing all chapters, you will help your
-                  fully-evolved plant in aiming to kill the zombies!
+                  fully-evolved Crypto bot in aiming to kill the aliens!
                 </SubHeading>
                 <br />
                 <div

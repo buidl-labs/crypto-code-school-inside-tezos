@@ -14,7 +14,7 @@ editor:
             
             self.init(
                 plant_manager = manager_address,
-                name = "peashooter",
+                name = "terminator",
                 is_alive = life_state,
                 
                 coordinate_x = sp.int(0), 
@@ -83,7 +83,7 @@ editor:
         ## Testing contract
         scenario += plant_test_contract
         
-        scenario += plant_test_contract.change_name("punky peashooter").run(sender = my_address)
+        scenario += plant_test_contract.change_name("punky terminator").run(sender = my_address)
         
         scenario.verify(plant_test_contract.data.is_alive == True)
         
@@ -106,7 +106,7 @@ editor:
             
             self.init(
                 plant_manager = manager_address,
-                name = "peashooter",
+                name = "terminator",
                 is_alive = life_state,
                 
                 coordinate_x = sp.int(0), 
@@ -175,7 +175,7 @@ editor:
         ## Testing contract
         scenario += plant_test_contract
         
-        scenario += plant_test_contract.change_name("punky peashooter").run(sender = my_address)
+        scenario += plant_test_contract.change_name("punky terminator").run(sender = my_address)
         
         scenario.verify(plant_test_contract.data.is_alive == True)
         
@@ -196,7 +196,7 @@ editor:
 
 Wow! Great job learner!
 
-You have finally assembled a zombie killer peashooter!
+You have finally assembled a zombie killer terminator!
 
 As you can see on the right side, we have assembled all the pieces of your `Plant` contract together so that you can review it's working one final time before you send your `Plant` to battle! ⚔️
 

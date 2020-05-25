@@ -15,7 +15,6 @@ import Completed from 'src/assets/completed.svg';
 import { trackEvent } from 'src/utils/analytics';
 import Footer from 'src/components/Footer';
 import SEO from 'src/components/Seo';
-import { PLANT_TYPES } from 'src/components/Plants/PLANT_TYPES';
 import styled from '@emotion/styled';
 import StyledLink from 'src/components/StyledLink';
 
@@ -148,28 +147,28 @@ function LessonsOverview() {
         <OverviewContainer>
           <div>
             <h1>Your mission's briefing:</h1>
-            <p> 🚨 A zombie apocalypse is incoming! 🚨</p>
+            <p> 🚨 A alien invasion is incoming! 🚨</p>
             <p>
               At the starting of your journey, the school bestowes upon you a
-              unique seed of a plant that is known to stop zombies!
+              unique gem of a Crypto bot that is known to stop aliens!
             </p>
             <p>
-              But the seed needs to grow into a full plant to battle the zombie
-              apocalypse
+              But the gem needs to grow into a full Crypto bot to battle the
+              alien invasion.
             </p>
             <p>
-              Your mission is to evolve the seed into a plant to fight the
-              incoming zombie apocalypse by progressing through the chapters!
+              Your mission is to evolve the gem into a Crypto bot to fight the
+              incoming alien invasion by progressing through the chapters!
             </p>
             <p>
-              In this lesson, you’re going to learn how to evolve your plant and
-              train it to defend against the incoming apocalypse by building a
-              simple smart contract in SmartPy which can be deployed on tezos
-              blockchain.
+              In this lesson, you’re going to learn how to evolve your Crypto
+              bot and train it to defend against the incoming apocalypse by
+              building a simple smart contract in SmartPy which can be deployed
+              on tezos blockchain.
             </p>
             <p>
-              At the end of lesson, you will help your fully-evolved plant in
-              aiming to kill the zombies!
+              At the end of lesson, you will help your fully-evolved Crypto bot
+              in aiming to kill the aliens!
             </p>
             <div>
               <StyledLink
@@ -193,7 +192,7 @@ function LessonsOverview() {
                   {chapterZeroCompleted ? (
                     <Completed width="38" height="38" />
                   ) : null}
-                  Chapter 0 - Zombie Apocalypse Begins
+                  Chapter 0 - Alien Invasion Begins
                 </Link>
                 <hr />
               </li>
