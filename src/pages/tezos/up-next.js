@@ -46,8 +46,8 @@ function UpNextPage() {
             <GrownRobot />
           </div>
           <p>
-            You have successfully evolved your plant to face the incoming wave
-            of zombie attack.
+            You have successfully evolved your CryptoBot to face the incoming
+            wave of alien attack.
           </p>
           <StyledLink style={{ padding: '15px 30px' }} to="/tezos/game">
             Battle it out
@@ -60,7 +60,7 @@ function UpNextPage() {
               <LockSVG />
             </div>
             <div>
-              <h3>Creating New Generation of Plants</h3>
+              <h3>Creating New Generation of CryptoBots</h3>
               <p>about the course</p>
             </div>
           </LearnNextContainer>
@@ -69,7 +69,7 @@ function UpNextPage() {
               <LockSVG />
             </div>
             <div>
-              <h3>Army of Plant Defenders</h3>
+              <h3>Army of CryptoBot Defenders</h3>
               <p>about the course</p>
             </div>
           </LearnNextContainer>

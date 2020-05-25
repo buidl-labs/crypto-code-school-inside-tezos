@@ -9,14 +9,15 @@ import { FaTwitter } from 'react-icons/fa';
 import { OutboundLink } from 'gatsby-plugin-amplitude-analytics';
 import { PLANT_GROWTH } from '../Plants/PLANT_GROWTH';
 import StyledLink, { CustomLink } from '../StyledLink';
+//TODO: Stage update doesn't work properly
 const stages = [
   {
     stage: 0,
     description: {
       before:
-        'You have successfully completed this chapter. You can now try to evolve your plant to stage one.',
+        'You have successfully completed this chapter. You can now try to evolve your CryptoBot to stage one.',
       after:
-        'You have successfully completed this chapter. You can now try to evolve your plant to stage one.',
+        'You have successfully completed this chapter. You can now try to evolve your CryptoBot to stage one.',
     },
     nextChapterLink: '',
   },
@@ -24,9 +25,9 @@ const stages = [
     stage: 1,
     description: {
       before:
-        'You have successfully completed this chapter. You can now try to evolve your plant to stage two.',
+        'You have successfully completed this chapter. You can now try to evolve your CryptoBot to stage two.',
       after:
-        "You have successfully completed the chapter and evolved your plant's seed  into leaves",
+        "You have successfully completed the chapter and evolved your CryptoBot's gem into stage two.",
     },
     nextChapterLink: '',
   },
@@ -34,9 +35,9 @@ const stages = [
     stage: 2,
     description: {
       before:
-        'You have successfully completed this chapter. You can now try to evolve your plant to stage three.',
+        'You have successfully completed this chapter. You can now try to evolve your CryptoBot to stage three.',
       after:
-        "You have successfully completed the chapter and evolved your plant's body",
+        "You have successfully completed the chapter and evolved your CryptoBot's gem into stage three.",
     },
     nextChapterLink: '',
   },
@@ -44,9 +45,9 @@ const stages = [
     stage: 3,
     description: {
       before:
-        'You have successfully completed this chapter. You can now try to evolve your plant to stage four.',
+        'You have successfully completed this chapter. You can now try to evolve your CryptoBot to stage four.',
       after:
-        "You have successfully completed the chapter and evolved your plant's head",
+        "You have successfully completed the chapter and evolved your CryptoBot's gem into stage four.",
     },
     nextChapterLink: '',
   },
@@ -54,9 +55,9 @@ const stages = [
     stage: 4,
     description: {
       before:
-        'You have successfully completed this chapter. You can now try to evolve your plant to stage five.',
+        'You have successfully completed this chapter. You can now try to evolve your CryptoBot to stage five.',
       after:
-        "You have successfully completed the chapter and evolved your plant's eyes",
+        "You have successfully completed the chapter and evolved your CryptoBot's gem into stage five.",
     },
     nextChapterLink: '',
   },
@@ -64,9 +65,9 @@ const stages = [
     stage: 5,
     description: {
       before:
-        'You have successfully completed this chapter. You can now try to evolve your plant to final stage.',
+        'You have successfully completed this chapter. You can now try to evolve your CryptoBot to final stage.',
       after:
-        'You have successfully completed the chapter and evolved your plant to defend against the zombies.',
+        'You have successfully completed the chapter and evolved your CryptoBot to defend against the aliens.',
     },
     nextChapterLink: '',
   },
@@ -125,7 +126,7 @@ const PlantGrowthModalView = ({ currentChapter, nextSlug, onToggle }) => {
         <StyledOutboundLink
           rel="noopener"
           target="_blank"
-          href={`https://twitter.com/intent/tweet?text=I just completed Chapter ${currentChapter}! %23CryptoCodeSchool%20I Evolved my plant and learned more about %23Smartpy development. Evolve your own plant and battle out zombie apocalypse: &url=https://cryptocodeschool.in/tezos`}
+          href={`https://twitter.com/intent/tweet?text=I just completed Chapter ${currentChapter}! %23CryptoCodeSchool%20I Evolved my CryptoBot and learned more about %23Smartpy development. Evolve your own CryptoBot and battle out alien invasion: &url=https://cryptocodeschool.in/tezos`}
         >
           <FaTwitter />
           <span>Tweet</span>
@@ -149,7 +150,7 @@ const PlantGrowthModalView = ({ currentChapter, nextSlug, onToggle }) => {
             <p>
               {stage > 6
                 ? `You have successfully completed the chapter and evolved your
-              plants to defend against the zombies.`
+              CryptoBot to defend against the aliens.`
                 : !isEvolved
                 ? stages[stage].description.before
                 : stages[stage].description.after}

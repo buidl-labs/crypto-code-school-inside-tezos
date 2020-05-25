@@ -23,8 +23,8 @@ const WelcomeModal = ({ display = false, changeDisplay }) => {
                   Congratulations!
                 </Heading>
                 <SubHeading style={{ padding: '0 4rem' }}>
-                  You have successfully evolved your plant, battle it out to
-                  defend against the upcoming zombie apocalypse.
+                  You have successfully evolved your CryptoBot, battle it out to
+                  defend against the upcoming alien invasion.
                 </SubHeading>
                 <div
                   style={{

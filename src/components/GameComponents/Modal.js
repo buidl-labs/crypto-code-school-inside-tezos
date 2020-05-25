@@ -37,17 +37,17 @@ const GameOverModal = ({ totalDeadZombies = 4, status = 'lost' }) => {
                   <>
                     <Heading>Victory</Heading>
                     <SubHeading>
-                      Your plant has defeated the first wave of the zombie
-                      apocalypse. <br /> But are you ready to take it to the
-                      next level?
+                      Your CryptoBot has defeated the first wave of the alien
+                      invasion. <br /> But are you ready to take it to the next
+                      level?
                     </SubHeading>
                   </>
                 ) : (
                   <>
                     <Heading>Battle Lost</Heading>
                     <SubHeading>
-                      Your plant was defeated in the first wave of the zombie
-                      apocalypse. <br /> Are you ready to try again?
+                      Your CryptoBot was defeated in the first wave of the alien
+                      invasion. <br /> Are you ready to try again?
                     </SubHeading>
                   </>
                 )}
