@@ -121,23 +121,23 @@ const missing = {
 
   //******************/
   //For chapter 11
-  'bullet_seed_count = 5,':
-    'Error with smart contract code: invalid or missing bullet_seed_count variable init. in contract storage',
+  'bullet_gem_count = 5,':
+    'Error with smart contract code: invalid or missing bullet_gem_count variable init. in contract storage',
 
-  'record_zombie_kills = {"simple_zombie":sp.nat(0), "boss_zombie":sp.nat(0)}':
-    'Error with smart contract code: invalid or missing record_zombie_kills variable init. in contract storage',
+  'record_alien_kills = {':
+    'Error with smart contract code: invalid or missing record_alien_kills variable init. in contract storage',
 
-  'self.data.bullet_seed_count -= 1':
-    'Error with smart contract code: invalid or missing bullet_seed_count usage in shoot_zombie entry point function scope',
+  'self.data.bullet_gem_count -= 1':
+    'Error with smart contract code: invalid or missing bullet_gem_count usage in shoot_alien entry point function scope',
 
-  'self.data.record_zombie_kills[zombie_type] += 1':
-    'Error with smart contract code: invalid or missing record_zombie_kills usage in shoot_zombie entry point function scope',
+  'self.data.record_alien_kills[alien_type] += 1':
+    'Error with smart contract code: invalid or missing record_alien_kills usage in shoot_alien entry point function scope',
 
-  'scenario += crypto_bot_test_contract.shoot_zombie("simple_zombie")':
-    'Error with testing code: invalid or missing shoot_zombie test call to kill "simple_zombie"',
+  'scenario += crypto_bot_test_contract.shoot_alien("simple_alien")':
+    'Error with testing code: invalid or missing shoot_alien test call to kill "simple_alien"',
 
-  'scenario += crypto_bot_test_contract.shoot_zombie("boss_zombie")':
-    'Error with testing code: invalid or missing shoot_zombie test call to kill "boss_zombie"',
+  'scenario += crypto_bot_test_contract.shoot_alien("boss_alien")':
+    'Error with testing code: invalid or missing shoot_alien test call to kill "boss_alien"',
 
   //******************/
   //For chapter 12
@@ -157,11 +157,11 @@ const missing = {
   'sp.verify(self.data.crypto_bot_manager == sp.sender, message = "Error: you are not the manager of this CryptoBot")':
     'Error with smart contract code: invalid or missing sp.verify method call',
 
-  'scenario += crypto_bot_test_contract.shoot_zombie("simple_zombie").run(sender = my_address)':
-    'Error with testing code: invalid or missing shoot_zombie call test call with my_address as caller',
+  'scenario += crypto_bot_test_contract.shoot_alien("simple_alien").run(sender = my_address)':
+    'Error with testing code: invalid or missing shoot_alien call test call with my_address as caller',
 
-  'scenario += crypto_bot_test_contract.shoot_zombie("boss_zombie").run(sender = my_address)':
-    'Error with testing code: invalid or missing shoot_zombie call test call with my_address as caller',
+  'scenario += crypto_bot_test_contract.shoot_alien("boss_alien").run(sender = my_address)':
+    'Error with testing code: invalid or missing shoot_alien call test call with my_address as caller',
 
   //For chapter 14
   'sp.else:': 'Error in smart contract code: missing of invalid sp.else block',
@@ -169,7 +169,7 @@ const missing = {
   'sp.failwith("Error: you ran out of bullets! Please buy more!")':
     'Error in smart contract code: invalid or missing sp.failwith helper method call in sp.else block',
 
-  'sp.if self.data.bullet_seed_count >= 1:':
+  'sp.if self.data.bullet_gem_count >= 1:':
     'Error in smart contract code: invalid or missing sp.if block initialization',
 
   //chapter 2

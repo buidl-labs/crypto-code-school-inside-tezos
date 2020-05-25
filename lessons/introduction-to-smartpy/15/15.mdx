@@ -8,23 +8,23 @@ editor:
   startingCode: |
     import smartpy as sp
 
-    class Plant(sp.Contract):
+    class CryptoBot(sp.Contract):
     
         def __init__(self, manager_address, life_state):
             
             self.init(
-                plant_manager = manager_address,
+                crypto_bot_manager = manager_address,
                 name = "terminator",
                 is_alive = life_state,
                 
                 coordinate_x = sp.int(0), 
                 coordinate_y = sp.nat(0), 
                 
-                bullet_seed_count = 5,
+                bullet_gem_count = 5,
 
-                record_zombie_kills = {
-                    "simple_zombie": sp.nat(0), 
-                    "boss_zombie": sp.nat(0), 
+                record_alien_kills = {
+                    "simple_alien": sp.nat(0), 
+                    "boss_alien": sp.nat(0), 
                 }
                 
                 )
@@ -32,7 +32,7 @@ editor:
         @sp.entry_point
         def change_name(self, new_name):
             sp.verify(
-                self.data.plant_manager == sp.sender, 
+                self.data.crypto_bot_manager == sp.sender, 
                 message = "Error: non manager call"
                 )
 
@@ -41,7 +41,7 @@ editor:
         @sp.entry_point
         def move_horizontally(self, update_to):
             sp.verify(
-                self.data.plant_manager == sp.sender, 
+                self.data.crypto_bot_manager == sp.sender, 
                 message = "Error: non manager call"
                 )
                 
@@ -51,7 +51,7 @@ editor:
         def move_vertically(self, update_to):
             
             sp.verify(
-                self.data.plant_manager == sp.sender, 
+                self.data.crypto_bot_manager == sp.sender, 
                 message = "Error: non manager call"
                 )
                 
@@ -59,16 +59,16 @@ editor:
 
             
         @sp.entry_point
-        def shoot_zombie(self, zombie_type):
+        def shoot_alien(self, alien_type):
             
             sp.verify(
-                self.data.plant_manager == sp.sender, 
+                self.data.crypto_bot_manager == sp.sender, 
                 message = "Error: non manager call"
                 )
 
-            self.data.bullet_seed_count -= 1
+            self.data.bullet_gem_count -= 1
             
-            self.data.record_zombie_kills[zombie_type] += 1
+            self.data.record_alien_kills[alien_type] += 1
 
         
     @sp.add_test(name = "Ending")
@@ -78,45 +78,44 @@ editor:
         ## Class Invokation
         my_address = sp.address("tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj")
 
-        plant_test_contract =  Plant(manager_address = my_address, life_state = True)
+        crypto_bot_test_contract =  CryptoBot(manager_address = my_address, life_state = True)
         
         ## Testing contract
-        scenario += plant_test_contract
+        scenario += crypto_bot_test_contract
         
-        scenario += plant_test_contract.change_name("punky terminator").run(sender = my_address)
+        scenario += crypto_bot_test_contract.change_name("punky terminator").run(sender = my_address)
         
-        scenario.verify(plant_test_contract.data.is_alive == True)
+        scenario.verify(crypto_bot_test_contract.data.is_alive == True)
         
-        scenario += plant_test_contract.move_horizontally(2).run(sender = my_address)
+        scenario += crypto_bot_test_contract.move_horizontally(2).run(sender = my_address)
         
-        scenario += plant_test_contract.move_vertically(1).run(sender = my_address)
+        scenario += crypto_bot_test_contract.move_vertically(1).run(sender = my_address)
         
-        scenario += plant_test_contract.shoot_zombie("simple_zombie").run(sender = my_address)
+        scenario += crypto_bot_test_contract.shoot_alien("simple_alien").run(sender = my_address)
         
-        scenario += plant_test_contract.shoot_zombie("boss_zombie").run(sender = my_address)
+        scenario += crypto_bot_test_contract.shoot_alien("boss_alien").run(sender = my_address)
         
-
 
   answer: |
     import smartpy as sp
 
-    class Plant(sp.Contract):
+    class CryptoBot(sp.Contract):
     
         def __init__(self, manager_address, life_state):
             
             self.init(
-                plant_manager = manager_address,
+                crypto_bot_manager = manager_address,
                 name = "terminator",
                 is_alive = life_state,
                 
                 coordinate_x = sp.int(0), 
                 coordinate_y = sp.nat(0), 
                 
-                bullet_seed_count = 5,
+                bullet_gem_count = 5,
 
-                record_zombie_kills = {
-                    "simple_zombie": sp.nat(0), 
-                    "boss_zombie": sp.nat(0), 
+                record_alien_kills = {
+                    "simple_alien": sp.nat(0), 
+                    "boss_alien": sp.nat(0), 
                 }
                 
                 )
@@ -124,7 +123,7 @@ editor:
         @sp.entry_point
         def change_name(self, new_name):
             sp.verify(
-                self.data.plant_manager == sp.sender, 
+                self.data.crypto_bot_manager == sp.sender, 
                 message = "Error: non manager call"
                 )
 
@@ -133,7 +132,7 @@ editor:
         @sp.entry_point
         def move_horizontally(self, update_to):
             sp.verify(
-                self.data.plant_manager == sp.sender, 
+                self.data.crypto_bot_manager == sp.sender, 
                 message = "Error: non manager call"
                 )
                 
@@ -143,7 +142,7 @@ editor:
         def move_vertically(self, update_to):
             
             sp.verify(
-                self.data.plant_manager == sp.sender, 
+                self.data.crypto_bot_manager == sp.sender, 
                 message = "Error: non manager call"
                 )
                 
@@ -151,16 +150,16 @@ editor:
 
             
         @sp.entry_point
-        def shoot_zombie(self, zombie_type):
+        def shoot_alien(self, alien_type):
             
             sp.verify(
-                self.data.plant_manager == sp.sender, 
+                self.data.crypto_bot_manager == sp.sender, 
                 message = "Error: non manager call"
                 )
 
-            self.data.bullet_seed_count -= 1
+            self.data.bullet_gem_count -= 1
             
-            self.data.record_zombie_kills[zombie_type] += 1
+            self.data.record_alien_kills[alien_type] += 1
 
         
     @sp.add_test(name = "Ending")
@@ -170,22 +169,22 @@ editor:
         ## Class Invokation
         my_address = sp.address("tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj")
 
-        plant_test_contract =  Plant(manager_address = my_address, life_state = True)
+        crypto_bot_test_contract =  CryptoBot(manager_address = my_address, life_state = True)
         
         ## Testing contract
-        scenario += plant_test_contract
+        scenario += crypto_bot_test_contract
         
-        scenario += plant_test_contract.change_name("punky terminator").run(sender = my_address)
+        scenario += crypto_bot_test_contract.change_name("punky terminator").run(sender = my_address)
         
-        scenario.verify(plant_test_contract.data.is_alive == True)
+        scenario.verify(crypto_bot_test_contract.data.is_alive == True)
         
-        scenario += plant_test_contract.move_horizontally(2).run(sender = my_address)
+        scenario += crypto_bot_test_contract.move_horizontally(2).run(sender = my_address)
         
-        scenario += plant_test_contract.move_vertically(1).run(sender = my_address)
+        scenario += crypto_bot_test_contract.move_vertically(1).run(sender = my_address)
         
-        scenario += plant_test_contract.shoot_zombie("simple_zombie").run(sender = my_address)
+        scenario += crypto_bot_test_contract.shoot_alien("simple_alien").run(sender = my_address)
         
-        scenario += plant_test_contract.shoot_zombie("boss_zombie").run(sender = my_address)
+        scenario += crypto_bot_test_contract.shoot_alien("boss_alien").run(sender = my_address)
 
 
 ---
@@ -196,19 +195,19 @@ editor:
 
 Wow! Great job learner!
 
-You have finally assembled a zombie killer terminator!
+You have finally assembled a alien killer terminator!
 
-As you can see on the right side, we have assembled all the pieces of your `Plant` contract together so that you can review it's working one final time before you send your `Plant` to battle! ⚔️
+As you can see on the right side, we have assembled all the pieces of your `CryptoBot` contract together so that you can review it's working one final time before you send your `CryptoBot` to battle! ⚔️
 
 
 
-You can also tinker around with the final code on [SmartPy’s online IDE](https://smartpy.io/demo/index.html?code=eJzVVW2L00AQ_p5fseS@JFiLPU85CgdCOVAOQfDwgyLLNpm2a5PduLvpmYr_3dlk02SbvpxwoAZakuwzL888kxmeF1IZonOmTFERpokugiDJmNbkQ8aEiXQxnklhFEtMPA0IIfaXwoJQygU3lEYassWI5EywJSjK0lSB1iOS8QVQbZiBxo44W3tZk7E1j9o39ipsQOockZuByz5WsBwQEhbA9EpKAyr0zrmmLOMbi@kS8RD9@0RKlXKBEPoDLZAzR@ov4tExVNWg8H6A6t_PyywDQzVAShNZCoNmr0ZBH6IgQa90K_M5B7rmWaYR9LMPsVeoeV5k4HDh9Fj0GjuXWp9F_jqWdFzn9wbNAHWvaCGxGK3qyYqJJVBbfie8gIf6sVMZLTeg@KLy1K01T5lh4z2d60pqECkoP8McRUeIlflWKammREjRdgVJWJaFw7z9UK5N2hzb_j1CLpcboCup@BY7Ht1XjmJZpFZ0I_8BjgdE66J6ffzspkv8McSRj@HJadr_Df3Kpx@0BkcKUM8Q98k49u6LNFUxHGB_u8O7SMMJ8_yGTAI_2x36wLD50uP51RZtsq_1LoPAFg@HMTWgTdRO4FuBJV@GcWDrWJ@4cukEBFNcNqPSntD2VRTvBCEXF2RW75t3YiPXzHAp6vd51Q7@xoF7iEKznXysypd3LPl8nVRXl9ev2dWGzUC@Nw_fP929XTP5LXSlaoSoYydui6E3t9r29ovdONWh_YUH96oEP@d79Im8SevWp4x1PBC6c3AGOO6P2bAoxboivU0Xj1UpoqahvKzjYYS2UQ9FqXui25QDmueyHM7Lyz9J7aTb3jSaPIVT7wvf26ZP77@_gR_j_fTfb65I2Uw-). Try running the test by clicking on the ▶️ button!
+You can also tinker around with the final code on [SmartPy’s online IDE](https://smartpy.io/demo/index.html?code=eJzVVU2P0zAQvedXWNlLIkpFlwWtKlVCVCuBVpxYcQAhy02mrWliB9vp4kX8d8b5aOJNoxYJBOSUjzczb55fZnheSGWIzpkyhSVME10EQZIxrclS2cLI19JEupgupTCKJSaeBwHBK4U1oZQLbiiNNGTrCcmZYBtQlKWpAq0nJONroNowAxhFmutw44KmLkF0eOWupKpKV9LQJiFZDFJ7EYLlgJjQgMq5YEaq0AdwTVnG9w7UUfIhPgUpVeoyAf2GMdg9FyZ6Fk9GYbaG4f0Q5j2syiwDQzeQ00SWwmDci0ngQRQkmNcxBkF3PMs0gr57EHeFmudFBjUunI@Wr7ArqfVJ5I9x2nFN8RWGAvrA0kKiJAcjJFsmNkDdQTReEHBfPfYOHmP3oPja@udd2SBlhk2PnXwlqwaRgnrENkcfIMYd_I1SUs2JkKI1CklYloXHWvBLNtZp2QaHxsc6zeUe6FYq_oD_A9awTb9lkTofGPkvNXz0OHvl@zZ_suh6OFMGbM7w5IQI_6Ma1lfD72VMEr2VyLz6xxo56j_Y2OL4@PvbehzRYDCdni7IbGRyVwHDWfWp6_qzk3FW1wmcbDi9qQFtonZi3whUfBPGgROw@tIopRMQTHFZj1X3hbavoriz58UFWVar6q3Yyx0zXIrqfW7bTVEnaB6i0DzM3tvy@S1LPl4n9ury@iW72rMlyHfm_uuH2zc7Jr@EjTQ9_SsCSbMBMWVvNT7aTG5X2WMbED_cqRJ88neYFwUgbWq_d1RvjEOX5Rz0tD@fw6IUO0t6yzKeqtJ51rnK4x8Py7SeHS1V2aJbuIOuz@I7nLKXv0LydO7e6Jr9tsz9CeBv5z9TorfUTxX4CWJr86k-). Try running the test by clicking on the ▶️ button!
 
 
 ## Fighting Time! 
 
 As and when you are ready, click on "Finish" button! 
 
-It's time to kill some zombies! 
+It's time to kill some aliens! 
 
 ![Alt Text](https://media.giphy.com/media/4Sm7D7rlopgqs/giphy.gif)

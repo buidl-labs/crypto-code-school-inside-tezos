@@ -112,7 +112,7 @@ const HomePage = () => {
           </GridContainer>
           <GridContainer>
             <FlexContainer>
-              <h2>Evolve your Crypto bot to fight against a alien invasion!</h2>
+              <h2>Evolve your Crypto Bot to fight against a alien invasion!</h2>
               <p>
                 At the starting of your journey, the school bestowes upon you a
                 unique gem of a Crypto bot that is known to stop aliens! *ooh
