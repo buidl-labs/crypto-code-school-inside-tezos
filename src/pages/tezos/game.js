@@ -158,6 +158,7 @@ const Game = () => {
 
   const shooterBall = () => {
     const ball = createShooterBallElement();
+    if (gameContainer === null) return;
     gameContainer.current.appendChild(ball);
     setTimeout(() => {
       moveShooterBall(ball);
@@ -177,7 +178,7 @@ const Game = () => {
   };
 
   const setBallImage = ball => {
-    const plantType = JSON.parse(localStorage.getItem('plant'));
+    const plantType = JSON.parse(localStorage.getItem('robot'));
     switch (plantType.type) {
       case 'electric':
         ball.src = electricBall;

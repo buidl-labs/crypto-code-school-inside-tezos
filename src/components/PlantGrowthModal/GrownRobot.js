@@ -11,7 +11,7 @@ import {
   Feet,
   Gem,
   GemHolder,
-} from './Plant';
+} from './Robot';
 
 function GrownRobot({ positionTop = '51%', positionLeft = '53%' }) {
   //wait till window object is available

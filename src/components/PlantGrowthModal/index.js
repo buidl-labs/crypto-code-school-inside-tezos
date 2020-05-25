@@ -1,5 +1,5 @@
 import Portal from '../Portal/index';
-import PlantContainer from './Plant';
+import RobotContainer from './Robot';
 import styled from '@emotion/styled';
 import { FaChevronRight } from 'react-icons/fa';
 import { Link } from 'gatsby';
@@ -141,7 +141,7 @@ const PlantGrowthModalView = ({ currentChapter, nextSlug, onToggle }) => {
           />
         </CloseIconContainer>
         <div>
-          <PlantContainer isEvolved={isEvolved} stage={stage} />
+          <RobotContainer isEvolved={isEvolved} stage={stage} />
         </div>
         <Container>
           <ContentContainer>

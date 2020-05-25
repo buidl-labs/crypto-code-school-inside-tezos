@@ -26,7 +26,7 @@ import {
   BackLink,
 } from 'src/PagesStyle/GamePage/styled';
 import { useSpring, config } from 'react-spring';
-import { getRobotId } from 'src/components/PlantGrowthModal/Plant';
+import { getRobotId } from 'src/components/PlantGrowthModal/Robot';
 import { LeftArrow, RightArrow } from '../../components/IconSet';
 const Game = () => {
   const [plantType, setPlantTypeSeed] = useState(null);

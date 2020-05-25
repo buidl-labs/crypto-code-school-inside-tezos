@@ -2,7 +2,7 @@ import React from 'react';
 import { navigate } from 'gatsby';
 
 // Components
-import PlantCircle from '../../components/PlantGrowthModal/Plant';
+import PlantCircle from '../../components/PlantGrowthModal/Robot';
 import Robot from '../../components/PlantGrowthModal/GrownRobot';
 import Zombie from '../../components/GameComponents/Zombie';
 

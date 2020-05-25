@@ -337,7 +337,7 @@ const Light = styled.div`
 //chapter 11 `*(Animation of  growing)*`
 //chapter 14 `*(Animation of hair growing)*` --> plant has fully grown --> to battle zombie apocalypse
 
-const PlantContainer = ({ stage, isEvolved }) => {
+const RobotContainer = ({ stage, isEvolved }) => {
   const [evolved, setEvolved] = useState(false);
   const props = useSpring({
     opacity: 0,
@@ -378,23 +378,6 @@ const PlantContainer = ({ stage, isEvolved }) => {
           }}
         />
         <Glow />
-        {/*TODO: replace with incubated seed */}
-        {/* <IncubatorContainer
-          style={{
-            seedAnimation,
-          }}
-        >
-          <Incubator
-            style={{
-              opacity: `${stage <= 0 ? '1' : '0'}`,
-            }}
-          />
-          <Seed
-            style={{
-              opacity: `${stage <= 0 ? '1' : '0'}`,
-            }}
-          />
-        </IncubatorContainer> */}
         {/*Gem Holder + Gem*/}
         <GemHolder
           style={{ transform: `${stage >= 5 ? 'scale(1)' : 'scale(0)'}` }}
@@ -433,32 +416,9 @@ const PlantContainer = ({ stage, isEvolved }) => {
             opacity: `${stage <= 0 ? '1' : '0'}`,
           }}
         />
-        {/* <Body
-          style={{ transform: `${stage >= 2 ? 'scale(1)' : 'scale(0)'}` }}
-        />
-        <Eye style={{ transform: `${stage >= 4 ? 'scale(1)' : 'scale(0)'}` }} />
-        <Head
-          style={{ transform: `${stage >= 3 ? 'scale(1)' : 'scale(0)'}` }}
-        />
-        <Hair
-          style={{
-            transform: `${
-              stage >= 5 ? 'scale(1) translate(14px, 10px)' : 'scale(0)'
-            }`,
-          }}
-        />
-        <BackLeaves
-          style={{ transform: `${stage >= 1 ? 'scale(1)' : 'scale(0)'}` }}
-        />
-        <FrontLeaves
-          style={{ transform: `${stage >= 1 ? 'scale(1)' : 'scale(0)'}` }}
-        />
-        <Pattern
-          style={{ transform: `${stage >= 5 ? 'scale(1)' : 'scale(0)'}` }}
-        /> */}
       </Robot>
     </>
   );
 };
 
-export default PlantContainer;
+export default RobotContainer;
