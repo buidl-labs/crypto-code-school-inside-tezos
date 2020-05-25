@@ -2,11 +2,11 @@ import React from 'react';
 import { navigate } from 'gatsby';
 
 // Seed Images
-import IceSeed from '../../assets/Seeds/Ice.svg';
-import ElectricSeed from '../../assets/Seeds/electricity.svg';
-import FireSeed from '../../assets/Seeds/fire.svg';
-import GrassSeed from '../../assets/Seeds/grass.svg';
-import WaterSeed from '../../assets/Seeds/water.svg';
+import IceSeed from '../../assets/gems/ice.svg';
+import ElectricSeed from '../../assets/gems/electricity.svg';
+import FireSeed from '../../assets/gems/fire.svg';
+import GrassSeed from '../../assets/gems/grass.svg';
+import WaterSeed from '../../assets/gems/water.svg';
 import {
   GameModal,
   ModalMask,

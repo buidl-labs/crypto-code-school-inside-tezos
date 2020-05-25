@@ -43,7 +43,7 @@ const Game = () => {
   useEffect(() => {
     let plantType = null;
     const plantJSON =
-      typeof window != 'undefined' && localStorage.getItem('plant');
+      typeof window != 'undefined' && localStorage.getItem('robot');
     if (plantJSON !== null) {
       plantType = JSON.parse(plantJSON).type;
     }

@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Layout from 'src/components/Layout/layout';
 import Theme from 'src/assets/theme.svg';
-import IceSeed from 'src/assets/Seeds/Ice.svg';
-import ElectricSeed from 'src/assets/Seeds/electricity.svg';
-import FireSeed from 'src/assets/Seeds/fire.svg';
-import GrassSeed from 'src/assets/Seeds/grass.svg';
-import WaterSeed from 'src/assets/Seeds/water.svg';
 import StartIcon from 'src/assets/start_icon.svg';
 import useChapters from 'src/hooks/use-chapters';
 import { Link } from 'gatsby';
@@ -27,7 +22,6 @@ import StyledLink from 'src/components/StyledLink';
 function LessonsOverview() {
   const chapters = useChapters();
   const [chapterList, updateChapterList] = useState(chapters);
-  const [plantType, setPlantTypeSeed] = useState(null);
   const [continuationLink, setContinuationLink] = useState('/tezos/storyline');
   const [chapterZeroCompleted, setZeroChapterCompleted] = useState(() => {
     let result = false;
@@ -131,33 +125,6 @@ function LessonsOverview() {
       //update stored user progress lesson chapters
       //sync it according to latest content
       localStorage.setItem('lesson-v1', JSON.stringify(updateList));
-    }
-  };
-
-  useEffect(() => {
-    let plantType = null;
-    const plantJSON =
-      typeof window != 'undefined' && localStorage.getItem('plant');
-    if (plantJSON !== null) {
-      plantType = JSON.parse(plantJSON).type;
-    }
-    setPlantTypeSeed(plantType);
-  }, []);
-
-  const renderPlantTypeSeed = (plantType = null) => {
-    switch (plantType) {
-      case PLANT_TYPES.ICE:
-        return <IceSeed />;
-      case PLANT_TYPES.ELECTRIC:
-        return <ElectricSeed />;
-      case PLANT_TYPES.GRASS:
-        return <GrassSeed />;
-      case PLANT_TYPES.WATER:
-        return <WaterSeed />;
-      case PLANT_TYPES.FIRE:
-        return <FireSeed />;
-      default:
-        return null;
     }
   };
 
