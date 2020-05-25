@@ -51,8 +51,8 @@ const Zombie = styled.div`
 const Face = styled(zombieAnatomyList.face)`
   height: 100px;
   position: absolute;
-  left: 0%;
-  top: 0%;
+  left: 25%;
+  top: -15%;
   width: 100px;
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
   z-index: 8;
@@ -65,20 +65,20 @@ const Face = styled(zombieAnatomyList.face)`
 
 const Body = styled(zombieAnatomyList.body)`
   position: absolute;
-  top: 66px;
+  top: 22%;
   width: 100px;
   height: 100px;
-  left: 43px;
+  left: 28.5%;
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
   z-index: 7;
 `;
 
 const BackHand = styled(zombieAnatomyList.backHand)`
   position: absolute;
-  top: 75px;
+  top: 40%;
   width: 50px;
   height: 110px;
-  left: 38px;
+  left: 60%;
   transform: rotate(25deg);
   transform-origin: top right;
   transition: all 0.5s cubic-bezier(0.43, 0.13, 0.15, 0.99);
@@ -87,11 +87,11 @@ const BackHand = styled(zombieAnatomyList.backHand)`
 
 const BackLeg = styled(zombieAnatomyList.backLeg)`
   position: absolute;
-  top: 125px;
+  top: 62%;
   width: 50px;
   height: 110px;
   transform-origin: top right;
-  left: 50px;
+  left: 40%;
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
   z-index: 4;
   animation: ${backLegMovement} 0.5s 0.5s infinite alternate;
@@ -99,25 +99,25 @@ const BackLeg = styled(zombieAnatomyList.backLeg)`
 
 const FrontHand = styled(zombieAnatomyList.frontHand)`
   position: absolute;
-  top: 75px;
+  top: 40%;
   width: 50px;
   height: 110px;
-  left: 55px;
+  left: 26%;
   transform: rotate(-10deg);
   transform-origin: top right;
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
-  z-index: 8;
+  z-index: 5;
   animation: ${frontHandMovement} 0.5s infinite alternate;
 `;
 
 const FrontLeg = styled(zombieAnatomyList.frontLeg)`
   position: absolute;
-  top: 130px;
+  top: 64%;
   width: 50px;
   height: 110px;
   transform: rotate(-15deg);
   transform-origin: top left;
-  left: 82px;
+  left: 42%;
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
   z-index: 5;
   animation: ${frontLegMovement} 0.5s infinite alternate;
