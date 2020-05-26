@@ -1,4 +1,4 @@
-# Crypto Plants vs Zombies
+# Cryptoverse Wars
 
 Interactive Code School for learning smart contract development on the Tezos blockchain using SmartPy
 
@@ -19,7 +19,7 @@ This project aims to help beginners build a simple smart contract using SmartPy 
 
 ### Project Overview <a id="project_overview"></a>
 
-Project overview in detail can be found in [here](./PROJECT_OVERVIEW.md).
+Old Project overview in detail can be found in [here](./OLD_ROJECT_OVERVIEW.md).
 
 ## Contributing <a id="contributing"></a>
 

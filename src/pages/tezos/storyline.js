@@ -26,7 +26,7 @@ import {
   BackLink,
 } from 'src/PagesStyle/GamePage/styled';
 import { useSpring, config } from 'react-spring';
-import { getPlantId } from 'src/components/PlantGrowthModal/Plant';
+import { getRobotId } from 'src/components/PlantGrowthModal/Robot';
 import { LeftArrow, RightArrow } from '../../components/IconSet';
 const Game = () => {
   const [plantType, setPlantTypeSeed] = useState(null);
@@ -37,13 +37,13 @@ const Game = () => {
 
   //generate plant type at random if not already have been
   useEffect(() => {
-    getPlantId();
+    getRobotId();
   });
 
   useEffect(() => {
     let plantType = null;
     const plantJSON =
-      typeof window != 'undefined' && localStorage.getItem('plant');
+      typeof window != 'undefined' && localStorage.getItem('robot');
     if (plantJSON !== null) {
       plantType = JSON.parse(plantJSON).type;
     }
@@ -140,7 +140,7 @@ const Game = () => {
               <LeftArrow />
               <span>Back</span>
             </BackLink>
-            <Title />
+            <Title width="10%" />
             <BackLink to={`/lesson/chapter-01`}>
               <span>Skip</span>
               <RightArrow />

@@ -42,7 +42,7 @@ const HomePage = () => {
     >
       <div style={{ willChange: 'transform' }}>
         <SEO
-          title="SmartPy tutorial and tezos blockchain programming course"
+          title="Cryptobots vs Aliens | Crypto Code School | Learn to program smart contracts in SmartPy"
           keywords={[
             `smartpy`,
             `python`,
@@ -69,9 +69,9 @@ const HomePage = () => {
               Learn to code Tezos blockchain DApps in SmartPy <br />
             </HeroTitle>
             <HeroSubheading>
-              Crypto Plants Vs Zombies teaches you to write smart contracts in
-              SmartPy by evolving a crypto-plant that unleashes hell on the
-              incoming zombie apocalypse!
+              "Cryptobots vs Aliens" is an interactive code school that teaches
+              you to write smart contracts in SmartPy. Assemble your own
+              cryptobot that unleashes hell on the incoming alien invasion!
             </HeroSubheading>
             <InnerContainer>
               <div>
@@ -112,22 +112,23 @@ const HomePage = () => {
           </GridContainer>
           <GridContainer>
             <FlexContainer>
-              <h2>Evolve your plant to fight against a zombie apocalypse!</h2>
+              <h2>
+                Assemble your Cryptobot to fight against an alien invasion!
+              </h2>
               <p>
                 At the starting of your journey, the school bestowes upon you a
-                unique seed of a plant that is known to stop zombies! *ooh
-                exciting*
+                unique gem. This gem, when inserted into the chest of any
+                cryptobot, gives the cryptobot alien-killing cosmic superpowers!
+                *ooh exciting*
                 <br />
                 <br />
-                But the seed needs to grow into a full plant to battle the
-                zombie apocalypse! *oh no! what do I have to do?*
+                Your mission is to build and assemble the cryptobot from scratch
+                and then use the gem to power your cryptobot to battle the
+                incoming alien invasion!
                 <br />
                 <br />
-                Your mission is to evolve the seed into a plant to fight the
-                incoming zombie apocalypse by progressing through the chapters!
-                <br />
-                <br />
-                Are you ready? The world's hope is in your hands!
+                You will learn to assemble your cryptobot by progressing through
+                the school. Are you ready? The world's hope is in your hands!
               </p>
             </FlexContainer>
             <div>

@@ -7,96 +7,96 @@ editor:
   startingCode: |
     import smartpy as sp
 
-    class Plant(sp.Contract):
+    class Cryptobot(sp.Contract):
         def __init__(self, manager_address):
             self.init(
-                plant_manager = manager_address,
+                bot_manager = manager_address,
                
-                bullet_seed_count = 5,
+                plasma_bullet_count = 5,
                
-                record_zombie_kills = {
-                    "simple_zombie": sp.nat(0), 
-                    "boss_zombie": sp.nat(0), 
+                record_alien_kills = {
+                    "simple_alien": sp.nat(0), 
+                    "boss_alien": sp.nat(0), 
                 }
-                )
+            )
 
         @sp.entry_point
-        def shoot_zombie(self, zombie_type):
+        def shoot_alien(self, alien_type):
             sp.verify(
-                self.data.plant_manager == sp.sender, 
+                self.data.bot_manager == sp.sender, 
                 message = "Error: non manager call"
-                )
+            )
             
             
-            # Using sp.if add a condition to check bullet_seed_count >= 1
+            # Using sp.if add a condition to check plasma_bullet_count >= 1
                 
-                self.data.bullet_seed_count -= 1
-                self.data.record_zombie_kills[zombie_type] += 1
+                self.data.plasma_bullet_count -= 1
+                self.data.record_alien_kills[alien_type] += 1
             # Use sp.else to run code when the above condition fails. 
             # Use sp.failwith to return an error message.
 
 
 
-    @sp.add_test(name = "Testing with sp.if")
+    @sp.add_test(name = "Testing with sp if")
     def test():
         scenario = sp.test_scenario()
         
         my_address = sp.address("tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj")
         
-        plant_test_contract =  Plant(manager_address = my_address)
+        test_bot =  Cryptobot(manager_address = my_address)
         
-        scenario += plant_test_contract
+        scenario += test_bot
         
-        scenario += plant_test_contract.shoot_zombie("simple_zombie").run(sender = my_address)
-        scenario += plant_test_contract.shoot_zombie("boss_zombie").run(sender = my_address)
+        scenario += test_bot.shoot_alien("simple_alien").run(sender = my_address)
+        scenario += test_bot.shoot_alien("boss_alien").run(sender = my_address)
 
 
 
   answer: |
     import smartpy as sp
 
-    class Plant(sp.Contract):
+    class Cryptobot(sp.Contract):
         def __init__(self, manager_address):
             self.init(
-                plant_manager = manager_address,
+                bot_manager = manager_address,
 
-                bullet_seed_count = 5,
+                plasma_bullet_count = 5,
 
-                record_zombie_kills = {
-                    "simple_zombie": sp.nat(0), 
-                    "boss_zombie": sp.nat(0), 
+                record_alien_kills = {
+                    "simple_alien": sp.nat(0), 
+                    "boss_alien": sp.nat(0), 
                 }
-                )
+            )
 
 
         @sp.entry_point
-        def shoot_zombie(self, zombie_type):
+        def shoot_alien(self, alien_type):
             sp.verify(
-                self.data.plant_manager == sp.sender, 
+                self.data.bot_manager == sp.sender, 
                 message = "Error: non manager call"
-                )
-            # Using sp.if add a condition to check bullet_seed_count >= 1
-            sp.if self.data.bullet_seed_count >= 1:
+            )
+            # Using sp.if add a condition to check plasma_bullet_count >= 1
+            sp.if self.data.plasma_bullet_count >= 1:
                 
-                self.data.bullet_seed_count -= 1
-                self.data.record_zombie_kills[zombie_type] += 1
+                self.data.plasma_bullet_count -= 1
+                self.data.record_alien_kills[alien_type] += 1
             # Use sp.else to run code when the above condition fails. 
             # Use sp.failwith to return an error message. 
             sp.else:
                 sp.failwith("Error: you ran out of bullets! Please buy more!")
 
-    @sp.add_test(name = "Testing with sp.if")
+    @sp.add_test(name = "Testing with sp if")
     def test():
         scenario = sp.test_scenario()
         
         my_address = sp.address("tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj")
         
-        plant_test_contract =  Plant(manager_address = my_address)
+        test_bot =  Cryptobot(manager_address = my_address)
         
-        scenario += plant_test_contract
+        scenario += test_bot
         
-        scenario += plant_test_contract.shoot_zombie("simple_zombie").run(sender = my_address)
-        scenario += plant_test_contract.shoot_zombie("boss_zombie").run(sender = my_address)
+        scenario += test_bot.shoot_alien("simple_alien").run(sender = my_address)
+        scenario += test_bot.shoot_alien("boss_alien").run(sender = my_address)
 
 ---
 
@@ -106,7 +106,7 @@ You would be already be pretty familiar with basic decision making in Python usi
 
 In this chapter, we are going to understand how to go about writing decision making code inside smart contracts using SmartPy's `sp.if..sp.else` statements. 
 
-In later half of the chapter, we design an alerting system to ping us when our `Plant` runs out of Bullet Seeds! 
+In later half of the chapter, we design an alerting system to ping us when our `Cryptobot` runs out of plasma bullets! 
 
 ![Alert Text](https://media.giphy.com/media/Tdpbuz8KP0EpQfJR3T/giphy.gif)
 
@@ -128,11 +128,11 @@ Hence whenever in doubt or you are running in weird errors, trust in SmartPy's s
 
 Remember: 
 
-1. `coordinate_x` which stores our plant's current x coordinate and 
+1. `coordinate_x` which stores our cryptobot's current x coordinate and 
 2. `move_horizontally` entry point function which is used to change `coordinate_x` state variable value?
 
 ```python
-    class Plant(sp.Contract):
+    class Cryptobot(sp.Contract):
         def __init__(self,):
             self.init(
                 ....
@@ -140,7 +140,7 @@ Remember:
                 ... 
                 }
 
-                )
+            )
             
         ...
         @sp.entry_point
@@ -151,10 +151,10 @@ Remember:
 ```
 
 
-1. We had specified a range for it that the plant can only move between <span class="string-highlight">[-10, 10]</span>. 
+1. We had specified a range for it that the cryptobot can only move between <span class="string-highlight">[-10, 10]</span>. 
 2. Though currently our `move_horizontally` entry point function currently allows to move to any arbitrary value since we don't check whether `update_to` is in the range of <span class="string-highlight">[-10, 10]</span>!
 
-We don't want the plant to start running away do we? 😰 
+We don't want the cryptobot to start running away do we? 😰 
 
 <br />
 
@@ -181,19 +181,13 @@ Explaining the code above:
 
 ### New feature request!
 
-Currently if you run out of bullets, your `shoot_zombie` function will still be able to run without alerting you that there are no bullets left!
-
-Imagine your plant standing in a front of zombie with no seeds left.. 
-
-![Alt Text](https://media.giphy.com/media/8FGMkJzTl8m5efHvw0/giphy.gif)
-
-Yikes! 
+Currently if you run out of bullets, your `shoot_alien` function will still be able to run without alerting you that there are no bullets left!
 
 ### Step by step walkthrough:
 
-Let's use `sp.if` to proceed forward with shooting only when `bullet_seed_count` is greater than 1. If not, we will use `sp.failwith` to alert you that you run out of bullets!
+Let's use `sp.if` to proceed forward with shooting only when `plasma_bullet_count` is greater than 1. If not, we will use `sp.failwith` to alert you that you run out of bullets!
 
-1. Using `sp.if` add a condition to check `bullet_seed_count` >= 1. Use `self.data.bullet_seed_count` to access it. 
+1. Using `sp.if` add a condition to check `plasma_bullet_count` >= 1. Use `self.data.plasma_bullet_count` to access it. 
 2. Move the shooting code inside `sp.if` scope. 
 3. Add `sp.else` and inside it's scope use `sp.failwith` to return with `"Error: you ran out of bullets! Please buy more!"` error message. 
 
@@ -206,7 +200,7 @@ When you’re finished:
 2. Click on “Show Answer” in case you get stuck.
 
 
-You can also tinker around with the final code on [SmartPy’s online IDE](https://smartpy.io/demo/index.html?code=eJzdVE2L2zAQvedXzDoXh6am226XJZBSWAqFpVDobg8tRSjyOFEjS64kb_CW_e8dKXZiJ6Ef0F6qg2PFb97MvPmQZWWsB1dy66sGuANXjUZCcefgveLap67Kro32lgs_mY2ATo4FMCa19IylDlUxhZJrvkTLeJ5bdK4FhhO@ZwGb7v4KpwrcrDWD@SHBlMAD_KJWCj1ziDkTptaebF4eoSwKY3P2YMqFRLaWSjnCfR9gwkmcLCuFLTCZUdKZ5j59NpnCMXhhnPs19HFwm4y62F6TAZJ@DauM1H6noFsZ41vaVsU2bt9U2Fewyu7RyqIZKhiFzbnn2YGW82DhUOdoD0IsSVnCkCTJG2uNnYE2upMeBFcqOUiiezt@GcOdk3oZfMkCqGzAQRidSy@J0xsQKxTrE3V7NYfzfm5kvU_lNHw28DxM_tjiad_BEHyiPz73RP8CT_q2IUUMIaKiX0rJ1ppyzBE2K6QcVwh8Ye6xl3fBpXIZHFOEDxvpV5EGfW01cA0YqtCVJeurElzOhlnsSdKufI2pwRKPqT2YohXbndHkIie_i7qB0lg8S6gdR6PQiVQo5tH5VPMyNsItXUIdcxTSydgOa7qTRWjSCG170QnU3EoDscHCF9b9lW47JT7KphviLbC9pIl_OP_Q1C9uuPh0JZqL51eX_OKeX6N55zffPt68XXPzNekRbds6@hHtAiLGdisd7IuwQXZ@exy7mKmwJ_j2wPEYbm0TqhPnEi47MX@HJhvM8sFymWTUNul2Hk@E@WfU_VX0V4n_@5i7Kt9pYcqSFnKc38IoZTZxj_Wo4yqk@cwDRsexD@A4@nzJpc7gdiUdbGiBwFLSBtjN8tbNP1Non8rPHz8ALlZvYQ--). Try running the test by clicking on the ▶️ button!
+You can also tinker around with the final code on [SmartPy’s online IDE](https://smartpy.io/demo/index.html?code=eJyVVF2P0zAQfM@v2AsvqSgRBwc6VSpCVEhIJyQkPh5AyHKdTWvq2MF2egqI_846TVunaUHnhzZOZsc7s@uVVW2sB1dx6@sWuANXJ4lQ3DlY2Lb25o3xmavzhdHecuEnswRoFVgCY1JLz1jmUJVTqLjmK7SMF4VF53pgWOF7HrDZ4VVYouNnS@NZHwvzU5ZpHDGIXjZKoWcrrJgwjfYU@@Iy2qIwtmBcSdRsI5VyhP89gISVOlnVCne4dEZm5Jr77OlkCmPs0jj3X@SfwW6SdNvXhEbys2W1kdofHHVrQ2Z0lL2pu4R9W2PsZ51v0cqyHfrZ2Vxwz_Nzzs5DmENdoD1JsSKfCUOGpG@tNXYG2uh9IUBwpdITESOLDw@P4LOTehXOkiVQEYGDMLqQXhKnNyDWKDbj4r2aw3Wsj4KPcs6iZxe0j8BPYuohdtwV346Gf4fHcWRQhiE1VPRPSmyjSVqBcL9GkrZG4EuzxUhuyaVyOYwpwod76dcdDfrGauAaMJi_r0YeuxGOPNF7JMn2VWtNA5Z4TOPBlL3H7go@KOR07rJpoTIWr1LqwiQJPUj1YR6dzzSvuvp_ok0oX5ecq0GWBA6d2aH6FnQCNbfSQNdS4Qvbv8p2vdH9VO3@Eu@A_SZL_a_rj23z_I6Lr7eivXl2@5LfbPkCzXt___PL3bsNNz_SiCjq5u4w0Y8ioo1m1MngCKPkkEBEdkieinuJ@GHoPL61wwEyyalJst2lO5PQw9mjkfMP7r_lmcRa). Try running the test by clicking on the ▶️ button!
 
 
 ## Optional Reading: 

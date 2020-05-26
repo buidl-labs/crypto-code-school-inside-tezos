@@ -2,14 +2,18 @@ import React, { useState, useEffect } from 'react';
 
 // Plant parts
 import {
-  Body,
+  Robot,
   Eye,
-  Hair,
   Head,
-  BackLeaves,
-  FrontLeaves,
-  Pattern,
-} from '../PlantGrowthModal/Plant';
+  RightHand,
+  LeftHand,
+  Top,
+  LowerBottom,
+  LowerBody,
+  Feet,
+  Gem,
+  GemHolder,
+} from '../PlantGrowthModal/Robot';
 
 // Styles
 import styled from '@emotion/styled';
@@ -40,15 +44,18 @@ const Plant = () => {
     <PlantBox>
       <div id="plant-top-body">
         <div style={{ height: '100%' }}>
-          <Body />
-          <Eye />
-          <Head />
-          <Hair />
-          <Pattern />
+          <RightHand />
         </div>
       </div>
-      <BackLeaves />
-      <FrontLeaves />
+      <GemHolder />
+      <Gem />
+      <Eye />
+      <Head />
+      <LeftHand />
+      <Top />
+      <LowerBottom />
+      <LowerBody />
+      <Feet />
     </PlantBox>
   ) : null;
 };

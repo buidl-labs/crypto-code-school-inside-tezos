@@ -6,7 +6,7 @@ import Theme from 'src/assets/theme.svg';
 import styled from '@emotion/styled';
 import { Link } from 'gatsby';
 import LockSVG from 'src/assets/lock.svg';
-import GrownPlant from 'src/components/PlantGrowthModal/GrownPlant';
+import GrownRobot from 'src/components/PlantGrowthModal/GrownRobot';
 import { trackEvent } from 'src/utils/analytics';
 import SEO from 'src/components/Seo';
 import { ThemeContainer } from 'src/PagesStyle/OverviewPage/styled';
@@ -43,11 +43,11 @@ function UpNextPage() {
         <div>
           <h1>Success</h1>
           <div style={{ background: 'rgba(208, 252, 255, 0.15)' }}>
-            <GrownPlant />
+            <GrownRobot />
           </div>
           <p>
-            You have successfully evolved your plant to face the incoming wave
-            of zombie attack.
+            You have successfully assembled your Cryptobot to face the incoming
+            wave of alien attack.
           </p>
           <StyledLink style={{ padding: '15px 30px' }} to="/tezos/game">
             Battle it out
@@ -60,7 +60,7 @@ function UpNextPage() {
               <LockSVG />
             </div>
             <div>
-              <h3>Creating New Generation of Plants</h3>
+              <h3>Creating New Generation of Cryptobots</h3>
               <p>about the course</p>
             </div>
           </LearnNextContainer>
@@ -69,7 +69,7 @@ function UpNextPage() {
               <LockSVG />
             </div>
             <div>
-              <h3>Army of Plant Defenders</h3>
+              <h3>Army of Cryptobot Defenders</h3>
               <p>about the course</p>
             </div>
           </LearnNextContainer>
@@ -78,7 +78,7 @@ function UpNextPage() {
               <LockSVG />
             </div>
             <div>
-              <h3>Advance concept in SmartPy</h3>
+              <h3>Advance concepts in SmartPy</h3>
               <p>about the course</p>
             </div>
           </LearnNextContainer>

@@ -9,16 +9,16 @@ editor:
   startingCode: |
     import smartpy as sp
 
-    class Plant(sp.Contract):
+    class Cryptobot(sp.Contract):
         def __init__(self, is_alive):
             self.init(
-                name = "peashooter",
+                name = "terminator",
                 is_alive = is_alive,
 
                 ## Add coordinate_x and coordinate_y variables
                 ## Init both with 0 using sp.int and sp.nat respectively 
 
-                )
+            )
             
         @sp.entry_point
         def change_name(self, new_name):
@@ -29,31 +29,31 @@ editor:
         
         # Define move_vertically entry point function
 
-    @sp.add_test(name = "Test plants movement")
+    @sp.add_test(name = "Test Cryptobot movement")
     def test():
         scenario = sp.test_scenario()
         
-        plant_test_contract =  Plant(is_alive = True)
+        test_bot =  Cryptobot(is_alive = True)
         
-        scenario += plant_test_contract
+        scenario += test_bot
                 
         # Test your movement entry functions below
-        # Move plant forward by 2 and vertically by 1
+        # Move Cryptobot forward by 2 and vertically by 1
 
   answer: |  
     import smartpy as sp
 
-    class Plant(sp.Contract):
+    class Cryptobot(sp.Contract):
         def __init__(self, is_alive):
             self.init(
-                name = "peashooter",
+                name = "terminator",
                 is_alive = is_alive,
 
                 ## Add coordinate_x and coordinate_y variables
                 ## Init both with 0 using sp.int and sp.nat respectively 
                 coordinate_x = sp.int(0), 
                 coordinate_y = sp.nat(0)
-                )
+            )
         
         @sp.entry_point
         def change_name(self, new_name):
@@ -69,18 +69,18 @@ editor:
         def move_vertically(self, update_to):
             self.data.coordinate_y += update_to
  
-    @sp.add_test(name = "Test plants movement")
+    @sp.add_test(name = "Test Cryptobot movement")
     def test():
         scenario = sp.test_scenario()
        
-        plant_test_contract =  Plant(is_alive = True)
+        test_bot =  Cryptobot(is_alive = True)
        
-        scenario += plant_test_contract
+        scenario += test_bot
         
         # Test your movement entry functions below
-        # Move plant forward by 2 and vertically by 1
-        scenario += plant_test_contract.move_horizontally(2)
-        scenario += plant_test_contract.move_vertically(1)
+        # Move Cryptobot forward by 2 and vertically by 1
+        scenario += test_bot.move_horizontally(2)
+        scenario += test_bot.move_vertically(1)
 ---
 
 
@@ -88,12 +88,10 @@ editor:
 ### Intro: 
 Let us quickly understand how integers are handled under the hood in SmartPy! 
 
-In the later half of the chapter, you will also learn to add movement ability to our `Plant`! 
+In the later half of the chapter, you will also learn to add movement ability to our `Cryptobot`!
 
-Watch out Zombies! 
+<img src="https://media.giphy.com/media/urvsFBDfR6N32/giphy.gif" alt="drawing" style="display: block;width: 80%; margin: 40px auto"/>
 
-![Alt Text](https://media.giphy.com/media/qSOGIn9rUZEuA/giphy.gif)
- 
 
 ## Study Time: 
 
@@ -108,15 +106,15 @@ Most common use cases of integers are represented by the following types:
 ```python
 
 ## x_coordinate is a variable that 
-## stores the current x coordinate of your plant. 
+## stores the current x coordinate of your Cryptobot. 
 ## Range between [-10, 10]. 
-## Useful when you want to move your plant horizontally. 
+## Useful when you want to move your Cryptobot horizontally. 
 self.init(coordinate_x = 0)
 
 ## y_coordinate is a variable 
-## that stores the current y coordinate of your plant. 
+## that stores the current y coordinate of your Cryptobot. 
 ## Range between [1, 5].  
-## Useful when you want to move your plant vertically.
+## Useful when you want to move your Cryptobot vertically.
 self.init(coordinate_y = 1)
 
 ## Move 4 steps backward. 
@@ -139,22 +137,22 @@ Notes:
 
 #### New feature request: 
 
-Our current plant lacks the ability to move! It is basically like this package at the moment: 
+Our current Cryptobot lacks the ability to move! It is basically like this package at the moment:
 
 ![Alt Text](https://media.giphy.com/media/TeinpBGRY5UOc/giphy.gif)
 
 
-How do you imagine a plant to hide and seek zombies without it being able to move? 
+How do you imagine a Cryptobot to hide and seek aliens without it being able to move? 
 
 #### Step by step walkthrough: 
 
-1. Let’s add `coordinate_x`, `coordinate_y` state variables to act as the initial coordinate of our `Plant`.
+1. Let’s add `coordinate_x`, `coordinate_y` state variables to act as the initial coordinate of our `Cryptobot`.
 
     * Initialize `coordinate_x` with `sp.int(0)` as we know coordinate x can range from <span class="string-highlight">[-10, 10]</span> i.e coordinate x can hold signed integers. 
 
     * Initialize `coordinate_y` with `sp.nat(0)` as we know coordinate y can range from <span class="string-highlight">[0, 5]</span> i.e coordinate y can only hold non-negative integers. 
 
-2. Then add two entry point functions `move_horizontally` and `move_vertically` which will update the coordinates of our plant. 
+2. Then add two entry point functions `move_horizontally` and `move_vertically` which will update the coordinates of our Cryptobot. 
     * Both these functions take an argument `update_to`  which is used to update the coordinate's values. 
 
 We have left this exercise a little vague so that you can practice working with state variables and entry point functions. Check out [Chapter 5](/lesson/chapter-05) and [Chapter 7](/lesson/chapter-07) for a quick refresher.  
@@ -176,4 +174,4 @@ When you’re finished:
 2. Click on “Show Answer” in case you get stuck.
 
 
-You can also tinker around with the final code on [SmartPy’s online IDE](https://smartpy.io/demo/index.html?code=eJylU8GO2yAQvfsrRsnFViNrd48rRWrVXnqo1MPeETHjDVobEOBkvV_fgWA7JGmVVTlYgN@8efOYkb3R1oPrufVmBO7AmaJoOu4c_O648qUz9XetvOWNr54LoCWwBcakkp6x0mHXbkA6xjt5wIQIK_yoA6icr8JSvEfYwsogd3utPdrVJgNMVASatpsiQ6zX8E0IaLS2Qirukb0DV9nFCAduJd916C5Df5Ik2Gm_h6OkzwMMTqpXKpvE@shDWyIBi85g4yl_N0LGkmXeptDyodr8FTaeYLQnWAZaTnHzlVBIbo_MaCKd_W72XL0iC@4lyxUe47F6htxzwT2vk80TaM4RoWv4ga1UCL0@INtrKz_ohXlHdcbcEHNDOygqX6t_CruiSPIGI0LhXl@2RJSXOfhlu6CL2Ylc5AGtl81_SFwIPitwzAUWIQ0Xgnl0vpza@YUOYMLAuJivJyGrqgjpIy4lcQ0qakx9aofwh01XZbXUHoliAtak2aOINJBnA_JiBzwLm9lJ8A2Ku4H1ebetzKDeyO9lXm9krMle2Y7lLbLo5yL6SvUaonmjHuxsXXrk6Xkd7LDTxwT_RaCTbGi1PXIrYDfCU5zdsz6hu8e7qr1u4af7Ta0vu@sxxf4BWB2wkg--). Try running the test by clicking on the ▶️ button!
+You can also tinker around with the final code on [SmartPy’s online IDE](https://smartpy.io/demo/index.html?code=eJylUz1vwyAQ3f0rTsliq1GUZKwUqVW6dOiWHRFzTpBssAAnpb@@B7ETk_RDVRkQHI937x6cbFptHNiGG9d64BZsm2Vlza2FjfGt0zvtctvON1o5w0tXPGZAQ2AFjEklHWO5xbqagbSM1_KIPSKMcDAPoPwSCkPxBmENE4emkYo7bSazBDBQEWhYzrIEMZ3CsxBQam1EoED2DlwlAQ9HbiTf1Whvr76SJKDCDnCSNC2gs1LtqXQS6yIPLYkEDNoWS0f5aw8JS5J53V_NF8XsW5g_w2hNsAR03sXpiRBITnvWaiK8eF0euNojC871dis8xe2t3YI7Pu8dHjBn76bwgpVUCI0@IjtoIz_oUXlNpcWUEFNC1SmqWKsf9dxR9Kq6VoRanf5SVmLaw_qKvhqQijyicbL8h8QrwV8F@lRgFtJwIZhD6_LhB29pc@2TmLIhLZMiCwoitM9jS1T0HfX5E4QTNoTy0fvHg0C1hlH_jfphazoc4S@0JHa4OzYzCvS6MxdtvZGDhRZ2WOtTD38j0KieSpsTNwJ2HlaxLUbvQbHltxLm9_9jVfyCHj3VsvgElZ9yFA--). Try running the test by clicking on the ▶️ button!

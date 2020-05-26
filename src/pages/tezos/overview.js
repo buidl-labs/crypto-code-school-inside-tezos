@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Layout from 'src/components/Layout/layout';
 import Theme from 'src/assets/theme.svg';
-import IceSeed from 'src/assets/Seeds/Ice.svg';
-import ElectricSeed from 'src/assets/Seeds/electricity.svg';
-import FireSeed from 'src/assets/Seeds/fire.svg';
-import GrassSeed from 'src/assets/Seeds/grass.svg';
-import WaterSeed from 'src/assets/Seeds/water.svg';
 import StartIcon from 'src/assets/start_icon.svg';
 import useChapters from 'src/hooks/use-chapters';
 import { Link } from 'gatsby';
@@ -20,14 +15,12 @@ import Completed from 'src/assets/completed.svg';
 import { trackEvent } from 'src/utils/analytics';
 import Footer from 'src/components/Footer';
 import SEO from 'src/components/Seo';
-import { PLANT_TYPES } from 'src/components/Plants/PLANT_TYPES';
 import styled from '@emotion/styled';
 import StyledLink from 'src/components/StyledLink';
 
 function LessonsOverview() {
   const chapters = useChapters();
   const [chapterList, updateChapterList] = useState(chapters);
-  const [plantType, setPlantTypeSeed] = useState(null);
   const [continuationLink, setContinuationLink] = useState('/tezos/storyline');
   const [chapterZeroCompleted, setZeroChapterCompleted] = useState(() => {
     let result = false;
@@ -134,33 +127,6 @@ function LessonsOverview() {
     }
   };
 
-  useEffect(() => {
-    let plantType = null;
-    const plantJSON =
-      typeof window != 'undefined' && localStorage.getItem('plant');
-    if (plantJSON !== null) {
-      plantType = JSON.parse(plantJSON).type;
-    }
-    setPlantTypeSeed(plantType);
-  }, []);
-
-  const renderPlantTypeSeed = (plantType = null) => {
-    switch (plantType) {
-      case PLANT_TYPES.ICE:
-        return <IceSeed />;
-      case PLANT_TYPES.ELECTRIC:
-        return <ElectricSeed />;
-      case PLANT_TYPES.GRASS:
-        return <GrassSeed />;
-      case PLANT_TYPES.WATER:
-        return <WaterSeed />;
-      case PLANT_TYPES.FIRE:
-        return <FireSeed />;
-      default:
-        return null;
-    }
-  };
-
   return (
     <Layout
       background={`radial-gradient(
@@ -181,28 +147,30 @@ function LessonsOverview() {
         <OverviewContainer>
           <div>
             <h1>Your mission's briefing:</h1>
-            <p> 🚨 A zombie apocalypse is incoming! 🚨</p>
+            <p> 👽 An alien invasion is incoming! 👽</p>
             <p>
-              At the starting of your journey, the school bestowes upon you a
-              unique seed of a plant that is known to stop zombies!
+              At the starting of your journey, the school bestows upon you a
+              unique gem. This gem, when inserted into the chest of any
+              cryptobot, gives the cryptobot alien-killing cosmic superpowers!
+              <br />
+              🤖+ 💎 = 🤖++
             </p>
             <p>
-              But the seed needs to grow into a full plant to battle the zombie
-              apocalypse
+              Your mission is to build and assemble the cryptobot from scratch
+              and then use use the gem to power your cryptobot to battle the
+              incoming alien invasion!
             </p>
             <p>
-              Your mission is to evolve the seed into a plant to fight the
-              incoming zombie apocalypse by progressing through the chapters!
+              In this lesson, you’re going to learn how to assemble your own
+              cryptobot and give it defense and offense functionalities by
+              building a simple smart contract in SmartPy which can be deployed
+              on the Tezos blockchain.
             </p>
             <p>
-              In this lesson, you’re going to learn how to evolve your plant and
-              train it to defend against the incoming apocalypse by building a
-              simple smart contract in SmartPy which can be deployed on tezos
-              blockchain.
-            </p>
-            <p>
-              At the end of lesson, you will help your fully-evolved plant in
-              aiming to kill the zombies!
+              At the end of lesson, you will help your gem-powered cryptobot in
+              aiming to blast the aliens out of our world!
+              <br />
+              🤖 ⚔️ 👽
             </p>
             <div>
               <StyledLink
@@ -226,7 +194,7 @@ function LessonsOverview() {
                   {chapterZeroCompleted ? (
                     <Completed width="38" height="38" />
                   ) : null}
-                  Chapter 0 - Zombie Apocalypse Begins
+                  Chapter 0 - Alien Invasion Begins
                 </Link>
                 <hr />
               </li>

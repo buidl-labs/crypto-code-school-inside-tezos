@@ -9,25 +9,25 @@ editor:
   startingCode: |
     import smartpy as sp
 
-    class Plant(sp.Contract):
+    class Cryptobot(sp.Contract):
         # Pass manager_address as a parameter to the initialization function
         def __init__(self, life_state):
             self.init(
-                # Add plant_manager variable below
+                # Add bot_manager variable below
 
-                name = "peashooter",
+                name = "terminator",
                 is_alive = life_state,
                 
                 coordinate_x = sp.int(0), 
                 coordinate_y = sp.nat(0), 
                 
-                bullet_seed_count = 5,
+                plasma_bullet_count = 5,
                 
-                record_zombie_kills = {
-                    "simple_zombie": sp.nat(0),
-                    "boss_zombie": sp.nat(0)
+                record_alien_kills = {
+                    "simple_alien": sp.nat(0),
+                    "boss_alien": sp.nat(0)
                 }
-               )
+            )
             
         @sp.entry_point
         def change_name(self, new_name):
@@ -42,11 +42,11 @@ editor:
             self.data.coordinate_y += update_to
 
         @sp.entry_point
-        def shoot_zombie(self, zombie_type): 
-            self.data.bullet_seed_count -= 1
-            self.data.record_zombie_kills[zombie_type] += 1
+        def shoot_alien(self, alien_type): 
+            self.data.plasma_bullet_count -= 1
+            self.data.record_alien_kills[alien_type] += 1
          
-    @sp.add_test(name = "Test shooting")
+    @sp.add_test(name = "Simulating ownership")
     def test():
         scenario = sp.test_scenario()
        
@@ -56,38 +56,38 @@ editor:
         
         # Pass my_address as value to manager_address
         # and then use it to invoke the class
-        plant_test_contract =  Plant(life_state = True)
+        test_bot =  Cryptobot(life_state = True)
        
-        scenario += plant_test_contract
+        scenario += test_bot
               
-        scenario += plant_test_contract.shoot_zombie("simple_zombie")
+        scenario += test_bot.shoot_alien("simple_alien")
        
-        scenario += plant_test_contract.shoot_zombie("boss_zombie")
+        scenario += test_bot.shoot_alien("boss_alien")
 
 
   answer: |  
     import smartpy as sp
 
-    class Plant(sp.Contract):
+    class Cryptobot(sp.Contract):
         # Pass manager_address as a parameter to the initialization function
         def __init__(self, life_state, manager_address):
             self.init(
-                # Add plant_manager variable below
-                plant_manager = manager_address,
+                # Add bot_manager variable below
+                bot_manager = manager_address,
                 
-                name = "peashooter",
+                name = "terminator",
                 is_alive = life_state,
                 
                 coordinate_x = sp.int(0), 
                 coordinate_y = sp.nat(0), 
                 
-                bullet_seed_count = 5,
+                plasma_bullet_count = 5,
                 
-                record_zombie_kills = {
-                    "simple_zombie": sp.nat(0),
-                    "boss_zombie": sp.nat(0)
+                record_alien_kills = {
+                    "simple_alien": sp.nat(0),
+                    "boss_alien": sp.nat(0)
                 }
-               )
+            )
             
         @sp.entry_point
         def change_name(self, new_name):
@@ -102,11 +102,11 @@ editor:
             self.data.coordinate_y += update_to
 
         @sp.entry_point
-        def shoot_zombie(self, zombie_type): 
-            self.data.bullet_seed_count -= 1
-            self.data.record_zombie_kills[zombie_type] += 1
+        def shoot_alien(self, alien_type): 
+            self.data.plasma_bullet_count -= 1
+            self.data.record_alien_kills[alien_type] += 1
         
-    @sp.add_test(name = "Test shooting")
+    @sp.add_test(name = "Simulating ownership")
     def test():
         scenario = sp.test_scenario()
        
@@ -116,13 +116,13 @@ editor:
         
         # Pass my_address as value to manager_address
         # and then use it to invoke the class
-        plant_test_contract =  Plant(life_state = True, manager_address = my_address)
+        test_bot =  Cryptobot(life_state = True, manager_address = my_address)
        
-        scenario += plant_test_contract
+        scenario += test_bot
               
-        scenario += plant_test_contract.shoot_zombie("simple_zombie")
+        scenario += test_bot.shoot_alien("simple_alien")
        
-        scenario += plant_test_contract.shoot_zombie("boss_zombie")
+        scenario += test_bot.shoot_alien("boss_alien")
 ---
 
 ### Intro:
@@ -135,30 +135,30 @@ The unique identifier points to an account on the blockchain and it looks like t
 tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj
 ```
 
-In this chapter we are going to learn how SmartPy handles addresses under the hood. In the later half of the chapter, we will add the ability to add ownership rights to our plant! 
+In this chapter we are going to learn how SmartPy handles addresses under the hood. In the later half of the chapter, we will add the ability to add ownership rights to our cryptobot! 
 
 ## Study time: 
 
 Addresses can be of two types: 
 
-1. An address of a user account eg: address of your tezos wallet which you use to transfer XTZ to your friends. 
-2. An address of a smart contract eg: address of your `Plant` contract. 
+1. An address of a user account eg: address of your Tezos wallet which you use to transfer XTZ to your friends. 
+2. An address of a smart contract eg: address of your `Cryptobot` contract. 
 
 
 Addresses are represented by type `sp.TAddress` in `smartpy`. 
 
 ```python
-## plant_manager is a variable 
+## bot_manager is a variable 
 ## that stores the address of the user 
-## who manages the plant. 
+## who manages the cryptobot. 
 
 my_address = sp.address("tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj")
 
-self.init(plant_manager = my_address)
+self.init(bot_manager = my_address)
 
-## Update plant_manager value 
-## in case you decide to sell your plant
-self.data.plant_manager = sp.address("tz1dFyuNkiSabQrU1ie9yTKbiTje3YbuXjX1")
+## Update bot_manager value 
+## in case you decide to sell your cryptobot
+self.data.bot_manager = sp.address("tz1dFyuNkiSabQrU1ie9yTKbiTje3YbuXjX1")
 
 ```
 
@@ -173,16 +173,16 @@ Notes:
 
 #### New feature request!
 
-In our current  `Plant` contract implementation, there is no way to tell that you are the maker and manager of this `Plant`. 
+In our current  `Cryptobot` contract implementation, there is no way to tell that you are the maker and manager of this `Cryptobot`. 
 
-You are spending so much time evolving the plant’s abilities, that you had forgotten about this tiny but crucial detail! 
+You are spending so much time evolving the cryptobot’s abilities, that you had forgotten about this tiny but crucial detail! 
 
 
 #### Step by step walkthrough: 
  
-1. Add a `plant_manager` state variable to the contract's storage that will hold the address of the owner. 
+1. Add a `bot_manager` state variable to the contract's storage that will hold the address of the owner. 
 
-2. Pass `manager_address` as parameter to the initialization function and assign it to `plant_manager`
+2. Pass `manager_address` as parameter to the initialization function and assign it to `bot_manager`
  
 
 
@@ -190,7 +190,7 @@ You are spending so much time evolving the plant’s abilities, that you had for
 
 1. Define `my_address` variable and give it the address value of `tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj`
 
-2. Pass `my_address` as value to `manager_address` function argument and then use it to invoke the `Plant` contract. 
+2. Pass `my_address` as value to `manager_address` function argument and then use it to invoke the `Cryptobot` contract. 
 
 
 <br />
@@ -201,6 +201,6 @@ When you’re finished:
 2. Click on “Show Answer” in case you get stuck.
 
 
-You can also tinker around with the final code on [SmartPy’s online IDE](https://smartpy.io/demo/index.html?code=eJydVF1v0zAUfc@vsLKXVpSKwUDTpEmg8YA0IU1i4gGErNvktjVz7GA7LSniv@_acdu4DVVFnnKTc33O_fARVa2NY7YC4@qWgWW2zrJCgrXsQYJyI1tP77RyBgo3vskYPRfswf@uQMECDYeyNEgx5QKrwUCFDg1zmrklMqGEEyDFBpzQis0bVfiXcFCJc8a5R3A@sijnEybFHLl14HBySBDZ_eOxU5832n3qhH0oS1Z72TwmsxUYATOJbIZSrxN4Crw95JtkCVpRXQTKawS71JpKzCcJQFhOda48qFdFAkmCQmtTCkUg_ptyqM@C2v1qPPknrO1g9H4MS4JZIyU6bhFLXuhGOUp8e0KKwYJI@EZXM4H8SUhpKeNPgvFPbkVVS4zA_Kan5hg709YOIBPg3360_xVe3lMK0uK1vNbUmd3GFEtQC@R@HnFpFK5DeLghJTiYxrltManOk0SVXiFfaiM2tP8gZRvpmrr003B6kC8Z64vbPTo7j3CFxonif@jalO4kVVjhOJ3IE6fv2poayQaojrfq5S27HAAOrNP33uk_vM6Yl3mBdOG4Q@tG2zv2SEEnUahFPs684gCILbAFKrrXursP_g_ffhqFLYo@9RHnQiGr2p1JDdjBBQNVsoW_ucIFz9qDZYNME_fm8kvbvLmH4tt10V69vn4HVyu4Q_3ZrX99vf_0BPpnOKvHFKTFYJSfc0I@3q_I1mPbvr12eshYD5yqVwbJV6yxXSma3HelnzAUFTw9IDvfC10rorOT2mj3e@uib4@mOfZh75Q7Wftu72ZCwx1g6N27c@DTZEEPfOds0oNT@o40zp4BbL8idw--). Try running the test by clicking on the ▶️ button!
+You can also tinker around with the final code on [SmartPy’s online IDE](https://smartpy.io/demo/index.html?code=eJydVN9r2zAQfvdfIdwXh2Vh3bpRCoWN7mFQBoOOPWwMcbEviVZZ8qRzMnfsf@9JdmI7SUOZnyT5u_vu56fKyjoSvgRHVSPAC18lSa7Be3Hjmors3FLmq9mNNeQgp8lVIvg7E18CpAQDS3QSisIh39keRAUOSiR0gqygFQplFCnQ6gFIWSMWtcnDIToqcCGkDAgpM496MRVaLVB6AsLpPkHHHr6AnQW7bPfUBvahKAQHLTtTsQanYK5RzFHbzQg8hF3vc01H0NHFcH5skHKOpTJA1qVjtPKS810H0CCbpx3m1roieEL5h2243spQ9moyfRLWtDA@H8JGl4p7WYKc11ojydzWhtj07YlgHOZMExJAI@@V1p4N_o4g4Uu9KiuNLS69GkRzCJ1b7w@BI9y_3a1_j4f3jEcevkZWlquym5p8BWaJMvSiGxyDm3jdn5ICCGZdz7aY_RhPUpV2jXJlnXrgLQCtm46wrorQC7JHGUdNfXHdo5PnEa7Rkcr_h64Z052k8ivLWxB709G0jaem4kKKI0THJurltTg_Aj0cpR@9958hytYqCdHx3klCT9l2ve5UWWvWDLMUdmPQ@ZWq0kkSoo64rgw@R8M7btuNCH_k9imLs9Qp1kdcKIOibHZydUQazgSYQizD7iqK6tWDdY3CMvfD@V1Tv7mF_Ptl3ly8vnwHF2u4QfuZNr@_3X66B_sr@howxdC6S5Y@x0M66cdkq7bNUGjbeFhi93RrkAaHb0Tt21Qs6_Da3mNMKip8RMZ6sRByiAPF71WL37@6@lCKg2Du4unLvGsG93brerBrT2JmwzkcS8tp52PDgdBMkkdNuBKM). Try running the test by clicking on the ▶️ button!
     
 

@@ -2,8 +2,8 @@ import React from 'react';
 import { navigate } from 'gatsby';
 
 // Components
-import PlantCircle from '../../components/PlantGrowthModal/Plant';
-import Plant from '../../components/PlantGrowthModal/GrownPlant';
+import PlantCircle from '../../components/PlantGrowthModal/Robot';
+import Robot from '../../components/PlantGrowthModal/GrownRobot';
 import Zombie from '../../components/GameComponents/Zombie';
 
 import {
@@ -28,7 +28,7 @@ const GameOverModal = ({ totalDeadZombies = 4, status = 'lost' }) => {
               <SuccessLights />
               <PlantCircle />
               {status === 'won' ? (
-                <Plant positionTop="40%" positionLeft="50%" />
+                <Robot positionTop="40%" positionLeft="50%" />
               ) : (
                 <Zombie positionBottom="50%" positionRight="calc(50% - 5vw)" />
               )}
@@ -37,17 +37,17 @@ const GameOverModal = ({ totalDeadZombies = 4, status = 'lost' }) => {
                   <>
                     <Heading>Victory</Heading>
                     <SubHeading>
-                      Your plant has defeated the first wave of the zombie
-                      apocalypse. <br /> But are you ready to take it to the
-                      next level?
+                      Your cryptobot has defeated the first wave of the alien
+                      invasion. <br /> But are you ready to take it to the next
+                      level?
                     </SubHeading>
                   </>
                 ) : (
                   <>
                     <Heading>Battle Lost</Heading>
                     <SubHeading>
-                      Your plant was defeated in the first wave of the zombie
-                      apocalypse. <br /> Are you ready to try again?
+                      Your cryptobot was defeated in the first wave of the alien
+                      invasion. <br /> Are you ready to try again?
                     </SubHeading>
                   </>
                 )}

@@ -7,82 +7,82 @@ editor:
   startingCode: |
     import smartpy as sp
 
-    class Plant(sp.Contract):
+    class Cryptobot(sp.Contract):
         def __init__(self, manager_address):
             self.init(
-                plant_manager = manager_address,
+                bot_manager = manager_address,
 
-                bullet_seed_count = 5, 
+                plasma_bullet_count = 5, 
                 
-                record_zombie_kills = {
-                    "simple_zombie": sp.nat(0), 
-                    "boss_zombie": sp.nat(0), 
+                record_alien_kills = {
+                    "simple_alien": sp.nat(0), 
+                    "boss_alien": sp.nat(0), 
                 }
-                )
+            )
 
         @sp.entry_point
-        def shoot_zombie(self, zombie_type):
+        def shoot_alien(self, alien_type):
             # Use sp.verify to check 
             # whether caller's address is equal 
-            # to plant_manager's address
+            # to bot_manager's address
      
-            self.data.bullet_seed_count -= 1
-            self.data.record_zombie_kills[zombie_type] += 1
+            self.data.plasma_bullet_count -= 1
+            self.data.record_alien_kills[alien_type] += 1
 
-    @sp.add_test(name = "Testing entry functions only callable by plant manager")
+    @sp.add_test(name = "Testing entry functions only callable by cryptobot manager")
     def test():
         scenario = sp.test_scenario()
         
         my_address = sp.address("tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj")
         
-        plant_test_contract =  Plant(manager_address = my_address)
+        test_bot =  Cryptobot(manager_address = my_address)
         
-        scenario += plant_test_contract
+        scenario += test_bot
         
         # Use run method on both functions below and pass sender = my_address to it. 
-        scenario += plant_test_contract.shoot_zombie("simple_zombie")
-        scenario += plant_test_contract.shoot_zombie("boss_zombie")
+        scenario += test_bot.shoot_alien("simple_alien")
+        scenario += test_bot.shoot_alien("boss_alien")
 
 
   answer: |  
     import smartpy as sp
 
-    class Plant(sp.Contract):
+    class Cryptobot(sp.Contract):
         def __init__(self, manager_address):
             self.init(
-                plant_manager = manager_address, 
+                bot_manager = manager_address, 
                 
-                bullet_seed_count = 5,
+                plasma_bullet_count = 5,
                 
-                record_zombie_kills = {
-                    "simple_zombie": sp.nat(0), 
-                    "boss_zombie": sp.nat(0), 
+                record_alien_kills = {
+                    "simple_alien": sp.nat(0), 
+                    "boss_alien": sp.nat(0), 
                 }
-                )
+            )
 
         @sp.entry_point
-        def shoot_zombie(self, zombie_type):
+        def shoot_alien(self, alien_type):
             # Use sp.verify to check 
             # whether caller's address is equal 
-            # to plant_manager's address
-            sp.verify(self.data.plant_manager == sp.sender, message = "Error: non manager call")
+            # to bot_manager's address
+            sp.verify(self.data.bot_manager == sp.sender, message = "Error: non manager call")
             
-            self.data.bullet_seed_count -= 1
-            self.data.record_zombie_kills[zombie_type] += 1
+            self.data.plasma_bullet_count -= 1
+            self.data.record_alien_kills[alien_type] += 1
 
-    @sp.add_test(name = "Testing entry functions only callable by plant manager")
+    @sp.add_test(name = "Testing entry functions only callable by cryptobot manager")
     def test():
         scenario = sp.test_scenario()
         
         my_address = sp.address("tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj")
         
-        plant_test_contract =  Plant(manager_address = my_address)
+        test_bot =  Cryptobot(manager_address = my_address)
         
-        scenario += plant_test_contract
+        scenario += test_bot
         
         # Use run method on both functions below and pass sender = my_address to it. 
-        scenario += plant_test_contract.shoot_zombie("simple_zombie").run(sender = my_address)
-        scenario += plant_test_contract.shoot_zombie("boss_zombie").run(sender = my_address)
+        scenario += test_bot.shoot_alien("simple_alien").run(sender = my_address)
+        scenario += test_bot.shoot_alien("boss_alien").run(sender = my_address)
 ---
 
 ### Intro: 
@@ -95,7 +95,7 @@ Examples of usecases where `sp.verify` can help:
 1. To check whether your account has enough money to transfer before initiating transfer. 
 2. To add barriers to your entry functions so that they are only callable by the owner. 
 
-In the later half of the chapter, we will use `sp.verify` to all of our entry point functions so that they are only callable by the `plant_manager`!
+In the later half of the chapter, we will use `sp.verify` to all of our entry point functions so that they are only callable by the `bot_manager`!
 
 
 
@@ -137,31 +137,31 @@ It serves the same purpose by checking equality between <span class="string-high
 
 #### New feature request!
 
-Currently, entry functions of your `Plant` contract i.e it's abilities are callable by anybody in the world! 
+Currently, entry functions of your `Cryptobot` contract i.e it's abilities are callable by anybody in the world! 
 
 In theory that means anybody can:
 
-1. change your plant’s name 
-2. move the plant anywhere in the world 
+1. change your cryptobot’s name 
+2. move the cryptobot anywhere in the world 
 3. as well as empty all your bullets without your permission!
 
 
-Let us first learn to solve the third problem by allowing only `plant_manager`'s to shoot zombies. 
+Let us first learn to solve the third problem by allowing only `bot_manager`'s to shoot aliens. 
 
 #### Step by step walkthrough: 
 
 Let's start: 
 
-1. In the `shoot_zombie` entry point function add `sp.verify`. 
+1. In the `shoot_alien` entry point function add `sp.verify`. 
 2. In the `sp.verify`'s condition field: 
-    * use `self.data.plant_manager` to access the address stored inside `plant_manager`. 
+    * use `self.data.bot_manager` to access the address stored inside `bot_manager`. 
     * check it's equivalency with `sp.sender`:
        * SmartPy automatically populates `sp.address` with the address that called the current entry point.
        * **This is an important concept to keep in mind as `sp.sender` is very useful when working with entry point functions.**
  
 3. In the `sp.verify`'s `message` field: 
     * pass an error message on the lines of <span class="string-highlight">"Error: non manager call".</span>
-    * This will be sent to users who are trying to be sneaky by calling our `Plant`'s `shoot_zombie` function! 
+    * This will be sent to users who are trying to be sneaky by calling our `Cryptobot`'s `shoot_alien` function! 
 
 That will show them who is the boss! 😎
 
@@ -169,13 +169,13 @@ That will show them who is the boss! 😎
 
 #### Testing our code: 
 
-Now since we have added that only the address stored inside `plant_manager` is able to call `shoot_zombie` entry point function, we would also need to modify `shoot_zombie` calls in our testing function: 
+Now since we have added that only the address stored inside `bot_manager` is able to call `shoot_alien` entry point function, we would also need to modify `shoot_alien` calls in our testing function: 
 
 1. As you remember, we had stored our user account address in `my_address`
-2. We will reference it when we are call our `shoot_zombie` function by using the `run` method. 
-    * Syntax: `shoot_zombie("<zombie type>").run(sender = my_address)`
-    * The above code tells SmartPy that we are calling `shoot_zombie` with `sender` value as `my_address`. 
-4. SmartPy takes whatever address that was sent to `sender` and populates `sp.sender` in our `shoot_zombie`'s function definition. 
+2. We will reference it when we are call our `shoot_alien` function by using the `run` method. 
+    * Syntax: `shoot_alien("<alien type>").run(sender = my_address)`
+    * The above code tells SmartPy that we are calling `shoot_alien` with `sender` value as `my_address`. 
+4. SmartPy takes whatever address that was sent to `sender` and populates `sp.sender` in our `shoot_alien`'s function definition. 
     * Didn't we already mention that SmartPy is awesome! 
 
 
@@ -190,5 +190,5 @@ When you’re finished:
 2. Click on “Show Answer” in case you get stuck.
 
 
-You can also tinker around with the final code on [SmartPy’s online IDE](https://smartpy.io/demo/index.html?code=eJydVO@L1DAQ_d6_YqgfbHEtnp5yLCwIhyAcguCPD4qENJ29jZsmvUx6S0_835203d12XVTMt0nfvJm8N1NdN84HoFr60HQgCahJEmUkEbw30oaMmuLa2eClCvkyAT4VrkEIbXUQIiM06wXU0spb9EJWlUeiERhP_F5EbHa4iqeJ3GJMg9UpwSKZocvWGAyCECuhXGsDZ7xcwAwzCzwq5yvx4OpSo9hqY4hTfsww8aSk68bgCEyX_PrCypA9y0_Ye3DpiP4O_TmL8uElrxmNrGInGqdtOOhIG@fCyDlqOTYdugYnOj6CT4Sx5j16ve4gOFAbVFuYIHYbDBuWU0mWyz8mGNUETYB3rTRTMBPMTDjCj97tq_WdFZUMsjgxbhVBhLZCz1PAyXzNSqdvvHd@CdbZvbV9V2mewHw0etLf_X26goszwDO@fp3o9Q2exLwkqs2PEQEpZFbWfUsfOdD2FnobYN1aFbSzBM6arm9Olgah7AZZ9m1zx9Gnnmm0gxRa6bWD_vHxi9hfZXlymMW620_zAByDLA0PFx@69sWNVF@uVHf5_OqVvLyX1@jehd3d55u3W@m@pxOiQfK@jho3kRnH9TxZnLhKh7oTjkPPLNAZviNwmDPfsm88TK5ieaB0YTMRrETjdiBtBU38TQzuzwrH4dKh@KfSxWwFThYyL7iT7EyF_D@op@v7B@Jf8HKX5A--). Try running the test by clicking on the ▶️ button!
+You can also tinker around with the final code on [SmartPy’s online IDE](https://smartpy.io/demo/index.html?code=eJyNVE2P0zAQvfdXjMKBRJSIhWW1qlQJqUJCWnHi47AIWY4z3Zo6dtZ2tgqI_87Y@WjS7QI@VLH95s34vZnKqjbWg6u49XUL3IGrFwuhuHOwsW3tTWF86up8Y7S3XPhstQBaJW6BMamlZyx1qLZLqLjmd2gZL0uLzvXAsMJ9HrDpeBQWMbM@CNan4UuYYWebmsqrOCsapdAzYRrtieDt8ukIi8LYknElUbO9VMpRwK8ZJKzEyapW2OGSFWmRa@7TV9lJNRFbGOf@ifw97rJF_HxHSCQpW1Ybqf0optsZkiPS9Xp2xfq2xomUz@CLw5DtAa3ctuANiB2KPUwQhx36HWkqOOljnzvoJQXpAO8brqZgIpj4cAQfzRtyxbLyknuez5xbB4hDXaKlJqBQOiZ1k_fWGrsCbfTgbawoyUbqeYNE5nPWvlzDxRnoY0@_HSX7Di9C1CLITS9iHp1PNa9iZZ9pI_UdRB9g22jhpdEOjFZtrJEXCqGg72EChhdQ8cGsyNa74gRqbqWBqEO4YcNR2j01_lTt0NkdsN@kif958alt3txwcXst2svX11f88oFv0Hz0h_uvNx_23PxIJkQxQyhpDZMJPZmeME9jwknwWCypMxAdb7vmsg0ZRh1kShIkNMduIlGByhyA6xLq8BfR2T7LFjpK@vzpfPm01ecTl@WUPD1Dmv0n22Qm_8L1B4Uuhoo-). Try running the test by clicking on the ▶️ button!
 

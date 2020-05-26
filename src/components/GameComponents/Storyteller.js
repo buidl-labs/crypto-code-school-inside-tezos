@@ -2,11 +2,11 @@ import React from 'react';
 import { navigate } from 'gatsby';
 
 // Seed Images
-import IceSeed from '../../assets/Seeds/Ice.svg';
-import ElectricSeed from '../../assets/Seeds/electricity.svg';
-import FireSeed from '../../assets/Seeds/fire.svg';
-import GrassSeed from '../../assets/Seeds/grass.svg';
-import WaterSeed from '../../assets/Seeds/water.svg';
+import IceSeed from '../../assets/gems/ice.svg';
+import ElectricSeed from '../../assets/gems/electricity.svg';
+import FireSeed from '../../assets/gems/fire.svg';
+import GrassSeed from '../../assets/gems/grass.svg';
+import WaterSeed from '../../assets/gems/water.svg';
 import {
   GameModal,
   ModalMask,
@@ -61,12 +61,14 @@ const StoryTeller = ({ display, plantType }) => {
               >
                 <Heading>Save the Planet</Heading>
                 <SubHeading style={{ padding: '0 2rem' }}>
-                  The school has bestowed upon you the <b> {plantType} </b>seed!
-                  <br /> Your task now is to incubate the seed and help it
-                  evolve before the zombies reach you.
+                  The school has bestowed upon you the <b> {plantType} gem</b>!
                   <br />
-                  After completing all chapters, you will help your
-                  fully-evolved plant in aiming to kill the zombies!
+                  <br />
+                  Your task now is to assemble your{' '}
+                  <b> {plantType} cryptobot </b> and finally power it with the
+                  magical
+                  <b> {plantType} gem</b> to give it alien-killing cosmic
+                  superpowers!
                 </SubHeading>
                 <br />
                 <div

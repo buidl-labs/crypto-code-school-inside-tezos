@@ -6,5 +6,5 @@ export const PLANT_GROWTH = {
   STAGE_2: 5,
   STAGE_3: 9,
   STAGE_4: 11,
-  STAGE_5: 15,
+  STAGE_5: 14,
 };
