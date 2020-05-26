@@ -37,7 +37,7 @@ const GameOverModal = ({ totalDeadZombies = 4, status = 'lost' }) => {
                   <>
                     <Heading>Victory</Heading>
                     <SubHeading>
-                      Your CryptoBot has defeated the first wave of the alien
+                      Your cryptobot has defeated the first wave of the alien
                       invasion. <br /> But are you ready to take it to the next
                       level?
                     </SubHeading>
@@ -46,7 +46,7 @@ const GameOverModal = ({ totalDeadZombies = 4, status = 'lost' }) => {
                   <>
                     <Heading>Battle Lost</Heading>
                     <SubHeading>
-                      Your CryptoBot was defeated in the first wave of the alien
+                      Your cryptobot was defeated in the first wave of the alien
                       invasion. <br /> Are you ready to try again?
                     </SubHeading>
                   </>

@@ -9,7 +9,7 @@ editor:
   startingCode: |
     import smartpy as sp
 
-    class CryptoBot(sp.Contract):
+    class Cryptobot(sp.Contract):
         def __init__(self):
             self.init(name = "terminator")
         
@@ -19,18 +19,18 @@ editor:
   answer: |  
     import smartpy as sp
 
-    class CryptoBot(sp.Contract):
+    class Cryptobot(sp.Contract):
         def __init__(self):
             self.init(name = "terminator")
         
     # Add testing code below
-    @sp.add_test(name = "Test CryptoBot Contract")
+    @sp.add_test(name = "Test Cryptobot Contract")
     def test():
         scenario = sp.test_scenario()
 
-        crypto_bot_test_contract = CryptoBot()
+        test_bot = Cryptobot()
         
-        scenario += crypto_bot_test_contract
+        scenario += test_bot
 ---
 
 ### Intro: 
@@ -62,7 +62,7 @@ We will learn testing in 3 steps:
 
 1. First we create a testing environment. 
 2. Then we will define a scenario in our newly created testing environment. 
-3. Then we will use this scenario to simulate our `CryptoBot` contract's initialization. 
+3. Then we will use this scenario to simulate our `Cryptobot` contract's initialization. 
 
 ### Show me an example: 
 
@@ -139,14 +139,14 @@ You can also tinker around with the above code on [SmartPy’s online IDE](https
 
 ## #buidl-ing time:
 
-Now let us practice what we learned so far on our `CryptoBot` contract: 
+Now let us practice what we learned so far on our `Cryptobot` contract: 
 
 
-1. Add a test with the **name of “Test CryptoBot Contract”** using `@sp.add_test` decorator. 
+1. Add a test with the name = <span class="string-highlight">“Test Cryptobot Contract”</span> using `@sp.add_test` decorator. 
 2. Then follow it up with `test` function whose scope contains your testing code. 
 3. Inside `test` function, initialize a test scenario by calling  `sp.test_scenario()` and store it inside a `scenario` variable. 
-4. Initialize an instance of the `CryptoBot` contract and store it inside `crypto_bot_test_contract`
-5. Use the initialized instance of `CryptoBot` stored in `crypto_bot_test_contract`  and add it to the scenario created in step 3.
+4. Initialize an instance of the `Cryptobot` contract and store it inside `test_bot`
+5. Use the initialized instance of `Cryptobot` stored in `test_bot`  and add it to the scenario created in step 3.
 
 
 <br />

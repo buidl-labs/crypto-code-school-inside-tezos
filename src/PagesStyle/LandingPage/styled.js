@@ -107,6 +107,7 @@ export const HeroTitle = styled.h1`
   color: #ffffff;
   max-width: 900px;
   width: 80%;
+  border-bottom: none;
 `;
 
 export const HeroSubheading = styled.p`
@@ -192,14 +193,6 @@ export const GridContainer = styled.div`
     .render-second-in-mobile-view {
       grid-row: 2;
     }
-
-    ${'' /* h2 {
-      font-size: 33px;
-    }
-
-    p {
-      font-size: 14px;
-    } */}
   }
 `;
 
@@ -212,6 +205,7 @@ export const FlexContainer = styled.div`
   h2 {
     color: #ffffff;
     margin-bottom: 1rem;
+    border-bottom: none; 
   }
 
   p {

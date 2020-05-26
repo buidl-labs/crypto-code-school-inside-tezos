@@ -9,11 +9,11 @@ editor:
   startingCode: |
     import smartpy as sp
 
-    class CryptoBot(sp.Contract):
+    class Cryptobot(sp.Contract):
         # Pass manager_address as a parameter to the initialization function
         def __init__(self, life_state):
             self.init(
-                # Add crypto_bot_manager variable below
+                # Add bot_manager variable below
 
                 name = "terminator",
                 is_alive = life_state,
@@ -21,13 +21,13 @@ editor:
                 coordinate_x = sp.int(0), 
                 coordinate_y = sp.nat(0), 
                 
-                bullet_gem_count = 5,
+                plasma_bullet_count = 5,
                 
                 record_alien_kills = {
                     "simple_alien": sp.nat(0),
                     "boss_alien": sp.nat(0)
                 }
-               )
+            )
             
         @sp.entry_point
         def change_name(self, new_name):
@@ -43,10 +43,10 @@ editor:
 
         @sp.entry_point
         def shoot_alien(self, alien_type): 
-            self.data.bullet_gem_count -= 1
+            self.data.plasma_bullet_count -= 1
             self.data.record_alien_kills[alien_type] += 1
          
-    @sp.add_test(name = "Test shooting")
+    @sp.add_test(name = "Simulating ownership")
     def test():
         scenario = sp.test_scenario()
        
@@ -56,24 +56,24 @@ editor:
         
         # Pass my_address as value to manager_address
         # and then use it to invoke the class
-        crypto_bot_test_contract =  CryptoBot(life_state = True)
+        test_bot =  Cryptobot(life_state = True)
        
-        scenario += crypto_bot_test_contract
+        scenario += test_bot
               
-        scenario += crypto_bot_test_contract.shoot_alien("simple_alien")
+        scenario += test_bot.shoot_alien("simple_alien")
        
-        scenario += crypto_bot_test_contract.shoot_alien("boss_alien")
+        scenario += test_bot.shoot_alien("boss_alien")
 
 
   answer: |  
     import smartpy as sp
 
-    class CryptoBot(sp.Contract):
+    class Cryptobot(sp.Contract):
         # Pass manager_address as a parameter to the initialization function
         def __init__(self, life_state, manager_address):
             self.init(
-                # Add crypto_bot_manager variable below
-                crypto_bot_manager = manager_address,
+                # Add bot_manager variable below
+                bot_manager = manager_address,
                 
                 name = "terminator",
                 is_alive = life_state,
@@ -81,13 +81,13 @@ editor:
                 coordinate_x = sp.int(0), 
                 coordinate_y = sp.nat(0), 
                 
-                bullet_gem_count = 5,
+                plasma_bullet_count = 5,
                 
                 record_alien_kills = {
                     "simple_alien": sp.nat(0),
                     "boss_alien": sp.nat(0)
                 }
-               )
+            )
             
         @sp.entry_point
         def change_name(self, new_name):
@@ -103,10 +103,10 @@ editor:
 
         @sp.entry_point
         def shoot_alien(self, alien_type): 
-            self.data.bullet_gem_count -= 1
+            self.data.plasma_bullet_count -= 1
             self.data.record_alien_kills[alien_type] += 1
         
-    @sp.add_test(name = "Test shooting")
+    @sp.add_test(name = "Simulating ownership")
     def test():
         scenario = sp.test_scenario()
        
@@ -116,13 +116,13 @@ editor:
         
         # Pass my_address as value to manager_address
         # and then use it to invoke the class
-        crypto_bot_test_contract =  CryptoBot(life_state = True, manager_address = my_address)
+        test_bot =  Cryptobot(life_state = True, manager_address = my_address)
        
-        scenario += crypto_bot_test_contract
+        scenario += test_bot
               
-        scenario += crypto_bot_test_contract.shoot_alien("simple_alien")
+        scenario += test_bot.shoot_alien("simple_alien")
        
-        scenario += crypto_bot_test_contract.shoot_alien("boss_alien")
+        scenario += test_bot.shoot_alien("boss_alien")
 ---
 
 ### Intro:
@@ -135,30 +135,30 @@ The unique identifier points to an account on the blockchain and it looks like t
 tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj
 ```
 
-In this chapter we are going to learn how SmartPy handles addresses under the hood. In the later half of the chapter, we will add the ability to add ownership rights to our crypto_bot! 
+In this chapter we are going to learn how SmartPy handles addresses under the hood. In the later half of the chapter, we will add the ability to add ownership rights to our cryptobot! 
 
 ## Study time: 
 
 Addresses can be of two types: 
 
-1. An address of a user account eg: address of your tezos wallet which you use to transfer XTZ to your friends. 
-2. An address of a smart contract eg: address of your `CryptoBot` contract. 
+1. An address of a user account eg: address of your Tezos wallet which you use to transfer XTZ to your friends. 
+2. An address of a smart contract eg: address of your `Cryptobot` contract. 
 
 
 Addresses are represented by type `sp.TAddress` in `smartpy`. 
 
 ```python
-## crypto_bot_manager is a variable 
+## bot_manager is a variable 
 ## that stores the address of the user 
-## who manages the crypto_bot. 
+## who manages the cryptobot. 
 
 my_address = sp.address("tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj")
 
-self.init(crypto_bot_manager = my_address)
+self.init(bot_manager = my_address)
 
-## Update crypto_bot_manager value 
-## in case you decide to sell your crypto_bot
-self.data.crypto_bot_manager = sp.address("tz1dFyuNkiSabQrU1ie9yTKbiTje3YbuXjX1")
+## Update bot_manager value 
+## in case you decide to sell your cryptobot
+self.data.bot_manager = sp.address("tz1dFyuNkiSabQrU1ie9yTKbiTje3YbuXjX1")
 
 ```
 
@@ -173,16 +173,16 @@ Notes:
 
 #### New feature request!
 
-In our current  `CryptoBot` contract implementation, there is no way to tell that you are the maker and manager of this `CryptoBot`. 
+In our current  `Cryptobot` contract implementation, there is no way to tell that you are the maker and manager of this `Cryptobot`. 
 
-You are spending so much time evolving the crypto_bot’s abilities, that you had forgotten about this tiny but crucial detail! 
+You are spending so much time evolving the cryptobot’s abilities, that you had forgotten about this tiny but crucial detail! 
 
 
 #### Step by step walkthrough: 
  
-1. Add a `crypto_bot_manager` state variable to the contract's storage that will hold the address of the owner. 
+1. Add a `bot_manager` state variable to the contract's storage that will hold the address of the owner. 
 
-2. Pass `manager_address` as parameter to the initialization function and assign it to `crypto_bot_manager`
+2. Pass `manager_address` as parameter to the initialization function and assign it to `bot_manager`
  
 
 
@@ -190,7 +190,7 @@ You are spending so much time evolving the crypto_bot’s abilities, that you ha
 
 1. Define `my_address` variable and give it the address value of `tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj`
 
-2. Pass `my_address` as value to `manager_address` function argument and then use it to invoke the `CryptoBot` contract. 
+2. Pass `my_address` as value to `manager_address` function argument and then use it to invoke the `Cryptobot` contract. 
 
 
 <br />
@@ -201,6 +201,6 @@ When you’re finished:
 2. Click on “Show Answer” in case you get stuck.
 
 
-You can also tinker around with the final code on [SmartPy’s online IDE](https://smartpy.io/dev/index.html?code=eJydVFFv0zAQfs@vsLKXVJSKwUDTpErAeECakJCYeAAhy02uraljB_vSkaH9d85O2sRNNxXyZDvf3fed7_zJsjIWmSuFxaphwjFXJUmuhHPs2jYVmvcGM1fNro1GK3KcXCWMvjP22UNKocUKLBdFYYH2FC9YJawoAcEyNAzXwKSWKIWS9wKl0WxZ69wvQqICloxzj@A8c6CWU6bkErhDgTA9JOjY_eexMx@X7Y9aYe@KguVBOl8Y5F0GthVWioUCtgBl7qKYI@j5AfE0CtBUH5uzlGospRZobBoDpONU79aDBtVEkFiBMbbwmYD_phi6b6kxezGZPgprWhitx7Bos6iVAuQrKHluao0U9_oJJRZy4vDqQfONVMpRwJ8I4r_UybJS0OLSq4GUMXRhnBsDI9zDcNf_Cou3FAI0fA2vDN3KfmrytdAr4L4X3eBouAvbwykpBIpZ17MdJpb5JFFptsDXxsp7egNCqaajq6vCdwLNUb6opc_mPTo5jXALFmX@P3RNTPcklVsbmvrQnI6m7Tw2FV0jO0I0mqfnc3Z@BDcepO996h9eYheVeG30zDiCw2z3tG5p06qTepVOEi82ALrqXQ6aXrRpn4H_w3dHWRigzqY@wFJqYGWz96gjRnDGhC7Yyj9YicGyerCqgRnivj__0tSvbkT@7TJvLl5evhEXW3EN5hPe_fp683EjzM@Qa8AUpHWbLD0lQzrpp2Nnsc3QXVs95KsH_jQog@RrVru2FEPmuzUbCEUFWw_IgeOFq8s7dyfJA9vvrYvOb2099mM67_X1175vDnX5MarBAzw5ZjYc19iC_o08TjQwqEnyF6ZYLFs-). Try running the test by clicking on the ▶️ button!
+You can also tinker around with the final code on [SmartPy’s online IDE](https://smartpy.io/demo/index.html?code=eJydVN9r2zAQfvdfIdwXh2Vh3bpRCoWN7mFQBoOOPWwMcbEviVZZ8qRzMnfsf@9JdmI7SUOZnyT5u_vu56fKyjoSvgRHVSPAC18lSa7Be3Hjmors3FLmq9mNNeQgp8lVIvg7E18CpAQDS3QSisIh39keRAUOSiR0gqygFQplFCnQ6gFIWSMWtcnDIToqcCGkDAgpM496MRVaLVB6AsLpPkHHHr6AnQW7bPfUBvahKAQHLTtTsQanYK5RzFHbzQg8hF3vc01H0NHFcH5skHKOpTJA1qVjtPKS810H0CCbpx3m1roieEL5h2243spQ9moyfRLWtDA@H8JGl4p7WYKc11ojydzWhtj07YlgHOZMExJAI@@V1p4N_o4g4Uu9KiuNLS69GkRzCJ1b7w@BI9y_3a1_j4f3jEcevkZWlquym5p8BWaJMvSiGxyDm3jdn5ICCGZdz7aY_RhPUpV2jXJlnXrgLQCtm46wrorQC7JHGUdNfXHdo5PnEa7Rkcr_h64Z052k8ivLWxB709G0jaem4kKKI0THJurltTg_Aj0cpR@9958hytYqCdHx3klCT9l2ve5UWWvWDLMUdmPQ@ZWq0kkSoo64rgw@R8M7btuNCH_k9imLs9Qp1kdcKIOibHZydUQazgSYQizD7iqK6tWDdY3CMvfD@V1Tv7mF_Ptl3ly8vnwHF2u4QfuZNr@_3X66B_sr@howxdC6S5Y@x0M66cdkq7bNUGjbeFhi93RrkAaHb0Tt21Qs6_Da3mNMKip8RMZ6sRByiAPF71WL37@6@lCKg2Du4unLvGsG93brerBrT2JmwzkcS8tp52PDgdBMkkdNuBKM). Try running the test by clicking on the ▶️ button!
     
 

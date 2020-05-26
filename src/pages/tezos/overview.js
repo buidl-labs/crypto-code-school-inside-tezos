@@ -147,28 +147,30 @@ function LessonsOverview() {
         <OverviewContainer>
           <div>
             <h1>Your mission's briefing:</h1>
-            <p> 🚨 A alien invasion is incoming! 🚨</p>
+            <p> 👽 An alien invasion is incoming! 👽</p>
             <p>
-              At the starting of your journey, the school bestowes upon you a
-              unique gem of a Crypto bot that is known to stop aliens!
+              At the starting of your journey, the school bestows upon you a
+              unique gem. This gem, when inserted into the chest of any
+              cryptobot, gives the cryptobot alien-killing cosmic superpowers!
+              <br />
+              🤖+ 💎 = 🤖++
             </p>
             <p>
-              But the gem needs to grow into a full Crypto bot to battle the
-              alien invasion.
+              Your mission is to build and assemble the cryptobot from scratch
+              and then use use the gem to power your cryptobot to battle the
+              incoming alien invasion!
             </p>
             <p>
-              Your mission is to evolve the gem into a Crypto bot to fight the
-              incoming alien invasion by progressing through the chapters!
-            </p>
-            <p>
-              In this lesson, you’re going to learn how to evolve your Crypto
-              bot and train it to defend against the incoming apocalypse by
+              In this lesson, you’re going to learn how to assemble your own
+              cryptobot and give it defense and offense functionalities by
               building a simple smart contract in SmartPy which can be deployed
-              on tezos blockchain.
+              on the Tezos blockchain.
             </p>
             <p>
-              At the end of lesson, you will help your fully-evolved Crypto bot
-              in aiming to kill the aliens!
+              At the end of lesson, you will help your gem-powered cryptobot in
+              aiming to blast the aliens out of our world!
+              <br />
+              🤖 ⚔️ 👽
             </p>
             <div>
               <StyledLink
