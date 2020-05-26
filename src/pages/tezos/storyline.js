@@ -140,7 +140,7 @@ const Game = () => {
               <LeftArrow />
               <span>Back</span>
             </BackLink>
-            <Title />
+            <Title width="10%" />
             <BackLink to={`/lesson/chapter-01`}>
               <span>Skip</span>
               <RightArrow />

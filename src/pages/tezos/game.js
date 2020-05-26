@@ -281,7 +281,7 @@ const Game = () => {
             <LeftArrow />
             <span>Back</span>
           </BackLink>
-          <Title maxWidth="15vh" />
+          <Title width="10%" />
           <BackLink to={`/tezos/up-next`}>
             <span>Skip</span>
             <RightArrow />
