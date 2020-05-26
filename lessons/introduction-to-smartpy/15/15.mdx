@@ -8,42 +8,42 @@ editor:
   startingCode: |
     import smartpy as sp
 
-    class CryptoBot(sp.Contract):
+    class Cryptobot(sp.Contract):
     
         def __init__(self, manager_address, life_state):
             
             self.init(
-                crypto_bot_manager = manager_address,
+                bot_manager = manager_address,
                 name = "terminator",
                 is_alive = life_state,
                 
                 coordinate_x = sp.int(0), 
                 coordinate_y = sp.nat(0), 
                 
-                bullet_gem_count = 5,
+                plasma_bullet_count = 5,
 
                 record_alien_kills = {
                     "simple_alien": sp.nat(0), 
                     "boss_alien": sp.nat(0), 
                 }
                 
-                )
+            )
 
         @sp.entry_point
         def change_name(self, new_name):
             sp.verify(
-                self.data.crypto_bot_manager == sp.sender, 
+                self.data.bot_manager == sp.sender, 
                 message = "Error: non manager call"
-                )
+            )
 
             self.data.name = new_name
         
         @sp.entry_point
         def move_horizontally(self, update_to):
             sp.verify(
-                self.data.crypto_bot_manager == sp.sender, 
+                self.data.bot_manager == sp.sender, 
                 message = "Error: non manager call"
-                )
+            )
                 
             self.data.coordinate_x += update_to
         
@@ -51,9 +51,9 @@ editor:
         def move_vertically(self, update_to):
             
             sp.verify(
-                self.data.crypto_bot_manager == sp.sender, 
+                self.data.bot_manager == sp.sender, 
                 message = "Error: non manager call"
-                )
+            )
                 
             self.data.coordinate_y += update_to
 
@@ -62,11 +62,11 @@ editor:
         def shoot_alien(self, alien_type):
             
             sp.verify(
-                self.data.crypto_bot_manager == sp.sender, 
+                self.data.bot_manager == sp.sender, 
                 message = "Error: non manager call"
-                )
+            )
 
-            self.data.bullet_gem_count -= 1
+            self.data.plasma_bullet_count -= 1
             
             self.data.record_alien_kills[alien_type] += 1
 
@@ -78,63 +78,63 @@ editor:
         ## Class Invokation
         my_address = sp.address("tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj")
 
-        crypto_bot_test_contract =  CryptoBot(manager_address = my_address, life_state = True)
+        test_bot =  Cryptobot(manager_address = my_address, life_state = True)
         
         ## Testing contract
-        scenario += crypto_bot_test_contract
+        scenario += test_bot
         
-        scenario += crypto_bot_test_contract.change_name("punky terminator").run(sender = my_address)
+        scenario += test_bot.change_name("punky terminator").run(sender = my_address)
         
-        scenario.verify(crypto_bot_test_contract.data.is_alive == True)
+        scenario.verify(test_bot.data.is_alive == True)
         
-        scenario += crypto_bot_test_contract.move_horizontally(2).run(sender = my_address)
+        scenario += test_bot.move_horizontally(2).run(sender = my_address)
         
-        scenario += crypto_bot_test_contract.move_vertically(1).run(sender = my_address)
+        scenario += test_bot.move_vertically(1).run(sender = my_address)
         
-        scenario += crypto_bot_test_contract.shoot_alien("simple_alien").run(sender = my_address)
+        scenario += test_bot.shoot_alien("simple_alien").run(sender = my_address)
         
-        scenario += crypto_bot_test_contract.shoot_alien("boss_alien").run(sender = my_address)
+        scenario += test_bot.shoot_alien("boss_alien").run(sender = my_address)
         
 
   answer: |
     import smartpy as sp
 
-    class CryptoBot(sp.Contract):
+    class Cryptobot(sp.Contract):
     
         def __init__(self, manager_address, life_state):
             
             self.init(
-                crypto_bot_manager = manager_address,
+                bot_manager = manager_address,
                 name = "terminator",
                 is_alive = life_state,
                 
                 coordinate_x = sp.int(0), 
                 coordinate_y = sp.nat(0), 
                 
-                bullet_gem_count = 5,
+                plasma_bullet_count = 5,
 
                 record_alien_kills = {
                     "simple_alien": sp.nat(0), 
                     "boss_alien": sp.nat(0), 
                 }
                 
-                )
+            )
 
         @sp.entry_point
         def change_name(self, new_name):
             sp.verify(
-                self.data.crypto_bot_manager == sp.sender, 
+                self.data.bot_manager == sp.sender, 
                 message = "Error: non manager call"
-                )
+            )
 
             self.data.name = new_name
         
         @sp.entry_point
         def move_horizontally(self, update_to):
             sp.verify(
-                self.data.crypto_bot_manager == sp.sender, 
+                self.data.bot_manager == sp.sender, 
                 message = "Error: non manager call"
-                )
+            )
                 
             self.data.coordinate_x += update_to
         
@@ -142,9 +142,9 @@ editor:
         def move_vertically(self, update_to):
             
             sp.verify(
-                self.data.crypto_bot_manager == sp.sender, 
+                self.data.bot_manager == sp.sender, 
                 message = "Error: non manager call"
-                )
+            )
                 
             self.data.coordinate_y += update_to
 
@@ -153,11 +153,11 @@ editor:
         def shoot_alien(self, alien_type):
             
             sp.verify(
-                self.data.crypto_bot_manager == sp.sender, 
+                self.data.bot_manager == sp.sender, 
                 message = "Error: non manager call"
-                )
+            )
 
-            self.data.bullet_gem_count -= 1
+            self.data.plasma_bullet_count -= 1
             
             self.data.record_alien_kills[alien_type] += 1
 
@@ -169,22 +169,22 @@ editor:
         ## Class Invokation
         my_address = sp.address("tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj")
 
-        crypto_bot_test_contract =  CryptoBot(manager_address = my_address, life_state = True)
+        test_bot =  Cryptobot(manager_address = my_address, life_state = True)
         
         ## Testing contract
-        scenario += crypto_bot_test_contract
+        scenario += test_bot
         
-        scenario += crypto_bot_test_contract.change_name("punky terminator").run(sender = my_address)
+        scenario += test_bot.change_name("punky terminator").run(sender = my_address)
         
-        scenario.verify(crypto_bot_test_contract.data.is_alive == True)
+        scenario.verify(test_bot.data.is_alive == True)
         
-        scenario += crypto_bot_test_contract.move_horizontally(2).run(sender = my_address)
+        scenario += test_bot.move_horizontally(2).run(sender = my_address)
         
-        scenario += crypto_bot_test_contract.move_vertically(1).run(sender = my_address)
+        scenario += test_bot.move_vertically(1).run(sender = my_address)
         
-        scenario += crypto_bot_test_contract.shoot_alien("simple_alien").run(sender = my_address)
+        scenario += test_bot.shoot_alien("simple_alien").run(sender = my_address)
         
-        scenario += crypto_bot_test_contract.shoot_alien("boss_alien").run(sender = my_address)
+        scenario += test_bot.shoot_alien("boss_alien").run(sender = my_address)
 
 
 ---
@@ -195,13 +195,13 @@ editor:
 
 Wow! Great job learner!
 
-You have finally assembled a alien killer terminator!
+You have finally assembled a alien-killing cryptobot!
 
-As you can see on the right side, we have assembled all the pieces of your `CryptoBot` contract together so that you can review it's working one final time before you send your `CryptoBot` to battle! ⚔️
+As you can see on the right side, we have assembled all the pieces of your `Cryptobot` contract together so that you can review it's working one final time before you send your `Cryptobot` to battle! ⚔️
 
 
 
-You can also tinker around with the final code on [SmartPy’s online IDE](https://smartpy.io/demo/index.html?code=eJzVVU2P0zAQvedXWNlLIkpFlwWtKlVCVCuBVpxYcQAhy02mrWliB9vp4kX8d8b5aOJNoxYJBOSUjzczb55fZnheSGWIzpkyhSVME10EQZIxrclS2cLI19JEupgupTCKJSaeBwHBK4U1oZQLbiiNNGTrCcmZYBtQlKWpAq0nJONroNowAxhFmutw44KmLkF0eOWupKpKV9LQJiFZDFJ7EYLlgJjQgMq5YEaq0AdwTVnG9w7UUfIhPgUpVeoyAf2GMdg9FyZ6Fk9GYbaG4f0Q5j2syiwDQzeQ00SWwmDci0ngQRQkmNcxBkF3PMs0gr57EHeFmudFBjUunI@Wr7ArqfVJ5I9x2nFN8RWGAvrA0kKiJAcjJFsmNkDdQTReEHBfPfYOHmP3oPja@udd2SBlhk2PnXwlqwaRgnrENkcfIMYd_I1SUs2JkKI1CklYloXHWvBLNtZp2QaHxsc6zeUe6FYq_oD_A9awTb9lkTofGPkvNXz0OHvl@zZ_suh6OFMGbM7w5IQI_6Ma1lfD72VMEr2VyLz6xxo56j_Y2OL4@PvbehzRYDCdni7IbGRyVwHDWfWp6_qzk3FW1wmcbDi9qQFtonZi3whUfBPGgROw@tIopRMQTHFZj1X3hbavoriz58UFWVar6q3Yyx0zXIrqfW7bTVEnaB6i0DzM3tvy@S1LPl4n9ury@iW72rMlyHfm_uuH2zc7Jr@EjTQ9_SsCSbMBMWVvNT7aTG5X2WMbED_cqRJ88neYFwUgbWq_d1RvjEOX5Rz0tD@fw6IUO0t6yzKeqtJ51rnK4x8Py7SeHS1V2aJbuIOuz@I7nLKXv0LydO7e6Jr9tsz9CeBv5z9TorfUTxX4CWJr86k-). Try running the test by clicking on the ▶️ button!
+You can also tinker around with the final code on [SmartPy’s online IDE](https://smartpy.io/demo/index.html?code=eJzVVU2P0zAQvedXWNlLIkpFlwWtKlVCqlYCrTix4gBClptMW9PEDrbTxYv474zz0cRNqsJqJcCn2H7zPPNmMsPzQipDdM6UKSxhmugiCJKMaU2WyhZGrqSJdDFdSmEUS0w8DwKCK4U1oZQLbiiNNGTrCcmZYBtQlKWpAq0nJONroNowA2hFmnX4cEZTRxAdjtzC92jDRBYDTg8qWA6ICQ2onAtmpAp9ANeUZXzvQJ0vPsTbJFKq1DEB_Y42GDYXJnoRT07CbA3D7yHM2xQoac7oqswyMDSRpTBo@moSeCgFCVI7p0HQHc8yjaAfHsStUPO8yKDGhfOTHlTYldT6LPLnuOdx7d4bNAPMv6WFREUOBZBsmdgAdXloakDAfbXtJRxt96D42vp5rtKfMsOmXsYrOTWIFNSRiznmHzEu4TdKSTUnQoq2QEjCsiw89tt_pymX1sXgEOmp8HK5B7qVij9g8SO_bYIsi9Tl3si_HuVo0ro3vXp@tugc_83YMSLDkzOR_zcSWF8CP4BTOuitRK@r36fRoP45jS3Gu9q_Uu1jDef5gsxONOLKZth@PnfRfnHyzeqnAicX9mRqQJuo7cM3ApXehHHghKtuGoV0AoIpLutm6W5oexTFXS1eXJBlNXneib3cMcOlqM5z2_b_mqDZRKF5mH2w5ctblny6TuzV5fVrdrVnS5Dvzf23j7dvd0x@DRt1qldRfKToTbaj@eImjh0bYHhxp0rwnb1DSgwY50E9G_1YUa32zc5q7Hbab6NhUYqdJb2RFk9V6WrPFYnnXzykbWvvQF2ltRuDgyhG_Rn2vcs_cWLI1esjs0cz9f9EfwA@DWVvTp4j_AX6Oq8L). Try running the test by clicking on the ▶️ button!
 
 
 ## Fighting Time! 

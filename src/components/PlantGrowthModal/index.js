@@ -53,7 +53,7 @@ const stages = [
     stage: 4,
     description: {
       before:
-        'You have successfully completed this chapter. You can now try to evolve your CryptoBot to stage five.',
+        'Virtual highfive! You have successfully completed stage 5 of your learning 👏👏\n You can now power on the cryptobot parts building machine to assemble your 5th part!',
       after: `Congratulations! You were able to build the ${cryptobotsParts[3]} of your cryptobot!`,
     },
     nextChapterLink: '',
@@ -64,7 +64,7 @@ const stages = [
       before:
         'You have successfully completed this chapter. You can now try to evolve your CryptoBot to final stage.',
       after:
-        'You have successfully completed the chapter and evolved your CryptoBot to defend against the aliens.',
+        'The machine has oiled up your parts and inserted your gem to power up your cryptobot!',
     },
     nextChapterLink: '',
   },

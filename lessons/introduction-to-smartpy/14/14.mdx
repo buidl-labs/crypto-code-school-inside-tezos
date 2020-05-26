@@ -7,30 +7,30 @@ editor:
   startingCode: |
     import smartpy as sp
 
-    class CryptoBot(sp.Contract):
+    class Cryptobot(sp.Contract):
         def __init__(self, manager_address):
             self.init(
-                crypto_bot_manager = manager_address,
+                bot_manager = manager_address,
                
-                bullet_gem_count = 5,
+                plasma_bullet_count = 5,
                
                 record_alien_kills = {
                     "simple_alien": sp.nat(0), 
                     "boss_alien": sp.nat(0), 
                 }
-                )
+            )
 
         @sp.entry_point
         def shoot_alien(self, alien_type):
             sp.verify(
-                self.data.crypto_bot_manager == sp.sender, 
+                self.data.bot_manager == sp.sender, 
                 message = "Error: non manager call"
-                )
+            )
             
             
-            # Using sp.if add a condition to check bullet_gem_count >= 1
+            # Using sp.if add a condition to check plasma_bullet_count >= 1
                 
-                self.data.bullet_gem_count -= 1
+                self.data.plasma_bullet_count -= 1
                 self.data.record_alien_kills[alien_type] += 1
             # Use sp.else to run code when the above condition fails. 
             # Use sp.failwith to return an error message.
@@ -43,42 +43,42 @@ editor:
         
         my_address = sp.address("tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj")
         
-        crypto_bot_test_contract =  CryptoBot(manager_address = my_address)
+        test_bot =  Cryptobot(manager_address = my_address)
         
-        scenario += crypto_bot_test_contract
+        scenario += test_bot
         
-        scenario += crypto_bot_test_contract.shoot_alien("simple_alien").run(sender = my_address)
-        scenario += crypto_bot_test_contract.shoot_alien("boss_alien").run(sender = my_address)
+        scenario += test_bot.shoot_alien("simple_alien").run(sender = my_address)
+        scenario += test_bot.shoot_alien("boss_alien").run(sender = my_address)
 
 
 
   answer: |
     import smartpy as sp
 
-    class CryptoBot(sp.Contract):
+    class Cryptobot(sp.Contract):
         def __init__(self, manager_address):
             self.init(
-                crypto_bot_manager = manager_address,
+                bot_manager = manager_address,
 
-                bullet_gem_count = 5,
+                plasma_bullet_count = 5,
 
                 record_alien_kills = {
                     "simple_alien": sp.nat(0), 
                     "boss_alien": sp.nat(0), 
                 }
-                )
+            )
 
 
         @sp.entry_point
         def shoot_alien(self, alien_type):
             sp.verify(
-                self.data.crypto_bot_manager == sp.sender, 
+                self.data.bot_manager == sp.sender, 
                 message = "Error: non manager call"
-                )
-            # Using sp.if add a condition to check bullet_gem_count >= 1
-            sp.if self.data.bullet_gem_count >= 1:
+            )
+            # Using sp.if add a condition to check plasma_bullet_count >= 1
+            sp.if self.data.plasma_bullet_count >= 1:
                 
-                self.data.bullet_gem_count -= 1
+                self.data.plasma_bullet_count -= 1
                 self.data.record_alien_kills[alien_type] += 1
             # Use sp.else to run code when the above condition fails. 
             # Use sp.failwith to return an error message. 
@@ -91,12 +91,12 @@ editor:
         
         my_address = sp.address("tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj")
         
-        crypto_bot_test_contract =  CryptoBot(manager_address = my_address)
+        test_bot =  Cryptobot(manager_address = my_address)
         
-        scenario += crypto_bot_test_contract
+        scenario += test_bot
         
-        scenario += crypto_bot_test_contract.shoot_alien("simple_alien").run(sender = my_address)
-        scenario += crypto_bot_test_contract.shoot_alien("boss_alien").run(sender = my_address)
+        scenario += test_bot.shoot_alien("simple_alien").run(sender = my_address)
+        scenario += test_bot.shoot_alien("boss_alien").run(sender = my_address)
 
 ---
 
@@ -106,7 +106,7 @@ You would be already be pretty familiar with basic decision making in Python usi
 
 In this chapter, we are going to understand how to go about writing decision making code inside smart contracts using SmartPy's `sp.if..sp.else` statements. 
 
-In later half of the chapter, we design an alerting system to ping us when our `CryptoBot` runs out of Bullet gems! 
+In later half of the chapter, we design an alerting system to ping us when our `Cryptobot` runs out of plasma bullets! 
 
 ![Alert Text](https://media.giphy.com/media/Tdpbuz8KP0EpQfJR3T/giphy.gif)
 
@@ -132,7 +132,7 @@ Remember:
 2. `move_horizontally` entry point function which is used to change `coordinate_x` state variable value?
 
 ```python
-    class CryptoBot(sp.Contract):
+    class Cryptobot(sp.Contract):
         def __init__(self,):
             self.init(
                 ....
@@ -140,7 +140,7 @@ Remember:
                 ... 
                 }
 
-                )
+            )
             
         ...
         @sp.entry_point
@@ -185,9 +185,9 @@ Currently if you run out of bullets, your `shoot_alien` function will still be a
 
 ### Step by step walkthrough:
 
-Let's use `sp.if` to proceed forward with shooting only when `bullet_gem_count` is greater than 1. If not, we will use `sp.failwith` to alert you that you run out of bullets!
+Let's use `sp.if` to proceed forward with shooting only when `plasma_bullet_count` is greater than 1. If not, we will use `sp.failwith` to alert you that you run out of bullets!
 
-1. Using `sp.if` add a condition to check `bullet_gem_count` >= 1. Use `self.data.bullet_gem_count` to access it. 
+1. Using `sp.if` add a condition to check `plasma_bullet_count` >= 1. Use `self.data.plasma_bullet_count` to access it. 
 2. Move the shooting code inside `sp.if` scope. 
 3. Add `sp.else` and inside it's scope use `sp.failwith` to return with `"Error: you ran out of bullets! Please buy more!"` error message. 
 
