@@ -11,7 +11,7 @@ const HomePage = () => {
   return (
     <>
       <SEO
-        title="SmartPy tutorial and tezos blockchain programming course"
+        title="Cryptobots vs Aliens | Crypto Code School | Learn to program smart contracts in SmartPy"
         keywords={[
           `smartpy`,
           `python`,

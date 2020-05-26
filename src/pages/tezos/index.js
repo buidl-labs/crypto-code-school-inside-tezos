@@ -69,9 +69,9 @@ const HomePage = () => {
               Learn to code Tezos blockchain DApps in SmartPy <br />
             </HeroTitle>
             <HeroSubheading>
-              Crypto bots Vs Aliens teaches you to write smart contracts in
-              SmartPy by evolving a crypto-bot that unleashes hell on the
-              incoming alien invasion!
+              "Cryptobots vs Aliens" is an interactive code school that teaches
+              you to write smart contracts in SmartPy. Assemble your own
+              cryptobot that unleashes hell on the incoming alien invasion!
             </HeroSubheading>
             <InnerContainer>
               <div>
@@ -112,22 +112,23 @@ const HomePage = () => {
           </GridContainer>
           <GridContainer>
             <FlexContainer>
-              <h2>Evolve your Crypto Bot to fight against a alien invasion!</h2>
+              <h2>
+                Assemble your Cryptobot to fight against an alien invasion!
+              </h2>
               <p>
                 At the starting of your journey, the school bestowes upon you a
-                unique gem of a Crypto bot that is known to stop aliens! *ooh
-                exciting*
+                unique gem. This gem, when inserted into the chest of any
+                cryptobot, gives the cryptobot cosmic powers to stop aliens!
+                *ooh exciting*
                 <br />
                 <br />
-                But the gem needs to grow into a full Crypto bot to battle the
-                alien invasion! *oh no! what do I have to do?*
+                Your mission is to build and assemble the cryptobot from scratch
+                and then use use the gem to power your cryptobot to battle the
+                incoming alien invasion.
                 <br />
                 <br />
-                Your mission is to evolve the gem into a Crypto bot to fight the
-                incoming alien invasion by progressing through the chapters!
-                <br />
-                <br />
-                Are you ready? The world's hope is in your hands!
+                You learn to assemble your cryptobot by progressing through the
+                school. Are you ready? The world's hope is in your hands!
               </p>
             </FlexContainer>
             <div>
