@@ -46,7 +46,7 @@ function UpNextPage() {
             <GrownRobot />
           </div>
           <p>
-            You have successfully evolved your Cryptobot to face the incoming
+            You have successfully assembled your Cryptobot to face the incoming
             wave of alien attack.
           </p>
           <StyledLink style={{ padding: '15px 30px' }} to="/tezos/game">

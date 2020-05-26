@@ -62,7 +62,7 @@ const stages = [
     stage: 5,
     description: {
       before:
-        'You have successfully completed this chapter. You can now try to evolve your CryptoBot to final stage.',
+        'You have successfully completed this chapter. You can now try to evolve your Cryptobot to final stage.',
       after:
         'The machine has oiled up your parts and inserted your gem to power up your cryptobot!',
     },
@@ -83,7 +83,7 @@ const InfoToUser = ({ currentStage, evolutionStatus }) => {
   const stringToShowUser =
     currentStage > 6
       ? `You have successfully completed the chapter and evolved your
-        CryptoBot to defend against the aliens.`
+        Cryptobot to defend against the aliens.`
       : !evolutionStatus
       ? renderNewLines(stages[currentStage].description.before)
       : renderNewLines(stages[currentStage].description.after);
