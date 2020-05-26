@@ -215,12 +215,12 @@ const Glow = styled.div`
   }
 `;
 export const Gem = styled(randomRobot.gem[generatedPlantId.gemId])`
-  width: 15%;
-  height: 15%;
+  top: 43%;
+  left: 31.5%;
+  width: 12%;
+  height: 12%;
   position: absolute;
-  top: 14%;
-  left: 2.5%;
-  z-index: 20;
+  z-index: 21;
   transition: all 1s cubic-bezier(0.43, 0.13, 0.15, 0.99);
 `;
 
