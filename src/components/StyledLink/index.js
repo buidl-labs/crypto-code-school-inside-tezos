@@ -16,8 +16,8 @@ export const CustomLink = styled(Link)`
   text-decoration: none;
 
   padding: 8px 25px;
-  border: 5px solid rgba(41, 203, 106, 0.41);
-  background: #29cb6a;
+  border: 5px solid rgba(40, 151, 255, 0.25);
+  background: #2897ff;
   border-radius: 7px;
   color: #ffffff;
   transition: 0.3s;
@@ -25,7 +25,7 @@ export const CustomLink = styled(Link)`
 
   :hover {
     color: #fff;
-    box-shadow: 0 0 0 0.4rem rgba(41, 203, 106, 0.4);
+    box-shadow: 0 0 0 0.4rem rgba(40, 151, 255, 0.25);
   }
 `;
 
