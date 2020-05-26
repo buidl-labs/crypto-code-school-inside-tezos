@@ -9,7 +9,7 @@ editor:
   startingCode: |
     import smartpy as sp
 
-    class CryptoBot(sp.Contract):
+    class Cryptobot(sp.Contract):
         def __init__(self):
             self.init(name = "terminator")
         
@@ -17,20 +17,20 @@ editor:
 
 
             
-    @sp.add_test(name = "Testing giving CryptoBot a new name")
+    @sp.add_test(name = "Testing giving Cryptobot a new name")
     def test():
         scenario = sp.test_scenario()
         
-        crypto_bot_test_contract =  CryptoBot()
+        test_bot =  Cryptobot()
         
-        scenario += crypto_bot_test_contract
+        scenario += test_bot
         
         # Test change_name function below
 
   answer: |  
     import smartpy as sp
 
-    class CryptoBot(sp.Contract):
+    class Cryptobot(sp.Contract):
         def __init__(self):
             self.init(name = "terminator")
     
@@ -39,25 +39,25 @@ editor:
         def change_name(self, new_name):
             self.data.name = new_name
 
-    @sp.add_test(name = "Testing giving CryptoBot a new name")
+    @sp.add_test(name = "Testing giving Cryptobot a new name")
     def test():
         scenario = sp.test_scenario()
        
-        crypto_bot_test_contract =  CryptoBot()
+        test_bot =  Cryptobot()
        
-        scenario += crypto_bot_test_contract
+        scenario += test_bot
        
         # Test change_name function below
-        scenario += crypto_bot_test_contract.change_name("punky terminator")
+        scenario += test_bot.change_name("punky terminator")
 ---
 
 ### Intro: 
 
-Now that you know how to define and test your `CryptoBot` contract, time to start giving it small abilities!
+Now that you know how to define and test your `Cryptobot` contract, time to start giving it small abilities!
 
-Previously you had given the name of `terminator` to our `CryptoBot` contract. But then, if you come up with a cooler name in the future, how do you go about changing the CryptoBot’s name? 
+Previously you had given the name of <span class="string-highlight">"terminator"</span> to our `Cryptobot` contract. But then, if you come up with a cooler name in the future, how do you go about changing your cryptobot’s name? 
 
-In this chapter, you will learn to add a functionality that enables you to change your CryptoBot’s name using entry point functions!  
+In this chapter, you will learn to add a functionality that enables you to change your cryptobot’s name using entry point functions!  
 
 
 ## Study Time: 
@@ -145,13 +145,13 @@ You can also tinker around with the above code on [SmartPy’s online IDE](https
 
 ## #buidl-ing time:
 
-Let’s change our CryptoBot’s name from <span class="string-highlight">"terminator"</span> to <span class="string-highlight">"punky terminator"</span> by doing the following: 
+Let’s change our Cryptobot’s name from <span class="string-highlight">"terminator"</span> to <span class="string-highlight">"punky terminator"</span> by doing the following: 
 
 1. Add a `change_name` entry point function just after the scope of `__init__` initialization function finishes. 
      * Pass `self` and `new_name` as arguments to `change_name` function. 
-     * Use `self.data.name` to access `CryptoBot` contract’s internal storage. And assign it the value of `new_name`. 
+     * Use `self.data.name` to access `Cryptobot` contract’s internal storage. And assign it the value of `new_name`. 
 
-2. Test your newly created `change_name` function by calling `change_name` on `crypto_bot_test_contract`. 
+2. Test your newly created `change_name` function by calling `change_name` on `test_bot`. 
       * Pass in <span class="string-highlight">"punky terminator"</span> in `change_name`'s function call. 
 
 
