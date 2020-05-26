@@ -19,9 +19,9 @@ function UpNextPage() {
   return (
     <Layout
       background={`radial-gradient(
-      198.67% 198.67% at 53.06% -50.22%,
-      #13282d 53.32%,
-      #296460 100%
+      144.9% 144.89% at 53.86% -49.56%,
+      #09272e 43.89%,
+      #1f476b 100%
     )
     no-repeat center center fixed`}
     >
