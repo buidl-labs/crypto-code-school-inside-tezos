@@ -23,8 +23,9 @@ const WelcomeModal = ({ display = false, changeDisplay }) => {
                   Congratulations!
                 </Heading>
                 <SubHeading style={{ padding: '0 4rem' }}>
-                  You have successfully evolved your CryptoBot, battle it out to
-                  defend against the upcoming alien invasion.
+                  You have successfully assembled your Cryptobot, let's power it
+                  up with your gem to defend against the upcoming alien
+                  invasion!
                 </SubHeading>
                 <div
                   style={{
@@ -35,7 +36,7 @@ const WelcomeModal = ({ display = false, changeDisplay }) => {
                   }}
                 >
                   <ProceedLink onClick={() => changeDisplay()}>
-                    Battle it Out
+                    Time to Fight!
                   </ProceedLink>
                 </div>
               </ModalBottom>

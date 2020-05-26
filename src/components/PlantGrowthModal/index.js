@@ -10,14 +10,15 @@ import { OutboundLink } from 'gatsby-plugin-amplitude-analytics';
 import { PLANT_GROWTH } from '../Plants/PLANT_GROWTH';
 import StyledLink, { CustomLink } from '../StyledLink';
 //TODO: Stage update doesn't work properly
+const cryptobotsParts = ['legs', 'abdomen'];
+
 const stages = [
   {
     stage: 0,
     description: {
       before:
-        'You have successfully completed this chapter. You can now try to evolve your CryptoBot to stage one.',
-      after:
-        'You have successfully completed this chapter. You can now try to evolve your CryptoBot to stage one.',
+        'Virtual highfive! You have successfully completed stage 1 of your learning 👏👏\n You can now power on the cryptobot parts building machine to assemble your first part!',
+      after: `Congratulations! You were able to build the ${cryptobotsParts[0]} of your cryptobot!`,
     },
     nextChapterLink: '',
   },
@@ -25,9 +26,8 @@ const stages = [
     stage: 1,
     description: {
       before:
-        'You have successfully completed this chapter. You can now try to evolve your CryptoBot to stage two.',
-      after:
-        "You have successfully completed the chapter and evolved your CryptoBot's gem into stage two.",
+        'Virtual highfive! You have successfully completed stage 2 of your learning 👏👏\n You can now power on the cryptobot parts building machine to assemble your second part!.',
+      after: `Congratulations! You were able to build the ${cryptobotsParts[1]} of your cryptobot!`,
     },
     nextChapterLink: '',
   },
@@ -36,8 +36,7 @@ const stages = [
     description: {
       before:
         'You have successfully completed this chapter. You can now try to evolve your CryptoBot to stage three.',
-      after:
-        "You have successfully completed the chapter and evolved your CryptoBot's gem into stage three.",
+      after: `Congratulations! You were able to build the ${cryptobotsParts[1]} of your cryptobot!`,
     },
     nextChapterLink: '',
   },
@@ -72,6 +71,27 @@ const stages = [
     nextChapterLink: '',
   },
 ];
+
+const InfoToUser = ({ currentStage, evolutionStatus }) => {
+  const renderNewLines = infoString =>
+    infoString.split('\n').map((i, key) => {
+      return (
+        <p style={{ marginBottom: '2px' }} key={key}>
+          {i}
+        </p>
+      );
+    });
+
+  const stringToShowUser =
+    currentStage > 6
+      ? `You have successfully completed the chapter and evolved your
+        CryptoBot to defend against the aliens.`
+      : !evolutionStatus
+      ? renderNewLines(stages[currentStage].description.before)
+      : renderNewLines(stages[currentStage].description.after);
+
+  return <p>{stringToShowUser}</p>;
+};
 
 const PlantGrowthModalView = ({ currentChapter, nextSlug, onToggle }) => {
   const [stage, updateStage] = useState(() => {
@@ -126,7 +146,7 @@ const PlantGrowthModalView = ({ currentChapter, nextSlug, onToggle }) => {
         <StyledOutboundLink
           rel="noopener"
           target="_blank"
-          href={`https://twitter.com/intent/tweet?text=I just completed Chapter ${currentChapter}! %23CryptoCodeSchool%20I Evolved my CryptoBot and learned more about %23Smartpy development. Evolve your own CryptoBot and battle out alien invasion: &url=https://cryptocodeschool.in/tezos`}
+          href={`https://twitter.com/intent/tweet?text=I just completed Chapter ${currentChapter} of %23CryptoCodeSchool%20 where I am building my #cryptobot to fight the alien invasion while learning about %23smartpy development. Learn how to Build your own Cryptobot and  &url=https://cryptocodeschool.in/tezos`}
         >
           <FaTwitter />
           <span>Tweet</span>
@@ -146,22 +166,15 @@ const PlantGrowthModalView = ({ currentChapter, nextSlug, onToggle }) => {
         </div>
         <Container>
           <ContentContainer>
-            <h3>Success</h3>
-            <p>
-              {stage > 6
-                ? `You have successfully completed the chapter and evolved your
-              CryptoBot to defend against the aliens.`
-                : !isEvolved
-                ? stages[stage].description.before
-                : stages[stage].description.after}
-            </p>
+            <h3>3D printing cryptobot parts 🤖</h3>
+            <InfoToUser currentStage={stage} evolutionStatus={isEvolved} />
             {!isEvolved ? (
               <EvolutionButton
                 onClick={() => {
                   setEvolved(true);
                 }}
               >
-                Evolve
+                Power on the cryptobots part building machine!
               </EvolutionButton>
             ) : nextSlug ? (
               <StyledLink to={`/lesson/${nextSlug}`}>

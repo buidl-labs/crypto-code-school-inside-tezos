@@ -149,9 +149,9 @@ function LessonsOverview() {
             <h1>Your mission's briefing:</h1>
             <p> 👽 An alien invasion is incoming! 👽</p>
             <p>
-              At the starting of your journey, the school bestowes upon you a
+              At the starting of your journey, the school bestows upon you a
               unique gem. This gem, when inserted into the chest of any
-              cryptobot, gives the cryptobot cosmic powers to stop aliens!
+              cryptobot, gives the cryptobot alien-killing cosmic superpowers!
               <br />
               🤖+ 💎 = 🤖++
             </p>
@@ -162,9 +162,9 @@ function LessonsOverview() {
             </p>
             <p>
               In this lesson, you’re going to learn how to assemble your own
-              Cryptobot and give it defense and offense functionalities by
+              cryptobot and give it defense and offense functionalities by
               building a simple smart contract in SmartPy which can be deployed
-              on the Tezos blockchain. 👩‍💻👨‍💻
+              on the Tezos blockchain.
             </p>
             <p>
               At the end of lesson, you will help your gem-powered cryptobot in

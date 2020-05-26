@@ -118,17 +118,17 @@ const HomePage = () => {
               <p>
                 At the starting of your journey, the school bestowes upon you a
                 unique gem. This gem, when inserted into the chest of any
-                cryptobot, gives the cryptobot cosmic powers to stop aliens!
+                cryptobot, gives the cryptobot alien-killing cosmic superpowers!
                 *ooh exciting*
                 <br />
                 <br />
                 Your mission is to build and assemble the cryptobot from scratch
-                and then use use the gem to power your cryptobot to battle the
+                and then use the gem to power your cryptobot to battle the
                 incoming alien invasion!
                 <br />
                 <br />
-                You learn to assemble your cryptobot by progressing through the
-                school. Are you ready? The world's hope is in your hands!
+                You will learn to assemble your cryptobot by progressing through
+                the school. Are you ready? The world's hope is in your hands!
               </p>
             </FlexContainer>
             <div>
