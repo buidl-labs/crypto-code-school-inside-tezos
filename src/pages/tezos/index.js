@@ -42,7 +42,7 @@ const HomePage = () => {
     >
       <div style={{ willChange: 'transform' }}>
         <SEO
-          title="SmartPy tutorial and tezos blockchain programming course"
+          title="Cryptobots vs Aliens | Crypto Code School | Learn to program smart contracts in SmartPy"
           keywords={[
             `smartpy`,
             `python`,
@@ -124,7 +124,7 @@ const HomePage = () => {
                 <br />
                 Your mission is to build and assemble the cryptobot from scratch
                 and then use use the gem to power your cryptobot to battle the
-                incoming alien invasion.
+                incoming alien invasion!
                 <br />
                 <br />
                 You learn to assemble your cryptobot by progressing through the
