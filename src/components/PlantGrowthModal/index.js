@@ -10,7 +10,7 @@ import { OutboundLink } from 'gatsby-plugin-amplitude-analytics';
 import { PLANT_GROWTH } from '../Plants/PLANT_GROWTH';
 import StyledLink, { CustomLink } from '../StyledLink';
 //TODO: Stage update doesn't work properly
-const cryptobotsParts = ['legs', 'abdomen'];
+const cryptobotsParts = ['legs', 'abdomen', 'chest + shooter'];
 
 const stages = [
   {
@@ -26,8 +26,8 @@ const stages = [
     stage: 1,
     description: {
       before:
-        'Virtual highfive! You have successfully completed stage 2 of your learning 👏👏\n You can now power on the cryptobot parts building machine to assemble your second part!.',
-      after: `Congratulations! You were able to build the ${cryptobotsParts[1]} of your cryptobot!`,
+        'Virtual highfive! You have successfully completed stage 2 of your learning 👏👏\n You can now power on the cryptobot parts building machine to assemble your second part!',
+      after: `Congratulations! You were able to build the ${cryptobotsParts[0]} of your cryptobot!`,
     },
     nextChapterLink: '',
   },
@@ -35,7 +35,7 @@ const stages = [
     stage: 2,
     description: {
       before:
-        'You have successfully completed this chapter. You can now try to evolve your CryptoBot to stage three.',
+        'Virtual highfive! You have successfully completed stage 3 of your learning 👏👏\n You can now power on the cryptobot parts building machine to assemble your third part!',
       after: `Congratulations! You were able to build the ${cryptobotsParts[1]} of your cryptobot!`,
     },
     nextChapterLink: '',
@@ -45,8 +45,7 @@ const stages = [
     description: {
       before:
         'You have successfully completed this chapter. You can now try to evolve your CryptoBot to stage four.',
-      after:
-        "You have successfully completed the chapter and evolved your CryptoBot's gem into stage four.",
+      after: `Congratulations! You were able to build the ${cryptobotsParts[2]} of your cryptobot!`,
     },
     nextChapterLink: '',
   },

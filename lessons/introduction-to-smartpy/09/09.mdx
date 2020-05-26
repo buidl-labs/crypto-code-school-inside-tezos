@@ -9,7 +9,7 @@ editor:
   startingCode: |
     import smartpy as sp
 
-    class CryptoBot(sp.Contract):
+    class Cryptobot(sp.Contract):
         #2. Add life_state as a parameter to the the __init__ function:
         def __init__(self):
             self.init(
@@ -23,22 +23,22 @@ editor:
         def change_name(self, new_name):
             self.data.name = new_name
             
-    @sp.add_test(name = "Test whether CryptoBot is alive or not")
+    @sp.add_test(name = "Test whether Cryptobot is alive or not")
     def test():
         scenario = sp.test_scenario()
         
-        #4. Pass life_state = True to `CryptoBot`’s class invocation:
-        crypto_bot_test_contract =  CryptoBot()
+        #4. Pass life_state = True to Cryptobot’s class invocation:
+        test_bot =  Cryptobot()
         
-        scenario += crypto_bot_test_contract
+        scenario += test_bot
                
-        #5. Test for whether the CryptoBot is alive or not beneath: 
+        #5. Test for whether the Cryptobot is alive or not beneath: 
 
 
   answer: |  
     import smartpy as sp
 
-    class CryptoBot(sp.Contract):
+    class Cryptobot(sp.Contract):
         #2. Add life_state as a parameter to the the __init__ function:
         def __init__(self, life_state):
             self.init(
@@ -52,24 +52,24 @@ editor:
         def change_name(self, new_name):
             self.data.name = new_name
             
-    @sp.add_test(name = "Test whether CryptoBot is alive or not")
+    @sp.add_test(name = "Test whether Cryptobot is alive or not")
     def test():
         scenario = sp.test_scenario()
         
-        #4. Pass life_state = True to `CryptoBot`’s class invocation:
-        crypto_bot_test_contract =  CryptoBot(life_state = True)
+        #4. Pass life_state = True to Cryptobot’s class invocation:
+        test_bot =  Cryptobot(life_state = True)
         
-        scenario += crypto_bot_test_contract
+        scenario += test_bot
                 
-        #5. Test for whether the CryptoBot is alive or not beneath: 
-        scenario.verify(crypto_bot_test_contract.data.is_alive == True)
+        #5. Test for whether the Cryptobot is alive or not beneath: 
+        scenario.verify(test_bot.data.is_alive == True)
 ---
 
 ### Intro: 
 
 Let us quickly understand how strings and boolean types are handled in SmartPy!
 
-In the later half of the chapter, you also will learn to add the ability to know whether your `CryptoBot` is dead or alive when you are away! 
+In the later half of the chapter, you also will learn to add the ability to know whether your `Cryptobot` is dead or alive when you are away! 
 
  
 ## Study Time: 
@@ -103,7 +103,7 @@ Boolean type is represented by type `sp.TBool` in SmartPy.
 
 ```python
 ## crypto_bot_is_alive is a variable that stores 
-## whether the CryptoBot is alive or got eaten by a Alien!. 
+## whether the Cryptobot is alive or got eaten by a Alien!. 
 
 ## Here crypto_bot_is_alive has type of "sp.TBool" 
 ## which SmartPy automatically infers by its use. 
@@ -126,22 +126,22 @@ Notes:
 
 #### New feature Request!
 
-Do you know that your CryptoBot can keep fighting aliens 24*7 while you can netflix and chill? 
+Do you know that your Cryptobot can keep fighting aliens 24*7 while you can netflix and chill? 
 
 How is that possible?
 
 1. The Tezos blockchain runs 24*7 round the year. 
-2. Since your `CryptoBot` contract is going to be deployed on the Tezos blockchain, using the rules you have defined in your `CryptoBot` contract, the CryptoBot can keep fighting without requiring your attention. ⚔️
+2. Since your `Cryptobot` contract is going to be deployed on the Tezos blockchain, using the rules you have defined in your `Cryptobot` contract, the Cryptobot can keep fighting without requiring your attention. ⚔️
 
 That’s the power of smart contracts! 
 
-But at the moment, there is no way to know whether your CryptoBot is dead or alive while you are away. You should get alerted if your CryptoBot dies! 💀
+But at the moment, there is no way to know whether your Cryptobot is dead or alive while you are away. You should get alerted if your Cryptobot dies! 💀
 
 
 
 #### Step by step walkthrough: 
 
-1. Let us add `is_alive` variable to our `CryptoBot` contract storage which takes in the current state of life from the user at the time of contract initialization. 
+1. Let us add `is_alive` variable to our `Cryptobot` contract storage which takes in the current state of life from the user at the time of contract initialization. 
 
 2. Since we want to let user initialize `is_alive` value at class invocation time, add `life_state` as an argument to the `__init__` function. 
 
@@ -151,9 +151,9 @@ But at the moment, there is no way to know whether your CryptoBot is dead or ali
 
 #### Testing our code: 
 
-1. In our test function, pass `life_state = True` as an argument when invoking `CryptoBot` class 
+1. In our test function, pass `life_state = True` as an argument when invoking `Cryptobot` class 
 
-2. We will use `scenario.verify`, to check the current whether CryptoBot is alive or not by checking the current value of `is_alive` state variable:
+2. We will use `scenario.verify`, to check the current whether Cryptobot is alive or not by checking the current value of `is_alive` state variable:
 
 
 ```python
