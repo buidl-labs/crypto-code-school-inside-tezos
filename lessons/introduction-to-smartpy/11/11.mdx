@@ -9,7 +9,7 @@ editor:
   startingCode: |
     import smartpy as sp
 
-    class CryptoBot(sp.Contract):
+    class Cryptobot(sp.Contract):
         def __init__(self, life_state):
             self.init(
                 name = "terminator",
@@ -17,7 +17,7 @@ editor:
                 coordinate_x = sp.int(0), 
                 coordinate_y = sp.nat(0), 
                 
-                # Add bullet_gem_count with 5 bullets:
+                # Add plasma_bullet_count with 5 bullets:
 
                 
                 # Add record_alien_kills below:
@@ -41,7 +41,7 @@ editor:
         # Add shoot_alien function below
         @sp.entry_point
         def shoot_alien(self, alien_type): 
-            # Reduce bullet_gem_count by 1
+            # Reduce plasma_bullet_count by 1
 
                 
             # Record the alien that was shot
@@ -52,16 +52,16 @@ editor:
     def test():
         scenario = sp.test_scenario()
         
-        crypto_bot_test_contract =  CryptoBot(life_state = True)
+        test_bot =  Cryptobot(life_state = True)
         
-        scenario += crypto_bot_test_contract
+        scenario += test_bot
 
         # Use shoot_alien to kill 1 simple aliens and 1 boss alien
 
   answer: |  
     import smartpy as sp
 
-    class CryptoBot(sp.Contract):
+    class Cryptobot(sp.Contract):
         def __init__(self, life_state):
             self.init(
                 name = "terminator",
@@ -69,8 +69,8 @@ editor:
                 coordinate_x = sp.int(0), 
                 coordinate_y = sp.nat(0), 
                
-                # Add bullet_gem_count with 5 bullets:
-                bullet_gem_count = 5,
+                # Add plasma_bullet_count with 5 bullets:
+                plasma_bullet_count = 5,
                 
                 # Add record_alien_kills below:
                 record_alien_kills = {
@@ -96,8 +96,8 @@ editor:
         # Add shoot_alien function below
         @sp.entry_point
         def shoot_alien(self, alien_type): 
-            # Reduce bullet_gem_count by 1
-            self.data.bullet_gem_count -= 1
+            # Reduce plasma_bullet_count by 1
+            self.data.plasma_bullet_count -= 1
             
             # Record the alien that was shot
             # and then increase it by 1 below
@@ -108,19 +108,23 @@ editor:
     def test():
         scenario = sp.test_scenario()
         
-        crypto_bot_test_contract =  CryptoBot(life_state = True)
+        test_bot =  Cryptobot(life_state = True)
         
-        scenario += crypto_bot_test_contract
+        scenario += test_bot
       
         # Use shoot_alien to kill 1 simple aliens and 1 boss alien
-        scenario += crypto_bot_test_contract.shoot_alien("simple_alien")
-        scenario += crypto_bot_test_contract.shoot_alien("boss_alien")
+        scenario += test_bot.shoot_alien("simple_alien")
+        scenario += test_bot.shoot_alien("boss_alien")
 ---
 
 ### Intro: 
 Let us quickly understand how maps are handled under the hood in SmartPy! 
 
 In the later half of the chapter, you will adding the ability to shoot as well as the ability to record alien kills!
+
+<img src="https://media.giphy.com/media/tnqluTBR5y4ve/giphy.gif" alt="drawing" style="display: block;width: 80%; margin: 40px auto"/>
+
+
 
 ## Study Time: 
 
@@ -137,7 +141,8 @@ You might recognize the familiarity with Python’s [dictionaries](https://docs.
 Maps are represented by type `sp.TMap(key, value)` in SmartPy. 
 
 ```python
-## record_alien_kills is a variable that records your kill count for various types of aliens. 
+## record_alien_kills is a variable that 
+## records your kill count for various types of aliens. 
 self.init(
             record_alien_kills = {
                     "simple_alien": sp.nat(0), 
@@ -169,22 +174,24 @@ Notes:
 
 #### New Feature request:
 
-Your `CryptoBot` seems to be missing the most important ability: the ability to kill! Without it your CryptoBot is as good as dead 💀
+Your `Cryptobot` seems to be missing it's most important ability: **the ability to kill!** 
 
-Let’s also add the ability to record alien kills. This is going to be important to analyze how your `CryptoBot` is fairing in respect to other `CryptoBot`'s in the world. 
+Without it your cryptobot is as good as dead 💀
+
+Let’s also add the ability to record alien kills. This is going to be important to analyze how your `Cryptobot` is fairing in respect to other `Cryptobot`'s in the world. 
 
  
 
 #### Step-by-step walkthrough: 
 
-1. Add `bullet_gem_count ` to our contract's storage and initialize with <span class="string-highlight">5</span> bullets. 
+1. Add `plasma_bullet_count ` to our contract's storage and initialize with <span class="string-highlight">5</span> bullets. 
 2. Add `record_alien_kills` to our contract's storage and initialize with: 
     * key `simple_alien` and it's value as <span class="string-highlight">0</span> of type `sp.TNat`
 
     * key `boss_alien` and it's value as <span class="string-highlight">0</span> of type `sp.TNat`
 
 3. Complete the `shoot_alien` function's code by adding code: 
-    * to reduce `bullet_gem_count` by <span class="string-highlight">1</span>.
+    * to reduce `plasma_bullet_count` by <span class="string-highlight">1</span>.
     * use `alien_type` argument as key to access it's value in `record_alien_kills` map and increase it by  <span class="string-highlight">1</span>. 
 
 
