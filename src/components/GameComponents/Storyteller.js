@@ -61,12 +61,14 @@ const StoryTeller = ({ display, plantType }) => {
               >
                 <Heading>Save the Planet</Heading>
                 <SubHeading style={{ padding: '0 2rem' }}>
-                  The school has bestowed upon you the <b> {plantType} </b>gem!
-                  <br /> Your task now is to incubate the gem and help it evolve
-                  before the aliens reach you.
+                  The school has bestowed upon you the <b> {plantType} gem</b>!
                   <br />
-                  After completing all chapters, you will help your
-                  fully-evolved Crypto bot in aiming to kill the aliens!
+                  <br />
+                  Your task now is to assemble your{' '}
+                  <b> {plantType} cryptobot </b> and finally power it with the
+                  magical
+                  <b> {plantType} gem</b> to give it alien-killing cosmic
+                  superpowers!
                 </SubHeading>
                 <br />
                 <div
