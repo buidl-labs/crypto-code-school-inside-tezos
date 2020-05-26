@@ -33,7 +33,7 @@ const missing = {
   'import smartpy as sp': 'import statement missing or invalid',
 
   // chapter 4
-  'class CryptoBot(sp.Contract):':
+  'class Cryptobot(sp.Contract):':
     'Error in smart contract code: class (Contract) declaration missing or invalid',
   // chapter 5
   'def __init__(self):':
@@ -50,7 +50,7 @@ const missing = {
   pass:
     'Error in smart contract code: cannot have an empty function (add `pass`)',
 
-  '@sp.add_test(name = "Test CryptoBot Contract")':
+  '@sp.add_test(name = "Test Cryptobot Contract")':
     'Error in testing code: @sp.add_test decorator missing or invalid',
 
   'def test():': 'Error in testing code: test function declaration error',
@@ -58,11 +58,11 @@ const missing = {
   'scenario = sp.test_scenario()':
     'Error in testing code: invalid or missing test scenario declaration',
 
-  'crypto_bot_test_contract = CryptoBot()':
-    'Error in testing code: invalid or missing CryptoBot class invokation',
+  'test_bot = Cryptobot()':
+    'Error in testing code: invalid or missing Cryptobot class invokation',
 
-  'scenario += crypto_bot_test_contract':
-    'Error in testing code: invalid or missing crypto_bot_test_contract assignment to scenario',
+  'scenario += test_bot':
+    'Error in testing code: invalid or missing test_bot assignment to scenario',
 
   '@sp.entry_point':
     'Error in smart contract code: @sp.entry_point decorator missing or invalid',
@@ -73,7 +73,7 @@ const missing = {
   'self.data.name = new_name':
     'Error in smart contract code: invalid or missing new_name assignment to self.data.name',
 
-  'scenario += crypto_bot_test_contract.change_name("punky terminator")':
+  'scenario += test_bot.change_name("punky terminator")':
     'Error in testing code: invalid or missing change_name test call',
 
   'def __init__(self, life_state):':
@@ -82,10 +82,10 @@ const missing = {
   'is_alive = life_state':
     'Error in smart contract code: invalid or missing is_alive assignment',
 
-  'crypto_bot_test_contract =  CryptoBot(life_state = True)':
-    'Error in testing code: life_state is missing or invalid in CryptoBot invocation',
+  'test_bot =  Cryptobot(life_state = True)':
+    'Error in testing code: life_state is missing or invalid in Cryptobot invocation',
 
-  'scenario.verify(crypto_bot_test_contract.data.is_alive == True)':
+  'scenario.verify(test_bot.data.is_alive == True)':
     'Error in testing code: invalid or missing scenario.verify helper method call',
 
   //******************/
@@ -113,30 +113,30 @@ const missing = {
   'self.data.coordinate_y += update_to':
     'Error in smart contract code: invalid or missing coordinate_y assignment',
 
-  'scenario += crypto_bot_test_contract.move_horizontally(2)':
+  'scenario += test_bot.move_horizontally(2)':
     'Error in testing code: invalid or missing move_horizontally test call',
 
-  'scenario += crypto_bot_test_contract.move_vertically(1)':
+  'scenario += test_bot.move_vertically(1)':
     'Error in testing code: invalid or missing move_vertically test call',
 
   //******************/
   //For chapter 11
-  'bullet_gem_count = 5,':
-    'Error with smart contract code: invalid or missing bullet_gem_count variable init. in contract storage',
+  'plasma_bullet_count = 5,':
+    'Error with smart contract code: invalid or missing plasma_bullet_count variable init. in contract storage',
 
   'record_alien_kills = {':
     'Error with smart contract code: invalid or missing record_alien_kills variable init. in contract storage',
 
-  'self.data.bullet_gem_count -= 1':
-    'Error with smart contract code: invalid or missing bullet_gem_count usage in shoot_alien entry point function scope',
+  'self.data.plasma_bullet_count -= 1':
+    'Error with smart contract code: invalid or missing plasma_bullet_count usage in shoot_alien entry point function scope',
 
   'self.data.record_alien_kills[alien_type] += 1':
     'Error with smart contract code: invalid or missing record_alien_kills usage in shoot_alien entry point function scope',
 
-  'scenario += crypto_bot_test_contract.shoot_alien("simple_alien")':
+  'scenario += test_bot.shoot_alien("simple_alien")':
     'Error with testing code: invalid or missing shoot_alien test call to kill "simple_alien"',
 
-  'scenario += crypto_bot_test_contract.shoot_alien("boss_alien")':
+  'scenario += test_bot.shoot_alien("boss_alien")':
     'Error with testing code: invalid or missing shoot_alien test call to kill "boss_alien"',
 
   //******************/
@@ -144,23 +144,23 @@ const missing = {
   'def __init__(self, life_state, manager_address):':
     'Error with smart contract code: constructor initialization require a `self`, `life_state` and `manager_address` function parameters',
 
-  'crypto_bot_manager = manager_address,':
-    'Error with smart contract code: crypto_bot_manager variable initialization is missing/invalid in contract storage',
+  'bot_manager = manager_address,':
+    'Error with smart contract code: bot_manager variable initialization is missing/invalid in contract storage',
 
   'my_address = sp.address("tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj")':
     'Error with smart contract code: my_address of type `sp.TAddress` assignment is missing or is invalid',
 
-  'crypto_bot_test_contract =  CryptoBot(life_state = True, manager_address = my_address)':
-    'Error with testing code: manager_address key missing or invaild in CryptoBot invokation call',
+  'test_bot =  Cryptobot(life_state = True, manager_address = my_address)':
+    'Error with testing code: manager_address key missing or invalid in Cryptobot invokation call',
 
   //For chapter 13
-  'sp.verify(self.data.crypto_bot_manager == sp.sender, message = "Error: you are not the manager of this CryptoBot")':
+  'sp.verify(self.data.bot_manager == sp.sender, message = "Error: you are not the manager of this Cryptobot")':
     'Error with smart contract code: invalid or missing sp.verify method call',
 
-  'scenario += crypto_bot_test_contract.shoot_alien("simple_alien").run(sender = my_address)':
+  'scenario += test_bot.shoot_alien("simple_alien").run(sender = my_address)':
     'Error with testing code: invalid or missing shoot_alien call test call with my_address as caller',
 
-  'scenario += crypto_bot_test_contract.shoot_alien("boss_alien").run(sender = my_address)':
+  'scenario += test_bot.shoot_alien("boss_alien").run(sender = my_address)':
     'Error with testing code: invalid or missing shoot_alien call test call with my_address as caller',
 
   //For chapter 14
@@ -169,7 +169,7 @@ const missing = {
   'sp.failwith("Error: you ran out of bullets! Please buy more!")':
     'Error in smart contract code: invalid or missing sp.failwith helper method call in sp.else block',
 
-  'sp.if self.data.bullet_gem_count >= 1:':
+  'sp.if self.data.plasma_bullet_count >= 1:':
     'Error in smart contract code: invalid or missing sp.if block initialization',
 
   //chapter 2
