@@ -215,8 +215,8 @@ const Glow = styled.div`
   }
 `;
 export const Gem = styled(randomRobot.gem[generatedPlantId.gemId])`
-  width: 70%;
-  height: 70%;
+  width: 15%;
+  height: 15%;
   position: absolute;
   top: 14%;
   left: 2.5%;
