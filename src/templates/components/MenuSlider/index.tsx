@@ -35,7 +35,7 @@ const ContentMenu = ({ openDrawer = false, toggle }: Props) => {
               <>
                 <ChapterLink
                   partiallyActive={true}
-                  activeStyle={{ background: '#18B77E' }}
+                  activeStyle={{ background: '#2897ff' }}
                   to={`/lesson/${chapter.slug}`}
                 >
                   {chapter.chapter}: {chapter.title}

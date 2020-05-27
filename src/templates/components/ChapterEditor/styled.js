@@ -9,7 +9,7 @@ export const ContractFile = styled.div`
   justify-content: space-between;
   align-items: center;
   grid-area: contractFile;
-  background: #112425;
+  background: #12293c;
   height: ${ContractFileHeight};
   width: 100% !important;
 
@@ -30,11 +30,11 @@ export const ContractFile = styled.div`
   }
 
   > p {
-    background: #1b3738;
+    background: #253f54;
     display: inline-block;
     margin-left: 1rem;
-    color: #729e9f;
-    padding-top: 5px;
+    color: #64839a;
+    padding-top: 10px;
     padding-right: 25px;
     padding-left: 25px;
     margin-bottom: 0;
@@ -49,7 +49,7 @@ export const Editor = styled.div`
 `;
 export const Option = styled.div`
   grid-area: option;
-  background: #112425;
+  background: #12293b;
   height: ${OptionHeight};
   display: flex;
   justify-content: flex-end;
@@ -61,7 +61,7 @@ export const Option = styled.div`
 export const CheckAnswerButton = styled.button`
   display: flex;
   padding: 0 30px 0 25px;
-  background-color: #18b77e;
+  background-color: #2897ff;
   color: #fff;
   margin: 0 15px;
   border: none;
@@ -75,7 +75,7 @@ export const CheckAnswerButton = styled.button`
   }
 
   :hover {
-    background: #66cca7;
+    background: #3e97ea;
     color: #fff;
   }
 
@@ -90,7 +90,7 @@ export const CheckAnswerButton = styled.button`
 export const ShowAnswerButton = styled.button`
   display: flex;
   padding: 0 30px 0 20px;
-  background-color: #162f30;
+  background-color: #203d54;
   color: #fff;
   margin: 0 10px;
   border: none;
@@ -104,7 +104,7 @@ export const ShowAnswerButton = styled.button`
   }
 
   :hover {
-    background: #436061;
+    background: #2a4961;
     color: #fff;
   }
 

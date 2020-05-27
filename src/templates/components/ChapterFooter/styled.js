@@ -4,7 +4,7 @@ import { FooterHeight } from '../../chapter.styled';
 
 export const Footer = styled.footer`
   grid-area: footer;
-  background: #0e1817;
+  background: #091a28;
   height: ${FooterHeight};
   display: flex;
   justify-content: space-between;

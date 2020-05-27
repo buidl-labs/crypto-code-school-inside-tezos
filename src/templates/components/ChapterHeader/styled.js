@@ -4,7 +4,7 @@ import { HeaderHeight } from '../../chapter.styled';
 export const Header = styled.header`
   grid-area: header;
   height: ${HeaderHeight};
-  background-color: #0e1817;
+  background-color: #091a28;
   display: flex;
   justify-content: space-between;
   align-items: center;
