@@ -13,6 +13,8 @@ import StoryTeller from 'src/components/GameComponents/Storyteller';
 import Title from 'src/assets/GameAssets/title.svg';
 import House from 'src/assets/GameAssets/house.svg';
 import ForestLand from 'src/assets/GameAssets/forestland.svg';
+import Stars from 'src/assets/GameAssets/stars.svg';
+import Planet from 'src/assets/GameAssets/planet.svg';
 
 // Custom styles and styled images
 import Layout from 'src/components/Layout/layout';
@@ -65,7 +67,7 @@ const Game = () => {
     newZombie.style.display = 'block';
     newZombie.classList.add('zombie');
     newZombie.classList.add('zombie-transition');
-    newZombie.style.bottom = `${randomNumber(8, 12)}%`;
+    newZombie.style.bottom = `${randomNumber(4, 7)}%`;
     gameContainer.current.appendChild(newZombie);
     moveZombie(newZombie);
   };
@@ -75,7 +77,7 @@ const Game = () => {
       let xPosition = parseInt(
         window.getComputedStyle(zombie).getPropertyValue('left'),
       );
-      if (xPosition <= window.innerWidth / 1.1) {
+      if (xPosition <= window.innerWidth / 1.3) {
         zombie.style.left = `${xPosition - 1}px`;
         setStoryModalDisplay(true);
         setTimeout(() => {
@@ -91,7 +93,7 @@ const Game = () => {
   const randomNumber = (start, end) => Math.floor(Math.random() * end) + start;
 
   const props = useSpring({
-    delay: 2000,
+    delay: 4000,
     config: { tension: 300, friction: 60 },
     from: {
       height: '0%',
@@ -105,19 +107,19 @@ const Game = () => {
     },
   });
 
-  const slideFromTop = useSpring({
-    delay: 4000,
-    config: { ...config.gentle },
-    from: {
-      height: '0%',
-    },
-    to: async (next, cancel) => {
-      await next({
-        height: '10%',
-        zIndex: 200,
-      });
-    },
-  });
+  // const slideFromTop = useSpring({
+  //   delay: 4000,
+  //   config: { ...config.gentle },
+  //   from: {
+  //     height: '0%',
+  //   },
+  //   to: async (next, cancel) => {
+  //     await next({
+  //       height: '10%',
+  //       zIndex: 200,
+  //     });
+  //   },
+  // });
 
   return (
     <PageTransition
@@ -148,8 +150,22 @@ const Game = () => {
           </StorylineHeader>
           <StoryLineContainer id="game-container" ref={gameContainer}>
             <StoryTeller display={showStoryModal} plantType={plantType} />
-            <RightCloud />
-            <LeftCloud />
+            <Planet
+              style={{
+                top: '10%',
+                position: 'absolute',
+                zIndex: '-1',
+              }}
+            />
+            <Stars
+              style={{
+                top: '20%',
+                position: 'absolute',
+                zIndex: '-1',
+              }}
+            />
+            <RightCloud style={{ top: '25%' }} />
+            <LeftCloud style={{ top: '35%' }} />
             <div id="initialzombie" ref={zombieRef} style={{ display: 'none' }}>
               <Zombie />
             </div>

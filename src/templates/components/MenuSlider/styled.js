@@ -54,7 +54,7 @@ export const ChapterLink = styled(Link)`
   transition: 0.25s ease-in;
 
   :hover {
-    background: #202c2a;
+    background: rgba(109, 179, 243, 0.1);
     color: #fff;
   }
 `;
