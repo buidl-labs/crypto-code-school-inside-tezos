@@ -49,17 +49,16 @@ export const Output = styled.div`
   display: flex;
   justify-content: space-between;
   height: ${OutputHeaderHeight};
-  background: #112425;
+  background: #12293b;
 
   > div {
-    background: #1b3738;
+    background: #253f54;
     display: inline-block;
     margin-left: 1rem;
-    color: #729e9f;
-    padding: 10px 10px 0 10px;
+    color: #64839a;
+    padding: 8px 10px 0 10px;
     border-top: 1px solid #112425;
     font-family: Roboto;
-    margin: 1p;
   }
 
   span {

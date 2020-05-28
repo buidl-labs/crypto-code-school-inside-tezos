@@ -161,7 +161,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           ],
           colors: {
             'editor.foreground': '#F8F8F8',
-            'editor.background': '#1B3738',
+            'editor.background': '#253F54',
             'editor.selectionBackground': '#DDF0FF33',
             'editor.lineHighlightBackground': '#FFFFFF08',
             'editorCursor.foreground': '#A7A7A7',
@@ -421,7 +421,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                 <div
                   style={{
                     height: `${OutputContentHeight}`,
-                    background: '#1B3738',
+                    background: '#253f54',
                     color: '#fff',
                   }}
                 >

@@ -49,8 +49,8 @@ export const GameContainer = styled(animated.section)`
   left: 0;
   background: radial-gradient(
     198.67% 198.67% at 53.06% -50.22%,
-    #183338 53.32%,
-    #258c86 100%
+    #01181d 53.32%,
+    #20657b 100%
   );
   z-index: 1;
   overflow-y: hidden;
@@ -285,7 +285,7 @@ export const ModalBottom = styled.div`
   overflow-y: auto;
 `;
 
-export const Heading = styled.p`
+export const Heading = styled.h1`
   font-family: Sigmar One;
   font-style: normal;
   font-weight: normal;
@@ -293,7 +293,8 @@ export const Heading = styled.p`
   line-height: 77px;
   text-align: center;
   letter-spacing: -0.1em;
-  color: #29cb6a;
+  color: #2897ff;
+  margin: 0;
 `;
 
 export const SubHeading = styled.p`
@@ -308,7 +309,7 @@ export const SuccessLights = styled(SuccessLightsSvg)`
 
 export const ProceedLink = styled.button`
   padding: 18px 30px;
-  background: #29cb6a;
+  background: #2897ff;
   border: none;
   outline: none;
   color: #fff;
@@ -325,7 +326,7 @@ export const ProceedLink = styled.button`
     left: 0;
     height: 100%;
     width: 100%;
-    background: #29cb6a;
+    background: #2897ff;
     transform: scale(0.9);
     filter: blur(15px);
     opacity: 0.5;
@@ -334,7 +335,7 @@ export const ProceedLink = styled.button`
   }
 
   :hover {
-    box-shadow: 0 0 0 0.4rem rgba(102, 204, 167, 0.25);
+    box-shadow: 0 0 0 0.4rem rgba(40, 151, 255, 0.25);
   }
 
   :hover:before {

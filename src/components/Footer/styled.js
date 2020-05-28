@@ -9,16 +9,16 @@ export const Footer = styled.footer`
   justify-content: space-between;
 
   p {
-    background: #152023;
+    background: #001c28;
     padding-bottom: 20px;
     text-align: center;
-    color: #335a55;
+    color: #768b94;
     margin-bottom: 0;
   }
 `;
 
 export const FooterInner = styled.div`
-  background: #152023;
+  background: #001c28;
   display: flex;
   justify-content: space-between;
   list-style: none;

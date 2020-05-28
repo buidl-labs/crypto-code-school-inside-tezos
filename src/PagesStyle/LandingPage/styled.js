@@ -172,7 +172,7 @@ export const StartLink = styled(Link)`
 export const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
-  padding-bottom: 10vh;
+  padding: 4rem 0 7rem 0;
 `;
 
 export const GridContainer = styled.div`

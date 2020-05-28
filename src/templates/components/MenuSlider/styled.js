@@ -11,7 +11,7 @@ export const SideDrawer = styled.div`
   box-shadow: 1px 0px 7px rgba(0, 0, 0, 0.5);
   transform: ${props => (props.show ? 'translateX(0)' : 'translateX(-130%)')};
   transition: transform 0.3s ease-out;
-  background-color: #0e1817;
+  background-color: #091a28;
   overflow-y: auto;
 
   ul {
@@ -54,7 +54,7 @@ export const ChapterLink = styled(Link)`
   transition: 0.25s ease-in;
 
   :hover {
-    background: #202c2a;
+    background: rgba(109, 179, 243, 0.1);
     color: #fff;
   }
 `;

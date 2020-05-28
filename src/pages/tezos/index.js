@@ -73,14 +73,17 @@ const HomePage = () => {
               you to write smart contracts in SmartPy. Assemble your own
               cryptobot that unleashes hell on the incoming alien invasion!
             </HeroSubheading>
+            <StyledLink style={{ margin: '0.67em 0' }} to="/tezos/overview">
+              Start Learning
+            </StyledLink>
             <InnerContainer>
               <div>
                 <Plant />
               </div>
               <div>
-                <Link to="/tezos/overview">
+                {/* <Link to="/tezos/overview">
                   <StartLearning />
-                </Link>
+                </Link> */}
               </div>
               <div>
                 <Zombie />
@@ -90,10 +93,10 @@ const HomePage = () => {
         </HomepageHeroImage>
         <div
           style={{
-            background: 'linear-gradient(180deg, #1C423C 0%, #366961 100%)',
+            background: 'linear-gradient(180deg, #05323D 0%, #05323D 100%)',
           }}
         >
-          <GridContainer style={{ paddingTop: '10rem' }}>
+          <GridContainer style={{ paddingTop: '6rem' }}>
             <div className="render-second-in-mobile-view">
               <img src={learningInterface} width="90%" height="90%" />
             </div>
@@ -110,7 +113,7 @@ const HomePage = () => {
               </p>
             </FlexContainer>
           </GridContainer>
-          <GridContainer>
+          <GridContainer style={{ marginTop: '5rem' }}>
             <FlexContainer>
               <h2>
                 Assemble your Cryptobot to fight against an alien invasion!

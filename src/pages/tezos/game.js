@@ -15,6 +15,8 @@ import Title from 'src/assets/GameAssets/title.svg';
 import House from 'src/assets/GameAssets/house.svg';
 import ForestLand from 'src/assets/GameAssets/forestland.svg';
 import StartSymbol from 'src/assets/GameAssets/start.svg';
+import Stars from 'src/assets/GameAssets/stars.svg';
+import Planet from 'src/assets/GameAssets/planet.svg';
 
 // Custom styles and styled images
 import Layout from 'src/components/Layout/layout';
@@ -128,7 +130,7 @@ const Game = () => {
     newZombie.id = `zombie-${zombieIndex}`;
     newZombie.classList.add('zombie');
     newZombie.classList.add('zombie-transition');
-    newZombie.style.bottom = `${randomNumber(9, 12)}%`;
+    newZombie.style.bottom = `${randomNumber(9, 13)}%`;
     gameContainer.current.appendChild(newZombie);
     moveZombie(newZombie);
   };
@@ -293,6 +295,20 @@ const Game = () => {
           ) : (
             <GameOverModal totalDeadZombies={totalDeadZombies} status="won" />
           )}
+          <Planet
+            style={{
+              top: '10%',
+              position: 'absolute',
+              zIndex: '-1',
+            }}
+          />
+          <Stars
+            style={{
+              top: '20%',
+              position: 'absolute',
+              zIndex: '-1',
+            }}
+          />
           <RightCloud />
           <LeftCloud />
           <Instructions id="instructions">Use Spacebar to shoot</Instructions>
@@ -315,7 +331,7 @@ const Game = () => {
                 <Plant />
               </PlantContainer>
               <div id="initialzombie" ref={zombieRef}>
-                <Zombie />
+                <Zombie positionBottom={'-35px'} />
               </div>
             </>
           )}
