@@ -66,9 +66,11 @@ editor:
                 message = "Error: non manager call"
             )
 
-            self.data.plasma_bullet_count -= 1
-            
-            self.data.record_alien_kills[alien_type] += 1
+            sp.if self.data.plasma_bullet_count >= 1:
+                self.data.plasma_bullet_count -= 1
+                self.data.record_alien_kills[alien_type] += 1
+            sp.else:
+                sp.failwith("Error: you ran out of bullets! Please buy more!")
 
         
     @sp.add_test(name = "Ending")
@@ -157,9 +159,11 @@ editor:
                 message = "Error: non manager call"
             )
 
-            self.data.plasma_bullet_count -= 1
-            
-            self.data.record_alien_kills[alien_type] += 1
+            sp.if self.data.plasma_bullet_count >= 1:
+                self.data.plasma_bullet_count -= 1
+                self.data.record_alien_kills[alien_type] += 1
+            sp.else:
+                sp.failwith("Error: you ran out of bullets! Please buy more!")
 
         
     @sp.add_test(name = "Ending")
@@ -201,7 +205,7 @@ As you can see on the right side, we have assembled all the pieces of your `Cryp
 
 
 
-You can also tinker around with the final code on [SmartPy’s online IDE](https://smartpy.io/demo/index.html?code=eJzVVU2P0zAQvedXWNlLIkpFlwWtKlVCqlYCrTix4gBClptMW9PEDrbTxYv474zz0cRNqsJqJcCn2H7zPPNmMsPzQipDdM6UKSxhmugiCJKMaU2WyhZGrqSJdDFdSmEUS0w8DwKCK4U1oZQLbiiNNGTrCcmZYBtQlKWpAq0nJONroNowA2hFmnX4cEZTRxAdjtzC92jDRBYDTg8qWA6ICQ2onAtmpAp9ANeUZXzvQJ0vPsTbJFKq1DEB_Y42GDYXJnoRT07CbA3D7yHM2xQoac7oqswyMDSRpTBo@moSeCgFCVI7p0HQHc8yjaAfHsStUPO8yKDGhfOTHlTYldT6LPLnuOdx7d4bNAPMv6WFREUOBZBsmdgAdXloakDAfbXtJRxt96D42vp5rtKfMsOmXsYrOTWIFNSRiznmHzEu4TdKSTUnQoq2QEjCsiw89tt_pymX1sXgEOmp8HK5B7qVij9g8SO_bYIsi9Tl3si_HuVo0ro3vXp@tugc_83YMSLDkzOR_zcSWF8CP4BTOuitRK@r36fRoP45jS3Gu9q_Uu1jDef5gsxONOLKZth@PnfRfnHyzeqnAicX9mRqQJuo7cM3ApXehHHghKtuGoV0AoIpLutm6W5oexTFXS1eXJBlNXneib3cMcOlqM5z2_b_mqDZRKF5mH2w5ctblny6TuzV5fVrdrVnS5Dvzf23j7dvd0x@DRt1qldRfKToTbaj@eImjh0bYHhxp0rwnb1DSgwY50E9G_1YUa32zc5q7Hbab6NhUYqdJb2RFk9V6WrPFYnnXzykbWvvQF2ltRuDgyhG_Rn2vcs_cWLI1esjs0cz9f9EfwA@DWVvTp4j_AX6Oq8L). Try running the test by clicking on the ▶️ button!
+You can also tinker around with the final code on [SmartPy’s online IDE](https://smartpy.io/demo/index.html?code=eJzVVd9v0zAQfu9f4WUvqSgVHQNNlYaQqkmgCQmJiQcQstzkspo6drCdDg_xv3POjyZuUg0Q0oSf4vjz3Xf3ne94XihticmZtoUjzBBTTCaJYMaQlXaFVWtlY1PMV0pazRI7XU4mBFcKGaGUS24pjQ2IbEZyJtktaMrSVIMxMyJ4BtRYZgFvkWbtP_yluTcQ73_5hf5oY4lcDmwGUMlyQExkQedcMqt0FAK4oUzwnQd1XEJIsEmU0qm3BPQ73sGwubTxs@nsKMzVMPwewoJNgSnNGV2XQoCliSqlxasvZpMApSFB0540SLrlQhgE_QggfkWG54WAGhctjzKosGtlzIPIn@PMpzW913gNUH9HC4UZ2RdAsmHyFqjXoakBCXfVtic43t2B5pkLda7kT5ll80DxKp0GZAr6gGKO@iPGC36ltdJLIpVsC4QkTIjokHfopymXluJkH@mx8HK1A7pRmt9j8aN91wRZFqnX3qpHj3JUtM5nUM9PLjvivxk7RmR58kDk_00KXJiCMIBjeTAbhayr59PkoH6c1hXjXe1RkzDKh2c992N96NUlWSyP0B3DP0X8EfiwgX3u8vXFC7DoUwNh4MBzMc8YF3fcbuI2cqdKopkkqrREZaTmYk7IewHMAO4dlquGk6h59hMvJk4MasHYuJ0SVxLr4BYxXtbqpNHPJCCZ5qpu5f6Etr_iafdSTk_JqpqLb@VObZnlSlb_c9dOp9pAs4kje7_44Mrn1yz5dJG487OLl@x8x1ag3tm7bx@v32yZ@tpSrrxiaaCJ3tw9mH5@Hrqx8YoHN7qEkOwNmsSAcVrVkzuMFZVofXa3xk7n_SYfFaXcOtIbuNO5Lv3L8CUc8JsOzbYvY2@6KpluSA@iGOUz7Mpnf0JiaKvX5RZ_banfJ8Lx_G9M9qb4QwZ_ARd32_c-). Try running the test by clicking on the ▶️ button!
 
 
 ## Fighting Time! 
