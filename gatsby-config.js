@@ -4,12 +4,12 @@ const siteUrl =
 
 module.exports = {
   siteMetadata: {
-    title: `Crypto Code School`,
+    title: `Cryptoverse Wars`,
     author: `BUIDL Labs`,
-    description: `Interactive Code School for learning smart contract development on the Tezos blockchain using SmartPy`,
+    description: `An interactive Code School to build DApps on Tezos using SmartPy`,
     siteUrl,
     social: {
-      twitter: `BuidlLabs`,
+      twitter: `BUIDLabs`,
     },
   },
   plugins: [
