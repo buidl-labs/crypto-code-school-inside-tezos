@@ -69,6 +69,10 @@ export const CheckAnswerButton = styled.button`
   transition: 0.3s;
   outline: none;
 
+  svg {
+    align-self: center;
+  }
+
   span {
     align-self: center;
     vertical-align: middle;
@@ -101,6 +105,10 @@ export const ShowAnswerButton = styled.button`
   span {
     align-self: center;
     vertical-align: middle;
+  }
+
+  svg {
+    align-self: center;
   }
 
   :hover {
