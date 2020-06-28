@@ -144,7 +144,7 @@ const PlantGrowthModalView = ({ currentChapter, nextSlug, onToggle }) => {
         <StyledOutboundLink
           rel="noopener"
           target="_blank"
-          href={`https://twitter.com/intent/tweet?text=I just completed Chapter ${currentChapter} of Cryptoverse Wars - a metaverse created by @BUIDLabs to help in learning to build DApps on @Tezos using @SmartPy_io!%0D%0DHaving super fun building my own Cryptobot 🤖 to fight the 👽 invasion!%0D%0D&url=https%3A%2F%2Fcryptocodeschool.in%2Ftezos&hashtags=Tezos,SmartPy,DApps&related=twitter%3ABUIDLabs
+          href={`https://twitter.com/intent/tweet?text=I just completed Chapter ${currentChapter} of Cryptoverse Wars - a metaverse created by @buidllabs to help in learning to build DApps on @Tezos using @SmartPy_io!%0D%0DHaving super fun building my own Cryptobot 🤖 to fight the 👽 invasion!%0D%0D&url=https%3A%2F%2Fcryptocodeschool.in%2Ftezos&hashtags=Tezos,SmartPy,DApps&related=twitter%3ABUIDLabs
           `}
         >
           <FaTwitter />
