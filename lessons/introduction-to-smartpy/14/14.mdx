@@ -102,11 +102,11 @@ editor:
 
 ### Intro: 
 
-You would be already be pretty familiar with basic decision making in Python using `if...else` statements.  
+You should already be pretty familiar with basic decision making in Python using `if...else` statements.  
 
 In this chapter, we are going to understand how to go about writing decision making code inside smart contracts using SmartPy's `sp.if..sp.else` statements. 
 
-In later half of the chapter, we design an alerting system to ping us when our `Cryptobot` runs out of plasma bullets! 
+In the later half of the chapter, we will design an alerting system to ping us when our `Cryptobot` runs out of plasma bullets! 
 
 ![Alert Text](https://media.giphy.com/media/Tdpbuz8KP0EpQfJR3T/giphy.gif)
 
@@ -117,9 +117,9 @@ In later half of the chapter, we design an alerting system to ping us when our `
 
 We use `sp.if` over plain `if` for the following reasons: 
 
-1. In smart contracts, most of decision making tends to happen via placing conditions over values stored inside contract's storage. 
-    * Since decision making evaluation in smart contracts actually happens when smart contract's are being simulated or finally deployed to the Tezos blockchain, `sp.if` let's us execute decision making with contract's latest values in it's storage. 
-     * Since plain `if` doesn't have SmartPy's superpowers, you won't be able to bet whether it is executing on contract's latest updated values or not. 
+1. In smart contracts, most of decision making tends to happen via placing conditions over values stored inside the contract's storage. 
+    * Since decision making evaluation in smart contracts actually happens when smart contracts are being simulated or finally deployed to the Tezos blockchain, `sp.if` let's us execute decision making with the contract's latest values in it's storage. 
+     * Since plain `if` doesn't have SmartPy's superpowers, you won't be able to bet whether it is executing on the contract's latest updated values or not. 
 2. The difference between both comes from the environment in which they finally get to execute. 
 
 Hence whenever in doubt or you are running in weird errors, trust in SmartPy's superpowers and use the prefix `sp.`
@@ -185,7 +185,7 @@ Currently if you run out of bullets, your `shoot_alien` function will still be a
 
 ### Step by step walkthrough:
 
-Let's use `sp.if` to proceed forward with shooting only when `plasma_bullet_count` is greater than 1. If not, we will use `sp.failwith` to alert you that you run out of bullets!
+Let's use `sp.if` to proceed forward with shooting only when `plasma_bullet_count` is greater than or equal to 1. If not, we will use `sp.failwith` to alert you that you run out of bullets!
 
 1. Using `sp.if` add a condition to check `plasma_bullet_count` >= 1. Use `self.data.plasma_bullet_count` to access it. 
 2. Move the shooting code inside `sp.if` scope. 
