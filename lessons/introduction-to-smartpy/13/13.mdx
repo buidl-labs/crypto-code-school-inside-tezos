@@ -156,7 +156,7 @@ Let's start:
 2. In the `sp.verify`'s condition field: 
     * use `self.data.bot_manager` to access the address stored inside `bot_manager`. 
     * check it's equivalency with `sp.sender`:
-       * SmartPy automatically populates `sp.address` with the address that called the current entry point.
+       * SmartPy automatically populates `sp.sender` with the address that called the current entry point.
        * **This is an important concept to keep in mind as `sp.sender` is very useful when working with entry point functions.**
  
 3. In the `sp.verify`'s `message` field: 
