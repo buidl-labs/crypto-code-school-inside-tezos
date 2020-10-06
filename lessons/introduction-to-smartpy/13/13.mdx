@@ -156,7 +156,7 @@ Let's start:
 2. In the `sp.verify`'s condition field: 
     * use `self.data.bot_manager` to access the address stored inside `bot_manager`. 
     * check it's equivalency with `sp.sender`:
-       * SmartPy automatically populates `sp.address` with the address that called the current entry point.
+       * SmartPy automatically populates `sp.sender` with the address that called the current entry point.
        * **This is an important concept to keep in mind as `sp.sender` is very useful when working with entry point functions.**
  
 3. In the `sp.verify`'s `message` field: 
@@ -172,7 +172,7 @@ That will show them who is the boss! 😎
 Now since we have added that only the address stored inside `bot_manager` is able to call `shoot_alien` entry point function, we would also need to modify `shoot_alien` calls in our testing function: 
 
 1. As you remember, we had stored our user account address in `my_address`
-2. We will reference it when we are call our `shoot_alien` function by using the `run` method. 
+2. We will reference it when we call our `shoot_alien` function by using the `run` method. 
     * Syntax: `shoot_alien("<alien type>").run(sender = my_address)`
     * The above code tells SmartPy that we are calling `shoot_alien` with `sender` value as `my_address`. 
 4. SmartPy takes whatever address that was sent to `sender` and populates `sp.sender` in our `shoot_alien`'s function definition. 
