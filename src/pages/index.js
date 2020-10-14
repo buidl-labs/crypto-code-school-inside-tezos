@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { navigate } from 'gatsby';
 import SEO from 'src/components/Seo';
 import landingPage from 'src/images/landing_page.jpg';
+import './hover-preview.styles.css'; // Hover preview styles
 
 //redirect homepage view to /tezos
 const HomePage = () => {

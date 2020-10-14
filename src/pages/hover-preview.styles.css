@@ -1,0 +1,12 @@
+#tezos-hover-preview:hover::before {
+  content: 'Tezos is a technology for deploying a blockchain capable of modifying its own set of rules with minimal disruption to the network through an on-chain governance model. The Tezos blockchain is linked to a digital token known as a tez/tezzie or XTZ';
+  color: black;
+  background: white;
+  padding: 10px;
+  border: 2px solid black;
+  width: 300px;
+  z-index: 2;
+  position: absolute;
+  transform: translate(-10px, -100%);
+  cursor: pointer;
+}
