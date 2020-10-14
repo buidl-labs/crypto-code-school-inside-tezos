@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import PageTransition from 'gatsby-plugin-page-transitions';
+import PageTransition from '../../utils/pageTransition';
 
 // CSS
 // import '../assets/GameAssets/game.css';

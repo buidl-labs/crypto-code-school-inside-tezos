@@ -142,9 +142,6 @@ module.exports = {
       resolve: 'gatsby-plugin-root-import',
     },
     {
-      resolve: 'gatsby-plugin-page-transitions',
-    },
-    {
       resolve: `gatsby-plugin-typography`,
       options: {
         pathToConfigModule: `src/utils/typography`,
