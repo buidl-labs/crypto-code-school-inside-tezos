@@ -60,6 +60,10 @@ function SEO({ description, lang, image, meta, keywords, title, pathname }) {
                 name: 'google-site-verification',
                 content: '0l33QQ_a2I1oSyXr4TaAyRsKpKMdE3jimfhRNU9EgnA',
               },
+              {
+                name: 'ahrefs-site-verification',
+                content: '8cd0305e74b2fd42de579434ad307197d6dd94c55c34246110be242c4df562ea'
+              }
             ]
               .concat(
                 metaImage
