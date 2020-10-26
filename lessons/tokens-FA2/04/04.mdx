@@ -1,0 +1,259 @@
+---
+title: Interacting with Cyber Token
+chapter: Chapter 4
+slug: module-3/chapter-4
+editor:
+  language: python
+  startingCode: |
+    import smartpy as sp
+
+    # Import FA2 template
+    FA2 = sp.import_template("FA2.py")
+    # Define `Cryber_Token`
+    class Cyber_Token(FA2.FA2):
+        pass
+
+    @sp.add_test(name = "Fungible Token")
+    def test():
+        scenario = sp.test_scenario()
+        
+        admin = sp.test_account("Decentralized Dictator")
+        mark = sp.test_account("Mark")
+        elon = sp.test_account("tesla")
+
+        # Initialize Cyber_Token as cyber_token with single_asset = True
+        cyber_token = Cyber_Token(FA2.FA2_config(single_asset=True), admin.address)
+        scenario += cyber_token
+        
+        # mint 5 tokens to mark
+        
+        #mint 10 tokens to elon
+        
+        
+        #transfer 2 tokens from elon to mark.
+        
+            
+        
+        # create the FA2.View_consumer and add it to the scenario.
+        
+        
+        
+        def arguments_for_balance_of(receiver, reqs):
+            return (sp.record(
+                callback = sp.contract(
+                        FA2.Balance_of.response_type(),
+                        sp.contract_address(receiver),
+                        entry_point = "receive_balances").open_some(),
+                    requests = reqs))
+                    
+        # call the entry point balance_of to check elon's balance.
+        
+
+  answer: |  
+    import smartpy as sp
+
+    # Import FA2 template
+    FA2 = sp.import_template("FA2.py")
+    # Define `Cryber_Token`
+    class Cyber_Token(FA2.FA2):
+        pass
+
+    @sp.add_test(name = "Fungible Token")
+    def test():
+        scenario = sp.test_scenario()
+        
+        admin = sp.test_account("Decentralized Dictator")
+        mark = sp.test_account("Mark")
+        elon = sp.test_account("tesla")
+
+        # Initialize Cyber_Token as cyber_token with single_asset = True
+        cyber_token = Cyber_Token(FA2.FA2_config(single_asset=True), admin.address)
+        scenario += cyber_token
+        # mint 5 tokens to mark
+        scenario += cyber_token.mint(address = mark.address,
+                                    amount = 5,
+                                    symbol = 'CBT',
+                                    token_id = 0
+        ).run(sender = admin)
+        #mint 10 tokens to elon
+        scenario += cyber_token.mint(address = elon.address,
+                                    amount = 10,
+                                    symbol = 'CBT',
+                                    token_id = 0
+        ).run(sender = admin)
+        
+        #transfer 2 tokens from elon to mark.
+        scenario += cyber_token.transfer([
+            cyber_token.batch_transfer.item(from_ = elon.address, 
+                txs = [
+                    sp.record(amount = 2,
+                        to_ = mark.address,
+                        token_id = 0) 
+                ])
+            ]).run(sender = elon)
+            
+        
+        # create the FA2.View_consumer and add it to the scenario.
+        consumer = FA2.View_consumer(cyber_token)
+        scenario += consumer
+        
+        
+        def arguments_for_balance_of(receiver, reqs):
+            return (sp.record(
+                callback = sp.contract(
+                        FA2.Balance_of.response_type(),
+                        sp.contract_address(receiver),
+                        entry_point = "receive_balances").open_some(),
+                    requests = reqs))
+                    
+        # call the entry point balance_of to check elon's balance.
+        scenario += cyber_token.balance_of(arguments_for_balance_of(consumer, [
+                sp.record(owner = elon.address, token_id = 0)
+        ]))
+        
+---
+
+### Intro
+In this chapter we'll explore the different entry points FA2 offers to interact with it. 
+
+This is important as it'll help you gain a deeper understanding of the standard and later we'll use this knowledge to even see how you can interact with the `Cyber_Token` through Javascript in Module-3.
+
+After all, this is how the population in your civilization will interact with the currency.
+
+### Study time
+
+To see how to interact with FA2 based tokens, you need to first know what all entry points are available to us.
+
+**1. `transfer`**
+This entry point transfers tokens from one account to another.
+It accepts two arguments - 
+1. `from` - This specifies the address of the account from where the tokens need to be sent.
+2. `transactions` - It's a list and every item has is a dictionary that has three items - 
+    - `to` - this holds the address of the account tokens are being sent to.
+    - `amount` - amount of token to be transferred.
+    - `token_id` - specifies which token has to be transferred(as an FA2 contract can hold multiple tokens). `token_id` is always 0 in case `single_asset = True` for the contract.
+
+The `transfer` entry point loops through the transactions and for every item in the transaction, it checks if the tokens can be transferred based on the [`transfer policy`](https://gitlab.com/tzip/tzip/-/blob/master/proposals/tzip-12/tzip-12.md#default-transfer-permission-policy) - if they can be transferred, it sends the `amount` of tokens from the address passed as `from` to the account passed as the `to` in that item.
+**But, even if one transaction fails in the whole list, it has to cancel all others - either all of them happen or none of them happen.**
+
+Let's look at an example - 
+- Jon wants to sends Lisa and Mark 2 tokens each.
+- We'll call the transfer entry point with - 
+    - Jon's wallet as the address to `from`.
+    - As `transactions`, we'll send a list of transactions. 
+        1. First item in the list with hold the address of Lisa's wallet, 2 tokens as the amount and token_id as 0 because we only have one kind of token.
+        2. Second item will be the address to Mark's wallet, 2 tokens as amount and 0 as token_id.
+- Now, in case Jon has only 3 tokens but total he has to send 4. One scenario could be that he sends 2 tokens to Lisa and then the transaction fails for Mark. But remember, either all transaction will happen or all will fail. Hence, if Jon has less tokens than total needed for all the transactions, it will fail with the message - `"FA2_INSUFFICIENT_BALANCE"`(PS - even the [error messages are specified in the FA2 standard](https://gitlab.com/tzip/tzip/-/blob/master/proposals/tzip-12/tzip-12.md#error-handling).)
+
+
+**2. `balance_of`**
+As the name suggests, it tells you the amount of particular token an account holds. 
+
+Similar to `transfer`, it accepts a list of requests.
+Each item in the list holds -
+1. `owner` - Address of the account you want to check the balance for.
+2. `token_id` - ID of the token for which you want to check the balance.
+
+It goes through the list and sends to a `consumer` a `response` list, each item in the list has 2 fields - 
+1. `balance` - this is the amount of a specific token the account holds.
+2. `request` - this is the exact `request` that was sent to the entry point in the list.
+
+So, each item in the `response` list ends up looking like -
+
+
+| balance          | request         |
+| ---------------- | --------------- |
+| amount of tokens | owner, token_id |
+
+`balance_of` behaves differently than `transfer` in terms of logistics.
+Along with the `request` you also pass in a callback(contract) to `balance_of` and to the contract that has been passed in, `balance_of` sends the response.
+This is similar to how we implemented the intergration between our `Cryptobot` and `Market` in the previous module through **inter-contract calling**.
+Here what happens is, when calling `balance_of`, we also pass in a `consumer`(this **consumes** the result from the entry point) and `balance_of` sends the response the the `consumer` through an inter-contract call.
+
+> Note - Most of the entry points in FA2 perform **batch operations**; they accept a list of requests and processes it atomically. If one request fails, all of them fail(atomic updates).
+
+
+**3. `mint`**
+It creates a specified number of tokens in an account. This is how you'll jump-start your society's economy.
+FA2 standard doesn't specify any details for `mint` but the FA2 template in SmartPy has built a `mint` entry point that we can use.
+It accepts 4 arguments - 
+1. `address` - Address to the account where you want to mint the tokens.
+2. `amount` - Number of tokens you want to create.
+3. `symbol` - Symbol to represent this token(Like dollars have $).
+4. `token_id` - 0 in case you only have a single-asset fungible tokens. Used by FA2 standard to differentiate between different tokens. 
+
+
+So far we've explored 3 entry points available in entry points, down the line we'll explore a few more :cookie: 
+
+### Show me an example
+
+```python=
+@sp.add_test(name = "Fungible Token")
+def test():
+    scenario = sp.test_scenario()
+    admin = sp.test_account("Decentralized Dictator")
+    mark = sp.test_account("Mark")
+    
+    your_token = Your_Token(FA2.FA2_config(single_asset=True), admin.address)
+    scenario += your_token
+    scenario += your_token.mint(address = mark.address,
+                                amount = 10,
+                                symbol = 'YTK',
+                                token_id = 0).run(sender = admin)
+```
+Building on the previous example, here we're creating two more test accounts and `mint` 10 tokens each to them. 
+Keep in mind that `mint` can only be called by the `admin`.
+
+Now let's take a look at how you can transfer.
+```python=
+scenario += your_token.transfer(
+        [
+            your_token.batch_transfer.item(from_ = mark.address,
+            txs = [
+                    sp.record(to_ = elon.address,
+                                      amount = 5,
+                                      token_id = 0)
+            ])
+]).run(sender = mark)
+```
+Here, mark is sending elon 5 tokens. 
+You need to use `your_token.batch_transfer.item`(another helper implemented in the FA2 template) and pass the arguments `from_` and `txs`.
+You could choose to do it without `batch_transfer.item` as well, but then you would have to write a bit of logic yourself.
+Why write the logic yourself when it's coming baked in to the template directly.
+
+Now, you'd like to check how much balance `elon` and `mark` have - 
+```python=
+consumer = FA2.View_consumer(your_token)
+scenario += consumer
+    
+    
+def arguments_for_balance_of(receiver, reqs):
+    return (sp.record(
+        callback = sp.contract(
+                    FA2.Balance_of.response_type(),
+                    sp.contract_address(receiver),
+                    entry_point = "receive_balances").open_some(),
+                requests = reqs))
+                
+                
+scenario += your_token.balance_of(arguments_for_balance_of(consumer, [
+        sp.record(owner = elon.address, token_id = 0),
+        sp.record(owner = mark.address, token_id = 0),
+    ]))
+```
+First of all, we initialize our `consumer` contract. Remember, this is the contract which will accept the result from `balance_of`.
+Second, the function `arguments_for_balance_of` abstracts away some of the details for you to not worry about, but feel free to ponder on it for a couple minutes.
+Third, we call the `balance_of` entry point and as arguments we pass to it the `consumer` contract and a list of records which signify the accounts for which we need the balance.
+### #buidl-ing time
+ 
+#### New feature request!
+It's time to mint some tokens and bring to life your economy!
+
+#### Step by step walkthrough
+1. Minting tokens
+    1. Mint 5 tokens with symbol `'CBT'` and token_id as 0 to `mark`.
+    2. Mint 10 tokens with symbol `'CBT'` and token_id as 0 to `elon`.
+2. Transfer 2 tokens from `elon` to `mark`.
+3. Check `elon`'s balance.
+    1. Create an `FA2.View_consumer` as `consumer` and add it to the scenario
+    2. Call `balance_of` with necessary arugments to check `elon`'s balance. 

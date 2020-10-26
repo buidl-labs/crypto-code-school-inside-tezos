@@ -18,6 +18,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   const chapters = result.data.allMdx.nodes;
 
   chapters.forEach(chapter => {
+    console.log(chapter);
     actions.createPage({
       path: `/lesson/${chapter.frontmatter.slug}`,
       component: require.resolve('./src/templates/chapter.js'),

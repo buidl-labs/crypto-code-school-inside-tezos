@@ -1,0 +1,180 @@
+---
+title: Hiring a bot manager
+chapter: Chapter 6
+slug: module-3/chapter-6
+editor:
+  language: python
+  startingCode: |
+    import smartpy as sp
+
+    FA2 = sp.import_template("FA2.py")
+
+    class Cryptobot(FA2.FA2):
+        
+        @sp.entry_point
+        def mint(self, params):
+            sp.verify(sp.sender == self.data.administrator)
+            
+            if self.config.non_fungible:
+                sp.verify(params.amount == 1, "NFT-asset: amount <> 1")
+                sp.verify(~ self.token_id_set.contains(self.data.all_tokens, params.token_id), "NFT-asset: cannon mint the same token twice")
+            
+            user = self.ledger_key.make(params.address, params.token_id)
+            self.token_id_set.add(self.data.all_tokens, params.token_id)
+            sp.if self.data.ledger.contains(user):
+                self.data.ledger[user].balance += params.amount
+            sp.else:
+                self.data.ledger[user] = FA2.Ledger_value.make(params.amount)
+            
+            sp.if self.data.tokens.contains(params.token_id):
+                pass
+            sp.else:
+                self.data.tokens[params.token_id] = sp.record(
+                        token_id = params.token_id,
+                        symbol = params.symbol,
+                        name = "", 
+                        decimals = 0,
+                        extras = params.extras
+                    )
+                
+
+    @sp.add_test(name = "Cryptobot")
+    def test():
+        scenario = sp.test_scenario()
+        
+        admin = sp.test_account("Admin")
+        
+        mark = sp.test_account("Mark")
+        elon = sp.test_account("Mars")
+        
+        
+        cryptobot = Cryptobot(FA2.FA2_config(non_fungible = True), admin.address)
+        scenario += cryptobot
+        
+        
+        scenario += cryptobot.mint(address = mark.address, 
+                                amount = 1,
+                                symbol = 'CTB',
+                                token_id = 0,
+                                extras = { "value": "First bot"}).run(sender = admin)
+        
+        scenario += cryptobot.mint(address = elon.address,
+                                amount = 1,
+                                symbol = 'CTB',
+                                token_id = 1,
+                                extras = { "value": "Second bot" }).run(sender = admin)
+                                
+        # (1) Create a test account `operator` with the seed of "operator".              
+        
+        
+        # (2) Call entry point `update_operator` and give `operator` the access to transfer token with token_id 0 for `mark`.
+        
+
+
+  answer: |  
+    import smartpy as sp
+
+    FA2 = sp.import_template("FA2.py")
+
+    class Cryptobot(FA2.FA2):
+        
+        @sp.entry_point
+        def mint(self, params):
+            sp.verify(sp.sender == self.data.administrator)
+            
+            if self.config.non_fungible:
+                sp.verify(params.amount == 1, "NFT-asset: amount <> 1")
+                sp.verify(~ self.token_id_set.contains(self.data.all_tokens, params.token_id), "NFT-asset: cannon mint the same token twice")
+            
+            user = self.ledger_key.make(params.address, params.token_id)
+            self.token_id_set.add(self.data.all_tokens, params.token_id)
+            sp.if self.data.ledger.contains(user):
+                self.data.ledger[user].balance += params.amount
+            sp.else:
+                self.data.ledger[user] = FA2.Ledger_value.make(params.amount)
+            
+            sp.if self.data.tokens.contains(params.token_id):
+                pass
+            sp.else:
+                self.data.tokens[params.token_id] = sp.record(
+                        token_id = params.token_id,
+                        symbol = params.symbol,
+                        name = "", 
+                        decimals = 0,
+                        extras = params.extras
+                    )
+                
+
+    @sp.add_test(name = "Cryptobot")
+    def test():
+        scenario = sp.test_scenario()
+        
+        admin = sp.test_account("Admin")
+        
+        mark = sp.test_account("Mark")
+        elon = sp.test_account("Mars")
+        
+        
+        cryptobot = Cryptobot(FA2.FA2_config(non_fungible = True), admin.address)
+        scenario += cryptobot
+        
+        
+        scenario += cryptobot.mint(address = mark.address, 
+                                amount = 1,
+                                symbol = 'CTB',
+                                token_id = 0,
+                                extras = { "value": "First bot"}).run(sender = admin)
+        
+        scenario += cryptobot.mint(address = elon.address,
+                                amount = 1,
+                                symbol = 'CTB',
+                                token_id = 1,
+                                extras = { "value": "Second bot" }).run(sender = admin)
+                                
+        # (1) Create a test account `operator` with the seed of "operator".              
+        operator = sp.test_account("operator")
+        # (2) Call entry point `update_operator` and give `operator` the access to transfer token with token_id 0 for `mark`.
+        scenario += cryptobot.update_operators([
+                sp.variant("add_operator",
+                    cryptobot.operator_param.make(
+                        owner = mark.address,
+                        operator = operator.address,
+                        token_id = 0))
+            ]).run(sender = mark)
+        
+---
+### Intro
+Well now the people in your society have their own `Cryptobots`, but - there are only a few experts who know how to operate the `Cryptobot` effectively.
+Worry not, FA2 to the save here(again) - it allows you to appove `operator` accounts that have the permission to transfer on the `owner`'s behalf.
+
+
+### Study time
+There's an entry point we haven't explored yet - `update_operator`.
+`update_operator` accepts a list, and every item in the list includes - 
+1. `add_operator`/`remove_operater` - accepts a variant to specify whether you want to add an operator or remove an operator.
+2. `operator` - this is the address to the `operator`'s account.
+3. `owner` - this is the address ot the `owner`'s account.
+4. `token_id` - operator can only get access to one kind of token at a time, so you have to specify which token it should have access to.
+
+It's called like this - 
+```python=
+scenario += your_bot.update_operators([
+            sp.variant("add_operator",
+                your_bot.operator_param.make(
+                    owner = mark.address,
+                    operator = operator.address,
+                    token_id = 0))
+        ]).run(sender = mark)
+```
+Now, the `operator` account can `transfer` token with `token_id` 0 on behalf of `mark`.
+To remove an operator, all you have to do is replace `"add_operator"` with `"remove_operator"`.
+
+
+### #buidl-ing time
+ 
+#### New feature request!
+Mark is having troubles using his `Cryptobot` and he wants to hire an `operator`.
+
+#### Step by step walkthrough
+1. Create an `operator` account through `sp.test_account` with seed as "operator".
+2. Add `operator` as an operator for `mark` and give him the access to handle token with `token_id` 0.
