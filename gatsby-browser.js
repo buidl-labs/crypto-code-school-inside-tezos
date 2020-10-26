@@ -6,3 +6,8 @@
 
 // You can delete this file if you're not using it
 require('prismjs/themes/prism.css');
+exports.onClientEntry = () => {
+  window.onload = () => {
+    brython({ debug: 1, indexedDB: false });
+  };
+};
