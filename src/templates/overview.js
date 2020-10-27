@@ -49,22 +49,18 @@ function LessonsOverview({ data: { mdx: module } }) {
 
     useEffect(() => {
         //get the previous stored if available otherwise create a new one
-        console.log(module)
         let list = [];
         const listJSON =
-            typeof window != 'undefined' && localStorage.getItem('lesson-v1');
+            typeof window != 'undefined' && localStorage.getItem(module.frontmatter.filterBy);
         if (listJSON !== null) {
             list = JSON.parse(listJSON);
             //handle backward compatibility by removing chapters where current key isn't available
             list = list.filter(chapter => chapter && chapter.current);
             typeof window != 'undefined' &&
-                localStorage.setItem('lesson-v1', JSON.stringify(list));
-            // console.log('updatedList', updatedList);
-            // console.log('chapters', chapters);
+                localStorage.setItem(module.frontmatter.filterBy, JSON.stringify(list));
         }
-        //Generate chapter continuation route link
-        //check if first chapter zero is successfully completed or not
-        if (!chapterZeroCompleted) {
+        
+        if (!chapterZeroCompleted && module.frontmatter.slug === "module-01") {
             // console.log('storyline');
             setContinuationLink('/tezos/storyline');
             return;
@@ -73,14 +69,19 @@ function LessonsOverview({ data: { mdx: module } }) {
         // if no chapter completed --> show first-chapter
         // console.log('list', list);
         if (list.length === 0) {
-            setContinuationLink('/lesson/chapter-01');
+            setContinuationLink(module.frontmatter.next);
         } else if (list.length > 0) {
             const chapterSlug =
                 chapters[list[list.length - 1].current] &&
                 chapters[list[list.length - 1].current].slug;
             if (!chapterSlug) {
-                // if if last chapter completed --> show up-next page
-                setContinuationLink('/tezos/game');
+                if (module.frontmatter.slug === "module-01"){
+                    // if last chapter of module-01 completed --> show the game next.
+                    setContinuationLink('/tezos/game');
+                }else{
+                    // TODO: Figure out what the continuation link at the end has to be for rest of the modules
+                    setContinuationLink('#')
+                }
             } else {
                 // if 1st chapter completed show --> next chapter i.e 2nd chapter and so on
                 setContinuationLink(`/lesson/${chapterSlug}`);
