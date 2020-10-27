@@ -11,6 +11,7 @@ export const getChaptersIndex = (chapterList, currentSlug) => {
   const total = chapterList.length;
   //current chapter index
   const current = chapterList.findIndex(chapter => {
+    console.log(chapter.slug)
     return chapter.slug === currentSlug;
   });
   const nextChapterIndex = current + 1;
