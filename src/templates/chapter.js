@@ -248,7 +248,10 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
         />
       ) : null}
       <Container>
-        <ChapterHeader />
+        <ChapterHeader 
+          backLink={`/overview/${chapter.frontmatter.slug.slice(0, chapter.frontmatter.slug.indexOf('/'))}`}
+         
+        />
         <ChapterContent
           chapter={chapter.frontmatter.chapter}
           title={chapter.frontmatter.title}
