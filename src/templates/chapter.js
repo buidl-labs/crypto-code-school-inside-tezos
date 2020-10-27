@@ -35,6 +35,7 @@ export const query = graphql`
         title
         chapter
         slug
+        filterBy
         editor {
           language
           startingCode
@@ -74,12 +75,13 @@ Retrieving stored progress
 */
 
 const ChapterTemplate = ({ data: { mdx: chapter } }) => {
-  const chapterList = useChapters("module-1");
+  const chapterList = useChapters(chapter.frontmatter.filterBy);
   const [showModal, setModal] = useState(false);
   const [chapterCompletedSuccessfully, setChapterCompletionState] = useState(
     false,
   );
   const [index] = useState(() => {
+    
     const { current, total, nextSlug, prevSlug } = getChaptersIndex(
       chapterList,
       chapter.frontmatter.slug,
@@ -146,6 +148,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
   );
 
   useEffect(() => {
+  
     monaco
       .init()
       .then(monacoInstance => {

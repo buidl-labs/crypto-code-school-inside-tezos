@@ -19,7 +19,7 @@ import styled from '@emotion/styled';
 import StyledLink from 'src/components/StyledLink';
 
 function LessonsOverview() {
-  const chapters = useChapters("module-1");
+  const chapters = useChapters("lesson-1");
   const [chapterList, updateChapterList] = useState(chapters);
   const [continuationLink, setContinuationLink] = useState('/tezos/storyline');
   const [chapterZeroCompleted, setZeroChapterCompleted] = useState(() => {

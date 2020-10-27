@@ -9,6 +9,7 @@ const useChapters = (module) => {
             title
             slug
             chapter
+            filterBy
             editor {
               answer
               showEditor
@@ -22,12 +23,10 @@ const useChapters = (module) => {
     }
   `);
   return data.allMdx.nodes.filter(chapter => {
-    
-    console.log(!chapter.frontmatter.slug.includes("module"));
-    if(module == "module-1") return !chapter.frontmatter.slug.includes("module")
-    else return chapter.frontmatter.slug.includes(module)
-
-  }).map(chapter => ({
+    console.log(chapter.frontmatter.slug);
+    return chapter.frontmatter.filterBy === module;
+  })
+  .map(chapter => ({
     title: chapter.frontmatter.title,
     chapter: chapter.frontmatter.chapter,
     slug: chapter.frontmatter.slug,
