@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import useChapters from '../../../hooks/use-chapters';
 import {
   SideDrawer,
-  Backdrop,
+  Backdrop, 
   Title,
   ChapterLink,
   SliderHeader,
@@ -12,10 +12,12 @@ import { IoIosClose } from 'react-icons/io';
 interface Props {
   openDrawer: boolean;
   toggle(input: boolean): void;
+  currentModule: string;
 }
 
-const ContentMenu = ({ openDrawer = false, toggle }: Props) => {
-  const chapters = useChapters();
+const ContentMenu = ({ openDrawer = false, toggle, currentModule}: Props) => {
+  const chapters = useChapters(currentModule);
+  
   return (
     <>
       {openDrawer ? <Backdrop onClick={toggle} show={openDrawer} /> : null}

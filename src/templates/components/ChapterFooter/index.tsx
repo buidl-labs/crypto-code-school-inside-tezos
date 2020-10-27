@@ -14,6 +14,7 @@ import ReactTooltip from 'react-tooltip';
 interface Props {
   chapter: string;
   title: string;
+  currentModule: string;
   chapterIndex: {
     current: number;
     total: number;
@@ -25,6 +26,7 @@ interface Props {
 function ChapterFooter({
   chapter,
   title,
+  currentModule,
   chapterIndex: { current, total, nextSlug, prevSlug },
 }: Props) {
   const [openDrawer, toggleDrawer] = useState(false);
@@ -36,7 +38,7 @@ function ChapterFooter({
       <div>
         <MenuButton>
           <IoIosMenu onClick={toggle} size={36} color="#fff" />
-          <ContentMenuSlider openDrawer={openDrawer} toggle={toggle} />
+          <ContentMenuSlider openDrawer={openDrawer} toggle={toggle} currentModule={currentModule}/>
         </MenuButton>
         <ChapterTitle>
           {chapter}

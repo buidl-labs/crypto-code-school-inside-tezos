@@ -497,6 +497,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           chapter={chapter.frontmatter.chapter}
           title={chapter.frontmatter.title}
           chapterIndex={index}
+          currentModule={chapter.frontmatter.filterBy}
         />
       </Container>
     </Layout>
