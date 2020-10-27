@@ -139,8 +139,18 @@ const HomePage = () => {
             </div>
           </GridContainer>
           <ButtonContainer>
-            <StyledLink to="/tezos/overview">
+            <StyledLink to="/overview/module-01">
               I'm ready. Take me to my mission! <RightArrow />
+            </StyledLink>
+          </ButtonContainer>
+          <ButtonContainer>
+            <StyledLink to="/overview/module-02">
+              Inter-contract calling <RightArrow />
+            </StyledLink>
+          </ButtonContainer>
+          <ButtonContainer>
+            <StyledLink to="/overview/module-03">
+              FA2 tokens <RightArrow />
             </StyledLink>
           </ButtonContainer>
         </div>
