@@ -74,7 +74,7 @@ Retrieving stored progress
 */
 
 const ChapterTemplate = ({ data: { mdx: chapter } }) => {
-  const chapterList = useChapters(1);
+  const chapterList = useChapters("module-1");
   const [showModal, setModal] = useState(false);
   const [chapterCompletedSuccessfully, setChapterCompletionState] = useState(
     false,
@@ -92,12 +92,12 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
     };
   });
 
-  useEffect(() => {
-    trackEventWithProperties('Learning_Interface_View', {
-      slug: chapterList[index.current - 1].slug,
-      title: chapterList[index.current - 1].title,
-    });
-  }, [index.current]);
+  // useEffect(() => {
+  //   trackEventWithProperties('Learning_Interface_View', {
+  //     slug: chapterList[index.current - 1].slug,
+  //     title: chapterList[index.current - 1].title,
+  //   });
+  // }, [index.current]);
 
   const [validation, updateValidation] = useState({
     success: false,

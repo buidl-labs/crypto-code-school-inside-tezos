@@ -1,6 +1,6 @@
 import { useStaticQuery, graphql } from 'gatsby';
 
-const useChapters = (module_num) => {
+const useChapters = (module) => {
   const data = useStaticQuery(graphql`
     query {
       allMdx(sort: { fields: frontmatter___slug, order: ASC }) {
@@ -24,8 +24,8 @@ const useChapters = (module_num) => {
   return data.allMdx.nodes.filter(chapter => {
     
     console.log(!chapter.frontmatter.slug.includes("module"));
-    if(module_num == 1) return !chapter.frontmatter.slug.includes("module")
-    else return chapter.frontmatter.slug.includes(`module-${module_num}`)
+    if(module == "module-1") return !chapter.frontmatter.slug.includes("module")
+    else return chapter.frontmatter.slug.includes(module)
 
   }).map(chapter => ({
     title: chapter.frontmatter.title,
