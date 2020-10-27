@@ -3,7 +3,7 @@ import { useStaticQuery, graphql } from 'gatsby';
 const useChapters = (module) => {
   const data = useStaticQuery(graphql`
     query {
-      allMdx(sort: { fields: frontmatter___slug, order: ASC }) {
+      allMdx(sort: { fields: frontmatter___slug, order: ASC }, filter: {frontmatter: {type: {ne: "module"}}}) {
         nodes {
           frontmatter {
             title
@@ -23,7 +23,6 @@ const useChapters = (module) => {
     }
   `);
   return data.allMdx.nodes.filter(chapter => {
-    console.log(chapter.frontmatter.slug);
     return chapter.frontmatter.filterBy === module;
   })
   .map(chapter => ({
