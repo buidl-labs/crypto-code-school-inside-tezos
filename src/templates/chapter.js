@@ -74,7 +74,7 @@ Retrieving stored progress
 */
 
 const ChapterTemplate = ({ data: { mdx: chapter } }) => {
-  const chapterList = useChapters();
+  const chapterList = useChapters(1);
   const [showModal, setModal] = useState(false);
   const [chapterCompletedSuccessfully, setChapterCompletionState] = useState(
     false,
