@@ -97,7 +97,7 @@ function LessonsOverview({ data: { mdx: module } }) {
         //get the previous stored if available otherwise create a new one
         let list = [];
         const listJSON =
-            typeof window != 'undefined' && localStorage.getItem('lesson-v1');
+            typeof window != 'undefined' && localStorage.getItem(module.frontmatter.filterBy);
         if (listJSON !== null) {
             list = JSON.parse(listJSON);
         }
@@ -125,7 +125,7 @@ function LessonsOverview({ data: { mdx: module } }) {
     const SyncSavedUserProgressWithLatestUpdates = () => {
         let list = [];
         const listJSON =
-            typeof window != 'undefined' && localStorage.getItem('lesson-v1');
+            typeof window != 'undefined' && localStorage.getItem(module.frontmatter.filterBy);
         if (listJSON !== null) {
             list = JSON.parse(listJSON);
         }
@@ -139,7 +139,7 @@ function LessonsOverview({ data: { mdx: module } }) {
             // console.log('updateList', updateList);
             //update stored user progress lesson chapters
             //sync it according to latest content
-            localStorage.setItem('lesson-v1', JSON.stringify(updateList));
+            localStorage.setItem(module.frontmatter.filterBy, JSON.stringify(updateList));
         }
     };
 
