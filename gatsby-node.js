@@ -22,7 +22,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 
     if(file.frontmatter.type === "module"){
       actions.createPage({
-        path: `/overview/${file.frontmatter.slug}`,
+        path: `/tezos/overview/${file.frontmatter.slug}`,
         component: require.resolve('./src/templates/overview.js'),
         context: {
           slug: file.frontmatter.slug,

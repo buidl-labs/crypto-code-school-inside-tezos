@@ -155,7 +155,7 @@ function LessonsOverview({ data: { mdx: module } }) {
             <SEO title="Chapters Overview" />
             <Container>
                 <div>
-                    <BackLink to="/tezos" />
+                    <BackLink to="/tezos/overview" />
                 </div>
                 <ThemeContainer>
                     <Theme />

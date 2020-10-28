@@ -249,7 +249,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
       ) : null}
       <Container>
         <ChapterHeader 
-          backLink={`/overview/${chapter.frontmatter.slug.slice(0, chapter.frontmatter.slug.indexOf('/'))}`}
+          backLink={`/tezos/overview/${chapter.frontmatter.slug.slice(0, chapter.frontmatter.slug.indexOf('/'))}`}
          
         />
         <ChapterContent
