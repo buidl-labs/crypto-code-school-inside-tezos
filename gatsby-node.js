@@ -32,7 +32,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     }else{
 
       actions.createPage({
-        path: `/lesson/${file.frontmatter.slug}`,
+        path: `/tezos/lesson/${file.frontmatter.slug}`,
         component: require.resolve('./src/templates/chapter.js'),
         context: {
           slug: file.frontmatter.slug,

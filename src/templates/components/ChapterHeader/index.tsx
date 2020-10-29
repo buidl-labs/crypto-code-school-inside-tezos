@@ -6,15 +6,16 @@ import { LeftArrow } from '../../../components/IconSet';
 
 interface Props {
   backLink: string;
+  title: string;
 }
 
-function ChapterHeader({backLink}: Props) {
+function ChapterHeader({backLink, title}: Props) {
   return (
     <Header>
       <BackLink onClick={() => navigate(backLink)}>
         <LeftArrow />
       </BackLink>
-      <LessonTitle>Lesson: Introduction to SmartPy</LessonTitle>
+      <LessonTitle>Lesson: {title}</LessonTitle>
       <HelpButton
         rel="noopener"
         target="_blank"

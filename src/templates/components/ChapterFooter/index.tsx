@@ -48,7 +48,7 @@ function ChapterFooter({
       </div>
       <div>
         {prevSlug ? (
-          <PrevLink to={`/lesson/${prevSlug}`}>
+          <PrevLink to={`/tezos/lesson/${prevSlug}`}>
             <LeftArrow small />
             <span>Prev</span>
           </PrevLink>
@@ -58,7 +58,7 @@ function ChapterFooter({
           {current}/{total}
         </ContentIndex>
         {nextSlug ? (
-          <NextLink to={`/lesson/${nextSlug}`}>
+          <NextLink to={`/tezos/lesson/${nextSlug}`}>
             <span>Next</span> <RightArrow small />
           </NextLink>
         ) : (

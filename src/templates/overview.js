@@ -84,7 +84,7 @@ function LessonsOverview({ data: { mdx: module } }) {
                 }
             } else {
                 // if 1st chapter completed show --> next chapter i.e 2nd chapter and so on
-                setContinuationLink(`/lesson/${chapterSlug}`);
+                setContinuationLink(`/tezos/lesson/${chapterSlug}`);
             }
         }
     }, []);
@@ -194,7 +194,7 @@ function LessonsOverview({ data: { mdx: module } }) {
                             {chapterList.map((chapter, index) => {
                                 return (
                                     <li key={index}>
-                                        <Link to={`/lesson/${chapter.slug}`}>
+                                        <Link to={`/tezos/lesson/${chapter.slug}`}>
                                             {chapter.completed ? (
                                                 <Completed width="38" height="38" />
                                             ) : null}{' '}

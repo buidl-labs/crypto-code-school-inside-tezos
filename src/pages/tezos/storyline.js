@@ -143,7 +143,7 @@ const Game = () => {
               <span>Back</span>
             </BackLink>
             <Title width="10%" />
-            <BackLink to={`/lesson/module-01/chapter-01`}>
+            <BackLink to={`/tezos/lesson/module-01/chapter-01`}>
               <span>Skip</span>
               <RightArrow />
             </BackLink>

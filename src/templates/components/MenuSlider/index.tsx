@@ -38,7 +38,7 @@ const ContentMenu = ({ openDrawer = false, toggle, currentModule}: Props) => {
                 <ChapterLink
                   partiallyActive={true}
                   activeStyle={{ background: '#2897ff' }}
-                  to={`/lesson/${chapter.slug}`}
+                  to={`/tezos/lesson/${chapter.slug}`}
                 >
                   {chapter.chapter}: {chapter.title}
                 </ChapterLink>
