@@ -56,9 +56,13 @@ const CurriculumOverview = ({data: {allMdx: {nodes: modules}}}) => {
                     <MainOverviewWrapper>
                         <GeneralOverview>
                             {/* General Overview */}
-                            <h2>General Overview</h2>
+                            <h2>Embark on the journey to become a DApp Superhero!</h2>
                             <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget sapien elit. Nunc sodales mauris gravida sem tempus lobortis. Nullam justo nibh, iaculis at efficitur in, mattis eu ex. Proin vitae odio et nunc eleifend pretium placerat et arcu. Fusce ullamcorper at diam vitae convallis. Proin luctus libero eget sollicitudin interdum. Sed augue tellus, efficitur a consectetur id, iaculis at risus. Fusce eu pharetra erat, sit amet cursus sapien. Vivamus congue, tortor id laoreet consectetur, enim justo elementum tellus, sed efficitur nunc dolor et urna.
+                                This course will take you through a journey you'll remember for ages! <br/>
+                                From fighting aliens using your <code>Cryptobot</code> to re-building the society that is in shatters. <br/>
+                                You're going to do it all, from making a simple smart contract to making your own virtual currency, and taking it a step further by deploying(originating) your currency on contract on the Tezos network!
+                                <br/><br/>
+                                Start your journey of saving the world while developing your Tezos technical prowess. See you on the other side!
                             </p>
                             <StyledLink to= "/tezos/overview/module-01">
                                 Let's roll!
