@@ -62,7 +62,8 @@ function ChapterFooter({
             <span>Next</span> <RightArrow small />
           </NextLink>
         ) : (
-          <NextLink to="/tezos/game">
+
+          <NextLink to={currentModule === 'lesson-1'?'/tezos/game': `/tezos/overview`}>
             <span>Finish</span> <RightArrow small />
           </NextLink>
         )}

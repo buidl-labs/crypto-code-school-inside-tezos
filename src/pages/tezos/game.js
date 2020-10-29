@@ -279,12 +279,12 @@ const Game = () => {
     <Layout>
       <MainContainer>
         <Header>
-          <BackLink to={`/lesson/chapter-15`}>
+          <BackLink to={`/lesson//module-01/chapter-15`}>
             <LeftArrow />
             <span>Back</span>
           </BackLink>
           <Title width="10%" />
-          <BackLink to={`/tezos/up-next`}>
+          <BackLink to={`/tezos/overview`}>
             <span>Skip</span>
             <RightArrow />
           </BackLink>

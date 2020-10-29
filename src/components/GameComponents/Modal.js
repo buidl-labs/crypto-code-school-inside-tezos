@@ -54,7 +54,7 @@ const GameOverModal = ({ totalDeadZombies = 4, status = 'lost' }) => {
                 <Button
                   onClick={() => {
                     if (status === 'won') {
-                      navigate('/tezos/up-next');
+                      navigate('/tezos/overview');
                     } else {
                       typeof window !== 'undefined' && window.location.reload();
                     }
