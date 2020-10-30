@@ -56,6 +56,7 @@ export default function HTML(props) {
           type="text/javascript"
           charSet="utf-8"
         ></script>
+        <script type="text/python" src={withPrefix('smartpy.py')}></script>
         <script type="text/python" src={withPrefix('smartpyio.py')}></script>
       </body>
     </html>
