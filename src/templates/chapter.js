@@ -35,6 +35,7 @@ export const query = graphql`
         title
         chapter
         slug
+        filterBy
         editor {
           language
           startingCode
@@ -74,12 +75,13 @@ Retrieving stored progress
 */
 
 const ChapterTemplate = ({ data: { mdx: chapter } }) => {
-  const chapterList = useChapters();
+  const chapterList = useChapters(chapter.frontmatter.filterBy);
   const [showModal, setModal] = useState(false);
   const [chapterCompletedSuccessfully, setChapterCompletionState] = useState(
     false,
   );
   const [index] = useState(() => {
+    
     const { current, total, nextSlug, prevSlug } = getChaptersIndex(
       chapterList,
       chapter.frontmatter.slug,
@@ -111,7 +113,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
   const getDefaultEditorValue = () => {
     let list = [];
     const listJSON =
-      typeof window != 'undefined' && localStorage.getItem('lesson-v1');
+      typeof window != 'undefined' && localStorage.getItem(chapter.frontmatter.filterBy);
     if (listJSON !== null) {
       list = JSON.parse(listJSON);
     }
@@ -126,7 +128,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           const updateList = list.filter(chapter => {
             return !(chapter.chapterSlug === savedChapter.chapterSlug);
           });
-          localStorage.setItem('lesson-v1', JSON.stringify(updateList));
+          localStorage.setItem(chapter.frontmatter.filterBy, JSON.stringify(updateList));
           return `${chapter.frontmatter.editor.startingCode}`;
         }
         setChapterCompletionState(true);
@@ -146,6 +148,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
   );
 
   useEffect(() => {
+  
     monaco
       .init()
       .then(monacoInstance => {
@@ -203,7 +206,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
 
       //get the previous stored if available otherwise create a new one
       let list = [];
-      const listJSON = localStorage.getItem('lesson-v1');
+      const listJSON = localStorage.getItem(chapter.frontmatter.filterBy);
       if (listJSON !== null) {
         list = JSON.parse(listJSON);
       }
@@ -221,7 +224,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           chapterSlug: chapterList[index.current - 1].slug,
         });
       }
-      localStorage.setItem('lesson-v1', JSON.stringify(list));
+      localStorage.setItem(chapter.frontmatter.filterBy, JSON.stringify(list));
       // console.log(list);
     }
   }, [validation.success]);
@@ -245,7 +248,10 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
         />
       ) : null}
       <Container>
-        <ChapterHeader />
+        <ChapterHeader 
+          backLink={`/tezos/overview/${chapter.frontmatter.slug.slice(0, chapter.frontmatter.slug.indexOf('/'))}`}
+          title={chapter.frontmatter.title}
+        />
         <ChapterContent
           chapter={chapter.frontmatter.chapter}
           title={chapter.frontmatter.title}
@@ -491,6 +497,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           chapter={chapter.frontmatter.chapter}
           title={chapter.frontmatter.title}
           chapterIndex={index}
+          currentModule={chapter.frontmatter.filterBy}
         />
       </Container>
     </Layout>

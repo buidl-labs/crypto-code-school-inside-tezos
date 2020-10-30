@@ -1,0 +1,231 @@
+---
+title: Record data-type
+chapter: Chapter 4
+slug: module-02/chapter-04
+filterBy: lesson-2
+editor:
+  language: python
+  startingCode: |
+    import smartpy as sp
+
+    class Cryptobot(sp.Contract):
+
+        def __init__(self, manager_address, life_state, initial_mutez):
+            
+            self.init(
+                bot_manager = manager_address,
+                name = "terminator",
+                is_alive = life_state,
+                plasma_bullet_count = 5,
+
+                record_alien_kills = {
+                    "simple_alien": sp.nat(0), 
+                    "boss_alien": sp.nat(0), 
+                },
+                mutez_points = sp.mutez(initial_mutez)
+                
+            )
+
+            
+        @sp.entry_point
+        def shoot_alien(self, alien_type):
+            
+            sp.verify(
+                self.data.bot_manager == sp.sender, 
+                message = "Error: non manager call"
+            )
+
+            sp.if self.data.plasma_bullet_count >= 1:
+                self.data.plasma_bullet_count -= 1
+                self.data.record_alien_kills[alien_type] += 1
+            sp.else:
+                sp.failwith("Error: you ran out of bullets! Please buy more!")
+
+    class Market(sp.Contract):
+        def __init__(self):
+            self.init(
+                # edit powerups list to hold records
+                powerups = ["time_freeze", "one_shot_kill"]
+            )
+            
+        
+    @sp.add_test(name = "records")
+    def test():
+        scenario = sp.test_scenario()
+        
+        ## Class Invokation
+        my_account = sp.test_account("Cryptobot Owner")
+        test_bot =  Cryptobot(manager_address = my_account.address, life_state = True, initial_mutez=5000)
+        scenario += test_bot
+        
+        market = Market()
+        scenario += market
+
+  answer: |  
+    import smartpy as sp
+
+    class Cryptobot(sp.Contract):
+
+        def __init__(self, manager_address, life_state, initial_mutez):
+            
+            self.init(
+                bot_manager = manager_address,
+                name = "terminator",
+                is_alive = life_state,
+                plasma_bullet_count = 5,
+
+                record_alien_kills = {
+                    "simple_alien": sp.nat(0), 
+                    "boss_alien": sp.nat(0), 
+                },
+                mutez_points = sp.mutez(initial_mutez)
+                
+            )
+
+            
+        @sp.entry_point
+        def shoot_alien(self, alien_type):
+            
+            sp.verify(
+                self.data.bot_manager == sp.sender, 
+                message = "Error: non manager call"
+            )
+
+            sp.if self.data.plasma_bullet_count >= 1:
+                self.data.plasma_bullet_count -= 1
+                self.data.record_alien_kills[alien_type] += 1
+            sp.else:
+                sp.failwith("Error: you ran out of bullets! Please buy more!")
+
+    class Market(sp.Contract):
+        def __init__(self):
+            self.init(
+                # edit powerups list to hold records
+                powerups = [
+                    sp.record(power = "time_freeze", duration = sp.nat(3)), 
+                    sp.record(power = "one_shot_kill", duration = sp.nat(4))
+                ]
+            )
+            
+        
+    @sp.add_test(name = "records")
+    def test():
+        scenario = sp.test_scenario()
+        
+        ## Class Invokation
+        my_account = sp.test_account("Cryptobot Owner")
+        test_bot =  Cryptobot(manager_address = my_account.address,life_state = True, initial_mutez=5000)
+        scenario += test_bot
+        
+        market = Market()
+        scenario += market
+---
+
+### Intro
+Right now, the system is broken.
+You can't afford broken systems, you've got the threat of aliens looming over your head in case you forgot!
+You've stored `powerups` in the `Market`, but we've no idea how long a `powerup` lasts. 
+
+Let's fix this with data type provided by SmartPy - [record](https://smartpy.io/dev/reference.html#_records)
+
+### Study time
+Records are the kind of structures that seem not of much use at first but turn out to be extremely crucial on taking a closer look, it's the underdog of types 🐶
+
+A record can hold multiple variales of different(or same) types under one namespace and it's represented by the type `sp.TRecord` in SmartPy.
+
+Confused? 
+Take a look at the snippet below ⬇️
+```python=
+money = sp.record(amount = 1000, currency = "$")
+```
+As I told you before, a record is just multiple variables gathered under one. 
+
+You can access `amount` and `currency` through the following -
+```python=
+money.amount
+money.currency
+```
+
+Wondering why can't you use `sp.TMap` to do the same thing?
+Because `sp.TMap` only allows the same type of data as values. 
+
+For example, the following `sp.TMap` is invalid and will throw an error - 
+```python=
+❌ ❌ ❌
+money = {
+    "amount": 4000,
+    "currency": "$"
+}
+```
+This will give you an error because the value of amount is of type `sp.TNat`, while the type of currency is `sp.TString`. The types don't match.
+
+This won't be a problem with records because they're designed to hold multiples values of different data types.
+
+### Show me an example
+Following the lead from previous chapters, this example is also building on top of our `Wallet` smart contract.
+
+```python=
+class Wallet(sp.Contract):
+    def __init__(self, initial_amount, owner_address):
+        self.init(
+            amount = sp.mutez(initial_amount),
+            owner = owner_address,
+            transactions = sp.list()
+        )
+        
+    @sp.entry_point
+    def add_transaction(self, transaction):
+        sp.if transaction.action == "sent":
+            self.data.amount -= transaction.amount
+        sp.if transaction.action == "recieved":
+            self.data.amount += transaction.amount
+        self.data.transactions.push(transaction)
+    
+@sp.add_test(name = "Wallet")
+def test():
+    scenario = sp.test_scenario()
+    account_owner = sp.test_account("Wallet Example Account")
+    w = Wallet(initial_amount = 1000, owner_address = account_owner.address)
+    scenario += w
+    
+    scenario += w.add_transaction(sp.record(amount = sp.mutez(500), action = "sent"))
+    scenario += w.add_transaction(sp.record(amount = sp.mutez(300), action = "recieved")) 
+```
+Using records we've revamped the `add_transaction` entry point.
+Let's take a closer look.
+```python=
+    @sp.entry_point
+    def add_transaction(self, transaction):
+        sp.if transaction.action == "sent":
+            self.data.amount -= transaction.amount
+        sp.if transaction.action == "recieved":
+            self.data.amount += transaction.amount
+        self.data.transactions.push(transaction)
+```
+Now, we're accepting a record that has two fields inside it - `action` and `amount`.
+If the `action` is `"recieved"`, we add the `amount`.
+If the `action` is `sent` we deduct the `amount`.
+
+But, how do we call this entry point?
+Look at the snippet below.
+```python=
+scenario += w.add_transaction(sp.record(amount = sp.mutez(500), action = "sent"))
+```
+Passing `sp.record` with the fields inside it to `add_transaction`.
+
+Records seem simple now, don't they!?
+
+### #buidl-ing time
+ 
+#### New feature request!
+In the last chapter, we successfuly defined the smart contract for `Market` but we forgot that powerups don't last forever! We listed out the `powerups` in the list but didn't mention the `duration` for them.
+It's time to fix it 🔧
+#### Step by step walkthrough
+1. Edit the `powerups` list inside the `Market` contract to hold two records, both of them will have a `power` field and a `duration` field -
+
+
+| power(`sp.TString`) | duration(`sp.TNat`) |
+| ------------------- | ------------------  |
+| "time_freeze"       | 3                   |
+| "one_shot_kill"     | 4                   |
+`duration` is for how many turns the `powerup` will be in effect.

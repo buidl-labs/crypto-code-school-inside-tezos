@@ -1,0 +1,151 @@
+---
+title: Test Accounts
+chapter: Chapter 2
+slug: module-02/chapter-02
+filterBy: lesson-2
+editor:
+  language: python
+  startingCode: |
+    import smartpy as sp
+
+    class Cryptobot(sp.Contract):
+
+        def __init__(self, manager_address, life_state, initial_mutez):
+            
+            self.init(
+                bot_manager = manager_address,
+                name = "terminator",
+                is_alive = life_state,
+                plasma_bullet_count = 5,
+
+                record_alien_kills = {
+                    "simple_alien": sp.nat(0), 
+                    "boss_alien": sp.nat(0), 
+                },
+                # add mutez_points here
+                mutez_points = sp.mutez(initial_mutez)
+                
+            )
+
+            
+        @sp.entry_point
+        def shoot_alien(self, alien_type):
+            
+            sp.verify(
+                self.data.bot_manager == sp.sender, 
+                message = "Error: non manager call"
+            )
+
+            sp.if self.data.plasma_bullet_count >= 1:
+                self.data.plasma_bullet_count -= 1
+                self.data.record_alien_kills[alien_type] += 1
+            sp.else:
+                sp.failwith("Error: you ran out of bullets! Please buy more!")
+
+        
+    @sp.add_test(name = "test_account")
+    def test():
+        scenario = sp.test_scenario()
+        
+        ## Class Invokation
+        my_address = sp.address("tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj")
+
+        test_bot =  Cryptobot(manager_address = my_address, life_state = True, initial_mutez=5000)
+        
+        ## Testing contract
+        scenario += test_bot
+
+  answer: |  
+    import smartpy as sp
+
+    class Cryptobot(sp.Contract):
+
+        def __init__(self, manager_address, life_state, initial_mutez):
+            
+            self.init(
+                bot_manager = manager_address,
+                name = "terminator",
+                is_alive = life_state,
+                plasma_bullet_count = 5,
+
+                record_alien_kills = {
+                    "simple_alien": sp.nat(0), 
+                    "boss_alien": sp.nat(0), 
+                },
+                # add mutez_points here
+                mutez_points = sp.mutez(initial_mutez)
+                
+            )
+
+            
+        @sp.entry_point
+        def shoot_alien(self, alien_type):
+            
+            sp.verify(
+                self.data.bot_manager == sp.sender, 
+                message = "Error: non manager call"
+            )
+
+            sp.if self.data.plasma_bullet_count >= 1:
+                self.data.plasma_bullet_count -= 1
+                self.data.record_alien_kills[alien_type] += 1
+            sp.else:
+                sp.failwith("Error: you ran out of bullets! Please buy more!")
+
+        
+    @sp.add_test(name = "test_account")
+    def test():
+        scenario = sp.test_scenario()
+        
+        ## Class Invokation
+        my_account = sp.test_account("Cryptobot Owner")
+        
+        test_bot =  Cryptobot(manager_address = my_account.address, life_state = True, initial_mutez=5000)
+        
+        ## Testing contract
+        scenario += test_bot
+---
+
+### Intro
+
+Calibrating our plasma cannons for the next wave of aliens - what better way than to make your script a teeny bit better?
+Right now, we're using `sp.address` to give a `bot_manager` address to our `Cryptobot`.
+But, SmartPy has a special function called `sp.test_account(seed)` which we'll use to improve upon this.
+
+### Study time
+`sp.test_account(seed)` takes a random string as an argument and generates several properties based on this `seed` value.
+A test accounts has the following fields - 
+- `address`
+- `public_key_hash`
+- `public_key`
+- `secret_key`
+
+Don't worry about what all the fields mean. We only need the `address` for our purpose :D
+
+### Show me an example
+```python=
+class Wallet(sp.Contract):
+    def __init__(self, initial_amount, owner_address):
+        self.init(
+            amount = sp.mutez(initial_amount),
+            owner = owner_address
+        )
+    
+@sp.add_test(name = "Wallet")
+def test():
+    scenario = sp.test_scenario()
+    account_owner = sp.test_account("Wallet Example Account")
+    w = Wallet(initial_amount = 1000, owner_address = account_owner.address)
+    scenario += w
+```
+Building on our example from the previous chapter, here a new field has been added in contract storage, `owner`. 
+Inside the test, we generated a test account using `sp.test_account("Wallet Example Account")` and passed in the address to wallet using `account_owner.address`.
+
+### #buidl-ing time
+ 
+#### Let's refactor!
+Now you know about `sp.test_account`, use it instead of `sp.address` in our `Cryptobot`.
+
+#### Step by step walkthrough
+1. Replace `my_address` variable with `my_account` and assign and invoke it with `sp.test_account` with the `seed` of `"Cryptobot Owner"`.
+2. Replace `my_address` in the Contract initialization with `my_account.address`.

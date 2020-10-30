@@ -146,3 +146,66 @@ export const BackLink = styled(Link)`
 export const StartLink = styled(Link)`
   margin: 0 2rem;
 `;
+
+export const ParentOverviewContainer = styled.main`
+  color: #ffffff;
+  margin: 4rem;
+  margin-top: 0rem;
+  h1{
+    color: #ffffff;
+    font-family: 'Sigmar One';
+    text-align: center;
+  }
+  h2{
+    margin: 0;
+    margin-bottom: 1rem;
+  }
+`
+
+export const MainOverviewWrapper = styled.div`
+display: grid;
+grid-template-columns: 1fr 1fr;
+grid-gap: 2rem;
+margin-top: 2rem;
+align-items: start; 
+`
+
+export const GeneralOverview = styled.div`
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    padding: 2rem;
+    p {
+      margin-bottom: 3rem;
+    }
+`
+export const ModuleOverview = styled.div`
+
+`
+
+export const ModuleBox = styled.article`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.25);
+    padding: 2rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    h2{
+      margin: 0;
+    }
+`
+
+export const ModuleLink = styled(Link)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #2897ff;
+  transition: .2s all;
+  :hover {
+    color: #efefef;
+  }
+  svg{
+    height: 2.75rem;
+    width: 2.75rem;
+  }
+`;

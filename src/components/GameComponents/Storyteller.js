@@ -84,7 +84,7 @@ const StoryTeller = ({ display, plantType }) => {
                     onClick={() => {
                       typeof window != 'undefined' &&
                         localStorage.setItem('chapter-0', true);
-                      navigate(`/lesson/chapter-01`);
+                      navigate(`/lesson/module-01/chapter-01`);
                     }}
                   >
                     Proceed to chapter 1!

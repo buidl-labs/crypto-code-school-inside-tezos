@@ -1,0 +1,195 @@
+---
+title: Buidl your own bot
+chapter: Chapter 5
+slug: module-03/chapter-05
+filterBy: lesson-3
+editor:
+  language: python
+  startingCode: |
+    import smartpy as sp
+
+    FA2 = sp.import_template("FA2.py")
+
+    class Cryptobot(FA2.FA2):
+        
+        @sp.entry_point
+        def mint(self, params):
+            sp.verify(sp.sender == self.data.administrator)
+            
+            if self.config.non_fungible:
+                sp.verify(params.amount == 1, "NFT-asset: amount <> 1")
+                sp.verify(~ self.token_id_set.contains(self.data.all_tokens, params.token_id), "NFT-asset: cannon mint the same token twice")
+            
+            user = self.ledger_key.make(params.address, params.token_id)
+            self.token_id_set.add(self.data.all_tokens, params.token_id)
+            sp.if self.data.ledger.contains(user):
+                self.data.ledger[user].balance += params.amount
+            sp.else:
+                self.data.ledger[user] = FA2.Ledger_value.make(params.amount)
+            
+            sp.if self.data.tokens.contains(params.token_id):
+                pass
+            sp.else:
+                self.data.tokens[params.token_id] = sp.record(
+                        token_id = params.token_id,
+                        symbol = params.symbol,
+                        name = "", 
+                        decimals = 0,
+                        extras = params.extras
+                    )
+                
+
+    @sp.add_test(name = "Cryptobot")
+    def test():
+        scenario = sp.test_scenario()
+        
+        admin = sp.test_account("Admin")
+        
+        mark = sp.test_account("Mark")
+        elon = sp.test_account("Mars")
+        
+        # (1) Initialize Cryptobot as `cryptobot` with non_fungible set to True.
+        # (2) Add it to the scenario.
+        
+        
+        # Mint 1 token to mark with symbol - "CTB", amount - 1, token_id - 0 and extras - {"value": "First bot"}
+        
+        
+        # Mint 1 token to mark with symbol - "CTB", amount - 1, token_id - 1 and extras - {"value": "Second bot"}                           
+        
+        
+        
+
+  answer: |  
+    import smartpy as sp
+
+    FA2 = sp.import_template("FA2.py")
+
+    class Cryptobot(FA2.FA2):
+        
+        @sp.entry_point
+        def mint(self, params):
+            sp.verify(sp.sender == self.data.administrator)
+            
+            if self.config.non_fungible:
+                sp.verify(params.amount == 1, "NFT-asset: amount <> 1")
+                sp.verify(~ self.token_id_set.contains(self.data.all_tokens, params.token_id), "NFT-asset: cannon mint the same token twice")
+            
+            user = self.ledger_key.make(params.address, params.token_id)
+            self.token_id_set.add(self.data.all_tokens, params.token_id)
+            sp.if self.data.ledger.contains(user):
+                self.data.ledger[user].balance += params.amount
+            sp.else:
+                self.data.ledger[user] = FA2.Ledger_value.make(params.amount)
+            
+            sp.if self.data.tokens.contains(params.token_id):
+                pass
+            sp.else:
+                self.data.tokens[params.token_id] = sp.record(
+                        token_id = params.token_id,
+                        symbol = params.symbol,
+                        name = "", 
+                        decimals = 0,
+                        extras = params.extras
+                    )
+                
+
+    @sp.add_test(name = "Cryptobot")
+    def test():
+        scenario = sp.test_scenario()
+        
+        admin = sp.test_account("Admin")
+        
+        mark = sp.test_account("Mark")
+        elon = sp.test_account("Mars")
+        
+        # (1) Initialize Cryptobot as `cryptobot` with non_fungible set to True.
+        # (2) Add it to the scenario.
+        cryptobot = Cryptobot(FA2.FA2_config(non_fungible = True), admin.address)
+        scenario += cryptobot
+        
+        # Mint 1 token to mark with symbol - "CTB", amount - 1, token_id - 0 and extras - {"value": "First bot"}
+        scenario += cryptobot.mint(address = mark.address, 
+                                amount = 1,
+                                symbol = 'CTB',
+                                token_id = 0,
+                                extras = { "value": "First bot"}).run(sender = admin)
+        # Mint 1 token to mark with symbol - "CTB", amount - 1, token_id - 1 and extras - {"value": "Second bot"}                           
+        scenario += cryptobot.mint(address = elon.address,
+                                amount = 1,
+                                symbol = 'CTB',
+                                token_id = 1,
+                                extras = { "value": "Second bot" }).run(sender = admin)
+        
+---
+
+So far you've managed to introduce an economy to your society through `Cyber_Token` but you can't expect your civillians to re-build the infrastructure when you've got a good ol' fleet of `Cryptobots` that can be put to good use.
+
+### Study time
+Recall when we looked at the configuration options available in the FA2 template - there's an option `non_fungible` which by default is `False`. 
+To instantiate our FA2 contract to hold non-fungible token, you simply need to pass `non_fungible` as `True`.
+```python=
+your_bot = YourBot(FA2.FA2_config(non_fungible = True), admin.address)
+```
+
+For fungible tokens, we were pasing `token_id` as 0 throughout.
+But each and every non-fungible token is different hence there needs to be a way to differentiate them - each non-fungible token will have a different `token_id` - 0, 1, 2, 3, ...etc.
+
+#### Characteristics of a Non-fungible token - 
+1. Each token needs to have a unique `token_id`, otherwise you won't even be able to create the token.
+2. May or may not have additonal data(`extras`) attached to it. For example, might have an URL which points to an image.
+
+How do we add extra data to an NFT?
+We're going to **override the mint** entry point provided to us in the FA2 template.
+( You **don't need** to dive deep into this code but it's good to just go through once )
+```python=
+@sp.entry_point
+def mint(self, params):
+    sp.verify(sp.sender == self.data.administrator)
+
+    if self.config.non_fungible:
+        sp.verify(params.amount == 1, "NFT-asset: amount <> 1")
+        sp.verify(~ self.token_id_set.contains(self.data.all_tokens, params.token_id), "NFT-asset: cannon mint the same token twice")
+
+    user = self.ledger_key.make(params.address, params.token_id)
+    self.token_id_set.add(self.data.all_tokens, params.token_id)
+    sp.if self.data.ledger.contains(user):
+        self.data.ledger[user].balance += params.amount
+    sp.else:
+        self.data.ledger[user] = FA2.Ledger_value.make(params.amount)
+
+    sp.if self.data.tokens.contains(params.token_id):
+        pass
+    sp.else:
+        self.data.tokens[params.token_id] = sp.record(
+                 token_id = params.token_id,
+                 symbol = params.symbol,
+                 name = "",
+                 decimals = 0,
+                 extras = params.extras
+             )
+```
+
+### Show me an example
+```python=
+your_bot = Yourbot(FA2.FA2_config(non_fungible = True), admin.address)
+scenario += your_bot
+
+scenario += your_bot.mint(address = mark.address, 
+                           amount = 1,
+                           symbol = 'YBT',
+                           token_id = 0,
+                           extras = { "value": "I am your first bot."}).run(sender = admin)
+
+```
+The arguments to `mint` are similar to how we did it for fungible tokens, but here we're also passing in `extras` which is of type `sp.TMap`.
+
+### #buidl-ing time
+ 
+#### New feature request!
+Time to mint some `Cryptobot`s to build out the new world.
+
+#### Step by step walkthrough
+1. Initialize `Cryptobot` which can hold non-fungible tokens.
+2. Mint 1 token for `mark` with extras as ``{"value": "First bot"}`
+3. 2. Mint 1 token for `elon` with extras as ``{"value": "Second bot"}`

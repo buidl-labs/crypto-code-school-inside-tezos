@@ -1,0 +1,123 @@
+---
+title: FA2 template in SmartPy
+chapter: Chapter 3
+slug: module-03/chapter-03
+filterBy: lesson-3
+editor:
+  language: python
+  startingCode: |
+    import smartpy as sp
+
+    # Import FA2 template
+
+    # Define `Cryber_Token`
+
+
+    @sp.add_test(name = "Fungible Token")
+    def test():
+        scenario = sp.test_scenario()
+        admin = sp.test_account("Decentralized Dictator")
+
+        # Initialize Cyber_Token as cyber_token with single_asset = True
+
+  answer: |  
+    import smartpy as sp
+
+    # Import FA2 template
+    FA2 = sp.import_template("FA2.py")
+    # Define `Cryber_Token`
+    class Cyber_Token(FA2.FA2):
+        pass
+
+    @sp.add_test(name = "Fungible Token")
+    def test():
+        scenario = sp.test_scenario()
+        admin = sp.test_account("Decentralized Dictator")
+
+        # Initialize Cyber_Token as cyber_token with single_asset = True
+        cyber_token = Cyber_Token(FA2.FA2_config(single_asset=True), admin.address)
+---
+
+### Intro
+By now you know, there are multiple languages in which you can write smart contracts for the Tezos blockchain.
+How do you maintain uniformity of the FA2 standards in all these languages?
+Enter, **FA2 template**.
+
+**FA2 template** is your angel from heaven - here to save you from implementing the complexities of the FA2 standard.
+
+### Study time
+In the multiple languages through which you can write smart contracts for Tezos, there's an FA2 template implemented in all of those languages by seasoned developers.
+
+And good news! There's an awesome template implemented for SmartPy as well which we can directly use to implement our own tokens.
+
+To build your own tokens, you don't need to know the very deep details of FA2, but if you're interested - you can read the [proposal for FA2(TZIP-12)](https://gitlab.com/tzip/tzip/-/blob/master/proposals/tzip-12/tzip-12.md), after all, wouldn't it be nice to know about what technology will be supporting your civilization?
+
+#### How do you use the FA2 template?
+The behavior of your token is controled by a set of values you pass in during the initialization of the contract(tokens are implemented as contracts.)
+```python=
+def __init__(self,
+             single_asset = False,
+             non_fungible = False,
+             ...,
+             ... ):
+```
+These are the multiple options that you can play around with that I've ommited above, but honestly you can simply use these 2 options - `single_asset` and `non_fungible` to implment what you want to.
+
+If you were looking towards implementing a fungible token like [Dai](https://decrypt.co/resources/dai-explained-guide-ethereum-stablecoin), you'll set `non_fungible` as `False` and `single_asset` as True.
+If you wanted to implement collectibles like [CryptoKitties](https://www.cryptokitties.co/), you'll set `single_asset` as `False` and `non_fungible` as True.
+
+But what does `single_asset` mean? It signifies whether the token contract has multiple types of tokens or just one type of token.
+
+> I recommend you go through the [FA2 template](https://smartpy.io/dev/index.html?code=eJztPe2S27iR__0UKLnuLNmSPDOppCqzO1tne8cp1_qr7NmkKi4XRVHQiDFFaklqxrOXS@1b3J_kae5N9kmuu_FBgAAoamaceDdmba01EtBoNPobDfDu3Tt37zL471lel8Vim9RpkcNX@O1bzlm94uzpoyNW1XG@iMsFW_BlmqfY6hjbfL2q6011_PDheVpn8XyaFOuH9Y_pRvxv8nCeFfOH67iqeflwUxabooqzin6cHB49_MYYaV2UnPGP8XqT8erhoki2a57XMY7E4jo0VrUu8gWvHy7jo0m1jst6c_XwGwa4Wh3iquJ1Na1_qPmPRUUdYQDAo_jA80lSwNzjpK4QysPDiQVriiim601R1kx@yeKKVRuJOvz3gtfx5HVZnJfxep3m5@xJkS_T820ZG8Q8A0LOgJJRQj_OWJIBVmxVZIuKqLxGKBsDSmJCITRElwbI8R0GD6wIiyJclCgaVjxbjulr61nw@fY8WhcL7vzE2Al7CovCPd0qwCPjEZFvj255kUfLbX6ezjN3vHC3eLGI1ltYogiWI6@WvOzVreTxIvaNJLqdlVtfr2VRJjzK4qtiW1e9e1XbDXJCVGw4rEtR9usF9ANmxkWreLKt0wseEedFKax9uBeQA4ZZp1UFDFBFC14lZboRo4bJkcU_XkUgOeVVtCnSvK72aQv0z@oUJFB1cvuMju_oL9OlwVnHVltkxOn6KlrHG4BVbabwQTfgAHlH83l6HpldhAQVG9IHs2bUGVvHH7gQoQT5@5znXMgM2xr43wU@Od9mcQntNxVLc1BJ8YIVSwYjTfC7MVvxPOEsrSVIaLPhQiE2UKADDgX6sObqD6VAGI@rlJfThkA0LUuKTiyhsqaXVtZcJMwqvoDhijXMDPQOaDYYuyjjc87mV0b3y6L8gFqjyLMrZG4CIvRbumCzg1kbK0tITyyZNcCe5iQoBA2aTESTNEvrKzV7GgSol075lL5YAtoGiHoV19CojjMSH0BvBROpCzbn7LCNlRbmEy3XLRaYqe9nihuAbjHL@HmcXAGQukYy0KCXnH3gfMPistiCRTAWURFpDiu@Aq1OpNtsS7BPvJo2LY0@31e8nMRJAqBApuISYW9qYBIYXLLQsdF8NtxSh8Wi5KC07@u1GLHJN6y4BCatVmAFUyDwzD_iU7mKj@P5VQbzBONQF0mRjQF_DkRcIBFhlIYkSmpnBhRAsCgXoEtV49ePnnwHtMsJ9gd@VamFlLNoL4mtKU9szdlaHBSYdJkmQv5K_sM2hemzOMsAD_ABgDX4ZFkCbyPBS54AaiYMZO@LuExjpLFgkftler6qwUiv59VX99WaWvwFDLCJwWzyWkwTehE14CN02@BagSIFvNcxCvh_kqKYVOmP3BHVtn4_cVS@o5FkS1KjE6ly4@wyBsKuUHYFQkDgko_ZfFuLj8C1BiTpVXFgyxhXaZLEsFTIoQBC8DNf02QyTq34egMSOKzoVwOQ0g1ISNQXl6DT2Kw9hxnKzIxYZdQmwQ5j1fVzi3dj4Fh@kRbbil0AtyNHSE47@_Oz1zavjFHtXsYmiJwnIDlxeYUUJDlGhfhBa2BQpvARWUtoIOR0U3P6heqs6aq6VUTovLgE6qUALr6I0wwZ6KsWbxlgzrcp2GNw3y4RuxTXBd1VmIWpBJ4t2awG6z5Dtl0U@b0aZsUXQBmQ2MzCgwH9xuwv26qm6SI2ANyABbx7JVkHGNpZNdd3OvE4VAa8RwvAIxdsy4httdmIF@CAplUtGBvQ0TABFrStoVMKhL@y1YxJ_HsVm8cZipsP04Bbc9Lh87Qwx7Fm_pYzUxS_Qr5CA2HZcLIbsACwsrXmJ0t1xZa9SIoKhLptf6tCW5i68U0AXF7UOBOU2zTAhi@BiMJIgQ_VJZ@zMQI3ehqTnhi0m4MuXaPvwJNVDrOA1VH6d9FeAp@L6Hy3o4vpKYZ_DIggWFmyoD__9HfUaSBtSLqff_qHJCKZpLcYbb2@QsNRsBdpsgKvEQMhFySQ0J0SrlQYMdv7LOMUMDr9mHAafuh4vYMncY6rCib4AgR_7@EGo2YJclAmQLQBxHGDPp40tX8AHSbUwupj@pKhXmYbq7Pp8oU650u7j6tSQj2pVWu8Wjt1wfGKSDVx@lqORwcA0cLp3hayDgjFpnK6dxm@DlDQJo9dGvpVVwgOtqZmg06eD3XP@Ka7Y0AsLAjrga0RJBvjP3dkIuTR9iNEBmixn2Cmggup@GOcbXllpEGaFBIYCZ6BpWvsJwn9i@eT@mojuwOHJqItmid0DsGhQFAiKQOeIqPGlCFRKxLhVyKQPHsZ13dk6uS0LIsyWqNbcc5D2ROZeBkd2_MV3wJM8cH@ERydZfpRSnU00JAxnpNQq9ExcH@9LXM2NPs8gF90e4E_BCtIIr6ghtBPPLK3CJUR8ODs1XenL6PvX357@vTZy9NvBw0giF23S7BmKRA1kpZYQ3MBPXv59vunT589eXb68ix6_Oj5o5dPTg1owP9abGycvGi9fHUWvXp9@ubR2as3bSgY@DggwlD@9PLUBKGQqIBGUp4bKrkgFBJvgUZvv3_9@tWbM6KS4sRkW5ZcMhCxF4RycQ2WZtG4PNKxsd0D9CiICZdFBgxcHUv2ns1mRRKvM_xMQA1v7L_xS8Yg@llH7JjJyPAr8W39sTpWLeCvwm3BmGJu@El91L_Fa4xL4RdQNvLL_2EZ@HD4ufkE@GlBhDkIqZBGDbxZngF9KfBKQAvXIoxoEgA0I7DM1TZZMS4kluSOPasxahGZCyvLCaAWQDgwmRCJoPeK36Dfiy2byI5JrT6VgvoYV6FlYm4kqdj5nNcaJCkIyTi6d_3R1BtvKDod4lqILx6J9fDk0cxHr9IJs7TRjm5yAbXKGllmvpnWtMMKNvjLT1PRzPVnhgOY1mBM_woc4Y@BwGEwGlntm78s4tlUEly9D50UypXs9RxYdCjxHo2CmAee4YAwwFkASHMKUitYuNss4eEEpUoUXrQALv@MDIVb87XkSsJkjFMzIF6IaZY2uZqmtGiVgzZ0qSSOEf@4KYcXYxZGRiqhV1JLRhS5zoTBRekkjUSWVYV6s__YbhYg6Vq9V1b4pOTRhnib8ugTQ5u1LBYg@9HFZ2bmJtQmJKLXkjkEorh1OCD8SLAUIsSSSshGHsb0OQsEZqwnM9Z4mjxqcZQijOgZEBuDOBp0oKmHRruZszSZU_KktrXESLPnfHEOHPuBXxl8KRKRjRmm_bAYLG9GrdkQU5MjyrAKFp@wZzm7D@Gjyo1i2ATxI@UHIWwudOoNI2EIsDfTTZx8mE2tziIymojEvAkhiXORisGEKSKDudx7lbLISiqaudySRBgcgCPKZTd647di2W3Ci9YGwxtKm7JLnj70w7inBIQDTRgNggcYAHHo2OHR7WgtUoWzmGFoWH@4KNlPQOwcUrEpLv5QtBcc@VRm_GKIKCA8UV6e5DdwjUQmrll6lc1ir2VOE6HItGblzyGp9IvY2sZEf7mmX75qcmgIhX@EPwScdayzNqwgd2mZ8mzR5jjC@dhVpH4LJvWonEHbxdB8J3_3wijbIFRjLd5Zmn@AaK6@5MBt2piQAylSisSWQtivZANMgtMuCoVzuJFyH0NT9A_vI0lnUqv93_82mgs@652UmVg8Efph_MlUd7EnJDc0wPXEhBNtdWDWCfFR3quZTZZVAwImtSTd8T3I88wxhFoObiz0aZ4H_FF3DXeaP_vpYwztJ2QaO7qM9rZ@OGtYDe@c91EA1NAg36iXLjh7fFXzytW5HsIbiIi96WGNdupE_KKnMAI1JtSIoDNyjC1caCP2MO1YCyIH2s_AO8u@y8wHV33kR8Y2IfKnsbsS19PoEl5_lS47NMQGPaPyLbzuR2xo@E7nDGihwr3eCypsYYH1kCVfFxd831EXPNtv5EZfVNGar@cyjbLHkJqra1yMGvyrath3@NEdHZmT4o@K5bFBgR9AY_axQfv58kE_3dU4ppIx8Ko2mK7tQozCO2vUELqiI80UEGroMLWn70qaa3gb_GVfnIFsZmlJI0m7L3XR8Z3jfqkY9oncmBtaiFv0aaEuUbPi8@CsG3l3J1fh7BQ6g4aVzmjJUIQjCEHjf2FU2S9nU12t50UmwbytS3CJ7QYyJR76GRNhawhOGkawfwc_sIzVry_A2BiADKAGqW8erzbpnw4DMRyIqXc2glY4_@420EhRAZlCzBg5visu1jYHHDQ5KckZaIRMvmjs0xB_8kSjCqbFvX7rb_s_kmdfd@zbfDLWVfq4SfhsiixNpEk@@6MomLFZGreemtyz8kpauZJLMtj9msHwDh6Ov4NPf17smFfop_3zggYhdvCm3c8mzh5d2SBMMCsBZI_QzD28qKIHzGhVFB_C6yXLG8RmS3dbFaP6215rUQOz8n6__3JaJNhvQV2y7LWqHlJZy5lsq7pYGzu7tpR67U583mEvBK2jeJPKRq9EdYKZ5jHcdMyXdSRO3ZigvRhtzkh4etGEHN2tK54vuChM7tFakIpaG_MKETAcTHSwoSQH_mN4izoq3bnu6L0IAvRhErCQRADydGgaA59NQ2w@qVnzBbP4_fZiaG5GGCgBcFlwOazGKrYxdFTDNsMuveYlUTuHGKqkNB8M@Vhb@Tb42NsoIQ6H6aq_HKdWczU0ammTkZene7SU_Eyo5UVuZ0sc5Ds2dFq@tFyjC51l8xQ9VtBqA7oAQgW@YHMsIJ3lcT1D6mMynMpWVBG2SJxR7hLzW0YxC0R9JfXOGUQJ2zhjsyGOBqBGM1kDM9XZ9@_y4lKWpbrVlNuKL7eZTOSXomGcJFvK@HEswWCyBKOS@fjXrTrRXQlVKsvEcXEMVSAikqkQbnGsmYUfhk0aEqvjoR_8PREJ56kVg4CTd3v5PCrN3ZHW6l9MJNZ9gLVbSNsU4rEkLhcpTHcakGdYsuFBv1wYgB3W_m0wO5uCURolGi5uY1ISGg1PR0M@DpsB2AN2OOpCX_VG7C4aZK2cxm1jrCp3LtjXCnIfFDVOF5QpV2ftVLlTXBtF0SpCV7u4dpndTFSxNrWrxi6tOrlyKWur6AzLzz_9Ha1iSrtaVEMKQInpj@@QqbDAD1Xh7liUOytrgeaBl@nyakjcIhTiSVNjjYH71KoXHql@2mYJgFMIl2pgW1Ht7WxVeTqIcgTR9gVia7TMF16wVs_RHfvonTpzN9@meOgubs7Y4LGOkup16wKJbJWw4BZGnJPKtOqi9WagqH9B4cxXQCs62oAb@wpMifXfqzRZNXVulTxEVKa03s3xShqMLfml3P5JZCEd4rVYqC@L9Rr4ZsljYMpm@2PC_oTaWO9YAmMJjfgO9z@NVNLs_VCdjLy8vJzKY43TtHi44BcPSw78gPw0XdXr7K5VKDgSALEQWutd8yzVtiJlj7WysSjaM4@fxFgrJSDYbCzqz5U1IEMna6xp@wtkAeQJWS2qyE8WwsA2WZxwPEFJG4l4ggVXVgxQXQFSa7SN2EjQWwBrsGOXab0COMrKKPMzqVTSZZus9IxnA_lzdHRwdHDwu4OjCM@xRvPfH_5u@ZujweyYBjGOOsDyT_SZ0Vwihm3OQT5xEdNabTzSiYh3gG1RpTD1q2aFfAdrR2TPG3jNYbFVsYUpFnN@NbWOi5YcBVipmNEOUzdm9@9TbiaS67BXMSQ3qyyhjVV1OTT6j@x@hbG3Bt3MrbY@vUj2zX70RUfP2rD9eAzT@LOjV6Y3_aFPUwGwcxyd59RD6W86@vrrhLF0yJ@J6gA1t2rq8OuTVp2dvzPYTNto7igBF3NW4R@1FH6voUiGNoDuwfrUSiMr@9tJxrasmoWuY3jGdsK8ax1Mr33kgL5QO4Wh3hSuuf1geL0kF4QNkQucOj0Pl@LBMzUtyvvbWSsgab@jvlyf5llm8flw4LQe9IIZKD3fBdw8WWH14eoQR4QmZp3@SJo@yvgFx9T94Fu@jKHrc_CSWgXtqAftiFJWg5y4C@TZGFYbwGaJhskenq2tak_QPm0SHqKJfk5c_SpZz@4B9jlSiLkqcioCm1aflmVu9kftZi17Ymxh0Mf_splUWydLM3mEuHFP2d_EIlag9sH3WQxHRuDtlXFXJ3pjcOhLkaxRDy5AWAwrK8kj8vtOdOspFXiaDRW4j2T5VTMs_3ZY4W4zu_qj9GnZN@xgzBrbOjh78@jl26enb6JXT6M_n755NXDVSe9SLpeqMG6zN3aCQw_Mornj5oT514BYj7E7z@CEsNiRfxuqlbf88yZgGY3YX3eBsNfvhDWdd_Z1ZcveoRcxkpbGPVLOzmNieRM4enY3AWLwhmfT234ahnU9xKl1usRjRt3w2pnN58AoN6cBnY3xEMAIwjU_CT3dJBj6rkYnFu3jRx5c6FCz1EUQhB2Ik82YHVyh@s@LS6@LBXrAVmIeTwwf0peqytV2t4XJskTA4sEdqixIE4OoYrB3Gon3U1W78Q2W56u8Qpi@ndT1nsnykBifuuikAs076jP_HnMjJo6rCPOGwZn1ATQxaBRaDWUQDFAGE4tZB3jDi4bs0iDxwFipEBI7NEpwkLZ7p9YiNOfOoTZgQru9n7mutgn5P3eZ8HaocHjN41wk@mVHUcSKX5PNrqpbcZyMGiC3PKnpihNYRpuywFscIllvMYR_W6vbxebQeipr0vCjn9X7aEerd0h8b6Iad3F2gK0NEWzznMXVPs4S5ex@iQ1skZlPU8rWozE@Rrle69RHs0pmWrd3yakXoPp9rIvmOgC6denO6vjl8AsZzach44G1CSlr0rIiiTPcFxdVg1jBJfPtqtAPL_kaOkJvKQWdrPdhLMGpWsHe3mnfAkdLsenYElPopM9bqRYD2V1hqo7JKRQu@Tk6l1efImq1MlPeQhBzavi5iOROhXB0s@UokFLqnGL7mGDH3LxI@@tsvVVO@GDqxzy94GZ6jWDd5RNRk90fwihcY9IdsspwXlAnkBugh7YaRDOQEsw64BVPFSw4bqaU534fQWxQlOeiy3BgkmVAXQFkh7ekGW0I7aZS9ewV3eKzO27yu3uEghMdq03lG8bFekLX6tjrWIS_b7fD3V6xFif@UhfNOORw83zGtZeO3Wz1WGgBPfdRglzHaYarOfR4g_57KEZSh8o76eA_ujPIvGRK7fPiPXB4ynTOme5P1TLb85XaRxa3ZyFAeexD2ojgKbF5UWRDcavbp0WkxVLyGApx1U68ml1JG4rapzT2JvcdSZcnNGxq9e@2cGi2fMN1mO@dImbvMLgYgWES4E260DIH6NHNAnoQ0Wz3fMVQn2SeMjD1TXCN@1Ct@YWwpLa3iOBdLJIQV_ElK558oBIywjXHezrnPMHP7JLfkydFCWRTatU7md4gJ73a6yXSW@OF7@xyxlM3ipywQxjt5dMzNZT8AQY6HIRC6b959n_sQ2OCmfWO0bUyyS3KBEMTE_tE3MSGfMHqyxTClQqP3RAMYzpdaQVFIHnmzEHD5maLBrbzYky_A8j@qYHuZACmuKw1NocKXK3sAPOmslrlU6EZtLMr7am3fBtKdHWi6MB@1wL5vkd8bYTCrd4BttLnuWRz8Xegsbq1D4Leu1iqBzQE7QakxLwaw2s5_f2MQ18HAdDmuS8MoD1@mWU37WizryJt9br10DSUQAmepVSPebusjhRVtiKsVlbgwGT6CNLzeD1fxN2Zlwb4XvvoPjD24RjzGbln6@iom0TXOjEiUqSg0cPZUS@qoZMDlgQBrPeOdpfJrh2NoSFey7mttUaQ2LclXSV8mimMRiarDl12HWsPYOw6gePG_xkzjwMUKFYjGAbhVM9poL12TcS9@Kztkgl46lbDM8xs6eJd65ZDUAPbNfBgq3RX3K2mavJERTyV5tMlanSmVlwKLS_h1ocSsFpXVm2qHNhkHmNn83ZpVXGKtRR4lRO@uoLF82Irb1WjNa7ci7@rhOd4faKS8Ol0OsLr4NgwWRJM9s567cZeVaJpHsURzi1Sw0QjXWX_x5RfUpU1Uqt3IaLZQsuCJmtThGw3oDIeGBUQ2a5DWpd@j5NEaHRPgyb4FUERHstDt0MXPgeyQzuyaHKl1e7fXlm0jrymx_02KWCCRXcXu4dyVR4ID06oh96L6DXDayRDrQrzXknJ9mDBMexJqYXfmy569ftoZITmqdOz0VC0Fb5Hv9nuV@doIx6qRPRNoF1qKNxAaQIUw6ODoA6QdR58DbGZR9LwhSh9fVpPd_HiEqWu_9C8D6RYkjJnb6WG0pfSkkoWF_5UhbrvvUx_bLS2dSKgmP@FJ3QaimrV5wjzMqZ76i_Sahtn0FPc2J9WSvvSDeF5hocznn17Slr36w71@g3oTnkCh7TqUNmuFNeNShgloQy3TzeWzqqKGeGvVsfmD@PuWexpMo6kkvCwLNVuuKjaqKwOh3j5rbaF7CUMe8wG7IGJh6djjdfBgFZD8uKtWNXQjNbV0PLNG@r1LmD3Tr89@u1vD3@PNwlN8EKxCmZRI3ujKRc3oDeTIZNuzESCGw4embbfiB9hEVVpRKsD_mA0nBdzxnwN3xRzXtYDczLPOV6Mv0irTRYLvlIvFHHJPl0dwWDy54GHbtWquBy@o4mNBbpjRMbw45JDlAZwwyxHScW9LkjURsmhmXrYmXUACXj17SvrK5GM8s_nGd77HGfsRUpvAPFNazMcnDnvIFjTHeuHBwcyT3JwjwSL1mLqgSJmMqXkkXoFy4kgkg77O518fR0rjLkjHFBR5L2z7w7u9d6tPRhNy20@1GdMpc_ppdqZVKKVmDC@QOZxMQ9PW2__Wci8c1CDpq0CWLrFVF1Ouge59ATpIlN3pNDTxPTiml3g3_0GtB9j1a7T3VqeXv1bEdb79qIiBT2L6itJg8UwkzTwZzttZa8HoGiUcJ2w3x_c2kDmKrSHOfQM84Xtbo_t@gP4ZJM4_LeSHQsQyRGbwELi_w4_uUS1B4dxH8j_GYM3hrjrGtaw1X2B94_SmTN2hrc_9zaYvVnqeubysL@5POxnLm9rGkf7TOOo_zSO@lr938Cq4QkncV0BUx4A2n00_20n9NNo4r01yk318DVUv_18Hpr4M5rG4ei9ZyK0CXpRZDAIcE12RbEfiyEyWVJWD1@WM58Qa7h1Kl@Yxn4s8d5h1IA4AR__FZ3sfxxXaWIc7RWpCV@YhBoClYHcDtXH00gzUHREe3RfggTn@Tx0xK1N4sZz2M2yY7wTO9UbJgFupEwK1RJpZozzKzoW9IUN3edXxoafxlD9im3NJxfcLt_y9AKcSi2wlgGpi4Ktt8nqi8y6jxnm3Fxq@6xfP9XrbERTVdsTdQM0frBcAbUVC2DtrdnEE_LSossG3nStHv0iLenmOEnhY@a9FvCBqC8QiOqzCWqE0ZR_xH0ca1fTdJTkNuikWJozor2S8pw2r6sIZh8Zh@fU_jqdIgvcgzjsKC@yr9JWqPuLTcK7tMEKGYcWCt9AF2NvELcx23vKgxFuiuURvjPefzZC3@tN5AiKuUHBIGnVso1bQlk57y1oZWA67Nc@fQ9v0Peomfl7H7fJVI@aYntfPZBypYQ9Be0v5K60T5OqbY4LEL@Jrv9YFPKmKhpaXXso7m5sXqISkCrFCAvadaTtRq7KvXFjTu8Bdyj2wDkmZ8CdYmAcTerP91oH7MX3Drq2ANg6gmp@my74XsRh5mgE@8AbUAVLuHCXnu44GQ7ar8iT9QPrBVYPZE7IrA@YaQUCKzt8t16oksOmRcsmMOs4iO6AzDc4@@5gMGJ_Zc7Xhx70JAgDE9GUgPRjB@f0VkhdmgV97w7G7PC9u55N9Z5nRazWITugrvlq3TNERTqHPQ9vmTaUirbU5W2XMRZw4ZupQZzoSE9eNBfMSqjt4mnTJKLFVbex4UESxtHj8r5g_TgARy6Cc_Du3X6OgqTLnvdpeRAJlJ3sku5wTWYQZtR5ts8zRl8Ngk9Ai_gx8d9rHNAvbbr5DYhbsOIsmafexTIbnYza5tLpDjbFWzsO5MlEzbJ4X@51@TIwHMqYklnmqWvAp9gc@CopVLf2BUPF5rCreft0Q7E56mp@FCKUKLQA3PDNOIf4v6N2Za1B0yYNkoCSO@c6I6crpvalq8_66pIr60ToGAG0DrnS_pOXjf0ekr@peXv8YXdby7PzCOIvBvujlmzvCLBpbgYjaDYkZsCXDQaStCB@eO1riP86g258_OHw7QffRJ49A3CayO0G4fg0G3XXhXDN_Bk@7fns5Kndz63Ox9mFwKfNvIB0T9a1skOPi7nm238qv16LaW6DWz@31T3subqdDqFvsY927CV9UU@9n3_Fgh_1XnBRRIhGSZzqx5AkLbWVvFX3pH39wedm43d6KL@ACXQ7KXYZFU2vl6Zv@ShxfkXvMf530QK_erUviwfotQI6wPrsYpOdytgSm4PPKjL5VLgf7hB5q8iE5uUR@AN7p97069i9g3sUkdw7vPfv4ePdeFsXn5uVZODT2h30g_lCw85nf5V5sFNHol201CQlcsOVViaYX0xWZw_d6TTYrZCu4ZzSWTyX7MJZVZmTL2QPk12eCVOEp8OCPe2Cla0StgENgmL5g0kvpv9iHozn8zAPv5K4@rZoeHPzADOqWJNCifG9hEkBsqKlHJVWT4H53P3ro3@SjeirqlAnWemrttL6oqj2fz4jIfuyPO7zr1ieI7vR9coJWuUWdLnyeeClXZ43ydx8W92BdI3Chn6VDTctbbhubcOexQ076hiuQfEOxe275qF5JeofsmIeZ@w0v0jLIsdSQ_ZaXMPBy8p4jye94VG93BFfobjNsUyOV6L4AYtrNlf1qsiZmKW6yhT7cwM42VBAqNK3eOjXWc6MdvrKj6TkNEr75aDnKdb1yLeritcwQ_iCdonKrOhFxuJ9noHRsSjtnCYfbdSEh9AWL1XBK8jFJR1CmmBtrVfZFtVUQn0ne7ynuq4aVmHAvGWu1tUqHSCWKDoBGOJ@ldaXElP6WryDzbmeVDWhObtEVnePqFE0lRs5W_D59jxaFwuspHOoNmh@Bm9ICH8jK@bRWW9vs4Gnv3kHhre_2cDT331toheK28wDC5hxEYfwUD9CPxLHpht4ogmXt_tU3r5WCxdAu5zOT8dWIxdM12uXW6_E8xCoo7NnqKCB2j1QsKtnRZwXFHpJ474jsQck_arDfiCbNyPasPV9dm_V1c8___T3dZzmP__0D_PeOv0yXPwNry6q5K1yWYzEZjnoMvnmYVRuwPUTda9QLW_K03WO87K4xHtYZbXa9A5onAFo7k2GynRAxZowSBTh1UBRJORf32LkUxHCuMg6T5caRZ4hNZp@CEgT4thiCxrD0DKWchFsZF@ahEPiHVh5JOc16oTXUji3ALGlghDi2K9XWlKgn5uMbigdyVc3AtdWRm05uBWcnTUd@3TYJxm6W8kFfdObETXMDLc9kk_h_XMGMvXhdUf8f1AVIg4-) even if it seems overwhelming at first, it's worth spending some time to understand how it's working behind the scenes.
+
+
+### Show me an example
+To implement a token of your own - you need to import SmartPy's FA2 template and in your own contract, rather than inheriting from `sp.Contract`, you'll inherit from the `FA2` contract.
+
+```python=
+FA2 = sp.import_template("FA2.py")
+```
+This line is similar to - `import FA2` in plain python.
+But because we're writing SmartPy, the rules are different. 
+You need to use - 
+1. `sp.import_template` - If your code is running in the SmartPy online IDE.
+2. `sp.import_script_from_url` - If you're not using SmartPy's online IDE.
+
+There are a lot of classes in the FA2 template along with the core `FA2` contract which are used in implementing the template in a way that it's easily reusable.
+
+To access the `FA2` contract defined in the template, you need to use the dot(.) notation - `FA2.FA2`, where the first `FA2` represents the template as a whole and the second `FA2` represents the actual contract class defined in the template.
+
+```python=
+FA2 = sp.import_template("FA2.py")
+class Your_Token(FA2.FA2):
+    pass
+
+@sp.add_test(name = "Fungible Token")
+def test():
+    scenario = sp.test_scenario()
+    # Creating test accounts.
+    admin = sp.test_account("Elon Musk owns this account.")
+
+    your_token = Your_Token(FA2.FA2_config(single_asset = True), admin.address)
+```
+That's all the code needed to implement your own fungible token!
+
+Look at the last line of code in the snippet above - 
+```python=
+your_token = Your_Token(FA2.FA2_config(single_asset = True), admin.address)
+```
+On first look, we're initializing a smart contract like we usually do. 
+But, we're also passing in `FA2.FA2_config(single_asset = True)`. `FA2_config` is one of the helper classes defined in the FA2 template through which we can control the behavior of the token.
+We're simply telling the config class that we want our contract to be a **single asset** token.
+As the second argument, we're passing the address to the admin account.
+
+### #buidl-ing time
+ 
+#### New feature request!
+It's time to introduce some order in your chaotic new world order!
+Take the first steps towards building the universe's most advanced civilization, it's time to make your own economy through fungible tokens 💵
+
+#### Step by step walkthrough
+1. Import the FA2 template using and set it equal to `FA2`.
+2. Define a smart contract - `Cyber_Token` that inherits from the core FA2 contract. (Use `Your_Token`) in the example above as a reference.
+3. Initialize `Cyber_Token` with `single_asset=True` and the address to the `admin`.

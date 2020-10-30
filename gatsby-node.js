@@ -5,6 +5,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
         nodes {
           frontmatter {
             slug
+            type
           }
         }
       }
@@ -15,15 +16,28 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     reporter.panic('failed to create chapter', result.errors);
   }
 
-  const chapters = result.data.allMdx.nodes;
+  const mdxFiles = result.data.allMdx.nodes;
+  
+  mdxFiles.forEach(file => {
 
-  chapters.forEach(chapter => {
-    actions.createPage({
-      path: `/lesson/${chapter.frontmatter.slug}`,
-      component: require.resolve('./src/templates/chapter.js'),
-      context: {
-        slug: chapter.frontmatter.slug,
-      },
-    });
+    if(file.frontmatter.type === "module"){
+      actions.createPage({
+        path: `/tezos/overview/${file.frontmatter.slug}`,
+        component: require.resolve('./src/templates/overview.js'),
+        context: {
+          slug: file.frontmatter.slug,
+        },
+        
+      });
+    }else{
+
+      actions.createPage({
+        path: `/tezos/lesson/${file.frontmatter.slug}`,
+        component: require.resolve('./src/templates/chapter.js'),
+        context: {
+          slug: file.frontmatter.slug,
+        },
+      });
+    }
   });
 };
