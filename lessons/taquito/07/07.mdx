@@ -1,0 +1,134 @@
+---
+title: Minting some tokens
+chapter: Chapter 7
+slug: module-04/chapter-07
+filterBy: lesson-4
+editor:
+  language: javascript
+  startingCode: |
+    Tezos.contract.at("<CONTRACT_ADDRESS>")
+        .then(contract => {
+            // Call the `mint` entrypoint to mint 10 tokens of symbol "CBT" and token_id 0, in your account.
+
+        })
+        .then(operation => {
+            // Return the operation while specifying to wait for 3 confirmations.
+
+        })
+        .then(hash => {
+            // Log to the console - Operation injected: ${hash}
+
+        })
+        .catch(error => console.error(error));
+
+  answer: |
+    Tezos.contract.at("<CONTRACT_ADDRESS>")
+        .then(contract => {
+            // Call the `mint` entrypoint to mint 10 tokens of symbol "CBT" and token_id 0, in your account.
+            return contract.methods.mint("tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7", 10, "CBT", 0).send();
+        })
+        .then(operation => {
+            // Return the operation while specifying to wait for 3 confirmations.
+            return operation.confirmation(3).then(() => operation.hash);
+        })
+        .then(hash => {
+            // Log to the console - Operation injected: ${hash}
+            console.log(`Operation injected: ${hash}`)
+        })
+        .catch(error => console.error(error));
+---
+### Intro
+The smart contract for `Cyber_Token` that we've originated has en entry point called `mint`, through which we can create new tokens. 
+
+In this chapter, we're going to interact with the contract by calling the `mint` entry point.
+
+Hope you saved the address of the contract we originated in the previous chapter, we'll use it in this one.
+If you haven't, please go back to the previous chapter, originate the contract once again and take note of the contract address.
+
+### Study time
+
+Taquito gives you a smooth API to work with contracts.
+
+```javascript=
+Tezos.contract.at("<CONTRACT_ADDRESS>")
+.then(c  => {
+    console.log(c);
+})
+```
+
+`Tezos.contract.at()` returns an object that signifies the contract we were trying to find.
+
+The object `c` gives you a whole lot of fields to play around with - most notable is, one, you can call entry points through `c.methods` as if they were normal Javascript functions, second, you can access the contract's storage!
+
+Through `c.methods` you can access all the entry points that are available.
+
+```javascript=
+c.methods.increment(100).send()
+```
+If we had a smart contract with the entry point `increment`, this is how you would call it while passing the `100` as an argument to the entry point.
+
+### Show me an example
+If we have the following smart contract - 
+```python=
+import smartpy as sp
+
+class Counter(sp.Contract):
+    
+    def __init__(self, initialVal):
+        self.init(
+            value = initialVal
+        )
+    
+    def increment(self, amount):
+        self.data.value += amount
+    
+    def decrement(self, amount):
+        self.data.value -= amount
+        
+        
+@sp.add_test(name = "Counter")
+def test():
+    scenario = sp.test_scenario()
+    
+    counter = Counter(5)
+    scenario += counter
+```
+To call the increment entry point through Taquito - 
+```javascript=
+Tezos.contract.at("<CONTRACT_ADDRESS>")
+.then(c => {
+    return c.methods.increment(10).send();
+})
+.then(operation => {
+    console.log("Mint operation sent.")
+    console.log(`Awaiting for ${operation.hash} to be confirmed...`);
+    return operation.confirmation(3).then(() => operation.hash);
+})
+.then(hash => console.log(`Operation injected: {hash}`
+))
+.catch(error => console.error(error));
+```
+Take a couple seconds to look through the code snippet.
+Now, let's break it down block by block - 
+1. Using `Tezos.contract.at` we get access to the contract object.
+2. We access the `increment` entry point through `c.menthods` and then call `.send` on it. `.send` is what sends the operation to the Tezos blockchain.
+3. In return on the third step, we get the ongoing operation that hasn't been `confirmed` on the blockchain yet, meaning it's yet to be completed. Confirmations are an important concept to the blockchain, multiple different nodes will verify and confirm your operation to make sure it's not malicious or tampered.
+4. Now we have to specify for how many confirmations do we want to wait. 3 is a good number for testing, on production it's recommended to wait for a higher number of confirmations. 
+5. Finally, we get back a `hash`(just a bunch of random characters) that is the unique identifier of the operation we injected. In blockchain, every operation has a hash which contributes to its transparency.
+
+
+### #buidl-ing time
+ 
+#### New feature request!
+You've got all the systems in your society in check now.
+The economy and economic policies are in place.
+The fleet of `Cryptobots` is out there re-building the society.
+
+How about you start minting some money for the society now?
+
+#### Step by step walkthrough
+- Mint 10 tokens of the symbol `"CBT"` and token id `0` to your address(the pkh you obtained from the faucet data); To look at what parameter the entry point `mint` accepts and in what order, take a look at [this chapter](https://hackmd.io/@manangouhari/FA2-4).
+    1. Access the contract through `Tezos.contract.at` - pass in the address of the contract we originated in the last chapter as the argument.
+    2. Access the `mint` entry point through `c.methods`. Pass it the 4 required arguments - `address`(wallet address to which the tokens will be minted), `amount`(amount of tokens to be minted), `symbol`(symbol which will represent your token, like BTC for bitcoin), `token_id`(used by FA2 for the internal implementation, 0 for signle asset fungible tokens) and call `.send()` on it.
+    3. Return the operation recieved while specifying it to wait for 3 confirmations.
+    4. When you finally recieve the `hash` of the operation, log to the console: `Operation injected: {hash}`.

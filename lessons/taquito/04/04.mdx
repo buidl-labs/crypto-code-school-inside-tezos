@@ -1,0 +1,171 @@
+---
+title: Michelson is a thing you know.
+chapter: Chapter 4
+slug: module-04/chapter-04
+filterBy: lesson-4
+editor:
+  language: javascript
+  startingCode: |
+    import { Tezos } from "@taquito/taquito";
+    import { importKey } from "@taquito/signer";
+
+    function originate(){
+        
+        const FAUCET_KEY = {
+            "mnemonic": [
+                "chimney",
+                "item",
+                "course",
+                "pair",
+                "opinion",
+                "mass",
+                "receive",
+                "wrong",
+                "hurry",
+                "nest",
+                "oil",
+                "acoustic",
+                "section",
+                "salad",
+                "electric"
+            ],
+            "secret": "47184b1d8bf4dd550256817c3507cc4ccf112888",
+            "amount": "903205016",
+            "pkh": "tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7",
+            "password": "9U5VOADM6l",
+            "email": "ryqwtuyj.ciwjnvdt@tezos.example.org"
+        }
+        
+        importKey(
+            Tezos,
+            FAUCET_KEY.email,
+            FAUCET_KEY.password,
+            FAUCET_KEY.mnemonic.join(' '),
+            FAUCET_KEY.secret
+        );
+        
+        Tezos.setProvider({ rpc: 'https://carthagenet.SmartPy.io' });
+        
+        // Store the code here - 
+        // const CODE_JSON = 
+        
+        // Store the initial storage over here - 
+        // const STORAGE_JSON = 
+    }
+
+  answer: |
+    import { Tezos } from "@taquito/taquito";
+    import { importKey } from "@taquito/signer";
+
+    function originate(){
+        
+        const FAUCET_KEY = {
+            "mnemonic": [
+                "chimney",
+                "item",
+                "course",
+                "pair",
+                "opinion",
+                "mass",
+                "receive",
+                "wrong",
+                "hurry",
+                "nest",
+                "oil",
+                "acoustic",
+                "section",
+                "salad",
+                "electric"
+            ],
+            "secret": "47184b1d8bf4dd550256817c3507cc4ccf112888",
+            "amount": "903205016",
+            "pkh": "tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7",
+            "password": "9U5VOADM6l",
+            "email": "ryqwtuyj.ciwjnvdt@tezos.example.org"
+        }
+        
+        importKey(
+            Tezos,
+            FAUCET_KEY.email,
+            FAUCET_KEY.password,
+            FAUCET_KEY.mnemonic.join(' '),
+            FAUCET_KEY.secret
+        );
+        
+        Tezos.setProvider({ rpc: 'https://carthagenet.SmartPy.io' });
+        
+        // Store the code here - 
+        // const CODE_JSON = 
+        
+        // Store the initial storage over here - 
+        // const STORAGE_JSON = 
+    }
+---
+### Intro
+Michelson is the language than runs on the Tezos network, rest all higher-level languages are an abstraction over it which directly compile to michelson.
+
+### Study time
+
+To deploy contracts through Taquito you need to grab the "Michelson JSON" and "Initial Storage JSON" for the contract that you wrote in SmartPy and this process is made SUPER EASY thanks to the [SmartPy IDE](smartpy.io/dev) - it generates "Storage JSON" and "Code JSON" for you which you can directly copy.
+
+### Show me an example
+If we've the following contract - 
+```python=
+import smartpy as sp
+
+class Counter(sp.Contract):
+    
+    def __init__(self, initialVal):
+        self.init(
+            value = initialVal
+        )
+    
+    def increment(self, amount):
+        self.data.value += amount
+        
+    
+    def decrement(self, amount):
+        self.data.value -= amount
+        
+        
+        
+@sp.add_test(name = "Counter")
+def test():
+    scenario = sp.test_scenario()
+    
+    counter = Counter(5)
+    scenario += counter
+```
+
+It generates the following **Code JSON** - 
+```json=
+[
+  { "prim": "storage", "args": [ { "prim": "int" } ] },
+  { "prim": "parameter", "args": [ { "prim": "unit" } ] },
+  { "prim": "code", "args": [ [ { "prim": "CDR" }, { "prim": "NIL", "args": [ { "prim": "operation" } ] }, { "prim": "PAIR" } ] ] }
+]
+```
+And Storage JSON - 
+```json=
+{ "int": "5" }
+```
+
+### #buidl-ing time
+ 
+#### New feature request!
+We're going to generate the JSON Code and Storage for the contract we want to originate and store it in our code.
+
+#### Step by step walkthrough
+1. Grab the **Code JSON** and **Storage JSON** for the contract - 
+    1. Head over the following link to the [SmartPy IDE](https://smartpy.io/dev/index.html?code=eJxtT8lqwzAQvesrBuci0eJDjwVDS0og99wV2R47otqQ5Ab_fUdy0qZQgQSaN2_TNviYIVkVc1hBJUiBsR0ct_nh_QUy2mBURlY@HeGtrqC8A7whpA1rI4j4gZN2COd9XHuM8uQ_0Z3ZYFRKsP8d8UKhK14Z0AkEM_ZG2mocSThl7pRFsmsOi5t1bxAqjzxGnKBu3LhpQKei9lu2gsj7iIu6UZ8dhCXD6pcIV2UMZiCriBRLO8gXhC9iqGLUo_HX9oeoRksbVfzG4M3RpQeBC0ZsKVldH2rJXMIS6Z_KcvBu0jNP2s0GJTXH3J3iguJ58xJ_az11j5oV@wbmIowr) - we've pre-loaded the script for `Cyber_token`.
+    1. Replace your wallet address for admin - 
+        - Several operations in a fungible token require to be called by the `admin`. We'll be injecting operations through the account that you obtained from the faucet, hence, that account needs to be specified as the `admin` in our code for the fungible token.
+        1. In the account data you generated from the faucet, there's a key `"pkh"`(value starts from "tz") - this is your wallet address and stands for "public key hash"
+        2. In the SmartPy code, initialize the admin interfact with the value of your `pkh`.
+        - Eg: `admin = `
+       
+    2. Run the smart contract in the IDE.
+    3. The first section that you see in the output is your contract, click on "Deploy Michelson Contract".
+    4. Click "Code JSON" and copy the code from there.
+2. Store this JSON in your code, inside a constant, `CODE_JSON`.
+3. Copy the "Storage JSON" from the SmartPy IDE and save it in your code inside a constant, `STORAGE_JSON`

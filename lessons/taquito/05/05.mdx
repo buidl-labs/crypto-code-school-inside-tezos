@@ -1,0 +1,77 @@
+---
+title: How much does it cost?
+chapter: Chapter 5
+slug: module-04/chapter-05
+filterBy: lesson-4
+editor:
+  language: javascript
+  startingCode: |
+    Tezos.estimate.originate({
+        // Pass in the CODE_JSON as `code` and STORAGE_JSON as `init`.
+        
+        
+      })
+      .then(operation => {
+        // Log to the console `totalCost` required for the origination of the contract.
+        
+      })
+
+  answer: |
+    Tezos.estimate.originate({
+        // Pass in the CODE_JSON as `code` and STORAGE_JSON as `init`.
+        code: CODE_JSON,
+        init: STORAGE_JSON
+      })
+      .then(operation => {
+        // Log to the console `totalCost` required for the origination of the contract.
+        console.log(operation.totalCost)
+      })
+---
+### Intro
+Everything on the blockchain costs.
+Each contract you deploy, each byte you store, each operation you perform - everything costs.
+
+Wouldn't you want to know how much will it cost you to originate a smart contract?
+Like you don't buy a t-shirt without checking the price, do you?
+
+### Study time
+
+Taquito's estimate method can be used to estimate fees, gas and storage associated with an operation, even originating a contract is an operation.
+
+```javascript=
+Tezos.estimate.originate({
+    code: CODE_JSON,
+    init: STORAGE_JSON
+})
+.then(opEstimate=> {
+    console.log(opEstimate)
+})
+```
+You need to pass the `CODE_JSON` and `STORAGE_JSON` for the contract that you grabbed in the previous chapter, and it returns the following properties - 
+
+- `burnFeeMutez`: The number of Mutez that will be burned for the storage of the operation.
+- `gasLimit`: The limit on the amount of gas a given operation can consume.
+- `minimalFeeMutez`: Minimum fees required for the operation according to baker defaults.
+- `storageLimit`: The limit on the amount of storage an operation can use. Returns a number.
+- `suggestedFeeMutez`: The suggested fee for the operation which includes minimal fees and a small buffer.
+- `totalCost`: The sum of minimalFeeMutez + burnFeeMutez. Returns a number.
+- `usingBaseFeeMutez`: Fees according to your specified base fee will ensure that at least minimum fee is used.
+
+
+You can even check the balance available in your account through Taquito -
+```javascript=
+Tezos.tz
+  .getBalance("<YOUR_ADDRESS>")
+  .then(balance => console.log(`${balance.toNumber() / 1000000} ꜩ`))
+  .catch(error => console.log(JSON.stringify(error)));
+```
+We're dividing the balance by 1000000 because, it returns the balance in **mutez**, to convert it to **tez** - we divide it with 1000000.
+
+### #buidl-ing time
+ 
+#### New feature request!
+It's time for the moment of truth, let's see how much it costs to originate our contract.
+
+#### Step by step walkthrough
+1. Pass in the `CODE_JSON` as `code` and `STORAGE_JSON` as `init`.
+2. Log to the console `totalCost` required for the operation.

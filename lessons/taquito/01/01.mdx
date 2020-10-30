@@ -1,0 +1,105 @@
+---
+title: The key to originating smart contracts
+chapter: Chapter 1
+slug: module-04/chapter-01
+filterBy: lesson-4
+editor:
+  language: javascript
+  startingCode: |
+    // Import Tezos from taquito.
+
+    function setup(){
+        
+        // Initialize the `FAUCET_KEY`
+
+    }
+
+  answer: |
+    // Import Tezos from taquito.
+    import { Tezos } from "@taquito/taquito";
+
+    function setup(){
+        
+        // Initialize the `FAUCET_KEY`
+        const FAUCET_KEY = {
+            "mnemonic": [
+                "chimney",
+                "item",
+                "course",
+                "pair",
+                "opinion",
+                "mass",
+                "receive",
+                "wrong",
+                "hurry",
+                "nest",
+                "oil",
+                "acoustic",
+                "section",
+                "salad",
+                "electric"
+            ],
+            "secret": "47184b1d8bf4dd550256817c3507cc4ccf112888",
+            "amount": "903205016",
+            "pkh": "tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7",
+            "password": "9U5VOADM6l",
+            "email": "ryqwtuyj.ciwjnvdt@tezos.example.org"
+        }
+        
+        
+    }
+
+---
+### Intro
+In this module, we'll take you through the whole process of originating(or deploying) a smart contract on the Tezos blockchian using Javascript.
+On this adventure, we'll use the Taquito library - library for development on the Tezos blockchain.
+
+In this module, we'll deploy and interact with `Cyber_Token` - our very own fungible token that we learned how to develop in the previous module.
+
+### Study time
+Taquito is a library that makes it really easy to make DApps around the Tezos blockchain.
+It can do a whole range of things - 
+- Originate a smart contract
+- Check the balance of an account
+- Estimate the amount of tezos needed to originate a contract
+- Call an entry point
+- Check contract's global storage
+
+There's a few more to it but these are the features that we'll explore in this module.
+
+The code we'll write can work both in the browser and the Node environment, so we won't show you how to wire this up with the UI or a CLI but you can essentially drop the code right into a React or Vue app and it should work no issues.
+
+
+In this chapter we'll start our journey by creating a Tezos testnet account which we'll use to originate our contracts and will set it up in the code.
+
+### Show me an example
+To install taquito - 
+```javascript=
+npm install @taquito/taquito // or yarn add @taquito/taquito
+```
+Importing the `Tezos` object - 
+```javascript=
+import { Tezos } from `@taquito/taquito`
+```
+Almost all the magic happens through the `Tezos` object we imported right here.
+
+### #buidl-ing time
+ 
+#### New feature request!
+You've made quite a few smart contracts so far but now it's time to originate them - for that you need to create an account and set it up.
+
+#### Step by step walkthrough
+1. Install `taquito` using npm or yarn.
+2. Import `Tezos` from `@taquito/taquito`
+3. Generate your faucet account - 
+    1. Visit the Tezos Faucet - faucet.tzalpha.net
+    2. Click on "Get testnet ꜩ" (will explain "testnet" in a future chapter)
+    3. Copy and save the whole JSON output it gives you, this  data basically signifies your account on the testnet.
+4. Set the JSON obtained in the previous step as the `FAUCET_KEY` in the code which is a constant(use the `const` keyword).
+5. Activate the testnet account.
+    1. Head over to https://smartpy.io/dev/wallet.html
+    2. Click on "Faucet Accounts" and then "Faucet Importer".
+    3. Paste the JSON recieved from the Tezos Faucet in the visible textarea.
+    4. Hit "Compute your private key".
+    5. Click "Save Account in Wallet" - this isn't necessary but saving the account in wallet will later give you easy access to all the contracts deployed from this testnet account through the SmartPy explorer.
+    6. Finally, click "Activate account".

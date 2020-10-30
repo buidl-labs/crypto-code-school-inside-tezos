@@ -1,0 +1,130 @@
+---
+title: Signing our keys
+chapter: Chapter 2
+slug: module-04/chapter-02
+filterBy: lesson-4
+editor:
+  language: javascript
+  startingCode: |
+    import { Tezos } from "@taquito/taquito";
+    // Import importKey from @taquito/signer.
+
+
+    function setup(){
+        
+        // Initialize the `FAUCET_KEY`
+        const FAUCET_KEY = {
+            "mnemonic": [
+                "chimney",
+                "item",
+                "course",
+                "pair",
+                "opinion",
+                "mass",
+                "receive",
+                "wrong",
+                "hurry",
+                "nest",
+                "oil",
+                "acoustic",
+                "section",
+                "salad",
+                "electric"
+            ],
+            "secret": "47184b1d8bf4dd550256817c3507cc4ccf112888",
+            "amount": "903205016",
+            "pkh": "tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7",
+            "password": "9U5VOADM6l",
+            "email": "ryqwtuyj.ciwjnvdt@tezos.example.org"
+        }
+        
+        // use importKey
+        
+        
+    }
+
+  answer: |
+    import { Tezos } from "@taquito/taquito";
+    // Import importKey from @taquito/signer.
+    import { importKey } from "@taquito/signer";
+
+    function setup(){
+        
+        // Initialize the `FAUCET_KEY`
+        const FAUCET_KEY = {
+            "mnemonic": [
+                "chimney",
+                "item",
+                "course",
+                "pair",
+                "opinion",
+                "mass",
+                "receive",
+                "wrong",
+                "hurry",
+                "nest",
+                "oil",
+                "acoustic",
+                "section",
+                "salad",
+                "electric"
+            ],
+            "secret": "47184b1d8bf4dd550256817c3507cc4ccf112888",
+            "amount": "903205016",
+            "pkh": "tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7",
+            "password": "9U5VOADM6l",
+            "email": "ryqwtuyj.ciwjnvdt@tezos.example.org"
+        }
+        
+        // use importKey
+        importKey(
+            Tezos,
+            FAUCET_KEY.email,
+            FAUCET_KEY.password,
+            FAUCET_KEY.mnemonic.join(' '),
+            FAUCET_KEY.secret
+        );
+        
+    }
+
+---
+### Intro
+Well we've generated our Faucet account and activated it.
+Now we need to **sign** it as well. 
+It's required if you want to inject operations into the Tezos blockchain.
+
+### Study time
+
+Taquito supports multiple different signers but none are configured by default.
+
+We're going to use `InMemorySigner` - it's best suited for development and testing, not so much for production.
+When you're writing code for production that deals with tokens of real value, you should use [TezBridge Signer](https://tezostaquito.io/docs/tezbridge_signer).
+
+### Show me an example
+
+Import the signer - 
+```javascript=
+npm install @taquito/signer // or yarn add @taquito/signer
+```
+
+Using the `inMemorySigner` - 
+```javascript=
+import { importKey } from "@taquito/signer"
+
+importKey(
+            Tezos,
+            FAUCET_KEY.email,
+            FAUCET_KEY.password,
+            FAUCET_KEY.mnemonic.join(' '),
+            FAUCET_KEY.secret
+        );
+```
+As the first argument, `importKey` takes in the `Tezos` instance and rest all is the data that's needed for signing which we obtained through the faucet.
+
+### #buidl-ing time
+ 
+
+#### Step by step walkthrough
+1. Install the **signer** using npm or yarn.
+2. Import `importKey` from `@taquito/signer`.
+3. Use `importKey` by providing it all the arguments needed.
