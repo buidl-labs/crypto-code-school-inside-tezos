@@ -75,3 +75,44 @@ export const Output = styled.div`
     }
   }
 `;
+
+export const CodeOutputHeader = styled.div`
+  > div:first-of-type {
+    display: flex;
+    justify-content: space-between;
+    height: ${OutputHeaderHeight};
+    background: #12293b;
+    
+      > div {
+        background: #253f54;
+        display: inline-block;
+        margin-left: 1rem;
+        color: #64839a;
+        padding: 8px 10px 0 10px;
+        border-top: 1px solid #112425;
+        font-family: Roboto;
+      }
+  }
+
+  span {
+    svg {
+      color: white;
+      align-self: center;
+      display: flex;
+      width: 48px;
+      height: 40px;
+
+      :hover {
+        cursor: pointer;
+      }
+    }
+  }
+`;
+
+export const CodeOutputContent = styled.div`
+
+  > div{
+    min-height: ${OutputContentHeight}
+    background: red;
+  }
+`

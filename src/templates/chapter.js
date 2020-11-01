@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { graphql } from 'gatsby';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import Layout from '../components/Layout/layout';
@@ -9,11 +9,11 @@ import {
   ChapterFooter,
   ChapterHeader,
   ChapterContent,
-  ChapterEditor,
+  ChapterEditor
 } from './components/index';
 import useChapters from '../hooks/use-chapters';
 import { getChaptersIndex } from '../utils/index';
-import { Container, Output } from './chapter.styled';
+import { Container, Output, CodeOutputHeader, CodeOutputContent } from './chapter.styled';
 import PlantGrowthModalView from '../components/PlantGrowthModal';
 import { trackEventWithProperties } from '../utils/analytics';
 import SEO from '../components/Seo';
@@ -27,6 +27,15 @@ import {
   OutputHeaderHeight,
   OutputContentHeight,
 } from './chapter.styled';
+
+import { TezosToolkit } from '@taquito/taquito';
+import { importKey, InMemorySigner } from '@taquito/signer';
+import SemiLiveProvider from "src/components/SemiLiveProvider";
+import {
+  LiveEditor,
+  LivePreview,
+  LiveError
+} from "react-live";
 
 export const query = graphql`
   query($slug: String!) {
@@ -94,6 +103,15 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
     };
   });
 
+  const liveProvider = useRef(null);
+
+  const input = `
+    Tezos.tz
+    .getBalance('tz1h3rQ8wBxFd8L9B3d7Jhaawu6Z568XU3xY')
+    .then(balance => print(balance.toNumber() / 1000000 + "ꜩ"))
+    .catch(error => print(JSON.stringify(error)));
+  `.trim();
+
   useEffect(() => {
     trackEventWithProperties('Learning_Interface_View', {
       slug: chapterList[index.current - 1].slug,
@@ -147,37 +165,42 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
     `calc(100vh - (210px + 40px))`,
   );
 
+  const [showCodeOutput, setShowCodeOutput] = useState(false);
+  const [runCodeClicked, setRunCodeClicked] = useState(false);
+
   useEffect(() => {
-  
+    if(runCodeClicked) runCode();
+  }, [runCodeClicked])
+  useEffect(() => {
     monaco
-      .init()
-      .then(monacoInstance => {
-        monacoInstance.editor.defineTheme('myCustomTheme', {
-          base: 'vs-dark',
-          inherit: true,
-          automaticLayout: true,
-          rules: [
-            { token: 'comment', foreground: '989898', fontStyle: 'italic' },
-            { token: 'keyword', foreground: 'EA4192' },
-            { token: 'number', foreground: '00FF47' },
-            { token: 'string', foreground: 'FA00FF' },
-          ],
-          colors: {
-            'editor.foreground': '#F8F8F8',
-            'editor.background': '#253F54',
-            'editor.selectionBackground': '#DDF0FF33',
-            'editor.lineHighlightBackground': '#FFFFFF08',
-            'editorCursor.foreground': '#A7A7A7',
-            'editorWhitespace.foreground': '#FFFFFF40',
-          },
-        });
-      })
-      .catch(error =>
-        console.error(
-          'An error occurred during initialization of Monaco: ',
-          error,
-        ),
-      );
+    .init()
+    .then(monacoInstance => {
+          monacoInstance.editor.defineTheme('myCustomTheme', {
+            base: 'vs-dark',
+            inherit: true,
+            automaticLayout: true,
+            rules: [
+              { token: 'comment', foreground: '989898', fontStyle: 'italic' },
+              { token: 'keyword', foreground: 'EA4192' },
+              { token: 'number', foreground: '00FF47' },
+              { token: 'string', foreground: 'FA00FF' },
+            ],
+            colors: {
+              'editor.foreground': '#F8F8F8',
+              'editor.background': '#253F54',
+              'editor.selectionBackground': '#DDF0FF33',
+              'editor.lineHighlightBackground': '#FFFFFF08',
+              'editorCursor.foreground': '#A7A7A7',
+              'editorWhitespace.foreground': '#FFFFFF40',
+            },
+          });
+        })
+        .catch(error =>
+          console.error(
+            'An error occurred during initialization of Monaco: ',
+            error,
+          ),
+        );
     return () => {
       // cleanup;
     };
@@ -237,6 +260,15 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
     setModal(prevState => !prevState);
   };
 
+  const Tezos = new TezosToolkit('https://api.tez.ie/rpc/carthagenet');
+
+  function runCode(){
+    setShowCodeOutput(status => {
+      if(!status) setShowCodeOutput(!status);
+      else setShowCodeOutput(status)
+    })
+    liveProvider.current && liveProvider.current.run();
+  }
   return (
     <Layout>
       <SEO title={`Ch ${index.current}: ${chapter.frontmatter.title}`} />
@@ -337,6 +369,19 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
             <MDXRenderer>{chapter.body}</MDXRenderer>
           </MDXProvider>
         </ChapterContent>
+        <SemiLiveProvider
+          transformCode={code => code.replace(/import .*/g, '')}
+          noInline={true}
+          ref={liveProvider}
+          //code={editorInputValue}
+          code = {`
+    Tezos.tz
+    .getBalance('tz1h3rQ8wBxFd8L9B3d7Jhaawu6Z568XU3xY')
+    .then(balance => print(balance.toNumber() / 1000000 + "ꜩ"))
+    .catch(error => print(JSON.stringify(error)));
+  `.trim()}
+          scope={{ ...React, Tezos, importKey, InMemorySigner }}
+        >
         <ChapterEditor
           setShowOutput={setShowOutput}
           setButtonClicked={setButtonClicked}
@@ -347,7 +392,15 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           resetEditor={resetEditor}
           chapterCompletedSuccessfully={chapterCompletedSuccessfully}
           chapterSolution={chapter.frontmatter.editor.answer}
+          currentLesson={chapter.frontmatter.filterBy}
+          runCode={runCode}
+          
         >
+          {chapter.frontmatter.filterBy === "lesson-4"? 
+          <LiveEditor
+    
+          />
+          :
           <ControlledEditor
             height={`${
               buttonClicked
@@ -374,6 +427,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
               wordBasedSuggestions: false,
             }}
           />
+         }
           {buttonClicked ? (
             showOutput ? (
               <div>
@@ -492,13 +546,38 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           ) : (
             console.log('No Output')
           )}
+            { showCodeOutput ? (
+                <div>
+                  <CodeOutputHeader>
+                    <div>
+                      <div>output</div>
+                      <span
+                        onClick={() => {
+                          setRunCodeClicked(false);
+                          setShowCodeOutput(false);
+                        }}
+                      >
+                        <IoIosClose />
+                      </span>
+                    </div>
+                    
+                  </CodeOutputHeader>
+                  <CodeOutputContent>
+                    <LivePreview />
+                    <LiveError/>
+                  </CodeOutputContent>
+                </div>
+              ) : null
+            }
         </ChapterEditor>
         <ChapterFooter
           chapter={chapter.frontmatter.chapter}
           title={chapter.frontmatter.title}
           chapterIndex={index}
           currentModule={chapter.frontmatter.filterBy}
+          runCode={runCode}
         />
+        </SemiLiveProvider>
       </Container>
     </Layout>
   );

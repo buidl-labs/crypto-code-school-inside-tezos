@@ -8,10 +8,11 @@ import {
   Option,
   ShowAnswerButton,
   CheckAnswerButton,
+  RunCodeButton
 } from './styled';
 import { useMediaQuery } from 'react-responsive';
 import RefreshSVG from '../../../assets/refresh.svg';
-import { Check, ShowAnswer } from '../../../components/IconSet';
+import { Check, ShowAnswer, Code } from '../../../components/IconSet';
 import ReactTooltip from 'react-tooltip';
 
 interface Props {
@@ -29,6 +30,8 @@ interface Props {
   };
   updateValidation(input: string): void;
   editorInputValue: string;
+  currentLesson: string;
+  runCode(): void;
 }
 
 function ChapterEditor({
@@ -42,14 +45,21 @@ function ChapterEditor({
   resetEditor,
   chapterCompletedSuccessfully,
   chapterSolution,
+  currentLesson,
+  runCode
 }: Props) {
   const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
 
   return (
     <>
       <ReactTooltip place="left" type="light" effect="solid" />
-      <ContractFile>
-        <p>Contract.py</p>
+      <ContractFile>   
+      <p>{
+        currentLesson === "lesson-4"?
+        "index.js"
+        :
+        "Contract.py"
+        }</p>
         {!chapterCompletedSuccessfully ? (
           <span data-tip="Reset Editor Content" onClick={() => resetEditor()}>
             <RefreshSVG />
@@ -73,24 +83,36 @@ function ChapterEditor({
         >
           <ShowAnswer /> <span>Show Answer</span>
         </ShowAnswerButton>
-        <CheckAnswerButton
-          onClick={() => {
-            setShowOutput(false);
-            setButtonClicked(true);
-            // setEditorHeight(
-            //   `${
-            //     isMobile
-            //       ? `calc(100vh - (130px)) `
-            //       : `calc(100vh - (250px + 200px + 40px))`
-            //   }`,
-            // );
-            const result = checkCode(editorInputValue, chapterSolution);
-            // console.log('result', result);
-            updateValidation(result);
-          }}
-        >
-          <Check /> <span>Check</span>
-        </CheckAnswerButton>
+        {currentLesson !== "lesson-4"? 
+          <CheckAnswerButton
+            onClick={() => {
+              setShowOutput(false);
+              setButtonClicked(true);
+              // setEditorHeight(
+              //   `${
+              //     isMobile
+              //       ? `calc(100vh - (130px)) `
+              //       : `calc(100vh - (250px + 200px + 40px))`
+              //   }`,
+              // );
+              const result = checkCode(editorInputValue, chapterSolution);
+              // console.log('result', result);
+              updateValidation(result);
+            }}
+          >
+            <Check /> <span>Check</span>
+          </CheckAnswerButton>
+        : null }
+        
+        {currentLesson === "lesson-4"? 
+          (<RunCodeButton
+            onClick={() => {
+              runCode();
+            }}
+          >
+            <Code/> <span>Run Code</span>
+          </RunCodeButton>): null
+        }
       </Option>
     </>
   );

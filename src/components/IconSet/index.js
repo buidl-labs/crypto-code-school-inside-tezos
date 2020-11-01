@@ -5,6 +5,7 @@ import CloseSVG from '../../assets/Iconset/close.svg';
 import HintsSVG from '../../assets/Iconset/hints.svg';
 import MenuSVG from '../../assets/Iconset/menu.svg';
 import ShowAnswerSVG from '../../assets/Iconset/show_answer.svg';
+import { BsCodeSlash } from "react-icons/bs";
 import styled from '@emotion/styled';
 
 export const RightArrow = styled(RightArrowSVG)`
@@ -67,5 +68,14 @@ export const ShowAnswer = styled(ShowAnswerSVG)`
 
   rect {
     height: 15px;
+  }
+`;
+
+export const Code = styled(BsCodeSlash)`
+  width: ${props => (props.small ? '20px' : '30px')};
+  height: 30px;
+
+  rect {
+    height: 25px;
   }
 `;

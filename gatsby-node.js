@@ -28,15 +28,17 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
           slug: file.frontmatter.slug,
         },
       });
-    } else if (file.frontmatter.filterBy === 'lesson-4') {
-      actions.createPage({
-        path: `/tezos/lesson/${file.frontmatter.slug}`,
-        component: require.resolve('./src/templates/chapterWithLiveEditor.js'),
-        context: {
-          slug: file.frontmatter.slug,
-        },
-      });
-    } else {
+    } 
+    //else if (file.frontmatter.filterBy === 'lesson-4') {
+      // actions.createPage({
+      //   path: `/tezos/lesson/${file.frontmatter.slug}`,
+      //   component: require.resolve('./src/templates/chapterWithLiveEditor.js'),
+      //   context: {
+      //     slug: file.frontmatter.slug,
+      //   },
+      // });
+    // } 
+    else {
       actions.createPage({
         path: `/tezos/lesson/${file.frontmatter.slug}`,
         component: require.resolve('./src/templates/chapter.js'),
