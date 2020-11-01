@@ -369,11 +369,18 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
             <MDXRenderer>{chapter.body}</MDXRenderer>
           </MDXProvider>
         </ChapterContent>
+        
+        {/* SemiLiveProvider needed to wrap all three - 
+        1. LiveEditor
+        2. LivePreview
+        3. LiveError
+        Hence, it needs to be placed at a place in the tree where it wraps all three components. */}
         <SemiLiveProvider
           transformCode={code => code.replace(/import .*/g, '')}
           noInline={true}
           ref={liveProvider}
           //code={editorInputValue}
+          // Right now for testing I've used an arbitrary code snippet, will be replaced by code snippet for the particular chapter.
           code = {`
     Tezos.tz
     .getBalance('tz1h3rQ8wBxFd8L9B3d7Jhaawu6Z568XU3xY')
@@ -382,6 +389,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
   `.trim()}
           scope={{ ...React, Tezos, importKey, InMemorySigner }}
         >
+
         <ChapterEditor
           setShowOutput={setShowOutput}
           setButtonClicked={setButtonClicked}
@@ -397,9 +405,9 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           
         >
           {chapter.frontmatter.filterBy === "lesson-4"? 
-          <LiveEditor
-    
-          />
+          //Uses LiveEditor for module-04, otherwise Monaco.
+          //NOTE: Layout is broken right now.
+          <LiveEditor/>
           :
           <ControlledEditor
             height={`${
@@ -563,6 +571,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                     
                   </CodeOutputHeader>
                   <CodeOutputContent>
+                    {/* Displays LivePreview if no errors, otherwise LiveError */}
                     <LivePreview />
                     <LiveError/>
                   </CodeOutputContent>
@@ -575,7 +584,6 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           title={chapter.frontmatter.title}
           chapterIndex={index}
           currentModule={chapter.frontmatter.filterBy}
-          runCode={runCode}
         />
         </SemiLiveProvider>
       </Container>
