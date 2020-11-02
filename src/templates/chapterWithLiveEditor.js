@@ -395,7 +395,15 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                 overflowX: 'auto',
               }}
             >
-              <LiveEditor />
+              <LiveEditor
+                style={{
+                  minHeight: `${
+                    buttonClicked
+                      ? `calc(100vh - (${HeaderHeight} + ${FooterHeight} + ${ContractFileHeight} + ${OptionHeight} + ${OutputHeaderHeight} + ${OutputContentHeight}))`
+                      : `calc(100vh - (${HeaderHeight} + ${FooterHeight} + ${ContractFileHeight} + ${OptionHeight}))`
+                  }`,
+                }}
+              />
             </div>
 
             {buttonClicked ? (
