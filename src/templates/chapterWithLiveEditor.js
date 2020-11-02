@@ -326,7 +326,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           ref={liveProvider}
           //code={editorInputValue}
           // Right now for testing I've used an arbitrary code snippet, will be replaced by code snippet for the particular chapter.
-          code={input}
+          code={chapter.frontmatter.editor.startingCode}
           scope={{ ...React, Tezos, importKey, InMemorySigner }}
           // To edit the theme, you need to edit - node_modules/prism-react-renderer/themes/vsDark/index.js
           theme={theme}
