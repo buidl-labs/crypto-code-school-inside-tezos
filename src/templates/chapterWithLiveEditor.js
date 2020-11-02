@@ -34,6 +34,8 @@ import {
   LiveError
 } from "react-live";
 
+import theme from 'prism-react-renderer/themes/vsDark';
+
 export const query = graphql`
   query($slug: String!) {
     mdx(frontmatter: { slug: { eq: $slug } }) {
@@ -326,6 +328,8 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           // Right now for testing I've used an arbitrary code snippet, will be replaced by code snippet for the particular chapter.
           code={input}
           scope={{ ...React, Tezos, importKey, InMemorySigner }}
+          // To edit the theme, you need to edit - node_modules/prism-react-renderer/themes/vsDark/index.js
+          theme={theme}
         >
 
           <ChapterEditor
@@ -383,83 +387,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                     }}
                   />
                 </div>
-              ) : null //(
-              //     <div>
-              //       <Output>
-              //         <div>output</div>
-              //         <span
-              //           onClick={() => {
-              //             setButtonClicked(false);
-              //           }}
-              //         >
-              //           <IoIosClose />
-              //         </span>
-              //       </Output>
-              //       <div
-              //         style={{
-              //           height: `${OutputContentHeight}`,
-              //           background: '#253f54',
-              //           color: '#fff',
-              //         }}
-              //       >
-              //         {validation.success ? (
-              //           <div
-              //             style={{
-              //               fontFamily: "'Inconsolata', monospace",
-              //               padding: 10,
-              //             }}
-              //           >
-              //             <p
-              //               style={{
-              //                 color: '#18b77e',
-              //                 paddingBottom: 5,
-              //                 fontSize: '0.9rem',
-              //                 marginBottom: '0',
-              //               }}
-              //             >
-              //               <span> > </span>Bingo! You wrote the correct answer!
-              //         </p>
-              //             <p
-              //               style={{
-              //                 color: '#18b77e',
-              //                 fontSize: '0.9rem',
-              //                 marginBottom: '0',
-              //               }}
-              //             >
-              //               <span> > </span>Proceed to the next chapter by clicking
-              //           on 'next >' to continue
-              //         </p>
-              //           </div>
-              //         ) : (
-              //             <div
-              //               style={{
-              //                 padding: 10,
-              //                 height: '200px',
-              //                 overflowY: 'auto',
-              //               }}
-              //             >
-              //               {validation.error.map((errorMessage, index) => {
-              //                 return (
-              //                   <p
-              //                     key={index}
-              //                     style={{
-              //                       fontFamily: "'Inconsolata', monospace",
-              //                       color: '#d0454c',
-              //                       paddingBottom: 5,
-              //                       fontSize: '0.9rem',
-              //                       marginBottom: '0',
-              //                     }}
-              //                   >
-              //                     <span> {errorMessage ? '>' : ''} </span>
-              //                     {errorMessage}
-              //                   </p>
-              //                 );
-              //               })}
-              //             </div>
-              //           )}
-              //       </div>
-              //     </div>
-              //   )
+              ) : null
             ) : (
                 console.log('No Output')
               )}
