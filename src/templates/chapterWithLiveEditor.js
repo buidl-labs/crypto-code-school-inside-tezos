@@ -3,16 +3,21 @@ import { graphql } from 'gatsby';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import Layout from '../components/Layout/layout';
 import { MDXProvider } from '@mdx-js/react';
-import { DiffEditor } from '@monaco-editor/react';
+import { DiffEditor, monaco } from '@monaco-editor/react';
 import {
   ChapterFooter,
   ChapterHeader,
   ChapterContent,
-  ChapterEditor
+  ChapterEditor,
 } from './components/index';
 import useChapters from '../hooks/use-chapters';
 import { getChaptersIndex } from '../utils/index';
-import { Container, Output, CodeOutputHeader, CodeOutputContent } from './chapter.styled';
+import {
+  Container,
+  Output,
+  CodeOutputHeader,
+  CodeOutputContent,
+} from './chapter.styled';
 import { trackEventWithProperties } from '../utils/analytics';
 import SEO from '../components/Seo';
 import { IoIosClose } from 'react-icons/io';
@@ -27,14 +32,10 @@ import {
 
 import { TezosToolkit } from '@taquito/taquito';
 import { importKey, InMemorySigner } from '@taquito/signer';
-import SemiLiveProvider from "src/components/SemiLiveProvider";
-import {
-  LiveEditor,
-  LivePreview,
-  LiveError
-} from "react-live";
+import SemiLiveProvider from 'src/components/SemiLiveProvider';
+import { LiveEditor, LivePreview, LiveError } from 'react-live';
 
-import theme from 'prism-react-renderer/themes/vsDark';
+import theme from './customVSDarkTheme';
 
 export const query = graphql`
   query($slug: String!) {
@@ -88,7 +89,6 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
     false,
   );
   const [index] = useState(() => {
-
     const { current, total, nextSlug, prevSlug } = getChaptersIndex(
       chapterList,
       chapter.frontmatter.slug,
@@ -129,7 +129,8 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
   const getDefaultEditorValue = () => {
     let list = [];
     const listJSON =
-      typeof window != 'undefined' && localStorage.getItem(chapter.frontmatter.filterBy);
+      typeof window != 'undefined' &&
+      localStorage.getItem(chapter.frontmatter.filterBy);
     if (listJSON !== null) {
       list = JSON.parse(listJSON);
     }
@@ -144,7 +145,10 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           const updateList = list.filter(chapter => {
             return !(chapter.chapterSlug === savedChapter.chapterSlug);
           });
-          localStorage.setItem(chapter.frontmatter.filterBy, JSON.stringify(updateList));
+          localStorage.setItem(
+            chapter.frontmatter.filterBy,
+            JSON.stringify(updateList),
+          );
           return `${chapter.frontmatter.editor.startingCode}`;
         }
         setChapterCompletionState(true);
@@ -163,13 +167,12 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
     `calc(100vh - (210px + 40px))`,
   );
 
-  const [showCodeOutput, setShowCodeOutput] = useState(false);
-  const [runCodeClicked, setRunCodeClicked] = useState(false);
+  // const [showCodeOutput, setShowCodeOutput] = useState(false);
+  // const [runCodeClicked, setRunCodeClicked] = useState(false);
 
-  useEffect(() => {
-    if (runCodeClicked) runCode();
-  }, [runCodeClicked])
-
+  // useEffect(() => {
+  //   if (runCodeClicked) runCode();
+  // }, [runCodeClicked]);
 
   useEffect(() => {
     if (validation.success) {
@@ -208,17 +211,51 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
     setEditorInputValue(getDefaultEditorValue);
   };
 
-  
-
   const Tezos = new TezosToolkit('https://api.tez.ie/rpc/carthagenet');
 
   function runCode() {
-    setShowCodeOutput(status => {
-      if (!status) setShowCodeOutput(!status);
-      else setShowCodeOutput(status)
-    })
+    // setShowCodeOutput(status => {
+    //   if (!status) setShowCodeOutput(!status);
+    //   else setShowCodeOutput(status);
+    // });
+    // setButtonClicked(false);
     liveProvider.current && liveProvider.current.run();
   }
+
+  useEffect(() => {
+    monaco
+      .init()
+      .then(monacoInstance => {
+        monacoInstance.editor.defineTheme('myCustomTheme', {
+          base: 'vs-dark',
+          inherit: true,
+          automaticLayout: true,
+          rules: [
+            { token: 'comment', foreground: '989898', fontStyle: 'italic' },
+            { token: 'keyword', foreground: 'EA4192' },
+            { token: 'number', foreground: '00FF47' },
+            { token: 'string', foreground: 'FA00FF' },
+          ],
+          colors: {
+            'editor.foreground': '#F8F8F8',
+            'editor.background': '#253F54',
+            'editor.selectionBackground': '#DDF0FF33',
+            'editor.lineHighlightBackground': '#FFFFFF08',
+            'editorCursor.foreground': '#A7A7A7',
+            'editorWhitespace.foreground': '#FFFFFF40',
+          },
+        });
+      })
+      .catch(error =>
+        console.error(
+          'An error occurred during initialization of Monaco: ',
+          error,
+        ),
+      );
+    return () => {
+      // cleanup;
+    };
+  }, []);
 
   return (
     <Layout>
@@ -226,7 +263,10 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
 
       <Container>
         <ChapterHeader
-          backLink={`/tezos/overview/${chapter.frontmatter.slug.slice(0, chapter.frontmatter.slug.indexOf('/'))}`}
+          backLink={`/tezos/overview/${chapter.frontmatter.slug.slice(
+            0,
+            chapter.frontmatter.slug.indexOf('/'),
+          )}`}
           title={chapter.frontmatter.title}
         />
         <ChapterContent
@@ -331,7 +371,6 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           // To edit the theme, you need to edit - node_modules/prism-react-renderer/themes/vsDark/index.js
           theme={theme}
         >
-
           <ChapterEditor
             setShowOutput={setShowOutput}
             setButtonClicked={setButtonClicked}
@@ -344,11 +383,18 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
             chapterSolution={chapter.frontmatter.editor.answer}
             currentLesson={chapter.frontmatter.filterBy}
             runCode={runCode}
-
           >
-            <LiveEditor />
-              
-              
+            <LiveEditor
+              style={{
+                height: `${
+                  buttonClicked
+                    ? `calc(100vh - (${HeaderHeight} + ${FooterHeight} + ${ContractFileHeight} + ${OptionHeight} + ${OutputHeaderHeight} + ${OutputContentHeight}))`
+                    : `calc(100vh - (${HeaderHeight} + ${FooterHeight} + ${ContractFileHeight} + ${OptionHeight}))`
+                }`,
+                width: `calc(100vw - (100vw / 2.4))`,
+              }}
+            />
+
             {buttonClicked ? (
               showOutput ? (
                 <div>
@@ -365,7 +411,9 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                   <DiffEditor
                     height={OutputContentHeight}
                     original={
-                      showOutput ? chapter.frontmatter.editor.answer : 'MODIFIED'
+                      showOutput
+                        ? chapter.frontmatter.editor.answer
+                        : 'MODIFIED'
                     }
                     modified={showOutput ? editorInputValue : 'MODIFIED'}
                     language="python"
@@ -374,7 +422,10 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                       lineNumbers: false,
                       scrollBeyondLastLine: false,
                       minimap: { enabled: false },
-                      scrollbar: { vertical: 'hidden', verticalScrollbarSize: 0 },
+                      scrollbar: {
+                        vertical: 'hidden',
+                        verticalScrollbarSize: 0,
+                      },
                       folding: false,
                       readOnly: true,
                       fontSize: 14,
@@ -387,34 +438,33 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                     }}
                   />
                 </div>
-              ) : null
-            ) : (
-                console.log('No Output')
-              )}
-            {showCodeOutput ? (
-              <div>
-                <CodeOutputHeader>
-                  <div>
+              ) : (
+                <div>
+                  <Output>
                     <div>output</div>
                     <span
                       onClick={() => {
-                        setRunCodeClicked(false);
-                        setShowCodeOutput(false);
+                        setButtonClicked(false);
                       }}
                     >
                       <IoIosClose />
                     </span>
+                  </Output>
+                  <div
+                    style={{
+                      height: `${OutputContentHeight}`,
+                      background: '#253f54',
+                      color: '#fff',
+                    }}
+                  >
+                    <LivePreview />
+                    <LiveError />
                   </div>
-
-                </CodeOutputHeader>
-                <CodeOutputContent>
-                  {/* Displays LivePreview if no errors, otherwise LiveError */}
-                  <LivePreview />
-                  <LiveError />
-                </CodeOutputContent>
-              </div>
-            ) : null
-            }
+                </div>
+              )
+            ) : (
+              console.log('No Output')
+            )}
           </ChapterEditor>
           <ChapterFooter
             chapter={chapter.frontmatter.chapter}

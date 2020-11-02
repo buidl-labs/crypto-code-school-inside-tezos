@@ -56,11 +56,12 @@ function ChapterEditor({
       <ContractFile>   
       <p>{
         currentLesson === "lesson-4"?
-        "index.js"
+        "Live Editor"
         :
         "Contract.py"
         }</p>
         {!chapterCompletedSuccessfully ? (
+          currentLesson === "lesson-4" ? null :
           <span data-tip="Reset Editor Content" onClick={() => resetEditor()}>
             <RefreshSVG />
           </span>
@@ -107,6 +108,8 @@ function ChapterEditor({
         {currentLesson === "lesson-4"? 
           (<RunCodeButton
             onClick={() => {
+              setShowOutput(false);
+              setButtonClicked(true);
               runCode();
             }}
           >
