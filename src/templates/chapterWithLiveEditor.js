@@ -384,7 +384,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
             currentLesson={chapter.frontmatter.filterBy}
             runCode={runCode}
           >
-            <LiveEditor
+            <div
               style={{
                 height: `${
                   buttonClicked
@@ -392,8 +392,11 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                     : `calc(100vh - (${HeaderHeight} + ${FooterHeight} + ${ContractFileHeight} + ${OptionHeight}))`
                 }`,
                 width: `calc(100vw - (100vw / 2.4))`,
+                overflowX: 'auto',
               }}
-            />
+            >
+              <LiveEditor />
+            </div>
 
             {buttonClicked ? (
               showOutput ? (
