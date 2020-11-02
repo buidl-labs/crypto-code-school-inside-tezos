@@ -12,7 +12,7 @@ editor:
         
       })
       .then(operation => {
-        // Log to the console `totalCost` required for the origination of the contract.
+        // Print to the console `totalCost` required for the origination of the contract.
         
       })
 
@@ -23,8 +23,8 @@ editor:
         init: STORAGE_JSON
       })
       .then(operation => {
-        // Log to the console `totalCost` required for the origination of the contract.
-        console.log(operation.totalCost)
+        // print `totalCost` required for the origination of the contract.
+        print(operation.totalCost)
       })
 ---
 ### Intro
@@ -44,7 +44,7 @@ Tezos.estimate.originate({
     init: STORAGE_JSON
 })
 .then(opEstimate=> {
-    console.log(opEstimate)
+    print(opEstimate)
 })
 ```
 You need to pass the `CODE_JSON` and `STORAGE_JSON` for the contract that you grabbed in the previous chapter, and it returns the following properties - 
@@ -62,9 +62,10 @@ You can even check the balance available in your account through Taquito -
 ```javascript=
 Tezos.tz
   .getBalance("<YOUR_ADDRESS>")
-  .then(balance => console.log(`${balance.toNumber() / 1000000} ꜩ`))
-  .catch(error => console.log(JSON.stringify(error)));
+  .then(balance => print(`${balance.toNumber() / 1000000} ꜩ`))
+  .catch(error => print(JSON.stringify(error)));
 ```
+> Note: To print things as output in our interface, you need to use `print`.
 We're dividing the balance by 1000000 because, it returns the balance in **mutez**, to convert it to **tez** - we divide it with 1000000.
 
 ### #buidl-ing time
@@ -74,4 +75,4 @@ It's time for the moment of truth, let's see how much it costs to originate our 
 
 #### Step by step walkthrough
 1. Pass in the `CODE_JSON` as `code` and `STORAGE_JSON` as `init`.
-2. Log to the console `totalCost` required for the operation.
+2. Print to the console `totalCost` required for the operation.

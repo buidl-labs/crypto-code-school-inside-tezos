@@ -3,6 +3,7 @@ var theme = {
   plain: {
     color: '#F8F8F8',
     backgroundColor: '#253F54',
+    fontSize: '14px'
   },
   styles: [
     {
@@ -72,6 +73,7 @@ var theme = {
       types: ['punctuation', 'operator'],
       style: {
         color: 'rgb(212, 212, 212)',
+        background: "inherit"
       },
     },
     {

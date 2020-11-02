@@ -16,7 +16,7 @@ editor:
         // Access and return the value of tokens your account is left with.
       
         .then( res => {
-          console.log(res)
+          print(res)
         })      
     })
 
@@ -30,7 +30,7 @@ editor:
         // Access and return the value of tokens your account is left with.
         return storage.ledger.get("tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7")
         .then( res => {
-          console.log(res)
+          print(res)
         })      
     })
 ---
@@ -49,7 +49,7 @@ Tezos.contract.at("KT1QECVYeUcy1EocvZvzbzA51oV6QcwCB5uY")
     return contract.storage()
 })
 .then(storage => {
-    console.log(storage.ledger) // will output a random string.
+    print(storage.ledger) // will output a random string.
 })
 ```
 The console output will show you a random numerical string, but why is this?
@@ -72,7 +72,7 @@ Tezos.contract.at("KT1QECVYeUcy1EocvZvzbzA51oV6QcwCB5uY")
     //returning a promise that'll resolve to give you the value of the key you provide.
     return storage.ledger.get("tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7")
     .then( res => {
-      console.log(res)
+      print(res)
     })      
 })       
 ```

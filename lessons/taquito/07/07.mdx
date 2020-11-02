@@ -16,7 +16,7 @@ editor:
 
         })
         .then(hash => {
-            // Log to the console - Operation injected: ${hash}
+            // Print to the console - Operation injected: ${hash}
 
         })
         .catch(error => console.error(error));
@@ -32,8 +32,8 @@ editor:
             return operation.confirmation(3).then(() => operation.hash);
         })
         .then(hash => {
-            // Log to the console - Operation injected: ${hash}
-            console.log(`Operation injected: ${hash}`)
+            // Print to the console - Operation injected: ${hash}
+            print(`Operation injected: ${hash}`)
         })
         .catch(error => console.error(error));
 ---
@@ -52,7 +52,7 @@ Taquito gives you a smooth API to work with contracts.
 ```javascript=
 Tezos.contract.at("<CONTRACT_ADDRESS>")
 .then(c  => {
-    console.log(c);
+    print(c);
 })
 ```
 
@@ -100,11 +100,11 @@ Tezos.contract.at("<CONTRACT_ADDRESS>")
     return c.methods.increment(10).send();
 })
 .then(operation => {
-    console.log("Mint operation sent.")
-    console.log(`Awaiting for ${operation.hash} to be confirmed...`);
+    print("Mint operation sent.")
+    print(`Awaiting for ${operation.hash} to be confirmed...`);
     return operation.confirmation(3).then(() => operation.hash);
 })
-.then(hash => console.log(`Operation injected: {hash}`
+.then(hash => print(`Operation injected: {hash}`
 ))
 .catch(error => console.error(error));
 ```
@@ -131,4 +131,4 @@ How about you start minting some money for the society now?
     1. Access the contract through `Tezos.contract.at` - pass in the address of the contract we originated in the last chapter as the argument.
     2. Access the `mint` entry point through `c.methods`. Pass it the 4 required arguments - `address`(wallet address to which the tokens will be minted), `amount`(amount of tokens to be minted), `symbol`(symbol which will represent your token, like BTC for bitcoin), `token_id`(used by FA2 for the internal implementation, 0 for signle asset fungible tokens) and call `.send()` on it.
     3. Return the operation recieved while specifying it to wait for 3 confirmations.
-    4. When you finally recieve the `hash` of the operation, log to the console: `Operation injected: {hash}`.
+    4. When you finally recieve the `hash` of the operation, print to the console: `Operation injected: {hash}`.

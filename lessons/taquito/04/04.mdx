@@ -6,100 +6,89 @@ filterBy: lesson-4
 editor:
   language: javascript
   startingCode: |
-    import { Tezos } from "@taquito/taquito";
-    import { importKey } from "@taquito/signer";
-
-    function originate(){
-        
-        const FAUCET_KEY = {
-            "mnemonic": [
-                "chimney",
-                "item",
-                "course",
-                "pair",
-                "opinion",
-                "mass",
-                "receive",
-                "wrong",
-                "hurry",
-                "nest",
-                "oil",
-                "acoustic",
-                "section",
-                "salad",
-                "electric"
-            ],
-            "secret": "47184b1d8bf4dd550256817c3507cc4ccf112888",
-            "amount": "903205016",
-            "pkh": "tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7",
-            "password": "9U5VOADM6l",
-            "email": "ryqwtuyj.ciwjnvdt@tezos.example.org"
-        }
-        
-        importKey(
-            Tezos,
-            FAUCET_KEY.email,
-            FAUCET_KEY.password,
-            FAUCET_KEY.mnemonic.join(' '),
-            FAUCET_KEY.secret
-        );
-        
-        Tezos.setProvider({ rpc: 'https://carthagenet.SmartPy.io' });
-        
-        // Store the code here - 
-        // const CODE_JSON = 
-        
-        // Store the initial storage over here - 
-        // const STORAGE_JSON = 
+    const FAUCET_KEY = {
+        "mnemonic": [
+            "chimney",
+            "item",
+            "course",
+            "pair",
+            "opinion",
+            "mass",
+            "receive",
+            "wrong",
+            "hurry",
+            "nest",
+            "oil",
+            "acoustic",
+            "section",
+            "salad",
+            "electric"
+        ],
+        "secret": "47184b1d8bf4dd550256817c3507cc4ccf112888",
+        "amount": "903205016",
+        "pkh": "tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7",
+        "password": "9U5VOADM6l",
+        "email": "ryqwtuyj.ciwjnvdt@tezos.example.org"
     }
+    
+    importKey(
+        Tezos,
+        FAUCET_KEY.email,
+        FAUCET_KEY.password,
+        FAUCET_KEY.mnemonic.join(' '),
+        FAUCET_KEY.secret
+    );
+    
+    Tezos.setProvider({ rpc: 'https://carthagenet.SmartPy.io' });
+    
+    // Store the code here - 
+    // const CODE_JSON = 
+    
+    // Store the initial storage over here - 
+    // const STORAGE_JSON = 
 
   answer: |
-    import { Tezos } from "@taquito/taquito";
-    import { importKey } from "@taquito/signer";
-
-    function originate(){
-        
-        const FAUCET_KEY = {
-            "mnemonic": [
-                "chimney",
-                "item",
-                "course",
-                "pair",
-                "opinion",
-                "mass",
-                "receive",
-                "wrong",
-                "hurry",
-                "nest",
-                "oil",
-                "acoustic",
-                "section",
-                "salad",
-                "electric"
-            ],
-            "secret": "47184b1d8bf4dd550256817c3507cc4ccf112888",
-            "amount": "903205016",
-            "pkh": "tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7",
-            "password": "9U5VOADM6l",
-            "email": "ryqwtuyj.ciwjnvdt@tezos.example.org"
-        }
-        
-        importKey(
-            Tezos,
-            FAUCET_KEY.email,
-            FAUCET_KEY.password,
-            FAUCET_KEY.mnemonic.join(' '),
-            FAUCET_KEY.secret
-        );
-        
-        Tezos.setProvider({ rpc: 'https://carthagenet.SmartPy.io' });
-        
-        // Store the code here - 
-        // const CODE_JSON = 
-        
-        // Store the initial storage over here - 
-        // const STORAGE_JSON = 
+    const FAUCET_KEY = {
+        "mnemonic": [
+            "chimney",
+            "item",
+            "course",
+            "pair",
+            "opinion",
+            "mass",
+            "receive",
+            "wrong",
+            "hurry",
+            "nest",
+            "oil",
+            "acoustic",
+            "section",
+            "salad",
+            "electric"
+        ],
+        "secret": "47184b1d8bf4dd550256817c3507cc4ccf112888",
+        "amount": "903205016",
+        "pkh": "tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7",
+        "password": "9U5VOADM6l",
+        "email": "ryqwtuyj.ciwjnvdt@tezos.example.org"
     }
+        
+    importKey(
+        Tezos,
+        FAUCET_KEY.email,
+        FAUCET_KEY.password,
+        FAUCET_KEY.mnemonic.join(' '),
+        FAUCET_KEY.secret
+    );
+    
+    Tezos.setProvider({ rpc: 'https://carthagenet.SmartPy.io' });
+    
+    // Store the code here - 
+    // const CODE_JSON = 
+    
+    // Store the initial storage over here - 
+    // const STORAGE_JSON = 
+    
 ---
 ### Intro
 Michelson is the language than runs on the Tezos network, rest all higher-level languages are an abstraction over it which directly compile to michelson.
@@ -162,7 +151,7 @@ We're going to generate the JSON Code and Storage for the contract we want to or
         - Several operations in a fungible token require to be called by the `admin`. We'll be injecting operations through the account that you obtained from the faucet, hence, that account needs to be specified as the `admin` in our code for the fungible token.
         1. In the account data you generated from the faucet, there's a key `"pkh"`(value starts from "tz") - this is your wallet address and stands for "public key hash"
         2. In the SmartPy code, initialize the admin interfact with the value of your `pkh`.
-        - Eg: `admin = `
+        - Eg: `admin = sp.address("tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7")`
        
     2. Run the smart contract in the IDE.
     3. The first section that you see in the output is your contract, click on "Deploy Michelson Contract".

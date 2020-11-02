@@ -16,7 +16,7 @@ editor:
         // Initialize numTokens with `all_tokens` from conttract `storage`.
         const numTokens = ???
         
-        // Log to the console numTokens == 1
+        // Print to the console numTokens == 1
         
         
     })
@@ -32,8 +32,8 @@ editor:
         // Initialize numTokens with `all_tokens` from conttract `storage`.
         const numTokens = storage.all_tokens
         
-        // Log to the console numTokens == 1
-        console.log(numTokens == 1)
+        // Print to the console numTokens == 1
+        print(numTokens == 1)
     })
     .catch(error => console.error(error));
 ---
@@ -54,7 +54,7 @@ Tezos.contract.at("<CONTRACT_ADDRESS>")
     return contract.storage();
 })
 .then(storage => {
-    console.log(storage)
+    print(storage)
 })
 .catch(error => console.error(error));
 ```
@@ -98,7 +98,7 @@ Tezos.contract.at("KT1CTQ7CteorSXcKZPRcZqt2G8gCkPA3YbsA")
     return contract.storage();
 })
 .then(storage => {
-    console.log(storage)
+    print(storage)
 })
 .catch(error => console.error(error));
 ```
@@ -126,4 +126,4 @@ You'll need to access `all_tokens` inside the contract storage of the `Cyber_Tok
 1. Replace the `"<CONTRACT_ADDRESS>"` with the address of the contract you orginated.
 2. Return the contract storage.
 3. Initialize `numTokens` as `all_tokens` present in the `storage`.
-4. Log to the console : `numTokens == 1`
+4. Print to the console : `numTokens == 1`

@@ -14,11 +14,11 @@ editor:
     })
     .then(operation => {
 
-        console.log("Waiting for confirmation")
+        print("Waiting for confirmation")
         return operation.confirmation(3).then(() => operation.hash);
 
     })
-    .then(hash => console.log(`Operation injected: https://carthagenet.tzstats.com/${hash}`))
+    .then(hash => print(`Operation injected: https://carthagenet.tzstats.com/${hash}`))
     .catch(error => console.error(error));
 
   answer: |
@@ -34,11 +34,11 @@ editor:
     })
     .then(operation => {
 
-        console.log("Waiting for confirmation")
+        print("Waiting for confirmation")
         return operation.confirmation(3).then(() => operation.hash);
 
     })
-    .then(hash => console.log(`Operation injected: https://carthagenet.tzstats.com/${hash}`))
+    .then(hash => print(`Operation injected: https://carthagenet.tzstats.com/${hash}`))
     .catch(error => console.error(error));
 ---
 ### Intro
@@ -108,7 +108,7 @@ let inspectArguments = contract.methods.transfer([
           }
         ]).toTransferParam();
         
-console.log(inspectArguments);
+print(inspectArguments);
 ```
 `.toTransferParams` creates a nice object which you can look at to see if the arguments are being passed in as you want them to.
 

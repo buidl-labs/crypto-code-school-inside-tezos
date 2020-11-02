@@ -6,110 +6,99 @@ filterBy: lesson-4
 editor:
   language: javascript
   startingCode: |
-    import { Tezos } from "@taquito/taquito";
-    import { importKey } from "@taquito/signer";
-
-    function originate(){
-        
-        const FAUCET_KEY = {
-            "mnemonic": [
-                "chimney",
-                "item",
-                "course",
-                "pair",
-                "opinion",
-                "mass",
-                "receive",
-                "wrong",
-                "hurry",
-                "nest",
-                "oil",
-                "acoustic",
-                "section",
-                "salad",
-                "electric"
-            ],
-            "secret": "47184b1d8bf4dd550256817c3507cc4ccf112888",
-            "amount": "903205016",
-            "pkh": "tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7",
-            "password": "9U5VOADM6l",
-            "email": "ryqwtuyj.ciwjnvdt@tezos.example.org"
-        }
-        
-        importKey(
-            Tezos,
-            FAUCET_KEY.email,
-            FAUCET_KEY.password,
-            FAUCET_KEY.mnemonic.join(' '),
-            FAUCET_KEY.secret
-        );
-        
-        Tezos.setProvider({ rpc: 'https://carthagenet.SmartPy.io' });
-        
-        // const CODE_JSON = 
-        
-        // const STORAGE_JSON = 
-        
-        // Originate the contract -
-        
+    const FAUCET_KEY = {
+        "mnemonic": [
+            "chimney",
+            "item",
+            "course",
+            "pair",
+            "opinion",
+            "mass",
+            "receive",
+            "wrong",
+            "hurry",
+            "nest",
+            "oil",
+            "acoustic",
+            "section",
+            "salad",
+            "electric"
+        ],
+        "secret": "47184b1d8bf4dd550256817c3507cc4ccf112888",
+        "amount": "903205016",
+        "pkh": "tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7",
+        "password": "9U5VOADM6l",
+        "email": "ryqwtuyj.ciwjnvdt@tezos.example.org"
     }
+    
+    importKey(
+        Tezos,
+        FAUCET_KEY.email,
+        FAUCET_KEY.password,
+        FAUCET_KEY.mnemonic.join(' '),
+        FAUCET_KEY.secret
+    );
+    
+    Tezos.setProvider({ rpc: 'https://carthagenet.SmartPy.io' });
+    
+    // const CODE_JSON = 
+    
+    // const STORAGE_JSON = 
+    
+    // Originate the contract -
+    
 
   answer: |
-    import { Tezos } from "@taquito/taquito";
-    import { importKey } from "@taquito/signer";
-
-    function originate(){
-        
-        const FAUCET_KEY = {
-            "mnemonic": [
-                "chimney",
-                "item",
-                "course",
-                "pair",
-                "opinion",
-                "mass",
-                "receive",
-                "wrong",
-                "hurry",
-                "nest",
-                "oil",
-                "acoustic",
-                "section",
-                "salad",
-                "electric"
-            ],
-            "secret": "47184b1d8bf4dd550256817c3507cc4ccf112888",
-            "amount": "903205016",
-            "pkh": "tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7",
-            "password": "9U5VOADM6l",
-            "email": "ryqwtuyj.ciwjnvdt@tezos.example.org"
-        }
-        
-        importKey(
-            Tezos,
-            FAUCET_KEY.email,
-            FAUCET_KEY.password,
-            FAUCET_KEY.mnemonic.join(' '),
-            FAUCET_KEY.secret
-        );
-        
-        Tezos.setProvider({ rpc: 'https://carthagenet.SmartPy.io' });
-        
-        // const CODE_JSON = 
-        
-        // const STORAGE_JSON = 
-        
-        // Originate the contract - 
-        Tezos.contract.originate({
-            code: CODE_JSON,
-            init: STORAGE_JSON
-        }).then(origination => {
-            console.log(`Origination waiting confirmation...`);
-            return origination.contract()
-        }).then(contract => {
-            console.log(`Origination completed.`);
-            console.log(`Contract: ${contract.address}`)
-        })
+    const FAUCET_KEY = {
+        "mnemonic": [
+            "chimney",
+            "item",
+            "course",
+            "pair",
+            "opinion",
+            "mass",
+            "receive",
+            "wrong",
+            "hurry",
+            "nest",
+            "oil",
+            "acoustic",
+            "section",
+            "salad",
+            "electric"
+        ],
+        "secret": "47184b1d8bf4dd550256817c3507cc4ccf112888",
+        "amount": "903205016",
+        "pkh": "tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7",
+        "password": "9U5VOADM6l",
+        "email": "ryqwtuyj.ciwjnvdt@tezos.example.org"
+    }
+    
+    importKey(
+        Tezos,
+        FAUCET_KEY.email,
+        FAUCET_KEY.password,
+        FAUCET_KEY.mnemonic.join(' '),
+        FAUCET_KEY.secret
+    );
+    
+    Tezos.setProvider({ rpc: 'https://carthagenet.SmartPy.io' });
+    
+    // const CODE_JSON = 
+    
+    // const STORAGE_JSON = 
+    
+    // Originate the contract - 
+    Tezos.contract.originate({
+        code: CODE_JSON,
+        init: STORAGE_JSON
+    }).then(origination => {
+        print(`Origination waiting confirmation...`);
+        return origination.contract()
+    }).then(contract => {
+        print(`Origination completed.`);
+        print(`Contract: ${contract.address}`)
+    })
         
         
     }
@@ -123,17 +112,17 @@ It's a super straightforward process to origiante a contract using Taquito - all
 
 
 ### Show me an example
-
+> Note: You need to use `print` as a replacement of `console.log` to output content on our platform
 ```javascript=
 Tezos.contract.originate({
         code: CODE_JSON,
         init: STORAGE_JSON
     }).then(origination => {
-        console.log(`Origination waiting confirmation...`);
+        print(`Origination waiting confirmation...`);
         return origination.contract()
     }).then(contract => {
-        console.log(`Origination completed.`);
-        console.log(`Contract: ${contract.address}`)
+        print(`Origination completed.`);
+        print(`Contract: ${contract.address}`)
     })
 ```
 First, we're giving it the `CODE_JSON` and `STORAGE_JSON`.
@@ -144,4 +133,4 @@ Next, when you get the origination confirmation back, we're returning the origin
  
 #### Step by step walkthrough
 - Originate the contract using `Tezos.contract.originate` and pass it the `CODE_JSON` and `STORAGE_JSON` (use the code snippet present above).
-**- Don't forget to copy/store the contract address that's being logged to the console, we'll use it in the next few chapters!** In a React application you would ideally store the resultant contract as a state variable but we're not choosing to do that to keep this tutorial as isolated as possible from your framework/environment of choice.
+**- Don't forget to copy/store the contract address that's being printed to the console, we'll use it in the next few chapters!** In a React application you would ideally store the resultant contract as a state variable but we're not choosing to do that to keep this tutorial as isolated as possible from your framework/environment of choice.
