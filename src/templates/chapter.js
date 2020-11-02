@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { graphql } from 'gatsby';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import Layout from '../components/Layout/layout';
@@ -13,7 +13,7 @@ import {
 } from './components/index';
 import useChapters from '../hooks/use-chapters';
 import { getChaptersIndex } from '../utils/index';
-import { Container, Output, CodeOutputHeader, CodeOutputContent } from './chapter.styled';
+import { Container, Output } from './chapter.styled';
 import PlantGrowthModalView from '../components/PlantGrowthModal';
 import { trackEventWithProperties } from '../utils/analytics';
 import SEO from '../components/Seo';
@@ -28,14 +28,6 @@ import {
   OutputContentHeight,
 } from './chapter.styled';
 
-import { TezosToolkit } from '@taquito/taquito';
-import { importKey, InMemorySigner } from '@taquito/signer';
-import SemiLiveProvider from "src/components/SemiLiveProvider";
-import {
-  LiveEditor,
-  LivePreview,
-  LiveError
-} from "react-live";
 
 export const query = graphql`
   query($slug: String!) {
@@ -101,16 +93,9 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
       nextSlug,
       prevSlug,
     };
+
   });
 
-  const liveProvider = useRef(null);
-
-  const input = `
-    Tezos.tz
-    .getBalance('tz1h3rQ8wBxFd8L9B3d7Jhaawu6Z568XU3xY')
-    .then(balance => print(balance.toNumber() / 1000000 + "ꜩ"))
-    .catch(error => print(JSON.stringify(error)));
-  `.trim();
 
   useEffect(() => {
     trackEventWithProperties('Learning_Interface_View', {
@@ -165,12 +150,6 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
     `calc(100vh - (210px + 40px))`,
   );
 
-  const [showCodeOutput, setShowCodeOutput] = useState(false);
-  const [runCodeClicked, setRunCodeClicked] = useState(false);
-
-  useEffect(() => {
-    if(runCodeClicked) runCode();
-  }, [runCodeClicked])
   useEffect(() => {
     monaco
     .init()
@@ -260,15 +239,6 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
     setModal(prevState => !prevState);
   };
 
-  const Tezos = new TezosToolkit('https://api.tez.ie/rpc/carthagenet');
-
-  function runCode(){
-    setShowCodeOutput(status => {
-      if(!status) setShowCodeOutput(!status);
-      else setShowCodeOutput(status)
-    })
-    liveProvider.current && liveProvider.current.run();
-  }
   return (
     <Layout>
       <SEO title={`Ch ${index.current}: ${chapter.frontmatter.title}`} />
@@ -369,27 +339,6 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
             <MDXRenderer>{chapter.body}</MDXRenderer>
           </MDXProvider>
         </ChapterContent>
-        
-        {/* SemiLiveProvider needed to wrap all three - 
-        1. LiveEditor
-        2. LivePreview
-        3. LiveError
-        Hence, it needs to be placed at a place in the tree where it wraps all three components. */}
-        <SemiLiveProvider
-          transformCode={code => code.replace(/import .*/g, '')}
-          noInline={true}
-          ref={liveProvider}
-          //code={editorInputValue}
-          // Right now for testing I've used an arbitrary code snippet, will be replaced by code snippet for the particular chapter.
-          code = {`
-    Tezos.tz
-    .getBalance('tz1h3rQ8wBxFd8L9B3d7Jhaawu6Z568XU3xY')
-    .then(balance => print(balance.toNumber() / 1000000 + "ꜩ"))
-    .catch(error => print(JSON.stringify(error)));
-  `.trim()}
-          scope={{ ...React, Tezos, importKey, InMemorySigner }}
-        >
-
         <ChapterEditor
           setShowOutput={setShowOutput}
           setButtonClicked={setButtonClicked}
@@ -401,14 +350,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           chapterCompletedSuccessfully={chapterCompletedSuccessfully}
           chapterSolution={chapter.frontmatter.editor.answer}
           currentLesson={chapter.frontmatter.filterBy}
-          runCode={runCode}
-          
         >
-          {chapter.frontmatter.filterBy === "lesson-4"? 
-          //Uses LiveEditor for module-04, otherwise Monaco.
-          //NOTE: Layout is broken right now.
-          <LiveEditor/>
-          :
           <ControlledEditor
             height={`${
               buttonClicked
@@ -435,7 +377,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
               wordBasedSuggestions: false,
             }}
           />
-         }
+         
           {buttonClicked ? (
             showOutput ? (
               <div>
@@ -554,30 +496,6 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           ) : (
             console.log('No Output')
           )}
-            { showCodeOutput ? (
-                <div>
-                  <CodeOutputHeader>
-                    <div>
-                      <div>output</div>
-                      <span
-                        onClick={() => {
-                          setRunCodeClicked(false);
-                          setShowCodeOutput(false);
-                        }}
-                      >
-                        <IoIosClose />
-                      </span>
-                    </div>
-                    
-                  </CodeOutputHeader>
-                  <CodeOutputContent>
-                    {/* Displays LivePreview if no errors, otherwise LiveError */}
-                    <LivePreview />
-                    <LiveError/>
-                  </CodeOutputContent>
-                </div>
-              ) : null
-            }
         </ChapterEditor>
         <ChapterFooter
           chapter={chapter.frontmatter.chapter}
@@ -585,7 +503,6 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           chapterIndex={index}
           currentModule={chapter.frontmatter.filterBy}
         />
-        </SemiLiveProvider>
       </Container>
     </Layout>
   );
