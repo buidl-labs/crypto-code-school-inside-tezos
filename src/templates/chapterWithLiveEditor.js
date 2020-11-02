@@ -3,8 +3,7 @@ import { graphql } from 'gatsby';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import Layout from '../components/Layout/layout';
 import { MDXProvider } from '@mdx-js/react';
-import { ControlledEditor, monaco, DiffEditor } from '@monaco-editor/react';
-import './prism-custom.css';
+import { DiffEditor } from '@monaco-editor/react';
 import {
   ChapterFooter,
   ChapterHeader,
@@ -14,10 +13,8 @@ import {
 import useChapters from '../hooks/use-chapters';
 import { getChaptersIndex } from '../utils/index';
 import { Container, Output, CodeOutputHeader, CodeOutputContent } from './chapter.styled';
-import PlantGrowthModalView from '../components/PlantGrowthModal';
 import { trackEventWithProperties } from '../utils/analytics';
 import SEO from '../components/Seo';
-import { PLANT_GROWTH } from '../components/Plants/PLANT_GROWTH';
 import { IoIosClose } from 'react-icons/io';
 import {
   HeaderHeight,
@@ -85,7 +82,6 @@ Retrieving stored progress
 
 const ChapterTemplate = ({ data: { mdx: chapter } }) => {
   const chapterList = useChapters(chapter.frontmatter.filterBy);
-  const [showModal, setModal] = useState(false);
   const [chapterCompletedSuccessfully, setChapterCompletionState] = useState(
     false,
   );
@@ -171,52 +167,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
   useEffect(() => {
     if (runCodeClicked) runCode();
   }, [runCodeClicked])
-  useEffect(() => {
-    monaco
-      .init()
-      .then(monacoInstance => {
-        monacoInstance.editor.defineTheme('myCustomTheme', {
-          base: 'vs-dark',
-          inherit: true,
-          automaticLayout: true,
-          rules: [
-            { token: 'comment', foreground: '989898', fontStyle: 'italic' },
-            { token: 'keyword', foreground: 'EA4192' },
-            { token: 'number', foreground: '00FF47' },
-            { token: 'string', foreground: 'FA00FF' },
-          ],
-          colors: {
-            'editor.foreground': '#F8F8F8',
-            'editor.background': '#253F54',
-            'editor.selectionBackground': '#DDF0FF33',
-            'editor.lineHighlightBackground': '#FFFFFF08',
-            'editorCursor.foreground': '#A7A7A7',
-            'editorWhitespace.foreground': '#FFFFFF40',
-          },
-        });
-      })
-      .catch(error =>
-        console.error(
-          'An error occurred during initialization of Monaco: ',
-          error,
-        ),
-      );
-    return () => {
-      // cleanup;
-    };
-  }, []);
 
-  useEffect(() => {
-    switch (index.current) {
-      case PLANT_GROWTH.STAGE_1:
-      case PLANT_GROWTH.STAGE_2:
-      case PLANT_GROWTH.STAGE_3:
-      case PLANT_GROWTH.STAGE_4:
-      case PLANT_GROWTH.STAGE_5:
-        setModal(true);
-        break;
-    }
-  }, [index.current]);
 
   useEffect(() => {
     if (validation.success) {
@@ -248,7 +199,6 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
         });
       }
       localStorage.setItem(chapter.frontmatter.filterBy, JSON.stringify(list));
-      // console.log(list);
     }
   }, [validation.success]);
 
@@ -256,9 +206,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
     setEditorInputValue(getDefaultEditorValue);
   };
 
-  const onToggle = () => {
-    setModal(prevState => !prevState);
-  };
+  
 
   const Tezos = new TezosToolkit('https://api.tez.ie/rpc/carthagenet');
 
@@ -269,16 +217,11 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
     })
     liveProvider.current && liveProvider.current.run();
   }
+
   return (
     <Layout>
       <SEO title={`Ch ${index.current}: ${chapter.frontmatter.title}`} />
-      {validation.success && showModal ? (
-        <PlantGrowthModalView
-          onToggle={onToggle}
-          currentChapter={index.current}
-          nextSlug={index.nextSlug}
-        />
-      ) : null}
+
       <Container>
         <ChapterHeader
           backLink={`/tezos/overview/${chapter.frontmatter.slug.slice(0, chapter.frontmatter.slug.indexOf('/'))}`}
@@ -381,12 +324,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           ref={liveProvider}
           //code={editorInputValue}
           // Right now for testing I've used an arbitrary code snippet, will be replaced by code snippet for the particular chapter.
-          code={`
-    Tezos.tz
-    .getBalance('tz1h3rQ8wBxFd8L9B3d7Jhaawu6Z568XU3xY')
-    .then(balance => print(balance.toNumber() / 1000000 + "ꜩ"))
-    .catch(error => print(JSON.stringify(error)));
-  `.trim()}
+          code={input}
           scope={{ ...React, Tezos, importKey, InMemorySigner }}
         >
 
@@ -404,37 +342,9 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
             runCode={runCode}
 
           >
-            {chapter.frontmatter.filterBy === "lesson-4" ?
-              //Uses LiveEditor for module-04, otherwise Monaco.
-              //NOTE: Layout is broken right now.
-              <LiveEditor />
-              :
-              <ControlledEditor
-                height={`${buttonClicked
-                    ? `calc(100vh - (${HeaderHeight} + ${FooterHeight} + ${ContractFileHeight} + ${OptionHeight} + ${OutputHeaderHeight} + ${OutputContentHeight}))`
-                    : `calc(100vh - (${HeaderHeight} + ${FooterHeight} + ${ContractFileHeight} + ${OptionHeight}))`
-                  }`}
-                width={`calc(100vw - (100vw / 2.4))`}
-                value={editorInputValue}
-                onChange={(_, value) => {
-                  setEditorInputValue(value);
-                }}
-                language="python"
-                theme="myCustomTheme"
-                options={{
-                  lineNumbers: true,
-                  scrollBeyondLastLine: false,
-                  minimap: { enabled: false },
-                  scrollbar: { vertical: 'hidden', verticalScrollbarSize: 0 },
-                  folding: true,
-                  readOnly: false,
-                  fontSize: 14,
-                  fontFamily: "'Inconsolata', monospace",
-                  wordWrap: true,
-                  wordBasedSuggestions: false,
-                }}
-              />
-            }
+            <LiveEditor />
+              
+              
             {buttonClicked ? (
               showOutput ? (
                 <div>
@@ -473,83 +383,83 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                     }}
                   />
                 </div>
-              ) : (
-                  <div>
-                    <Output>
-                      <div>output</div>
-                      <span
-                        onClick={() => {
-                          setButtonClicked(false);
-                        }}
-                      >
-                        <IoIosClose />
-                      </span>
-                    </Output>
-                    <div
-                      style={{
-                        height: `${OutputContentHeight}`,
-                        background: '#253f54',
-                        color: '#fff',
-                      }}
-                    >
-                      {validation.success ? (
-                        <div
-                          style={{
-                            fontFamily: "'Inconsolata', monospace",
-                            padding: 10,
-                          }}
-                        >
-                          <p
-                            style={{
-                              color: '#18b77e',
-                              paddingBottom: 5,
-                              fontSize: '0.9rem',
-                              marginBottom: '0',
-                            }}
-                          >
-                            <span> > </span>Bingo! You wrote the correct answer!
-                      </p>
-                          <p
-                            style={{
-                              color: '#18b77e',
-                              fontSize: '0.9rem',
-                              marginBottom: '0',
-                            }}
-                          >
-                            <span> > </span>Proceed to the next chapter by clicking
-                        on 'next >' to continue
-                      </p>
-                        </div>
-                      ) : (
-                          <div
-                            style={{
-                              padding: 10,
-                              height: '200px',
-                              overflowY: 'auto',
-                            }}
-                          >
-                            {validation.error.map((errorMessage, index) => {
-                              return (
-                                <p
-                                  key={index}
-                                  style={{
-                                    fontFamily: "'Inconsolata', monospace",
-                                    color: '#d0454c',
-                                    paddingBottom: 5,
-                                    fontSize: '0.9rem',
-                                    marginBottom: '0',
-                                  }}
-                                >
-                                  <span> {errorMessage ? '>' : ''} </span>
-                                  {errorMessage}
-                                </p>
-                              );
-                            })}
-                          </div>
-                        )}
-                    </div>
-                  </div>
-                )
+              ) : null //(
+              //     <div>
+              //       <Output>
+              //         <div>output</div>
+              //         <span
+              //           onClick={() => {
+              //             setButtonClicked(false);
+              //           }}
+              //         >
+              //           <IoIosClose />
+              //         </span>
+              //       </Output>
+              //       <div
+              //         style={{
+              //           height: `${OutputContentHeight}`,
+              //           background: '#253f54',
+              //           color: '#fff',
+              //         }}
+              //       >
+              //         {validation.success ? (
+              //           <div
+              //             style={{
+              //               fontFamily: "'Inconsolata', monospace",
+              //               padding: 10,
+              //             }}
+              //           >
+              //             <p
+              //               style={{
+              //                 color: '#18b77e',
+              //                 paddingBottom: 5,
+              //                 fontSize: '0.9rem',
+              //                 marginBottom: '0',
+              //               }}
+              //             >
+              //               <span> > </span>Bingo! You wrote the correct answer!
+              //         </p>
+              //             <p
+              //               style={{
+              //                 color: '#18b77e',
+              //                 fontSize: '0.9rem',
+              //                 marginBottom: '0',
+              //               }}
+              //             >
+              //               <span> > </span>Proceed to the next chapter by clicking
+              //           on 'next >' to continue
+              //         </p>
+              //           </div>
+              //         ) : (
+              //             <div
+              //               style={{
+              //                 padding: 10,
+              //                 height: '200px',
+              //                 overflowY: 'auto',
+              //               }}
+              //             >
+              //               {validation.error.map((errorMessage, index) => {
+              //                 return (
+              //                   <p
+              //                     key={index}
+              //                     style={{
+              //                       fontFamily: "'Inconsolata', monospace",
+              //                       color: '#d0454c',
+              //                       paddingBottom: 5,
+              //                       fontSize: '0.9rem',
+              //                       marginBottom: '0',
+              //                     }}
+              //                   >
+              //                     <span> {errorMessage ? '>' : ''} </span>
+              //                     {errorMessage}
+              //                   </p>
+              //                 );
+              //               })}
+              //             </div>
+              //           )}
+              //       </div>
+              //     </div>
+              //   )
             ) : (
                 console.log('No Output')
               )}
