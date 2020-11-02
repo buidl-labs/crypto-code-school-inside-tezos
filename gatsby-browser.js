@@ -8,6 +8,6 @@
 require('prismjs/themes/prism.css');
 exports.onClientEntry = () => {
   window.onload = () => {
-    brython({ debug: 1, indexedDB: false });
+    brython({ debug: 1, indexedDB: false, pythonpath:'/' });
   };
 };
