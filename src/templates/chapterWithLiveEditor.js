@@ -15,8 +15,7 @@ import { getChaptersIndex } from '../utils/index';
 import {
   Container,
   Output,
-  CodeOutputHeader,
-  CodeOutputContent,
+  OutputWithCopyButton
 } from './chapter.styled';
 import { trackEventWithProperties } from '../utils/analytics';
 import SEO from '../components/Seo';
@@ -36,6 +35,8 @@ import SemiLiveProvider from 'src/components/SemiLiveProvider';
 import { LiveEditor, LivePreview, LiveError } from 'react-live';
 
 import theme from './customVSDarkTheme';
+
+import Clipboard from "react-clipboard.js"
 
 export const query = graphql`
   query($slug: String!) {
@@ -409,16 +410,24 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
             {buttonClicked ? (
               showOutput ? (
                 <div>
-                  <Output>
+                  <OutputWithCopyButton>
+                    
                     <div>output</div>
-                    <span
-                      onClick={() => {
-                        setButtonClicked(false);
-                      }}
-                    >
-                      <IoIosClose />
-                    </span>
-                  </Output>
+                    <div>
+                        <Clipboard data-clipboard-text={chapter.frontmatter.editor.answer}>
+                          copy code
+                        </Clipboard>
+                      <span
+                        onClick={() => {
+                          setButtonClicked(false);
+                        }}
+                      >
+                        <IoIosClose />
+                      </span>
+                    </div>
+                    
+                    
+                  </OutputWithCopyButton>
                   
                   <ControlledEditor
                     height={OutputContentHeight}
