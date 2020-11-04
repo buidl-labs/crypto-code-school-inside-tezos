@@ -27,6 +27,7 @@ import {
   OptionHeight,
   OutputHeaderHeight,
   OutputContentHeight,
+  CopyConfirmModal
 } from './chapter.styled';
 
 import { TezosToolkit } from '@taquito/taquito';
@@ -89,6 +90,8 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
   const [chapterCompletedSuccessfully, setChapterCompletionState] = useState(
     false,
   );
+
+  const [codeCopied, setCodeCopied] = useState(false);
   const [index] = useState(() => {
     const { current, total, nextSlug, prevSlug } = getChaptersIndex(
       chapterList,
@@ -103,13 +106,6 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
   });
 
   const liveProvider = useRef(null);
-
-  const input = `
-    Tezos.tz
-    .getBalance('tz1h3rQ8wBxFd8L9B3d7Jhaawu6Z568XU3xY')
-    .then(balance => print(balance.toNumber() / 1000000 + "ꜩ"))
-    .catch(error => print(JSON.stringify(error)));
-  `.trim();
 
   useEffect(() => {
     trackEventWithProperties('Learning_Interface_View', {
@@ -263,6 +259,18 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
       <SEO title={`Ch ${index.current}: ${chapter.frontmatter.title}`} />
 
       <Container>
+        {codeCopied? 
+          <CopyConfirmModal>
+            <div>Reference code has been copied to clipboard!</div>
+            <span
+              onClick={() => {
+                setCodeCopied(false);
+              }}
+            >
+              <IoIosClose />
+            </span>
+          </CopyConfirmModal>
+        : null}
         <ChapterHeader
           backLink={`/tezos/overview/${chapter.frontmatter.slug.slice(
             0,
@@ -414,7 +422,11 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                     
                     <div>output</div>
                     <div>
-                        <Clipboard data-clipboard-text={chapter.frontmatter.editor.answer}>
+                        <Clipboard data-clipboard-text={chapter.frontmatter.editor.answer}
+                          onClick={() => {
+                            setCodeCopied(true);
+                          }}
+                        >
                           copy code
                         </Clipboard>
                       <span
