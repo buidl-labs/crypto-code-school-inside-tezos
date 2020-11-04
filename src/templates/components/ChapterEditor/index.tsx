@@ -29,6 +29,7 @@ interface Props {
   };
   updateValidation(input: string): void;
   editorInputValue: string;
+  currentLesson: string;
 }
 
 function ChapterEditor({
@@ -42,6 +43,7 @@ function ChapterEditor({
   resetEditor,
   chapterCompletedSuccessfully,
   chapterSolution,
+  currentLesson
 }: Props) {
   const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
 
@@ -84,6 +86,7 @@ function ChapterEditor({
             //       : `calc(100vh - (250px + 200px + 40px))`
             //   }`,
             // );
+
             const result = checkCode(editorInputValue, chapterSolution);
             // console.log('result', result);
             updateValidation(result);
