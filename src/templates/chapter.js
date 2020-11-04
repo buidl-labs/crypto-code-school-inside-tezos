@@ -148,6 +148,18 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
   );
 
   useEffect(() => {
+    console.log('button clicked', buttonClicked);
+    console.log('show output', showOutput);
+    if(buttonClicked){
+      if(showOutput){
+        console.log("Show answer")
+      }else{
+        console.log("Run code")
+      }
+    }
+  }, [buttonClicked, showOutput])
+
+  useEffect(() => {
   
     monaco
       .init()
@@ -383,6 +395,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                   <span
                     onClick={() => {
                       setButtonClicked(false);
+                      
                     }}
                   >
                     <IoIosClose />

@@ -62,35 +62,24 @@ function ChapterEditor({
       <Option>
         <ShowAnswerButton
           onClick={() => {
-            setShowOutput(true);
-            setButtonClicked(true);
-            // setEditorHeight(
-            //   `${
-            //     isMobile
-            //       ? `calc(100vh - (130px)) `
-            //       : `calc(100vh - (250px + 200px + 40px))`
-            //   }`,
-            // );
-          }}
+              setShowOutput(true);
+              setButtonClicked(true);
+  
+              console.log("Show answer clicked.")
+            }
+          }
         >
           <ShowAnswer /> <span>Show Answer</span>
         </ShowAnswerButton>
         <CheckAnswerButton
           onClick={() => {
-            setShowOutput(false);
-            setButtonClicked(true);
-            // setEditorHeight(
-            //   `${
-            //     isMobile
-            //       ? `calc(100vh - (130px)) `
-            //       : `calc(100vh - (250px + 200px + 40px))`
-            //   }`,
-            // );
-
-            const result = checkCode(editorInputValue, chapterSolution);
-            // console.log('result', result);
-            updateValidation(result);
-          }}
+              setShowOutput(false);
+              setButtonClicked(true);
+              console.log("Check answer clicked.")
+              const result = checkCode(editorInputValue, chapterSolution);
+              updateValidation(result);
+            }
+          }
         >
           <Check /> <span>Check</span>
         </CheckAnswerButton>
