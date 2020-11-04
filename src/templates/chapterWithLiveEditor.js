@@ -3,7 +3,7 @@ import { graphql } from 'gatsby';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import Layout from '../components/Layout/layout';
 import { MDXProvider } from '@mdx-js/react';
-import { DiffEditor, monaco } from '@monaco-editor/react';
+import { ControlledEditor, monaco } from '@monaco-editor/react';
 import {
   ChapterFooter,
   ChapterHeader,
@@ -419,15 +419,12 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                       <IoIosClose />
                     </span>
                   </Output>
-                  <DiffEditor
+                  
+                  <ControlledEditor
                     height={OutputContentHeight}
-                    original={
-                      showOutput
-                        ? chapter.frontmatter.editor.answer
-                        : 'MODIFIED'
-                    }
-                    modified={showOutput ? editorInputValue : 'MODIFIED'}
-                    language="python"
+              
+                    value={chapter.frontmatter.editor.answer}
+                    language="javascript"
                     theme="myCustomTheme"
                     options={{
                       lineNumbers: false,
