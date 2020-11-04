@@ -6,21 +6,22 @@ filterBy: lesson-4
 editor:
   language: javascript
   startingCode: |
-    Tezos.contract.at("KT1QECVYeUcy1EocvZvzbzA51oV6QcwCB5uY")
+    Tezos.contract.at("KT1Gyk8KanMsaAt39ijcTvGgFajFagtMsAdT")
     .then(contract => {
       // Return contract storage.
-        
-
-    .then(storage => {
-        // Access and return the value of tokens your account is left with.
       
-        .then( res => {
-          print(res)
-        })      
+    })
+    .then(storage => {
+      // Access and return the value of tokens your account is left with.
+      
+      .then(res => {
+        print(res)
+      })      
     })
 
+
   answer: |
-    Tezos.contract.at("KT1QECVYeUcy1EocvZvzbzA51oV6QcwCB5uY")
+    Tezos.contract.at("KT1Gyk8KanMsaAt39ijcTvGgFajFagtMsAdT")
     .then(contract => {
 
         // Return contract storage.
@@ -28,7 +29,7 @@ editor:
     .then(storage => {
         // Access and return the value of tokens your account is left with.
         return storage.ledger.get("tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7")
-        .then( res => {
+        .then(res => {
           print(res)
         })      
     })
@@ -85,4 +86,4 @@ After you sent 2 tokens to your friend in the previous chapter, you want to doub
 
 #### Step by step walkthrough
 1. Return the contract's storage.
-2. Access and return the value of your account in the `ledger`. Use `storage.ledger.get(account_address)` with your account's address as `account_address`
+2. Access and return the value of your account in the `ledger`. Use `storage.ledger.get(account_address)` with your account's address as `account_address`(`tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7`)

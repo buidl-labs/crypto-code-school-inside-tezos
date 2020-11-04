@@ -6,6 +6,7 @@ filterBy: lesson-4
 editor:
   language: javascript
   startingCode: |
+    print("Starting to access storage...");
     Tezos.contract.at("<CONTRACT_ADDRESS>")
     .then(contract => {
         // Return the storage of the contract.
@@ -20,10 +21,11 @@ editor:
         
         
     })
-    .catch(error => console.error(error));
+    .catch(error => print(error));
 
   answer: |
-    Tezos.contract.at("KT1QECVYeUcy1EocvZvzbzA51oV6QcwCB5uY")
+    print("Starting to access storage...");
+    Tezos.contract.at("KT1Gyk8KanMsaAt39ijcTvGgFajFagtMsAdT")
     .then(contract => {
         // Return the storage of the contract.
         return contract.storage();
@@ -35,7 +37,7 @@ editor:
         // Print to the console numTokens == 1
         print(numTokens == 1)
     })
-    .catch(error => console.error(error));
+    .catch(error => print(error));
 ---
 ### Intro
 Now your society is starting to function well. 
@@ -56,7 +58,7 @@ Tezos.contract.at("<CONTRACT_ADDRESS>")
 .then(storage => {
     print(storage)
 })
-.catch(error => console.error(error));
+.catch(error => print(error));
 ```
 Once you get access to the `contract` object you simply have to return the `contract.storage()` - you'll get the storage of that contract as a result. 
 
@@ -100,7 +102,7 @@ Tezos.contract.at("KT1CTQ7CteorSXcKZPRcZqt2G8gCkPA3YbsA")
 .then(storage => {
     print(storage)
 })
-.catch(error => console.error(error));
+.catch(error => print(error));
 ```
 We'll get a result similar to - 
 ```json=

@@ -6,17 +6,19 @@ filterBy: lesson-4
 editor:
   language: javascript
   startingCode: |
+    print("Starting...")
     Tezos.estimate.originate({
         // Pass in the CODE_JSON as `code` and STORAGE_JSON as `init`.
-        
         
       })
       .then(operation => {
         // Print to the console `totalCost` required for the origination of the contract.
         
       })
+      .catch(error => print(error))
 
   answer: |
+    print("Starting...")
     Tezos.estimate.originate({
         // Pass in the CODE_JSON as `code` and STORAGE_JSON as `init`.
         code: CODE_JSON,
@@ -26,9 +28,11 @@ editor:
         // print `totalCost` required for the origination of the contract.
         print(operation.totalCost)
       })
+      .catch(error => print(error))
 ---
 ### Intro
-Everything on the blockchain costs.
+Everything on the blockchain has a cost.
+
 Each contract you deploy, each byte you store, each operation you perform - everything costs.
 
 Wouldn't you want to know how much will it cost you to originate a smart contract?
@@ -46,6 +50,7 @@ Tezos.estimate.originate({
 .then(opEstimate=> {
     print(opEstimate)
 })
+.catch(error => print(`Error: ${JSON.stringify(error, null, 2)}`));
 ```
 You need to pass the `CODE_JSON` and `STORAGE_JSON` for the contract that you grabbed in the previous chapter, and it returns the following properties - 
 

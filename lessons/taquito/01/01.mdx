@@ -9,6 +9,9 @@ editor:
     // Initialize the `FAUCET_KEY`
 
     
+    //NOTE: You've to use print() as a replacement of console.log to output content on this platform, eg - print("Hello World")
+    // print FAUCET_KEY.pkh
+
 
   answer: |
     // Initialize the `FAUCET_KEY`
@@ -37,7 +40,7 @@ editor:
         "email": "ryqwtuyj.ciwjnvdt@tezos.example.org"
     }
         
-
+    print(FAUCET_KEY.pkh)
 
 ---
 ### Intro
@@ -80,6 +83,8 @@ You've made quite a few smart contracts so far but now it's time to originate th
 
 #### Step by step walkthrough
 
+> Note: We're already imported Tezos and initialized a bunch of other stuff to make this whole journey a little bit smoother for you.
+
 1. Generate your faucet account - 
     1. Visit the Tezos Faucet - faucet.tzalpha.net
     2. Click on "Get testnet ꜩ" (will explain "testnet" in a future chapter)
@@ -92,5 +97,4 @@ You've made quite a few smart contracts so far but now it's time to originate th
     4. Hit "Compute your private key".
     5. Click "Save Account in Wallet" - this isn't necessary but saving the account in wallet will later give you easy access to all the contracts deployed from this testnet account through the SmartPy explorer.
     6. Finally, click "Activate account".
-
-> Note: We're already imported Tezos and initialized a bunch of stuff to make this whole journey a little bit smoother for you.
+4. Print the `FAUCET_KEY.pkh` to the console, this is the address of your account.

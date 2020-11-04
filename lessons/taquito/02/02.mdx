@@ -6,9 +6,7 @@ filterBy: lesson-4
 editor:
   language: javascript
   startingCode: |
-    // import { importKey } from "@taquito/signer";
-
-    
+    print("Starting...")
     const FAUCET_KEY = {
         "mnemonic": [
             "chimney",
@@ -35,10 +33,10 @@ editor:
     }
         
     // use importKey
-        
+    
 
   answer: |
-    
+    print("Starting...")
     const FAUCET_KEY = {
         "mnemonic": [
             "chimney",
@@ -105,10 +103,18 @@ importKey(
             FAUCET_KEY.secret
         );
 ```
+
 As the first argument, `importKey` takes in the `Tezos` instance and rest all is the data that's needed for signing which we obtained through the faucet.
+
+Once you sign your account, you can check it in the Tezos instance using - 
+```javascript=
+print(Tezos.signer._key.key)
+```
+>Note: To print content in the output on our interface, you'll have to use `print` as a replacement of `console.log`.
 
 ### #buidl-ing time
  
 
 #### Step by step walkthrough
 1. Use `importKey` to sign your account. We've already imported it from `@taquito/signer`.
+2. Print `Tezos.signer._key.key`

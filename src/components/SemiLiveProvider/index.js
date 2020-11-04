@@ -3,6 +3,7 @@ import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
 import { TezosToolkit } from '@taquito/taquito';
 import { importKey, InMemorySigner } from '@taquito/signer';
 
+
 class SemiLiveProvider extends LiveProvider {
     constructor() {
         super();
@@ -27,6 +28,7 @@ class SemiLiveProvider extends LiveProvider {
     }
 
     run() {
+        
         const { scope, transformCode, noInline } = this.props;
 
         // The following piece of code provides additional functionality
@@ -44,7 +46,12 @@ class SemiLiveProvider extends LiveProvider {
       })
       .then(response => response.text())
       .then(privateKey => {
-        return importKey(Tezos, privateKey);
+        return importKey(
+                    Tezos,
+                    FAUCET_KEY.email,
+                    FAUCET_KEY.password,
+                    FAUCET_KEY.mnemonic.join(' '),
+                    FAUCET_KEY.secret);
        })
       .then(() => {
         ${this.code}

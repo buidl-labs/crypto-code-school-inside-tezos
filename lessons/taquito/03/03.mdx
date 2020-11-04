@@ -6,6 +6,7 @@ filterBy: lesson-4
 editor:
   language: javascript
   startingCode: |
+    print("Starting...")
     const FAUCET_KEY = {
         "mnemonic": [
             "chimney",
@@ -42,8 +43,11 @@ editor:
     // set cathargenet as the rpc provider
 
 
+    // Print the rpc you're connected to
+
 
   answer: |
+    print("Starting...")
     const FAUCET_KEY = {
         "mnemonic": [
             "chimney",
@@ -80,6 +84,9 @@ editor:
     // set cathargenet as the rpc provider
     Tezos.setProvider({ rpc: 'https://carthagenet.SmartPy.io' });
 
+    // Print the rpc you're connected to
+    print(Tezos._rpc)
+
 ---
 ### Intro
 When you develop an application - do you directly deploy it with ZERO testing?
@@ -96,9 +103,11 @@ There are 3-4 testnets but currently **cathargenet** is the most used one and it
 While using Taquito, you need to specify which network you're using - 
 ```javascript=
 Tezos.setProvider({ rpc: 'https://carthagenet.SmartPy.io' });
+print(Tezos._rpc); // prints the network you're connected to.
 ```
 
 ### #buidl-ing time
  
 #### Step by step walkthrough
 - Use `Tezos.setProvider` to specify you're using **cathargenet**.
+- Print the rpc you've connected to.

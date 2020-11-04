@@ -180,7 +180,7 @@ export const CopyConfirmModal = styled.div`
   background: #152f44;
   color: #84a3ba;
   border:2px solid #64839a;
-  box-shadow: 2px 8px 16px rgba(0, 0, 0, .2);
+  box-shadow: 2px 8px 16px rgba(0, 0, 0, .4), 4px 12px 20px rgba(0, 0, 0, .2);
   padding: 15px 25px;
   left: 50%;
   top: 20%;

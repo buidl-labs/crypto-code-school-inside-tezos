@@ -6,6 +6,7 @@ filterBy: lesson-4
 editor:
   language: javascript
   startingCode: |
+    print("Starting transaction...")
     Tezos.contract.at("<CONTRACT_ADDRESS>")
         .then(contract => {
             // Call the `mint` entrypoint to mint 10 tokens of symbol "CBT" and token_id 0, in your account.
@@ -19,10 +20,11 @@ editor:
             // Print to the console - Operation injected: ${hash}
 
         })
-        .catch(error => console.error(error));
+        .catch(error => print(error));
 
   answer: |
-    Tezos.contract.at("<CONTRACT_ADDRESS>")
+    print("Starting transaction...")
+    Tezos.contract.at("KT1Gyk8KanMsaAt39ijcTvGgFajFagtMsAdT")
         .then(contract => {
             // Call the `mint` entrypoint to mint 10 tokens of symbol "CBT" and token_id 0, in your account.
             return contract.methods.mint("tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7", 10, "CBT", 0).send();
@@ -35,10 +37,10 @@ editor:
             // Print to the console - Operation injected: ${hash}
             print(`Operation injected: ${hash}`)
         })
-        .catch(error => console.error(error));
+        .catch(error => print(error));
 ---
 ### Intro
-The smart contract for `Cyber_Token` that we've originated has en entry point called `mint`, through which we can create new tokens. 
+The smart contract for `Cyber_Token` that we've originated has an entry point called `mint`, through which we can create new tokens.
 
 In this chapter, we're going to interact with the contract by calling the `mint` entry point.
 
@@ -63,7 +65,7 @@ The object `c` gives you a whole lot of fields to play around with - most notabl
 Through `c.methods` you can access all the entry points that are available.
 
 ```javascript=
-c.methods.increment(100).send()
+c.methods.increment(100).send();
 ```
 If we had a smart contract with the entry point `increment`, this is how you would call it while passing the `100` as an argument to the entry point.
 
@@ -106,7 +108,7 @@ Tezos.contract.at("<CONTRACT_ADDRESS>")
 })
 .then(hash => print(`Operation injected: {hash}`
 ))
-.catch(error => console.error(error));
+.catch(error => print(error));
 ```
 Take a couple seconds to look through the code snippet.
 Now, let's break it down block by block - 

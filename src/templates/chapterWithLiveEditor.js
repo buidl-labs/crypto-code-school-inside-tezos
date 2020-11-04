@@ -20,6 +20,7 @@ import {
 import { trackEventWithProperties } from '../utils/analytics';
 import SEO from '../components/Seo';
 import { IoIosClose } from 'react-icons/io';
+
 import {
   HeaderHeight,
   FooterHeight,
@@ -37,7 +38,11 @@ import { LiveEditor, LivePreview, LiveError } from 'react-live';
 
 import theme from './customVSDarkTheme';
 
-import Clipboard from "react-clipboard.js"
+import Clipboard from "react-clipboard.js";
+
+import CODE_JSON from "src/data/code";
+import STORAGE_JSON from "src/data/storage";
+import FAUCET_KEY from "src/data/account";
 
 export const query = graphql`
   query($slug: String!) {
@@ -259,7 +264,8 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
       <SEO title={`Ch ${index.current}: ${chapter.frontmatter.title}`} />
 
       <Container>
-        {codeCopied? 
+        {codeCopied?
+          
           <CopyConfirmModal>
             <div>Reference code has been copied to clipboard!</div>
             <span
@@ -270,6 +276,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
               <IoIosClose />
             </span>
           </CopyConfirmModal>
+          
         : null}
         <ChapterHeader
           backLink={`/tezos/overview/${chapter.frontmatter.slug.slice(
@@ -376,7 +383,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           //code={editorInputValue}
           // Right now for testing I've used an arbitrary code snippet, will be replaced by code snippet for the particular chapter.
           code={chapter.frontmatter.editor.startingCode}
-          scope={{ ...React, Tezos, importKey, InMemorySigner }}
+          scope={{ ...React, Tezos, importKey, InMemorySigner, CODE_JSON, STORAGE_JSON, FAUCET_KEY }}
           // To edit the theme, you need to edit - node_modules/prism-react-renderer/themes/vsDark/index.js
           theme={theme}
         >

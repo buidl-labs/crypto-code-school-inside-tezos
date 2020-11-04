@@ -6,9 +6,10 @@ filterBy: lesson-4
 editor:
   language: javascript
   startingCode: |
-    Tezos.contract.at("KT1QECVYeUcy1EocvZvzbzA51oV6QcwCB5uY")
+    print("Starting transfer...")
+    Tezos.contract.at("<CONTRACT_ADDRESS>")
     .then(contract => {
-        // transfer 2 tokens from your previous account to the new one which you generated recently.
+        // transfer 2 tokens from `tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7` to `tz1YLnvKy2ycBZ9TpTCv9ngXd1eUw2uxzhDd`.
         
         
     })
@@ -22,13 +23,14 @@ editor:
     .catch(error => console.error(error));
 
   answer: |
-    Tezos.contract.at("KT1QECVYeUcy1EocvZvzbzA51oV6QcwCB5uY")
+    print("Starting transfer...")
+    Tezos.contract.at("KT1Gyk8KanMsaAt39ijcTvGgFajFagtMsAdT")
     .then(contract => {
         // transfer 2 tokens from your previous account to the new one which you generated recently.
         return contract.methods.transfer([
           {
-            from_: "tz1YLnvKy2ycBZ9TpTCv9ngXd1eUw2uxzhDd",
-            txs: [{ to_: "tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7", token_id: 0, amount: 2 }]
+            from_: "tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7",
+            txs: [{ to_: "tz1YLnvKy2ycBZ9TpTCv9ngXd1eUw2uxzhDd", token_id: 0, amount: 2 }]
           }
         ]).send();
     })
@@ -122,16 +124,4 @@ Like you, he's starting his own civilization.
 But he needs your help getting the economy started, **he's requested you send him 3 Cyber Tokens**.
 
 #### Step by step walkthrough
-1. Create a new Faucet Account. 
-    1. Go to https://faucet.tzalpha.net/
-    2. Click on "Get testnet".
-    3. Copy the generated JSON.
-    4. Head over to smartpy.io/dev/wallet.html
-    5. Click "Faucet Accounts" and then "Faucet" importer.
-    6. Paste the JSON generated through faucet in the textarea below.
-    7. Activate your account - 
-        1. Click "Compute Private Key"
-        2. Click "Save Account in Wallet"
-        3. Click "Activate Account"
-    8. Now, find **"pkh"** in the JSON that was generated through the faucet - this is the **address of the new test account you created right now, save this.**
-2. Transfer 2 tokens of `token_id` 0 from your previous account(the one you used while minting the tokens) to the new account which you generated right now. Take reference from the code snippet we explored above.
+1. Transfer 2 tokens of `token_id` 0 from your previous account(`tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7`)(the one you used while minting the tokens) to this account - ``, which you generated right now. Take reference from the code snippet we explored above.
