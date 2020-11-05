@@ -10,6 +10,7 @@ import {
   ChapterHeader,
   ChapterContent,
   ChapterEditor,
+  MichelsonOutput
 } from './components/index';
 import useChapters from '../hooks/use-chapters';
 import { getChaptersIndex } from '../utils/index';
@@ -26,6 +27,7 @@ import {
   OptionHeight,
   OutputHeaderHeight,
   OutputContentHeight,
+  OutputWithShowCodeButton
 } from './chapter.styled';
 
 export const query = graphql`
@@ -147,6 +149,9 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
     `calc(100vh - (210px + 40px))`,
   );
 
+  const [showMichelsonCode, setShowMichelsonCode] = useState(false);
+
+
   useEffect(() => {
   
     monaco
@@ -196,6 +201,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
   }, [index.current]);
 
   useEffect(() => {
+    console.log(validation)
     if (validation.success) {
       const ch = {
         chapterSlug: chapterList[index.current - 1].slug,
@@ -248,6 +254,13 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
         />
       ) : null}
       <Container>
+        {chapter.frontmatter.filterBy !== "lesson-1" && validation.success?
+        <MichelsonOutput 
+          show={showMichelsonCode} 
+          setShow={setShowMichelsonCode} 
+          contracts={validation.result}
+        />:null}
+        
         <ChapterHeader 
           backLink={`/tezos/overview/${chapter.frontmatter.slug.slice(0, chapter.frontmatter.slug.indexOf('/'))}`}
           title={chapter.frontmatter.title}
@@ -347,6 +360,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           resetEditor={resetEditor}
           chapterCompletedSuccessfully={chapterCompletedSuccessfully}
           chapterSolution={chapter.frontmatter.editor.answer}
+          currentLesson={chapter.frontmatter.filterBy}
         >
           <ControlledEditor
             height={`${
@@ -414,16 +428,41 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
               </div>
             ) : (
               <div>
-                <Output>
-                  <div>output</div>
-                  <span
-                    onClick={() => {
-                      setButtonClicked(false);
-                    }}
-                  >
-                    <IoIosClose />
-                  </span>
-                </Output>
+                {chapter.frontmatter.filterBy === "lesson-1"?
+                  (<Output>
+                    <div>output</div>
+                    <span
+                      onClick={() => {
+                        setButtonClicked(false);
+                      }}
+                    >
+                      <IoIosClose />
+                    </span>
+                  </Output>):
+                  (
+                    <OutputWithShowCodeButton 
+                    success={validation.success}
+                    >
+                      <div>output</div>
+                      <div>
+                        <button
+                        onClick = {() => {
+                            setButtonClicked(false);
+                            setShowMichelsonCode(true);
+                          }
+                        }
+                        >Show Compiled Code</button>
+                        <span
+                          onClick={() => {
+                            setButtonClicked(false);
+                          }}
+                        >
+                          <IoIosClose />
+                        </span>
+                      </div>
+                    </OutputWithShowCodeButton>
+                  )
+                }
                 <div
                   style={{
                     height: `${OutputContentHeight}`,
@@ -438,28 +477,54 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                         padding: 10,
                       }}
                     >
-                      <p
-                        style={{
-                          color: '#18b77e',
-                          paddingBottom: 5,
-                          fontSize: '0.9rem',
-                          marginBottom: '0',
-                        }}
-                      >
-                        <span> > </span>Bingo! You wrote the correct answer!
-                      </p>
-                      <p
-                        style={{
-                          color: '#18b77e',
-                          fontSize: '0.9rem',
-                          marginBottom: '0',
-                        }}
-                      >
-                        <span> > </span>Proceed to the next chapter by clicking
-                        on 'next >' to continue
-                      </p>
-                    </div>
-                  ) : (
+                      {chapter.frontmatter.filterBy === "lesson-1"? 
+                          (<>
+                          <p
+                            style={{
+                              color: '#18b77e',
+                              paddingBottom: 5,
+                              fontSize: '0.9rem',
+                              marginBottom: '0',
+                            }}
+                          >
+                            <span> {">"} </span>Bingo! You wrote the correct answer!
+                        </p>
+                        <p
+                          style={{
+                              color: '#18b77e',
+                              fontSize: '0.9rem',
+                              marginBottom: '0',
+                            }}
+                          >
+                              <span> {">"} </span>Proceed to the next chapter by clicking
+                        on 'next {">"}' to continue
+                          </p>
+                        </>
+                        ):
+                        (<>
+                            <p
+                              style={{
+                                color: '#18b77e',
+                                paddingBottom: 5,
+                                fontSize: '0.9rem',
+                                marginBottom: '0',
+                              }}
+                            >
+                              <span> {">"} </span>The code has compiled successfully. You can proceed to the next chapter by clicking on 'next {">"}' to continue.
+                        </p>
+                            <p
+                              style={{
+                                color: '#18b77e',
+                                fontSize: '0.9rem',
+                                marginBottom: '0',
+                              }}
+                            >
+                              <span> {">"} </span>But we suggest you take a look at the compiled Michelson code before moving to the next chapter by clicking on 'Show Compiled Code'.
+                          </p>
+                        </>)
+                    
+                      }
+                    </div>) : (
                     <div
                       style={{
                         padding: 10,
@@ -487,8 +552,8 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                     </div>
                   )}
                 </div>
-              </div>
-            )
+              </div>)
+            
           ) : (
             console.log('No Output')
           )}
