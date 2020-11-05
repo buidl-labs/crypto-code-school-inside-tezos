@@ -101,6 +101,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
       slug: chapterList[index.current - 1].slug,
       title: chapterList[index.current - 1].title,
     });
+
   }, [index.current]);
 
   const [validation, updateValidation] = useState({
