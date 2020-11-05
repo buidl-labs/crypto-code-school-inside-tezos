@@ -8,15 +8,11 @@ import {
   ChapterFooter,
   ChapterHeader,
   ChapterContent,
-  ChapterEditor,
+  ChapterWithLiveEditorBottomBar,
 } from './components/index';
 import useChapters from '../hooks/use-chapters';
 import { getChaptersIndex } from '../utils/index';
-import {
-  Container,
-  Output,
-  OutputWithCopyButton
-} from './chapter.styled';
+import { Container, Output, OutputWithCopyButton } from './chapter.styled';
 import { trackEventWithProperties } from '../utils/analytics';
 import SEO from '../components/Seo';
 import { IoIosClose } from 'react-icons/io';
@@ -28,7 +24,7 @@ import {
   OptionHeight,
   OutputHeaderHeight,
   OutputContentHeight,
-  CopyConfirmModal
+  CopyConfirmModal,
 } from './chapter.styled';
 
 import { TezosToolkit } from '@taquito/taquito';
@@ -38,11 +34,11 @@ import { LiveEditor, LivePreview, LiveError } from 'react-live';
 
 import theme from './customVSDarkTheme';
 
-import Clipboard from "react-clipboard.js";
+import Clipboard from 'react-clipboard.js';
 
-import CODE_JSON from "src/data/code";
-import STORAGE_JSON from "src/data/storage";
-import FAUCET_KEY from "src/data/account";
+import CODE_JSON from 'src/data/code';
+import STORAGE_JSON from 'src/data/storage';
+import FAUCET_KEY from 'src/data/account';
 
 export const query = graphql`
   query($slug: String!) {
@@ -264,8 +260,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
       <SEO title={`Ch ${index.current}: ${chapter.frontmatter.title}`} />
 
       <Container>
-        {codeCopied?
-          
+        {codeCopied ? (
           <CopyConfirmModal>
             <div>Reference code has been copied to clipboard!</div>
             <span
@@ -276,8 +271,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
               <IoIosClose />
             </span>
           </CopyConfirmModal>
-          
-        : null}
+        ) : null}
         <ChapterHeader
           backLink={`/tezos/overview/${chapter.frontmatter.slug.slice(
             0,
@@ -383,11 +377,19 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           //code={editorInputValue}
           // Right now for testing I've used an arbitrary code snippet, will be replaced by code snippet for the particular chapter.
           code={chapter.frontmatter.editor.startingCode}
-          scope={{ ...React, Tezos, importKey, InMemorySigner, CODE_JSON, STORAGE_JSON, FAUCET_KEY }}
+          scope={{
+            ...React,
+            Tezos,
+            importKey,
+            InMemorySigner,
+            CODE_JSON,
+            STORAGE_JSON,
+            FAUCET_KEY,
+          }}
           // To edit the theme, you need to edit - node_modules/prism-react-renderer/themes/vsDark/index.js
           theme={theme}
         >
-          <ChapterEditor
+          <ChapterWithLiveEditorBottomBar
             setShowOutput={setShowOutput}
             setButtonClicked={setButtonClicked}
             setEditorHeight={setEditorHeight}
@@ -426,16 +428,16 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
               showOutput ? (
                 <div>
                   <OutputWithCopyButton>
-                    
                     <div>output</div>
                     <div>
-                        <Clipboard data-clipboard-text={chapter.frontmatter.editor.answer}
-                          onClick={() => {
-                            setCodeCopied(true);
-                          }}
-                        >
-                          copy code
-                        </Clipboard>
+                      <Clipboard
+                        data-clipboard-text={chapter.frontmatter.editor.answer}
+                        onClick={() => {
+                          setCodeCopied(true);
+                        }}
+                      >
+                        copy code
+                      </Clipboard>
                       <span
                         onClick={() => {
                           setButtonClicked(false);
@@ -444,13 +446,10 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                         <IoIosClose />
                       </span>
                     </div>
-                    
-                    
                   </OutputWithCopyButton>
-                  
+
                   <ControlledEditor
                     height={OutputContentHeight}
-              
                     value={chapter.frontmatter.editor.answer}
                     language="javascript"
                     theme="myCustomTheme"
@@ -501,7 +500,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
             ) : (
               console.log('No Output')
             )}
-          </ChapterEditor>
+          </ChapterWithLiveEditorBottomBar>
           <ChapterFooter
             chapter={chapter.frontmatter.chapter}
             title={chapter.frontmatter.title}

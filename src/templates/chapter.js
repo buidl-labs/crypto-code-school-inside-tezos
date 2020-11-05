@@ -9,7 +9,7 @@ import {
   ChapterFooter,
   ChapterHeader,
   ChapterContent,
-  ChapterEditor
+  ChapterBottomBar,
 } from './components/index';
 import useChapters from '../hooks/use-chapters';
 import { getChaptersIndex } from '../utils/index';
@@ -27,7 +27,6 @@ import {
   OutputHeaderHeight,
   OutputContentHeight,
 } from './chapter.styled';
-
 
 export const query = graphql`
   query($slug: String!) {
@@ -82,7 +81,6 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
     false,
   );
   const [index] = useState(() => {
-    
     const { current, total, nextSlug, prevSlug } = getChaptersIndex(
       chapterList,
       chapter.frontmatter.slug,
@@ -93,9 +91,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
       nextSlug,
       prevSlug,
     };
-
   });
-
 
   useEffect(() => {
     trackEventWithProperties('Learning_Interface_View', {
@@ -116,7 +112,8 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
   const getDefaultEditorValue = () => {
     let list = [];
     const listJSON =
-      typeof window != 'undefined' && localStorage.getItem(chapter.frontmatter.filterBy);
+      typeof window != 'undefined' &&
+      localStorage.getItem(chapter.frontmatter.filterBy);
     if (listJSON !== null) {
       list = JSON.parse(listJSON);
     }
@@ -131,7 +128,10 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           const updateList = list.filter(chapter => {
             return !(chapter.chapterSlug === savedChapter.chapterSlug);
           });
-          localStorage.setItem(chapter.frontmatter.filterBy, JSON.stringify(updateList));
+          localStorage.setItem(
+            chapter.frontmatter.filterBy,
+            JSON.stringify(updateList),
+          );
           return `${chapter.frontmatter.editor.startingCode}`;
         }
         setChapterCompletionState(true);
@@ -152,34 +152,34 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
 
   useEffect(() => {
     monaco
-    .init()
-    .then(monacoInstance => {
-          monacoInstance.editor.defineTheme('myCustomTheme', {
-            base: 'vs-dark',
-            inherit: true,
-            automaticLayout: true,
-            rules: [
-              { token: 'comment', foreground: '989898', fontStyle: 'italic' },
-              { token: 'keyword', foreground: 'EA4192' },
-              { token: 'number', foreground: '00FF47' },
-              { token: 'string', foreground: 'FA00FF' },
-            ],
-            colors: {
-              'editor.foreground': '#F8F8F8',
-              'editor.background': '#253F54',
-              'editor.selectionBackground': '#DDF0FF33',
-              'editor.lineHighlightBackground': '#FFFFFF08',
-              'editorCursor.foreground': '#A7A7A7',
-              'editorWhitespace.foreground': '#FFFFFF40',
-            },
-          });
-        })
-        .catch(error =>
-          console.error(
-            'An error occurred during initialization of Monaco: ',
-            error,
-          ),
-        );
+      .init()
+      .then(monacoInstance => {
+        monacoInstance.editor.defineTheme('myCustomTheme', {
+          base: 'vs-dark',
+          inherit: true,
+          automaticLayout: true,
+          rules: [
+            { token: 'comment', foreground: '989898', fontStyle: 'italic' },
+            { token: 'keyword', foreground: 'EA4192' },
+            { token: 'number', foreground: '00FF47' },
+            { token: 'string', foreground: 'FA00FF' },
+          ],
+          colors: {
+            'editor.foreground': '#F8F8F8',
+            'editor.background': '#253F54',
+            'editor.selectionBackground': '#DDF0FF33',
+            'editor.lineHighlightBackground': '#FFFFFF08',
+            'editorCursor.foreground': '#A7A7A7',
+            'editorWhitespace.foreground': '#FFFFFF40',
+          },
+        });
+      })
+      .catch(error =>
+        console.error(
+          'An error occurred during initialization of Monaco: ',
+          error,
+        ),
+      );
     return () => {
       // cleanup;
     };
@@ -250,8 +250,11 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
         />
       ) : null}
       <Container>
-        <ChapterHeader 
-          backLink={`/tezos/overview/${chapter.frontmatter.slug.slice(0, chapter.frontmatter.slug.indexOf('/'))}`}
+        <ChapterHeader
+          backLink={`/tezos/overview/${chapter.frontmatter.slug.slice(
+            0,
+            chapter.frontmatter.slug.indexOf('/'),
+          )}`}
           title={chapter.frontmatter.title}
         />
         <ChapterContent
@@ -339,7 +342,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
             <MDXRenderer>{chapter.body}</MDXRenderer>
           </MDXProvider>
         </ChapterContent>
-        <ChapterEditor
+        <ChapterBottomBar
           setShowOutput={setShowOutput}
           setButtonClicked={setButtonClicked}
           setEditorHeight={setEditorHeight}
@@ -377,7 +380,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
               wordBasedSuggestions: false,
             }}
           />
-         
+
           {buttonClicked ? (
             showOutput ? (
               <div>
@@ -496,7 +499,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           ) : (
             console.log('No Output')
           )}
-        </ChapterEditor>
+        </ChapterBottomBar>
         <ChapterFooter
           chapter={chapter.frontmatter.chapter}
           title={chapter.frontmatter.title}
