@@ -446,11 +446,12 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                       <div>output</div>
                       <div>
                         <button
-                        onClick = {() => {
-                            setButtonClicked(false);
-                            setShowMichelsonCode(true);
+                          onClick = {() => {
+                              setButtonClicked(false);
+                              setShowMichelsonCode(true);
+                            }
                           }
-                        }
+                          disabled={!validation.success}
                         >Show Compiled Code</button>
                         <span
                           onClick={() => {

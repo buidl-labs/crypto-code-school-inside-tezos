@@ -111,11 +111,19 @@ export const OutputWithShowCodeButton = styled.div`
     cursor: pointer;
     transition: .2s all;
     
-    :hover{
+    :disabled{
+      background: #051f34;
+      color: #24435a;
+      border-color: #24435a;
+      cursor: not-allowed;
+    }
+
+    :hover:enabled{
       background: #152f44;
       color: #84a3ba;
       border-color: #64839a;
     }
+
   }
   span {
     svg {
