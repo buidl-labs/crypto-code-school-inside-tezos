@@ -249,7 +249,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
   return (
     <Layout>
       <SEO title={`Ch ${index.current}: ${chapter.frontmatter.title}`} />
-      {validation.success && showModal ? (
+      {validation.success && showModal && chapter.frontmatter.filterBy === "lesson-1" ? (
         <PlantGrowthModalView
           onToggle={onToggle}
           currentChapter={index.current}
