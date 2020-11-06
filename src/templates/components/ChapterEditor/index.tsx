@@ -29,6 +29,9 @@ interface Props {
   };
   updateValidation(input: string): void;
   editorInputValue: string;
+  chapterSolution: string;
+  currentLesson: string;
+  isCode: boolean;
 }
 
 function ChapterEditor({
@@ -42,6 +45,8 @@ function ChapterEditor({
   resetEditor,
   chapterCompletedSuccessfully,
   chapterSolution,
+  currentLesson,
+  isCode,
 }: Props) {
   const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
 
@@ -84,9 +89,24 @@ function ChapterEditor({
             //       : `calc(100vh - (250px + 200px + 40px))`
             //   }`,
             // );
-            const result = checkCode(editorInputValue, chapterSolution);
-            // console.log('result', result);
-            updateValidation(result);
+            let result;
+            if(currentLesson === "lesson-1" || !isCode){
+              result = checkCode(editorInputValue, chapterSolution);
+            
+              updateValidation(result);
+            }else{
+              const res = window !== undefined && window.runCode(editorInputValue);
+              console.log(res);
+              if(res.success){
+                res.error = [""]
+                updateValidation(res);
+              }else{
+                res.error = [res.error]
+                updateValidation(res);
+              }
+            }
+            
+            
           }}
         >
           <Check /> <span>Check</span>

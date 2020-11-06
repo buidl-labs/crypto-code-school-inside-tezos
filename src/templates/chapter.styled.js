@@ -75,3 +75,80 @@ export const Output = styled.div`
     }
   }
 `;
+
+export const OutputWithShowCodeButton = styled.div`
+  display: flex;
+  justify-content: space-between;
+  height: ${OutputHeaderHeight};
+  background: #12293b;
+  > div:first-of-type {
+    background: #253f54;
+    display: inline-block;
+    margin-left: 1rem;
+    color: #64839a;
+    padding: 6px 10px 6px 10px;
+    border-top: 1px solid #112425;
+    font-family: Roboto;
+  }
+  
+  > div{
+    display: flex;
+    align-items: center;
+  }
+  
+  button {
+    
+    border-radius: 2px;
+    background: #253f54;
+    display: inline-block;
+    margin-right: 1rem;
+    color: #64839a;
+    padding: 4px 10px 4px 10px;
+    border: none;
+    border: 1px solid #64839a;
+    font-family: Roboto;
+    font-size: inherit;
+    cursor: pointer;
+    transition: .2s all;
+    
+    :disabled{
+      background: #051f34;
+      color: #24435a;
+      border-color: #24435a;
+      cursor: not-allowed;
+    }
+
+    :hover:enabled{
+      background: #152f44;
+      color: #84a3ba;
+      border-color: #64839a;
+    }
+
+  }
+  span {
+    svg {
+      color: white;
+      align-self: center;
+      display: flex;
+      width: 48px;
+      height: 40px;
+      :hover {
+        cursor: pointer;
+      }
+    }
+  }
+`;
+
+export const SpinnerBackdrop = styled.div`
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: fixed;
+  background: rgba(0,0,0, .5);
+  z-index: 200;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+

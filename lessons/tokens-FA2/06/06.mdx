@@ -3,12 +3,13 @@ title: Hiring a bot manager
 chapter: Chapter 6
 slug: module-03/chapter-06
 filterBy: lesson-3
+isCode: true
 editor:
   language: python
   startingCode: |
     import smartpy as sp
 
-    FA2 = sp.import_template("FA2.py")
+    FA2 = sp.import_script_from_url("https://smartpy.io/dev/templates/FA2.py")
 
     class Cryptobot(FA2.FA2):
         
@@ -75,7 +76,7 @@ editor:
   answer: |  
     import smartpy as sp
 
-    FA2 = sp.import_template("FA2.py")
+    FA2 = sp.import_script_from_url("https://smartpy.io/dev/templates/FA2.py")
 
     class Cryptobot(FA2.FA2):
         
