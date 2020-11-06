@@ -27,7 +27,8 @@ import {
   OptionHeight,
   OutputHeaderHeight,
   OutputContentHeight,
-  OutputWithShowCodeButton
+  OutputWithShowCodeButton,
+  SpinnerBackdrop
 } from './chapter.styled';
 
 export const query = graphql`
@@ -151,7 +152,6 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
   );
 
   const [showMichelsonCode, setShowMichelsonCode] = useState(false);
-
   
 
   useEffect(() => {
@@ -262,6 +262,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           setShow={setShowMichelsonCode} 
           contracts={validation.result}
         />:null}
+        
         
         <ChapterHeader 
           backLink={`/tezos/overview/${chapter.frontmatter.slug.slice(0, chapter.frontmatter.slug.indexOf('/'))}`}

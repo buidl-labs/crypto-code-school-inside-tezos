@@ -146,4 +146,9 @@ export const SpinnerBackdrop = styled.div`
   right: 0;
   position: fixed;
   background: rgba(0,0,0, .5);
+  z-index: 200;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
+

@@ -46,7 +46,7 @@ function ChapterEditor({
   chapterCompletedSuccessfully,
   chapterSolution,
   currentLesson,
-  isCode
+  isCode,
 }: Props) {
   const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
 
@@ -95,7 +95,6 @@ function ChapterEditor({
             
               updateValidation(result);
             }else{
-              console.log("Running code...")
               const res = window !== undefined && window.runCode(editorInputValue);
               console.log(res);
               if(res.success){
