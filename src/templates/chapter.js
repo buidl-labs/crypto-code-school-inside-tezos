@@ -451,7 +451,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                         <button
                           onClick = {() => {
                               setShowMichelsonCode(true);
-                              setButtonClicked(false);                           
+                                                  
                             }
                           }
                           disabled={!validation.success || !chapter.frontmatter.isCode}
