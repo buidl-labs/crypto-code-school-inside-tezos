@@ -3,13 +3,14 @@ title: Interacting with Cyber Token
 chapter: Chapter 4
 slug: module-03/chapter-04
 filterBy: lesson-3
+isCode: true
 editor:
   language: python
   startingCode: |
     import smartpy as sp
 
     # Import FA2 template
-    FA2 = sp.import_template("FA2.py")
+    FA2 = sp.import_script_from_url("FA2.py")
     # Define `Cryber_Token`
     class Cyber_Token(FA2.FA2):
         pass
@@ -54,7 +55,7 @@ editor:
     import smartpy as sp
 
     # Import FA2 template
-    FA2 = sp.import_template("FA2.py")
+    FA2 = sp.import_script_from_url("https://smartpy.io/dev/templates/FA2.py")
     # Define `Cryber_Token`
     class Cyber_Token(FA2.FA2):
         pass
@@ -128,7 +129,9 @@ To see how to interact with FA2 based tokens, you need to first know what all en
 **1. `transfer`**
 This entry point transfers tokens from one account to another.
 It accepts two arguments - 
+
 1. `from` - This specifies the address of the account from where the tokens need to be sent.
+
 2. `transactions` - It's a list and every item has is a dictionary that has three items - 
     - `to` - this holds the address of the account tokens are being sent to.
     - `amount` - amount of token to be transferred.
@@ -152,11 +155,15 @@ As the name suggests, it tells you the amount of particular token an account hol
 
 Similar to `transfer`, it accepts a list of requests.
 Each item in the list holds -
+
 1. `owner` - Address of the account you want to check the balance for.
+
 2. `token_id` - ID of the token for which you want to check the balance.
 
 It goes through the list and sends to a `consumer` a `response` list, each item in the list has 2 fields - 
+
 1. `balance` - this is the amount of a specific token the account holds.
+
 2. `request` - this is the exact `request` that was sent to the entry point in the list.
 
 So, each item in the `response` list ends up looking like -
@@ -178,9 +185,13 @@ Here what happens is, when calling `balance_of`, we also pass in a `consumer`(th
 It creates a specified number of tokens in an account. This is how you'll jump-start your society's economy.
 FA2 standard doesn't specify any details for `mint` but the FA2 template in SmartPy has built a `mint` entry point that we can use.
 It accepts 4 arguments - 
+
 1. `address` - Address to the account where you want to mint the tokens.
+
 2. `amount` - Number of tokens you want to create.
+
 3. `symbol` - Symbol to represent this token(Like dollars have $).
+
 4. `token_id` - 0 in case you only have a single-asset fungible tokens. Used by FA2 standard to differentiate between different tokens. 
 
 

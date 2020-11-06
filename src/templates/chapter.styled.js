@@ -117,12 +117,12 @@ export const CodeOutputContent = styled.div`
   }
 `
 
-export const OutputWithCopyButton = styled.div`
+// export const OutputWithCopyButton = styled.div`
+export const OutputWithShowCodeButton = styled.div`
   display: flex;
   justify-content: space-between;
   height: ${OutputHeaderHeight};
   background: #12293b;
-
   > div:first-of-type {
     background: #253f54;
     display: inline-block;
@@ -152,14 +152,20 @@ export const OutputWithCopyButton = styled.div`
     cursor: pointer;
     transition: .2s all;
     
-    :hover{
+    :disabled{
+      background: #051f34;
+      color: #24435a;
+      border-color: #24435a;
+      cursor: not-allowed;
+    }
+
+    :hover:enabled{
       background: #152f44;
       color: #84a3ba;
       border-color: #64839a;
     }
+
   }
-
-
   span {
     svg {
       color: white;
@@ -167,7 +173,6 @@ export const OutputWithCopyButton = styled.div`
       display: flex;
       width: 48px;
       height: 40px;
-
       :hover {
         cursor: pointer;
       }
@@ -209,3 +214,16 @@ export const CopyConfirmModal = styled.div`
     margin-right: 4rem;
   }
 `
+export const SpinnerBackdrop = styled.div`
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: fixed;
+  background: rgba(0,0,0, .5);
+  z-index: 200;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+

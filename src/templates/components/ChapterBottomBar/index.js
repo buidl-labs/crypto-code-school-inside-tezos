@@ -20,6 +20,8 @@ function ChapterEditor({
   resetEditor,
   chapterCompletedSuccessfully,
   chapterSolution,
+  currentLesson,
+  isCode,
 }) {
   return (
     <>
@@ -46,8 +48,24 @@ function ChapterEditor({
           onClick={() => {
             setShowOutput(false);
             setButtonClicked(true);
-            const result = checkCode(editorInputValue, chapterSolution);
-            updateValidation(result);
+
+            let result;
+            if(currentLesson === "lesson-1" || !isCode){
+              result = checkCode(editorInputValue, chapterSolution);
+            
+              updateValidation(result);
+            }else{
+              const res = window !== undefined && window.runCode(editorInputValue);
+              console.log(res);
+              if(res.success){
+                res.error = [""]
+                updateValidation(res);
+              }else{
+                res.error = [res.error]
+                updateValidation(res);
+              }
+            }
+            
           }}
         >
           <Check /> <span>Check</span>
