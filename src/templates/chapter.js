@@ -38,6 +38,7 @@ export const query = graphql`
         chapter
         slug
         filterBy
+        isCode
         editor {
           language
           startingCode
@@ -255,7 +256,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
         />
       ) : null}
       <Container>
-        {chapter.frontmatter.filterBy !== "lesson-1" && validation.success?
+        {chapter.frontmatter.filterBy !== "lesson-1" && validation.success && chapter.frontmatter.isCode ?
         <MichelsonOutput 
           show={showMichelsonCode} 
           setShow={setShowMichelsonCode} 
@@ -362,6 +363,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           chapterCompletedSuccessfully={chapterCompletedSuccessfully}
           chapterSolution={chapter.frontmatter.editor.answer}
           currentLesson={chapter.frontmatter.filterBy}
+          isCode={chapter.frontmatter.isCode}
         >
           <ControlledEditor
             height={`${
@@ -452,7 +454,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                               setButtonClicked(false);                           
                             }
                           }
-                          disabled={!validation.success}
+                          disabled={!validation.success || !chapter.frontmatter.isCode}
                         >Show Compiled Code</button>
                         <span
                           onClick={() => {
@@ -504,6 +506,8 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                         </>
                         ):
                         (<>
+                          {chapter.frontmatter.isCode? 
+                            (<>
                             <p
                               style={{
                                 color: '#18b77e',
@@ -523,6 +527,30 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                             >
                               <span> {">"} </span>But we suggest you take a look at the compiled Michelson code before moving to the next chapter by clicking on 'Show Compiled Code'.
                           </p>
+                          </>)
+                          : (
+                                <>
+                                  <p
+                                    style={{
+                                      color: '#18b77e',
+                                      paddingBottom: 5,
+                                      fontSize: '0.9rem',
+                                      marginBottom: '0',
+                                    }}
+                                  >
+                                    <span> {">"} </span>Bingo! You got the correct answer.
+                                  </p>
+                                  <p
+                                    style={{
+                                      color: '#18b77e',
+                                      fontSize: '0.9rem',
+                                      marginBottom: '0',
+                                    }}
+                                  >
+                                    <span> {">"} </span>You can proceed to the next chapter by clicking on 'next {">"}' to continue.
+                                  </p>
+                                </>
+                          )}
                         </>)
                     
                       }

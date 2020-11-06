@@ -31,6 +31,7 @@ interface Props {
   editorInputValue: string;
   chapterSolution: string;
   currentLesson: string;
+  isCode: boolean;
 }
 
 function ChapterEditor({
@@ -44,7 +45,8 @@ function ChapterEditor({
   resetEditor,
   chapterCompletedSuccessfully,
   chapterSolution,
-  currentLesson
+  currentLesson,
+  isCode
 }: Props) {
   const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
 
@@ -88,7 +90,7 @@ function ChapterEditor({
             //   }`,
             // );
             let result;
-            if(currentLesson === "lesson-1"){
+            if(currentLesson === "lesson-1" || !isCode){
               result = checkCode(editorInputValue, chapterSolution);
             
               updateValidation(result);
