@@ -123,3 +123,37 @@ export const ShowAnswerButton = styled.button`
     padding: 1rem 2rem;
   }
 `;
+
+export const RunCodeButton = styled.button`
+  display: flex;
+  padding: 0 30px 0 25px;
+  background-color: #2897ff;
+  color: #fff;
+  margin: 0 15px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+  outline: none;
+
+  svg {
+    align-self: center;
+  }
+
+  span {
+    align-self: center;
+    vertical-align: middle;
+  }
+
+  :hover {
+    background: #3e97ea;
+    color: #fff;
+  }
+
+  @media only screen and (max-width: 767px) {
+    span {
+      display: none;
+    }
+
+    padding: 1rem 2rem;
+  }
+`;

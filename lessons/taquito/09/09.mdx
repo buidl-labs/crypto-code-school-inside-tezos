@@ -1,0 +1,127 @@
+---
+title: Transfer some tokens
+chapter: Chapter 9
+slug: module-04/chapter-09
+filterBy: lesson-4
+editor:
+  language: javascript
+  startingCode: |
+    print("Starting transfer...")
+    Tezos.contract.at("<CONTRACT_ADDRESS>")
+    .then(contract => {
+        // transfer 2 tokens from `tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7` to `tz1YLnvKy2ycBZ9TpTCv9ngXd1eUw2uxzhDd`.
+        
+        
+    })
+    .then(operation => {
+
+        print("Waiting for confirmation")
+        return operation.confirmation(3).then(() => operation.hash);
+
+    })
+    .then(hash => print(`Operation injected: https://carthagenet.tzstats.com/${hash}`))
+    .catch(error => console.error(error));
+
+  answer: |
+    print("Starting transfer...")
+    Tezos.contract.at("KT1Gyk8KanMsaAt39ijcTvGgFajFagtMsAdT")
+    .then(contract => {
+        // transfer 2 tokens from your previous account to the new one which you generated recently.
+        return contract.methods.transfer([
+          {
+            from_: "tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7",
+            txs: [{ to_: "tz1YLnvKy2ycBZ9TpTCv9ngXd1eUw2uxzhDd", token_id: 0, amount: 2 }]
+          }
+        ]).send();
+    })
+    .then(operation => {
+
+        print("Waiting for confirmation")
+        return operation.confirmation(3).then(() => operation.hash);
+
+    })
+    .then(hash => print(`Operation injected: https://carthagenet.tzstats.com/${hash}`))
+    .catch(error => console.error(error));
+---
+### Intro
+
+In this one we're going to play around a bit with calling an entry point whose arguments are relatively complex through Taquito to help you see and understand how to construct parameters like these.
+
+### Study time
+
+In this chapter we'll call the `transfer` entry point of the `Cyber_Token` contract we deployed.
+Even if you didn't know what arguments the `transfer` entry point takes, by looking at the JSON Code for this entry point you can faintly deduce what sort of arguments it requires - 
+```json=
+{
+"prim": "list",
+"args": [
+  {
+    "prim": "pair",
+    "args": [
+      { "prim": "address", "annots": [ "%from_" ] },
+      {
+        "prim": "list",
+        "args": [
+          {
+            "prim": "pair",
+            "args": [
+              { "prim": "address", "annots": [ "%to_" ] },
+              { "prim": "pair", "args": [ { "prim": "nat", "annots": [ "%token_id" ] }, { "prim": "nat", "annots": [ "%amount" ] } ] }
+            ]
+          }
+        ],
+        "annots": [ "%txs" ]
+      }
+    ]
+  }
+],
+"annots": [ "%transfer" ]
+}
+```
+If you stare at it long enough, you'll start seeing familiar terms like - `from_`, `nat`, `address`, etc...
+Basically, `transfer` accepts a list. Inside the list every item is a nested pair - 
+1. `from_` - this simply holds the address of the account from where the tokens have to be sent.
+2. `txs` - It's short for "transactions". Each item in the `txs` list has 3 fields - 
+    1. `to_` - Address of the recieving account.
+    2. `token_id` - To specify which token to transfer.
+    3. `amount` - Number of tokens to transfer.
+
+Now, how would you go about calling the entry point - 
+```javascript=
+contract.methods.transfer([
+          {
+            from_: "tz1YLnvKy2ycBZ9TpTCv9ngXd1eUw2uxzhDd",
+            txs: [{ to_: "tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7", token_id: 0, amount: 2 }]
+          }
+        ]).send()
+```
+Let's break this down - `transfer` accepts a list and each list item has two fields `from_` and `txs` as seen in the snippet above.
+In all our previous experience, we didn't have to specifically tell Taquito which arugment belongs to which field - but in this example our data is fairly nested(the data inside `txs` list is 3 levels deep) and in nested data specifying fields becomes a necessity.
+
+The question that might arise is, why does `transfer` accept a list? Becuase it can perform **batch operations**, i.e. - handle multiple transactions in an atomic manner in one entry point call. 
+We can have multiple transactions in one `transfer` call as well.
+
+Another helpful function that can help us debug our arguments better is `.toTransferParams()`.
+```javascript=
+let inspectArguments = contract.methods.transfer([
+          {
+            from_: "tz1YLnvKy2ycBZ9TpTCv9ngXd1eUw2uxzhDd",
+            txs: [{ to_: "tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7", token_id: 0, amount: 2 }]
+          }
+        ]).toTransferParam();
+        
+print(inspectArguments);
+```
+`.toTransferParams` creates a nice object which you can look at to see if the arguments are being passed in as you want them to.
+
+
+### #buidl-ing time
+ 
+#### New feature request!
+Your oldest friend has called for help. 
+In a land far far away he fought his battle against the aliens and saved thousands of lives. 
+Like you, he's starting his own civilization. 
+But he needs your help getting the economy started, **he's requested you send him 3 Cyber Tokens**.
+
+#### Step by step walkthrough
+1. Transfer 2 tokens of `token_id` 0 from your previous account(`tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7`)(the one you used while minting the tokens) to this account - ``, which you generated right now. Take reference from the code snippet we explored above.

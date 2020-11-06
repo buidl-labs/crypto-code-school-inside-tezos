@@ -6,6 +6,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
           frontmatter {
             slug
             type
+            filterBy
           }
         }
       }
@@ -17,20 +18,25 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   }
 
   const mdxFiles = result.data.allMdx.nodes;
-  
-  mdxFiles.forEach(file => {
 
-    if(file.frontmatter.type === "module"){
+  mdxFiles.forEach(file => {
+    if (file.frontmatter.type === 'module') {
       actions.createPage({
         path: `/tezos/overview/${file.frontmatter.slug}`,
         component: require.resolve('./src/templates/overview.js'),
         context: {
           slug: file.frontmatter.slug,
         },
-        
       });
-    }else{
-
+    } else if (file.frontmatter.filterBy === 'lesson-4') {
+      actions.createPage({
+        path: `/tezos/lesson/${file.frontmatter.slug}`,
+        component: require.resolve('./src/templates/chapterWithLiveEditor.js'),
+        context: {
+          slug: file.frontmatter.slug,
+        },
+      });
+    } else {
       actions.createPage({
         path: `/tezos/lesson/${file.frontmatter.slug}`,
         component: require.resolve('./src/templates/chapter.js'),

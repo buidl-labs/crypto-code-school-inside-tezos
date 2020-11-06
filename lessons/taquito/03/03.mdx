@@ -1,0 +1,113 @@
+---
+title: What's a testnet
+chapter: Chapter 3
+slug: module-04/chapter-03
+filterBy: lesson-4
+editor:
+  language: javascript
+  startingCode: |
+    print("Starting...")
+    const FAUCET_KEY = {
+        "mnemonic": [
+            "chimney",
+            "item",
+            "course",
+            "pair",
+            "opinion",
+            "mass",
+            "receive",
+            "wrong",
+            "hurry",
+            "nest",
+            "oil",
+            "acoustic",
+            "section",
+            "salad",
+            "electric"
+        ],
+        "secret": "47184b1d8bf4dd550256817c3507cc4ccf112888",
+        "amount": "903205016",
+        "pkh": "tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7",
+        "password": "9U5VOADM6l",
+        "email": "ryqwtuyj.ciwjnvdt@tezos.example.org"
+    }
+        
+    importKey(
+        Tezos,
+        FAUCET_KEY.email,
+        FAUCET_KEY.password,
+        FAUCET_KEY.mnemonic.join(' '),
+        FAUCET_KEY.secret
+    );
+    
+    // set cathargenet as the rpc provider
+
+
+    // Print the rpc you're connected to
+
+
+  answer: |
+    print("Starting...")
+    const FAUCET_KEY = {
+        "mnemonic": [
+            "chimney",
+            "item",
+            "course",
+            "pair",
+            "opinion",
+            "mass",
+            "receive",
+            "wrong",
+            "hurry",
+            "nest",
+            "oil",
+            "acoustic",
+            "section",
+            "salad",
+            "electric"
+        ],
+        "secret": "47184b1d8bf4dd550256817c3507cc4ccf112888",
+        "amount": "903205016",
+        "pkh": "tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7",
+        "password": "9U5VOADM6l",
+        "email": "ryqwtuyj.ciwjnvdt@tezos.example.org"
+    }
+    
+    importKey(
+        Tezos,
+        FAUCET_KEY.email,
+        FAUCET_KEY.password,
+        FAUCET_KEY.mnemonic.join(' '),
+        FAUCET_KEY.secret
+    );
+    
+    // set cathargenet as the rpc provider
+    Tezos.setProvider({ rpc: 'https://carthagenet.SmartPy.io' });
+
+    // Print the rpc you're connected to
+    print(Tezos._rpc)
+
+---
+### Intro
+When you develop an application - do you directly deploy it with ZERO testing?
+
+That's what the testnets exist for, to originate your contract on for testing.
+
+Once you've thoroughly tested your contract, you can originate on the **mainnet**, where tokens have real value.
+On testnet, tokens don't have real value - hence, you can test as much as you'd like.
+
+### Study time
+
+There are 3-4 testnets but currently **cathargenet** is the most used one and it's the one that we'll be originating our contracts on as well.
+
+While using Taquito, you need to specify which network you're using - 
+```javascript=
+Tezos.setProvider({ rpc: 'https://carthagenet.SmartPy.io' });
+print(Tezos._rpc); // prints the network you're connected to.
+```
+
+### #buidl-ing time
+ 
+#### Step by step walkthrough
+- Use `Tezos.setProvider` to specify you're using **cathargenet**.
+- Print the rpc you've connected to.

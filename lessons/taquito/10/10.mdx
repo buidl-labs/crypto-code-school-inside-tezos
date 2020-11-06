@@ -1,0 +1,93 @@
+---
+title: Let's check the ledger, shall we.
+chapter: Chapter 10
+slug: module-04/chapter-10
+filterBy: lesson-4
+editor:
+  language: javascript
+  startingCode: |
+    print("Starting...")
+    Tezos.contract.at("KT1Gyk8KanMsaAt39ijcTvGgFajFagtMsAdT")
+    .then(contract => {
+        // Return contract storage.
+        
+    })
+    .then(storage => {
+        // Access and return the value of tokens your account is left with.
+        
+    })  
+    .then(res => {
+        print(res)
+    })      
+
+
+
+
+  answer: |
+    print("Starting...")
+    Tezos.contract.at("KT1Gyk8KanMsaAt39ijcTvGgFajFagtMsAdT")
+    .then(contract => {
+        // Return contract storage.
+        return contract.storage()
+    })
+    .then(storage => {
+        // Access and return the value of tokens your account is left with.
+        return storage.ledger.get("tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7")
+    })  
+    .then(res => {
+        print(res)
+    })      
+---
+### Intro
+There's one thing that we haven't done yet - access contract storage of type big_map or map.
+Let's go and learn in this chapter, how to access big_maps in the Tezos blockchain.
+
+### Study time
+If you try to access a storage variable of type big_map, it'll show you a random numerical string.
+Our contract for `Cyber_Token` has three big_maps, one of them being the `ledger` that stores the amount and type of tokens that each account has. 
+
+If you try accessing `ledger` as a normal variable - 
+```javascript=
+Tezos.contract.at("KT1QECVYeUcy1EocvZvzbzA51oV6QcwCB5uY")
+.then(contract => {
+    return contract.storage()
+})
+.then(storage => {
+    print(storage.ledger) // will output a random string.
+})
+```
+The console output will show you a random numerical string, but why is this?
+Because, big_maps are not stored at the same place as the contract, only a reference id to the big_map is stored in the contract.
+
+But why even bother with this? 
+Big_maps are serialized and deserialized only and only when needed. Hence, they result in an optimal usage of resources. 
+On a blockchain, resources are expensive, each bit of data costs you, each operation costs you. 
+Less usage of resources = money saved.
+
+So how do you access a big_map?
+By accessing specific keys along with javascript promises.
+
+You can use `.get(key)` to access a value on the big_map, but it'll still give you a `pending promise` - either use `.then` or `async/await` to wait till the promise resolves and gives you a result.
+```javascript=
+Tezos.contract.at("KT1QECVYeUcy1EocvZvzbzA51oV6QcwCB5uY")
+.then(contract => {
+    return contract.storage()
+.then(storage => {
+    //returning a promise that'll resolve to give you the value of the key you provide.
+    return storage.ledger.get("tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7")
+    .then( res => {
+      print(res)
+    })      
+})       
+```
+Here we're accessing how many tokens a specified account has in our `Cyber_Token` contract.
+
+
+### #buidl-ing time
+ 
+#### New feature request!
+After you sent 2 tokens to your friend in the previous chapter, you want to double-check the amount of tokens you're left with. 
+
+#### Step by step walkthrough
+1. Return the contract's storage.
+2. Access and return the value of your account in the `ledger`. Use `storage.ledger.get(account_address)` with your account's address as `account_address`(`tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7`)
