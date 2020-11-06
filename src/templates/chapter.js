@@ -259,7 +259,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
       <Container>
         {chapter.frontmatter.filterBy !== 'lesson-1' &&
         validation.success &&
-        chapter.frontmatter.isCode ? (
+        chapter.frontmatter.isCode && (validation.result.length > 0) ? (
           <MichelsonOutput
             show={showMichelsonCode}
             setShow={setShowMichelsonCode}

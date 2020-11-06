@@ -37,12 +37,12 @@ function MichelsonOutput({show, setShow, contracts}) {
 
     return (
         <>
-            {show ? 
+            {(show && (contracts.length > 0)) ? 
                 <Backdrop 
                 onClick={() => setShow(false)} 
                 show={show} /> 
             : null}
-            <CodeDrawer show={show}>
+            <CodeDrawer show={(show && (contracts.length > 0))}>
                 <DrawerHeader>
                     <Title>Compiled Code</Title>
                     <IoIosClose
@@ -52,6 +52,7 @@ function MichelsonOutput({show, setShow, contracts}) {
                         onClick={() => setShow(false)}
                     />
                 </DrawerHeader>
+
                 <TabsWrapper>
                     { contracts.map((contract, index) => (
                         <TabGroup>
