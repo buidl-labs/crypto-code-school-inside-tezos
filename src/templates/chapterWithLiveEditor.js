@@ -93,6 +93,13 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
   );
 
   const [codeCopied, setCodeCopied] = useState(false);
+
+  useEffect(() => {
+    let timer = setTimeout(() => setCodeCopied(false), 2500);
+
+    return () => clearTimeout(timer);
+  }, [codeCopied])
+  
   const [index] = useState(() => {
     const { current, total, nextSlug, prevSlug } = getChaptersIndex(
       chapterList,
@@ -212,11 +219,6 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
   const Tezos = new TezosToolkit('https://api.tez.ie/rpc/carthagenet');
 
   function runCode() {
-    // setShowCodeOutput(status => {
-    //   if (!status) setShowCodeOutput(!status);
-    //   else setShowCodeOutput(status);
-    // });
-    // setButtonClicked(false);
     liveProvider.current && liveProvider.current.run();
   }
 
