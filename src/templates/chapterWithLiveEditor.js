@@ -492,6 +492,8 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                       height: `${OutputContentHeight}`,
                       background: '#253f54',
                       color: '#fff',
+                      padding: '1rem 1.25rem',
+                      fontFamily: "'Inconsolata', monospace"
                     }}
                   >
                     <LivePreview />
