@@ -151,6 +151,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
 
   const [showMichelsonCode, setShowMichelsonCode] = useState(false);
 
+  
 
   useEffect(() => {
   
@@ -447,8 +448,8 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
                       <div>
                         <button
                           onClick = {() => {
-                              setButtonClicked(false);
                               setShowMichelsonCode(true);
+                              setButtonClicked(false);                           
                             }
                           }
                           disabled={!validation.success}

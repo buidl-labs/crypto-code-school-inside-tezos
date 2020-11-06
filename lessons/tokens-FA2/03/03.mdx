@@ -24,7 +24,7 @@ editor:
     import smartpy as sp
 
     # Import FA2 template
-    FA2 = sp.import_template("FA2.py")
+    FA2 = sp.import_script_from_url("https://smartpy.io/dev/templates/FA2.py")
     # Define `Cryber_Token`
     class Cyber_Token(FA2.FA2):
         pass
@@ -75,20 +75,20 @@ But what does `single_asset` mean? It signifies whether the token contract has m
 To implement a token of your own - you need to import SmartPy's FA2 template and in your own contract, rather than inheriting from `sp.Contract`, you'll inherit from the `FA2` contract.
 
 ```python=
-FA2 = sp.import_template("FA2.py")
+FA2 = sp.import_script_from_url("https://smartpy.io/dev/templates/FA2.py")
 ```
 This line is similar to - `import FA2` in plain python.
 But because we're writing SmartPy, the rules are different. 
 You need to use - 
-1. `sp.import_template` - If your code is running in the SmartPy online IDE.
-2. `sp.import_script_from_url` - If you're not using SmartPy's online IDE.
+1. `sp.import_script_from_url` - If you're not using SmartPy's online IDE.
+2. `sp.import_template` - If your code is running in the SmartPy online IDE. When you use this, you would be required to just pass in `"FA2.py"` as the argument and not the whole URL.
 
 There are a lot of classes in the FA2 template along with the core `FA2` contract which are used in implementing the template in a way that it's easily reusable.
 
 To access the `FA2` contract defined in the template, you need to use the dot(.) notation - `FA2.FA2`, where the first `FA2` represents the template as a whole and the second `FA2` represents the actual contract class defined in the template.
 
 ```python=
-FA2 = sp.import_template("FA2.py")
+FA2 = sp.import_script_from_url("https://smartpy.io/dev/templates/FA2.py")
 class Your_Token(FA2.FA2):
     pass
 
