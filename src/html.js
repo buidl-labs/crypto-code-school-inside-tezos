@@ -11,6 +11,48 @@ export default function HTML(props) {
           name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no"
         />
+        <script
+          src={withPrefix('eztz.min.js')}
+          type="text/javascript"
+          charSet="utf-8"
+          async
+        ></script>
+        <script
+          src={withPrefix('sodium-sumo-master.js')}
+          type="text/javascript"
+          charSet="utf-8"
+          async
+        ></script>
+        <script
+          src={withPrefix('execute.js')}
+          type="text/javascript"
+          charSet="utf-8"
+          async
+        ></script>
+        <script
+          src={withPrefix('smartjs/smart.js')}
+          type="text/javascript"
+          charSet="utf-8"
+          async
+        ></script>
+        <script
+          src={withPrefix('smartjs/smartmljs.bc.js')}
+          type="text/javascript"
+          charSet="utf-8"
+          async
+        ></script>
+        <script
+          src={withPrefix('brython/brython.js')}
+          type="text/javascript"
+          charSet="utf-8"
+          async
+        ></script>
+        <script
+          src={withPrefix('brython/brython_stdlib.js')}
+          type="text/javascript"
+          charSet="utf-8"
+          async
+        ></script>
         {props.headComponents}
       </head>
       <body {...props.bodyAttributes}>
@@ -21,41 +63,6 @@ export default function HTML(props) {
           dangerouslySetInnerHTML={{ __html: props.body }}
         />
         {props.postBodyComponents}
-        <script
-          src={withPrefix('eztz.min.js')}
-          type="text/javascript"
-          charSet="utf-8"
-        ></script>
-        <script
-          src={withPrefix('sodium-sumo-master.js')}
-          type="text/javascript"
-          charSet="utf-8"
-        ></script>
-        <script
-          src={withPrefix('execute.js')}
-          type="text/javascript"
-          charSet="utf-8"
-        ></script>
-        <script
-          src={withPrefix('smartjs/smart.js')}
-          type="text/javascript"
-          charSet="utf-8"
-        ></script>
-        <script
-          src={withPrefix('smartjs/smartmljs.bc.js')}
-          type="text/javascript"
-          charSet="utf-8"
-        ></script>
-        <script
-          src={withPrefix('brython/brython.js')}
-          type="text/javascript"
-          charSet="utf-8"
-        ></script>
-        <script
-          src={withPrefix('brython/brython_stdlib.js')}
-          type="text/javascript"
-          charSet="utf-8"
-        ></script>
         <script type="text/python" src={withPrefix('smartpyio.py')}></script>
       </body>
     </html>
