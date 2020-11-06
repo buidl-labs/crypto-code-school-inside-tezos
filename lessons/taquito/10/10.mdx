@@ -6,33 +6,37 @@ filterBy: lesson-4
 editor:
   language: javascript
   startingCode: |
+    print("Starting...")
     Tezos.contract.at("KT1Gyk8KanMsaAt39ijcTvGgFajFagtMsAdT")
     .then(contract => {
-      // Return contract storage.
-      
+        // Return contract storage.
+        
     })
     .then(storage => {
-      // Access and return the value of tokens your account is left with.
-      
-      .then(res => {
+        // Access and return the value of tokens your account is left with.
+        
+    })  
+    .then(res => {
         print(res)
-      })      
-    })
+    })      
+
+
 
 
   answer: |
+    print("Starting...")
     Tezos.contract.at("KT1Gyk8KanMsaAt39ijcTvGgFajFagtMsAdT")
     .then(contract => {
-
         // Return contract storage.
         return contract.storage()
+    })
     .then(storage => {
         // Access and return the value of tokens your account is left with.
         return storage.ledger.get("tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7")
-        .then(res => {
-          print(res)
-        })      
-    })
+    })  
+    .then(res => {
+        print(res)
+    })      
 ---
 ### Intro
 There's one thing that we haven't done yet - access contract storage of type big_map or map.
