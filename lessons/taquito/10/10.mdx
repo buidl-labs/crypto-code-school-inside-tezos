@@ -47,7 +47,7 @@ If you try to access a storage variable of type big_map, it'll show you a random
 Our contract for `Cyber_Token` has three big_maps, one of them being the `ledger` that stores the amount and type of tokens that each account has. 
 
 If you try accessing `ledger` as a normal variable - 
-```javascript=
+```javascript
 Tezos.contract.at("KT1QECVYeUcy1EocvZvzbzA51oV6QcwCB5uY")
 .then(contract => {
     return contract.storage()
@@ -68,7 +68,7 @@ So how do you access a big_map?
 By accessing specific keys along with javascript promises.
 
 You can use `.get(key)` to access a value on the big_map, but it'll still give you a `pending promise` - either use `.then` or `async/await` to wait till the promise resolves and gives you a result.
-```javascript=
+```javascript
 Tezos.contract.at("KT1QECVYeUcy1EocvZvzbzA51oV6QcwCB5uY")
 .then(contract => {
     return contract.storage()

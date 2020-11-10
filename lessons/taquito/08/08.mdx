@@ -50,7 +50,7 @@ In this chapter, we'll explore how you can access contract storage through Taqui
 Each contract has a global storage that holds all the data that is needed in the contract. For example, our `Cyber_Token` holds `administrator` and `ledger` among other fields.
 
 Contract storage can also be accessed through the `contract` object that we get back through `Tezos.contract.at`.
-```javascript=
+```javascript
 Tezos.contract.at("<CONTRACT_ADDRESS>")
 .then(contract => {
     return contract.storage();

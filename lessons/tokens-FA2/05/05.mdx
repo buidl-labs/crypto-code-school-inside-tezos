@@ -129,7 +129,7 @@ So far you've managed to introduce an economy to your society through `Cyber_Tok
 ### Study time
 Recall when we looked at the configuration options available in the FA2 template - there's an option `non_fungible` which by default is `False`. 
 To instantiate our FA2 contract to hold non-fungible token, you simply need to pass `non_fungible` as `True`.
-```python=
+```python
 your_bot = YourBot(FA2.FA2_config(non_fungible = True), admin.address)
 ```
 
@@ -143,7 +143,7 @@ But each and every non-fungible token is different hence there needs to be a way
 How do we add extra data to an NFT?
 We're going to **override the mint** entry point provided to us in the FA2 template.
 ( You **don't need** to dive deep into this code but it's good to just go through once )
-```python=
+```python
 @sp.entry_point
 def mint(self, params):
     sp.verify(sp.sender == self.data.administrator)
@@ -172,7 +172,7 @@ def mint(self, params):
 ```
 
 ### Show me an example
-```python=
+```python
 your_bot = Yourbot(FA2.FA2_config(non_fungible = True), admin.address)
 scenario += your_bot
 

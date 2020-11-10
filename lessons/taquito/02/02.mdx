@@ -87,12 +87,12 @@ When you're writing code for production that deals with tokens of real value, yo
 ### Show me an example
 
 Import the signer - 
-```javascript=
+```javascript
 npm install @taquito/signer // or yarn add @taquito/signer
 ```
 
 Using the `inMemorySigner` - 
-```javascript=
+```javascript
 import { importKey } from "@taquito/signer"
 
 importKey(
@@ -107,7 +107,7 @@ importKey(
 As the first argument, `importKey` takes in the `Tezos` instance and rest all is the data that's needed for signing which we obtained through the faucet.
 
 Once you sign your account, you can check it in the Tezos instance using - 
-```javascript=
+```javascript
 print(Tezos.signer._key.key)
 ```
 >Note: To print content in the output on our interface, you'll have to use `print` as a replacement of `console.log`.

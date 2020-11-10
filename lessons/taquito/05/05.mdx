@@ -42,7 +42,7 @@ Like you don't buy a t-shirt without checking the price, do you?
 
 Taquito's estimate method can be used to estimate fees, gas and storage associated with an operation, even originating a contract is an operation.
 
-```javascript=
+```javascript
 Tezos.estimate.originate({
     code: CODE_JSON,
     init: STORAGE_JSON
@@ -64,7 +64,7 @@ You need to pass the `CODE_JSON` and `STORAGE_JSON` for the contract that you gr
 
 
 You can even check the balance available in your account through Taquito -
-```javascript=
+```javascript
 Tezos.tz
   .getBalance("<YOUR_ADDRESS>")
   .then(balance => print(`${balance.toNumber() / 1000000} ꜩ`))

@@ -199,7 +199,7 @@ So far we've explored 3 entry points available in entry points, down the line we
 
 ### Show me an example
 
-```python=
+```python
 @sp.add_test(name = "Fungible Token")
 def test():
     scenario = sp.test_scenario()
@@ -217,7 +217,7 @@ Building on the previous example, here we're creating two more test accounts and
 Keep in mind that `mint` can only be called by the `admin`.
 
 Now let's take a look at how you can transfer.
-```python=
+```python
 scenario += your_token.transfer(
         [
             your_token.batch_transfer.item(from_ = mark.address,
@@ -234,7 +234,7 @@ You could choose to do it without `batch_transfer.item` as well, but then you wo
 Why write the logic yourself when it's coming baked in to the template directly.
 
 Now, you'd like to check how much balance `elon` and `mark` have - 
-```python=
+```python
 consumer = FA2.View_consumer(your_token)
 scenario += consumer
     

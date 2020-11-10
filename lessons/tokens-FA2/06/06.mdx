@@ -159,7 +159,7 @@ There's an entry point we haven't explored yet - `update_operator`.
 4. `token_id` - operator can only get access to one kind of token at a time, so you have to specify which token it should have access to.
 
 It's called like this - 
-```python=
+```python
 scenario += your_bot.update_operators([
             sp.variant("add_operator",
                 your_bot.operator_param.make(

@@ -126,14 +126,14 @@ Let's go!
 
 List type in SmartPy is represented by `sp.TList`. 
 It can be initialized by using either `[]` or `sp.list()`.
-```python=
+```python
 self.init(
     history = sp.list() # or []
 )
 ```
 
 Unlike lists in Python, a list in SmartPy can't hold data of differ data types. All the items in a SmartPy list should be of the same type. 
-```python=
+```python
 ✅ [1, 2, 3]
 ❌ ["one", 2, 3.0]
 ```
@@ -145,7 +145,7 @@ Unlike lists in Python, a list in SmartPy can't hold data of differ data types. 
 ### Show me an example
 We're going to build on top of the `Wallet` example from the previous chapter.
 
-```python=
+```python
 class Wallet(sp.Contract):
     def __init__(self, initial_amount, owner_address):
         self.init(
@@ -165,7 +165,7 @@ def test():
 ```
 Notice a new `transaction` state variable? It's a list.
 Now, we're going to add a new `entry_point` to this smart contract.
-```python=
+```python
 @sp.entry_point
 def add_transaction(self, amount):
     self.data.amount += amount
@@ -174,7 +174,7 @@ def add_transaction(self, amount):
 Take a look at the `entry_point` right above, it uses `.push` which is a method you can use to add items to the top of the list.
 
 **Now to test this code(coz you know, testing is a thing) -**
-```python=
+```python
 scenario += w.add_transaction(sp.mutez(500))
 scenario += w.add_transaction(sp.mutez(300))
 scenario.verify(w.data.amount == sp.mutez(1800))

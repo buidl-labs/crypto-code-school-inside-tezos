@@ -60,7 +60,7 @@ To build your own tokens, you don't need to know the very deep details of FA2, b
 
 #### How do you use the FA2 template?
 The behavior of your token is controled by a set of values you pass in during the initialization of the contract(tokens are implemented as contracts.)
-```python=
+```python
 def __init__(self,
              single_asset = False,
              non_fungible = False,
@@ -80,7 +80,7 @@ But what does `single_asset` mean? It signifies whether the token contract has m
 ### Show me an example
 To implement a token of your own - you need to import SmartPy's FA2 template and in your own contract, rather than inheriting from `sp.Contract`, you'll inherit from the `FA2` contract.
 
-```python=
+```python
 FA2 = sp.import_script_from_url("https://smartpy.io/dev/templates/FA2.py")
 ```
 This line is similar to - `import FA2` in plain python.
@@ -95,7 +95,7 @@ There are a lot of classes in the FA2 template along with the core `FA2` contrac
 
 To access the `FA2` contract defined in the template, you need to use the dot(.) notation - `FA2.FA2`, where the first `FA2` represents the template as a whole and the second `FA2` represents the actual contract class defined in the template.
 
-```python=
+```python
 FA2 = sp.import_script_from_url("https://smartpy.io/dev/templates/FA2.py")
 class Your_Token(FA2.FA2):
     pass
@@ -111,7 +111,7 @@ def test():
 That's all the code needed to implement your own fungible token!
 
 Look at the last line of code in the snippet above - 
-```python=
+```python
 your_token = Your_Token(FA2.FA2_config(single_asset = True), admin.address)
 ```
 On first look, we're initializing a smart contract like we usually do. 

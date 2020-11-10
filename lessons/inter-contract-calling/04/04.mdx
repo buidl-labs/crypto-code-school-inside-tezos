@@ -136,13 +136,13 @@ A record can hold multiple variales of different(or same) types under one namesp
 
 Confused? 
 Take a look at the snippet below ⬇️
-```python=
+```python
 money = sp.record(amount = 1000, currency = "$")
 ```
 As I told you before, a record is just multiple variables gathered under one. 
 
 You can access `amount` and `currency` through the following -
-```python=
+```python
 money.amount
 money.currency
 ```
@@ -151,7 +151,7 @@ Wondering why can't you use `sp.TMap` to do the same thing?
 Because `sp.TMap` only allows the same type of data as values. 
 
 For example, the following `sp.TMap` is invalid and will throw an error - 
-```python=
+```python
 ❌ ❌ ❌
 money = {
     "amount": 4000,
@@ -165,7 +165,7 @@ This won't be a problem with records because they're designed to hold multiples 
 ### Show me an example
 Following the lead from previous chapters, this example is also building on top of our `Wallet` smart contract.
 
-```python=
+```python
 class Wallet(sp.Contract):
     def __init__(self, initial_amount, owner_address):
         self.init(
@@ -194,7 +194,7 @@ def test():
 ```
 Using records we've revamped the `add_transaction` entry point.
 Let's take a closer look.
-```python=
+```python
     @sp.entry_point
     def add_transaction(self, transaction):
         sp.if transaction.action == "sent":
@@ -209,7 +209,7 @@ If the `action` is `sent` we deduct the `amount`.
 
 But, how do we call this entry point?
 Look at the snippet below.
-```python=
+```python
 scenario += w.add_transaction(sp.record(amount = sp.mutez(500), action = "sent"))
 ```
 Passing `sp.record` with the fields inside it to `add_transaction`.

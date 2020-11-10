@@ -198,12 +198,12 @@ Inter-contract calling not only **helps two contracts talk to each other** but a
 > Note - You can learn about oracles through this [article](https://academy.binance.com/en/articles/blockchain-oracles-explained).
 
 To implement inter-contract calling, you need to understand `sp.transfer` first. As the name suggests it transfers some data and amount to a destination contract(this is what calls the desired entry point).
-```python=
+```python
 sp.transfer(data_to_be_sent, amount_of_tezos, destination_contract)
 ```
 It calls the destination contract with `data_to_be_sent` as a parameter while sending the specified `amount_of_tezos` to it.
 `destination_contract` needs to be of type, `sp.TContract` created with `sp.contract`.
-```python=
+```python
 sp.contract(t, address, entry_point = "")
 ```
 Don't worry if it looks overwhelming at first glance, we're going to break it down :)
@@ -215,7 +215,7 @@ Don't worry if it looks overwhelming at first glance, we're going to break it do
 
 The result of `sp.contract` is passed to `destination_contract` in `sp.transfer`.
 
-```python=
+```python
 @sp.entry_point
 def send(self):
 
@@ -237,7 +237,7 @@ def send(self):
 The full example below will clear up things even more :dart: 
 
 ### Show me an example
-```python=
+```python
 class Sender(sp.Contract):
    
 	def __init__(self, target_address):

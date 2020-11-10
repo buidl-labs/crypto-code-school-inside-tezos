@@ -51,7 +51,7 @@ If you haven't, please go back to the previous chapter, originate the contract o
 
 Taquito gives you a smooth API to work with contracts.
 
-```javascript=
+```javascript
 Tezos.contract.at("<CONTRACT_ADDRESS>")
 .then(c  => {
     print(c);
@@ -64,7 +64,7 @@ The object `c` gives you a whole lot of fields to play around with - most notabl
 
 Through `c.methods` you can access all the entry points that are available.
 
-```javascript=
+```javascript
 c.methods.increment(100).send();
 ```
 If we had a smart contract with the entry point `increment`, this is how you would call it while passing the `100` as an argument to the entry point.

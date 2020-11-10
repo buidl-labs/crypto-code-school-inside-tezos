@@ -87,7 +87,7 @@ Basically, `transfer` accepts a list. Inside the list every item is a nested pai
     3. `amount` - Number of tokens to transfer.
 
 Now, how would you go about calling the entry point - 
-```javascript=
+```javascript
 contract.methods.transfer([
           {
             from_: "tz1YLnvKy2ycBZ9TpTCv9ngXd1eUw2uxzhDd",
@@ -102,7 +102,7 @@ The question that might arise is, why does `transfer` accept a list? Becuase it 
 We can have multiple transactions in one `transfer` call as well.
 
 Another helpful function that can help us debug our arguments better is `.toTransferParams()`.
-```javascript=
+```javascript
 let inspectArguments = contract.methods.transfer([
           {
             from_: "tz1YLnvKy2ycBZ9TpTCv9ngXd1eUw2uxzhDd",
