@@ -46,7 +46,7 @@ function MichelsonOutput({show, setShow, contracts}) {
                 <DrawerHeader>
                     <Title>Compiled Code</Title>
                     <IoIosClose
-                        style={{ margin: '1rem' }}
+                        style={{ margin: '1rem', cursor: 'pointer' }}
                         color="#fff"
                         size={48}
                         onClick={() => setShow(false)}

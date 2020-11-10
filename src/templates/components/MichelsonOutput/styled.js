@@ -13,7 +13,7 @@ export const CodeDrawer = styled.div`
     z-index: 200;
     box-shadow: 1px 0px 7px rgba(0, 0, 0, 0.5);
     transform: ${props => (props.show ? 'translateX(0)' : 'translateX(130%)')};
-    transition: transform 0.3s ease-out;
+    transition: transform 0.4s ease-out;
     background-color: #091a28;
     overflow-y: hidden;
 `
