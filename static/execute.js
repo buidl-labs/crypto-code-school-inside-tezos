@@ -4,7 +4,11 @@ window.nextId = () => ++id;
 window.runCode = code => {
   try {
     if (window.generate == undefined) {
-      return 'Editor not fully initialized yet.\nPlease wait for a few seconds and start again.';
+      return {
+        success: false,
+        error:
+          'Editor not fully initialized yet.\nPlease wait for a few seconds and try again.',
+      };
     }
     const results = generate(code);
 
