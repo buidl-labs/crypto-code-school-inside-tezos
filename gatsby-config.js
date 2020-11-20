@@ -50,35 +50,6 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-plugin-prefetch-google-fonts`,
-      options: {
-        fonts: [
-          {
-            family: `Roboto`,
-            subsets: [`latin`],
-            variants: [`400`, `500`, `700`],
-          },
-          {
-            family: `Inconsolata`,
-            subsets: [`latin`],
-            variants: [`400`, `700`],
-          },
-          {
-            family: `Open Sans`,
-            variants: [`400`, `700`],
-          },
-          {
-            family: `Sigmar One`,
-            subsets: [`latin`],
-          },
-          {
-            family: `Inter`,
-            variants: [`400`, `500`, `700`],
-          },
-        ],
-      },
-    },
-    {
       resolve: `gatsby-plugin-mdx`,
       options: {
         extensions: [`.mdx`, `.md`],
