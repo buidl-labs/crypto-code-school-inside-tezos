@@ -65,9 +65,9 @@ const HomePage = () => {
             <div>
               <Logo />
             </div>
-            <HeroTitle>
+            <h1 className={`text-base-800`}>
               Learn to code Tezos blockchain DApps in SmartPy <br />
-            </HeroTitle>
+            </h1>
             <HeroSubheading>
               "Cryptobots vs Aliens" is an interactive code school that teaches
               you to write smart contracts in SmartPy. Assemble your own
