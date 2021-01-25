@@ -50,14 +50,31 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-plugin-google-fonts`,
+      resolve: `gatsby-plugin-prefetch-google-fonts`,
       options: {
         fonts: [
-          `Roboto\:400,500,700`,
-          `Inconsolata\:400,700`,
-          'Open Sans:400,700',
-          `Sigmar One`,
-          `Inter\:400,500,700`,
+          {
+            family: `Roboto`,
+            subsets: [`latin`],
+            variants: [`400`, `500`, `700`],
+          },
+          {
+            family: `Inconsolata`,
+            subsets: [`latin`],
+            variants: [`400`, `700`],
+          },
+          {
+            family: `Open Sans`,
+            variants: [`400`, `700`],
+          },
+          {
+            family: `Sigmar One`,
+            subsets: [`latin`],
+          },
+          {
+            family: `Inter`,
+            variants: [`400`, `500`, `700`],
+          },
         ],
       },
     },
