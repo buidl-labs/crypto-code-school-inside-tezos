@@ -65,7 +65,7 @@ const HomePage = () => {
             <div>
               <Logo />
             </div>
-            <h1 className={`text-base-800`}>
+            <h1 className={`text-error-600`}>
               Learn to code Tezos blockchain DApps in SmartPy <br />
             </h1>
             <HeroSubheading>
