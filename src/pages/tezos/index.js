@@ -25,10 +25,12 @@ import SEO from 'src/components/Seo';
 import landingPage from 'src/images/landing_page.jpg';
 import StyledLink from 'src/components/StyledLink';
 import { RightArrow } from 'src/components/IconSet';
+import spacing from '../../styles/spacing';
 
 const HomePage = () => {
   useEffect(() => {
     trackEvent('Homepage-View');
+    console.log(spacing(4));
   }, []);
 
   return (
