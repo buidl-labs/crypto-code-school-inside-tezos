@@ -20,6 +20,8 @@ module.exports = {
     `gatsby-plugin-react-helmet`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
+    `gatsby-plugin-postcss`,
+
     {
       resolve: 'gatsby-plugin-react-svg',
     },
@@ -50,31 +52,14 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-plugin-prefetch-google-fonts`,
+      resolve: `gatsby-plugin-google-fonts`,
       options: {
         fonts: [
-          {
-            family: `Roboto`,
-            subsets: [`latin`],
-            variants: [`400`, `500`, `700`],
-          },
-          {
-            family: `Inconsolata`,
-            subsets: [`latin`],
-            variants: [`400`, `700`],
-          },
-          {
-            family: `Open Sans`,
-            variants: [`400`, `700`],
-          },
-          {
-            family: `Sigmar One`,
-            subsets: [`latin`],
-          },
-          {
-            family: `Inter`,
-            variants: [`400`, `500`, `700`],
-          },
+          `Roboto\:400,500,700`,
+          `Inconsolata\:400,700`,
+          'Open Sans:400,700',
+          `Sigmar One`,
+          `Inter\:400,500,700`,
         ],
       },
     },
