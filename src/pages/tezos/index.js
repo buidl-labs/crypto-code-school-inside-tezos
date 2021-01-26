@@ -25,6 +25,7 @@ import SEO from 'src/components/Seo';
 import landingPage from 'src/images/landing_page.jpg';
 import StyledLink from 'src/components/StyledLink';
 import { RightArrow } from 'src/components/IconSet';
+import NavBar from '../../components/NavBar';
 
 const HomePage = () => {
   useEffect(() => {
@@ -58,39 +59,7 @@ const HomePage = () => {
             height: 300,
           }}
         />
-        <HomepageHeroImage>
-          <RightCloud />
-          <LeftCloud />
-          <HeroContainer>
-            <div>
-              <Logo />
-            </div>
-            <h1 className={`text-error-600`}>
-              Learn to code Tezos blockchain DApps in SmartPy <br />
-            </h1>
-            <HeroSubheading>
-              "Cryptobots vs Aliens" is an interactive code school that teaches
-              you to write smart contracts in SmartPy. Assemble your own
-              cryptobot that unleashes hell on the incoming alien invasion!
-            </HeroSubheading>
-            <StyledLink style={{ margin: '0.67em 0' }} to="/tezos/overview">
-              Start Learning
-            </StyledLink>
-            <InnerContainer>
-              <div>
-                <Plant />
-              </div>
-              <div>
-                {/* <Link to="/tezos/overview">
-                  <StartLearning />
-                </Link> */}
-              </div>
-              <div>
-                <Zombie />
-              </div>
-            </InnerContainer>
-          </HeroContainer>
-        </HomepageHeroImage>
+        <NavBar></NavBar>
         <div
           style={{
             background: 'linear-gradient(180deg, #05323D 0%, #05323D 100%)',
