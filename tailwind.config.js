@@ -65,6 +65,7 @@ module.exports = {
         code: '#030D18',
         console: '061B2F',
       },
+      white: '#ffffff',
     },
     spacing: {
       px: '1px',
@@ -87,9 +88,11 @@ module.exports = {
       12: '3rem',
       14: '3.5rem',
       16: '4rem',
+      18: '4.5rem',
       20: '5rem',
       24: '6rem',
       28: '7rem',
+      30: '7.5rem',
       32: '8rem',
       36: '9rem',
       40: '10rem',
@@ -209,7 +212,9 @@ module.exports = {
       DEFAULT: '1',
     },
     fontFamily: {
+      mulish: ['Mulish', 'ui-sans-serif'],
       sans: [
+        'Mulish',
         'ui-sans-serif',
         'system-ui',
         '-apple-system',
