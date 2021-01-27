@@ -15,7 +15,12 @@ export const onClientEntry = () => {
 
 import React from 'react';
 import { Provider } from 'jotai';
+import { BeaconProvider } from './src/context/beacon-context';
 
 export const wrapRootElement = ({ element }) => {
-  return <Provider>{element}</Provider>;
+  return (
+    <BeaconProvider>
+      <Provider>{element}</Provider>
+    </BeaconProvider>
+  );
 };
