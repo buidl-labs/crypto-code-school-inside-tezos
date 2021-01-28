@@ -39,10 +39,12 @@ function UserDisplay({ user }) {
 function NavBar(props) {
   const [user, setUser] = useAtom(userAtom);
   const [isUser] = useAtom(isUserAtom);
-  const beacon = useContext(BeaconContext);
+  let beacon = useContext(BeaconContext);
 
   async function signInHandler() {
-    await beacon.setActiveAccount(null);
+    if (beacon === null) {
+      return;
+    }
     let acc = await beacon.getActiveAccount();
     if (acc) {
       let u = await createUser(acc.address);

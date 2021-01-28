@@ -262,7 +262,7 @@ function LoggedInModal() {
 }
 
 const AuthPage = () => {
-  const beacon = useContext(BeaconContext);
+  let beacon = useContext(BeaconContext);
   const browserSupport = useMemo(isBrowserSupported);
   const [thanosAvailable, setThanosAvailable] = useState(false);
   const [user, setUser] = useAtom(userAtom);
@@ -273,7 +273,6 @@ const AuthPage = () => {
   const [nickname, setNickname] = useState('');
 
   useEffect(() => {
-    beacon.setActiveAccount(null);
     typeof window !== 'undefined' &&
       ThanosWallet.onAvailabilityChange(available =>
         setThanosAvailable(available),
