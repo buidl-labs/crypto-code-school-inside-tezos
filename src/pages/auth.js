@@ -143,13 +143,21 @@ function VerifyEmailModal(props) {
   let { email, setEmail, nickname, setNickname } = props;
   const { user, setUser } = props;
   const [error, setError] = useState('');
+  const magic = useRef(new Magic('pk_test_90E65EC554AC32F6'));
 
   async function verifyEmail(e) {
     e.preventDefault();
 
     let res = await updateUser(email, nickname, user);
     if (Object.keys(await res).includes('error')) setError(res.error);
-    else setUser(res);
+    else {
+      setUser(res);
+      let didToken = await magic.current.auth.loginWithMagicLink({
+        email: res.email,
+      });
+      let u = await verifyUser(didToken);
+      setUser(u);
+    }
   }
   /*
   TODO: 1. Disable button if email and nickname are not filled.
@@ -265,22 +273,23 @@ const AuthPage = () => {
   const [nickname, setNickname] = useState('');
 
   useEffect(() => {
-    console.log(user);
+    beacon.setActiveAccount(null);
     typeof window !== 'undefined' &&
-      ThanosWallet.onAvailabilityChange(
-        available => setThanosAvailable(available),
-        console.log('isUser', isUser),
+      ThanosWallet.onAvailabilityChange(available =>
+        setThanosAvailable(available),
       );
   }, []);
 
+  useEffect(() => {
+    isUserVerified && navigate('/tezos');
+  }, [isUserVerified]);
+
   async function connectWallet() {
-    console.log(`starting connectWallet`);
     const acc = await beacon.getActiveAccount();
-    console.log(acc);
+
     let u;
     if (acc) {
       u = await createUser(acc.address);
-      console.log(await u);
     } else {
       try {
         const resp = await beacon.requestPermissions();
@@ -291,7 +300,7 @@ const AuthPage = () => {
         return;
       }
     }
-    console.log('user', u);
+
     setUser(u);
   }
 
@@ -313,13 +322,13 @@ const AuthPage = () => {
         <main
           className={`bg-base-900 min-h-screen text-white flex items-center justify-center`}
         >
-          {!browserSupport && <BrowserSupportMissingModal />}
-
-          {!thanosAvailable ? (
+          {!browserSupport ? (
+            <BrowserSupportMissingModal />
+          ) : !thanosAvailable ? (
             <ThanosNotAvailableModal />
           ) : !isUser ? (
             <ConnectWalletModal clickHandler={connectWallet} />
-          ) : user.name === null && user.email === null ? (
+          ) : (
             <VerifyEmailModal
               email={email}
               setEmail={setEmail}
@@ -328,10 +337,6 @@ const AuthPage = () => {
               user={user}
               setUser={setUser}
             />
-          ) : !isUserVerified ? (
-            <MagicLinkModal user={user} setUser={setUser} />
-          ) : (
-            <LoggedInModal />
           )}
         </main>
       </AuthLayout>

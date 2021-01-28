@@ -32,22 +32,6 @@ function UserDisplay({ user }) {
     <div className={`flex space-x-3 items-center`}>
       <div className={`h-8 w-8 rounded-full bg-primary-600`}></div>
       <div className={`text-lg text-white`}>{user.name}</div>
-      <button className={`text-white h-6 w-6`}>
-        <svg
-          class="w-6 h-6"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M19 9l-7 7-7-7"
-          ></path>
-        </svg>
-      </button>
     </div>
   );
 }
