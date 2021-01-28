@@ -20,6 +20,7 @@ export const getAllNFTsMetadata = async () => {
       tokenId: elm.data.key.value,
       symbol: elm.data.value.children[0].children[0].value,
       uri: elm.data.value.children[0].children[1].value,
+      timestamp: elm.data.timestamp,
     };
   });
 
@@ -51,4 +52,12 @@ export const nftOnOffer = async () => {
   });
 
   return filtered;
+};
+
+export const convertMutezToXtz = mutez => {
+  return mutez / 1000000;
+};
+
+export const convertXtzToMutez = xtz => {
+  return xtz * 1000000;
 };

@@ -3,17 +3,25 @@ import { Link } from 'gatsby';
 
 import NavBar from '../../components/NavBar';
 import Button from '../../components/Buttons';
+import { convertMutezToXtz } from 'src/utils/indexer';
 
 import model from 'src/images/Col-1.png';
 
-function Cryptobot() {
+function Cryptobot({ location }) {
+  console.log('location');
+  const bot = location.state.bot;
   return (
     <div className="h-screen w-screen fixed bg-base-900 ">
       <NavBar />
       <div classname="container px-12 py-12 mx-auto">
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <img src={model} />
+            <model-viewer
+              style={{ width: '100%', height: '100%' }}
+              camera-controls
+              alt="3D Cryptobot"
+              src={`https://cloudflare-ipfs.com/ipfs/${bot.uri}`}
+            ></model-viewer>
           </div>
 
           <div className="px-12 pt-9">
@@ -22,7 +30,7 @@ function Cryptobot() {
               <div className="grid grid-cols-3 gap-4">
                 <div className="col-span-2">
                   <h2 className="text-5xl font-mulish font-black text-white">
-                    Cryptobot #1
+                    Cryptobot (#{bot.tokenId})
                   </h2>
                 </div>
                 {/* social icons start */}
@@ -84,7 +92,9 @@ function Cryptobot() {
               {/* price starts */}
               <div className="mt-3">
                 <h4 className="text-2xl font-mulish font-bold">
-                  <span className="text-white">4 XTZ</span>{' '}
+                  <span className="text-white">
+                    {convertMutezToXtz(bot.saleValueInMutez)} XTZ
+                  </span>{' '}
                   <span className="text-base-200">($9.160)</span>
                 </h4>
               </div>
@@ -110,7 +120,7 @@ function Cryptobot() {
                         Owner
                       </span>
                       <span className=" font-mulish font-extrabold text-lg text-white ">
-                        Harsh Badhai
+                        {bot.seller}
                       </span>
                     </span>
                   </Link>
@@ -151,9 +161,15 @@ function Cryptobot() {
             </div>
             <div className="bottom-0 w-full bg-base-900">
               <div className="flex mx-auto justify-center py-9">
-                <Button size="lg" type="primary">
-                  Buy Now
-                </Button>
+                {bot.isForSale ? (
+                  <Button size="lg" type="primary">
+                    Buy Now
+                  </Button>
+                ) : (
+                  <div className="font-mulish font-bold mb-3 text-white">
+                    Bot not available for sale{' '}
+                  </div>
+                )}
               </div>
             </div>
           </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'gatsby';
 import { APP_NAME, NETWORK, CONTRACT_ADDRESS } from 'src/defaults';
 import { useAsync } from 'react-use';
-import { getAllNFTsMetadata, nftOnOffer } from '../../utils/indexer';
+import { getAllNFTsMetadata, nftOnOffer } from 'src/utils/indexer';
 import Button from '../../components/Buttons';
 import NavBar from '../../components/NavBar';
 import Footer from 'src/components/Footer';
@@ -13,8 +13,8 @@ const Marketplace = () => {
     try {
       const allTokens = await getAllNFTsMetadata();
       const tokensOnOffer = await nftOnOffer();
-      // console.log(allTokens);
-      // console.log(tokensOnOffer);
+      console.log(allTokens);
+      console.log(tokensOnOffer);
 
       const combined = allTokens.map(elm => {
         const token = tokensOnOffer.find(
@@ -28,6 +28,7 @@ const Marketplace = () => {
           isForSale: token ? token.isForSale : false,
           saleValueInMutez: token ? token.saleValueInMutez : null,
           seller: token ? token.seller : null,
+          mintDate: elm.timestamp,
         };
       });
 
