@@ -61,6 +61,7 @@
     "react-tooltip": "^4.2.5",
     "react-transition-group": "^4.4.1",
     "react-typography": "^0.16.19",
+    "react-use": "^15.3.8",
     "scheduler": "^0.20.1",
     "tailwindcss": "^2.0.2",
     "typography": "^0.16.19",
