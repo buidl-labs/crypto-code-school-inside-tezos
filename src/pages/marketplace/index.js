@@ -7,8 +7,7 @@ import Button from '../../components/Buttons';
 import NavBar from '../../components/NavBar';
 import Footer from 'src/components/Footer';
 import CryptobotCard from '../../components/CryptobotCard';
-import sortBy from 'lodash.sortby';
-import filter from 'lodash.filter';
+
 import uniqBy from 'lodash.uniqby';
 
 /**
@@ -33,6 +32,7 @@ function filterArray(array, filters) {
 const Marketplace = () => {
   const [forSale, updateForSale] = useState(true);
   const [notForSale, updateNotForSale] = useState(false);
+  const [sortBy, updateSortBy] = useState('offerDate');
   const [nftList, updateNftList] = useState([]);
 
   const allNFTS = useAsync(async () => {
@@ -82,9 +82,47 @@ const Marketplace = () => {
     } else {
       //else return filtered array
       const combined = uniqBy([...filForSale, ...filNotForSale], 'tokenId');
-      updateNftList(combined);
+
+      // sort list be date, high-price && low-price
+      // const z = sortBy(combined, 'offerDate', { reverse: true });
+      // Sort homes by price in ascending order:
+      let sorted = combined;
+
+      if (sortBy === 'offerDate') {
+        sorted = combined.sort(
+          (a, b) => parseFloat(a.offerDate) - parseFloat(b.offerDate),
+        );
+      } else if (sortBy === 'lowestPrice') {
+        //ascending order
+        sorted = combined.sort(
+          (a, b) =>
+            parseFloat(a.saleValueInMutez) - parseFloat(b.saleValueInMutez),
+        );
+      } else if (sortBy === 'highestPrice') {
+        //descending order
+        sorted = combined.sort(
+          (a, b) =>
+            parseFloat(b.saleValueInMutez) - parseFloat(a.saleValueInMutez),
+        );
+      }
+
+      // const ascendingOrder =
+
+      // For descending order, you may use
+      // homes.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+      // const descendingOrder = combined.sort(
+      //   (a, b) =>
+      //     parseFloat(b.saleValueInMutez) - parseFloat(a.saleValueInMutez),
+      // );
+
+      // const ascendingOrderOfferDate = combined.sort(
+      //   (a, b) => parseFloat(a.offerDate) - parseFloat(b.offerDate),
+      // );
+
+      // console.log('z', ascendingOrderOfferDate);
+      updateNftList(sorted);
     }
-  }, [forSale, notForSale]);
+  }, [forSale, notForSale, sortBy]);
 
   return (
     <div className="bg-base-900 font-mulish">
@@ -133,10 +171,17 @@ const Marketplace = () => {
           <div className="text-white grid justify-items-end">
             <div>
               <h5 className="font-mulish font-bold">SORT BY:</h5>
-              <select className="mt-3 font-mulish bg-base-900 pb-1 border-b-2 border-white">
-                <option selected>Recently Added</option>
-                <option>Lowest Price</option>
-                <option>Highest Price</option>
+              <select
+                defaultValue={'offerDate'}
+                onChange={e => {
+                  updateSortBy(e.target.value);
+                  // console.log('sel', e.target.value);
+                }}
+                className="mt-3 font-mulish bg-base-900 pb-1 border-b-2 border-white"
+              >
+                <option value={'offerDate'}>Recently Added</option>
+                <option value={'lowestPrice'}>Lowest Price</option>
+                <option value={'highestPrice'}>Highest Price</option>
               </select>
             </div>
           </div>
