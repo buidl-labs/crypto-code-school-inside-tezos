@@ -1,33 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'gatsby';
-import { APP_NAME, NETWORK, CONTRACT_ADDRESS } from 'src/defaults';
 import { useAsync } from 'react-use';
-import { getAllNFTsMetadata, nftOnOffer } from 'src/utils/indexer';
-import Button from '../../components/Buttons';
-import NavBar from '../../components/NavBar';
+import { fetchAllNfts } from 'src/utils/indexer';
+import Button from 'src/components/Buttons';
+import NavBar from 'src/components/NavBar';
 import Footer from 'src/components/Footer';
-import CryptobotCard from '../../components/CryptobotCard';
-
+import CryptobotCard from 'src/components/CryptobotCard';
 import uniqBy from 'lodash.uniqby';
-
-/**
- * Filters an array of objects using custom predicates.
- *
- * @param  {Array}  array: the array to filter
- * @param  {Object} filters: an object with the filter criteria
- * @return {Array}
- */
-function filterArray(array, filters) {
-  const filterKeys = Object.keys(filters);
-  return array.filter(item => {
-    // validates all filter criteria
-    return filterKeys.every(key => {
-      // ignores non-function predicates
-      if (typeof filters[key] !== 'function') return true;
-      return filters[key](item[key]);
-    });
-  });
-}
 
 const Marketplace = () => {
   const [forSale, updateForSale] = useState(true);
@@ -37,30 +15,12 @@ const Marketplace = () => {
 
   const allNFTS = useAsync(async () => {
     try {
-      const allTokens = await getAllNFTsMetadata();
-      const tokensOnOffer = await nftOnOffer();
-      console.log(allTokens);
-      console.log(tokensOnOffer);
+      const combined = await fetchAllNfts();
+      // console.log('combined', combined);
 
-      const combined = allTokens.map(elm => {
-        const token = tokensOnOffer.find(
-          element => element.tokenId == elm.tokenId,
-        );
-
-        return {
-          tokenId: elm.tokenId,
-          uri: elm.uri,
-          symbol: elm.symbol,
-          mintDate: elm.timestamp,
-          isForSale: token ? token.isForSale : false,
-          saleValueInMutez: token ? token.saleValueInMutez : null,
-          seller: token ? token.seller : null,
-          offerDate: token ? token.timestamp : null,
-        };
-      });
-
-      console.log('combined', combined);
+      // Default filter settings
       const x = combined.filter(elm => elm.isForSale === forSale);
+
       updateNftList(x);
       return combined;
     } catch (e) {
@@ -76,16 +36,11 @@ const Marketplace = () => {
     const filForSale = all.filter(elm => elm.isForSale === forSale);
     const filNotForSale = all.filter(elm => elm.isForSale !== notForSale);
 
-    //if forSale & notForSale false return empty array
     if (forSale === false && notForSale === false) {
       updateNftList([]);
     } else {
-      //else return filtered array
       const combined = uniqBy([...filForSale, ...filNotForSale], 'tokenId');
 
-      // sort list be date, high-price && low-price
-      // const z = sortBy(combined, 'offerDate', { reverse: true });
-      // Sort homes by price in ascending order:
       let sorted = combined;
 
       if (sortBy === 'offerDate') {
@@ -106,20 +61,6 @@ const Marketplace = () => {
         );
       }
 
-      // const ascendingOrder =
-
-      // For descending order, you may use
-      // homes.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
-      // const descendingOrder = combined.sort(
-      //   (a, b) =>
-      //     parseFloat(b.saleValueInMutez) - parseFloat(a.saleValueInMutez),
-      // );
-
-      // const ascendingOrderOfferDate = combined.sort(
-      //   (a, b) => parseFloat(a.offerDate) - parseFloat(b.offerDate),
-      // );
-
-      // console.log('z', ascendingOrderOfferDate);
       updateNftList(sorted);
     }
   }, [forSale, notForSale, sortBy]);
@@ -175,7 +116,6 @@ const Marketplace = () => {
                 defaultValue={'offerDate'}
                 onChange={e => {
                   updateSortBy(e.target.value);
-                  // console.log('sel', e.target.value);
                 }}
                 className="mt-3 font-mulish bg-base-900 pb-1 border-b-2 border-white"
               >
@@ -193,7 +133,7 @@ const Marketplace = () => {
 
         <div>
           {allNFTS.loading ? (
-            <div>Loading...</div>
+            <div className="text-white font-mulish font-bold">Loading...</div>
           ) : allNFTS.error ? (
             <div>Error: {allNFTS.error.message}</div>
           ) : (

@@ -55,6 +55,34 @@ export const nftOnOffer = async () => {
   return filtered;
 };
 
+export const fetchAllNfts = async () => {
+  try {
+    const allTokens = await getAllNFTsMetadata();
+    const tokensOnOffer = await nftOnOffer();
+
+    const combined = allTokens.map(elm => {
+      const token = tokensOnOffer.find(
+        element => element.tokenId == elm.tokenId,
+      );
+
+      return {
+        tokenId: elm.tokenId,
+        uri: elm.uri,
+        symbol: elm.symbol,
+        mintDate: elm.timestamp,
+        isForSale: token ? token.isForSale : false,
+        saleValueInMutez: token ? token.saleValueInMutez : null,
+        seller: token ? token.seller : null,
+        offerDate: token ? token.timestamp : null,
+      };
+    });
+
+    return combined;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 export const convertMutezToXtz = mutez => {
   return mutez / 1000000;
 };
