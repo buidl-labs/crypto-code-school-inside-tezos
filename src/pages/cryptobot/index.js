@@ -3,12 +3,13 @@ import { Link } from 'gatsby';
 
 import NavBar from '../../components/NavBar';
 import Button from '../../components/Buttons';
-import { convertMutezToXtz } from 'src/utils/indexer';
+import { convertMutezToXtz, getXTZPriceInUSD } from 'src/utils/indexer';
 
 import model from 'src/images/Col-1.png';
 
 function Cryptobot({ location }) {
   console.log('location');
+  const xtzPrice = location.state ? location.state.xtzPrice : null;
   const bot = location.state
     ? location.state.bot
     : {
@@ -104,9 +105,23 @@ function Cryptobot({ location }) {
               <div className="mt-3">
                 <h4 className="text-2xl font-mulish font-bold">
                   <span className="text-white">
-                    {convertMutezToXtz(bot.saleValueInMutez)} XTZ
+                    {bot.saleValueInMutez ? (
+                      <span>{convertMutezToXtz(bot.saleValueInMutez)} XTZ</span>
+                    ) : null}
                   </span>{' '}
-                  <span className="text-base-200">($9.160)</span>
+                  <span className="text-base-200">
+                    {xtzPrice && bot.saleValueInMutez ? (
+                      <span>
+                        {' '}
+                        ($
+                        {getXTZPriceInUSD(
+                          xtzPrice.price,
+                          bot.saleValueInMutez,
+                        )}{' '}
+                        )
+                      </span>
+                    ) : null}
+                  </span>
                 </h4>
               </div>
               {/* price ends */}

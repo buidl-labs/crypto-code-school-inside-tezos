@@ -84,9 +84,29 @@ export const fetchAllNfts = async () => {
 };
 
 export const convertMutezToXtz = mutez => {
-  return mutez / 1000000;
+  return parseFloat(mutez) / 1000000;
 };
 
 export const convertXtzToMutez = xtz => {
-  return xtz * 1000000;
+  return parseFloat(xtz) * 1000000;
+};
+
+export const getXTZPrice = async () => {
+  try {
+    const response = await fetch(
+      'https://api.nomics.com/v1/prices?key=2334c1509d5ddcd761a14745349f7551',
+    );
+    const data = await response.json();
+    const xtzPrice = data.find(el => el.currency === 'XTZ');
+    return {
+      currency: xtzPrice.currency,
+      price: parseFloat(parseFloat(xtzPrice.price).toFixed(2)),
+    };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getXTZPriceInUSD = (usd, mutez) => {
+  return parseFloat(convertMutezToXtz(mutez) * usd).toFixed(2);
 };
