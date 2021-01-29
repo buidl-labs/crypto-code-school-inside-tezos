@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAsync } from 'react-use';
-import { fetchAllNfts, getXTZPrice } from 'src/utils/indexer';
+import { fetchAllNfts } from 'src/utils/indexer';
 import Button from 'src/components/Buttons';
 import NavBar from 'src/components/NavBar';
 import Footer from 'src/components/Footer';
@@ -12,7 +12,6 @@ const Marketplace = () => {
   const [notForSale, updateNotForSale] = useState(false);
   const [sortBy, updateSortBy] = useState('offerDate');
   const [nftList, updateNftList] = useState([]);
-  const [xtzPrice, updateXtzPrice] = useState(null);
 
   const allNFTS = useAsync(async () => {
     try {
@@ -65,16 +64,6 @@ const Marketplace = () => {
       updateNftList(sorted);
     }
   }, [forSale, notForSale, sortBy]);
-
-  useEffect(async () => {
-    try {
-      const result = await getXTZPrice();
-      console.log(result);
-      updateXtzPrice(result);
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
 
   return (
     <div className="bg-base-900 font-mulish">
@@ -153,7 +142,7 @@ const Marketplace = () => {
                 nftList.map(el => {
                   return (
                     <div>
-                      <CryptobotCard xtzPrice={xtzPrice} bot={el} />
+                      <CryptobotCard bot={el} />
                     </div>
                   );
                 })}
