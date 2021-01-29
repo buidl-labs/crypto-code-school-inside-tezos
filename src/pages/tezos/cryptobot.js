@@ -1,10 +1,9 @@
 import React from 'react';
 import { Link } from 'gatsby';
 
-import NavBar from '../../components/NavBar';
-import Button from '../../components/Buttons';
+import NavBar from 'src/components/NavBar';
+import Button from 'src/components/Buttons';
 import { convertMutezToXtz, getXTZPriceInUSD } from 'src/utils/indexer';
-
 import model from 'src/images/Col-1.png';
 
 function Cryptobot({ location }) {
@@ -25,7 +24,7 @@ function Cryptobot({ location }) {
   return (
     <div className="h-screen w-screen fixed bg-base-900 ">
       <NavBar />
-      <div classname="container px-12 py-12 mx-auto">
+      <div className="container px-12 py-12 mx-auto">
         <div className="grid grid-cols-2 gap-4">
           <div>
             <model-viewer
@@ -165,8 +164,8 @@ function Cryptobot({ location }) {
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         <path
-                          fill-rule="evenodd"
-                          clip-rule="evenodd"
+                          fillRule="evenodd"
+                          clipRule="evenodd"
                           d="M19 3H20C21.1 3 22 3.9 22 5V21C22 22.1 21.1 23 20 23H4C2.9 23 2 22.1 2 21V5C2 3.9 2.9 3 4 3H5V1H7V3H17V1H19V3ZM4 21H20V8H4V21Z"
                           fill="white"
                         />

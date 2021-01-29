@@ -28,7 +28,7 @@ function NavBar(props) {
           <NavLink to={'/overview'}>Academy</NavLink>
         </li>
         <li>
-          <NavLink to={'/marketplace'}>Marketplace</NavLink>
+          <NavLink to={'/tezos/marketplace'}>Marketplace</NavLink>
         </li>
         <li>
           <NavButton>

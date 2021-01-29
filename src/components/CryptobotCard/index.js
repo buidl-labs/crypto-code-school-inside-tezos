@@ -15,7 +15,7 @@ function CryptobotCard({ bot, xtzPrice }) {
         ></model-viewer>
       </div>
       <Link
-        to={`/cryptobot/`}
+        to={`/tezos/cryptobot`}
         state={{ id: bot.tokenId, bot: bot, xtzPrice: xtzPrice }}
       >
         <div className="p-6">
