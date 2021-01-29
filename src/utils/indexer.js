@@ -48,6 +48,7 @@ export const nftOnOffer = async () => {
       isForSale: elm.data.value.children[0].value,
       saleValueInMutez: elm.data.value.children[1].value,
       seller: elm.data.value.children[2].value,
+      timestamp: elm.data.timestamp,
     };
   });
 

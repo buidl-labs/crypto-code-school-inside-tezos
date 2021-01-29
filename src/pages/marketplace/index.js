@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'gatsby';
 import { APP_NAME, NETWORK, CONTRACT_ADDRESS } from 'src/defaults';
 import { useAsync } from 'react-use';
@@ -7,8 +7,34 @@ import Button from '../../components/Buttons';
 import NavBar from '../../components/NavBar';
 import Footer from 'src/components/Footer';
 import CryptobotCard from '../../components/CryptobotCard';
+import sortBy from 'lodash.sortby';
+import filter from 'lodash.filter';
+import uniqBy from 'lodash.uniqby';
+
+/**
+ * Filters an array of objects using custom predicates.
+ *
+ * @param  {Array}  array: the array to filter
+ * @param  {Object} filters: an object with the filter criteria
+ * @return {Array}
+ */
+function filterArray(array, filters) {
+  const filterKeys = Object.keys(filters);
+  return array.filter(item => {
+    // validates all filter criteria
+    return filterKeys.every(key => {
+      // ignores non-function predicates
+      if (typeof filters[key] !== 'function') return true;
+      return filters[key](item[key]);
+    });
+  });
+}
 
 const Marketplace = () => {
+  const [forSale, updateForSale] = useState(true);
+  const [notForSale, updateNotForSale] = useState(false);
+  const [nftList, updateNftList] = useState([]);
+
   const allNFTS = useAsync(async () => {
     try {
       const allTokens = await getAllNFTsMetadata();
@@ -25,20 +51,40 @@ const Marketplace = () => {
           tokenId: elm.tokenId,
           uri: elm.uri,
           symbol: elm.symbol,
+          mintDate: elm.timestamp,
           isForSale: token ? token.isForSale : false,
           saleValueInMutez: token ? token.saleValueInMutez : null,
           seller: token ? token.seller : null,
-          mintDate: elm.timestamp,
+          offerDate: token ? token.timestamp : null,
         };
       });
 
       console.log('combined', combined);
-
+      const x = combined.filter(elm => elm.isForSale === forSale);
+      updateNftList(x);
       return combined;
     } catch (e) {
       console.log(e);
     }
   }, []);
+
+  useEffect(() => {
+    //get all the nft tokens
+    const all = allNFTS.value ? allNFTS.value : [];
+
+    //filter all the nfts by either for sale or not.
+    const filForSale = all.filter(elm => elm.isForSale === forSale);
+    const filNotForSale = all.filter(elm => elm.isForSale !== notForSale);
+
+    //if forSale & notForSale false return empty array
+    if (forSale === false && notForSale === false) {
+      updateNftList([]);
+    } else {
+      //else return filtered array
+      const combined = uniqBy([...filForSale, ...filNotForSale], 'tokenId');
+      updateNftList(combined);
+    }
+  }, [forSale, notForSale]);
 
   return (
     <div className="bg-base-900 font-mulish">
@@ -63,6 +109,8 @@ const Marketplace = () => {
                 <input
                   type="checkbox"
                   className="form-checkbox h-6 w-6 text-gray-600 rounded"
+                  checked={forSale}
+                  onChange={() => updateForSale(val => !val)}
                 />
                 <span className="ml-2 text-gray-700 font-mulish">for sale</span>
               </label>
@@ -71,6 +119,8 @@ const Marketplace = () => {
                 <input
                   type="checkbox"
                   className="form-checkbox h-6 w-6 text-gray-600 rounded bg-base-900"
+                  checked={notForSale}
+                  onChange={() => updateNotForSale(val => !val)}
                 />
                 <span className="ml-2 text-gray-700 font-mulish">
                   not for sale
@@ -103,13 +153,14 @@ const Marketplace = () => {
             <div>Error: {allNFTS.error.message}</div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {allNFTS.value.map(el => {
-                return (
-                  <div>
-                    <CryptobotCard bot={el} />
-                  </div>
-                );
-              })}
+              {nftList.length > 0 &&
+                nftList.map(el => {
+                  return (
+                    <div>
+                      <CryptobotCard bot={el} />
+                    </div>
+                  );
+                })}
             </div>
           )}
         </div>
