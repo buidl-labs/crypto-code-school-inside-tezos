@@ -9,7 +9,18 @@ import model from 'src/images/Col-1.png';
 
 function Cryptobot({ location }) {
   console.log('location');
-  const bot = location.state.bot;
+  const bot = location.state
+    ? location.state.bot
+    : {
+        tokenId: '',
+        uri: '',
+        symbol: '',
+        mintDate: '',
+        isForSale: '',
+        saleValueInMutez: '',
+        seller: '',
+        offerDate: '',
+      };
   return (
     <div className="h-screen w-screen fixed bg-base-900 ">
       <NavBar />
