@@ -149,6 +149,7 @@ function VerifyEmailModal(props) {
     e.preventDefault();
 
     let res = await updateUser(email, nickname, user);
+    console.log(res);
     if (Object.keys(await res).includes('error')) setError(res.error);
     else {
       setUser(res);
@@ -156,6 +157,7 @@ function VerifyEmailModal(props) {
         email: res.email,
       });
       let u = await verifyUser(didToken);
+      console.log(u);
       setUser(u);
     }
   }
@@ -285,15 +287,17 @@ const AuthPage = () => {
 
   async function connectWallet() {
     const acc = await beacon.getActiveAccount();
-
+    console.log(acc);
     let u;
     if (acc) {
       u = await createUser(acc.address);
+      console.log('u', u);
     } else {
       try {
         const resp = await beacon.requestPermissions();
         if (!resp.address) throw new Error();
         u = await createUser(resp.address);
+        console.log('u', u);
       } catch (err) {
         console.log(err);
         return;

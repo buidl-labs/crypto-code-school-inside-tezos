@@ -1,12 +1,13 @@
 import axios from 'axios';
 
-const API_URL = 'http://127.0.0.1:3001';
+const API_URL = 'https://cryptoverse-wars-backend-nfjp.onrender.com';
 
 export async function createUser(xtzAddress) {
   console.log('Running createUser.', xtzAddress);
   try {
     const res = await axios.post(`${API_URL}/user`, { xtzAddress });
-    if (res.statusText !== 'OK') throw new Error();
+    console.log(res);
+    if (res.status !== 200) throw new Error();
     return res.data;
   } catch (err) {
     console.log(err);
@@ -29,7 +30,8 @@ export async function updateUser(email, name, user) {
 export async function verifyUser(token) {
   try {
     const res = await axios.post(`${API_URL}/user/verify`, { token });
-    if (res.statusText !== 'OK') throw new Error();
+    console.log(res);
+    if (res.status !== 200) throw new Error();
 
     return res.data;
   } catch (err) {
