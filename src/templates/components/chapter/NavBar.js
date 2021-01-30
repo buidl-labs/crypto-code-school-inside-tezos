@@ -6,7 +6,7 @@ import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 const NavBar = ({ chapter }) => {
   return (
     <nav
-      className={`flex justify-between items-center px-9 py-3 bg-base-900 text-white`}
+      className={`flex justify-between items-center px-9 h-20 bg-base-900 text-white`}
     >
       <div className={`flex items-center`}>
         <ChevronLeftIcon />

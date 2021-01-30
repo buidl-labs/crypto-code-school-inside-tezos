@@ -61,10 +61,8 @@ module.exports = {
         100: '#FEE2E2',
         50: '#FEF2F2',
       },
-      editor: {
-        code: '#030D18',
-        console: '061B2F',
-      },
+      console: '061B2F',
+      code: '#030D18',
       white: '#ffffff',
     },
     spacing: {

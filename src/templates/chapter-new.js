@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { graphql } from 'gatsby';
 import NavBar from './components/chapter/NavBar';
-import { MDXRenderer } from 'gatsby-plugin-mdx';
+import Footer from './components/chapter/Footer';
+import LearningInterface from './components/chapter/LearningInterface';
+import CodingInterface from './components/chapter/CodingInterface';
 import Layout from '../components/Layout/layout';
 import { MDXProvider } from '@mdx-js/react';
 import { ControlledEditor, monaco, DiffEditor } from '@monaco-editor/react';
@@ -37,10 +39,14 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
   return (
     <div>
       <NavBar chapter={chapterHeading} />
-      <main className={`grid grid-cols-2 gap-x-6 bg-base-900 h-full`}>
-        <div className={`bg-primary-500`}>Text</div>
-        <div className={`bg-error-500`}>Editor</div>
+      <main
+        className={`grid grid-cols-2 gap-x-6 bg-base-900 h-full overflow-hidden`}
+        style={{ height: 'calc(100vh - 5rem - 3.5em)' }}
+      >
+        <LearningInterface heading={chapterHeading} body={chapter.body} />
+        <CodingInterface />
       </main>
+      <Footer />
     </div>
   );
 };
