@@ -6,7 +6,6 @@ import userAtom from '../../atoms/user-atom';
 import isUserAtom from '../../atoms/is-user-atom';
 import { useAtom } from 'jotai';
 import { createUser } from '../../api';
-import { setUserId } from 'amplitude-js';
 
 function NavLink({ to, children }) {
   return (
