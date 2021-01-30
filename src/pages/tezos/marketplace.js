@@ -70,7 +70,7 @@ const Marketplace = () => {
     }
   }, [forSale, notForSale, sortBy]);
 
-  useEffect(async () => {
+  useAsync(async () => {
     try {
       const result = await getXTZPrice();
       console.log(result);
@@ -80,7 +80,7 @@ const Marketplace = () => {
     }
   }, []);
 
-  useEffect(async () => {
+  useAsync(async () => {
     const x = await getNftInfoByXTZAddress();
   }, []);
 
@@ -160,7 +160,7 @@ const Marketplace = () => {
               {nftList.length > 0 &&
                 nftList.map(el => {
                   return (
-                    <div>
+                    <div key={el.tokenId} >
                       <CryptobotCard xtzPrice={xtzPrice} bot={el} />
                     </div>
                   );

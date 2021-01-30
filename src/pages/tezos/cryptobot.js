@@ -6,21 +6,10 @@ import Button from 'src/components/Buttons';
 import { convertMutezToXtz, getXTZPriceInUSD } from 'src/utils/indexer';
 import model from 'src/images/Col-1.png';
 
-function Cryptobot({ location }) {
-  console.log('location');
+function BotView({ location }) {
   const xtzPrice = location.state ? location.state.xtzPrice : null;
-  const bot = location.state
-    ? location.state.bot
-    : {
-        tokenId: '',
-        uri: '',
-        symbol: '',
-        mintDate: '',
-        isForSale: '',
-        saleValueInMutez: '',
-        seller: '',
-        offerDate: '',
-      };
+  const bot = location.state ? location.state.bot : null;
+
   return (
     <div className="h-screen w-screen fixed bg-base-900 ">
       <NavBar />
@@ -31,7 +20,7 @@ function Cryptobot({ location }) {
               style={{ width: '100%', height: '100%' }}
               camera-controls
               alt="3D Cryptobot"
-              src={`https://cloudflare-ipfs.com/ipfs/${bot.uri}`}
+              src={`https://cloudflare-ipfs.com/ipfs/${bot ? bot.uri : ''}`}
             ></model-viewer>
           </div>
 
@@ -41,7 +30,7 @@ function Cryptobot({ location }) {
               <div className="grid grid-cols-3 gap-4">
                 <div className="col-span-2">
                   <h2 className="text-5xl font-mulish font-black text-white">
-                    Cryptobot (#{bot.tokenId})
+                    Cryptobot (#{bot ? bot.tokenId : ''})
                   </h2>
                 </div>
                 {/* social icons start */}
@@ -104,12 +93,16 @@ function Cryptobot({ location }) {
               <div className="mt-3">
                 <h4 className="text-2xl font-mulish font-bold">
                   <span className="text-white">
-                    {bot.saleValueInMutez ? (
-                      <span>{convertMutezToXtz(bot.saleValueInMutez)} XTZ</span>
+                    {bot ? (
+                      bot.saleValueInMutez ? (
+                        <span>
+                          {convertMutezToXtz(bot.saleValueInMutez)} XTZ
+                        </span>
+                      ) : null
                     ) : null}
                   </span>{' '}
                   <span className="text-base-200">
-                    {xtzPrice && bot.saleValueInMutez ? (
+                    {xtzPrice && bot && bot.saleValueInMutez ? (
                       <span>
                         {' '}
                         ($
@@ -145,7 +138,7 @@ function Cryptobot({ location }) {
                         Owner
                       </span>
                       <span className=" font-mulish font-extrabold text-lg text-white ">
-                        {bot.seller}
+                        {bot ? bot.seller : ''}
                       </span>
                     </span>
                   </Link>
@@ -186,7 +179,7 @@ function Cryptobot({ location }) {
             </div>
             <div className="bottom-0 w-full bg-base-900">
               <div className="flex mx-auto justify-center py-9">
-                {bot.isForSale ? (
+                {bot && bot.isForSale ? (
                   <Button size="lg" type="primary">
                     Buy Now
                   </Button>
@@ -204,4 +197,4 @@ function Cryptobot({ location }) {
   );
 }
 
-export default Cryptobot;
+export default BotView;
