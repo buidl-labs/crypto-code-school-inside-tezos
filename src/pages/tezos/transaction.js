@@ -1,0 +1,218 @@
+import React, { useState } from 'react';
+import { Link } from 'gatsby';
+
+import NavBar from 'src/components/NavBar';
+import Button from 'src/components/Buttons';
+
+import model from 'src/images/Col-1.png';
+
+const Steppers = ({ number, name, clickEvent }) => {
+  return (
+    <div onClick={clickEvent}>
+      <div className="flex items-center text-primary-600 relative">
+        <div class="rounded-full h-12 w-12 py-3 inline-flex items-center justify-center bg-primary-600 text-white">
+          {number}
+        </div>
+        <div className="absolute top-0 -ml-10 text-center mt-16 w-32 text-lg font-regular text-white">
+          {name}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const Heading = ({ heading }) => {
+  return (
+    <div className="w-full">
+      <div className="flex mx-auto justify-center text-white pt-16">
+        <h4 className="font-mulish font-extrabold text-xl ">{heading}</h4>
+      </div>
+    </div>
+  );
+};
+
+const TransactionContainer = ({ children }) => {
+  return (
+    <div className="w-full rounded-md bg-base-700 p-12 mt-6">{children}</div>
+  );
+};
+
+const Cost = ({ type, main, caption }) => {
+  return (
+    <div className="grid grid-cols-2 gap-4 py-6">
+      <div>
+        <h5 className="text-base-100 text-lg font-bold font-mulish">{type}</h5>
+      </div>
+      <div className="grid justify-items-end">
+        <h5 className="text-white text-xl font-extrabold font-mulish">
+          {main}
+        </h5>
+        <p className="text-white text-lg font-mulish">{caption}</p>
+      </div>
+    </div>
+  );
+};
+
+function Transaction() {
+  const [step, setStep] = useState(1);
+  return (
+    <div className=" bg-base-900 ">
+      <NavBar />
+      <div className="container px-12 mx-auto ">
+        <div className="grid grid-cols-2 gap-4 h-screen">
+          <div>
+            <img src={model} />
+          </div>
+          <div className="px-12 pt-4 ">
+            <div class="flex items-center">
+              <Steppers
+                number="1"
+                name="Confirm Claim"
+                clickEvent={e => {
+                  e.preventDefault();
+                  setStep(1);
+                }}
+              />
+              <div className="flex-auto border-t-2  border-primary-600"></div>
+              <Steppers
+                number="2"
+                name="Transaction"
+                clickEvent={e => {
+                  e.preventDefault();
+                  setStep(2);
+                }}
+              />
+              <div className="flex-auto border-t-2 border-primary-600"></div>
+              <Steppers
+                number="3"
+                name="Finished"
+                clickEvent={e => {
+                  e.preventDefault();
+                  setStep(3);
+                }}
+              />
+            </div>
+            <div className={step === 1 ? 'block' : 'hidden'}>
+              <Heading heading="Confirm your claim" />
+              <TransactionContainer>
+                <Cost type="Total" main="4XTZ" caption="$8.25 USD" />
+                <div className="bg-base-600 mt-4 px-8 rounded">
+                  <Cost
+                    type="Cost"
+                    main="FREE"
+                    caption="Your first bot is on us!"
+                  />
+                  <hr className="my-2 bg-base-400 border-2 h-0.5" />
+                  <Cost type="Network Fee" main="4XTZ" caption="$2.25 USD" />
+                </div>
+                <div class="grid mx-auto justify-center mt-6">
+                  <Button size="lg" type="primary">
+                    Confirm
+                  </Button>
+                </div>
+              </TransactionContainer>
+            </div>
+
+            <div className={step === 2 ? 'block' : 'hidden'}>
+              <Heading heading="Transaction Operation Started" />
+              <TransactionContainer>
+                <h4 className="text-white text-center">loader</h4>
+                <div class="grid grid-cols mx-auto justify-center mt-6 text-white">
+                  <Button size="lg" type="outline">
+                    Show Status in Tezos Blockchain
+                  </Button>
+                </div>
+              </TransactionContainer>
+            </div>
+
+            <div className={step === 3 ? 'block' : 'hidden'}>
+              <Heading heading="Congratulations 🎉" />
+              <TransactionContainer>
+                <h4 className="text-white text-center text-xl font-extrabold font-mulish">
+                  You have acquired your Unique cryptobot
+                </h4>
+                <h4 className="text-white text-center text-lg font-mulish mt-6">
+                  Share your unique cryptobot with your friends and start
+                  trading with other on marketplace!
+                </h4>
+                <h4 className="text-white text-center text-lg font-mulish mt-8">
+                  Here’s the link to your unique cryptobot:
+                  https://cryptocodeschool.in/mybot-4433
+                </h4>
+
+                {/* social icons start */}
+                <div className="flex flex-row space-x-6 justify-center mt-4">
+                  {/* twitter icon */}
+                  <div className="w-12 h-12 inline-flex items-center justify-center rounded-full bg-primary-600 text-white">
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M19.633 7.99704C19.646 8.17204 19.646 8.34604 19.646 8.52004C19.646 13.845 15.593 19.981 8.186 19.981C5.904 19.981 3.784 19.32 2 18.172C2.324 18.209 2.636 18.222 2.973 18.222C4.856 18.222 6.589 17.586 7.974 16.501C6.203 16.464 4.719 15.304 4.207 13.708C4.456 13.745 4.706 13.77 4.968 13.77C5.329 13.77 5.692 13.72 6.029 13.633C4.182 13.259 2.799 11.638 2.799 9.68004V9.63004C3.336 9.92904 3.959 10.116 4.619 10.141C3.534 9.41904 2.823 8.18404 2.823 6.78704C2.823 6.03904 3.022 5.35304 3.371 4.75504C5.354 7.19804 8.335 8.79504 11.677 8.97004C11.615 8.67004 11.577 8.35904 11.577 8.04704C11.577 5.82704 13.373 4.01904 15.605 4.01904C16.765 4.01904 17.812 4.50504 18.548 5.29104C19.458 5.11604 20.33 4.77904 21.104 4.31804C20.805 5.25304 20.168 6.03904 19.333 6.53804C20.144 6.45004 20.93 6.22604 21.652 5.91404C21.104 6.71204 20.419 7.42304 19.633 7.99704Z"
+                        fill="white"
+                      />
+                    </svg>
+                  </div>
+                  {/* fb icon */}
+                  <div className="w-12 h-12 inline-flex items-center justify-center rounded-full bg-primary-600 text-white ">
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M13.397 20.9969V12.8009H16.162L16.573 9.59191H13.397V7.54791C13.397 6.62191 13.655 5.98791 14.984 5.98791H16.668V3.12691C15.849 3.03891 15.025 2.99691 14.201 2.99991C11.757 2.99991 10.079 4.49191 10.079 7.23091V9.58591H7.33203V12.7949H10.085V20.9969H13.397Z"
+                        fill="white"
+                      />
+                    </svg>
+                  </div>
+                  {/* copy icon */}
+                  <div className="w-12 h-12 inline-flex items-center justify-center rounded-full bg-primary-600 text-white ">
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M17 7H13V9H17C18.65 9 20 10.35 20 12C20 13.65 18.65 15 17 15H13V17H17C19.76 17 22 14.76 22 12C22 9.24 19.76 7 17 7Z"
+                        fill="white"
+                      />
+                      <path
+                        d="M11 15H7C5.35 15 4 13.65 4 12C4 10.35 5.35 9 7 9H11V7H7C4.24 7 2 9.24 2 12C2 14.76 4.24 17 7 17H11V15Z"
+                        fill="white"
+                      />
+                      <path d="M8 11H16V13H8V11Z" fill="white" />
+                    </svg>
+                  </div>
+                </div>
+                {/* social icons ends*/}
+                <h4 className="text-white text-center text-lg font-mulish mt-6">
+                  Earn more super cool cryptobots by completing Modules or
+                  exploring Marketplace
+                </h4>
+                <div class="grid grid-cols-2 gap-4  mx-auto justify-center text-white mt-8">
+                  <Button size="lg" type="secondary">
+                    Explore Marketplace
+                  </Button>
+                  <Button size="lg" type="primary">
+                    Go to Academy
+                  </Button>
+                </div>
+              </TransactionContainer>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Transaction;
