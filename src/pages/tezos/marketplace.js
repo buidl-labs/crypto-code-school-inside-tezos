@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useAsync } from 'react-use';
-import { fetchAllNfts, getXTZPrice } from 'src/utils/indexer';
+import {
+  fetchAllNfts,
+  getXTZPrice,
+  getNftInfoByXTZAddress,
+} from 'src/utils/indexer';
 import Button from 'src/components/Buttons';
 import NavBar from 'src/components/NavBar';
 import Footer from 'src/components/Footer';
@@ -74,6 +78,10 @@ const Marketplace = () => {
     } catch (error) {
       console.log(error);
     }
+  }, []);
+
+  useEffect(async () => {
+    const x = await getNftInfoByXTZAddress();
   }, []);
 
   return (

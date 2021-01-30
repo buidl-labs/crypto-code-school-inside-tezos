@@ -110,3 +110,58 @@ export const getXTZPrice = async () => {
 export const getXTZPriceInUSD = (usd, mutez) => {
   return parseFloat(convertMutezToXtz(mutez) * usd).toFixed(2);
 };
+
+export const getAllNFTHoldersInfo = () => {};
+
+export const getNftInfoByXTZAddress = async (
+  address = 'tz1iLVzBpCNTGz6tCBK2KHaQ8o44mmhLTBio',
+) => {
+  const allTokens = await getAllNFTsMetadata();
+  const tokensOnOffer = await nftOnOffer();
+
+  const response = await fetch(
+    `https://api.better-call.dev/v1/contract/${NETWORK}/${CONTRACT_ADDRESS}/storage`,
+  );
+  const result = await response.json();
+  const tokens = result.children.find(elm => elm.name === 'ledger');
+  const tk = await fetch(
+    `https://api.better-call.dev/v1/bigmap/${NETWORK}/${tokens.value}/keys`,
+  );
+
+  const ledger = await tk.json();
+
+  const owners = ledger.filter(elm => elm.data.value.value !== '0');
+
+  const allTokenHolders = owners.map(elm => {
+    return {
+      address: elm.data.key.children[0].value,
+      tokenId: elm.data.key.children[1].value,
+    };
+  });
+
+  const tokenHolderUser = allTokenHolders.filter(el => el.address === address);
+
+  if (tokenHolderUser.length <= 0) {
+    return [];
+  }
+
+  const filtered = tokenHolderUser.map(elm => {
+    const nft = allTokens.find(element => element.tokenId == elm.tokenId);
+
+    const offer = tokensOnOffer.find(element => element.tokenId == elm.tokenId);
+
+    return {
+      address: elm.address,
+      tokenId: elm.tokenId,
+      uri: nft.uri,
+      symbol: nft.symbol,
+      isForSale: offer ? offer.isForSale : false,
+      saleValueInMutez: offer ? offer.saleValueInMutez : null,
+      seller: offer ? offer.seller : null,
+      offerDate: offer ? offer.timestamp : null,
+    };
+  });
+
+  console.log(filtered);
+  return filtered;
+};
