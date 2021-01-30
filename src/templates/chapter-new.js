@@ -40,12 +40,13 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
     <div>
       <NavBar chapter={chapterHeading} />
       <main
-        className={`grid grid-cols-2 gap-x-6 bg-base-900 h-full overflow-hidden`}
+        className={`grid grid-cols-2 gap-x-6 bg-base-900 h-full`}
         style={{ height: 'calc(100vh - 5rem - 3.5em)' }}
       >
         <LearningInterface heading={chapterHeading} body={chapter.body} />
         <CodingInterface />
       </main>
+
       <Footer />
     </div>
   );

@@ -61,8 +61,6 @@ module.exports = {
         100: '#FEE2E2',
         50: '#FEF2F2',
       },
-      console: '061B2F',
-      code: '#030D18',
       white: '#ffffff',
     },
     spacing: {
@@ -775,7 +773,14 @@ module.exports = {
       40: '40',
       50: '50',
     },
+    extend: {
+      colors: {
+        'editor-console': '#061B2F',
+        'editor-code': '#030D18',
+      },
+    },
   },
+
   variantOrder: [
     'first',
     'last',
