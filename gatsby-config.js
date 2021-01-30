@@ -56,6 +56,7 @@ module.exports = {
       options: {
         fonts: [
           `Mulish\:400,700,800,900`,
+          `Ubuntu Mono\:400, 700`,
           `Roboto\:400,500,700`,
           `Inconsolata\:400,700`,
           'Open Sans:400,700',

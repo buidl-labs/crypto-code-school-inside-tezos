@@ -6,6 +6,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
           frontmatter {
             slug
             type
+            filterBy
           }
         }
       }
@@ -29,7 +30,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
       });
     } else if (file.frontmatter.filterBy === 'lesson-4') {
       actions.createPage({
-        path: `/tezos/lesson/${file.frontmatter.slug}`,
+        path: `/tezos/academy/${file.frontmatter.filterBy}/${file.frontmatter.slug}`,
         component: require.resolve('./src/templates/chapterWithLiveEditor.js'),
         context: {
           slug: file.frontmatter.slug,
@@ -37,10 +38,11 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
       });
     } else {
       actions.createPage({
-        path: `/tezos/lesson/${file.frontmatter.slug}`,
-        component: require.resolve('./src/templates/chapter.js'),
+        path: `/tezos/academy/${file.frontmatter.filterBy}/${file.frontmatter.slug}`,
+        component: require.resolve('./src/templates/chapter-new.js'),
         context: {
           slug: file.frontmatter.slug,
+          module: file.frontmatter.filterBy,
         },
       });
     }

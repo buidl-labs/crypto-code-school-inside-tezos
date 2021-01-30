@@ -241,6 +241,7 @@ module.exports = {
         'serif',
       ],
       mono: [
+        '"Ubuntu Mono"',
         'ui-monospace',
         'SFMono-Regular',
         'Menlo',
