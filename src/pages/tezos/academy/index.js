@@ -21,14 +21,9 @@ const CourseCard = ({ m, i }) => {
         </div>
         <div className={`my-auto`}>
           <h2 className={`font-black text-5xl`}>{m.frontmatter.title}</h2>
-          <p className={`text-lg pr-9`}>
-            Learn about the blockchain from scratch and the magic that is
-            possible with it. If you’ve no previous experience with Blockchain,
-            I promise, this module will blow your mind. Your first step to
-            becoming a blockchain pro 🚀
-          </p>
+          <p className={`text-lg pr-9`}>{m.frontmatter.description}</p>
           <Link
-            to="#"
+            to={`/tezos/academy/${m.frontmatter.slug}`}
             className={`bg-primary-600 mt-4 inline-block py-3 px-9 font-bold text-2xl rounded hover:no-underline`}
           >
             Start Module
@@ -49,6 +44,7 @@ export const query = graphql`
         frontmatter {
           title
           slug
+          description
         }
       }
     }
@@ -61,14 +57,7 @@ const CurriculumOverview = ({
   },
 }) => {
   return (
-    <Layout
-      background={`radial-gradient(
-        144.9% 144.89% at 53.86% -49.56%,
-        #09272E 43.89%,
-        #1F476B 100%
-      )
-      no-repeat center center fixed`}
-    >
+    <Layout>
       <SEO title="Chapters Overview" />
       <main className={`px-30 py-12 bg-base-900 text-white`}>
         <div

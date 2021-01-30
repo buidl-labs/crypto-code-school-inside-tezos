@@ -6,7 +6,6 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
           frontmatter {
             slug
             type
-            filterBy
           }
         }
       }
@@ -22,7 +21,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   mdxFiles.forEach(file => {
     if (file.frontmatter.type === 'module') {
       actions.createPage({
-        path: `/tezos/overview/${file.frontmatter.slug}`,
+        path: `/tezos/academy/${file.frontmatter.slug}`,
         component: require.resolve('./src/templates/overview.js'),
         context: {
           slug: file.frontmatter.slug,
