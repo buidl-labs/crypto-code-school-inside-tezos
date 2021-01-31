@@ -160,7 +160,7 @@ const Marketplace = () => {
               {nftList.length > 0 &&
                 nftList.map(el => {
                   return (
-                    <div key={el.tokenId} >
+                    <div key={el.tokenId}>
                       <CryptobotCard xtzPrice={xtzPrice} bot={el} />
                     </div>
                   );

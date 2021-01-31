@@ -180,9 +180,11 @@ function BotView({ location }) {
             <div className="bottom-0 w-full bg-base-900">
               <div className="flex mx-auto justify-center py-9">
                 {bot && bot.isForSale ? (
-                  <Button size="lg" type="primary">
-                    Buy Now
-                  </Button>
+                  <Link to={`/tezos/transaction`}>
+                    <Button size="lg" type="primary">
+                      Buy Now
+                    </Button>
+                  </Link>
                 ) : (
                   <div className="font-mulish font-bold mb-3 text-white">
                     Bot not available for sale{' '}
