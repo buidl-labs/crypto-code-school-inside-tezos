@@ -10,6 +10,7 @@ import NavBar from 'src/components/NavBar';
 import Footer from 'src/components/Footer';
 import CryptobotCard from 'src/components/CryptobotCard';
 import uniqBy from 'lodash.uniqby';
+import Loader from 'react-loader-spinner';
 
 const Marketplace = () => {
   const [forSale, updateForSale] = useState(true);
@@ -152,7 +153,14 @@ const Marketplace = () => {
 
         <div>
           {allNFTS.loading ? (
-            <div className="text-white font-mulish font-bold">Loading...</div>
+            <div className="flex justify-center w-full">
+              <Loader
+                type="BallTriangle"
+                color="#2563EB"
+                height={80}
+                width={80}
+              />
+            </div>
           ) : allNFTS.error ? (
             <div>Error: {allNFTS.error.message}</div>
           ) : (
