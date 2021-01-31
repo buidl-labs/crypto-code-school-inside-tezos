@@ -21,7 +21,7 @@ const LearningInterface = ({ heading, body }) => {
             ol: props => (
               <ol
                 {...props}
-                className={`text-white mt-6 space-y-3 list-disc list-decimal list-inside text-lg`}
+                className={`text-white mt-6 space-y-3 list-disc list-inside text-lg`}
               />
             ),
             ul: props => (

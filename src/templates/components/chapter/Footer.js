@@ -11,7 +11,7 @@ const Footer = () => {
           <ChevronLeftIcon />
           <span>Prev</span>
         </button>
-        <p className={`text-base-50`}>2/10</p>
+        <p className={`text-base-50`}>4/10</p>
         <button className={`flex items-center`}>
           <span>Next</span>
           <ChevronRightIcon />
