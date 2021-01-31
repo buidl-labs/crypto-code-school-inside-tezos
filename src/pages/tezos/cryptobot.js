@@ -30,7 +30,7 @@ function BotView({ location }) {
               <div className="grid grid-cols-3 gap-4">
                 <div className="col-span-2">
                   <h2 className="text-5xl font-mulish font-black text-white">
-                    Cryptobot (#{bot ? bot.tokenId : ''})
+                    Cryptobot <span className="text-3xl">(#{bot ? bot.tokenId : ''})</span>
                   </h2>
                 </div>
                 {/* social icons start */}
@@ -105,7 +105,7 @@ function BotView({ location }) {
                     {xtzPrice && bot && bot.saleValueInMutez ? (
                       <span>
                         {' '}
-                        ($
+                        ( $
                         {getXTZPriceInUSD(
                           xtzPrice.price,
                           bot.saleValueInMutez,
@@ -186,7 +186,7 @@ function BotView({ location }) {
                     </Button>
                   </Link>
                 ) : (
-                  <div className="font-mulish font-bold mb-3 text-white">
+                  <div className="font-mulish font-bold mb-3 text-white text-xl">
                     Bot not available for sale{' '}
                   </div>
                 )}

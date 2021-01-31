@@ -20,17 +20,17 @@ function CryptobotCard({ bot, xtzPrice }) {
       >
         <div className="p-6">
           <h1 className="font-mulish text-2xl font-bold text-white mb-2">
-            3D Cryptobot : (#{bot.tokenId})
+            Cryptobot (#{bot.tokenId})
           </h1>
           {bot.isForSale ? (
             <div>
-              <p className="font-mulish font-bold mb-3 text-white">
+              <p className="font-mulish text-lg font-bold mb-3 text-white">
                 {convertMutezToXtz(bot.saleValueInMutez)} XTZ
                 <span>
                   {xtzPrice ? (
-                    <span>
+                    <span className="text-base-100">
                       {' '}
-                      (${getXTZPriceInUSD(
+                      ( ${getXTZPriceInUSD(
                         xtzPrice.price,
                         bot.saleValueInMutez,
                       )}{' '}
@@ -41,7 +41,7 @@ function CryptobotCard({ bot, xtzPrice }) {
               </p>
             </div>
           ) : (
-            <p className="font-mulish font-bold mb-3 text-white">
+            <p className="font-mulish font-bold mb-3 text-lg text-white">
               Bot not available for sale{' '}
             </p>
           )}
