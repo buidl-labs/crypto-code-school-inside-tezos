@@ -1,27 +1,19 @@
-// Converted automatically using ./tools/themeFromVsCode
 var theme = {
   plain: {
-    color: '#F8F8F8',
-    backgroundColor: '#253F54',
-    fontSize: '14px'
+    color: '#9CDCFE',
+    backgroundColor: '#fff',
   },
   styles: [
     {
-      types: ['prolog'],
-      style: {
-        color: 'rgb(0, 0, 128)',
-      },
-    },
-    {
       types: ['comment'],
       style: {
-        color: '#989898',
+        color: 'rgb(106, 153, 85)',
       },
     },
     {
       types: ['builtin', 'changed', 'keyword'],
       style: {
-        color: '#EA4192',
+        color: 'rgb(86, 156, 214)',
       },
     },
     {
@@ -73,7 +65,6 @@ var theme = {
       types: ['punctuation', 'operator'],
       style: {
         color: 'rgb(212, 212, 212)',
-        background: "inherit"
       },
     },
     {

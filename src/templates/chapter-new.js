@@ -45,8 +45,6 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
     [chapters],
   );
 
-  console.log('Chapter Index', chapterIndex);
-
   return (
     <div className={`overflow-hidden`}>
       <NavBar chapter={chapterHeading} module={chapter.frontmatter.filterBy} />
