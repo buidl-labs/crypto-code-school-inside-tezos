@@ -98,8 +98,8 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
     let timer = setTimeout(() => setCodeCopied(false), 2500);
 
     return () => clearTimeout(timer);
-  }, [codeCopied])
-  
+  }, [codeCopied]);
+
   const [index] = useState(() => {
     const { current, total, nextSlug, prevSlug } = getChaptersIndex(
       chapterList,

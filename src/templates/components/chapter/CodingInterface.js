@@ -2,10 +2,16 @@ import React, { useEffect, useState } from 'react';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import DoneIcon from '@material-ui/icons/Done';
+import CloseIcon from '@material-ui/icons/Close';
+
 import { ControlledEditor, monaco, DiffEditor } from '@monaco-editor/react';
 
-const CodingInterface = ({ code }) => {
+const CodingInterface = ({ code, answer }) => {
   const [editorValue, setEditorValue] = useState(code);
+
+  const [showAnswer, setShowAnswer] = useState(false);
+  const [checkAnswer, setCheckAnswer] = useState(false);
+
   useEffect(() => {
     monaco.init().then(monacoInstance => {
       monacoInstance.editor.defineTheme('cryptoverse-theme', {
@@ -55,7 +61,11 @@ const CodingInterface = ({ code }) => {
         <ControlledEditor
           value={editorValue}
           onChange={(_, value) => setEditorValue(value)}
-          height={`calc(100vh - 8.5rem - 6rem)`}
+          height={`${
+            showAnswer || checkAnswer
+              ? 'calc(100vh - 8.5rem - 6rem - 15rem)'
+              : 'calc(100vh - 8.5rem - 6rem)'
+          } `}
           language={`python`}
           theme={`cryptoverse-theme`}
           options={{
@@ -71,6 +81,64 @@ const CodingInterface = ({ code }) => {
             wordBasedSuggestions: false,
           }}
         />
+        <div
+          className={`flex justify-start flex-shrink-0 bg-base-800 text-white text-lg h-12 space-x-4`}
+        >
+          <button
+            className={`bg-primary-600 hover:bg-primary-700 flex items-center  pl-2 pr-4 focus:outline-none`}
+            onClick={() => setCheckAnswer(true)}
+          >
+            <DoneIcon />
+            Check
+          </button>
+          <button
+            className={`bg-base-500 hover:bg-base-600 flex items-center pl-2 pr-4 focus:outline-none`}
+            onClick={() => setShowAnswer(true)}
+          >
+            <HelpOutlineIcon />
+            Show Answer
+          </button>
+        </div>
+        {(showAnswer || checkAnswer) && (
+          <div
+            className={`h-12 bg-editor-console flex justify-between items-center`}
+          >
+            <button
+              onClick={() => {
+                setShowAnswer(false);
+                setCheckAnswer(false);
+              }}
+              className={`text-white font-mono text-lg p-4 pr-3 flex items-center space-x-3 focus:outline-none`}
+            >
+              <span>Console</span>
+              <CloseIcon />
+            </button>
+          </div>
+        )}
+        {showAnswer ? (
+          <DiffEditor
+            height={`12rem`}
+            original={showAnswer ? answer : 'MODIFIED'}
+            modified={showAnswer ? editorValue : 'MODIFIED'}
+            language="python"
+            theme={`cryptoverse-theme`}
+            options={{
+              lineNumbers: false,
+              scrollBeyondLastLine: false,
+              minimap: { enabled: false },
+              scrollbar: { vertical: 'hidden', verticalScrollbarSize: 0 },
+              folding: false,
+              readOnly: true,
+              fontSize: 15.75,
+              fontFamily: "'Ubuntu Mono', monospace",
+              renderSideBySide: false,
+              wordWrap: true,
+              ignoreTrimWhitespace: false,
+              renderWhitespace: 'all',
+              lineHeight: 26,
+            }}
+          />
+        ) : null}
 
         {/* <ControlledEditor
           // height={`${
@@ -97,18 +165,6 @@ const CodingInterface = ({ code }) => {
             wordBasedSuggestions: false,
           }}
         /> */}
-      </div>
-      <div
-        className={`flex justify-start flex-shrink-0 bg-base-800 text-white text-lg h-12 space-x-4`}
-      >
-        <button className={`bg-primary-600 flex items-center  pl-2 pr-4`}>
-          <DoneIcon />
-          Check
-        </button>
-        <button className={`bg-base-500 flex items-center pl-2 pr-4`}>
-          <HelpOutlineIcon />
-          Show Answer
-        </button>
       </div>
     </main>
   );

@@ -65,7 +65,10 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           body={chapter.body}
           setDrawerOpen={setIsChapterDrawerOpen}
         />
-        <CodingInterface code={chapter.frontmatter.editor.startingCode} />
+        <CodingInterface
+          code={chapter.frontmatter.editor.startingCode}
+          answer={chapter.frontmatter.editor.answer}
+        />
       </main>
 
       <Footer
