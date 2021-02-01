@@ -2,8 +2,6 @@ import React, { useEffect } from 'react';
 import Layout from 'src/components/Layout/layout';
 import Plants from 'src/assets/plants.svg';
 import learningInterface from 'src/images/Interface.png';
-import HomepageHeroImage from 'src/components/BackgroundImages/HomepageHero';
-import { Link } from 'gatsby';
 import Footer from 'src/components/Footer';
 import { trackEvent } from 'src/utils/analytics';
 import {
