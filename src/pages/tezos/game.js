@@ -19,7 +19,7 @@ import Stars from 'src/assets/GameAssets/stars.svg';
 import Planet from 'src/assets/GameAssets/planet.svg';
 
 // Custom styles and styled images
-import Layout from 'src/components/Layout/layout';
+
 import {
   MainContainer,
   Header,
@@ -276,71 +276,69 @@ const Game = () => {
   //[if more than 1 ball hits a single zombie it will end the game there and then]
 
   return (
-    <Layout>
-      <MainContainer>
-        <Header>
-          <BackLink to={`/tezos/lesson/module-01/chapter-15`}>
-            <LeftArrow />
-            <span>Back</span>
-          </BackLink>
-          <Title width="10%" />
-          <BackLink to={`/tezos/overview`}>
-            <span>Skip</span>
-            <RightArrow />
-          </BackLink>
-        </Header>
-        <GameContainer ref={gameContainer} id="game-container">
-          {isGameLost ? (
-            <GameOverModal status="lost" />
-          ) : (
-            <GameOverModal totalDeadZombies={totalDeadZombies} status="won" />
-          )}
-          <Planet
-            style={{
-              top: '10%',
-              position: 'absolute',
-              zIndex: '-1',
-            }}
+    <MainContainer>
+      <Header>
+        <BackLink to={`/tezos/lesson/module-01/chapter-15`}>
+          <LeftArrow />
+          <span>Back</span>
+        </BackLink>
+        <Title width="10%" />
+        <BackLink to={`/tezos/overview`}>
+          <span>Skip</span>
+          <RightArrow />
+        </BackLink>
+      </Header>
+      <GameContainer ref={gameContainer} id="game-container">
+        {isGameLost ? (
+          <GameOverModal status="lost" />
+        ) : (
+          <GameOverModal totalDeadZombies={totalDeadZombies} status="won" />
+        )}
+        <Planet
+          style={{
+            top: '10%',
+            position: 'absolute',
+            zIndex: '-1',
+          }}
+        />
+        <Stars
+          style={{
+            top: '20%',
+            position: 'absolute',
+            zIndex: '-1',
+          }}
+        />
+        <RightCloud />
+        <LeftCloud />
+        <Instructions id="instructions">Use Spacebar to shoot</Instructions>
+        {showWelcomeModal ? (
+          <WelcomeModal
+            display
+            changeDisplay={() => updateWelcomeModalDisplay(false)}
           />
-          <Stars
-            style={{
-              top: '20%',
-              position: 'absolute',
-              zIndex: '-1',
-            }}
-          />
-          <RightCloud />
-          <LeftCloud />
-          <Instructions id="instructions">Use Spacebar to shoot</Instructions>
-          {showWelcomeModal ? (
-            <WelcomeModal
-              display
-              changeDisplay={() => updateWelcomeModalDisplay(false)}
-            />
-          ) : (
-            <>
-              <Lightening id="lightening" />
-              <StartSymbolContainer
-                ref={startButton}
-                id="start"
-                onClick={() => playGame()}
-              >
-                <StartSymbol />
-              </StartSymbolContainer>
-              <PlantContainer id="plant-shooter" ref={shooter}>
-                <Plant />
-              </PlantContainer>
-              <div id="initialzombie" ref={zombieRef}>
-                <Zombie positionBottom={'-35px'} />
-              </div>
-            </>
-          )}
-          <House className="house-img" />
-          <ForestLand className="forest-land-img" />
-        </GameContainer>
-        <Footer />
-      </MainContainer>
-    </Layout>
+        ) : (
+          <>
+            <Lightening id="lightening" />
+            <StartSymbolContainer
+              ref={startButton}
+              id="start"
+              onClick={() => playGame()}
+            >
+              <StartSymbol />
+            </StartSymbolContainer>
+            <PlantContainer id="plant-shooter" ref={shooter}>
+              <Plant />
+            </PlantContainer>
+            <div id="initialzombie" ref={zombieRef}>
+              <Zombie positionBottom={'-35px'} />
+            </div>
+          </>
+        )}
+        <House className="house-img" />
+        <ForestLand className="forest-land-img" />
+      </GameContainer>
+      <Footer />
+    </MainContainer>
   );
 };
 
