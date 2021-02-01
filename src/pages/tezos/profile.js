@@ -4,12 +4,38 @@ import { Link } from 'gatsby';
 import NavBar from '../../components/NavBar';
 import Footer from 'src/components/Footer';
 import Button from 'src/components/Buttons';
-// import CryptobotCard from '../../components/CryptobotCard';
+import { useAsync } from 'react-use';
+import Loader from 'react-loader-spinner';
+import CryptobotCard from 'src/components/CryptobotCard';
+
+import { getXTZPrice, getNftInfoByXTZAddress } from 'src/utils/indexer';
 
 import model from 'src/images/Col-1.png';
 
 function Profile() {
   const [openTab, setOpenTab] = useState(1);
+  const [xtzPrice, updateXtzPrice] = useState(null);
+
+  useAsync(async () => {
+    try {
+      const result = await getXTZPrice();
+      console.log(result);
+      updateXtzPrice(result);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+  const ownedBots = useAsync(async () => {
+    try {
+      return await getNftInfoByXTZAddress(
+        'tz1iLVzBpCNTGz6tCBK2KHaQ8o44mmhLTBio',
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+
   return (
     <div className="bg-base-900 font-mulish">
       <NavBar />
@@ -93,17 +119,72 @@ function Profile() {
             <div className="tab-content">
               {/* My Cryptobots starts*/}
               <div className={openTab === 1 ? 'block' : 'hidden'} id="link1">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <Link to="/cryptobot">{/* <CryptobotCard /> */}</Link>
-                  <Link to="/cryptobot">{/* <CryptobotCard /> */}</Link>
-                  <Link to="/cryptobot">{/* <CryptobotCard /> */}</Link>
+                <div>
+                  {ownedBots.loading ? (
+                    <div className="flex justify-center w-full">
+                      <Loader
+                        type="BallTriangle"
+                        color="#2563EB"
+                        height={80}
+                        width={80}
+                      />
+                    </div>
+                  ) : ownedBots.error ? (
+                    <div>Error: {ownedBots.error.message}</div>
+                  ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                      {ownedBots.value.length > 0 ? (
+                        ownedBots.value.map(el => {
+                          return (
+                            <div key={el.tokenId}>
+                              <CryptobotCard xtzPrice={xtzPrice} bot={el} />
+                            </div>
+                          );
+                        })
+                      ) : (
+                        <p className="font-mulish text-white">
+                          No bots available
+                        </p>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
               {/* My Cryptobots ends */}
               {/* On Sale starts */}
               <div className={openTab === 2 ? 'block' : 'hidden'} id="link2">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <Link to="/cryptobot">{/* <CryptobotCard /> */}</Link>
+                <div>
+                  {ownedBots.loading ? (
+                    <div className="flex justify-center w-full">
+                      <Loader
+                        type="BallTriangle"
+                        color="#2563EB"
+                        height={80}
+                        width={80}
+                      />
+                    </div>
+                  ) : ownedBots.error ? (
+                    <div>Error: {ownedBots.error.message}</div>
+                  ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                      {ownedBots.value.filter(el => el.isForSale === true)
+                        .length > 0 ? (
+                        ownedBots.value
+                          .filter(el => el.isForSale === true)
+                          .map(el => {
+                            return (
+                              <div key={el.tokenId}>
+                                <CryptobotCard xtzPrice={xtzPrice} bot={el} />
+                              </div>
+                            );
+                          })
+                      ) : (
+                        <p className="font-mulish text-white">
+                          No bots available
+                        </p>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
               {/* On Sale ends */}

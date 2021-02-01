@@ -113,9 +113,7 @@ export const getXTZPriceInUSD = (usd, mutez) => {
 
 export const getAllNFTHoldersInfo = () => {};
 
-export const getNftInfoByXTZAddress = async (
-  address = 'tz1iLVzBpCNTGz6tCBK2KHaQ8o44mmhLTBio',
-) => {
+export const getNftInfoByXTZAddress = async (address = '') => {
   const allTokens = await getAllNFTsMetadata();
   const tokensOnOffer = await nftOnOffer();
 
