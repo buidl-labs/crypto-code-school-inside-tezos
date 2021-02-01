@@ -3,16 +3,20 @@ import { MDXRenderer } from 'gatsby-plugin-mdx';
 import { MDXProvider } from '@mdx-js/react';
 import SubjectIcon from '@material-ui/icons/Subject';
 
-const LearningInterface = ({ heading, body }) => {
+const LearningInterface = ({ heading, body, setDrawerOpen }) => {
   return (
     <main className={`overflow-hidden flex flex-col`}>
       <header
         className={`flex items-center text-white space-x-6 py-3 h-12 px-6 bg-base-800 flex-shrink-0`}
       >
-        <button>
+        <button onClick={() => setDrawerOpen(true)}>
           <SubjectIcon />
         </button>
-        <h5 className={`font-extrabold text-lg`}>{heading}</h5>
+        <h5
+          className={`font-extrabold text-lg overflow-ellipsis overflow-hidden`}
+        >
+          {heading}
+        </h5>
       </header>
       <div className={`py-8 px-10 overflow-y-auto flex-1`}>
         <MDXProvider

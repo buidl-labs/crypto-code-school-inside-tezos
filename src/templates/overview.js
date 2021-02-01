@@ -13,10 +13,10 @@ import DoneIcon from '@material-ui/icons/Done';
 
 const MDXParagraph = props => <p className={`text-2xl pt-6`} {...props} />;
 
-const ChapterRow = ({ chapter, num }) => (
+const ChapterRow = ({ chapter }) => (
   <li>
     <Link
-      to="#"
+      to={`/tezos/academy/${chapter.module}/${chapter.slug}`}
       className={`flex justify-between items-center hover:no-underline`}
     >
       <div className={`flex items-center`}>
@@ -26,7 +26,7 @@ const ChapterRow = ({ chapter, num }) => (
           <DoneIcon />
         </div>
         <p className={`text-2xl ml-4`}>
-          Chapter {num}: {chapter.title}
+          {chapter.chapter}: {chapter.title}
         </p>
       </div>
       <span>
@@ -51,6 +51,7 @@ export const query = graphql`
 function LessonsOverview({ data: { mdx: module } }) {
   const chapters = useChapters(module.frontmatter.slug);
   const [chapterList, updateChapterList] = useState(chapters);
+
   const [continuationLink, setContinuationLink] = useState('#');
   const [chapterZeroCompleted, setZeroChapterCompleted] = useState(() => {
     let result = false;
@@ -200,8 +201,8 @@ function LessonsOverview({ data: { mdx: module } }) {
           <div className={`pl-6 py-8`}>
             <h3 className={`text-4xl font-black`}>Chapters</h3>
             <ul className={`mt-8 space-y-6`}>
-              {chapterList.map((c, i) => (
-                <ChapterRow chapter={c} key={c.slug} num={i} />
+              {chapterList.map(c => (
+                <ChapterRow chapter={c} key={c.slug} />
               ))}
             </ul>
           </div>

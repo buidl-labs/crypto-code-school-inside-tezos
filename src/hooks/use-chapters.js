@@ -35,6 +35,7 @@ const useChapters = module => {
       chapter: chapter.frontmatter.chapter,
       slug: chapter.frontmatter.slug,
       excerpt: chapter.excerpt,
+      module: chapter.frontmatter.filterBy,
       editor: {
         answer: chapter.frontmatter.editor.answer,
         showEditor: chapter.frontmatter.editor.showEditor,
