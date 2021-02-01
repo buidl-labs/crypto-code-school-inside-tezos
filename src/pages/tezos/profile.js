@@ -4,7 +4,7 @@ import { Link } from 'gatsby';
 import NavBar from '../../components/NavBar';
 import Footer from 'src/components/Footer';
 import Button from 'src/components/Buttons';
-import CryptobotCard from '../../components/CryptobotCard';
+// import CryptobotCard from '../../components/CryptobotCard';
 
 import model from 'src/images/Col-1.png';
 
@@ -94,24 +94,16 @@ function Profile() {
               {/* My Cryptobots starts*/}
               <div className={openTab === 1 ? 'block' : 'hidden'} id="link1">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <Link to="/cryptobot">
-                    <CryptobotCard />
-                  </Link>
-                  <Link to="/cryptobot">
-                    <CryptobotCard />
-                  </Link>
-                  <Link to="/cryptobot">
-                    <CryptobotCard />
-                  </Link>
+                  <Link to="/cryptobot">{/* <CryptobotCard /> */}</Link>
+                  <Link to="/cryptobot">{/* <CryptobotCard /> */}</Link>
+                  <Link to="/cryptobot">{/* <CryptobotCard /> */}</Link>
                 </div>
               </div>
-               {/* My Cryptobots ends */}
+              {/* My Cryptobots ends */}
               {/* On Sale starts */}
               <div className={openTab === 2 ? 'block' : 'hidden'} id="link2">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <Link to="/cryptobot">
-                    <CryptobotCard />
-                  </Link>
+                  <Link to="/cryptobot">{/* <CryptobotCard /> */}</Link>
                 </div>
               </div>
               {/* On Sale ends */}
