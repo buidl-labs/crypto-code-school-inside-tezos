@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import DoneIcon from '@material-ui/icons/Done';
@@ -16,13 +16,36 @@ import CODE_JSON from 'src/data/code';
 import STORAGE_JSON from 'src/data/storage';
 import FAUCET_KEY from 'src/data/account';
 
+function RenderLine({ value }) {
+  /* TODO: Logic to print new lines. */
+  const [val, setVal] = useState(value);
+
+  const valToPrint = useMemo(() => {
+    let lines = [];
+    for (let line of val) {
+      lines.push(line.split('\n'));
+    }
+
+    console.log(lines);
+
+    return lines;
+  }, [val]);
+
+  return <pre>{JSON.parse(JSON.stringify(valToPrint))}</pre>;
+}
+
 const CodingInterface = ({ code, answer }) => {
   const [editorValue, setEditorValue] = useState(code);
 
   const [showAnswer, setShowAnswer] = useState(false);
   const [checkAnswer, setCheckAnswer] = useState(false);
 
+  const Tezos = new TezosToolkit('https://api.tez.ie/rpc/carthagenet');
   const liveProvider = useRef(null);
+
+  function runCode() {
+    liveProvider.current && liveProvider.current.run();
+  }
 
   useEffect(() => {
     monaco.init().then(monacoInstance => {
@@ -58,15 +81,16 @@ const CodingInterface = ({ code, answer }) => {
       //code={editorInputValue}
 
       code={code}
-      // scope={{
-      //   ...React,
-      //   Tezos,
-      //   importKey,
-      //   InMemorySigner,
-      //   CODE_JSON,
-      //   STORAGE_JSON,
-      //   FAUCET_KEY,
-      // }}
+      scope={{
+        ...React,
+        RenderLine,
+        Tezos,
+        importKey,
+        InMemorySigner,
+        CODE_JSON,
+        STORAGE_JSON,
+        FAUCET_KEY,
+      }}
       // // To edit the theme, you need to edit - node_modules/prism-react-renderer/themes/vsDark/index.js
       theme={theme}
       style={{ overflow: 'hidden' }}
@@ -89,7 +113,16 @@ const CodingInterface = ({ code, answer }) => {
             </button>
           </div>
         </header>
-        <div style={{ height: 'calc(100vh - 14rem)', overflowX: 'auto' }}>
+        <div
+          style={{
+            height: `${
+              showAnswer || checkAnswer
+                ? 'calc(100vh - 14rem - 15rem)'
+                : 'calc(100vh - 14rem)'
+            }`,
+            overflowX: 'auto',
+          }}
+        >
           <LiveEditor
             style={{
               minHeight: `calc(100vh - 14rem)`,
@@ -104,14 +137,23 @@ const CodingInterface = ({ code, answer }) => {
         >
           <button
             className={`bg-primary-600 hover:bg-primary-700 flex items-center  pl-2 pr-4 focus:outline-none`}
-            onClick={() => setCheckAnswer(true)}
+            onClick={() => {
+              setCheckAnswer(true);
+              showAnswer && setShowAnswer(false);
+
+              runCode();
+            }}
           >
             <DoneIcon />
             Check
           </button>
           <button
             className={`bg-base-500 hover:bg-base-600 flex items-center pl-2 pr-4 focus:outline-none`}
-            onClick={() => setShowAnswer(true)}
+            onClick={() => {
+              setShowAnswer(true);
+              checkAnswer && setCheckAnswer(false);
+              showAnswer && setShowAnswer(false);
+            }}
           >
             <HelpOutlineIcon />
             Show Answer
@@ -158,6 +200,14 @@ const CodingInterface = ({ code, answer }) => {
               lineHeight: 26,
             }}
           />
+        ) : checkAnswer ? (
+          <div
+            className={`bg-editor-console text-white font-mono text-lg p-4 pr-3 overflow-auto`}
+            style={{ height: '11.5rem' }}
+          >
+            <LivePreview className={`overflow-y-auto text-white`} />
+            <LiveError className={`overflow-y-auto text-error-400`} />
+          </div>
         ) : null}
       </main>
     </SemiLiveProvider>

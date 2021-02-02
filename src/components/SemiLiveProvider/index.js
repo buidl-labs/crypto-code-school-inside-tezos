@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
 import { TezosToolkit } from '@taquito/taquito';
 import { importKey, InMemorySigner } from '@taquito/signer';
@@ -33,11 +33,7 @@ class SemiLiveProvider extends LiveProvider {
     // The following piece of code provides additional functionality
     // to the user code such as print function and key import
     const code = `
-    let _printlnBuffer = "";
-    function print(value) {
-      _printlnBuffer += value + "\\n";
-      render(_printlnBuffer);
-    }
+    
     Tezos.setProvider({ rpc: 'https://api.tez.ie/rpc/carthagenet' });
     ${`fetch('https://api.tez.ie/keys/carthagenet/', {
         method: 'POST',
@@ -53,6 +49,13 @@ class SemiLiveProvider extends LiveProvider {
                     FAUCET_KEY.secret);
        })
       .then(() => {
+        let _printlnBuffer = [];
+        function print(value) {
+          
+          _printlnBuffer.push(value)
+          
+          render(<RenderLine value={_printlnBuffer}/>);
+        }
         ${this.code}
        });`}`;
 
