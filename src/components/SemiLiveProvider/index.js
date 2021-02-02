@@ -49,12 +49,12 @@ class SemiLiveProvider extends LiveProvider {
                     FAUCET_KEY.secret);
        })
       .then(() => {
-        let _printlnBuffer = [];
+        let _printlnBuffer = "";
         function print(value) {
           
-          _printlnBuffer.push(value)
+          _printlnBuffer += value;
           
-          render(<RenderLine value={_printlnBuffer}/>);
+          render(_printlnBuffer);
         }
         ${this.code}
        });`}`;

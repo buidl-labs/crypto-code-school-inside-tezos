@@ -3,7 +3,7 @@ import RefreshIcon from '@material-ui/icons/Refresh';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import DoneIcon from '@material-ui/icons/Done';
 import CloseIcon from '@material-ui/icons/Close';
-import styled from '@emotion/styled';
+
 import { ControlledEditor, monaco } from '@monaco-editor/react';
 import { TezosToolkit } from '@taquito/taquito';
 import { importKey, InMemorySigner } from '@taquito/signer';
