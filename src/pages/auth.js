@@ -11,6 +11,10 @@ import thanosLogo from '../images/thanos-wallet.png';
 import SadBot from '../images/SadBot.png';
 import { createUser, updateUser, verifyUser } from '../api';
 import { Magic } from 'magic-sdk';
+import { NetworkType } from '@airgap/beacon-sdk';
+
+// To connect to Delphinet, change this to NetworkType.DELPHINET
+const network = NetworkType.MAINNET;
 
 function isBrowserSupported() {
   if (typeof window !== 'undefined') {
@@ -279,6 +283,8 @@ const AuthPage = () => {
       ThanosWallet.onAvailabilityChange(available =>
         setThanosAvailable(available),
       );
+
+    console.log(network);
   }, []);
 
   useEffect(() => {
@@ -286,15 +292,23 @@ const AuthPage = () => {
   }, [isUserVerified]);
 
   async function connectWallet() {
-    const acc = await beacon.getActiveAccount();
-    console.log(acc);
+    const acc = await beacon.getActiveAccount({
+      network: {
+        type: network,
+      },
+    });
+    console.log('active account', acc);
     let u;
-    if (acc) {
+    if (true) {
       u = await createUser(acc.address);
       console.log('u', u);
     } else {
       try {
-        const resp = await beacon.requestPermissions();
+        const resp = await beacon.requestPermissions({
+          network: {
+            type: network,
+          },
+        });
         if (!resp.address) throw new Error();
         u = await createUser(resp.address);
         console.log('u', u);
