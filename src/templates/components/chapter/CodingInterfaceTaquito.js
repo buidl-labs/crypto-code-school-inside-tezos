@@ -7,7 +7,7 @@ import styled from '@emotion/styled';
 import { ControlledEditor, monaco } from '@monaco-editor/react';
 import { TezosToolkit } from '@taquito/taquito';
 import { importKey, InMemorySigner } from '@taquito/signer';
-import StyledProvider from 'src/components/SemiLiveProvider';
+import SemiLiveProvider from 'src/components/SemiLiveProvider';
 import { LiveEditor, LivePreview, LiveError } from 'react-live';
 
 import theme from 'src/templates/customVSDarkTheme';
@@ -51,7 +51,7 @@ const CodingInterface = ({ code, answer }) => {
   const resetEditorCode = () => setEditorValue(code);
 
   return (
-    <StyledProvider
+    <SemiLiveProvider
       transformCode={code => code.replace(/import .*/g, '')}
       noInline={true}
       ref={liveProvider}
@@ -89,10 +89,10 @@ const CodingInterface = ({ code, answer }) => {
             </button>
           </div>
         </header>
-        <div className={`flex-1`}>
+        <div style={{ height: 'calc(100vh - 14rem)', overflowX: 'auto' }}>
           <LiveEditor
             style={{
-              height: `calc(100vh - 14rem)`,
+              minHeight: `calc(100vh - 14rem)`,
               fontFamily: `"Ubuntu Mono", monospace`,
               fontSize: '15.75px',
               overflow: 'auto',
@@ -160,7 +160,7 @@ const CodingInterface = ({ code, answer }) => {
           />
         ) : null}
       </main>
-    </StyledProvider>
+    </SemiLiveProvider>
   );
 };
 
