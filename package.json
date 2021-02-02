@@ -14,7 +14,7 @@
     "@mdx-js/react": "^1.5.7",
     "@monaco-editor/react": "^3.1.2",
     "@taquito/signer": "^7.0.0-beta.0",
-    "@taquito/taquito": "^7.0.0-beta.0",
+    "@taquito/taquito": "^7.0.0-beta-RC.0",
     "@thanos-wallet/dapp": "^2.2.1",
     "amplitude-js": "^5.11.0",
     "autoprefixer": "^10.2.3",
