@@ -1,16 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'gatsby';
+import { useAsync } from 'react-use';
+import Loader from 'react-loader-spinner';
 
 import NavBar from 'src/components/NavBar';
 import Button from 'src/components/Buttons';
-
-import model from 'src/images/Col-1.png';
+import { CONTRACT_ADDRESS } from 'src/defaults';
+import { connectToBeacon, Tezos } from 'src/utils/wallet';
+import { BeaconContext } from 'src/context/beacon-context';
+import { convertMutezToXtz, getXTZPriceInUSD } from 'src/utils/indexer';
 
 const Steppers = ({ number, name, clickEvent }) => {
   return (
     <div onClick={clickEvent}>
       <div className="flex items-center text-primary-600 relative">
-        <div class="rounded-full h-12 w-12 py-3 inline-flex items-center justify-center bg-primary-600 text-white">
+        <div className="rounded-full h-12 w-12 py-3 inline-flex items-center justify-center bg-primary-600 text-white">
           {number}
         </div>
         <div className="absolute top-0 -ml-10 text-center mt-16 w-32 text-lg font-regular text-white">
@@ -53,18 +57,54 @@ const Cost = ({ type, main, caption }) => {
   );
 };
 
-function Transaction() {
+function Transaction({ location }) {
+  let beacon = useContext(BeaconContext);
   const [step, setStep] = useState(1);
+  const [opHash, setOpHash] = useState(null);
+  const xtzPrice = location.state ? location.state.xtzPrice : null;
+  const bot = location.state ? location.state.bot : null;
+
+  const buyCryptobot = async (mutez, tokenId) => {
+    try {
+      await connectToBeacon(beacon);
+
+      const contract = await Tezos.wallet.at(CONTRACT_ADDRESS);
+
+      const sendArgs = { amount: mutez, mutez: true };
+
+      const op = await contract.methods
+        .purchase_bot_at_sale_price(Number(tokenId))
+        .send(sendArgs);
+
+      //Go to 2nd Step
+      setStep(2);
+      setOpHash(op.opHash);
+      console.log(`Awaiting for hash to be confirmed...`, op);
+
+      const result = await op.confirmation(1);
+      // Go to 3rd Step
+      setStep(3);
+      console.log('result', result);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className=" bg-base-900 ">
       <NavBar />
       <div className="container px-12 mx-auto ">
         <div className="grid grid-cols-2 gap-4 h-screen">
           <div>
-            <img src={model} />
+            <model-viewer
+              style={{ width: '100%', height: '100%' }}
+              camera-controls
+              alt="3D Cryptobot"
+              src={`https://cloudflare-ipfs.com/ipfs/${bot ? bot.uri : ''}`}
+            ></model-viewer>
           </div>
           <div className="px-12 pt-4 ">
-            <div class="flex items-center">
+            <div className="flex items-center">
               <Steppers
                 number="1"
                 name="Confirm Claim"
@@ -95,18 +135,42 @@ function Transaction() {
             <div className={step === 1 ? 'block' : 'hidden'}>
               <Heading heading="Confirm your claim" />
               <TransactionContainer>
-                <Cost type="Total" main="4XTZ" caption="$8.25 USD" />
+                <Cost
+                  type="Total"
+                  main={
+                    bot
+                      ? bot.saleValueInMutez
+                        ? `${convertMutezToXtz(bot.saleValueInMutez)} XTZ`
+                        : null
+                      : null
+                  }
+                  caption={
+                    xtzPrice && bot && bot.saleValueInMutez
+                      ? `$
+                        ${getXTZPriceInUSD(
+                          xtzPrice.price,
+                          bot.saleValueInMutez,
+                        )}`
+                      : null
+                  }
+                />
                 <div className="bg-base-600 mt-4 px-8 rounded">
-                  <Cost
+                  {/* <Cost
                     type="Cost"
                     main="FREE"
                     caption="Your first bot is on us!"
-                  />
-                  <hr className="my-2 bg-base-400 border-2 h-0.5" />
+                  /> */}
+                  {/* <hr className="my-2 bg-base-400 border-2 h-0.5" /> */}
                   <Cost type="Network Fee" main="4XTZ" caption="$2.25 USD" />
                 </div>
-                <div class="grid mx-auto justify-center mt-6">
-                  <Button size="lg" type="primary">
+                <div className="grid mx-auto justify-center mt-6">
+                  <Button
+                    onClick={() =>
+                      buyCryptobot(bot.saleValueInMutez, bot.tokenId)
+                    }
+                    size="lg"
+                    type="primary"
+                  >
                     Confirm
                   </Button>
                 </div>
@@ -116,12 +180,34 @@ function Transaction() {
             <div className={step === 2 ? 'block' : 'hidden'}>
               <Heading heading="Transaction Operation Started" />
               <TransactionContainer>
-                <h4 className="text-white text-center">loader</h4>
-                <div class="grid grid-cols mx-auto justify-center mt-6 text-white">
-                  <Button size="lg" type="outline">
-                    Show Status in Tezos Blockchain
+                <div className="grid grid-cols mx-auto justify-center mt-6 text-white">
+                  <Button
+                    onClick={() => {
+                      window.open(
+                        `https://delphinet.tzkt.io/${opHash ? opHash : ''}`,
+                        '_blank',
+                      );
+                    }}
+                    size="lg"
+                    type="outline"
+                  >
+                    <span>
+                      The transaction has successfully been broadcasted to the
+                      network.
+                    </span>
                   </Button>
                 </div>
+                <div className="grid grid-cols mx-auto justify-center mt-6 text-white">
+                  <Loader
+                    type="BallTriangle"
+                    color="#2563EB"
+                    height={80}
+                    width={80}
+                  />
+                </div>
+                <h4 className="text-white text-center">
+                  Waiting for confirmation
+                </h4>
               </TransactionContainer>
             </div>
 
@@ -198,13 +284,17 @@ function Transaction() {
                   Earn more super cool cryptobots by completing Modules or
                   exploring Marketplace
                 </h4>
-                <div class="grid grid-cols-2 gap-4  mx-auto justify-center text-white mt-8">
-                  <Button size="lg" type="secondary">
-                    Explore Marketplace
-                  </Button>
-                  <Button size="lg" type="primary">
-                    Go to Academy
-                  </Button>
+                <div className="grid grid-cols-2 gap-4  mx-auto justify-center text-white mt-8">
+                  <Link to="/tezos/marketplace">
+                    <Button size="lg" type="secondary">
+                      Explore Marketplace
+                    </Button>
+                  </Link>
+                  <Link to="/tezos/academy">
+                    <Button size="lg" type="primary">
+                      Go to Academy
+                    </Button>
+                  </Link>
                 </div>
               </TransactionContainer>
             </div>

@@ -9,8 +9,6 @@ if (NETWORK === 'delphinet') {
   TezosObj = new TezosToolkit(' https://api.tez.ie/rpc/mainnet');
 }
 
-export const Tezos = TezosObj;
-
 export const connectToBeacon = async walletContext => {
   let globalWallet;
 
@@ -33,3 +31,5 @@ export const connectToBeacon = async walletContext => {
 
   return globalWallet;
 };
+
+export const Tezos = TezosObj;

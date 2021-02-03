@@ -202,15 +202,25 @@ function BotView({ location }) {
             <div className="bottom-0 w-full bg-base-900">
               <div className="flex mx-auto justify-center py-9">
                 {bot && bot.isForSale ? (
-                  <Button
-                    onClick={() =>
-                      buyCryptobot(bot.saleValueInMutez, bot.tokenId)
-                    }
-                    size="lg"
-                    type="primary"
+                  <Link
+                    to={'/tezos/transaction'}
+                    state={{
+                      id: bot.tokenId,
+                      bot: bot,
+                      xtzPrice: xtzPrice,
+                      action: 'purchaseBotAtSaleValue',
+                    }}
                   >
-                    Buy Now
-                  </Button>
+                    <Button
+                      // onClick={() =>
+                      //   buyCryptobot(bot.saleValueInMutez, bot.tokenId)
+                      // }
+                      size="lg"
+                      type="primary"
+                    >
+                      Buy Now
+                    </Button>
+                  </Link>
                 ) : (
                   <div className="font-mulish font-bold mb-3 text-white text-xl">
                     Bot not available for sale{' '}
