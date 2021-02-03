@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { navigate } from 'gatsby';
+
 import { useAsync } from 'react-use';
 import {
   fetchAllNfts,
@@ -11,12 +13,16 @@ import CryptobotCard from 'src/components/CryptobotCard';
 import uniqBy from 'lodash.uniqby';
 import Loader from 'react-loader-spinner';
 
+import isUserAtom from 'src/atoms/is-user-atom';
+import { useAtom } from 'jotai';
+
 const Marketplace = () => {
   const [forSale, updateForSale] = useState(true);
   const [notForSale, updateNotForSale] = useState(false);
   const [sortBy, updateSortBy] = useState('offerDate');
   const [nftList, updateNftList] = useState([]);
   const [xtzPrice, updateXtzPrice] = useState(null);
+  const [isUser] = useAtom(isUserAtom);
 
   const allNFTS = useAsync(async () => {
     try {
@@ -82,6 +88,15 @@ const Marketplace = () => {
 
   useAsync(async () => {
     const x = await getNftInfoByXTZAddress();
+  }, []);
+
+  useEffect(() => {
+    // console.log(user, isUser);
+    if (!isUser) {
+      const url =
+        typeof window !== 'undefined' ? window.location.pathname : '/tezos';
+      navigate('/auth', { state: { pathname: url } });
+    }
   }, []);
 
   return (

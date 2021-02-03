@@ -25,7 +25,9 @@ function Profile() {
   useEffect(() => {
     // console.log(user, isUser);
     if (!isUser) {
-      navigate('/auth');
+      const url =
+        typeof window !== 'undefined' ? window.location.pathname : '/tezos';
+      navigate('/auth', { state: { pathname: url } });
     }
   }, []);
 
