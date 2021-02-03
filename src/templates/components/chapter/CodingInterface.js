@@ -1,16 +1,33 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import DoneIcon from '@material-ui/icons/Done';
 import CloseIcon from '@material-ui/icons/Close';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import { checkCode } from '../../../utils/compiler';
+import DisplayResult from './DisplayResult';
 
 import { ControlledEditor, monaco, DiffEditor } from '@monaco-editor/react';
 
-const CodingInterface = ({ code, answer }) => {
+const CodingInterface = ({
+  code,
+  answer,
+  updateValidation,
+  module,
+  isCode,
+}) => {
   const [editorValue, setEditorValue] = useState(code);
-
   const [showAnswer, setShowAnswer] = useState(false);
   const [checkAnswer, setCheckAnswer] = useState(false);
+  const [result, setResult] = useState({});
+
+  const displayMichelsonBtn = useMemo(
+    () =>
+      result.success &&
+      isCode &&
+      (module.indexOf('2') !== -1 || module.indexOf('3') !== -1),
+    [checkAnswer],
+  );
 
   useEffect(() => {
     monaco.init().then(monacoInstance => {
@@ -82,22 +99,37 @@ const CodingInterface = ({ code, answer }) => {
           }}
         />
         <div
-          className={`flex justify-start flex-shrink-0 bg-base-800 text-white text-lg h-12 space-x-4`}
+          className={`flex justify-between flex-shrink-0 bg-base-800 text-white text-lg h-12 space-x-4`}
         >
-          <button
-            className={`bg-primary-600 hover:bg-primary-700 flex items-center  pl-2 pr-4 focus:outline-none`}
-            onClick={() => setCheckAnswer(true)}
-          >
-            <DoneIcon />
-            Check
-          </button>
-          <button
-            className={`bg-base-500 hover:bg-base-600 flex items-center pl-2 pr-4 focus:outline-none`}
-            onClick={() => setShowAnswer(true)}
-          >
-            <HelpOutlineIcon />
-            Show Answer
-          </button>
+          <div className={`flex space-x-4`}>
+            <button
+              className={`bg-primary-600 hover:bg-primary-700 flex items-center  pl-2 pr-4 focus:outline-none`}
+              onClick={() => {
+                setCheckAnswer(true);
+                setShowAnswer(false);
+                let res = checkCode(editorValue, answer, module);
+                setResult(res);
+              }}
+            >
+              <DoneIcon />
+              Check
+            </button>
+            <button
+              className={`bg-base-500 hover:bg-base-600 flex items-center pl-2 pr-4 focus:outline-none`}
+              onClick={() => setShowAnswer(true)}
+            >
+              <HelpOutlineIcon />
+              Show Answer
+            </button>
+          </div>
+          {displayMichelsonBtn && (
+            <button
+              className={`text-base-50 py-2 px-4 mr-8 flex items-center focus:outline-none`}
+            >
+              <AddCircleOutlineIcon />
+              <span className={`mx-2 block`}>Show compiled code</span>
+            </button>
+          )}
         </div>
         {(showAnswer || checkAnswer) && (
           <div
@@ -138,6 +170,8 @@ const CodingInterface = ({ code, answer }) => {
               lineHeight: 26,
             }}
           />
+        ) : checkAnswer ? (
+          <DisplayResult result={result} />
         ) : null}
 
         {/* <ControlledEditor

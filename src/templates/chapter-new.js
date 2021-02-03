@@ -9,6 +9,7 @@ import Layout from '../components/Layout/layout';
 import { MDXProvider } from '@mdx-js/react';
 import { ControlledEditor, monaco, DiffEditor } from '@monaco-editor/react';
 import useChapters from '../hooks/use-chapters';
+import useModules from '../hooks/use-modules';
 import { getChaptersIndex } from '../utils/index';
 import SEO from '../components/Seo';
 
@@ -35,9 +36,20 @@ export const query = graphql`
 const ChapterTemplate = ({ data: { mdx: chapter } }) => {
   const [isChapterDrawerOpen, setIsChapterDrawerOpen] = useState(false);
 
-  const chapterHeading = useMemo(
-    () => `${chapter.frontmatter.chapter} - ${chapter.frontmatter.title}`,
-  );
+  const NavHeading = useMemo(() => {
+    let { module, title } = useModules(chapter.frontmatter.filterBy);
+    return `${(module.charAt(0).toUpperCase() + module.slice(1))
+      .split('-')
+      .reduce((acc, curr) => {
+        let c = curr;
+        if (c.indexOf('0') !== -1) {
+          console.log('curr has 0');
+          c = c.length > 1 ? c.slice(1) : c;
+        }
+        acc += ` ${c}`;
+        return acc;
+      }, '')} - ${title}`;
+  }, [chapter.filterBy]);
 
   const chapters = useMemo(() => useChapters(chapter.frontmatter.filterBy));
   const chapterIndex = useMemo(
@@ -45,9 +57,14 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
     [chapters],
   );
 
+  const [validation, updateValidation] = useState({
+    success: false,
+    error: [''],
+  });
+
   return (
     <div className={`overflow-hidden`}>
-      <NavBar chapter={chapterHeading} module={chapter.frontmatter.filterBy} />
+      <NavBar heading={NavHeading} module={chapter.frontmatter.filterBy} />
       <main
         className={`grid grid-cols-2 gap-x-6 bg-base-900 h-full relative`}
         style={{ height: 'calc(100vh - 5rem - 3.5em)' }}
@@ -66,6 +83,9 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
         <CodingInterface
           code={chapter.frontmatter.editor.startingCode}
           answer={chapter.frontmatter.editor.answer}
+          updateValidation={updateValidation}
+          module={chapter.frontmatter.filterBy}
+          isCode={chapter.frontmatter.isCode}
         />
       </main>
 
