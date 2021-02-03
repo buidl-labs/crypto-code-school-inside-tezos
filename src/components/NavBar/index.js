@@ -80,7 +80,9 @@ function NavBar(props) {
           </li>
         ) : (
           <li>
-            <UserDisplay user={user} />
+            <Link to="/tezos/profile">
+              <UserDisplay user={user} />
+            </Link>
           </li>
         )}
       </ul>

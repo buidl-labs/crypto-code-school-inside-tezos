@@ -292,7 +292,7 @@ const AuthPage = () => {
   }, [isUserVerified]);
 
   async function connectWallet() {
-    const acc = await beacon.getActiveAccount({
+    const acc = await beacon.client.getActiveAccount({
       network: {
         type: network,
       },
@@ -304,7 +304,7 @@ const AuthPage = () => {
       console.log('u', u);
     } else {
       try {
-        const resp = await beacon.requestPermissions({
+        const resp = await beacon.client.requestPermissions({
           network: {
             type: network,
           },

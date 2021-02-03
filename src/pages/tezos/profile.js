@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'gatsby';
+import React, { useState, useEffect } from 'react';
+import { Link, navigate } from 'gatsby';
 
 import NavBar from '../../components/NavBar';
 import Footer from 'src/components/Footer';
@@ -8,6 +8,10 @@ import { useAsync } from 'react-use';
 import Loader from 'react-loader-spinner';
 import CryptobotCard from 'src/components/CryptobotCard';
 
+import userAtom from 'src/atoms/user-atom';
+import isUserAtom from 'src/atoms/is-user-atom';
+import { useAtom } from 'jotai';
+
 import { getXTZPrice, getNftInfoByXTZAddress } from 'src/utils/indexer';
 
 import model from 'src/images/Col-1.png';
@@ -15,6 +19,15 @@ import model from 'src/images/Col-1.png';
 function Profile() {
   const [openTab, setOpenTab] = useState(1);
   const [xtzPrice, updateXtzPrice] = useState(null);
+  const [user, setUser] = useAtom(userAtom);
+  const [isUser] = useAtom(isUserAtom);
+
+  useEffect(() => {
+    // console.log(user, isUser);
+    if (!isUser) {
+      navigate('/auth');
+    }
+  }, []);
 
   useAsync(async () => {
     try {
@@ -27,14 +40,13 @@ function Profile() {
   }, []);
 
   const ownedBots = useAsync(async () => {
+    if (!user) return;
     try {
-      return await getNftInfoByXTZAddress(
-        'tz1iLVzBpCNTGz6tCBK2KHaQ8o44mmhLTBio',
-      );
+      return await getNftInfoByXTZAddress(user.xtzAddress);
     } catch (err) {
       console.log(err);
     }
-  }, []);
+  }, [user]);
 
   return (
     <div className="bg-base-900 font-mulish">
@@ -48,12 +60,12 @@ function Profile() {
           />
           <div className="flex-grow flex flex-col pl-6">
             <h3 className="font-mulish font-black text-white text-4xl">
-              harshbadhai
+              {user ? user.name : ''}
             </h3>
             <div className=" font-mulish text-xl text-white pt-3 ">
               <span className="font-regular">Wallet Address:</span>{' '}
               <span className="font-extrabold">
-                tz1UP5ZLKud4PMCrwGW1VBjYFvU8QdcPvTQt
+                {user ? user.xtzAddress : ''}
               </span>
             </div>
           </div>
