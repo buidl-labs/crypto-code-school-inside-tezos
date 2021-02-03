@@ -42,7 +42,9 @@ export const nftOnOffer = async () => {
     return [];
   }
 
-  const filtered = offers.map(elm => {
+  const nullValuesRemoved = offers.filter(elm => elm.data.value != null);
+
+  const filtered = nullValuesRemoved.map(elm => {
     return {
       tokenId: elm.data.key.value,
       isForSale: elm.data.value.children[0].value,
