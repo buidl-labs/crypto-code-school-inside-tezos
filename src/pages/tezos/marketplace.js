@@ -5,7 +5,6 @@ import {
   getXTZPrice,
   getNftInfoByXTZAddress,
 } from 'src/utils/indexer';
-import Button from 'src/components/Buttons';
 import NavBar from 'src/components/NavBar';
 import Footer from 'src/components/Footer';
 import CryptobotCard from 'src/components/CryptobotCard';

@@ -12,9 +12,11 @@ import SadBot from '../images/SadBot.png';
 import { createUser, updateUser, verifyUser } from '../api';
 import { NetworkType } from '@airgap/beacon-sdk';
 import { Magic } from 'magic-sdk';
+import { NETWORK } from 'src/defaults';
 
 // To connect to Delphinet, change this to NetworkType.DELPHINET
-const network = NetworkType.MAINNET;
+const network =
+  NETWORK === 'delphinet' ? NetworkType.DELPHINET : NetworkType.MAINNET;
 
 function isBrowserSupported() {
   if (typeof window !== 'undefined') {

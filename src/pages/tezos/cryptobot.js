@@ -1,14 +1,33 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'gatsby';
 
 import NavBar from 'src/components/NavBar';
 import Button from 'src/components/Buttons';
 import { convertMutezToXtz, getXTZPriceInUSD } from 'src/utils/indexer';
 import model from 'src/images/Col-1.png';
+import { BeaconContext } from '../../context/beacon-context';
+import { CONTRACT_ADDRESS } from 'src/defaults';
+import { connectToBeacon, Tezos } from 'src/utils/wallet';
 
 function BotView({ location }) {
+  let beacon = useContext(BeaconContext);
   const xtzPrice = location.state ? location.state.xtzPrice : null;
   const bot = location.state ? location.state.bot : null;
+
+  const buyCryptobot = async (mutez, tokenId) => {
+    await connectToBeacon(beacon);
+
+    const contract = await Tezos.wallet.at(CONTRACT_ADDRESS);
+
+    const sendArgs = { amount: mutez, mutez: true };
+
+    const op = await contract.methods
+      .purchase_bot_at_sale_price(Number(tokenId))
+      .send(sendArgs);
+    console.log(`Awaiting for ${op.hash} to be confirmed...`);
+    const result = await op.confirmation(3);
+    console.log('result', result);
+  };
 
   return (
     <div className="h-screen w-screen fixed bg-base-900 ">
@@ -30,7 +49,10 @@ function BotView({ location }) {
               <div className="grid grid-cols-3 gap-4">
                 <div className="col-span-2">
                   <h2 className="text-5xl font-mulish font-black text-white">
-                    Cryptobot <span className="text-3xl">(#{bot ? bot.tokenId : ''})</span>
+                    Cryptobot{' '}
+                    <span className="text-3xl">
+                      (#{bot ? bot.tokenId : ''})
+                    </span>
                   </h2>
                 </div>
                 {/* social icons start */}
@@ -180,11 +202,15 @@ function BotView({ location }) {
             <div className="bottom-0 w-full bg-base-900">
               <div className="flex mx-auto justify-center py-9">
                 {bot && bot.isForSale ? (
-                  <Link to={`/tezos/transaction`}>
-                    <Button size="lg" type="primary">
-                      Buy Now
-                    </Button>
-                  </Link>
+                  <Button
+                    onClick={() =>
+                      buyCryptobot(bot.saleValueInMutez, bot.tokenId)
+                    }
+                    size="lg"
+                    type="primary"
+                  >
+                    Buy Now
+                  </Button>
                 ) : (
                   <div className="font-mulish font-bold mb-3 text-white text-xl">
                     Bot not available for sale{' '}
