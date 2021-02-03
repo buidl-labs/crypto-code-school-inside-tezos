@@ -99,7 +99,7 @@ function ThanosNotAvailableModal() {
           Thanos Wallet will serve as a safe place to store your super cool
           Cryptobots. This will also act as your login to the platform (no extra
           password needed).
-          <p className={`mt-4`}>
+          <div className={`mt-4`}>
             Installed?{' '}
             <button
               className={`font-bold underline`}
@@ -107,7 +107,7 @@ function ThanosNotAvailableModal() {
             >
               Refresh this page to detect.
             </button>
-          </p>
+          </div>
         </ModalTextBody>
       </ModalTextSection>
       <a
@@ -269,7 +269,7 @@ function LoggedInModal() {
   );
 }
 
-const AuthPage = () => {
+const AuthPage = ({ location }) => {
   let beacon = useContext(BeaconContext);
   const browserSupport = useMemo(isBrowserSupported);
   const [thanosAvailable, setThanosAvailable] = useState(false);
@@ -288,7 +288,7 @@ const AuthPage = () => {
   }, []);
 
   useEffect(() => {
-    isUserVerified && navigate('/tezos');
+    isUserVerified && navigate(location ? location.state.pathname : '/tezos');
   }, [isUserVerified]);
 
   async function connectWallet() {

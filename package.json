@@ -52,6 +52,7 @@
     "magic-sdk": "^4.1.0",
     "monaco-editor": "^0.20.0",
     "polished": "^3.5.1",
+    "popper.js": "^1.16.1",
     "postcss": "^8.2.4",
     "prismjs": "^1.19.0",
     "prop-types": "^15.7.2",
