@@ -44,7 +44,7 @@ function NavBar(props) {
     if (beacon === null) {
       return;
     }
-    let acc = await beacon.getActiveAccount();
+    let acc = await beacon.client.getActiveAccount();
     if (acc) {
       let u = await createUser(acc.address);
       if (u.verified) {
