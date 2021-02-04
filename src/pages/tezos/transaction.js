@@ -9,6 +9,7 @@ import { CONTRACT_ADDRESS } from 'src/defaults';
 import { connectToBeacon, Tezos } from 'src/utils/wallet';
 import { BeaconContext } from 'src/context/beacon-context';
 import { convertMutezToXtz, getXTZPriceInUSD } from 'src/utils/indexer';
+import { InMemorySigner } from '@taquito/signer';
 
 const Steppers = ({ number, name, clickEvent }) => {
   return (
@@ -61,6 +62,7 @@ function Transaction({ location }) {
   let beacon = useContext(BeaconContext);
   const [step, setStep] = useState(1);
   const [opHash, setOpHash] = useState(null);
+  const [networkFeeEstimate, setNetworkFeeEstimate] = useState(0);
   const xtzPrice = location.state ? location.state.xtzPrice : null;
   const bot = location.state ? location.state.bot : null;
 
@@ -89,6 +91,30 @@ function Transaction({ location }) {
       console.log(err);
     }
   };
+
+  useAsync(async () => {
+    Tezos.setProvider({
+      signer: new InMemorySigner(
+        'edskRo7CmqNdMfnEeBCPNevy9jGo2MvwNdomoxVvmwqPJTFtFrubg1spFK1aZdywS8QxkhfnAWpAVVEgCsmkSnWMyNXM1aJ4Ka',
+      ),
+    });
+
+    try {
+      const contract = await Tezos.wallet.at(CONTRACT_ADDRESS);
+
+      const sendArgs = { amount: bot.saleValueInMutez, mutez: true };
+
+      const op = await contract.methods
+        .purchase_bot_at_sale_price(Number(bot.tokenId))
+        .toTransferParams(sendArgs);
+
+      const est = await Tezos.estimate.transfer(op);
+
+      setNetworkFeeEstimate(est.suggestedFeeMutez);
+    } catch (err) {
+      console.log('err', err);
+    }
+  }, []);
 
   return (
     <div className=" bg-base-900 ">
@@ -161,7 +187,18 @@ function Transaction({ location }) {
                     caption="Your first bot is on us!"
                   /> */}
                   {/* <hr className="my-2 bg-base-400 border-2 h-0.5" /> */}
-                  <Cost type="Network Fee" main="4XTZ" caption="$2.25 USD" />
+                  {networkFeeEstimate === 0 ? (
+                    <Cost type="Network Fee" main={`LOADING...`} caption={``} />
+                  ) : (
+                    <Cost
+                      type="Network Fee"
+                      main={`${convertMutezToXtz(networkFeeEstimate)} XTZ`}
+                      caption={`$ ${getXTZPriceInUSD(
+                        xtzPrice.price,
+                        networkFeeEstimate,
+                      )}`}
+                    />
+                  )}
                 </div>
                 <div className="grid mx-auto justify-center mt-6">
                   <Button
