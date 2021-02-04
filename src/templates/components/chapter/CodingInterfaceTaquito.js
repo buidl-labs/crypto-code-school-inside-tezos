@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useRef, useMemo } from 'react';
+
 import RefreshIcon from '@material-ui/icons/Refresh';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import DoneIcon from '@material-ui/icons/Done';
 import CloseIcon from '@material-ui/icons/Close';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 
 import { ControlledEditor, monaco } from '@monaco-editor/react';
 import { TezosToolkit } from '@taquito/taquito';
@@ -144,8 +146,8 @@ const CodingInterface = ({ code, answer }) => {
               runCode();
             }}
           >
-            <DoneIcon />
-            Check
+            <PlayArrowIcon />
+            Run Code
           </button>
           <button
             className={`bg-base-500 hover:bg-base-600 flex items-center pl-2 pr-4 focus:outline-none`}

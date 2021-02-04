@@ -1,31 +1,31 @@
 var theme = {
   plain: {
-    color: '#9CDCFE',
+    color: '#F8F8F8',
     backgroundColor: '#030D18',
   },
   styles: [
     {
       types: ['comment'],
       style: {
-        color: 'rgb(106, 153, 85)',
+        color: '#989898',
       },
     },
     {
       types: ['builtin', 'changed', 'keyword'],
       style: {
-        color: 'rgb(86, 156, 214)',
+        color: '#EA4192',
       },
     },
     {
       types: ['number', 'inserted'],
       style: {
-        color: 'rgb(181, 206, 168)',
+        color: '#00FF47',
       },
     },
     {
       types: ['constant'],
       style: {
-        color: 'rgb(100, 102, 149)',
+        color: '#9294d6',
       },
     },
     {
@@ -37,7 +37,7 @@ var theme = {
     {
       types: ['deleted', 'string', 'attr-value'],
       style: {
-        color: 'rgb(206, 145, 120)',
+        color: '#fc74fc',
       },
     },
     {

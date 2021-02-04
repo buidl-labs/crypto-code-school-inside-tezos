@@ -39,7 +39,7 @@ const CodingInterface = ({
           { token: 'comment', foreground: '989898', fontStyle: 'italic' },
           { token: 'keyword', foreground: 'EA4192' },
           { token: 'number', foreground: '00FF47' },
-          { token: 'string', foreground: 'AA00FA' },
+          { token: 'string', foreground: 'FC74FC' },
         ],
         colors: {
           'editor.foreground': '#F8F8F8',
