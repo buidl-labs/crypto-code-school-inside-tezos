@@ -372,7 +372,7 @@ function BotView({ location }) {
                         </Button>
                       </Link>
                     )
-                  ) : (
+                  ) : bot.isForSale ? (
                     <Link
                       to={'/tezos/transaction'}
                       state={{
@@ -392,12 +392,12 @@ function BotView({ location }) {
                         Buy Now
                       </Button>
                     </Link>
+                  ) : (
+                    <div className="font-mulish font-bold mb-3 text-white text-xl">
+                      Bot not available for sale{' '}
+                    </div>
                   )
-                ) : (
-                  <div className="font-mulish font-bold mb-3 text-white text-xl">
-                    Bot not available for sale{' '}
-                  </div>
-                )}
+                ) : null}
               </div>
             </div>
           </div>
