@@ -151,7 +151,11 @@ function Profile() {
                         ownedBots.value.map(el => {
                           return (
                             <div key={el.tokenId}>
-                              <CryptobotCard xtzPrice={xtzPrice} bot={el} />
+                              <CryptobotCard
+                                owned={true}
+                                xtzPrice={xtzPrice}
+                                bot={el}
+                              />
                             </div>
                           );
                         })
@@ -188,7 +192,11 @@ function Profile() {
                           .map(el => {
                             return (
                               <div key={el.tokenId}>
-                                <CryptobotCard xtzPrice={xtzPrice} bot={el} />
+                                <CryptobotCard
+                                  owned={true}
+                                  xtzPrice={xtzPrice}
+                                  bot={el}
+                                />
                               </div>
                             );
                           })

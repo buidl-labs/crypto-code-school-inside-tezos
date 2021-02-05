@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { Link } from 'gatsby';
+import React, { useContext, useState } from 'react';
+import { Link, navigate } from 'gatsby';
 
 import NavBar from 'src/components/NavBar';
 import Button from 'src/components/Buttons';
@@ -8,11 +8,21 @@ import model from 'src/images/Col-1.png';
 import { BeaconContext } from '../../context/beacon-context';
 import { CONTRACT_ADDRESS } from 'src/defaults';
 import { connectToBeacon, Tezos } from 'src/utils/wallet';
+import Loader from 'react-loader-spinner';
 
 function BotView({ location }) {
   let beacon = useContext(BeaconContext);
   const xtzPrice = location.state ? location.state.xtzPrice : null;
   const bot = location.state ? location.state.bot : null;
+  const owned = location.state ? location.state.owned : null;
+  const [opHash, setOpHash] = useState(null);
+  const [showWithdrawalPopup, setWithdrawalPopup] = useState(false);
+  const [
+    showWithdrawalConfirmationPop,
+    setWithdrawalConfirmationPop,
+  ] = useState(false);
+
+  const [botUpForSale, setBotUpForSale] = useState(false);
 
   const buyCryptobot = async (mutez, tokenId) => {
     await connectToBeacon(beacon);
@@ -29,8 +39,138 @@ function BotView({ location }) {
     console.log('result', result);
   };
 
+  const withdrawBotFromSale = async tokenId => {
+    await connectToBeacon(beacon);
+
+    try {
+      const contract = await Tezos.wallet.at(CONTRACT_ADDRESS);
+
+      const op = await contract.methods
+        .bot_no_longer_for_sale(Number(tokenId))
+        .send();
+
+      console.log(`Awaiting for ${op.opHash} to be confirmed...`);
+      setOpHash(op.opHash);
+      setWithdrawalPopup(false);
+      setWithdrawalConfirmationPop(true);
+      const result = await op.confirmation(1);
+      setWithdrawalConfirmationPop(false);
+      setBotUpForSale(true);
+      console.log('result', result);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const BotUpForSaleModel = () => {
+    return (
+      <BaseModal>
+        <ModalTextSection>
+          <ModalHeading>
+            3D Cryptobot (#{bot.tokenId}) withdrawn from sale.
+          </ModalHeading>
+          <Button
+            size="lg"
+            type="primary"
+            disabled={false}
+            style={{ width: '100%', marginBottom: '1rem' }}
+            onClick={() => {
+              navigate('/tezos/profile');
+            }}
+          >
+            Go back to profile view
+          </Button>
+        </ModalTextSection>
+      </BaseModal>
+    );
+  };
+
+  function WithdrawalPopup() {
+    return (
+      <BaseModal>
+        <ModalTextSection>
+          <ModalHeading>
+            Are you sure to withdraw cryptobot from sale ?
+          </ModalHeading>
+          <div>
+            <Button
+              size="lg"
+              type="primary"
+              disabled={false}
+              style={{ width: '100%', marginBottom: '1rem' }}
+              onClick={() => {
+                withdrawBotFromSale(bot.tokenId);
+              }}
+            >
+              Yes
+            </Button>
+          </div>
+          <div>
+            <Button
+              size="lg"
+              type="outline"
+              style={{ width: '100%' }}
+              onClick={() => setWithdrawalPopup(false)}
+              disabled={false}
+            >
+              No
+            </Button>
+          </div>
+        </ModalTextSection>
+      </BaseModal>
+    );
+  }
+
+  function ShowWithdrawalConfirmationPopModel() {
+    return (
+      <BaseModal>
+        <div className="grid grid-cols mx-auto justify-center mt-6 text-white">
+          <Button
+            onClick={() => {
+              window.open(
+                `https://delphinet.tzkt.io/${opHash ? opHash : ''}`,
+                '_blank',
+              );
+            }}
+            size="lg"
+            type="outline"
+          >
+            <span>
+              The transaction has successfully been broadcasted to the network.
+            </span>
+          </Button>
+        </div>
+        <div className="grid grid-cols mx-auto justify-center mt-6 text-white">
+          <Loader type="BallTriangle" color="#2563EB" height={80} width={80} />
+        </div>
+        <h4 className="text-white text-center">Waiting for confirmation</h4>
+      </BaseModal>
+    );
+  }
+
   return (
     <div className="h-screen w-screen fixed bg-base-900 ">
+      {showWithdrawalPopup && (
+        <div
+          className={`bg-base-900 min-h-screen text-white flex items-center justify-center`}
+        >
+          <WithdrawalPopup />
+        </div>
+      )}
+      {showWithdrawalConfirmationPop && (
+        <div
+          className={`bg-base-900 min-h-screen text-white flex items-center justify-center`}
+        >
+          <ShowWithdrawalConfirmationPopModel />
+        </div>
+      )}
+      {botUpForSale && (
+        <div
+          className={`bg-base-900 min-h-screen text-white flex items-center justify-center`}
+        >
+          <BotUpForSaleModel />
+        </div>
+      )}
       <NavBar />
       <div className="container px-12 py-12 mx-auto">
         <div className="grid grid-cols-2 gap-4">
@@ -201,26 +341,58 @@ function BotView({ location }) {
             </div>
             <div className="bottom-0 w-full bg-base-900">
               <div className="flex mx-auto justify-center py-9">
-                {bot && bot.isForSale ? (
-                  <Link
-                    to={'/tezos/transaction'}
-                    state={{
-                      id: bot.tokenId,
-                      bot: bot,
-                      xtzPrice: xtzPrice,
-                      action: 'purchaseBotAtSaleValue',
-                    }}
-                  >
-                    <Button
-                      // onClick={() =>
-                      //   buyCryptobot(bot.saleValueInMutez, bot.tokenId)
-                      // }
-                      size="lg"
-                      type="primary"
+                {bot ? (
+                  owned ? (
+                    bot.isForSale ? (
+                      <Button
+                        onClick={() => setWithdrawalPopup(true)}
+                        size="lg"
+                        type="primary"
+                      >
+                        Withdraw from sale
+                      </Button>
+                    ) : (
+                      <Link
+                        to={'/tezos/transaction'}
+                        state={{
+                          id: bot.tokenId,
+                          bot: bot,
+                          xtzPrice: xtzPrice,
+                          action: 'purchaseBotAtSaleValue',
+                        }}
+                      >
+                        <Button
+                          // onClick={() =>
+                          //   buyCryptobot(bot.saleValueInMutez, bot.tokenId)
+                          // }
+                          size="lg"
+                          type="primary"
+                        >
+                          Offer for sale
+                        </Button>
+                      </Link>
+                    )
+                  ) : (
+                    <Link
+                      to={'/tezos/transaction'}
+                      state={{
+                        id: bot.tokenId,
+                        bot: bot,
+                        xtzPrice: xtzPrice,
+                        action: 'purchaseBotAtSaleValue',
+                      }}
                     >
-                      Buy Now
-                    </Button>
-                  </Link>
+                      <Button
+                        // onClick={() =>
+                        //   buyCryptobot(bot.saleValueInMutez, bot.tokenId)
+                        // }
+                        size="lg"
+                        type="primary"
+                      >
+                        Buy Now
+                      </Button>
+                    </Link>
+                  )
                 ) : (
                   <div className="font-mulish font-bold mb-3 text-white text-xl">
                     Bot not available for sale{' '}
@@ -236,3 +408,23 @@ function BotView({ location }) {
 }
 
 export default BotView;
+
+function BaseModal({ children, img_src }) {
+  return (
+    <div
+      className={`bg-base-700 px-12 py-16 rounded-lg relative flex flex-col items-center shadow-lg text-center`}
+      style={{ maxWidth: '40vw' }}
+    >
+      {img_src && <img className={`m-0 w-auto`} src={img_src}></img>}
+      {children}
+    </div>
+  );
+}
+
+function ModalHeading({ children }) {
+  return <h4 className={`text-2xl font-extrabold mb-2`}>{children}</h4>;
+}
+
+function ModalTextSection({ children }) {
+  return <div className={`mt-6`}>{children}</div>;
+}

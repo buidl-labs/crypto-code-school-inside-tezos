@@ -3,7 +3,7 @@ import model from 'src/images/Col-1.png';
 import { Link } from 'gatsby';
 import { convertMutezToXtz, getXTZPriceInUSD } from 'src/utils/indexer';
 
-function CryptobotCard({ bot, xtzPrice }) {
+function CryptobotCard({ bot, xtzPrice, owned }) {
   return (
     <div className="bg-base-800  font-mulish h-full border-2 border-base-400 rounded-lg overflow-hidden">
       <div>
@@ -16,7 +16,7 @@ function CryptobotCard({ bot, xtzPrice }) {
       </div>
       <Link
         to={`/tezos/cryptobot`}
-        state={{ id: bot.tokenId, bot: bot, xtzPrice: xtzPrice }}
+        state={{ id: bot.tokenId, bot: bot, xtzPrice: xtzPrice, owned: owned }}
       >
         <div className="p-6">
           <h1 className="font-mulish text-2xl font-bold text-white mb-2">
@@ -30,11 +30,8 @@ function CryptobotCard({ bot, xtzPrice }) {
                   {xtzPrice ? (
                     <span className="text-base-100">
                       {' '}
-                      ( ${getXTZPriceInUSD(
-                        xtzPrice.price,
-                        bot.saleValueInMutez,
-                      )}{' '}
-                      )
+                      ( $
+                      {getXTZPriceInUSD(xtzPrice.price, bot.saleValueInMutez)} )
                     </span>
                   ) : null}
                 </span>
