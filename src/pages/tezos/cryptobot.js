@@ -324,13 +324,7 @@ function BotView({ location }) {
     );
   };
 
-  useAsync(async () => {
-    Tezos.setProvider({
-      signer: new InMemorySigner(
-        'edskRo7CmqNdMfnEeBCPNevy9jGo2MvwNdomoxVvmwqPJTFtFrubg1spFK1aZdywS8QxkhfnAWpAVVEgCsmkSnWMyNXM1aJ4Ka',
-      ),
-    });
-
+  const estimateWithdrawalGasFee = async () => {
     try {
       const contract = await Tezos.wallet.at(CONTRACT_ADDRESS);
 
@@ -344,6 +338,37 @@ function BotView({ location }) {
       setNetworkFeeEstimate(est.suggestedFeeMutez);
     } catch (err) {
       console.log('err', err);
+    }
+  };
+
+  const estimateBotPutOnSaleGasFee = async () => {
+    try {
+      const contract = await Tezos.wallet.at(CONTRACT_ADDRESS);
+
+      const op = await contract.methods
+        .offer_bot_for_sale(100, Number(bot.tokenId))
+        .toTransferParams({});
+
+      const est = await Tezos.estimate.transfer(op);
+
+      console.log(est);
+      setNetworkFeeEstimate(est.suggestedFeeMutez);
+    } catch (err) {
+      console.log('err', err);
+    }
+  };
+
+  useAsync(async () => {
+    Tezos.setProvider({
+      signer: new InMemorySigner(
+        'edskRo7CmqNdMfnEeBCPNevy9jGo2MvwNdomoxVvmwqPJTFtFrubg1spFK1aZdywS8QxkhfnAWpAVVEgCsmkSnWMyNXM1aJ4Ka',
+      ),
+    });
+
+    if (bot && owned && bot.isForSale) {
+      await estimateWithdrawalGasFee();
+    } else {
+      await estimateBotPutOnSaleGasFee();
     }
   }, []);
 
