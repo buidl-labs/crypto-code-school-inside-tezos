@@ -1,5 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Link, navigate } from 'gatsby';
+import { useAsync } from 'react-use';
 
 import NavBar from 'src/components/NavBar';
 import Button from 'src/components/Buttons';
@@ -9,6 +10,8 @@ import { BeaconContext } from '../../context/beacon-context';
 import { CONTRACT_ADDRESS } from 'src/defaults';
 import { connectToBeacon, Tezos } from 'src/utils/wallet';
 import Loader from 'react-loader-spinner';
+import { InMemorySigner } from '@taquito/signer';
+import { MdClose } from 'react-icons/md';
 
 function BotView({ location }) {
   let beacon = useContext(BeaconContext);
@@ -21,8 +24,34 @@ function BotView({ location }) {
     showWithdrawalConfirmationPop,
     setWithdrawalConfirmationPop,
   ] = useState(false);
+  const [networkFeeEstimate, setNetworkFeeEstimate] = useState(0);
+  const [botWithdrawnFromSale, setBotWithdrawnFrom] = useState(false);
 
-  const [botUpForSale, setBotUpForSale] = useState(false);
+  const Cost = ({ type, main, caption }) => {
+    return (
+      <div className="grid grid-cols-2 gap-4 py-6">
+        <div>
+          <h5 className="text-base-100 text-lg font-bold font-mulish">
+            {type}
+          </h5>
+        </div>
+        <div className="grid justify-items-end">
+          <h5 className="text-white text-xl font-extrabold font-mulish">
+            {main}
+          </h5>
+          <p className="text-white text-lg font-mulish">{caption}</p>
+        </div>
+      </div>
+    );
+  };
+
+  const TransactionContainer = ({ children }) => {
+    return (
+      <div className="w-full rounded-md bg-base-800 p-3 mt-6 mb-6">
+        {children}
+      </div>
+    );
+  };
 
   const buyCryptobot = async (mutez, tokenId) => {
     await connectToBeacon(beacon);
@@ -55,14 +84,14 @@ function BotView({ location }) {
       setWithdrawalConfirmationPop(true);
       const result = await op.confirmation(1);
       setWithdrawalConfirmationPop(false);
-      setBotUpForSale(true);
+      setBotWithdrawnFrom(true);
       console.log('result', result);
     } catch (err) {
       console.log(err);
     }
   };
 
-  const BotUpForSaleModel = () => {
+  const BotWithdrawnSaleModel = () => {
     return (
       <BaseModal>
         <ModalTextSection>
@@ -88,10 +117,30 @@ function BotView({ location }) {
   function WithdrawalPopup() {
     return (
       <BaseModal>
+        <div
+          onClick={() => setWithdrawalPopup(false)}
+          className="rounded-full bg-base-500 p-1 absolute right-3 top-3 cursor-pointer"
+        >
+          <MdClose size="38px" />
+        </div>
         <ModalTextSection>
           <ModalHeading>
             Are you sure to withdraw cryptobot from sale ?
           </ModalHeading>
+          <TransactionContainer>
+            {networkFeeEstimate === 0 ? (
+              <Cost type="Network Fee" main={`LOADING...`} caption={``} />
+            ) : (
+              <Cost
+                type="Network Fee"
+                main={`${convertMutezToXtz(networkFeeEstimate)} XTZ`}
+                caption={`$ ${getXTZPriceInUSD(
+                  xtzPrice.price,
+                  networkFeeEstimate,
+                )}`}
+              />
+            )}
+          </TransactionContainer>
           <div>
             <Button
               size="lg"
@@ -103,17 +152,6 @@ function BotView({ location }) {
               }}
             >
               Yes
-            </Button>
-          </div>
-          <div>
-            <Button
-              size="lg"
-              type="outline"
-              style={{ width: '100%' }}
-              onClick={() => setWithdrawalPopup(false)}
-              disabled={false}
-            >
-              No
             </Button>
           </div>
         </ModalTextSection>
@@ -148,8 +186,31 @@ function BotView({ location }) {
     );
   }
 
+  useAsync(async () => {
+    Tezos.setProvider({
+      signer: new InMemorySigner(
+        'edskRo7CmqNdMfnEeBCPNevy9jGo2MvwNdomoxVvmwqPJTFtFrubg1spFK1aZdywS8QxkhfnAWpAVVEgCsmkSnWMyNXM1aJ4Ka',
+      ),
+    });
+
+    try {
+      const contract = await Tezos.wallet.at(CONTRACT_ADDRESS);
+
+      const op = await contract.methods
+        .bot_no_longer_for_sale(Number(bot.tokenId))
+        .toTransferParams({});
+
+      const est = await Tezos.estimate.transfer(op);
+
+      console.log(est);
+      setNetworkFeeEstimate(est.suggestedFeeMutez);
+    } catch (err) {
+      console.log('err', err);
+    }
+  }, []);
+
   return (
-    <div className="h-screen w-screen fixed bg-base-900 ">
+    <div className="h-screen w-screen fixed bg-base-900">
       {showWithdrawalPopup && (
         <div
           className={`bg-base-900 min-h-screen text-white flex items-center justify-center`}
@@ -164,11 +225,11 @@ function BotView({ location }) {
           <ShowWithdrawalConfirmationPopModel />
         </div>
       )}
-      {botUpForSale && (
+      {botWithdrawnFromSale && (
         <div
           className={`bg-base-900 min-h-screen text-white flex items-center justify-center`}
         >
-          <BotUpForSaleModel />
+          <BotWithdrawnSaleModel />
         </div>
       )}
       <NavBar />
