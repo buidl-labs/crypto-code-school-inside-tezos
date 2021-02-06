@@ -4,7 +4,11 @@ import { useAsync } from 'react-use';
 
 import NavBar from 'src/components/NavBar';
 import Button from 'src/components/Buttons';
-import { convertMutezToXtz, getXTZPriceInUSD } from 'src/utils/indexer';
+import {
+  convertMutezToXtz,
+  convertXtzToMutez,
+  getXTZPriceInUSD,
+} from 'src/utils/indexer';
 import model from 'src/images/Col-1.png';
 import { BeaconContext } from '../../context/beacon-context';
 import { CONTRACT_ADDRESS } from 'src/defaults';
@@ -26,6 +30,12 @@ function BotView({ location }) {
   ] = useState(false);
   const [networkFeeEstimate, setNetworkFeeEstimate] = useState(0);
   const [botWithdrawnFromSale, setBotWithdrawnFrom] = useState(false);
+
+  // for bot on sale
+  const [onSaleError, setOnSaleError] = useState('');
+  const [salePrice, setSalePrice] = useState();
+  const [closePutBotOnSaleModel, setClosePutBotOnSaleModel] = useState(false);
+  const [botPutUpOnSale, setBotPutUpOnSale] = useState(false);
 
   const Cost = ({ type, main, caption }) => {
     return (
@@ -85,6 +95,29 @@ function BotView({ location }) {
       const result = await op.confirmation(1);
       setWithdrawalConfirmationPop(false);
       setBotWithdrawnFrom(true);
+      console.log('result', result);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const putBotOnSale = async (tokenId, saleValue) => {
+    await connectToBeacon(beacon);
+
+    try {
+      const contract = await Tezos.wallet.at(CONTRACT_ADDRESS);
+
+      const op = await contract.methods
+        .offer_bot_for_sale(saleValue, Number(tokenId))
+        .send();
+
+      console.log(`Awaiting for ${op.opHash} to be confirmed...`);
+      setOpHash(op.opHash);
+      setClosePutBotOnSaleModel(false);
+      setWithdrawalConfirmationPop(true);
+      const result = await op.confirmation(1);
+      setWithdrawalConfirmationPop(false);
+      setBotPutUpOnSale(true);
       console.log('result', result);
     } catch (err) {
       console.log(err);
@@ -159,6 +192,90 @@ function BotView({ location }) {
     );
   }
 
+  function PutBotOnSalePopup() {
+    return (
+      <BaseModal>
+        <div
+          onClick={() => setClosePutBotOnSaleModel(false)}
+          className="rounded-full bg-base-500 p-1 absolute right-3 top-3 cursor-pointer"
+        >
+          <MdClose size="38px" />
+        </div>
+        <ModalTextSection>
+          <ModalHeading>Sell Cryptobot (#{bot.tokenId})</ModalHeading>
+          <ModalTextSection>
+            Other Cryptoverse wars users will be able to buy your cryptobot from
+            marketplace
+          </ModalTextSection>
+          <form
+            className={`mt-8 space-y-4 flex flex-col justify-center w-full`}
+          >
+            <InputContainer>
+              <input
+                className={`px-6 py-2.5 w-full text-lg bg-base-600 rounded border ${
+                  onSaleError === 'INSUFFICIENT_AMOUNT'
+                    ? 'border-error-400'
+                    : 'border-base-500'
+                }`}
+                placeholder={'Enter Price'}
+                autoFocus
+                type="number"
+                min="0"
+                value={salePrice}
+                onChange={e => {
+                  setSalePrice(Math.abs(e.target.value));
+                  setOnSaleError('');
+                }}
+              />
+              <div style={{ color: 'cornflowerblue' }}>
+                {salePrice &&
+                  `$ ${getXTZPriceInUSD(
+                    xtzPrice.price,
+                    convertXtzToMutez(salePrice),
+                  )}`}
+              </div>
+              {onSaleError === 'INSUFFICIENT_AMOUNT' && (
+                <ErrorMessage>
+                  Please make sure price is more than 0 XTZ
+                </ErrorMessage>
+              )}
+            </InputContainer>
+          </form>
+          <TransactionContainer>
+            {networkFeeEstimate === 0 ? (
+              <Cost type="Network Fee" main={`LOADING...`} caption={``} />
+            ) : (
+              <Cost
+                type="Network Fee"
+                main={`${convertMutezToXtz(networkFeeEstimate)} XTZ`}
+                caption={`$ ${getXTZPriceInUSD(
+                  xtzPrice.price,
+                  networkFeeEstimate,
+                )}`}
+              />
+            )}
+          </TransactionContainer>
+          <div>
+            <Button
+              size="lg"
+              type="primary"
+              disabled={false}
+              style={{ width: '100%', marginBottom: '1rem' }}
+              onClick={() => {
+                if (salePrice <= 0) {
+                  setOnSaleError('INSUFFICIENT_AMOUNT');
+                }
+                putBotOnSale(bot.tokenId, convertXtzToMutez(salePrice));
+              }}
+            >
+              Continue
+            </Button>
+          </div>
+        </ModalTextSection>
+      </BaseModal>
+    );
+  }
+
   function ShowWithdrawalConfirmationPopModel() {
     return (
       <BaseModal>
@@ -185,6 +302,27 @@ function BotView({ location }) {
       </BaseModal>
     );
   }
+
+  const BotPutUpOnSaleModel = () => {
+    return (
+      <BaseModal>
+        <ModalTextSection>
+          <ModalHeading>3D Cryptobot (#{bot.tokenId}) up on sale.</ModalHeading>
+          <Button
+            size="lg"
+            type="primary"
+            disabled={false}
+            style={{ width: '100%', marginBottom: '1rem' }}
+            onClick={() => {
+              navigate('/tezos/profile');
+            }}
+          >
+            Go back to profile view
+          </Button>
+        </ModalTextSection>
+      </BaseModal>
+    );
+  };
 
   useAsync(async () => {
     Tezos.setProvider({
@@ -230,6 +368,20 @@ function BotView({ location }) {
           className={`bg-base-900 min-h-screen text-white flex items-center justify-center`}
         >
           <BotWithdrawnSaleModel />
+        </div>
+      )}
+      {closePutBotOnSaleModel && (
+        <div
+          className={`bg-base-900 min-h-screen text-white flex items-center justify-center`}
+        >
+          <PutBotOnSalePopup />
+        </div>
+      )}
+      {botPutUpOnSale && (
+        <div
+          className={`bg-base-900 min-h-screen text-white flex items-center justify-center`}
+        >
+          <BotPutUpOnSaleModel />
         </div>
       )}
       <NavBar />
@@ -413,25 +565,15 @@ function BotView({ location }) {
                         Withdraw from sale
                       </Button>
                     ) : (
-                      <Link
-                        to={'/tezos/transaction'}
-                        state={{
-                          id: bot.tokenId,
-                          bot: bot,
-                          xtzPrice: xtzPrice,
-                          action: 'purchaseBotAtSaleValue',
+                      <Button
+                        onClick={() => {
+                          setClosePutBotOnSaleModel(true);
                         }}
+                        size="lg"
+                        type="primary"
                       >
-                        <Button
-                          // onClick={() =>
-                          //   buyCryptobot(bot.saleValueInMutez, bot.tokenId)
-                          // }
-                          size="lg"
-                          type="primary"
-                        >
-                          Offer for sale
-                        </Button>
-                      </Link>
+                        Offer for sale
+                      </Button>
                     )
                   ) : bot.isForSale ? (
                     <Link
@@ -488,4 +630,14 @@ function ModalHeading({ children }) {
 
 function ModalTextSection({ children }) {
   return <div className={`mt-6`}>{children}</div>;
+}
+
+function ErrorMessage({ children }) {
+  return <span className={`text-sm text-error-400 mt-2`}>{children}</span>;
+}
+
+function InputContainer({ children }) {
+  return (
+    <div className={`flex justify-start flex-col text-left`}>{children}</div>
+  );
 }
