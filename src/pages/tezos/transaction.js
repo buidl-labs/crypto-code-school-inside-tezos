@@ -10,14 +10,30 @@ import { connectToBeacon, Tezos } from 'src/utils/wallet';
 import { BeaconContext } from 'src/context/beacon-context';
 import { convertMutezToXtz, getXTZPriceInUSD } from 'src/utils/indexer';
 import { InMemorySigner } from '@taquito/signer';
+import {
+  estimateWithdrawalGasFee,
+  estimateBotPurchaseGasFee,
+} from 'src/utils/gas_estimates';
+import { MdDone } from 'react-icons/md';
 
-const Steppers = ({ number, name, clickEvent }) => {
+const Steppers = ({ number, name, clickEvent, tick = false }) => {
   return (
     <div onClick={clickEvent}>
       <div className="flex items-center text-primary-600 relative">
-        <div className="rounded-full h-12 w-12 py-3 inline-flex items-center justify-center bg-primary-600 text-white">
-          {number}
-        </div>
+        {tick ? (
+          <div
+            style={{
+              backgroundColor: 'rgba(52, 211, 153, 0.9)',
+            }}
+            className="rounded-full h-12 w-12 py-3 inline-flex items-center justify-center text-white"
+          >
+            <MdDone size={24} />
+          </div>
+        ) : (
+          <div className="rounded-full h-12 w-12 py-3 inline-flex items-center justify-center bg-primary-600 text-white">
+            {number}
+          </div>
+        )}
         <div className="absolute top-0 -ml-10 text-center mt-16 w-32 text-lg font-regular text-white">
           {name}
         </div>
@@ -99,21 +115,9 @@ function Transaction({ location }) {
       ),
     });
 
-    try {
-      const contract = await Tezos.wallet.at(CONTRACT_ADDRESS);
-
-      const sendArgs = { amount: bot.saleValueInMutez, mutez: true };
-
-      const op = await contract.methods
-        .purchase_bot_at_sale_price(Number(bot.tokenId))
-        .toTransferParams(sendArgs);
-
-      const est = await Tezos.estimate.transfer(op);
-
-      setNetworkFeeEstimate(est.suggestedFeeMutez);
-    } catch (err) {
-      console.log('err', err);
-    }
+    //TODO: replace with purchase gas fee estimate
+    const x = await estimateWithdrawalGasFee(bot);
+    setNetworkFeeEstimate(x);
   }, []);
 
   return (
@@ -134,27 +138,30 @@ function Transaction({ location }) {
               <Steppers
                 number="1"
                 name="Confirm Claim"
+                tick={step >= 2}
                 clickEvent={e => {
                   e.preventDefault();
-                  setStep(1);
+                  // setStep(1);
                 }}
               />
               <div className="flex-auto border-t-2  border-primary-600"></div>
               <Steppers
                 number="2"
                 name="Transaction"
+                tick={step === 3}
                 clickEvent={e => {
                   e.preventDefault();
-                  setStep(2);
+                  // setStep(2);
                 }}
               />
               <div className="flex-auto border-t-2 border-primary-600"></div>
               <Steppers
                 number="3"
                 name="Finished"
+                tick={step === 3}
                 clickEvent={e => {
                   e.preventDefault();
-                  setStep(3);
+                  // setStep(3);
                 }}
               />
             </div>
