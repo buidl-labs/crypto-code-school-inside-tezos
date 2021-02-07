@@ -18,7 +18,6 @@ const Chapter = ({ chapter, active }) => {
   );
 };
 const ChapterList = ({ isOpen, setIsOpen, chapters, activeSlug }) => {
-  console.log('chapters', chapters);
   return (
     <>
       {isOpen && (
@@ -44,9 +43,9 @@ const ChapterList = ({ isOpen, setIsOpen, chapters, activeSlug }) => {
         <ul className={`flex-1 overflow-y-auto`}>
           {chapters.map(c =>
             activeSlug === c.slug ? (
-              <Chapter chapter={c} active />
+              <Chapter chapter={c} active key={c.slug} />
             ) : (
-              <Chapter chapter={c} />
+              <Chapter chapter={c} key={c.slug} />
             ),
           )}
         </ul>

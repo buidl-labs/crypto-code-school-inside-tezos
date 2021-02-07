@@ -17,7 +17,7 @@ const Footer = ({
   );
   return (
     <footer
-      className={`bg-base-800 text-white flex justify-end text-lg px-12 h-14`}
+      className={`bg-base-800 text-white flex justify-end text-lg px-12 h-14 relative z-0`}
     >
       <div className={`flex items-center space-x-10`}>
         {prev && (

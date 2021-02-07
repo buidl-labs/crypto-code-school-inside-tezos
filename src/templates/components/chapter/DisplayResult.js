@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const ErrorMessage = ({ errors }) => {
+  useEffect(() => {
+    console.log(errors);
+  }, []);
   return (
     <ul>
       {errors.map(err => (
-        <li>
+        <li key={err}>
           {'>'} {err}
         </li>
       ))}
@@ -20,11 +23,13 @@ const DisplayResult = ({ result: { success, error } }) => {
         success ? 'text-success-500' : 'text-error-500'
       }`}
     >
-      {success ? (
-        <p>{'>'} Yay you're good to go</p>
-      ) : (
-        <ErrorMessage errors={error} />
-      )}
+      {success !== undefined ? (
+        success ? (
+          <p>{'>'} Yay you're good to go</p>
+        ) : (
+          <ErrorMessage errors={error} />
+        )
+      ) : null}
     </div>
   );
 };

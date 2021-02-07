@@ -333,7 +333,7 @@ export function checkCode(userInputtedCode, correctSolution, module) {
     ],
     correctSolution,
   );
-  console.log(filteredUserInputtedCode, filteredCorrectSolution);
+  // console.log(filteredUserInputtedCode, filteredCorrectSolution);
   const correctCodeArray = mapArrayToObject(filteredCorrectSolution);
 
   // list of lines (code) that user didn't write

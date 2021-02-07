@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { graphql } from 'gatsby';
+
 import NavBar from './components/chapter/NavBar';
 import Footer from './components/chapter/Footer';
+
 import LearningInterface from './components/chapter/LearningInterface';
 import CodingInterface from './components/chapter/CodingInterface';
 import ChapterList from './components/chapter/ChapterList';
-import Layout from '../components/Layout/layout';
-import { MDXProvider } from '@mdx-js/react';
-import { ControlledEditor, monaco, DiffEditor } from '@monaco-editor/react';
+import MichelsonResult from './components/chapter/MichelsonResult';
+
 import useChapters from '../hooks/use-chapters';
 import useModules from '../hooks/use-modules';
 import { getChaptersIndex } from '../utils/index';
@@ -34,8 +35,19 @@ export const query = graphql`
 `;
 
 const ChapterTemplate = ({ data: { mdx: chapter } }) => {
+  /*
+    TODO:
+      - Sync state in localStorage
+        1. Progress stored under the 'progress' key in localStorage.
+        2. Every object is marked with a key `${chapter.frontmatter.slug}-${chapter.frontmatter.filterBy}`
+        3. On completing a chapter, progress[`${chapter.frontmatter.slug}-${chapter.frontmatter.filterBy}`] is marked as true for "complete."
+  */
   const [isChapterDrawerOpen, setIsChapterDrawerOpen] = useState(false);
-
+  const [isChapterCompleted, setIsChapterCompleted] = useState(false);
+  const [result, setResult] = useState({});
+  const [michelsonDrawer, setMichelsonDrawer] = useState(false);
+  const [michelsonResult, setMichelsonResult] = useState('');
+  const [editorValue, setEditorValue] = useState(getDefaultEditorValue);
   const NavHeading = useMemo(() => {
     let { module, title } = useModules(chapter.frontmatter.filterBy);
     return `${(module.charAt(0).toUpperCase() + module.slice(1))
@@ -43,7 +55,6 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
       .reduce((acc, curr) => {
         let c = curr;
         if (c.indexOf('0') !== -1) {
-          console.log('curr has 0');
           c = c.length > 1 ? c.slice(1) : c;
         }
         acc += ` ${c}`;
@@ -57,10 +68,37 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
     [chapters],
   );
 
-  const [validation, updateValidation] = useState({
-    success: false,
-    error: [''],
-  });
+  useEffect(() => {
+    if (result.success === true) setIsChapterCompleted(true);
+  }, [result.success]);
+
+  useEffect(() => {
+    if (isChapterCompleted) {
+      let progress = localStorage.getItem('progress');
+      console.log('progress', progress);
+      progress = progress ? JSON.parse(progress) : {};
+
+      if (!progress[chapter.frontmatter.filterBy])
+        progress[chapter.frontmatter.filterBy] = {};
+      progress[chapter.frontmatter.filterBy][chapter.frontmatter.slug] = true;
+      localStorage.setItem('progress', JSON.stringify(progress));
+    }
+  }, [isChapterCompleted]);
+
+  function getDefaultEditorValue() {
+    const module = chapter.frontmatter.filterBy;
+    let progress =
+      (typeof window != 'undefined' && localStorage.getItem('progress')) || {};
+    progress = progress ? JSON.parse(progress) : {};
+    console.log('Logging from getDefaultEditorValue...');
+    console.log('getDef', progress);
+    if (progress[module]) {
+      console.log('getDef', progress[module]);
+      if (progress[module][chapter.frontmatter.slug])
+        return chapter.frontmatter.editor.answer;
+    }
+    return chapter.frontmatter.editor.startingCode;
+  }
 
   return (
     <div className={`overflow-hidden`}>
@@ -81,11 +119,21 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           setDrawerOpen={setIsChapterDrawerOpen}
         />
         <CodingInterface
-          code={chapter.frontmatter.editor.startingCode}
           answer={chapter.frontmatter.editor.answer}
-          updateValidation={updateValidation}
+          editorValue={editorValue}
+          setEditorValue={setEditorValue}
           module={chapter.frontmatter.filterBy}
           isCode={chapter.frontmatter.isCode}
+          openMichelsonDrawer={() => setMichelsonDrawer(true)}
+          setMichelsonResult={setMichelsonResult}
+          setResult={setResult}
+          result={result}
+        />
+        <MichelsonResult
+          data={michelsonResult}
+          closeDrawer={() => setMichelsonDrawer(false)}
+          drawerOpen={michelsonDrawer}
+          isAnswerCorrect={result.success}
         />
       </main>
 

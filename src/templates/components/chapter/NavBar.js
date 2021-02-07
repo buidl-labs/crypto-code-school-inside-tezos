@@ -13,9 +13,8 @@ const NavBar = ({ heading, module }) => {
         <ChevronLeftIcon />
         <Theme className={`h-18 w-auto ml-4`} />
       </Link>
-      <div className={`text-lg font-bold`}>{heading}</div>
+      <div className={`text-lg font-bold pr-4`}>{heading}</div>
       <div>
-        <HelpOutlineIcon />
         <button
           className={`bg-primary-600 px-6 py-2 rounded text-lg font-bold ml-12`}
         >

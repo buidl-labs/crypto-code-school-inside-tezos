@@ -12,21 +12,28 @@ import { ControlledEditor, monaco, DiffEditor } from '@monaco-editor/react';
 const CodingInterface = ({
   code,
   answer,
-  updateValidation,
+  editorValue,
+  setEditorValue,
   module,
   isCode,
+  openMichelsonDrawer,
+  setMichelsonResult,
+  setResult,
+  result,
 }) => {
-  const [editorValue, setEditorValue] = useState(code);
   const [showAnswer, setShowAnswer] = useState(false);
   const [checkAnswer, setCheckAnswer] = useState(false);
-  const [result, setResult] = useState({});
 
-  const displayMichelsonBtn = useMemo(
+  const [displayMichelsonBtn, setDisplayMichelsonBtn] = useState(false);
+
+  useEffect(
     () =>
-      result.success &&
-      isCode &&
-      (module.indexOf('2') !== -1 || module.indexOf('3') !== -1),
-    [checkAnswer],
+      setDisplayMichelsonBtn(
+        result.success &&
+          isCode &&
+          (module.indexOf('2') !== -1 || module.indexOf('3') !== -1),
+      ),
+    [checkAnswer, result.success],
   );
 
   useEffect(() => {
@@ -69,8 +76,10 @@ const CodingInterface = ({
           <button className={`mr-6`} onClick={resetEditorCode}>
             <RefreshIcon />
           </button>
-          <button className={`mr-9`}>
-            <HelpOutlineIcon />
+          <button
+            className={`mr-9 px-3 py-1 border-2 border-base-500 rounded focus:outline-none`}
+          >
+            Have a doubt?
           </button>
         </div>
       </header>
@@ -108,6 +117,15 @@ const CodingInterface = ({
                 setCheckAnswer(true);
                 setShowAnswer(false);
                 let res = checkCode(editorValue, answer, module);
+                if (
+                  isCode &&
+                  (module.indexOf('2') !== -1 || module.indexOf('3') !== -1)
+                ) {
+                  let compiledCode =
+                    window !== undefined && window.runCode(editorValue);
+
+                  setMichelsonResult(compiledCode);
+                }
                 setResult(res);
               }}
             >
@@ -125,6 +143,7 @@ const CodingInterface = ({
           {displayMichelsonBtn && (
             <button
               className={`text-base-50 py-2 px-4 mr-8 flex items-center focus:outline-none`}
+              onClick={openMichelsonDrawer}
             >
               <AddCircleOutlineIcon />
               <span className={`mx-2 block`}>Show compiled code</span>
@@ -175,6 +194,7 @@ const CodingInterface = ({
         ) : null}
 
         {/* <ControlledEditor
+        <pre className={`text-white`}>{JSON.stringify(result, null, 4)}</pre>
           // height={`${
           //   buttonClicked
           //     ? `calc(100vh - (${HeaderHeight} + ${FooterHeight} + ${ContractFileHeight} + ${OptionHeight} + ${OutputHeaderHeight} + ${OutputContentHeight}))`
