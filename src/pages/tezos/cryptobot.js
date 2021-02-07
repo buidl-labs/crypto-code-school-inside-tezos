@@ -16,6 +16,10 @@ import { connectToBeacon, Tezos } from 'src/utils/wallet';
 import Loader from 'react-loader-spinner';
 import { InMemorySigner } from '@taquito/signer';
 import { MdClose } from 'react-icons/md';
+import {
+  estimateWithdrawalGasFee,
+  estimateBotPutOnSaleGasFee,
+} from 'src/utils/gas_estimates';
 
 function BotView({ location }) {
   let beacon = useContext(BeaconContext);
@@ -23,60 +27,12 @@ function BotView({ location }) {
   const bot = location.state ? location.state.bot : null;
   const owned = location.state ? location.state.owned : null;
   const [opHash, setOpHash] = useState(null);
-  const [showWithdrawalPopup, setWithdrawalPopup] = useState(false);
-  const [
-    showWithdrawalConfirmationPop,
-    setWithdrawalConfirmationPop,
-  ] = useState(false);
   const [networkFeeEstimate, setNetworkFeeEstimate] = useState(0);
-  const [botWithdrawnFromSale, setBotWithdrawnFrom] = useState(false);
+  const [withdrawNowStep, updateWithdrawNowStep] = useState(0);
 
-  // for bot on sale
   const [onSaleError, setOnSaleError] = useState('');
   const [salePrice, setSalePrice] = useState();
-  const [closePutBotOnSaleModel, setClosePutBotOnSaleModel] = useState(false);
-  const [botPutUpOnSale, setBotPutUpOnSale] = useState(false);
-
-  const Cost = ({ type, main, caption }) => {
-    return (
-      <div className="grid grid-cols-2 gap-4 py-6">
-        <div>
-          <h5 className="text-base-100 text-lg font-bold font-mulish">
-            {type}
-          </h5>
-        </div>
-        <div className="grid justify-items-end">
-          <h5 className="text-white text-xl font-extrabold font-mulish">
-            {main}
-          </h5>
-          <p className="text-white text-lg font-mulish">{caption}</p>
-        </div>
-      </div>
-    );
-  };
-
-  const TransactionContainer = ({ children }) => {
-    return (
-      <div className="w-full rounded-md bg-base-800 p-3 mt-6 mb-6">
-        {children}
-      </div>
-    );
-  };
-
-  const buyCryptobot = async (mutez, tokenId) => {
-    await connectToBeacon(beacon);
-
-    const contract = await Tezos.wallet.at(CONTRACT_ADDRESS);
-
-    const sendArgs = { amount: mutez, mutez: true };
-
-    const op = await contract.methods
-      .purchase_bot_at_sale_price(Number(tokenId))
-      .send(sendArgs);
-    console.log(`Awaiting for ${op.hash} to be confirmed...`);
-    const result = await op.confirmation(3);
-    console.log('result', result);
-  };
+  const [sellNowStep, updateSellNowStep] = useState(0);
 
   const withdrawBotFromSale = async tokenId => {
     await connectToBeacon(beacon);
@@ -90,11 +46,9 @@ function BotView({ location }) {
 
       console.log(`Awaiting for ${op.opHash} to be confirmed...`);
       setOpHash(op.opHash);
-      setWithdrawalPopup(false);
-      setWithdrawalConfirmationPop(true);
+      updateWithdrawNowStep(2);
       const result = await op.confirmation(1);
-      setWithdrawalConfirmationPop(false);
-      setBotWithdrawnFrom(true);
+      updateWithdrawNowStep(3);
       console.log('result', result);
     } catch (err) {
       console.log(err);
@@ -113,45 +67,20 @@ function BotView({ location }) {
 
       console.log(`Awaiting for ${op.opHash} to be confirmed...`);
       setOpHash(op.opHash);
-      setClosePutBotOnSaleModel(false);
-      setWithdrawalConfirmationPop(true);
+      updateSellNowStep(2);
       const result = await op.confirmation(1);
-      setWithdrawalConfirmationPop(false);
-      setBotPutUpOnSale(true);
+      updateSellNowStep(3);
       console.log('result', result);
     } catch (err) {
       console.log(err);
     }
   };
 
-  const BotWithdrawnSaleModel = () => {
-    return (
-      <BaseModal>
-        <ModalTextSection>
-          <ModalHeading>
-            3D Cryptobot (#{bot.tokenId}) withdrawn from sale.
-          </ModalHeading>
-          <Button
-            size="lg"
-            type="primary"
-            disabled={false}
-            style={{ width: '100%', marginBottom: '1rem' }}
-            onClick={() => {
-              navigate('/tezos/profile');
-            }}
-          >
-            Go back to profile view
-          </Button>
-        </ModalTextSection>
-      </BaseModal>
-    );
-  };
-
   function WithdrawalPopup() {
     return (
       <BaseModal>
         <div
-          onClick={() => setWithdrawalPopup(false)}
+          onClick={() => updateWithdrawNowStep(0)}
           className="rounded-full bg-base-500 p-1 absolute right-3 top-3 cursor-pointer"
         >
           <MdClose size="38px" />
@@ -192,11 +121,11 @@ function BotView({ location }) {
     );
   }
 
-  function PutBotOnSalePopup() {
+  function PutBotOnSaleModel() {
     return (
       <BaseModal>
         <div
-          onClick={() => setClosePutBotOnSaleModel(false)}
+          onClick={() => updateSellNowStep(0)}
           className="rounded-full bg-base-500 p-1 absolute right-3 top-3 cursor-pointer"
         >
           <MdClose size="38px" />
@@ -224,7 +153,12 @@ function BotView({ location }) {
                 value={salePrice}
                 onChange={e => {
                   setSalePrice(Math.abs(e.target.value));
-                  setOnSaleError('');
+                  const x = Math.abs(e.target.value);
+                  if (!x || x === 0) {
+                    setOnSaleError('INSUFFICIENT_AMOUNT');
+                  } else {
+                    setOnSaleError('');
+                  }
                 }}
               />
               <div style={{ color: 'cornflowerblue' }}>
@@ -262,10 +196,11 @@ function BotView({ location }) {
               disabled={false}
               style={{ width: '100%', marginBottom: '1rem' }}
               onClick={() => {
-                if (salePrice <= 0) {
+                if (!salePrice || salePrice === 0) {
                   setOnSaleError('INSUFFICIENT_AMOUNT');
+                } else {
+                  putBotOnSale(bot.tokenId, convertXtzToMutez(salePrice));
                 }
-                putBotOnSale(bot.tokenId, convertXtzToMutez(salePrice));
               }}
             >
               Continue
@@ -276,88 +211,6 @@ function BotView({ location }) {
     );
   }
 
-  function ShowWithdrawalConfirmationPopModel() {
-    return (
-      <BaseModal>
-        <div className="grid grid-cols mx-auto justify-center mt-6 text-white">
-          <Button
-            onClick={() => {
-              window.open(
-                `https://delphinet.tzkt.io/${opHash ? opHash : ''}`,
-                '_blank',
-              );
-            }}
-            size="lg"
-            type="outline"
-          >
-            <span>
-              The transaction has successfully been broadcasted to the network.
-            </span>
-          </Button>
-        </div>
-        <div className="grid grid-cols mx-auto justify-center mt-6 text-white">
-          <Loader type="BallTriangle" color="#2563EB" height={80} width={80} />
-        </div>
-        <h4 className="text-white text-center">Waiting for confirmation</h4>
-      </BaseModal>
-    );
-  }
-
-  const BotPutUpOnSaleModel = () => {
-    return (
-      <BaseModal>
-        <ModalTextSection>
-          <ModalHeading>3D Cryptobot (#{bot.tokenId}) up on sale.</ModalHeading>
-          <Button
-            size="lg"
-            type="primary"
-            disabled={false}
-            style={{ width: '100%', marginBottom: '1rem' }}
-            onClick={() => {
-              navigate('/tezos/profile');
-            }}
-          >
-            Go back to profile view
-          </Button>
-        </ModalTextSection>
-      </BaseModal>
-    );
-  };
-
-  const estimateWithdrawalGasFee = async () => {
-    try {
-      const contract = await Tezos.wallet.at(CONTRACT_ADDRESS);
-
-      const op = await contract.methods
-        .bot_no_longer_for_sale(Number(bot.tokenId))
-        .toTransferParams({});
-
-      const est = await Tezos.estimate.transfer(op);
-
-      console.log(est);
-      setNetworkFeeEstimate(est.suggestedFeeMutez);
-    } catch (err) {
-      console.log('err', err);
-    }
-  };
-
-  const estimateBotPutOnSaleGasFee = async () => {
-    try {
-      const contract = await Tezos.wallet.at(CONTRACT_ADDRESS);
-
-      const op = await contract.methods
-        .offer_bot_for_sale(100, Number(bot.tokenId))
-        .toTransferParams({});
-
-      const est = await Tezos.estimate.transfer(op);
-
-      console.log(est);
-      setNetworkFeeEstimate(est.suggestedFeeMutez);
-    } catch (err) {
-      console.log('err', err);
-    }
-  };
-
   useAsync(async () => {
     Tezos.setProvider({
       signer: new InMemorySigner(
@@ -366,47 +219,57 @@ function BotView({ location }) {
     });
 
     if (bot && owned && bot.isForSale) {
-      await estimateWithdrawalGasFee();
-    } else {
-      await estimateBotPutOnSaleGasFee();
+      const result = await estimateWithdrawalGasFee(bot);
+      setNetworkFeeEstimate(result);
+    } else if (bot && owned && !bot.isForSale) {
+      const result = await estimateBotPutOnSaleGasFee(bot);
+      setNetworkFeeEstimate(result);
     }
   }, []);
 
   return (
     <div className="h-screen w-screen fixed bg-base-900">
-      {showWithdrawalPopup && (
+      {withdrawNowStep === 1 && (
         <div
           className={`bg-base-900 min-h-screen text-white flex items-center justify-center`}
         >
           <WithdrawalPopup />
         </div>
       )}
-      {showWithdrawalConfirmationPop && (
+      {withdrawNowStep === 2 && (
         <div
           className={`bg-base-900 min-h-screen text-white flex items-center justify-center`}
         >
-          <ShowWithdrawalConfirmationPopModel />
+          {ConfirmationModel(opHash)}
         </div>
       )}
-      {botWithdrawnFromSale && (
+      {withdrawNowStep === 3 && (
         <div
           className={`bg-base-900 min-h-screen text-white flex items-center justify-center`}
         >
-          <BotWithdrawnSaleModel />
+          {GoBackModel(bot, true)}
         </div>
       )}
-      {closePutBotOnSaleModel && (
+
+      {sellNowStep === 1 && (
         <div
           className={`bg-base-900 min-h-screen text-white flex items-center justify-center`}
         >
-          <PutBotOnSalePopup />
+          <PutBotOnSaleModel />
         </div>
       )}
-      {botPutUpOnSale && (
+      {sellNowStep === 2 && (
         <div
           className={`bg-base-900 min-h-screen text-white flex items-center justify-center`}
         >
-          <BotPutUpOnSaleModel />
+          {ConfirmationModel(opHash)}
+        </div>
+      )}
+      {sellNowStep === 3 && (
+        <div
+          className={`bg-base-900 min-h-screen text-white flex items-center justify-center`}
+        >
+          {GoBackModel(bot, false)}
         </div>
       )}
       <NavBar />
@@ -527,54 +390,22 @@ function BotView({ location }) {
                 {/* info tab ends */}
 
                 {/* owner starts */}
-                <div className="mt-6">
-                  <Link to="\profile" className="inline-flex items-center">
-                    <img
-                      src={model}
-                      className="w-12 h-12 rounded-full flex-shrink-0 object-cover object-center mb-0 bg-primary-800"
-                    />
-                    <span className="flex-grow flex flex-col pl-4">
-                      <span className="font-mulish font-regular text-base-200 text-lg">
-                        Owner
-                      </span>
-                      <span className=" font-mulish font-extrabold text-lg text-white ">
-                        {bot ? bot.seller : ''}
-                      </span>
+                <div className="mt-6 inline-flex items-center">
+                  <img
+                    src={model}
+                    className="w-12 h-12 rounded-full flex-shrink-0 object-cover object-center mb-0 bg-primary-800"
+                  />
+                  <span className="flex-grow flex flex-col pl-4">
+                    <span className="font-mulish font-regular text-base-200 text-lg">
+                      Owner
                     </span>
-                  </Link>
+                    <span className=" font-mulish font-extrabold text-lg text-white ">
+                      {bot ? bot.seller : ''}
+                    </span>
+                  </span>
                 </div>
                 {/* owner ends */}
-
-                {/* date starts */}
-                <div className="mt-6">
-                  <a className="inline-flex items-center">
-                    <div className="w-12 h-12 inline-flex items-center justify-center rounded-full bg-primary-600 text-white ">
-                      <svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          clipRule="evenodd"
-                          d="M19 3H20C21.1 3 22 3.9 22 5V21C22 22.1 21.1 23 20 23H4C2.9 23 2 22.1 2 21V5C2 3.9 2.9 3 4 3H5V1H7V3H17V1H19V3ZM4 21H20V8H4V21Z"
-                          fill="white"
-                        />
-                      </svg>
-                    </div>
-                    <span className="flex-grow flex flex-col pl-4">
-                      <span className="font-mulish font-regular text-base-200 text-lg">
-                        Date Owned
-                      </span>
-                      <span className=" font-mulish font-extrabold text-lg text-white ">
-                        12 Dec 2021
-                      </span>
-                    </span>
-                  </a>
-                </div>
-                {/* date ends */}
+                <div className="mt-12" />
               </div>
             </div>
             <div className="bottom-0 w-full bg-base-900">
@@ -583,7 +414,7 @@ function BotView({ location }) {
                   owned ? (
                     bot.isForSale ? (
                       <Button
-                        onClick={() => setWithdrawalPopup(true)}
+                        onClick={() => updateWithdrawNowStep(1)}
                         size="lg"
                         type="primary"
                       >
@@ -592,12 +423,12 @@ function BotView({ location }) {
                     ) : (
                       <Button
                         onClick={() => {
-                          setClosePutBotOnSaleModel(true);
+                          updateSellNowStep(1);
                         }}
                         size="lg"
                         type="primary"
                       >
-                        Offer for sale
+                        Sell Now
                       </Button>
                     )
                   ) : bot.isForSale ? (
@@ -666,3 +497,78 @@ function InputContainer({ children }) {
     <div className={`flex justify-start flex-col text-left`}>{children}</div>
   );
 }
+
+const Cost = ({ type, main, caption }) => {
+  return (
+    <div className="grid grid-cols-2 gap-4 py-6">
+      <div>
+        <h5 className="text-base-100 text-lg font-bold font-mulish">{type}</h5>
+      </div>
+      <div className="grid justify-items-end">
+        <h5 className="text-white text-xl font-extrabold font-mulish">
+          {main}
+        </h5>
+        <p className="text-white text-lg font-mulish">{caption}</p>
+      </div>
+    </div>
+  );
+};
+
+const TransactionContainer = ({ children }) => {
+  return (
+    <div className="w-full rounded-md bg-base-800 p-3 mt-6 mb-6">
+      {children}
+    </div>
+  );
+};
+
+function ConfirmationModel(opHash) {
+  return (
+    <BaseModal>
+      <div className="grid grid-cols mx-auto justify-center mt-6 text-white">
+        <Button
+          onClick={() => {
+            window.open(
+              `https://delphinet.tzkt.io/${opHash ? opHash : ''}`,
+              '_blank',
+            );
+          }}
+          size="lg"
+          type="outline"
+        >
+          <span>
+            The transaction has successfully been broadcasted to the network.
+          </span>
+        </Button>
+      </div>
+      <div className="grid grid-cols mx-auto justify-center mt-6 text-white">
+        <Loader type="BallTriangle" color="#2563EB" height={80} width={80} />
+      </div>
+      <h4 className="text-white text-center">Waiting for confirmation</h4>
+    </BaseModal>
+  );
+}
+
+const GoBackModel = (bot, botWithdrawn = true) => {
+  return (
+    <BaseModal>
+      <ModalTextSection>
+        <ModalHeading>
+          3D Cryptobot (#{bot.tokenId}){' '}
+          {botWithdrawn ? 'withdrawn from sale.' : 'up on sale.'}
+        </ModalHeading>
+        <Button
+          size="lg"
+          type="primary"
+          disabled={false}
+          style={{ width: '100%', marginBottom: '1rem' }}
+          onClick={() => {
+            navigate('/tezos/profile');
+          }}
+        >
+          Go back
+        </Button>
+      </ModalTextSection>
+    </BaseModal>
+  );
+};
