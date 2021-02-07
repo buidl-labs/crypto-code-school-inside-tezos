@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'gatsby';
-import { useAsync } from 'react-use';
+import { useAsync, useWindowSize } from 'react-use';
 import Loader from 'react-loader-spinner';
 
 import NavBar from 'src/components/NavBar';
@@ -15,6 +15,7 @@ import {
   estimateBotPurchaseGasFee,
 } from 'src/utils/gas_estimates';
 import { MdDone } from 'react-icons/md';
+import Confetti from 'react-confetti';
 
 const Steppers = ({ number, name, clickEvent, tick = false }) => {
   return (
@@ -81,6 +82,7 @@ function Transaction({ location }) {
   const [networkFeeEstimate, setNetworkFeeEstimate] = useState(0);
   const xtzPrice = location.state ? location.state.xtzPrice : null;
   const bot = location.state ? location.state.bot : null;
+  const { width, height } = useWindowSize();
 
   const buyCryptobot = async (mutez, tokenId) => {
     try {
@@ -123,6 +125,7 @@ function Transaction({ location }) {
   return (
     <div className=" bg-base-900 ">
       <NavBar />
+      <Confetti width={width} height={height} run={step === 3} />
       <div className="container px-12 mx-auto ">
         <div className="grid grid-cols-2 gap-4 h-screen">
           <div>
