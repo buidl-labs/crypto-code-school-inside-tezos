@@ -19,10 +19,14 @@ const Disabled = {
   true: 'opacity-50',
 };
 
-function Button({ type, size, disabled, children }) {
+function Button({ type, size, disabled, children, ...props }) {
   const classNames =
     ButtonType[type] + ' ' + ButtonSize[size] + ' ' + Disabled[disabled];
-  return <button className={classNames}>{children}</button>;
+  return (
+    <button {...props} className={classNames}>
+      {children}
+    </button>
+  );
 }
 
 export default Button;
