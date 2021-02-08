@@ -74,14 +74,15 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
 
   useEffect(() => {
     if (isChapterCompleted) {
-      let progress = localStorage.getItem('progress');
+      let progress = window != 'undefined' && localStorage.getItem('progress');
       console.log('progress', progress);
       progress = progress ? JSON.parse(progress) : {};
 
       if (!progress[chapter.frontmatter.filterBy])
         progress[chapter.frontmatter.filterBy] = {};
       progress[chapter.frontmatter.filterBy][chapter.frontmatter.slug] = true;
-      localStorage.setItem('progress', JSON.stringify(progress));
+      window != 'undefined' &&
+        localStorage.setItem('progress', JSON.stringify(progress));
     }
   }, [isChapterCompleted]);
 
