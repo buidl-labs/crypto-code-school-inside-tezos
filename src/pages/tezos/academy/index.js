@@ -86,7 +86,7 @@ const CurriculumOverview = ({
       window != 'undefined' &&
       JSON.parse(localStorage.getItem('progress') || '{}');
     return p;
-  }, [window]);
+  }, []);
 
   return (
     <Layout>
