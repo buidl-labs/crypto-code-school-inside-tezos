@@ -22,8 +22,8 @@ const state = proxy({
   items: {
     head: '#ffffff',
     body: '#ffffff',
-    hands: '#ffffff',
-    legs: '#ffffff',
+    arm: '#ffffff',
+    leg: '#ffffff',
   },
 });
 
@@ -33,17 +33,19 @@ function useGroup(scene, type) {
   const filterType = [type];
   const regexType = new RegExp(filterType.join('|'), 'i');
 
+  // console.log('scene child',scene.children);
   scene.children.forEach(group => {
     if (regexType.test(group.name)) {
       result.push(group);
     }
   });
 
-  // console.log('result', result);
+  console.log('result', result);
   return result;
 }
 
 const renderGroup = (groupObject, id = 0, color, color_name) => {
+  // console.log('group object', groupObject);
   return (
     <>
       <group
@@ -71,15 +73,16 @@ const renderGroup = (groupObject, id = 0, color, color_name) => {
   );
 };
 
-const Bot = ({ headCount, legCount, bodyCount }) => {
+const Bot = ({ headCount, armCount, bodyCount, legCount }) => {
   const group = useRef();
-  const { scene } = useGLTF('cryptobot.glb');
+  const { scene } = useGLTF('/c3bots.glb');
   const snap = useProxy(state);
+  const [hovered, set] = useState(null);
 
   const link = useRef();
 
   const head = useGroup(scene, 'head');
-  const hand = useGroup(scene, 'hand');
+  const arm = useGroup(scene, 'arm');
   const body = useGroup(scene, 'body');
   const leg = useGroup(scene, 'leg');
   return (
@@ -96,23 +99,45 @@ const Bot = ({ headCount, legCount, bodyCount }) => {
       dispose={null}
     >
       {renderGroup(head, headCount, snap.items.head, 'head')}
-      {renderGroup(hand, bodyCount, snap.items.hands, 'hands')}
+      {renderGroup(arm, armCount, snap.items.arm, 'arm')}
       {renderGroup(body, bodyCount, snap.items.body, 'body')}
-      {renderGroup(leg, legCount, snap.items.legs, 'legs')}
+      {renderGroup(leg, legCount, snap.items.leg, 'leg')}
     </group>
   );
 };
 
 const Customizer = () => {
-  const [selectPart, setselectPart] = React.useState(1);
+  const [selectPart, setselectPart] = useState(1);
+  const [headCount, setHeadCount] = useState(0);
+  const [armCount, setArmCount] = useState(0);
+  const [bodyCount, setBodyCount] = useState(0);
+  const [legCount, setLegCount] = useState(0);
+
+  const snap = useProxy(state);
+
+  const colors = [
+    {
+      backgroundColor: '#66533C',
+    },
+    {
+      backgroundColor: '#173A2F',
+    },
+    {
+      backgroundColor: '#153944',
+    },
+    {
+      backgroundColor: '#27548D',
+    },
+    {
+      backgroundColor: '#438AAC',
+    },
+  ];
+
   return (
-    <div className="h-screen bg-base-900 ">
+    <div className="h-screen bg-primary-900">
       <NavBar />
       <div id="main" className="relative h-full">
-        <div
-          id="customizer-canvas"
-          className="absolute border-base-50 border-2 w-full h-full"
-        >
+        <div id="customizer-canvas" className="absolute w-full h-full">
           {' '}
           <Canvas
             concurrent
@@ -127,7 +152,12 @@ const Customizer = () => {
               position={[5, 25, 20]}
             />
             <Suspense fallback={null}>
-              <Bot />
+              <Bot
+                headCount={headCount}
+                armCount={armCount}
+                bodyCount={bodyCount}
+                legCount={legCount}
+              />
               <ContactShadows
                 rotation-x={Math.PI / 2}
                 position={[0, -0.8, 0]}
@@ -143,7 +173,7 @@ const Customizer = () => {
         </div>
         <div
           id="editor"
-          className=" absolute h-full min-h-screen grid grid-cols-8 gap-4 w-full"
+          className="absolute h-full min-h-screen grid grid-cols-8 gap-4 w-full"
         >
           <div
             id="left-menu"
@@ -184,7 +214,7 @@ const Customizer = () => {
                   href="#part2"
                   role="tablist"
                 >
-                  Body
+                  Arms
                 </a>
                 <a
                   className={
@@ -201,7 +231,7 @@ const Customizer = () => {
                   href="#part3"
                   role="tablist"
                 >
-                  Arms
+                  Body
                 </a>
                 <a
                   className={
@@ -227,45 +257,144 @@ const Customizer = () => {
                   id="part1"
                 >
                   {' '}
-                  <div className="px-4 py-6 bg-base-700  text-white">
+                  <button
+                    className="px-4 py-6 bg-base-700  text-white focus:outline-none"
+                    onClick={() => setHeadCount(0)}
+                  >
                     Head 1
-                  </div>
-                  <div className="px-4 py-6 bg-base-700  text-white">
+                  </button>
+                  <button
+                    className="px-4 py-6 bg-base-700  text-white focus:outline-none"
+                    onClick={() => setHeadCount(1)}
+                  >
                     Head 2
-                  </div>
-                  <div className="px-4 py-6 bg-base-700  text-white">
+                  </button>
+                  <button
+                    className="px-4 py-6 bg-base-700  text-white focus:outline-none"
+                    onClick={() => setHeadCount(2)}
+                  >
                     Head 3
-                  </div>
+                  </button>
+                  <button
+                    className="px-4 py-6 bg-base-700  text-white focus:outline-none"
+                    onClick={() => setHeadCount(3)}
+                  >
+                    Head 4
+                  </button>
+                  <button
+                    className="px-4 py-6 bg-base-700  text-white focus:outline-none"
+                    onClick={() => setHeadCount(4)}
+                  >
+                    Head 5
+                  </button>
                 </div>
                 <div
                   className={selectPart === 2 ? 'block' : 'hidden'}
                   id="part2"
                 >
                   {' '}
-                  <div className="px-4 py-6 bg-base-700  text-white">
-                    Body 1
-                  </div>
-                  <div className="px-4 py-6 bg-base-700  text-white">
-                    Body 2
-                  </div>
-                  <div className="px-4 py-6 bg-base-700  text-white">
-                    Body 3
-                  </div>
+                  <button
+                    className="px-4 py-6 bg-base-700  text-white focus:outline-none"
+                    onClick={() => setArmCount(0)}
+                  >
+                    Arms 1
+                  </button>
+                  <button
+                    className="px-4 py-6 bg-base-700  text-white focus:outline-none"
+                    onClick={() => setArmCount(1)}
+                  >
+                    Arms 2
+                  </button>
+                  <button
+                    className="px-4 py-6 bg-base-700  text-white focus:outline-none"
+                    onClick={() => setArmCount(2)}
+                  >
+                    Arms 3
+                  </button>
+                  <button
+                    className="px-4 py-6 bg-base-700  text-white focus:outline-none"
+                    onClick={() => setArmCount(3)}
+                  >
+                    Arms 4
+                  </button>
+                  <button
+                    className="px-4 py-6 bg-base-700  text-white focus:outline-none"
+                    onClick={() => setArmCount(4)}
+                  >
+                    Arms 5
+                  </button>
                 </div>
                 <div
                   className={selectPart === 3 ? 'block' : 'hidden'}
-                  id="part2"
+                  id="part3"
                 >
                   {' '}
-                  <div className="px-4 py-6 bg-base-700  text-white">
-                    Arms 1
-                  </div>
-                  <div className="px-4 py-6 bg-base-700  text-white">
-                    Arms 2
-                  </div>
-                  <div className="px-4 py-6 bg-base-700  text-white">
-                    Arms 3
-                  </div>
+                  <button
+                    className="px-4 py-6 bg-base-700  text-white focus:outline-none"
+                    onClick={() => setBodyCount(0)}
+                  >
+                    Body 1
+                  </button>
+                  <button
+                    className="px-4 py-6 bg-base-700  text-white focus:outline-none"
+                    onClick={() => setBodyCount(1)}
+                  >
+                    Body 2
+                  </button>
+                  <button
+                    className="px-4 py-6 bg-base-700  text-white focus:outline-none"
+                    onClick={() => setBodyCount(2)}
+                  >
+                    Body 3
+                  </button>
+                  <button
+                    className="px-4 py-6 bg-base-700  text-white focus:outline-none"
+                    onClick={() => setBodyCount(3)}
+                  >
+                    Body 4
+                  </button>
+                  <button
+                    className="px-4 py-6 bg-base-700  text-white focus:outline-none"
+                    onClick={() => setBodyCount(4)}
+                  >
+                    Body 5
+                  </button>
+                </div>
+                <div
+                  className={selectPart === 4 ? 'block' : 'hidden'}
+                  id="part4"
+                >
+                  {' '}
+                  <button
+                    className="px-4 py-6 bg-base-700  text-white focus:outline-none"
+                    onClick={() => setLegCount(0)}
+                  >
+                    Legs 1
+                  </button>
+                  <button
+                    className="px-4 py-6 bg-base-700  text-white focus:outline-none"
+                    onClick={() => setLegCount(1)}
+                  >
+                    Legs 2
+                  </button>
+                  <button
+                    className="px-4 py-6 bg-base-700  text-white focus:outline-none"
+                    onClick={() => setLegCount(2)}
+                  >
+                    Legs 3
+                  </button>
+                  <button
+                    className="px-4 py-6 bg-base-700  text-white focus:outline-none"
+                    onClick={() => setLegCount(3)}
+                  >
+                    Legs 4
+                  </button>
+                  <button
+                    className="px-4 py-6 bg-base-700  text-white focus:outline-none"
+                    onClick={() => setLegCount(4)}
+                  >
+                    Legs 5
+                  </button>
                 </div>
               </div>
             </div>
@@ -304,21 +433,12 @@ const Customizer = () => {
               </div>
               <div id="colors" className="space-y-4">
                 <h5 className="text-lg text-white font-bold">
-                  Colors : <span>(Head)</span>
+                  Colors : <span>{snap.current}</span>
                 </h5>
                 <div className="grid grid-cols-4 gap-x-2 gap-y-4">
-                  <div className="w-16 h-16 bg-primary-300 rounded"></div>
-                  <div className="w-16 h-16 bg-primary-300 rounded"></div>
-                  <div className="w-16 h-16 bg-primary-300 rounded"></div>
-                  <div className="w-16 h-16 bg-primary-300 rounded"></div>
-                  <div className="w-16 h-16 bg-primary-300 rounded"></div>
-                  <div className="w-16 h-16 bg-primary-300 rounded"></div>
-                  <div className="w-16 h-16 bg-primary-300 rounded"></div>
-                  <div className="w-16 h-16 bg-primary-300 rounded"></div>
-                  <div className="w-16 h-16 bg-primary-300 rounded"></div>
-                  <div className="w-16 h-16 bg-primary-300 rounded"></div>
-                  <div className="w-16 h-16 bg-primary-300 rounded"></div>
-                  <div className="w-16 h-16 bg-primary-300 rounded"></div>
+                  {colors.map((color) => (
+                  <div className="w-16 h-16 rounded" style={{backgroundColor:color.backgroundColor}}></div>
+                  ))}
                 </div>
               </div>
             </div>
