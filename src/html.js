@@ -12,6 +12,14 @@ export default function HTML(props) {
           content="width=device-width, initial-scale=1, shrink-to-fit=no"
         />
         <script
+          type="module"
+          src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"
+        ></script>
+        <script
+          noModule
+          src="https://unpkg.com/@google/model-viewer/dist/model-viewer-legacy.js"
+        ></script>
+        <script
           src={withPrefix('eztz.min.js')}
           type="text/javascript"
           charSet="utf-8"
