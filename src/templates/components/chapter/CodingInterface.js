@@ -37,7 +37,7 @@ const CodingInterface = ({
   );
 
   useEffect(() => {
-    monaco.init().then(monacoInstance => {
+    monaco.init().then((monacoInstance) => {
       monacoInstance.editor.defineTheme('cryptoverse-theme', {
         base: 'vs-dark',
         inherit: true,
@@ -122,7 +122,7 @@ const CodingInterface = ({
                   (module.indexOf('2') !== -1 || module.indexOf('3') !== -1)
                 ) {
                   let compiledCode =
-                    window !== undefined && window.runCode(editorValue);
+                    typeof window !== undefined && window.runCode(editorValue);
 
                   setMichelsonResult(compiledCode);
                 }
