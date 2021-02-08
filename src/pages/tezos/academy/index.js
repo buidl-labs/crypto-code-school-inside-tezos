@@ -83,7 +83,7 @@ const CurriculumOverview = ({
 }) => {
   const progress = useMemo(() => {
     let p =
-      window != 'undefined' &&
+      typeof window != 'undefined' &&
       JSON.parse(localStorage.getItem('progress') || '{}');
     return p;
   }, []);

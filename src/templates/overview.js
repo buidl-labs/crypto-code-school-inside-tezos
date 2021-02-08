@@ -11,7 +11,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import DoneIcon from '@material-ui/icons/Done';
 
-const MDXParagraph = props => <p className={`text-2xl pt-6`} {...props} />;
+const MDXParagraph = (props) => <p className={`text-2xl pt-6`} {...props} />;
 
 const ChapterRow = ({ chapter, done }) => (
   <li>
@@ -57,7 +57,7 @@ function LessonsOverview({ data: { mdx: module } }) {
   const [chapterList, updateChapterList] = useState(chapters);
   const progress = useMemo(() => {
     let p =
-      window !== undefined &&
+      typeof window !== undefined &&
       JSON.parse(localStorage.getItem('progress') || '{}');
     if (p[module.frontmatter.slug])
       return Object.keys(p[module.frontmatter.slug]);
@@ -103,7 +103,7 @@ function LessonsOverview({ data: { mdx: module } }) {
           <div className={`pl-6 py-8`}>
             <h3 className={`text-4xl font-black`}>Chapters</h3>
             <ul className={`mt-8 space-y-6`}>
-              {chapterList.map(c => (
+              {chapterList.map((c) => (
                 <ChapterRow
                   chapter={c}
                   key={c.slug}
