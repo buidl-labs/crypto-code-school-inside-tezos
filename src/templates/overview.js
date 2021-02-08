@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Layout from 'src/components/Layout/layout';
 import useChapters from 'src/hooks/use-chapters';
 import { Link, graphql } from 'gatsby';
@@ -13,7 +13,7 @@ import DoneIcon from '@material-ui/icons/Done';
 
 const MDXParagraph = props => <p className={`text-2xl pt-6`} {...props} />;
 
-const ChapterRow = ({ chapter }) => (
+const ChapterRow = ({ chapter, done }) => (
   <li>
     <Link
       to={`/tezos/academy/${chapter.module}/${chapter.slug}`}
@@ -21,7 +21,11 @@ const ChapterRow = ({ chapter }) => (
     >
       <div className={`flex items-center`}>
         <div
-          className={`bg-base-400 text-base-700 rounded-full h-12 w-12 flex items-center justify-center`}
+          className={`${
+            done
+              ? 'bg-success-200 text-success-600'
+              : 'bg-base-400 text-base-700'
+          } rounded-full h-12 w-12 flex items-center justify-center`}
         >
           <DoneIcon />
         </div>
@@ -51,120 +55,16 @@ export const query = graphql`
 function LessonsOverview({ data: { mdx: module } }) {
   const chapters = useChapters(module.frontmatter.slug);
   const [chapterList, updateChapterList] = useState(chapters);
-
-  const [continuationLink, setContinuationLink] = useState('#');
-  const [chapterZeroCompleted, setZeroChapterCompleted] = useState(() => {
-    let result = false;
-    const isChapterZeroCompleted =
-      typeof window != 'undefined' && localStorage.getItem('chapter-0');
-    if (isChapterZeroCompleted !== null) {
-      result = isChapterZeroCompleted;
-    }
-
-    return result;
-  });
-
-  //   useEffect(() => {
-  //     //get the previous stored if available otherwise create a new one
-  //     let list = [];
-  //     const listJSON =
-  //       typeof window != 'undefined' &&
-  //       localStorage.getItem(module.frontmatter.filterBy);
-  //     if (listJSON !== null) {
-  //       list = JSON.parse(listJSON);
-  //       //handle backward compatibility by removing chapters where current key isn't available
-  //       list = list.filter(chapter => chapter && chapter.current);
-  //       typeof window != 'undefined' &&
-  //         localStorage.setItem(module.frontmatter.filterBy, JSON.stringify(list));
-  //     }
-
-  //     if (!chapterZeroCompleted && module.frontmatter.slug === 'module-01') {
-  //       // console.log('storyline');
-  //       setContinuationLink('/tezos/storyline');
-  //       return;
-  //     }
-  //     //Go to next chapter route link from last successfully completed chapter
-  //     // if no chapter completed --> show first-chapter
-  //     // console.log('list', list);
-  //     if (list.length === 0) {
-  //       setContinuationLink(module.frontmatter.next);
-  //     } else if (list.length > 0) {
-  //       const chapterSlug =
-  //         chapters[list[list.length - 1].current] &&
-  //         chapters[list[list.length - 1].current].slug;
-  //       if (!chapterSlug) {
-  //         if (module.frontmatter.slug === 'module-01') {
-  //           // if last chapter of module-01 completed --> show the game next.
-  //           setContinuationLink('/tezos/game');
-  //         } else {
-  //           // TODO: Figure out what the continuation link at the end has to be for rest of the modules
-  //           setContinuationLink('#');
-  //         }
-  //       } else {
-  //         // if 1st chapter completed show --> next chapter i.e 2nd chapter and so on
-  //         setContinuationLink(`/tezos/lesson/${chapterSlug}`);
-  //       }
-  //     }
-  //   }, []);
+  const progress = useMemo(() => {
+    let p = JSON.parse(localStorage.getItem('progress') || '{}');
+    if (p[module.frontmatter.slug])
+      return Object.keys(p[module.frontmatter.slug]);
+    return [];
+  }, [module.frontmatter.slug]);
 
   useEffect(() => {
     trackEvent('Chapters-Overview-View');
   }, []);
-
-  // useEffect(() => {
-  //   //get the previous stored if available otherwise create a new one
-  //   let list = [];
-  //   const listJSON =
-  //     typeof window != 'undefined' &&
-  //     localStorage.getItem(module.frontmatter.filterBy);
-  //   if (listJSON !== null) {
-  //     list = JSON.parse(listJSON);
-  //   }
-  //   const newChapterList = chapters.map(chapter => {
-  //     const chapterAlreadyExists = list.some(savedChapter => {
-  //       return savedChapter.chapterSlug === chapter.slug;
-  //     });
-  //     return {
-  //       title: chapter.title,
-  //       chapter: chapter.chapter,
-  //       slug: chapter.slug,
-  //       excerpt: chapter.excerpt,
-  //       completed: chapterAlreadyExists,
-  //       editor: chapter.editor,
-  //     };
-  //   });
-
-  //   updateChapterList(newChapterList);
-  // }, []);
-
-  // useEffect(() => {
-  //   SyncSavedUserProgressWithLatestUpdates();
-  // }, []);
-
-  // const SyncSavedUserProgressWithLatestUpdates = () => {
-  //   let list = [];
-  //   const listJSON =
-  //     typeof window != 'undefined' &&
-  //     localStorage.getItem(module.frontmatter.filterBy);
-  //   if (listJSON !== null) {
-  //     list = JSON.parse(listJSON);
-  //   }
-  //   if (list.length > 0) {
-  //     const updateList = list.filter(currentSavedChapter => {
-  //       const result = chapterList.find(ch => {
-  //         return ch.editor.answer === currentSavedChapter.code;
-  //       });
-  //       return result;
-  //     });
-  //     // console.log('updateList', updateList);
-  //     //update stored user progress lesson chapters
-  //     //sync it according to latest content
-  //     localStorage.setItem(
-  //       module.frontmatter.filterBy,
-  //       JSON.stringify(updateList),
-  //     );
-  //   }
-  // };
 
   return (
     <Layout>
@@ -202,7 +102,11 @@ function LessonsOverview({ data: { mdx: module } }) {
             <h3 className={`text-4xl font-black`}>Chapters</h3>
             <ul className={`mt-8 space-y-6`}>
               {chapterList.map(c => (
-                <ChapterRow chapter={c} key={c.slug} />
+                <ChapterRow
+                  chapter={c}
+                  key={c.slug}
+                  done={progress.includes(c.slug)}
+                />
               ))}
             </ul>
           </div>

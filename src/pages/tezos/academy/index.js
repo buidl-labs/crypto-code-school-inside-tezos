@@ -1,20 +1,40 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { graphql, Link } from 'gatsby';
 import Layout from 'src/components/Layout/layout';
 import SEO from 'src/components/Seo';
 import Footer from 'src/components/Footer';
 import Cryptobot from 'src/images/cryptobot-yellow.png';
+import DoneIcon from '@material-ui/icons/Done';
+import useChapters from 'src/hooks/use-chapters';
 
-const CourseCard = ({ m, i }) => {
+const CourseCard = ({ m, i, progress }) => {
+  const chapters = useChapters(m.frontmatter.slug);
+
+  const p = useMemo(
+    () => Math.round((Object.keys(progress).length / chapters.length) * 100),
+    [],
+  );
+  console.log('🔥', p);
   return (
     <article className={`flex`}>
+      {p === 100 ? (
+        <div
+          className={`h-12 w-12 relative z-10 rounded-full bg-success-200 text-success-600 flex items-center justify-center text-2xl mr-14 flex-none`}
+        >
+          <DoneIcon />
+        </div>
+      ) : (
+        <div
+          className={`h-12 w-12 relative z-10 rounded-full ${
+            p > 0 ? 'bg-primary-600' : 'bg-base-400'
+          } text-white flex items-center justify-center text-2xl mr-14 flex-none`}
+        >
+          {i + 1}
+        </div>
+      )}
+
       <div
-        className={`h-12 w-12 relative z-10 rounded-full bg-base-400 text-white flex items-center justify-center text-2xl mr-14 flex-none`}
-      >
-        {i + 1}
-      </div>
-      <div
-        className={`grid grid-cols-2 w-full  bg-base-800 border border-base-400 rounded-xl`}
+        className={`grid grid-cols-2 w-full bg-base-800 border border-base-400 rounded-xl`}
       >
         <div>
           <img src={Cryptobot} className={`block my-0 mx-auto`} />
@@ -22,11 +42,16 @@ const CourseCard = ({ m, i }) => {
         <div className={`my-auto`}>
           <h2 className={`font-black text-5xl`}>{m.frontmatter.title}</h2>
           <p className={`text-lg pr-9`}>{m.frontmatter.description}</p>
+          {p > 0 && (
+            <h3 className={`text-success-500 text-3xl mt-4 font-black`}>
+              {p}% complete
+            </h3>
+          )}
           <Link
             to={`/tezos/academy/${m.frontmatter.slug}`}
             className={`bg-primary-600 mt-4 inline-block py-3 px-9 font-bold text-2xl rounded hover:no-underline`}
           >
-            Start Module
+            {p === 100 ? 'Revisit' : p > 0 ? 'Continue' : 'Start'} Module
           </Link>
         </div>
       </div>
@@ -56,6 +81,11 @@ const CurriculumOverview = ({
     allMdx: { nodes: modules },
   },
 }) => {
+  const progress = useMemo(() => {
+    let p = JSON.parse(localStorage.getItem('progress') || '{}');
+    return p;
+  });
+
   return (
     <Layout>
       <SEO title="Chapters Overview" />
@@ -78,7 +108,14 @@ const CurriculumOverview = ({
         </div>
         <ul className={`my-12 space-y-12 relative`}>
           {modules.map((m, i) => (
-            <CourseCard m={m} i={i} key={i} />
+            <CourseCard
+              m={m}
+              i={i}
+              key={i}
+              progress={
+                progress[m.frontmatter.slug] ? progress[m.frontmatter.slug] : {}
+              }
+            />
           ))}
           <div
             className={`absolute left-0 bottom-0 h-full w-4 bg-base-700 rounded-full ml-4 z-0`}

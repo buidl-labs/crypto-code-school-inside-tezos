@@ -88,10 +88,10 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
   function getDefaultEditorValue() {
     const module = chapter.frontmatter.filterBy;
     let progress =
-      (typeof window != 'undefined' && localStorage.getItem('progress')) || {};
-    progress = progress ? JSON.parse(progress) : {};
-    console.log('Logging from getDefaultEditorValue...');
-    console.log('getDef', progress);
+      (typeof window != 'undefined' &&
+        JSON.parse(localStorage.getItem('progress'))) ||
+      '{}';
+
     if (progress[module]) {
       console.log('getDef', progress[module]);
       if (progress[module][chapter.frontmatter.slug])
