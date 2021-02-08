@@ -82,9 +82,11 @@ const CurriculumOverview = ({
   },
 }) => {
   const progress = useMemo(() => {
-    let p = JSON.parse(localStorage.getItem('progress') || '{}');
+    let p =
+      window != 'undefined' &&
+      JSON.parse(localStorage.getItem('progress') || '{}');
     return p;
-  });
+  }, [window]);
 
   return (
     <Layout>
