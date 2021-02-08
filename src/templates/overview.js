@@ -57,7 +57,7 @@ function LessonsOverview({ data: { mdx: module } }) {
   const [chapterList, updateChapterList] = useState(chapters);
   const progress = useMemo(() => {
     let p =
-      typeof window !== undefined &&
+      typeof window != 'undefined' &&
       JSON.parse(localStorage.getItem('progress') || '{}');
     if (p[module.frontmatter.slug])
       return Object.keys(p[module.frontmatter.slug]);
