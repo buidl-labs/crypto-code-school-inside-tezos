@@ -63,6 +63,7 @@ const renderGroup = (groupObject, id = 0, color, color_name) => {
                 material={child.material}
                 geometry={child.geometry}
                 position={child.position}
+                rotation={child.rotation}
                 scale={child.scale}
                 material-color={color}
               />
@@ -75,7 +76,7 @@ const renderGroup = (groupObject, id = 0, color, color_name) => {
 
 const Bot = ({ headCount, armCount, bodyCount, legCount }) => {
   const group = useRef();
-  const { scene } = useGLTF('/c3bots.glb');
+  const { scene } = useGLTF('/c5bots.glb');
   const snap = useProxy(state);
   const [hovered, set] = useState(null);
 
@@ -86,24 +87,17 @@ const Bot = ({ headCount, armCount, bodyCount, legCount }) => {
   const body = useGroup(scene, 'body');
   const leg = useGroup(scene, 'leg');
   return (
-    <group
-      onPointerOver={e => (e.stopPropagation(), set(e.object.material.name))}
-      onPointerOut={e => e.intersections.length === 0 && set(null)}
-      onPointerMissed={() => (state.current = null)}
-      onPointerDown={e => {
-        e.stopPropagation();
-        console.log(e.object);
-        state.current = e.object.material.name;
-      }}
-      ref={group}
-      dispose={null}
-    >
+    <group ref={group} dispose={null}>
       {renderGroup(head, headCount, snap.items.head, 'head')}
       {renderGroup(arm, armCount, snap.items.arm, 'arm')}
       {renderGroup(body, bodyCount, snap.items.body, 'body')}
       {renderGroup(leg, legCount, snap.items.leg, 'leg')}
     </group>
   );
+};
+
+const getRandomNumber = (min, max) => {
+  return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
 const Customizer = () => {
@@ -173,7 +167,7 @@ const Customizer = () => {
         </div>
         <div
           id="editor"
-          className="absolute h-full min-h-screen grid grid-cols-8 gap-4 w-full"
+          className="relative h-full min-h-screen grid grid-cols-8 gap-4 w-full"
         >
           <div
             id="left-menu"
@@ -405,7 +399,16 @@ const Customizer = () => {
             className="col-span-2 col-start-7 bg-base-900 px-4 "
           >
             <div className="grid grid-cols-2 gap-4  mx-auto justify-center text-white  py-4">
-              <Button size="sm" type="secondary">
+              <Button
+                size="sm"
+                type="secondary"
+                onClick={() => {
+                  setHeadCount(getRandomNumber(0, 4));
+                  setBodyCount(getRandomNumber(0, 4));
+                  setArmCount(getRandomNumber(0, 4));
+                  setLegCount(getRandomNumber(0, 4));
+                }}
+              >
                 Randomize
               </Button>
 
@@ -421,7 +424,26 @@ const Customizer = () => {
                   Colors & Textures
                 </h4>
               </div>
-
+              <div className="flex flex-col  text-white ">
+                <label className="font-regular text-lg ">Metallic</label>
+                <input
+                  type="range"
+                  id="metallic"
+                  name="metallic"
+                  min="0"
+                  max="10"
+                />
+              </div>
+              <div className="flex flex-col  text-white ">
+                <label className="font-regular text-lg ">Roughness</label>
+                <input
+                  type="range"
+                  id="roughness"
+                  name="roughness"
+                  min="0"
+                  max="10"
+                />
+              </div>
               <div id="textures" className="space-y-4">
                 <h5 className="text-lg text-white font-bold">Textures</h5>
                 <div className=" grid grid-cols-4 gap-x-2 gap-y-4">
@@ -436,8 +458,11 @@ const Customizer = () => {
                   Colors : <span>{snap.current}</span>
                 </h5>
                 <div className="grid grid-cols-4 gap-x-2 gap-y-4">
-                  {colors.map((color) => (
-                  <div className="w-16 h-16 rounded" style={{backgroundColor:color.backgroundColor}}></div>
+                  {colors.map(color => (
+                    <div
+                      className="w-16 h-16 rounded"
+                      style={{ backgroundColor: color.backgroundColor }}
+                    ></div>
                   ))}
                 </div>
               </div>
