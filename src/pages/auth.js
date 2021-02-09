@@ -10,7 +10,13 @@ import AuthLayout from '../components/AuthLayout';
 import thanosLogo from '../images/thanos-wallet.png';
 import SadBot from '../images/SadBot.png';
 import { createUser, updateUser, verifyUser } from '../api';
+import { NetworkType } from '@airgap/beacon-sdk';
 import { Magic } from 'magic-sdk';
+import { NETWORK } from 'src/defaults';
+
+// To connect to Delphinet, change this to NetworkType.DELPHINET
+const network =
+  NETWORK === 'delphinet' ? NetworkType.DELPHINET : NetworkType.MAINNET;
 
 function isBrowserSupported() {
   if (typeof window !== 'undefined') {
@@ -93,7 +99,7 @@ function ThanosNotAvailableModal() {
           Thanos Wallet will serve as a safe place to store your super cool
           Cryptobots. This will also act as your login to the platform (no extra
           password needed).
-          <p className={`mt-4`}>
+          <div className={`mt-4`}>
             Installed?{' '}
             <button
               className={`font-bold underline`}
@@ -101,7 +107,7 @@ function ThanosNotAvailableModal() {
             >
               Refresh this page to detect.
             </button>
-          </p>
+          </div>
         </ModalTextBody>
       </ModalTextSection>
       <a
@@ -263,7 +269,7 @@ function LoggedInModal() {
   );
 }
 
-const AuthPage = () => {
+const AuthPage = ({ location }) => {
   let beacon = useContext(BeaconContext);
   const browserSupport = useMemo(isBrowserSupported);
   const [thanosAvailable, setThanosAvailable] = useState(false);
@@ -282,11 +288,15 @@ const AuthPage = () => {
   }, []);
 
   useEffect(() => {
-    isUserVerified && navigate('/tezos');
+    isUserVerified && navigate(location ? location.state.pathname : '/tezos');
   }, [isUserVerified]);
 
   async function connectWallet() {
-    const acc = await beacon.getActiveAccount();
+    const acc = await beacon.client.getActiveAccount({
+      network: {
+        type: network,
+      },
+    });
     console.log(acc);
     let u;
     if (acc) {
@@ -294,7 +304,11 @@ const AuthPage = () => {
       console.log('u', u);
     } else {
       try {
-        const resp = await beacon.requestPermissions();
+        const resp = await beacon.client.requestPermissions({
+          network: {
+            type: network,
+          },
+        });
         if (!resp.address) throw new Error();
         u = await createUser(resp.address);
         console.log('u', u);

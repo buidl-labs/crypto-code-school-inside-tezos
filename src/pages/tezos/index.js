@@ -57,7 +57,6 @@ const HomePage = () => {
             height: 300,
           }}
         />
-        <NavBar></NavBar>
         <div
           style={{
             background: 'linear-gradient(180deg, #05323D 0%, #05323D 100%)',
