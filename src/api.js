@@ -39,3 +39,19 @@ export async function verifyUser(token) {
     return;
   }
 }
+
+export async function updateProgress(user, chapter_num, module_num) {
+  try {
+    const res = await axios.post(`${API_URL}/user/progress`, {
+      user,
+      chapter_num,
+      module_num,
+    });
+    console.log(res);
+    if (res.status !== 200) throw new Error();
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return;
+  }
+}

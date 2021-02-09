@@ -12,7 +12,12 @@ import MichelsonResult from './components/chapter/MichelsonResult';
 import useChapters from '../hooks/use-chapters';
 import useModules from '../hooks/use-modules';
 import { getChaptersIndex } from '../utils/index';
+import userAtom from 'src/atoms/user-atom';
+import isUserAtom from 'src/atoms/is-user-atom';
+import { useAtom } from 'jotai';
 import SEO from '../components/Seo';
+import { updateProgress } from 'src/api';
+import { updateUser } from '../api';
 
 export const query = graphql`
   query($slug: String!, $module: String!) {
@@ -42,6 +47,8 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
         2. Every object is marked with a key `${chapter.frontmatter.slug}-${chapter.frontmatter.filterBy}`
         3. On completing a chapter, progress[`${chapter.frontmatter.slug}-${chapter.frontmatter.filterBy}`] is marked as true for "complete."
   */
+  const [user] = useAtom(userAtom);
+  const [isUser] = useAtom(isUserAtom);
   const [isChapterDrawerOpen, setIsChapterDrawerOpen] = useState(false);
   const [isChapterCompleted, setIsChapterCompleted] = useState(false);
   const [result, setResult] = useState({});
@@ -69,7 +76,16 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
   );
 
   useEffect(() => {
-    if (result.success === true) setIsChapterCompleted(true);
+    if (result.success === true) {
+      setIsChapterCompleted(true);
+      if (isUser) {
+        updateProgress(
+          user,
+          Number.parseInt(chapter.frontmatter.slug.split('-')[1]),
+          Number.parseInt(chapter.frontmatter.filterBy.split('-')[1]),
+        ).then(res => console.log(res));
+      }
+    }
   }, [result.success]);
 
   useEffect(() => {
