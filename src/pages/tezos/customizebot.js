@@ -1,4 +1,10 @@
-import React, { Suspense, useRef, useState, useEffect } from 'react';
+import React, {
+  Suspense,
+  useRef,
+  useState,
+  useEffect,
+  useContext,
+} from 'react';
 import NavBar from '../../components/NavBar';
 import Button from '../../components/Buttons';
 
@@ -10,12 +16,14 @@ import {
   OrbitControls,
   Html,
 } from '@react-three/drei';
-
+import { MichelsonMap } from '@taquito/taquito';
 import { proxy, useProxy } from 'valtio';
 import { HexColorPicker } from 'react-colorful';
 import 'react-colorful/dist/index.css';
 import GLTFExporter from 'three-gltf-exporter';
-
+import { connectToBeacon, Tezos } from 'src/utils/wallet';
+import { BeaconContext } from 'src/context/beacon-context';
+import { CONTRACT_ADDRESS } from 'src/defaults';
 // TODO: Make every mesh part colorable -- dependent on how the material is named inside blender
 const state = proxy({
   current: null,
@@ -74,18 +82,23 @@ const renderGroup = (groupObject, id = 0, color, color_name) => {
   );
 };
 
-const Bot = ({ headCount, armCount, bodyCount, legCount }) => {
+const Bot = ({
+  headCount,
+  armCount,
+  bodyCount,
+  legCount,
+  head,
+  body,
+  arm,
+  leg,
+}) => {
   const group = useRef();
-  const { scene } = useGLTF('/c5bots.glb');
+
   const snap = useProxy(state);
   const [hovered, set] = useState(null);
 
   const link = useRef();
 
-  const head = useGroup(scene, 'head');
-  const arm = useGroup(scene, 'arm');
-  const body = useGroup(scene, 'body');
-  const leg = useGroup(scene, 'leg');
   return (
     <group ref={group} dispose={null}>
       {renderGroup(head, headCount, snap.items.head, 'head')}
@@ -106,6 +119,47 @@ const Customizer = () => {
   const [armCount, setArmCount] = useState(0);
   const [bodyCount, setBodyCount] = useState(0);
   const [legCount, setLegCount] = useState(0);
+  const beacon = useContext(BeaconContext);
+
+  const { scene } = useGLTF('/c5bots.glb');
+  const head = useGroup(scene, 'head');
+  const arm = useGroup(scene, 'arm');
+  const body = useGroup(scene, 'body');
+  const leg = useGroup(scene, 'leg');
+
+  async function mintNFT(ipfsHash) {
+    console.log(ipfsHash);
+    const contract = await Tezos.wallet.at(CONTRACT_ADDRESS);
+    const RnId = (deepness = 10) =>
+      parseInt(Date.now() + Math.random() * deepness);
+    const randomId = RnId();
+    const metadata = MichelsonMap.fromLiteral({
+      uri: ipfsHash,
+      symbol: 'CB',
+    });
+    const u = await beacon.client.getActiveAccount({
+      network: {
+        type: 'https://api.tez.ie/rpc/delphinet',
+      },
+    });
+    const address = u.address;
+
+    const op = await contract.methods
+      .mint(
+        address,
+        Number(1),
+        metadata,
+        randomId, // DONE: Make the token id increment dynamic
+      )
+      .send();
+
+    console.log(`Awaiting for hash to be confirmed...`, op);
+
+    const result = await op.confirmation(1);
+
+    console.log('result', result);
+    return;
+  }
 
   const snap = useProxy(state);
 
@@ -151,6 +205,10 @@ const Customizer = () => {
                 armCount={armCount}
                 bodyCount={bodyCount}
                 legCount={legCount}
+                head={head}
+                arm={arm}
+                body={body}
+                leg={leg}
               />
               <ContactShadows
                 rotation-x={Math.PI / 2}
@@ -162,6 +220,7 @@ const Customizer = () => {
                 far={1}
               />
             </Suspense>
+
             <OrbitControls enableZoom={false} />
           </Canvas>
         </div>
@@ -411,8 +470,56 @@ const Customizer = () => {
               >
                 Randomize
               </Button>
+              <Button
+                size="sm"
+                type="primary"
+                onClick={() => {
+                  const gltfExporter = new GLTFExporter();
 
-              <Button size="sm" type="primary">
+                  gltfExporter.parse(
+                    [
+                      head[headCount],
+                      body[bodyCount],
+                      arm[armCount],
+                      leg[legCount],
+                    ],
+                    function(result) {
+                      console.log('resulting...', result);
+                      const blob = new Blob([result], {
+                        type: 'application/octet-stream',
+                      });
+
+                      upload(blob);
+                    },
+                    { binary: true },
+                  );
+
+                  function upload(blob) {
+                    var fd = new FormData();
+                    // fd.append('bot', blob, 'bot.glb');
+                    fd.append('file', blob);
+                    fetch(
+                      'https://cryptoverse-wars-backend-nfjp.onrender.com/api/upload-3d-model-to-ipfs',
+                      {
+                        method: 'post',
+                        body: fd,
+                      },
+                    )
+                      .then(res => {
+                        // console.log(res)
+                        return res.json();
+                      })
+                      .then(async res => {
+                        await connectToBeacon(beacon);
+
+                        mintNFT(res.body.ipfsHash);
+                      })
+                      .catch(err => {
+                        console.log(err);
+                      });
+                  }
+                }}
+              >
                 Claim Bot
               </Button>
             </div>
@@ -462,6 +569,7 @@ const Customizer = () => {
                     <div
                       className="w-16 h-16 rounded"
                       style={{ backgroundColor: color.backgroundColor }}
+                      key={color.backgroundColor}
                     ></div>
                   ))}
                 </div>

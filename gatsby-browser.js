@@ -13,14 +13,16 @@ export const onClientEntry = () => {
   };
 };
 
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Provider } from 'jotai';
 import { BeaconProvider } from './src/context/beacon-context';
 
 export const wrapRootElement = ({ element }) => {
   return (
-    <BeaconProvider>
-      <Provider>{element}</Provider>
-    </BeaconProvider>
+    <Suspense fallback={null}>
+      <BeaconProvider>
+        <Provider>{element}</Provider>
+      </BeaconProvider>
+    </Suspense>
   );
 };
