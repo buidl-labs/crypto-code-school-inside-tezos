@@ -14,6 +14,7 @@ import {
 import { proxy, useProxy } from 'valtio';
 import { HexColorPicker } from 'react-colorful';
 import 'react-colorful/dist/index.css';
+import 'src/utils/react-colorful.css';
 import GLTFExporter from 'three-gltf-exporter';
 
 // TODO: Make every mesh part colorable -- dependent on how the material is named inside blender
@@ -40,12 +41,12 @@ function useGroup(scene, type) {
     }
   });
 
-  console.log('result', result);
+  // console.log('result', result);
   return result;
 }
 
-const renderGroup = (groupObject, id = 0, color, color_name) => {
-  // console.log('group object', groupObject);
+const renderGroup = (groupObject, id = 0, colors, getMeshName) => {
+  // console.log('group object', colors, getMeshName);
   return (
     <>
       <group
@@ -56,17 +57,20 @@ const renderGroup = (groupObject, id = 0, color, color_name) => {
       >
         {groupObject.length > 0 &&
           groupObject[id].children.map(child => {
-            child.material.name = color_name;
             return (
               <mesh
+                key={child.uuid}
                 name={child.name}
                 material={child.material}
                 geometry={child.geometry}
                 position={child.position}
                 rotation={child.rotation}
                 scale={child.scale}
-                material-color={color}
-              />
+              >
+                <meshPhongMaterial
+                  color={colors.items[getMeshName(child.name)] || '#ffffff'}
+                />
+              </mesh>
             );
           })}
       </group>
@@ -74,10 +78,17 @@ const renderGroup = (groupObject, id = 0, color, color_name) => {
   );
 };
 
-const Bot = ({ headCount, armCount, bodyCount, legCount }) => {
+const Bot = ({
+  headCount,
+  armCount,
+  bodyCount,
+  legCount,
+  colors,
+  getMeshName,
+  setBotColors,
+}) => {
   const group = useRef();
   const { scene } = useGLTF('/c5bots.glb');
-  const snap = useProxy(state);
   const [hovered, set] = useState(null);
 
   const link = useRef();
@@ -87,11 +98,26 @@ const Bot = ({ headCount, armCount, bodyCount, legCount }) => {
   const body = useGroup(scene, 'body');
   const leg = useGroup(scene, 'leg');
   return (
-    <group ref={group} dispose={null}>
-      {renderGroup(head, headCount, snap.items.head, 'head')}
-      {renderGroup(arm, armCount, snap.items.arm, 'arm')}
-      {renderGroup(body, bodyCount, snap.items.body, 'body')}
-      {renderGroup(leg, legCount, snap.items.leg, 'leg')}
+    <group
+      onPointerOver={e => (e.stopPropagation(), set(e.object.material.name))}
+      onPointerOut={e => e.intersections.length === 0 && set(null)}
+      onPointerMissed={() => (state.current = null)}
+      onPointerDown={e => {
+        e.stopPropagation();
+        console.log(e.object);
+        setBotColors(current => {
+          const copy = { ...current };
+          copy.current = getMeshName(e.object.name);
+          return copy;
+        });
+      }}
+      ref={group}
+      dispose={null}
+    >
+      {renderGroup(head, headCount, colors, getMeshName)}
+      {renderGroup(arm, armCount, colors, getMeshName)}
+      {renderGroup(body, bodyCount, colors, getMeshName)}
+      {renderGroup(leg, legCount, colors, getMeshName)}
     </group>
   );
 };
@@ -107,25 +133,109 @@ const Customizer = () => {
   const [bodyCount, setBodyCount] = useState(0);
   const [legCount, setLegCount] = useState(0);
 
-  const snap = useProxy(state);
+  const [showColorPicker, updateShowColorPicker] = useState(false);
+  const [colorPicker, setColorPicker] = useState('#ffffff');
+  const [botColors, setBotColors] = useState({
+    current: null,
+    items: {
+      face: '#ffffff',
+      eye: '#ffffff',
+      neck: '#ffffff',
+      bodybase: '#ffffff',
+      gem: '#ffffff',
+      armsR: '#ffffff',
+      handsR: '#ffffff',
+      armsL: '#ffffff',
+      handsL: '#ffffff',
+      torso: '#ffffff',
+      legsL: '#ffffff',
+      footL: '#ffffff',
+      legsR: '#ffffff',
+      footR: '#ffffff',
+      waist: '#ffffff',
+      jointR: '#ffffff',
+      jointL: '#ffffff',
+      shoulderR: '#ffffff',
+      shoulderL: '#ffffff',
+
+      //extras
+      head: '#ffffff',
+      body: '#ffffff',
+      arm: '#ffffff',
+      leg: '#ffffff',
+    },
+  });
+
+  const getMeshName = name => {
+    const filterType = Object.keys(botColors.items);
+
+    const value = filterType.find(elm => {
+      const regexType = new RegExp(elm, 'i');
+      if (regexType.test(name)) {
+        return true;
+      }
+    });
+
+    return value;
+  };
 
   const colors = [
     {
-      backgroundColor: '#66533C',
+      backgroundColor: '#FFBF41',
     },
     {
-      backgroundColor: '#173A2F',
+      backgroundColor: '#FF6161',
     },
     {
-      backgroundColor: '#153944',
+      backgroundColor: '#4AA4FF',
     },
     {
-      backgroundColor: '#27548D',
+      backgroundColor: '#43E871',
     },
     {
-      backgroundColor: '#438AAC',
+      backgroundColor: '#E7E7E7',
+    },
+    {
+      backgroundColor: '#9148E7',
+    },
+    {
+      backgroundColor: '#E76F16',
+    },
+    {
+      backgroundColor: '#00D8E7',
+    },
+    {
+      backgroundColor: '#1D1D1D',
+    },
+    {
+      backgroundColor: '#643C28',
+    },
+    {
+      backgroundColor: '#FFB6EB',
+    },
+    {
+      backgroundColor: '#0C2661',
     },
   ];
+
+  function Picker() {
+    return (
+      <div style={{ display: true ? 'block' : 'none' }}>
+        <HexColorPicker
+          className="picker"
+          color={colorPicker}
+          onChange={color => {
+            setColorPicker(color);
+            setBotColors(current => {
+              const copy = { ...current };
+              copy.items[copy.current] = color;
+              return copy;
+            });
+          }}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="h-screen bg-primary-900">
@@ -360,7 +470,7 @@ const Customizer = () => {
           </div>
 
           <div
-            id="right-menu"
+            id="middle-menu"
             className="relative col-span-2 col-start-3 col-end-7 row-start-0 row-span-full"
           >
             <div id="customizer-canvas" className="w-full h-full">
@@ -382,6 +492,9 @@ const Customizer = () => {
                     armCount={armCount}
                     bodyCount={bodyCount}
                     legCount={legCount}
+                    colors={botColors}
+                    getMeshName={getMeshName}
+                    setBotColors={setBotColors}
                   />
                   <Environment files="royal_esplanade_1k.hdr" />
                 </Suspense>
@@ -450,17 +563,41 @@ const Customizer = () => {
               </div>
               <div id="colors" className="space-y-4">
                 <h5 className="text-lg text-white font-bold">
-                  Colors : <span>{snap.current}</span>
+                  Body Part : <span>{botColors.current}</span>
                 </h5>
-                <div className="grid grid-cols-4 gap-x-2 gap-y-4">
-                  {colors.map(color => (
-                    <div
-                      className="w-16 h-16 rounded"
-                      style={{ backgroundColor: color.backgroundColor }}
-                    ></div>
-                  ))}
-                </div>
+                {showColorPicker ? (
+                  <Picker />
+                ) : (
+                  <div className="grid grid-cols-4 gap-x-2 gap-y-4 cursor-pointer	">
+                    {colors.map((color, index) => (
+                      <div
+                        onClick={() => {
+                          setBotColors(current => {
+                            const copy = { ...current };
+                            copy.items[copy.current] = color.backgroundColor;
+                            return copy;
+                          });
+                        }}
+                        key={index}
+                        className="w-16 h-16 rounded"
+                        style={{ backgroundColor: color.backgroundColor }}
+                      ></div>
+                    ))}
+                  </div>
+                )}
               </div>
+              <Button
+                size="sm"
+                type="secondary"
+                style={{ width: '100%' }}
+                onClick={() => {
+                  showColorPicker
+                    ? updateShowColorPicker(false)
+                    : updateShowColorPicker(true);
+                }}
+              >
+                {showColorPicker ? `Close` : `+ Custom color`}
+              </Button>
             </div>
           </div>
         </div>
