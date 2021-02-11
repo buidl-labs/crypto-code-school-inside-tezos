@@ -129,42 +129,7 @@ const Customizer = () => {
 
   return (
     <div className="h-screen bg-primary-900">
-      <NavBar />
       <div id="main" className="relative h-full">
-        <div id="customizer-canvas" className="absolute w-full h-full">
-          {' '}
-          <Canvas
-            concurrent
-            pixelRatio={[1, 1.5]}
-            camera={{ position: [0, 0, 5.75], fov: 80 }}
-          >
-            <ambientLight intensity={0.5} />
-            <spotLight
-              intensity={0.3}
-              angle={0.1}
-              penumbra={1}
-              position={[5, 25, 20]}
-            />
-            <Suspense fallback={null}>
-              <Bot
-                headCount={headCount}
-                armCount={armCount}
-                bodyCount={bodyCount}
-                legCount={legCount}
-              />
-              <ContactShadows
-                rotation-x={Math.PI / 2}
-                position={[0, -0.8, 0]}
-                opacity={0.25}
-                width={10}
-                height={10}
-                blur={2}
-                far={1}
-              />
-            </Suspense>
-            <OrbitControls enableZoom={false} />
-          </Canvas>
-        </div>
         <div
           id="editor"
           className="relative h-full min-h-screen grid grid-cols-8 gap-4 w-full"
@@ -394,6 +359,36 @@ const Customizer = () => {
             </div>
           </div>
 
+          <div
+            id="right-menu"
+            className="relative col-span-2 col-start-3 col-end-7 row-start-0 row-span-full"
+          >
+            <div id="customizer-canvas" className="w-full h-full">
+              <Canvas
+                concurrent
+                pixelRatio={[1, 1.5]}
+                camera={{ position: [0, 0, 5.75], fov: 80 }}
+              >
+                <ambientLight intensity={0.5} />
+                <spotLight
+                  intensity={0.3}
+                  angle={0.1}
+                  penumbra={1}
+                  position={[5, 25, 20]}
+                />
+                <Suspense fallback={null}>
+                  <Bot
+                    headCount={headCount}
+                    armCount={armCount}
+                    bodyCount={bodyCount}
+                    legCount={legCount}
+                  />
+                  <Environment files="royal_esplanade_1k.hdr" />
+                </Suspense>
+                <OrbitControls enableZoom={false} />
+              </Canvas>
+            </div>
+          </div>
           <div
             id="right-menu"
             className="col-span-2 col-start-7 bg-base-900 px-4 "
