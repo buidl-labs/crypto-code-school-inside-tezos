@@ -10,13 +10,14 @@ import AuthLayout from '../components/AuthLayout';
 import thanosLogo from '../images/thanos-wallet.png';
 import SadBot from '../images/SadBot.png';
 import { createUser, updateUser, verifyUser } from '../api';
-import { NetworkType } from '@airgap/beacon-sdk';
 import { Magic } from 'magic-sdk';
 import { NETWORK } from 'src/defaults';
 
 // To connect to Delphinet, change this to NetworkType.DELPHINET
 const network =
-  NETWORK === 'delphinet' ? NetworkType.DELPHINET : NetworkType.MAINNET;
+  NETWORK === 'delphinet'
+    ? 'https://api.tez.ie/rpc/delphinet'
+    : 'https://api.tez.ie/rpc/mainnet';
 
 function isBrowserSupported() {
   if (typeof window !== 'undefined') {
@@ -270,7 +271,7 @@ function LoggedInModal() {
 }
 
 const AuthPage = ({ location }) => {
-  let beacon = useContext(BeaconContext);
+  let beacon = typeof window != 'undefined' && useContext(BeaconContext);
   const browserSupport = useMemo(isBrowserSupported);
   const [thanosAvailable, setThanosAvailable] = useState(false);
   const [user, setUser] = useAtom(userAtom);
@@ -321,7 +322,7 @@ const AuthPage = ({ location }) => {
     setUser(u);
   }
 
-  return (
+  return typeof window !== 'undefined' ? (
     <>
       <AuthLayout>
         <SEO
@@ -339,25 +340,28 @@ const AuthPage = ({ location }) => {
         <main
           className={`bg-base-900 min-h-screen text-white flex items-center justify-center`}
         >
-          {!browserSupport ? (
-            <BrowserSupportMissingModal />
-          ) : !thanosAvailable ? (
-            <ThanosNotAvailableModal />
-          ) : !isUser ? (
-            <ConnectWalletModal clickHandler={connectWallet} />
-          ) : (
-            <VerifyEmailModal
-              email={email}
-              setEmail={setEmail}
-              nickname={nickname}
-              setNickname={setNickname}
-              user={user}
-              setUser={setUser}
-            />
-          )}
+          {typeof window != 'undefined' &&
+            (!browserSupport ? (
+              <BrowserSupportMissingModal />
+            ) : !thanosAvailable ? (
+              <ThanosNotAvailableModal />
+            ) : !isUser ? (
+              <ConnectWalletModal clickHandler={connectWallet} />
+            ) : (
+              <VerifyEmailModal
+                email={email}
+                setEmail={setEmail}
+                nickname={nickname}
+                setNickname={setNickname}
+                user={user}
+                setUser={setUser}
+              />
+            ))}
         </main>
       </AuthLayout>
     </>
+  ) : (
+    <></>
   );
 };
 

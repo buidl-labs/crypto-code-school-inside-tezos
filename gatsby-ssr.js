@@ -9,9 +9,5 @@ import React, { Suspense } from 'react';
 import { Provider } from 'jotai';
 
 export const wrapRootElement = ({ element }) => {
-  return (
-    <Suspense fallback={null}>
-      <Provider>{element}</Provider>
-    </Suspense>
-  );
+  return <Provider>{element}</Provider>;
 };

@@ -1,39 +1,37 @@
-import React from "react";
+import React from 'react';
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
 import { TezosToolkit } from '@taquito/taquito';
 import { importKey, InMemorySigner } from '@taquito/signer';
 
-
 class SemiLiveProvider extends LiveProvider {
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        this.onChange = code => {
-            // Override to prevent LiveProvider transpiling code on every change but
-            // keep the code. We will need it later.
-            console.log(code);
-            this.code = code;
-        };
-    }
+    this.onChange = code => {
+      // Override to prevent LiveProvider transpiling code on every change but
+      // keep the code. We will need it later.
 
-    UNSAFE_componentWillMount() {
-        // Override to prevent LiveProvider transpiling code on mount but
-        // keep the code. We will need it later.
-        this.code = this.props.code;
-    }
+      this.code = code;
+    };
+  }
 
-    componentDidUpdate() {
-        // Override to prevent LiveProvider transpiling code on update but
-        // keep the code. We will need it later.
-    }
+  UNSAFE_componentWillMount() {
+    // Override to prevent LiveProvider transpiling code on mount but
+    // keep the code. We will need it later.
+    this.code = this.props.code;
+  }
 
-    run() {
-        
-        const { scope, transformCode, noInline } = this.props;
+  componentDidUpdate() {
+    // Override to prevent LiveProvider transpiling code on update but
+    // keep the code. We will need it later.
+  }
 
-        // The following piece of code provides additional functionality
-        // to the user code such as print function and key import
-        const code = `
+  run() {
+    const { scope, transformCode, noInline } = this.props;
+
+    // The following piece of code provides additional functionality
+    // to the user code such as print function and key import
+    const code = `
     let _printlnBuffer = "";
     function print(value) {
       _printlnBuffer += value + "\\n";
@@ -57,8 +55,8 @@ class SemiLiveProvider extends LiveProvider {
         ${this.code}
        });`}`;
 
-        this.transpile({ code, scope, transformCode, noInline });
-    }
+    this.transpile({ code, scope, transformCode, noInline });
+  }
 }
 
 export default SemiLiveProvider;

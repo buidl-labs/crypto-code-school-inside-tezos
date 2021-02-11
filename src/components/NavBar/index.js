@@ -49,17 +49,15 @@ function NavBar(props) {
       return;
     }
     const url = typeof window !== 'undefined' ? window.location.pathname : '';
-    console.log(url);
+
     let acc = await beacon.client.getActiveAccount();
 
     if (acc) {
       let u = await createUser(acc.address);
       if (u.verified) {
-        console.log(`u is verified`);
         setUser(u);
         return;
       } else navigate('/auth', { state: { pathname: url } });
-      console.log(acc);
     } else {
       navigate('/auth', { state: { pathname: url } });
     }
@@ -149,9 +147,10 @@ const Dropdown = ({ color = 'white', beacon }) => {
                   //close the drop down
                   dropdownPopoverShow ? closeDropdownPopover() : null;
 
-                  beacon.client.destroy().then(() => {
-                    window.location.href = '/tezos';
-                  });
+                  typeof window != 'undefined' &&
+                    beacon.client.destroy().then(() => {
+                      window.location.href = '/tezos';
+                    });
                 }}
               >
                 Sign Out

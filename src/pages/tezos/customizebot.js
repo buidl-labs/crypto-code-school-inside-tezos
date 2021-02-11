@@ -18,8 +18,6 @@ import {
 } from '@react-three/drei';
 import { MichelsonMap } from '@taquito/taquito';
 import { proxy, useProxy } from 'valtio';
-import { HexColorPicker } from 'react-colorful';
-import 'react-colorful/dist/index.css';
 import GLTFExporter from 'three-gltf-exporter';
 import { connectToBeacon, Tezos } from 'src/utils/wallet';
 import { BeaconContext } from 'src/context/beacon-context';
@@ -82,20 +80,16 @@ const renderGroup = (groupObject, id = 0, color, color_name) => {
   );
 };
 
-const Bot = ({
-  headCount,
-  armCount,
-  bodyCount,
-  legCount,
-  head,
-  body,
-  arm,
-  leg,
-}) => {
+const Bot = ({ headCount, armCount, bodyCount, legCount }) => {
   const group = useRef();
 
   const snap = useProxy(state);
   const [hovered, set] = useState(null);
+  const { scene } = useGLTF('/c5bots.glb');
+  const head = useGroup(scene, 'head');
+  const arm = useGroup(scene, 'arm');
+  const body = useGroup(scene, 'body');
+  const leg = useGroup(scene, 'leg');
 
   const link = useRef();
 
@@ -113,6 +107,73 @@ const getRandomNumber = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
+const ClaimBotBtn = ({
+  connectToBeacon,
+  beacon,
+  mintNFT,
+  headCount,
+  bodyCount,
+  armCount,
+  legCount,
+}) => {
+  const { scene } = useGLTF('/c5bots.glb');
+  const head = useGroup(scene, 'head');
+  const arm = useGroup(scene, 'arm');
+  const body = useGroup(scene, 'body');
+  const leg = useGroup(scene, 'leg');
+
+  return (
+    <Button
+      size="sm"
+      type="primary"
+      onClick={() => {
+        const gltfExporter = new GLTFExporter();
+
+        gltfExporter.parse(
+          [head[headCount], body[bodyCount], arm[armCount], leg[legCount]],
+          function(result) {
+            console.log('resulting...', result);
+            const blob = new Blob([result], {
+              type: 'application/octet-stream',
+            });
+
+            upload(blob);
+          },
+          { binary: true },
+        );
+
+        function upload(blob) {
+          var fd = new FormData();
+          // fd.append('bot', blob, 'bot.glb');
+          fd.append('file', blob);
+          fetch(
+            'https://cryptoverse-wars-backend-nfjp.onrender.com/api/upload-3d-model-to-ipfs',
+            {
+              method: 'post',
+              body: fd,
+            },
+          )
+            .then(res => {
+              // console.log(res)
+              return res.json();
+            })
+            .then(async res => {
+              if (typeof window == 'undefined') return;
+              await connectToBeacon(beacon);
+
+              mintNFT(res.body.ipfsHash);
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        }
+      }}
+    >
+      Claim Bot
+    </Button>
+  );
+};
+
 const Customizer = () => {
   const [selectPart, setselectPart] = useState(1);
   const [headCount, setHeadCount] = useState(0);
@@ -120,12 +181,6 @@ const Customizer = () => {
   const [bodyCount, setBodyCount] = useState(0);
   const [legCount, setLegCount] = useState(0);
   const beacon = useContext(BeaconContext);
-
-  const { scene } = useGLTF('/c5bots.glb');
-  const head = useGroup(scene, 'head');
-  const arm = useGroup(scene, 'arm');
-  const body = useGroup(scene, 'body');
-  const leg = useGroup(scene, 'leg');
 
   async function mintNFT(ipfsHash) {
     console.log(ipfsHash);
@@ -137,11 +192,13 @@ const Customizer = () => {
       uri: ipfsHash,
       symbol: 'CB',
     });
-    const u = await beacon.client.getActiveAccount({
-      network: {
-        type: 'https://api.tez.ie/rpc/delphinet',
-      },
-    });
+    const u =
+      typeof window != 'undefined' &&
+      (await beacon.client.getActiveAccount({
+        network: {
+          type: 'https://api.tez.ie/rpc/delphinet',
+        },
+      }));
     const address = u.address;
 
     const op = await contract.methods
@@ -181,8 +238,8 @@ const Customizer = () => {
     },
   ];
 
-  return (
-    <div className="h-screen bg-primary-900">
+  return typeof window != 'undefined' ? (
+    <div className="h-screen bg-base-100">
       <NavBar />
       <div id="main" className="relative h-full">
         <div id="customizer-canvas" className="absolute w-full h-full">
@@ -205,10 +262,6 @@ const Customizer = () => {
                 armCount={armCount}
                 bodyCount={bodyCount}
                 legCount={legCount}
-                head={head}
-                arm={arm}
-                body={body}
-                leg={leg}
               />
               <ContactShadows
                 rotation-x={Math.PI / 2}
@@ -470,58 +523,17 @@ const Customizer = () => {
               >
                 Randomize
               </Button>
-              <Button
-                size="sm"
-                type="primary"
-                onClick={() => {
-                  const gltfExporter = new GLTFExporter();
-
-                  gltfExporter.parse(
-                    [
-                      head[headCount],
-                      body[bodyCount],
-                      arm[armCount],
-                      leg[legCount],
-                    ],
-                    function(result) {
-                      console.log('resulting...', result);
-                      const blob = new Blob([result], {
-                        type: 'application/octet-stream',
-                      });
-
-                      upload(blob);
-                    },
-                    { binary: true },
-                  );
-
-                  function upload(blob) {
-                    var fd = new FormData();
-                    // fd.append('bot', blob, 'bot.glb');
-                    fd.append('file', blob);
-                    fetch(
-                      'https://cryptoverse-wars-backend-nfjp.onrender.com/api/upload-3d-model-to-ipfs',
-                      {
-                        method: 'post',
-                        body: fd,
-                      },
-                    )
-                      .then(res => {
-                        // console.log(res)
-                        return res.json();
-                      })
-                      .then(async res => {
-                        await connectToBeacon(beacon);
-
-                        mintNFT(res.body.ipfsHash);
-                      })
-                      .catch(err => {
-                        console.log(err);
-                      });
-                  }
-                }}
-              >
-                Claim Bot
-              </Button>
+              <Suspense fallback={null}>
+                <ClaimBotBtn
+                  connectToBeacon={connectToBeacon}
+                  beacon={beacon}
+                  mintNFT={mintNFT}
+                  headCount={headCount}
+                  bodyCount={bodyCount}
+                  armCount={armCount}
+                  legCount={legCount}
+                />
+              </Suspense>
             </div>
             <hr className="my-2 bg-base-400 border-2 h-0.5" />
             <div className="space-y-6">
@@ -579,6 +591,8 @@ const Customizer = () => {
         </div>
       </div>
     </div>
+  ) : (
+    <div>Loading...</div>
   );
 };
 

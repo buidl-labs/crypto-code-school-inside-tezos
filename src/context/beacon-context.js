@@ -6,9 +6,8 @@ export const BeaconContext = createContext();
 export const BeaconProvider = ({ children }) => {
   let beacon = useRef(new BeaconWallet({ name: 'Cryptoverse Wars' }));
   useEffect(() => {
-    if (typeof window !== undefined)
+    if (typeof window !== `undefined`)
       beacon.current = new BeaconWallet({ name: 'Cryptoverse Wars' });
-    // console.log('beacon.current', beacon.current);
   }, []);
 
   return (
