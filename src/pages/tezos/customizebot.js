@@ -15,6 +15,7 @@ import { proxy, useProxy } from 'valtio';
 import { HexColorPicker } from 'react-colorful';
 import 'react-colorful/dist/index.css';
 import 'src/utils/react-colorful.css';
+import { colorsList } from 'src/utils/colors-list.js';
 import GLTFExporter from 'three-gltf-exporter';
 
 // TODO: Make every mesh part colorable -- dependent on how the material is named inside blender
@@ -515,6 +516,19 @@ const Customizer = () => {
                   setBodyCount(getRandomNumber(0, 4));
                   setArmCount(getRandomNumber(0, 4));
                   setLegCount(getRandomNumber(0, 4));
+
+                  setBotColors(current => {
+                    const copy = { ...current };
+                    Object.keys(copy.items).forEach(elm => {
+                      const item =
+                        colorsList[
+                          Math.floor(Math.random() * colorsList.length)
+                        ];
+                      console.log(elm, item);
+                      copy.items[elm] = item.hex;
+                    });
+                    return copy;
+                  });
                 }}
               >
                 Randomize
