@@ -233,6 +233,11 @@ const Customizer = () => {
       torso: '#ffffff',
       base_jointsL: '#ffffff',
       base_jointsR: '#ffffff',
+      Body_base: '#ffffff',
+      LowerLegR: '#ffffff',
+      LowerLegL: '#ffffff',
+      leg_jointsR: '#ffffff',
+      leg_jointsL: '#ffffff',
     },
   });
 
