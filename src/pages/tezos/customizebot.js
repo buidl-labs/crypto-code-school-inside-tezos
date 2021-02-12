@@ -1,7 +1,7 @@
 import React, { Suspense, useRef, useState, useEffect } from 'react';
 import NavBar from '../../components/NavBar';
 import Button from '../../components/Buttons';
-
+import { navigate } from 'gatsby';
 import { Canvas, useFrame } from 'react-three-fiber';
 import {
   ContactShadows,
@@ -10,7 +10,7 @@ import {
   OrbitControls,
   Html,
 } from '@react-three/drei';
-
+import Loader from 'react-loader-spinner';
 import { HexColorPicker } from 'react-colorful';
 import 'react-colorful/dist/index.css';
 import 'src/utils/react-colorful.css';
@@ -140,6 +140,39 @@ const getRandomNumber = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
+function BaseModal({ children, img_src }) {
+  return (
+    <div
+      className={`bg-base-700 px-12 py-16 rounded-lg relative flex flex-col items-center shadow-lg text-center`}
+      style={{ maxWidth: '40vw' }}
+    >
+      {img_src && <img className={`m-0 w-auto`} src={img_src}></img>}
+      {children}
+    </div>
+  );
+}
+
+function ModalHeading({ children }) {
+  return <h4 className={`text-2xl font-extrabold mb-2`}>{children}</h4>;
+}
+
+function ModalTextSection({ children }) {
+  return <div className={`mt-6`}>{children}</div>;
+}
+
+const SavingBotModal = () => {
+  return (
+    <BaseModal>
+      <ModalTextSection>
+        <ModalHeading>Saving your 3D Cryptobot on IPFS</ModalHeading>
+        <div className="flex justify-center w-full">
+          <Loader type="BallTriangle" color="#2563EB" height={80} width={80} />
+        </div>
+      </ModalTextSection>
+    </BaseModal>
+  );
+};
+
 const Customizer = () => {
   const [selectPart, setselectPart] = useState(1);
   const [headCount, setHeadCount] = useState(0);
@@ -147,6 +180,7 @@ const Customizer = () => {
   const [bodyCount, setBodyCount] = useState(0);
   const [legCount, setLegCount] = useState(0);
 
+  const [showSavingBotModel, setShowSavingBotModel] = useState(false);
   const [shininess, setShininess] = useState(0);
   const [showColorPicker, updateShowColorPicker] = useState(false);
   const [colorPicker, setColorPicker] = useState('#ffffff');
@@ -287,6 +321,7 @@ const Customizer = () => {
     );
 
     function upload(blob) {
+      setShowSavingBotModel(true);
       var fd = new FormData();
       // fd.append('bot', blob, 'bot.glb');
       fd.append('file', blob);
@@ -304,9 +339,13 @@ const Customizer = () => {
         .then(res => {
           console.log(res.body.ipfsHash);
           console.log('yo', res);
+          navigate('/tezos/claim-transaction', {
+            state: { uri: res.body.ipfsHash },
+          });
         })
         .catch(err => {
           console.log(err);
+          setShowSavingBotModel(false);
         });
     }
   };
@@ -318,6 +357,13 @@ const Customizer = () => {
       style={{ background: 'rgba(55, 65, 81)' }}
       className="h-screen bg-grey-900"
     >
+      {showSavingBotModel && (
+        <div
+          className={`bg-base-900 min-h-screen text-white flex items-center justify-center`}
+        >
+          <SavingBotModal />
+        </div>
+      )}
       <div id="main" className="relative h-full">
         <div
           id="editor"
