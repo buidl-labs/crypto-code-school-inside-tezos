@@ -14,12 +14,7 @@ import { BeaconContext } from '../../context/beacon-context';
 import { CONTRACT_ADDRESS } from 'src/defaults';
 import { connectToBeacon, Tezos } from 'src/utils/wallet';
 import Loader from 'react-loader-spinner';
-import { InMemorySigner } from '@taquito/signer';
 import { MdClose } from 'react-icons/md';
-import {
-  estimateWithdrawalGasFee,
-  estimateBotPutOnSaleGasFee,
-} from 'src/utils/gas_estimates';
 
 function BotView({ location }) {
   let beacon = useContext(BeaconContext);
@@ -33,6 +28,8 @@ function BotView({ location }) {
   const [onSaleError, setOnSaleError] = useState('');
   const [salePrice, setSalePrice] = useState();
   const [sellNowStep, updateSellNowStep] = useState(0);
+
+  // console.log('xtzPrice', xtzPrice);
 
   const withdrawBotFromSale = async tokenId => {
     await connectToBeacon(beacon);
@@ -90,18 +87,13 @@ function BotView({ location }) {
             Are you sure to withdraw cryptobot from sale ?
           </ModalHeading>
           <TransactionContainer>
-            {networkFeeEstimate === 0 ? (
-              <Cost type="Network Fee" main={`LOADING...`} caption={``} />
-            ) : (
-              <Cost
-                type="Network Fee"
-                main={`${convertMutezToXtz(networkFeeEstimate)} XTZ`}
-                caption={`$ ${getXTZPriceInUSD(
-                  xtzPrice.price,
-                  networkFeeEstimate,
-                )}`}
-              />
-            )}
+            <Cost
+              type="Estimated Network Fee"
+              main={`${convertMutezToXtz(4556)} XTZ`}
+              caption={
+                xtzPrice ? `$ ${getXTZPriceInUSD(xtzPrice.price, 4556)}` : null
+              }
+            />
           </TransactionContainer>
           <div>
             <Button
@@ -176,18 +168,13 @@ function BotView({ location }) {
             </InputContainer>
           </form>
           <TransactionContainer>
-            {networkFeeEstimate === 0 ? (
-              <Cost type="Network Fee" main={`LOADING...`} caption={``} />
-            ) : (
-              <Cost
-                type="Network Fee"
-                main={`${convertMutezToXtz(networkFeeEstimate)} XTZ`}
-                caption={`$ ${getXTZPriceInUSD(
-                  xtzPrice.price,
-                  networkFeeEstimate,
-                )}`}
-              />
-            )}
+            <Cost
+              type="Estimated Network Fee"
+              main={`${convertMutezToXtz(4556)} XTZ`}
+              caption={
+                xtzPrice ? `$ ${getXTZPriceInUSD(xtzPrice.price, 4556)}` : null
+              }
+            />
           </TransactionContainer>
           <div>
             <Button
@@ -210,22 +197,6 @@ function BotView({ location }) {
       </BaseModal>
     );
   }
-
-  useAsync(async () => {
-    Tezos.setProvider({
-      signer: new InMemorySigner(
-        'edskRo7CmqNdMfnEeBCPNevy9jGo2MvwNdomoxVvmwqPJTFtFrubg1spFK1aZdywS8QxkhfnAWpAVVEgCsmkSnWMyNXM1aJ4Ka',
-      ),
-    });
-
-    if (bot && owned && bot.isForSale) {
-      const result = await estimateWithdrawalGasFee(bot);
-      setNetworkFeeEstimate(result);
-    } else if (bot && owned && !bot.isForSale) {
-      const result = await estimateBotPutOnSaleGasFee(bot);
-      setNetworkFeeEstimate(result);
-    }
-  }, []);
 
   return (
     <div className="h-screen w-screen fixed bg-base-900">
