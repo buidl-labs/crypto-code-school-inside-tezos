@@ -9,11 +9,6 @@ import { CONTRACT_ADDRESS } from 'src/defaults';
 import { connectToBeacon, Tezos } from 'src/utils/wallet';
 import { BeaconContext } from 'src/context/beacon-context';
 import { convertMutezToXtz, getXTZPriceInUSD } from 'src/utils/indexer';
-import { InMemorySigner } from '@taquito/signer';
-import {
-  estimateWithdrawalGasFee,
-  estimateBotPurchaseGasFee,
-} from 'src/utils/gas_estimates';
 import { MdDone } from 'react-icons/md';
 import Confetti from 'react-confetti';
 
@@ -110,18 +105,6 @@ function Transaction({ location }) {
     }
   };
 
-  useAsync(async () => {
-    Tezos.setProvider({
-      signer: new InMemorySigner(
-        'edskRo7CmqNdMfnEeBCPNevy9jGo2MvwNdomoxVvmwqPJTFtFrubg1spFK1aZdywS8QxkhfnAWpAVVEgCsmkSnWMyNXM1aJ4Ka',
-      ),
-    });
-
-    //TODO: replace with purchase gas fee estimate
-    const x = await estimateWithdrawalGasFee(bot);
-    setNetworkFeeEstimate(x);
-  }, []);
-
   return (
     <div className=" bg-base-900 ">
       <NavBar />
@@ -197,18 +180,15 @@ function Transaction({ location }) {
                     caption="Your first bot is on us!"
                   /> */}
                   {/* <hr className="my-2 bg-base-400 border-2 h-0.5" /> */}
-                  {networkFeeEstimate === 0 ? (
-                    <Cost type="Network Fee" main={`LOADING...`} caption={``} />
-                  ) : (
-                    <Cost
-                      type="Network Fee"
-                      main={`${convertMutezToXtz(networkFeeEstimate)} XTZ`}
-                      caption={`$ ${getXTZPriceInUSD(
-                        xtzPrice.price,
-                        networkFeeEstimate,
-                      )}`}
-                    />
-                  )}
+                  <Cost
+                    type="Estimated Network Fee"
+                    main={`${convertMutezToXtz(4556)} XTZ`}
+                    caption={
+                      xtzPrice
+                        ? `$ ${getXTZPriceInUSD(xtzPrice.price, 4556)}`
+                        : null
+                    }
+                  />
                 </div>
                 <div className="grid mx-auto justify-center mt-6">
                   <Button
