@@ -48,7 +48,7 @@ function useGroup(scene, type) {
   return result;
 }
 
-const renderGroup = (groupObject, id = 0, colors, getMeshName) => {
+const renderGroup = (groupObject, id = 0, colors, getMeshName, shininess) => {
   // console.log('group object', colors, getMeshName);
   return (
     <>
@@ -72,6 +72,7 @@ const renderGroup = (groupObject, id = 0, colors, getMeshName) => {
               >
                 <meshPhongMaterial
                   color={colors.items[getMeshName(child.name)] || '#ffffff'}
+                  shininess={shininess}
                 />
               </mesh>
             );
@@ -89,6 +90,7 @@ const Bot = ({
   colors,
   getMeshName,
   setBotColors,
+  shininess,
 }) => {
   const group = useRef();
   const { scene } = useGLTF('/c5bots.glb');
@@ -117,10 +119,10 @@ const Bot = ({
       ref={group}
       dispose={null}
     >
-      {renderGroup(head, headCount, colors, getMeshName)}
-      {renderGroup(arm, armCount, colors, getMeshName)}
-      {renderGroup(body, bodyCount, colors, getMeshName)}
-      {renderGroup(leg, legCount, colors, getMeshName)}
+      {renderGroup(head, headCount, colors, getMeshName, shininess)}
+      {renderGroup(arm, armCount, colors, getMeshName, shininess)}
+      {renderGroup(body, bodyCount, colors, getMeshName, shininess)}
+      {renderGroup(leg, legCount, colors, getMeshName, shininess)}
     </group>
   );
 };
@@ -136,6 +138,7 @@ const Customizer = () => {
   const [bodyCount, setBodyCount] = useState(0);
   const [legCount, setLegCount] = useState(0);
 
+  const [shininess, setShininess] = useState(0);
   const [showColorPicker, updateShowColorPicker] = useState(false);
   const [colorPicker, setColorPicker] = useState('#ffffff');
   const [botColors, setBotColors] = useState({
@@ -519,6 +522,7 @@ const Customizer = () => {
                     colors={botColors}
                     getMeshName={getMeshName}
                     setBotColors={setBotColors}
+                    shininess={shininess}
                   />
                   <Environment files="royal_esplanade_1k.hdr" />
                 </Suspense>
@@ -569,7 +573,7 @@ const Customizer = () => {
                   Colors & Textures
                 </h4>
               </div>
-              <div className="flex flex-col  text-white ">
+              {/* <div className="flex flex-col  text-white ">
                 <label className="font-regular text-lg ">Metallic</label>
                 <input
                   type="range"
@@ -578,15 +582,20 @@ const Customizer = () => {
                   min="0"
                   max="10"
                 />
-              </div>
+              </div> */}
               <div className="flex flex-col  text-white ">
-                <label className="font-regular text-lg ">Roughness</label>
+                <label className="font-regular text-lg ">Shininess</label>
                 <input
                   type="range"
                   id="roughness"
                   name="roughness"
+                  value={shininess}
+                  onChange={e => {
+                    console.log(e.target.value);
+                    setShininess(e.target.value);
+                  }}
                   min="0"
-                  max="10"
+                  max="100"
                 />
               </div>
               <div id="textures" className="space-y-4">
