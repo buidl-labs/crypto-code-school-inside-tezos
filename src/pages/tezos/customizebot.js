@@ -16,6 +16,8 @@ import { HexColorPicker } from 'react-colorful';
 import 'react-colorful/dist/index.css';
 import 'src/utils/react-colorful.css';
 import { colorsList } from 'src/utils/colors-list.js';
+import namedColors from 'color-name-list';
+
 import GLTFExporter from 'three-gltf-exporter';
 
 // TODO: Make every mesh part colorable -- dependent on how the material is named inside blender
@@ -105,7 +107,7 @@ const Bot = ({
       onPointerMissed={() => (state.current = null)}
       onPointerDown={e => {
         e.stopPropagation();
-        console.log(e.object);
+        console.log(e.object.name);
         setBotColors(current => {
           const copy = { ...current };
           copy.current = getMeshName(e.object.name);
@@ -157,13 +159,31 @@ const Customizer = () => {
       jointR: '#ffffff',
       jointL: '#ffffff',
       shoulderR: '#ffffff',
+      shoudlerR: '#ffffff',
+      shoudlerL: '#ffffff',
       shoulderL: '#ffffff',
-
-      //extras
-      head: '#ffffff',
-      body: '#ffffff',
-      arm: '#ffffff',
-      leg: '#ffffff',
+      upper_armsL: '#ffffff',
+      elbowR: '#ffffff',
+      elbowL: '#ffffff',
+      lowerArmR: '#ffffff',
+      HandL: '#ffffff',
+      HandsL: '#ffffff',
+      HandR: '#ffffff',
+      HandsR: '#ffffff',
+      weaponR: '#ffffff',
+      weaponL: '#ffffff',
+      gem_holder: '#ffffff',
+      ears: '#ffffff',
+      thumbL: '#ffffff',
+      thumbR: '#ffffff',
+      foot_jointsL: '#ffffff',
+      foot_jointsR: '#ffffff',
+      thighsR: '#ffffff',
+      thighsL: '#ffffff',
+      upper_armsR: '#ffffff',
+      torso: '#ffffff',
+      base_jointsL: '#ffffff',
+      base_jointsR: '#ffffff',
     },
   });
 
@@ -239,7 +259,10 @@ const Customizer = () => {
   }
 
   return (
-    <div className="h-screen bg-primary-900">
+    <div
+      style={{ background: 'rgba(55, 65, 81)' }}
+      className="h-screen bg-grey-900"
+    >
       <div id="main" className="relative h-full">
         <div
           id="editor"
@@ -521,8 +544,8 @@ const Customizer = () => {
                     const copy = { ...current };
                     Object.keys(copy.items).forEach(elm => {
                       const item =
-                        colorsList[
-                          Math.floor(Math.random() * colorsList.length)
+                        namedColors[
+                          Math.floor(Math.random() * namedColors.length)
                         ];
                       console.log(elm, item);
                       copy.items[elm] = item.hex;
