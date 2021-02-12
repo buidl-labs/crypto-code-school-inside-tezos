@@ -11,25 +11,22 @@ import {
   Html,
 } from '@react-three/drei';
 
-import { proxy, useProxy } from 'valtio';
 import { HexColorPicker } from 'react-colorful';
 import 'react-colorful/dist/index.css';
 import 'src/utils/react-colorful.css';
-import { colorsList } from 'src/utils/colors-list.js';
 import namedColors from 'color-name-list';
 
 import GLTFExporter from 'three-gltf-exporter';
 
-// TODO: Make every mesh part colorable -- dependent on how the material is named inside blender
-const state = proxy({
+const state = {
   current: null,
   items: {
-    head: '#ffffff',
-    body: '#ffffff',
-    arm: '#ffffff',
-    leg: '#ffffff',
+    head: null,
+    body: null,
+    arm: null,
+    leg: null,
   },
-});
+};
 
 function useGroup(scene, type) {
   const result = [];
@@ -53,7 +50,7 @@ const renderGroup = (groupObject, id = 0, colors, getMeshName, shininess) => {
   return (
     <>
       <group
-        name="bot_head"
+        name={groupObject.name}
         position={groupObject.length > 0 && groupObject[id].position}
         rotation={groupObject.length > 0 && groupObject[id].rotation}
         scale={groupObject.length > 0 && groupObject[id].scale}
@@ -69,8 +66,13 @@ const renderGroup = (groupObject, id = 0, colors, getMeshName, shininess) => {
                 position={child.position}
                 rotation={child.rotation}
                 scale={child.scale}
+                material-color={
+                  colors.items[getMeshName(child.name)] || '#ffffff'
+                }
+                shininess={shininess}
               >
                 <meshPhongMaterial
+                  attach="material"
                   color={colors.items[getMeshName(child.name)] || '#ffffff'}
                   shininess={shininess}
                 />
@@ -93,7 +95,7 @@ const Bot = ({
   shininess,
 }) => {
   const group = useRef();
-  const { scene } = useGLTF('/c5bots.glb');
+  const { scene } = useGLTF('/compressed.glb');
   const [hovered, set] = useState(null);
 
   const link = useRef();
@@ -102,6 +104,13 @@ const Bot = ({
   const arm = useGroup(scene, 'arm');
   const body = useGroup(scene, 'body');
   const leg = useGroup(scene, 'leg');
+
+  // set export objects
+  state.items.head = head[headCount];
+  state.items.arm = arm[armCount];
+  state.items.body = body[bodyCount];
+  state.items.leg = leg[legCount];
+
   return (
     <group
       onPointerOver={e => (e.stopPropagation(), set(e.object.material.name))}
@@ -260,6 +269,49 @@ const Customizer = () => {
       </div>
     );
   }
+
+  const upload3dModel = (head, arm, body, leg) => {
+    const gltfExporter = new GLTFExporter();
+
+    gltfExporter.parse(
+      [head, arm, body, leg],
+      function(result) {
+        // console.log('result', result);
+        const blob = new Blob([result], {
+          type: 'application/octet-stream',
+        });
+
+        upload(blob);
+      },
+      { binary: true },
+    );
+
+    function upload(blob) {
+      var fd = new FormData();
+      // fd.append('bot', blob, 'bot.glb');
+      fd.append('file', blob);
+      fetch(
+        'https://cryptoverse-wars-backend-nfjp.onrender.com/api/upload-3d-model-to-ipfs',
+        {
+          method: 'post',
+          body: fd,
+        },
+      )
+        .then(res => {
+          // console.log(res)
+          return res.json();
+        })
+        .then(res => {
+          console.log(res.body.ipfsHash);
+          console.log('yo', res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  };
+
+  const isBrowser = typeof window !== 'undefined';
 
   return (
     <div
@@ -500,35 +552,38 @@ const Customizer = () => {
             id="middle-menu"
             className="relative col-span-2 col-start-3 col-end-7 row-start-0 row-span-full"
           >
-            <div id="customizer-canvas" className="w-full h-full">
-              <Canvas
-                concurrent
-                pixelRatio={[1, 1.5]}
-                camera={{ position: [0, 0, 5.75], fov: 80 }}
-              >
-                <ambientLight intensity={0.5} />
-                <spotLight
-                  intensity={0.3}
-                  angle={0.1}
-                  penumbra={1}
-                  position={[5, 25, 20]}
-                />
-                <Suspense fallback={null}>
-                  <Bot
-                    headCount={headCount}
-                    armCount={armCount}
-                    bodyCount={bodyCount}
-                    legCount={legCount}
-                    colors={botColors}
-                    getMeshName={getMeshName}
-                    setBotColors={setBotColors}
-                    shininess={shininess}
+            {isBrowser && (
+              <div id="customizer-canvas" className="w-full h-full">
+                <Canvas
+                  concurrent
+                  pixelRatio={[1, 1.5]}
+                  camera={{ position: [0, 0, 5.75], fov: 80 }}
+                >
+                  <ambientLight intensity={0.5} />
+                  <spotLight
+                    intensity={0.3}
+                    angle={0.1}
+                    penumbra={1}
+                    position={[5, 25, 20]}
                   />
-                  <Environment files="royal_esplanade_1k.hdr" />
-                </Suspense>
-                <OrbitControls enableZoom={false} />
-              </Canvas>
-            </div>
+                  <Suspense fallback={null}>
+                    <Bot
+                      headCount={headCount}
+                      armCount={armCount}
+                      bodyCount={bodyCount}
+                      legCount={legCount}
+                      colors={botColors}
+                      getMeshName={getMeshName}
+                      setBotColors={setBotColors}
+                      shininess={shininess}
+                      upload3dModel={upload3dModel}
+                    />
+                    <Environment files="royal_esplanade_1k.hdr" />
+                  </Suspense>
+                  <OrbitControls enableZoom={false} />
+                </Canvas>
+              </div>
+            )}
           </div>
           <div
             id="right-menu"
@@ -561,7 +616,18 @@ const Customizer = () => {
                 Randomize
               </Button>
 
-              <Button size="sm" type="primary">
+              <Button
+                onClick={() => {
+                  upload3dModel(
+                    state.items.head,
+                    state.items.arm,
+                    state.items.body,
+                    state.items.leg,
+                  );
+                }}
+                size="sm"
+                type="primary"
+              >
                 Claim Bot
               </Button>
             </div>
