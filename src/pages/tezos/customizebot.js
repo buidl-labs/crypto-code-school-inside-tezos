@@ -16,6 +16,9 @@ import 'react-colorful/dist/index.css';
 import 'src/utils/react-colorful.css';
 import namedColors from 'color-name-list';
 
+import isUserAtom from 'src/atoms/is-user-atom';
+import { useAtom } from 'jotai';
+
 import GLTFExporter from 'three-gltf-exporter';
 
 const state = {
@@ -232,6 +235,17 @@ const Customizer = () => {
       base_jointsR: '#ffffff',
     },
   });
+
+  const [isUser] = useAtom(isUserAtom);
+
+  useEffect(() => {
+    // console.log(user, isUser);
+    if (!isUser) {
+      const url =
+        typeof window !== 'undefined' ? window.location.pathname : '/tezos';
+      navigate('/auth', { state: { pathname: url } });
+    }
+  }, []);
 
   const getMeshName = name => {
     const filterType = Object.keys(botColors.items);
