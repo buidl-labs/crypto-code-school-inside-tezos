@@ -17,7 +17,6 @@ import isUserAtom from 'src/atoms/is-user-atom';
 import { useAtom } from 'jotai';
 import SEO from '../components/Seo';
 import { updateProgress } from 'src/api';
-import { updateUser } from '../api';
 
 export const query = graphql`
   query($slug: String!, $module: String!) {

@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
-import { graphql } from 'gatsby';
+import { graphql, navigate } from 'gatsby';
 import ChapterList from './components/chapter/ChapterList';
 import useChapters from '../hooks/use-chapters';
 import { getChaptersIndex } from '../utils/index';
@@ -7,7 +7,10 @@ import NavBar from './components/chapter/NavBar';
 import Footer from './components/chapter/Footer';
 import LearningInterface from './components/chapter/LearningInterface';
 import CodingInterfaceTaquito from './components/chapter/CodingInterfaceTaquito';
-import CodingInterface from './components/chapter/CodingInterface';
+
+import userAtom from 'src/atoms/user-atom';
+import isUserAtom from 'src/atoms/is-user-atom';
+import { useAtom } from 'jotai';
 
 export const query = graphql`
   query($slug: String!, $module: String!) {
@@ -29,7 +32,12 @@ export const query = graphql`
 `;
 
 const ChapterWithLiveEditorTemplate = ({ data: { mdx: chapter } }) => {
+  const [user] = useAtom(userAtom);
+  const [isUser] = useAtom(isUserAtom);
   const [isChapterDrawerOpen, setIsChapterDrawerOpen] = useState(false);
+  const progress =
+    typeof window !== `undefined` &&
+    JSON.parse(localStorage.getItem('progress') || '{}');
 
   const chapterHeading = useMemo(
     () => `${chapter.frontmatter.chapter} - ${chapter.frontmatter.title}`,
@@ -41,6 +49,21 @@ const ChapterWithLiveEditorTemplate = ({ data: { mdx: chapter } }) => {
     () => getChaptersIndex(chapters, chapter.frontmatter.slug),
     [chapters],
   );
+
+  async function markChapterAsDone() {
+    console.log('🔥 Inside markChapterAsDone');
+    console.log('🔥', progress);
+    if (!progress[chapter.frontmatter.filterBy])
+      progress[chapter.frontmatter.filterBy] = {};
+
+    progress[chapter.frontmatter.filterBy][chapter.frontmatter.slug] = true;
+    typeof window != 'undefined' &&
+      localStorage.setItem('progress', JSON.stringify(progress));
+
+    if (isUser) {
+      console.log('🔥Sync with backend');
+    }
+  }
 
   return (
     <div className={`overflow-hidden`}>
@@ -70,6 +93,7 @@ const ChapterWithLiveEditorTemplate = ({ data: { mdx: chapter } }) => {
       <Footer
         chapterIndex={chapterIndex}
         module={chapter.frontmatter.filterBy}
+        markDone={markChapterAsDone}
       />
     </div>
   );

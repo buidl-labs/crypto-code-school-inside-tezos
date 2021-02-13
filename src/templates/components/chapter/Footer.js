@@ -1,10 +1,11 @@
 import React, { useMemo } from 'react';
-import { Link } from 'gatsby';
+import { Link, navigate } from 'gatsby';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 const Footer = ({
   chapterIndex: { current, total, prevSlug, nextSlug },
   module,
+  markDone = null,
 }) => {
   const [nextLink, nextText] = useMemo(() => {
     return nextSlug
@@ -12,6 +13,9 @@ const Footer = ({
       : ['/tezos/academy', 'Finish'];
   });
 
+  const progress =
+    typeof window !== `undefined` &&
+    JSON.parse(localStorage.getItem('progress') || '{}');
   const prev = useMemo(() =>
     prevSlug ? `/tezos/academy/${module}/${prevSlug}` : '',
   );
@@ -29,10 +33,18 @@ const Footer = ({
         <p className={`text-base-50`}>
           {current}/{total}
         </p>
-        <Link className={`flex items-center hover:no-underline`} to={nextLink}>
+        <button
+          className={`flex items-center hover:no-underline`}
+          onClick={() => {
+            if (module === 'module-04') {
+              markDone();
+            }
+            navigate(nextLink);
+          }}
+        >
           <span>{nextText}</span>
           <ChevronRightIcon />
-        </Link>
+        </button>
       </div>
     </footer>
   );
