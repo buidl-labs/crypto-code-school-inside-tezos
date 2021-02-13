@@ -11,6 +11,7 @@ import CodingInterfaceTaquito from './components/chapter/CodingInterfaceTaquito'
 import userAtom from 'src/atoms/user-atom';
 import isUserAtom from 'src/atoms/is-user-atom';
 import { useAtom } from 'jotai';
+import { updateProgress } from 'src/api';
 
 export const query = graphql`
   query($slug: String!, $module: String!) {
@@ -62,6 +63,11 @@ const ChapterWithLiveEditorTemplate = ({ data: { mdx: chapter } }) => {
 
     if (isUser) {
       console.log('🔥Sync with backend');
+      updateProgress(
+        user,
+        Number.parseInt(chapter.frontmatter.slug.split('-')[1]),
+        Number.parseInt(chapter.frontmatter.filterBy.split('-')[1]),
+      ).then(res => console.log('🔥', res));
     }
   }
 

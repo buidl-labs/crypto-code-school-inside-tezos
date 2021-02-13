@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Link } from 'gatsby';
+import { Link, navigate } from 'gatsby';
 import Theme from 'src/assets/theme.svg';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
