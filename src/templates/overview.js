@@ -11,7 +11,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import DoneIcon from '@material-ui/icons/Done';
 
-const MDXParagraph = (props) => <p className={`text-2xl pt-6`} {...props} />;
+const MDXParagraph = props => <p className={`text-2xl pt-6`} {...props} />;
 
 const ChapterRow = ({ chapter, done }) => (
   <li>
@@ -25,7 +25,7 @@ const ChapterRow = ({ chapter, done }) => (
             done
               ? 'bg-success-200 text-success-600'
               : 'bg-base-400 text-base-700'
-          } rounded-full h-12 w-12 flex items-center justify-center`}
+          } rounded-full h-12 w-12 flex items-center justify-center flex-shrink-0`}
         >
           <DoneIcon />
         </div>
@@ -103,7 +103,7 @@ function LessonsOverview({ data: { mdx: module } }) {
           <div className={`pl-6 py-8`}>
             <h3 className={`text-4xl font-black`}>Chapters</h3>
             <ul className={`mt-8 space-y-6`}>
-              {chapterList.map((c) => (
+              {chapterList.map(c => (
                 <ChapterRow
                   chapter={c}
                   key={c.slug}

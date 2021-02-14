@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_URL = 'https://cryptoverse-wars-backend-nfjp.onrender.com';
+// const API_URL = 'https://cryptoverse-wars-backend-nfjp.onrender.com';
+const API_URL = 'https://cryptoverse-wars-backend-pr-2.onrender.com';
 
 export async function createUser(xtzAddress) {
   console.log('Running createUser.', xtzAddress);
@@ -48,6 +49,20 @@ export async function updateProgress(user, chapter_num, module_num) {
       module_num,
     });
     console.log(res);
+    if (res.status !== 200) throw new Error();
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return;
+  }
+}
+
+export async function batchUpdateProgress(user, progress) {
+  try {
+    const res = await axios.post(`${API_URL}/user/progress/batch`, {
+      user,
+      progress,
+    });
     if (res.status !== 200) throw new Error();
     return res.data;
   } catch (err) {

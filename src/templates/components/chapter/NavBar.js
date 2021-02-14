@@ -7,7 +7,7 @@ import userAtom from 'src/atoms/user-atom';
 import isUserAtom from 'src/atoms/is-user-atom';
 import { BeaconContext } from 'src/context/beacon-context';
 import { useAtom } from 'jotai';
-import { createUser } from 'src/api';
+import { createUser, batchUpdateProgress } from 'src/api';
 
 function UserDisplay({ user, beacon }) {
   return (
@@ -40,6 +40,13 @@ const NavBar = ({ heading, module }) => {
       if (u.verified) {
         console.log(`u is verified`);
         setUser(u);
+        let progress =
+          typeof window !== `undefined` && localStorage.getItem('progress');
+        if (progress) {
+          progress = JSON.parse(progress);
+          const res = await batchUpdateProgress(u, progress);
+          console.log(res);
+        }
         return;
       } else navigate('/auth', { state: { pathname: url } });
       console.log(acc);

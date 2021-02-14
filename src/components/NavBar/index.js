@@ -5,7 +5,7 @@ import Theme from 'src/assets/theme.svg';
 import userAtom from '../../atoms/user-atom';
 import isUserAtom from '../../atoms/is-user-atom';
 import { useAtom } from 'jotai';
-import { createUser } from '../../api';
+import { createUser, batchUpdateProgress } from '../../api';
 import Popper from 'popper.js';
 import { MdExpandMore } from 'react-icons/md';
 
@@ -57,6 +57,13 @@ function NavBar(props) {
       if (u.verified) {
         console.log(`u is verified`);
         setUser(u);
+        let progress =
+          typeof window !== `undefined` && localStorage.getItem('progress');
+        if (progress) {
+          progress = JSON.parse(progress);
+          const res = await batchUpdateProgress(u, progress);
+          console.log(res);
+        }
         return;
       } else navigate('/auth', { state: { pathname: url } });
       console.log(acc);
