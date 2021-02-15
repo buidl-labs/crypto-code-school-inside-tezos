@@ -1,12 +1,12 @@
 import React from 'react';
 
 const ButtonType = {
-  primary: 'bg-primary-600 hover:bg-primary-700 text-white font-bold rounded',
-  secondary: 'bg-base-500 hover:bg-base-600  text-white font-bold rounded',
+  primary: 'bg-primary-600 hover:bg-primary-700 text-white font-bold rounded focus:outline-none',
+  secondary: 'bg-base-500 hover:bg-base-600  text-white font-bold rounded focus:outline-none',
   outline:
-    'border-primary-600 border-2 hover:border-primary-700 text-white font-bold rounded',
+    'border-primary-600 border-2 hover:border-primary-700 text-white font-bold rounded focus:outline-none',
   outline_secondary:
-    'border-base-500 border-2 hover:border-base-600 text-white font-bold rounded',
+    'border-base-500 border-2 hover:border-base-600 text-white font-bold rounded focus:outline-none',
   link: 'text-white font-bold rounded',
 };
 
