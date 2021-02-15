@@ -9,7 +9,12 @@ import SEO from 'src/components/Seo';
 import AuthLayout from '../components/AuthLayout';
 import thanosLogo from '../images/thanos-wallet.png';
 import SadBot from '../images/SadBot.png';
-import { createUser, updateUser, verifyUser } from '../api';
+import {
+  createUser,
+  updateUser,
+  verifyUser,
+  batchUpdateProgress,
+} from '../api';
 import { NetworkType } from '@airgap/beacon-sdk';
 import { Magic } from 'magic-sdk';
 import { NETWORK } from 'src/defaults';
@@ -288,7 +293,17 @@ const AuthPage = ({ location }) => {
   }, []);
 
   useEffect(() => {
-    isUserVerified && navigate(location ? location.state.pathname : '/tezos');
+    if (isUserVerified) {
+      let progress =
+        typeof window !== `undefined` && localStorage.getItem('progress');
+      if (progress) {
+        progress = JSON.parse(progress);
+        batchUpdateProgress(user, progress).then(res =>
+          console.log('bath update', res),
+        );
+      }
+      navigate(location.state ? location.state.pathname : '/tezos');
+    }
   }, [isUserVerified]);
 
   async function connectWallet() {

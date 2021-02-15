@@ -61,10 +61,6 @@ module.exports = {
         100: '#FEE2E2',
         50: '#FEF2F2',
       },
-      editor: {
-        code: '#030D18',
-        console: '061B2F',
-      },
       white: '#ffffff',
     },
     spacing: {
@@ -91,8 +87,10 @@ module.exports = {
       18: '4.5rem',
       20: '5rem',
       24: '6rem',
+      26: '6.5rem',
       28: '7rem',
       30: '7.5rem',
+      31: '7.75rem',
       32: '8rem',
       36: '9rem',
       40: '10rem',
@@ -239,6 +237,7 @@ module.exports = {
         'serif',
       ],
       mono: [
+        '"Ubuntu Mono"',
         'ui-monospace',
         'SFMono-Regular',
         'Menlo',
@@ -774,7 +773,14 @@ module.exports = {
       40: '40',
       50: '50',
     },
+    extend: {
+      colors: {
+        'editor-console': '#061B2F',
+        'editor-code': '#030D18',
+      },
+    },
   },
+
   variantOrder: [
     'first',
     'last',
