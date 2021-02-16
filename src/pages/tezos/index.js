@@ -6,8 +6,18 @@ import PlayButton from '../../components/LandingPage/playbutton';
 
 import learningInterface from '../../images/Interface.png';
 import cryptobots from '../../images/cryptobots.png';
+import earnWhileYouLearn from 'src/assets/videos/earn while you learn-anim.mp4';
+import createCurrency from 'src/assets/videos/anim - create your own currency.webm';
 
-const FeatureGrid = ({ heading, subtext, buttontext, img, order, padding }) => {
+const FeatureGrid = ({
+  heading,
+  subtext,
+  buttontext,
+  video,
+  videoType,
+  order,
+  padding,
+}) => {
   return (
     <div className="grid md:grid-cols-2 grid-cols-1 gap-6 ">
       <div
@@ -21,8 +31,18 @@ const FeatureGrid = ({ heading, subtext, buttontext, img, order, padding }) => {
           {buttontext}
         </Button>
       </div>
-      <div className="bg-base-600 h-full w-full">
-        <img src={img} className="object-cover object-center" />
+      <div className="h-full w-full">
+        <video
+          className="object-contain object-center"
+          loop
+          autoPlay
+          muted
+          preload="auto"
+          height={`80%`}
+          width={`80%`}
+        >
+          <source src={video} type={`video/${videoType}`} />
+        </video>
       </div>
     </div>
   );
@@ -117,14 +137,16 @@ function Landing() {
           subtext="Learn how to create apps on the Tezos blockchain through our exciting
           course. You even learn how to make your own currency 🤑"
           buttontext="Become a Blockchain Pro "
-          img={learningInterface}
+          video={createCurrency}
+          videoType="webm"
           padding="l"
         />
         <FeatureGrid
           heading="Earn while you learn!"
           subtext="Join the Cryptobot clan by winning your unique Cryptobot and earn real money by trading with others in our marketplace! Major throwback to the  pokémon cards trading era ⚡️"
           buttontext="Explore mind-blowing Cryptobots"
-          img={learningInterface}
+          video={earnWhileYouLearn}
+          videoType="mp4"
           order="2"
           padding="r"
         />
