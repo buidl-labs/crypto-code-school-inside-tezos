@@ -728,15 +728,6 @@ const Customizer = () => {
                   max="100"
                 />
               </div>
-              <div id="textures" className="space-y-4">
-                <h5 className="text-lg text-white font-bold">Textures</h5>
-                <div className=" grid grid-cols-4 gap-x-2 gap-y-4">
-                  <div className="w-16 h-16 bg-primary-300 rounded"></div>
-                  <div className="w-16 h-16 bg-primary-300 rounded"></div>
-                  <div className="w-16 h-16 bg-primary-300 rounded"></div>
-                  <div className="w-16 h-16 bg-primary-300 rounded"></div>
-                </div>
-              </div>
               <div id="colors" className="space-y-4">
                 <h5 className="text-lg text-white font-bold">
                   Body Part : <span>{botColors.current}</span>
