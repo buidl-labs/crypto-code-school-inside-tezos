@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-// const API_URL = 'https://cryptoverse-wars-backend-nfjp.onrender.com';
-const API_URL = 'https://cryptoverse-wars-backend-pr-2.onrender.com';
+const API_URL = 'https://cryptoverse-wars-backend-nfjp.onrender.com';
 
 export async function createUser(xtzAddress) {
   console.log('Running createUser.', xtzAddress);
