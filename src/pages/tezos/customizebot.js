@@ -72,14 +72,8 @@ const renderGroup = (groupObject, id = 0, colors, getMeshName, shininess) => {
                 material-color={
                   colors.items[getMeshName(child.name)] || '#ffffff'
                 }
-                shininess={shininess}
-              >
-                <meshPhongMaterial
-                  attach="material"
-                  color={colors.items[getMeshName(child.name)] || '#ffffff'}
-                  shininess={shininess}
-                />
-              </mesh>
+                material-shininess={shininess}
+              ></mesh>
             );
           })}
       </group>
@@ -683,6 +677,11 @@ const Customizer = () => {
 
               <Button
                 onClick={() => {
+                  setHeadCount(headCount);
+                  setBodyCount(bodyCount);
+                  setArmCount(armCount);
+                  setLegCount(legCount);
+
                   upload3dModel(
                     state.items.head,
                     state.items.arm,
