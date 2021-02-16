@@ -18,8 +18,7 @@ export const getAllNFTsMetadata = async () => {
   const filtered = all_tokens.map(elm => {
     return {
       tokenId: elm.data.key.value,
-      symbol: elm.data.value.children[0].children[0].value,
-      uri: elm.data.value.children[0].children[1].value,
+      uri: elm.data.value.children[0].children[0].value,
       timestamp: elm.data.timestamp,
     };
   });
@@ -70,7 +69,6 @@ export const fetchAllNfts = async () => {
       return {
         tokenId: elm.tokenId,
         uri: elm.uri,
-        symbol: elm.symbol,
         mintDate: elm.timestamp,
         isForSale: token ? token.isForSale : false,
         saleValueInMutez: token ? token.saleValueInMutez : null,
@@ -154,7 +152,6 @@ export const getNftInfoByXTZAddress = async (address = '') => {
       address: elm.address,
       tokenId: elm.tokenId,
       uri: nft.uri,
-      symbol: nft.symbol,
       isForSale: offer ? offer.isForSale : false,
       saleValueInMutez: offer ? offer.saleValueInMutez : null,
       seller: offer ? offer.seller : null,
