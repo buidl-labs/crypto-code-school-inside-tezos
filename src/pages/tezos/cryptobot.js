@@ -155,6 +155,7 @@ function BotView({ location }) {
               />
               <div style={{ color: 'cornflowerblue' }}>
                 {salePrice &&
+                  xtzPrice &&
                   `$ ${getXTZPriceInUSD(
                     xtzPrice.price,
                     convertXtzToMutez(salePrice),

@@ -72,14 +72,8 @@ const renderGroup = (groupObject, id = 0, colors, getMeshName, shininess) => {
                 material-color={
                   colors.items[getMeshName(child.name)] || '#ffffff'
                 }
-                shininess={shininess}
-              >
-                <meshPhongMaterial
-                  attach="material"
-                  color={colors.items[getMeshName(child.name)] || '#ffffff'}
-                  shininess={shininess}
-                />
-              </mesh>
+                material-shininess={shininess}
+              ></mesh>
             );
           })}
       </group>
@@ -683,6 +677,11 @@ const Customizer = () => {
 
               <Button
                 onClick={() => {
+                  setHeadCount(headCount);
+                  setBodyCount(bodyCount);
+                  setArmCount(armCount);
+                  setLegCount(legCount);
+
                   upload3dModel(
                     state.items.head,
                     state.items.arm,
@@ -728,15 +727,6 @@ const Customizer = () => {
                   min="0"
                   max="100"
                 />
-              </div>
-              <div id="textures" className="space-y-4">
-                <h5 className="text-lg text-white font-bold">Textures</h5>
-                <div className=" grid grid-cols-4 gap-x-2 gap-y-4">
-                  <div className="w-16 h-16 bg-primary-300 rounded"></div>
-                  <div className="w-16 h-16 bg-primary-300 rounded"></div>
-                  <div className="w-16 h-16 bg-primary-300 rounded"></div>
-                  <div className="w-16 h-16 bg-primary-300 rounded"></div>
-                </div>
               </div>
               <div id="colors" className="space-y-4">
                 <h5 className="text-lg text-white font-bold">
