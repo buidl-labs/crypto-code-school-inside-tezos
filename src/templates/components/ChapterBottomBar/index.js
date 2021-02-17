@@ -1,5 +1,5 @@
 import React from 'react';
-import { checkCode } from '../../../utils/compiler';
+import { checkCode } from '../../../utils/checkCode';
 import {
   ContractFile,
   Editor,
@@ -50,22 +50,22 @@ function ChapterEditor({
             setButtonClicked(true);
 
             let result;
-            if(currentLesson === "lesson-1" || !isCode){
+            if (currentLesson === 'lesson-1' || !isCode) {
               result = checkCode(editorInputValue, chapterSolution);
-            
+
               updateValidation(result);
-            }else{
-              const res = window !== undefined && window.runCode(editorInputValue);
+            } else {
+              const res =
+                window !== undefined && window.runCode(editorInputValue);
               console.log(res);
-              if(res.success){
-                res.error = [""]
+              if (res.success) {
+                res.error = [''];
                 updateValidation(res);
-              }else{
-                res.error = [res.error]
+              } else {
+                res.error = [res.error];
                 updateValidation(res);
               }
             }
-            
           }}
         >
           <Check /> <span>Check</span>

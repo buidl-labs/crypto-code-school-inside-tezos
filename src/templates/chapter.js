@@ -207,6 +207,8 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
     console.log(validation);
     if (validation.success) {
       const ch = {
+
+        
         chapterSlug: chapterList[index.current - 1].slug,
         completed: true,
         code: chapter.frontmatter.editor.answer,
