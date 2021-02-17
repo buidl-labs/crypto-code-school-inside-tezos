@@ -1,5 +1,6 @@
 import { TezosToolkit } from '@taquito/taquito';
 import { NETWORK } from 'src/defaults';
+import { NetworkType } from '@airgap/beacon-sdk';
 import { BeaconWallet } from '@taquito/beacon-wallet';
 
 let TezosObj;
