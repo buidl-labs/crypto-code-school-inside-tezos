@@ -18,7 +18,7 @@ export const connectToBeacon = async walletContext => {
 
   if (!globalWallet) {
     // Create a new BeaconWallet instance. The options will be passed to the DAppClient constructor.
-    const wallet = new BeaconWallet({ name: 'Cryptoverse Wars' });
+    // const wallet = new BeaconWallet({ name: 'Cryptoverse Wars' });
 
     // Setting the wallet as the wallet provider for Taquito.
     TezosObj.setWalletProvider(walletContext);

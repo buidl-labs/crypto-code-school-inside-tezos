@@ -361,7 +361,7 @@ function Transaction({ location }) {
                   </Link>
                   <Link to="/tezos/academy">
                     <Button size="lg" type="primary">
-                      Go to Academy
+                      Continue learning
                     </Button>
                   </Link>
                 </div>
