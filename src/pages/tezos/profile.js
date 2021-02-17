@@ -220,7 +220,8 @@ function Profile() {
                     type="email"
                     className="text-lg px-6 py-4 rounded bg-base-600 outline-none border-2 border-base-500 h-14 focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent"
                     placeholder="Your Email Address"
-                    value="harsh@buidllabs.io"
+                    value={user ? user.email : ''}
+                    disabled
                   />
                   <p className="text-base mt-4">
                     *We collect your email to send you product and
@@ -235,19 +236,13 @@ function Profile() {
                     type="text"
                     className="text-lg px-6 py-4 rounded bg-base-600 outline-none border-2 border-base-500 h-14 focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent"
                     placeholder="Nickname (optional)"
-                    value="harshbadhai"
+                    value={user ? user.name : ''}
+                    disabled
                   />
                   <p className="text-base mt-4">
                     *Other Cryptoverse Wars users will identify you with your
                     nickname.
                   </p>
-                </div>
-
-                <div className="flex-col flex py-8 w-64">
-                  <Button size="lg" type="primary">
-                    {' '}
-                    Save Changes{' '}
-                  </Button>
                 </div>
               </div>
               {/* Profile Settings ends */}
