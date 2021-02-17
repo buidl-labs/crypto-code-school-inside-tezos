@@ -1,6 +1,6 @@
 import { TezosToolkit } from '@taquito/taquito';
 import { NETWORK } from 'src/defaults';
-import { NetworkType } from '@airgap/beacon-sdk';
+import { BeaconWallet } from '@taquito/beacon-wallet';
 
 let TezosObj;
 
@@ -17,7 +17,7 @@ export const connectToBeacon = async walletContext => {
 
   if (!globalWallet) {
     // Create a new BeaconWallet instance. The options will be passed to the DAppClient constructor.
-    // const wallet = new BeaconWallet({ name: 'TzButton' })
+    const wallet = new BeaconWallet({ name: 'Cryptoverse Wars' });
 
     // Setting the wallet as the wallet provider for Taquito.
     TezosObj.setWalletProvider(walletContext);

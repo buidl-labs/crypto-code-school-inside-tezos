@@ -120,6 +120,7 @@ function Transaction({ location }) {
       const randomId = RnId();
 
       const contract = await Tezos.wallet.at(CONTRACT_ADDRESS);
+      console.log('🔥', contract);
 
       const op = await contract.methods
         .mint(
@@ -138,7 +139,7 @@ function Transaction({ location }) {
       const result = await op.confirmation(1);
       // Go to 3rd Step
       setStep(3);
-      console.log('result', result);
+      console.log('result 🔥', result);
     } catch (err) {
       console.log(err);
     }
@@ -233,6 +234,7 @@ function Transaction({ location }) {
                 <div className="grid mx-auto justify-center mt-6">
                   <Button
                     onClick={() => {
+                      console.log('Clicked 🔥');
                       mintNFT();
                     }}
                     size="lg"
