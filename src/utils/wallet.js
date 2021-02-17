@@ -25,16 +25,16 @@ export const connectToBeacon = async walletContext => {
     globalWallet = walletContext;
   }
 
-  if (
-    await globalWallet.client.getActiveAccount({
-      network: {
-        type: network,
-      },
-    })
-  ) {
-    // Check if we already have an account connected, so we can skip requestPermissions.
-    return globalWallet;
-  }
+  // if (
+  //   await globalWallet.client.getActiveAccount({
+  //     network: {
+  //       type: network,
+  //     },
+  //   })
+  // ) {
+  //   // Check if we already have an account connected, so we can skip requestPermissions.
+  //   return globalWallet;
+  // }
 
   // Send permission request to the connected wallet. This will either be the browser extension, or a wallet over the P2P network.
   await globalWallet.requestPermissions({
