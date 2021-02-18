@@ -9,6 +9,7 @@ import learningInterface from '../../images/Interface.png';
 import cryptobots from '../../images/cryptobots.png';
 import earnWhileYouLearn from 'src/assets/videos/earn while you learn-anim.mp4';
 import createCurrency from 'src/assets/videos/anim-create-currency.mp4';
+import FinanceIllustration from 'src/assets/wealth.png';
 
 const FeatureGrid = ({
   heading,
@@ -128,8 +129,8 @@ function Landing() {
               </p>
             </div>
           </div>
-          <div className="col-span-2 bg-base-600 h-full w-full">
-            <img src="" className="object-cover object-center" />
+          <div className="col-span-2 h-full w-full">
+            <img src={FinanceIllustration} />
           </div>
         </div>
       </section>
