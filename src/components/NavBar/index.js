@@ -78,7 +78,7 @@ function NavBar(props) {
       <Theme className={`h-18 w-auto`} />
       <ul className={`flex items-center space-x-12`}>
         <li>
-          <NavLink to={'/overview'}>Academy</NavLink>
+          <NavLink to={'/tezos/academy'}>Academy</NavLink>
         </li>
         <li>
           <NavLink to={'/tezos/marketplace'}>Marketplace</NavLink>

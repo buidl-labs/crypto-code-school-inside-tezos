@@ -8,7 +8,7 @@ import PlayButton from '../../components/LandingPage/playbutton';
 import learningInterface from '../../images/Interface.png';
 import cryptobots from '../../images/cryptobots.png';
 import earnWhileYouLearn from 'src/assets/videos/earn while you learn-anim.mp4';
-import createCurrency from 'src/assets/videos/anim - create your own currency.webm';
+import createCurrency from 'src/assets/videos/anim-create-currency.mp4';
 
 const FeatureGrid = ({
   heading,
