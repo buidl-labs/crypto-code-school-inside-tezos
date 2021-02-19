@@ -38,10 +38,10 @@ export default function MichelsonResult({
         ></div>
       ) : null}
       <div
-        className={`absolute inset-y-0 right-0 bg-editor-code z-20 transition-transform duration-300 transform ${
+        className={`absolute overflow-hidden inset-y-0 right-0 h-full flex flex-col bg-editor-code z-20 transition-transform duration-300 transform ${
           drawerOpen && success ? 'translate-x-0' : 'translate-x-full'
         }`}
-        style={{ width: '50vw' }}
+        style={{ width: '50vw', bottom: '3.5rem' }}
       >
         <header
           className={`bg-editor-code flex justify-between items-center text-white px-8 py-7`}
@@ -82,7 +82,7 @@ export default function MichelsonResult({
         </div>
 
         <pre
-          className={`text-base-50 text-lg p-6 font-mono overflow-auto h-full`}
+          className={`text-base-50 relative block z-20 text-lg p-6 font-mono overflow-auto h-full`}
         >
           {currentOutput}
         </pre>
