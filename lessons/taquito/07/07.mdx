@@ -24,20 +24,23 @@ editor:
 
   answer: |
     print("Starting transaction...")
-    Tezos.contract.at("KT1Gyk8KanMsaAt39ijcTvGgFajFagtMsAdT")
+    Tezos.contract.at("KT1T4wLsRSQUhfiBWsBPSeT2yYrkPghrFKUf")
         .then(contract => {
             // Call the `mint` entrypoint to mint 10 tokens of symbol "CBT" and token_id 0, in your account.
-            return contract.methods.mint("tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7", 10, "CBT", 0).send();
+            return contract.methods.mint("tz1WvExrfb4hPQZhoXeY8DqmmtvceYnDv8Pt", 10, MichelsonMap.fromLiteral({symbol: char2Bytes("CBT")}), 0).send();
         })
         .then(operation => {
             // Return the operation while specifying to wait for 3 confirmations.
+            print('Waiting for confirmation')
             return operation.confirmation(3).then(() => operation.hash);
         })
         .then(hash => {
             // Print to the console - Operation injected: ${hash}
             print(`Operation injected: ${hash}`)
         })
-        .catch(error => print(error));
+        .catch(error => print(error.message));
+
+
 ---
 ### Intro
 The smart contract for `Cyber_Token` that we've originated has an entry point called `mint`, through which we can create new tokens.

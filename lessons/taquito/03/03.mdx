@@ -9,27 +9,27 @@ editor:
     print("Starting...")
     const FAUCET_KEY = {
         "mnemonic": [
-            "chimney",
-            "item",
-            "course",
-            "pair",
-            "opinion",
-            "mass",
-            "receive",
-            "wrong",
-            "hurry",
-            "nest",
-            "oil",
-            "acoustic",
-            "section",
-            "salad",
-            "electric"
+            "average",
+            "oblige",
+            "arrow",
+            "reunion",
+            "connect",
+            "setup",
+            "consider",
+            "devote",
+            "peanut",
+            "canal",
+            "dinner",
+            "noise",
+            "ask",
+            "arena",
+            "image"
         ],
-        "secret": "47184b1d8bf4dd550256817c3507cc4ccf112888",
-        "amount": "903205016",
-        "pkh": "tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7",
-        "password": "9U5VOADM6l",
-        "email": "ryqwtuyj.ciwjnvdt@tezos.example.org"
+        "secret": "945e08fcbf7bb2cdd6023679d9c63e8b61bd9342",
+        "amount": "54613484787",
+        "pkh": "tz1WvExrfb4hPQZhoXeY8DqmmtvceYnDv8Pt",
+        "password": "q0bpPnA9yc",
+        "email": "vpzrkuhu.brekchkh@tezos.example.org"
     }
         
     importKey(
@@ -50,27 +50,27 @@ editor:
     print("Starting...")
     const FAUCET_KEY = {
         "mnemonic": [
-            "chimney",
-            "item",
-            "course",
-            "pair",
-            "opinion",
-            "mass",
-            "receive",
-            "wrong",
-            "hurry",
-            "nest",
-            "oil",
-            "acoustic",
-            "section",
-            "salad",
-            "electric"
+            "average",
+            "oblige",
+            "arrow",
+            "reunion",
+            "connect",
+            "setup",
+            "consider",
+            "devote",
+            "peanut",
+            "canal",
+            "dinner",
+            "noise",
+            "ask",
+            "arena",
+            "image"
         ],
-        "secret": "47184b1d8bf4dd550256817c3507cc4ccf112888",
-        "amount": "903205016",
-        "pkh": "tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7",
-        "password": "9U5VOADM6l",
-        "email": "ryqwtuyj.ciwjnvdt@tezos.example.org"
+        "secret": "945e08fcbf7bb2cdd6023679d9c63e8b61bd9342",
+        "amount": "54613484787",
+        "pkh": "tz1WvExrfb4hPQZhoXeY8DqmmtvceYnDv8Pt",
+        "password": "q0bpPnA9yc",
+        "email": "vpzrkuhu.brekchkh@tezos.example.org"
     }
     
     importKey(
@@ -98,16 +98,21 @@ On testnet, tokens don't have real value - hence, you can test as much as you'd 
 
 ### Study time
 
-There are 3-4 testnets but currently **cathargenet** is the most used one and it's the one that we'll be originating our contracts on as well.
+There are 3-4 testnets but currently **delphinet** is the one that's being used and it's the one that we'll be originating our contracts on as well.
 
-While using Taquito, you need to specify which network you're using - 
+Youneed to provide the RPC url when you instantiate the Tezos object through -
+```
+const Tezos = new TezosToolkit('https://api.tez.ie/rpc/delphinet')
+```
+
+But then, you can change the RPC url too through - 
 ```javascript=
-Tezos.setProvider({ rpc: 'https://carthagenet.SmartPy.io' });
+Tezos.setProvider({ rpc: 'https://api.tez.ie/rpc/delphinet' });
 print(Tezos._rpc); // prints the network you're connected to.
 ```
 
 ### #buidl-ing time
  
 #### Step by step walkthrough
-- Use `Tezos.setProvider` to specify you're using **cathargenet**.
+- Use `Tezos.setProvider` to specify you're using **delphinet**.
 - Print the rpc you've connected to.
