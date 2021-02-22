@@ -39,7 +39,8 @@ const Footer = ({
             if (module === 'module-04') {
               markDone();
             }
-
+            if (nextText === 'Finish')
+              localStorage.setItem('currentModule', JSON.stringify(module));
             navigate(nextLink);
           }}
         >

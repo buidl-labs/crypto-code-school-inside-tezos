@@ -34,8 +34,17 @@ import GLTFExporter from 'three-gltf-exporter';
 const WelcomeModal = ({ close, isUser }) => {
   const [user, setUser] = useAtom(userAtom);
   const signedIn = isUser && user.verified;
-
+  const [nextLink, setNextLink] = useState('/tezos/academy');
+  const currentModule = JSON.parse(
+    localStorage.getItem('currentModule') || JSON.stringify(''),
+  );
   const beacon = useContext(BeaconContext);
+
+  useEffect(() => {
+    if (currentModule !== null) {
+      setNextLink(`/tezos/academy/${currentModule}`);
+    }
+  }, []);
 
   async function signInHandler() {
     if (beacon === null) {
@@ -92,7 +101,7 @@ const WelcomeModal = ({ close, isUser }) => {
             {signedIn ? `Take me to my Cryptobot` : `Sign in`}
           </button>
           <Link
-            href="#"
+            href={nextLink}
             className={`flex mt-6 justify-center text-lg font-bold`}
           >
             Skip to next module
