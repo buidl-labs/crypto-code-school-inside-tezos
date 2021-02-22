@@ -40,7 +40,8 @@ const Footer = ({
               markDone();
             }
             if (nextText === 'Finish')
-              localStorage.setItem('currentModule', JSON.stringify(module));
+              typeof window !== `undefined` &&
+                localStorage.setItem('currentModule', JSON.stringify(module));
             navigate(nextLink);
           }}
         >

@@ -35,9 +35,9 @@ const WelcomeModal = ({ close, isUser }) => {
   const [user, setUser] = useAtom(userAtom);
   const signedIn = isUser && user.verified;
   const [nextLink, setNextLink] = useState('/tezos/academy');
-  const currentModule = JSON.parse(
-    localStorage.getItem('currentModule') || JSON.stringify(''),
-  );
+  const currentModule =
+    typeof window != 'undefined' &&
+    JSON.parse(localStorage.getItem('currentModule') || JSON.stringify(''));
   const beacon = useContext(BeaconContext);
 
   useEffect(() => {
@@ -47,7 +47,7 @@ const WelcomeModal = ({ close, isUser }) => {
   }, []);
 
   async function signInHandler() {
-    if (beacon === null) {
+    if (typeof beacon === `undefined`) {
       return;
     }
     const url = typeof window !== 'undefined' ? window.location.pathname : '';
