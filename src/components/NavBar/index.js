@@ -157,8 +157,8 @@ const Dropdown = ({ color = 'white', beacon }) => {
                   e.preventDefault();
                   //close the drop down
                   dropdownPopoverShow ? closeDropdownPopover() : null;
-
-                  beacon.client.destroy().then(() => {
+                  console.log(beacon);
+                  beacon.client.setActiveAccount(null).then(() => {
                     window.location.href = '/tezos';
                   });
                 }}

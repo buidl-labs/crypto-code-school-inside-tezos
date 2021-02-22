@@ -10,7 +10,7 @@ const Footer = ({
   const [nextLink, nextText] = useMemo(() => {
     return nextSlug
       ? [`/tezos/academy/${module}/${nextSlug}`, 'Next']
-      : ['/tezos/customizebot', 'Finish'];
+      : ['/tezos/claim-bot', 'Finish'];
   });
 
   const progress =

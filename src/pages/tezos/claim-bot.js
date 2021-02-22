@@ -1,7 +1,13 @@
-import React, { Suspense, useRef, useState, useEffect } from 'react';
+import React, {
+  Suspense,
+  useRef,
+  useState,
+  useEffect,
+  useContext,
+} from 'react';
 import NavBar from '../../components/NavBar';
 import Button from '../../components/Buttons';
-import { navigate } from 'gatsby';
+import { navigate, Link } from 'gatsby';
 import { Canvas, useFrame } from 'react-three-fiber';
 import {
   ContactShadows,
@@ -15,11 +21,89 @@ import { HexColorPicker } from 'react-colorful';
 import 'react-colorful/dist/index.css';
 import 'src/utils/react-colorful.css';
 import namedColors from 'color-name-list';
-
+import cryptobots from 'src/images/crypto-modal.png';
 import isUserAtom from 'src/atoms/is-user-atom';
+import userAtom from 'src/atoms/user-atom';
 import { useAtom } from 'jotai';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import { BeaconContext } from 'src/context/beacon-context';
+import { createUser, batchUpdateProgress } from 'src/api';
 
 import GLTFExporter from 'three-gltf-exporter';
+
+const WelcomeModal = ({ close, isUser }) => {
+  const [user, setUser] = useAtom(userAtom);
+  const signedIn = isUser && user.verified;
+
+  const beacon = useContext(BeaconContext);
+
+  async function signInHandler() {
+    if (beacon === null) {
+      return;
+    }
+    const url = typeof window !== 'undefined' ? window.location.pathname : '';
+    console.log(url);
+    let acc = await beacon.client.getActiveAccount();
+
+    if (acc) {
+      let u = await createUser(acc.address);
+      if (u.verified) {
+        console.log(`u is verified`);
+        setUser(u);
+        let progress =
+          typeof window !== `undefined` && localStorage.getItem('progress');
+        if (progress) {
+          progress = JSON.parse(progress);
+          const res = await batchUpdateProgress(u, progress);
+          console.log(res);
+        }
+        return;
+      } else navigate('/auth', { state: { pathname: url } });
+      console.log(acc);
+    } else {
+      navigate('/auth', { state: { pathname: url } });
+    }
+  }
+
+  return (
+    <div
+      className={`bg-base-900 bg-opacity-80 absolute inset-0 flex items-center justify-center text-white`}
+    >
+      <div
+        className={`absolute bg-base-700 flex items-center justify-center flex-col py-9 px-24 rounded-3xl`}
+        style={{ maxWidth: `65vw` }}
+      >
+        <h3 className={`text-4xl font-black`}>Congratulations</h3>
+        <p className={`text-lg mt-4 text-center`}>
+          You have earned a Unique Cryptobot You can customise it and share it
+          with your friends.
+          {signedIn ? (
+            <p>Let’s do it 🚀</p>
+          ) : (
+            <p>Please Sign in to customise and claim your bot.</p>
+          )}
+        </p>
+        <img src={cryptobots} className={`mt-6`} />
+        <div className={`flex items-center flex-col`}>
+          <button
+            className={`bg-primary-700 font-bold text-2xl px-9 py-3 rounded`}
+            onClick={signedIn ? close : signInHandler}
+          >
+            {signedIn ? `Take me to my Cryptobot` : `Sign in`}
+          </button>
+          <Link
+            href="#"
+            className={`flex mt-6 justify-center text-lg font-bold`}
+          >
+            Skip to next module
+            <ChevronRightIcon className={`ml-2`} />
+          </Link>
+        </div>
+      </div>
+      ;
+    </div>
+  );
+};
 
 const state = {
   current: null,
@@ -237,12 +321,15 @@ const Customizer = () => {
 
   const [isUser] = useAtom(isUserAtom);
 
+  const [isModalOpen, setIsModalOpen] = useState(true);
+
   useEffect(() => {
     // console.log(user, isUser);
     if (!isUser) {
       const url =
         typeof window !== 'undefined' ? window.location.pathname : '/tezos';
-      navigate('/auth', { state: { pathname: url } });
+      // navigate('/auth', { state: { pathname: url } });
+      console.log('user not signed in bro');
     }
   }, []);
 
@@ -368,7 +455,7 @@ const Customizer = () => {
   return (
     <div
       style={{ background: 'rgba(55, 65, 81)' }}
-      className="h-screen bg-grey-900"
+      className="h-screen bg-grey-900 relative"
     >
       {showSavingBotModel && (
         <div
@@ -769,6 +856,9 @@ const Customizer = () => {
           </div>
         </div>
       </div>
+      {isModalOpen && (
+        <WelcomeModal close={() => setIsModalOpen(false)} isUser={isUser} />
+      )}
     </div>
   );
 };
