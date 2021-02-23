@@ -6,6 +6,7 @@ import Footer from 'src/components/Footer';
 import Cryptobot from 'src/images/cryptobot-yellow.png';
 import DoneIcon from '@material-ui/icons/Done';
 import useChapters from 'src/hooks/use-chapters';
+import Img from 'gatsby-image';
 
 const CourseCard = ({ m, i, progress }) => {
   const chapters = useChapters(m.frontmatter.slug);
@@ -36,8 +37,9 @@ const CourseCard = ({ m, i, progress }) => {
       <div
         className={`grid grid-cols-2 w-full bg-base-800 border border-base-400 rounded-xl`}
       >
-        <div>
-          <img src={Cryptobot} className={`block my-0 mx-auto`} />
+        <div className={`block my-0 mx-auto`}>
+          <Img fluid={m.frontmatter.img.childImageSharp.fluid} />
+          {/* <img src={Cryptobot} /> */}
         </div>
         <div className={`my-auto`}>
           <h2 className={`font-black text-5xl`}>{m.frontmatter.title}</h2>
@@ -70,6 +72,13 @@ export const query = graphql`
           title
           slug
           description
+          img{
+               childImageSharp {
+                 fluid(maxWidth: 800) {
+                   ...GatsbyImageSharpFluid
+                 }
+               }
+            }
         }
       }
     }
