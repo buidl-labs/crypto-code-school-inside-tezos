@@ -38,7 +38,7 @@ const CourseCard = ({ m, i, progress }) => {
         className={`grid grid-cols-2 w-full bg-base-800 border border-base-400 rounded-xl`}
       >
         <div className={`block my-0 mx-auto`}>
-          <Img fluid={m.frontmatter.img.childImageSharp.fluid} />
+          <img src={m.frontmatter.img.childImageSharp.fluid.src} />
           {/* <img src={Cryptobot} /> */}
         </div>
         <div className={`my-auto`}>
@@ -72,13 +72,13 @@ export const query = graphql`
           title
           slug
           description
-          img{
-               childImageSharp {
-                 fluid(maxWidth: 800) {
-                   ...GatsbyImageSharpFluid
-                 }
-               }
+          img {
+            childImageSharp {
+              fluid(maxWidth: 800) {
+                ...GatsbyImageSharpFluid
+              }
             }
+          }
         }
       }
     }
@@ -90,6 +90,7 @@ const CurriculumOverview = ({
     allMdx: { nodes: modules },
   },
 }) => {
+  console.log(modules);
   const progress = useMemo(() => {
     let p =
       typeof window != 'undefined' &&
