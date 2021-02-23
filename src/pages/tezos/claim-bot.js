@@ -29,6 +29,12 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { BeaconContext } from 'src/context/beacon-context';
 import { createUser, batchUpdateProgress } from 'src/api';
 
+import { NetworkType } from '@airgap/beacon-sdk';
+import { NETWORK } from 'src/defaults';
+
+const network =
+  NETWORK === 'delphinet' ? NetworkType.DELPHINET : NetworkType.MAINNET;
+
 import GLTFExporter from 'three-gltf-exporter';
 
 const WelcomeModal = ({ close, isUser }) => {
@@ -52,7 +58,11 @@ const WelcomeModal = ({ close, isUser }) => {
     }
     const url = typeof window !== 'undefined' ? window.location.pathname : '';
     console.log(url);
-    let acc = await beacon.client.getActiveAccount();
+    let acc = await beacon.client.getActiveAccount({
+      network: {
+        type: network,
+      },
+    });
 
     if (acc) {
       let u = await createUser(acc.address);
@@ -731,7 +741,6 @@ const Customizer = () => {
                       getMeshName={getMeshName}
                       setBotColors={setBotColors}
                       shininess={shininess}
-                      upload3dModel={upload3dModel}
                     />
                     <Environment files="royal_esplanade_1k.hdr" />
                   </Suspense>
