@@ -201,14 +201,19 @@ function ModalTextSection({ children }) {
 
 const SavingBotModal = () => {
   return (
-    <BaseModal>
-      <ModalTextSection>
-        <ModalHeading>Saving your 3D Cryptobot on IPFS</ModalHeading>
+    <div
+      className={`bg-base-900 bg-opacity-80 absolute inset-0 flex items-center justify-center text-white`}
+    >
+      <div
+        className={`absolute bg-base-700 flex items-center justify-center flex-col py-9 px-24 rounded-3xl`}
+        style={{ maxWidth: `65vw` }}
+      >
+        <ModalHeading>Saving your 3D Cryptobot</ModalHeading>
         <div className="flex justify-center w-full">
           <Loader type="BallTriangle" color="#2563EB" height={80} width={80} />
         </div>
-      </ModalTextSection>
-    </BaseModal>
+      </div>
+    </div>
   );
 };
 
@@ -484,13 +489,6 @@ const Customizer = () => {
       style={{ background: 'rgba(55, 65, 81)' }}
       className="h-screen bg-grey-900 relative"
     >
-      {showSavingBotModel && (
-        <div
-          className={`bg-base-900 min-h-screen text-white flex items-center justify-center`}
-        >
-          <SavingBotModal />
-        </div>
-      )}
       <div id="main" className="relative h-full">
         <div
           id="editor"
@@ -945,6 +943,7 @@ const Customizer = () => {
       {isModalOpen && (
         <WelcomeModal close={() => setIsModalOpen(false)} isUser={isUser} />
       )}
+      {showSavingBotModel && <SavingBotModal />}
     </div>
   );
 };
