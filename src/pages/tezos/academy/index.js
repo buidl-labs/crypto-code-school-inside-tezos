@@ -36,8 +36,8 @@ const CourseCard = ({ m, i, progress }) => {
       <div
         className={`grid grid-cols-2 w-full bg-base-800 border border-base-400 rounded-xl`}
       >
-        <div>
-          <img src={Cryptobot} className={`block my-0 mx-auto`} />
+        <div className={`block my-0 mx-auto`}>
+          <img src={m.frontmatter.img.childImageSharp.fluid.src} className="object-cover object-center" />
         </div>
         <div className={`my-auto`}>
           <h2 className={`font-black text-5xl`}>{m.frontmatter.title}</h2>
@@ -70,6 +70,13 @@ export const query = graphql`
           title
           slug
           description
+          img {
+            childImageSharp {
+              fluid(maxWidth: 800) {
+                ...GatsbyImageSharpFluid
+              }
+            }
+          }
         }
       }
     }
