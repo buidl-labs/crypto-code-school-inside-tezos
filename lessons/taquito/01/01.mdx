@@ -10,44 +10,48 @@ editor:
 
     
     //NOTE: You've to use print() as a replacement of console.log to output content on this platform, eg - print("Hello World")
-    // print FAUCET_KEY.pkh
+    // print(FAUCET_KEY.pkh)
 
 
   answer: |
     // Initialize the `FAUCET_KEY`
     const FAUCET_KEY = {
         "mnemonic": [
-            "chimney",
-            "item",
-            "course",
-            "pair",
-            "opinion",
-            "mass",
-            "receive",
-            "wrong",
-            "hurry",
-            "nest",
-            "oil",
-            "acoustic",
-            "section",
-            "salad",
-            "electric"
+            "average",
+            "oblige",
+            "arrow",
+            "reunion",
+            "connect",
+            "setup",
+            "consider",
+            "devote",
+            "peanut",
+            "canal",
+            "dinner",
+            "noise",
+            "ask",
+            "arena",
+            "image"
         ],
-        "secret": "47184b1d8bf4dd550256817c3507cc4ccf112888",
-        "amount": "903205016",
-        "pkh": "tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7",
-        "password": "9U5VOADM6l",
-        "email": "ryqwtuyj.ciwjnvdt@tezos.example.org"
+        "secret": "945e08fcbf7bb2cdd6023679d9c63e8b61bd9342",
+        "amount": "54613484787",
+        "pkh": "tz1WvExrfb4hPQZhoXeY8DqmmtvceYnDv8Pt",
+        "password": "q0bpPnA9yc",
+        "email": "vpzrkuhu.brekchkh@tezos.example.org"
     }
         
     print(FAUCET_KEY.pkh)
 
 ---
 ### Intro
-In this module, we'll take you through the whole process of originating(or deploying) a smart contract on the Tezos blockchain using Javascript.
-On this adventure, we'll use the Taquito library - library for development on the Tezos blockchain.
+In this module, there are no right answers :P 
+We'll take you through the whole process of originating(or deploying) a smart contract on the Tezos blockchain using Javascript, but, we'll complete a chapter complete when you click on 'Next'.
 
-In this module, we'll deploy and interact with `Cyber_Token` - our very own fungible token that we learned how to develop in the previous module.
+Doesn't mean we've left you high and dry, we got your back. 
+You can always check reference code from the "Show Answer" tab!
+
+On this adventure, we'll use the Taquito library - library for development on the Tezos blockchain.
+And, we'll deploy and interact with `Cyber_Token` - our very own fungible token that we learned how to develop in the previous module.
 
 ### Study time
 Taquito is a library that makes it really easy to make DApps over the Tezos blockchain.
@@ -72,21 +76,21 @@ npm install @taquito/taquito // or yarn add @taquito/taquito
 ```
 Importing the `Tezos` object - 
 ```javascript=
-import { Tezos } from `@taquito/taquito`
+import { TezosToolkit } from `@taquito/taquito`
 ```
-Almost all the magic happens through the `Tezos` object we imported right here.
+Almost all the magic happens through the `TezosToolkit` object we imported right here.
 
 ### #buidl-ing time
  
 #### New feature request!
-You've made quite a few smart contracts so far but now it's time to originate them - for that you need to create an account and set it up.
+You've made quite a few smart contracts so far but now it's time to originate them - for that you need to create an account on the testnet and set it up.
 
 #### Step by step walkthrough
 
-> Note: We're already imported Tezos and initialized a bunch of other stuff to make this whole journey a little bit smoother for you.
+> Note: We're already imported `TezosToolkit` and initialized a bunch of other stuff to make this whole journey a little bit smoother for you.
 
 1. Generate your faucet account - 
-    1. Visit the Tezos Faucet - faucet.tzalpha.net
+    1. Visit the Tezos Faucet - https://faucet.tzalpha.net
     2. Click on "Get testnet ꜩ" (will explain "testnet" in a future chapter)
     3. Copy and save the whole JSON output it gives you, this  data basically signifies your account on the testnet.
 2. Set the JSON obtained in the previous step as the `FAUCET_KEY` in the code which is a constant(use the `const` keyword).

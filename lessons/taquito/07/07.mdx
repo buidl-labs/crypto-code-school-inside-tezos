@@ -24,22 +24,26 @@ editor:
 
   answer: |
     print("Starting transaction...")
-    Tezos.contract.at("KT1Gyk8KanMsaAt39ijcTvGgFajFagtMsAdT")
+    Tezos.contract.at("KT1T4wLsRSQUhfiBWsBPSeT2yYrkPghrFKUf")
         .then(contract => {
             // Call the `mint` entrypoint to mint 10 tokens of symbol "CBT" and token_id 0, in your account.
-            return contract.methods.mint("tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7", 10, "CBT", 0).send();
+            return contract.methods.mint("tz1WvExrfb4hPQZhoXeY8DqmmtvceYnDv8Pt", 10, MichelsonMap.fromLiteral({symbol: char2Bytes("CBT")}), 0).send();
         })
         .then(operation => {
             // Return the operation while specifying to wait for 3 confirmations.
+            print('Waiting for confirmation')
             return operation.confirmation(3).then(() => operation.hash);
         })
         .then(hash => {
             // Print to the console - Operation injected: ${hash}
             print(`Operation injected: ${hash}`)
         })
-        .catch(error => print(error));
+        .catch(error => print(error.message));
+
+
 ---
 ### Intro
+
 The smart contract for `Cyber_Token` that we've originated has an entry point called `mint`, through which we can create new tokens.
 
 In this chapter, we're going to interact with the contract by calling the `mint` entry point.
@@ -132,5 +136,21 @@ How about you start minting some money for the society now?
 - Mint 10 tokens of the symbol `"CBT"` and token id `0` to your address(the pkh you obtained from the faucet data); To look at what parameter the entry point `mint` accepts and in what order, take a look at [this chapter](https://hackmd.io/@manangouhari/FA2-4).
     1. Access the contract through `Tezos.contract.at` - pass in the address of the contract we originated in the last chapter as the argument.
     2. Access the `mint` entry point through `c.methods`. Pass it the 4 required arguments - `address`(wallet address to which the tokens will be minted), `amount`(amount of tokens to be minted), `symbol`(symbol which will represent your token, like BTC for bitcoin), `token_id`(used by FA2 for the internal implementation, 0 for signle asset fungible tokens) and call `.send()` on it.
+        - `mint` takes these 4 arguments ->
+            1. address (String)
+            2. amount (Int)
+            3. metadata (Map[string: bytes]) - `{symbol: "CBT"}`
+            4. token_id (Int)
+        - Here's how you create a map in Taquito -
+            ```
+            MichelsonMap.fromLiteral({symbol: char2Bytes('CBT')})
+            ```
+            Don't forget to import `MichelsonMap` from `@taquito/taquito`.
+            Also, you notice we've used `char2Bytes`, it's a helper function provided by Taquito to convert string to bytes, as FA2 expects metadata values to be in bytes.
+            It's imported from another package called `@taquito/tzip16`. So you need to first install the package using npm/yarn. And then import it like this -
+            ```
+            import { char2Bytes } from '@taquito/tzip16'
+            ```
+            Don't worry, we've imported it for you. 
     3. Return the operation recieved while specifying it to wait for 3 confirmations.
     4. When you finally recieve the `hash` of the operation, print to the console: `Operation injected: {hash}`.

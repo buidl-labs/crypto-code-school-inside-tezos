@@ -7,8 +7,9 @@ import CloseIcon from '@material-ui/icons/Close';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 
 import { ControlledEditor, monaco } from '@monaco-editor/react';
-import { TezosToolkit } from '@taquito/taquito';
+import { TezosToolkit, MichelsonMap } from '@taquito/taquito';
 import { importKey, InMemorySigner } from '@taquito/signer';
+import { char2Bytes } from '@taquito/tzip16';
 import SemiLiveProvider from 'src/components/SemiLiveProvider';
 import { LiveEditor, LivePreview, LiveError } from 'react-live';
 
@@ -42,7 +43,7 @@ const CodingInterface = ({ code, answer }) => {
   const [showAnswer, setShowAnswer] = useState(false);
   const [checkAnswer, setCheckAnswer] = useState(false);
 
-  const Tezos = new TezosToolkit('https://api.tez.ie/rpc/carthagenet');
+  const Tezos = new TezosToolkit('https://api.tez.ie/rpc/delphinet');
   const liveProvider = useRef(null);
 
   function runCode() {
@@ -92,6 +93,8 @@ const CodingInterface = ({ code, answer }) => {
         CODE_JSON,
         STORAGE_JSON,
         FAUCET_KEY,
+        MichelsonMap,
+        char2Bytes,
       }}
       // // To edit the theme, you need to edit - node_modules/prism-react-renderer/themes/vsDark/index.js
       theme={theme}

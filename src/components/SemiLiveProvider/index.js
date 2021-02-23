@@ -11,7 +11,6 @@ class SemiLiveProvider extends LiveProvider {
     this.onChange = code => {
       // Override to prevent LiveProvider transpiling code on every change but
       // keep the code. We will need it later.
-      console.log(code);
       this.code = code;
     };
   }
@@ -33,9 +32,15 @@ class SemiLiveProvider extends LiveProvider {
     // The following piece of code provides additional functionality
     // to the user code such as print function and key import
     const code = `
-    
-    Tezos.setProvider({ rpc: 'https://api.tez.ie/rpc/carthagenet' });
-    ${`fetch('https://api.tez.ie/keys/carthagenet/', {
+    let _printlnBuffer = "";
+    function print(value) {
+      _printlnBuffer += value; 
+      render(_printlnBuffer);
+    }
+
+
+    Tezos.setProvider({ rpc: 'https://api.tez.ie/rpc/delphinet' });
+    ${`fetch('https://api.tez.ie/keys/delphinet/', {
         method: 'POST',
         headers: { Authorization: 'Bearer taquito-example' },
       })
@@ -49,13 +54,6 @@ class SemiLiveProvider extends LiveProvider {
                     FAUCET_KEY.secret);
        })
       .then(() => {
-        let _printlnBuffer = "";
-        function print(value) {
-          
-          _printlnBuffer += value;
-          
-          render(_printlnBuffer);
-        }
         ${this.code}
        });`}`;
 

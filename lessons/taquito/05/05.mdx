@@ -28,7 +28,9 @@ editor:
         // print `totalCost` required for the origination of the contract.
         print(operation.totalCost)
       })
-      .catch(error => print(error))
+      .catch(error => {
+        print(error)
+      })
 ---
 ### Intro
 Everything on the blockchain has a cost.

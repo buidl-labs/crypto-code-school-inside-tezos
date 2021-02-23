@@ -9,57 +9,58 @@ editor:
     print("Starting...")
     const FAUCET_KEY = {
         "mnemonic": [
-            "chimney",
-            "item",
-            "course",
-            "pair",
-            "opinion",
-            "mass",
-            "receive",
-            "wrong",
-            "hurry",
-            "nest",
-            "oil",
-            "acoustic",
-            "section",
-            "salad",
-            "electric"
+            "average",
+            "oblige",
+            "arrow",
+            "reunion",
+            "connect",
+            "setup",
+            "consider",
+            "devote",
+            "peanut",
+            "canal",
+            "dinner",
+            "noise",
+            "ask",
+            "arena",
+            "image"
         ],
-        "secret": "47184b1d8bf4dd550256817c3507cc4ccf112888",
-        "amount": "903205016",
-        "pkh": "tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7",
-        "password": "9U5VOADM6l",
-        "email": "ryqwtuyj.ciwjnvdt@tezos.example.org"
+        "secret": "945e08fcbf7bb2cdd6023679d9c63e8b61bd9342",
+        "amount": "54613484787",
+        "pkh": "tz1WvExrfb4hPQZhoXeY8DqmmtvceYnDv8Pt",
+        "password": "q0bpPnA9yc",
+        "email": "vpzrkuhu.brekchkh@tezos.example.org"
     }
         
     // use importKey
     
+    // Print `Tezos.signer._key.key`
 
   answer: |
     print("Starting...")
     const FAUCET_KEY = {
         "mnemonic": [
-            "chimney",
-            "item",
-            "course",
-            "pair",
-            "opinion",
-            "mass",
-            "receive",
-            "wrong",
-            "hurry",
-            "nest",
-            "oil",
-            "acoustic",
-            "section",
-            "salad",
-            "electric"
+            "average",
+            "oblige",
+            "arrow",
+            "reunion",
+            "connect",
+            "setup",
+            "consider",
+            "devote",
+            "peanut",
+            "canal",
+            "dinner",
+            "noise",
+            "ask",
+            "arena",
+            "image"
         ],
-        "secret": "47184b1d8bf4dd550256817c3507cc4ccf112888",
-        "amount": "903205016",
-        "pkh": "tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7",
-        "password": "9U5VOADM6l",
-        "email": "ryqwtuyj.ciwjnvdt@tezos.example.org"
+        "secret": "945e08fcbf7bb2cdd6023679d9c63e8b61bd9342",
+        "amount": "54613484787",
+        "pkh": "tz1WvExrfb4hPQZhoXeY8DqmmtvceYnDv8Pt",
+        "password": "q0bpPnA9yc",
+        "email": "vpzrkuhu.brekchkh@tezos.example.org"
     }
     
     // use importKey
@@ -70,6 +71,8 @@ editor:
         FAUCET_KEY.mnemonic.join(' '),
         FAUCET_KEY.secret
     );
+
+    print(Tezos.signer._key.key)
 
 ---
 ### Intro
@@ -82,7 +85,7 @@ It's required if you want to inject operations into the Tezos blockchain.
 Taquito supports multiple different signers but none are configured by default.
 
 We're going to use `InMemorySigner` - it's best suited for development and testing, not so much for production.
-When you're writing code for production that deals with tokens of real value, you should use [TezBridge Signer](https://tezostaquito.io/docs/tezbridge_signer).
+When you're writing code for production that deals with tokens of real value, we suggest using [@taquito/beacon-wallet](https://tezostaquito.io/docs/tezbridge_signer).
 
 ### Show me an example
 
