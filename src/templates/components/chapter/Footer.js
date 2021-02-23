@@ -12,7 +12,7 @@ const Footer = ({
       ? [`/tezos/academy/${module}/${nextSlug}`, 'Next']
       : module === 'module-0'
       ? ['/tezos/customizebot', 'Finish']
-      : ['/tezos/academy', 'Finish'];
+      : ['/tezos/customizebot', 'Finish'];
   });
 
   const progress =
