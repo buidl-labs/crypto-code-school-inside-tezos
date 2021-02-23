@@ -39,7 +39,7 @@ editor:
         admin = sp.test_account("Decentralized Dictator")
 
         # Initialize Cyber_Token as cyber_token with single_asset = True
-        cyber_token = Cyber_Token(FA2.FA2_config(single_asset=True), admin.address)
+        cyber_token = Cyber_Token(FA2.FA2_config(single_asset=True), admin = admin.address, metadata = sp.big_map({"": sp.bytes_of_string("tezos-storage:content"),"content": sp.bytes_of_string("""{"name" : "Cyber Token"}""")}))
         #Add cyber_token to the scenario
         scenario += cyber_token
 ---
@@ -106,18 +106,32 @@ def test():
     # Creating test accounts.
     admin = sp.test_account("Elon Musk owns this account.")
 
-    your_token = Your_Token(FA2.FA2_config(single_asset = True), admin.address)
+    your_token = Your_Token(FA2.FA2_config(single_asset = True), admin = admin.address, 
+    metadata = sp.big_map({"": sp.bytes_of_string("tezos-storage:content"),"content": sp.bytes_of_string("""{"name" : "Your Token"}""")}))
 ```
 That's all the code needed to implement your own fungible token!
 
 Look at the last line of code in the snippet above - 
 ```python=
-your_token = Your_Token(FA2.FA2_config(single_asset = True), admin.address)
+your_token = Your_Token(FA2.FA2_config(single_asset = True), admin.address, 
+metadata = sp.big_map({"": sp.bytes_of_string("tezos-storage:content"),"content": sp.bytes_of_string("""{"name" : "Your Token"}""")}))
 ```
+
 On first look, we're initializing a smart contract like we usually do. 
 But, we're also passing in `FA2.FA2_config(single_asset = True)`. `FA2_config` is one of the helper classes defined in the FA2 template through which we can control the behavior of the token.
 We're simply telling the config class that we want our contract to be a **single asset** token.
 As the second argument, we're passing the address to the admin account.
+
+Now, third argument, `metadata`, is where you need to carefully take a look. This `metadata` is neccessary to be passed, and has to be according to [TZIP-16](https://gitlab.com/tzip/tzip/-/blob/master/proposals/tzip-16/tzip-16.md)
+Let's deconstruct it!
+```
+metadata = sp.big_map({"": sp.bytes_of_string("tezos-storage:content"),"content": sp.bytes_of_string("""{"name" : "Your Token"}""")}))
+```
+`metadata` needs to be a big map(`sp.big_map`), and the first key NEEDS to be an empty string(`""`) and it's value needs to be a string which points to the location of the metadata content.
+There can be several different ways of specifying the metadata, if you're storing the data in the contract storage itself, then you've to specify it as `"tezos-storage:<name_of_the_key>"`. Over here `"content"` is the key under which data is stored, hence the metadata location specifier is `"tezos-storage:content"`. 
+And now, the value of `"content"` is in bytes, a string that represents the JSON object. 
+
+
 
 ### #buidl-ing time
  
@@ -128,5 +142,5 @@ Take the first steps towards building the universe's most advanced civilization,
 #### Step by step walkthrough
 1. Import the FA2 template using and set it equal to `FA2`.
 2. Define a smart contract - `Cyber_Token` that inherits from the core FA2 contract. (Use `Your_Token`) in the example above as a reference.
-3. Initialize `Cyber_Token` with `single_asset=True` and the address to the `admin`.
+3. Initialize `Cyber_Token` with `single_asset=True`, address to the `admin`, and in the `metadata`, `name` needs to be equal to `"Cyber Token"`.
 4. Add `cyber_token` to the scenario.
