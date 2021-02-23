@@ -10,7 +10,9 @@ const Footer = ({
   const [nextLink, nextText] = useMemo(() => {
     return nextSlug
       ? [`/tezos/academy/${module}/${nextSlug}`, 'Next']
-      : ['/tezos/academy', 'Finish'];
+      : module === 'module-0'
+      ? ['/tezos/customizebot', 'Finish']
+      : ['/tezos/customizebot', 'Finish'];
   });
 
   const progress =
@@ -39,6 +41,7 @@ const Footer = ({
             if (module === 'module-04') {
               markDone();
             }
+
             navigate(nextLink);
           }}
         >
