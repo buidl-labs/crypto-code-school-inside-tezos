@@ -39,6 +39,29 @@ import { createUser, batchUpdateProgress } from 'src/api';
 
 const network =
   NETWORK === 'delphinet' ? NetworkType.DELPHINET : NetworkType.MAINNET;
+import head1 from '../../assets/CryptobotImages/Head/01xhead.png';
+import head2 from '../../assets/CryptobotImages/Head/02xhead.png';
+import head3 from '../../assets/CryptobotImages/Head/03xhead.png';
+import head4 from '../../assets/CryptobotImages/Head/04xhead.png';
+import head5 from '../../assets/CryptobotImages/Head/05xhead.png';
+
+import arms1 from '../../assets/CryptobotImages/Arm/01xarms.png';
+import arms2 from '../../assets/CryptobotImages/Arm/02xarms.png';
+import arms3 from '../../assets/CryptobotImages/Arm/03xarms.png';
+import arms4 from '../../assets/CryptobotImages/Arm/04xarms.png';
+import arms5 from '../../assets/CryptobotImages/Arm/05xarms.png';
+
+import body1 from '../../assets/CryptobotImages/Body/01xbody.png';
+import body2 from '../../assets/CryptobotImages/Body/02xbody.png';
+import body3 from '../../assets/CryptobotImages/Body/03xbody.png';
+import body4 from '../../assets/CryptobotImages/Body/04xbody.png';
+import body5 from '../../assets/CryptobotImages/Body/05xbody.png';
+
+import legs1 from '../../assets/CryptobotImages/Leg/01xlegs.png';
+import legs2 from '../../assets/CryptobotImages/Leg/02xlegs.png';
+import legs3 from '../../assets/CryptobotImages/Leg/03xlegs.png';
+import legs4 from '../../assets/CryptobotImages/Leg/04xlegs.png';
+import legs5 from '../../assets/CryptobotImages/Leg/05xlegs.png';
 
 const state = {
   current: null,
@@ -556,34 +579,49 @@ const Customizer = () => {
                 >
                   {' '}
                   <button
-                    className="px-4 py-6 bg-base-700  text-white focus:outline-none"
+                    className={
+                      ' bg-base-700 w-32 h-32 focus:outline-none ' +
+                      (headCount === 0 ? 'border-2 border-base-400' : '')
+                    }
                     onClick={() => setHeadCount(0)}
                   >
-                    Head 1
+                    <img src={head1} alt="head1" />
                   </button>
                   <button
-                    className="px-4 py-6 bg-base-700  text-white focus:outline-none"
+                    className={
+                      ' bg-base-700 w-32 h-32 focus:outline-none ' +
+                      (headCount === 1 ? 'border-2 border-base-400' : '')
+                    }
                     onClick={() => setHeadCount(1)}
                   >
-                    Head 2
+                    <img src={head2} alt="head2" />
                   </button>
                   <button
-                    className="px-4 py-6 bg-base-700  text-white focus:outline-none"
+                    className={
+                      ' bg-base-700 w-32 h-32 focus:outline-none ' +
+                      (headCount === 2 ? 'border-2 border-base-400' : '')
+                    }
                     onClick={() => setHeadCount(2)}
                   >
-                    Head 3
+                    <img src={head3} alt="head3" />
                   </button>
                   <button
-                    className="px-4 py-6 bg-base-700  text-white focus:outline-none"
+                    className={
+                      ' bg-base-700 w-32 h-32 focus:outline-none ' +
+                      (headCount === 3 ? 'border-2 border-base-400' : '')
+                    }
                     onClick={() => setHeadCount(3)}
                   >
-                    Head 4
+                    <img src={head4} alt="head4" />
                   </button>
                   <button
-                    className="px-4 py-6 bg-base-700  text-white focus:outline-none"
+                    className={
+                      ' bg-base-700 w-32 h-32 focus:outline-none ' +
+                      (headCount === 4 ? 'border-2 border-base-400' : '')
+                    }
                     onClick={() => setHeadCount(4)}
                   >
-                    Head 5
+                    <img src={head5} alt="head5" />
                   </button>
                 </div>
                 <div
@@ -592,34 +630,49 @@ const Customizer = () => {
                 >
                   {' '}
                   <button
-                    className="px-4 py-6 bg-base-700  text-white focus:outline-none"
+                    className={
+                      ' bg-base-700 w-32 h-32 focus:outline-none ' +
+                      (armCount === 0 ? 'border-2 border-base-400' : '')
+                    }
                     onClick={() => setArmCount(0)}
                   >
-                    Arms 1
+                    <img src={arms1} alt="arms1" />
                   </button>
                   <button
-                    className="px-4 py-6 bg-base-700  text-white focus:outline-none"
+                    className={
+                      ' bg-base-700 w-32 h-32 focus:outline-none ' +
+                      (armCount === 1 ? 'border-2 border-base-400' : '')
+                    }
                     onClick={() => setArmCount(1)}
                   >
-                    Arms 2
+                    <img src={arms2} alt="arms2" />
                   </button>
                   <button
-                    className="px-4 py-6 bg-base-700  text-white focus:outline-none"
+                    className={
+                      ' bg-base-700 w-32 h-32 focus:outline-none ' +
+                      (armCount === 2 ? 'border-2 border-base-400' : '')
+                    }
                     onClick={() => setArmCount(2)}
                   >
-                    Arms 3
+                    <img src={arms3} alt="arms3" />
                   </button>
                   <button
-                    className="px-4 py-6 bg-base-700  text-white focus:outline-none"
+                    className={
+                      ' bg-base-700 w-32 h-32 focus:outline-none ' +
+                      (armCount === 3 ? 'border-2 border-base-400' : '')
+                    }
                     onClick={() => setArmCount(3)}
                   >
-                    Arms 4
+                    <img src={arms4} alt="arms4" />
                   </button>
                   <button
-                    className="px-4 py-6 bg-base-700  text-white focus:outline-none"
+                    className={
+                      ' bg-base-700 w-32 h-32 focus:outline-none ' +
+                      (armCount === 4 ? 'border-2 border-base-400' : '')
+                    }
                     onClick={() => setArmCount(4)}
                   >
-                    Arms 5
+                    <img src={arms5} alt="arms5" />
                   </button>
                 </div>
                 <div
@@ -628,34 +681,49 @@ const Customizer = () => {
                 >
                   {' '}
                   <button
-                    className="px-4 py-6 bg-base-700  text-white focus:outline-none"
+                    className={
+                      ' bg-base-700 w-32 h-32 focus:outline-none ' +
+                      (bodyCount === 0 ? 'border-2 border-base-400' : '')
+                    }
                     onClick={() => setBodyCount(0)}
                   >
-                    Body 1
+                    <img src={body1} alt="body1" />
                   </button>
                   <button
-                    className="px-4 py-6 bg-base-700  text-white focus:outline-none"
+                    className={
+                      ' bg-base-700 w-32 h-32 focus:outline-none ' +
+                      (bodyCount === 1 ? 'border-2 border-base-400' : '')
+                    }
                     onClick={() => setBodyCount(1)}
                   >
-                    Body 2
+                    <img src={body2} alt="body2" />
                   </button>
                   <button
-                    className="px-4 py-6 bg-base-700  text-white focus:outline-none"
+                    className={
+                      ' bg-base-700 w-32 h-32 focus:outline-none ' +
+                      (bodyCount === 2 ? 'border-2 border-base-400' : '')
+                    }
                     onClick={() => setBodyCount(2)}
                   >
-                    Body 3
+                    <img src={body3} alt="body3" />
                   </button>
                   <button
-                    className="px-4 py-6 bg-base-700  text-white focus:outline-none"
+                    className={
+                      ' bg-base-700 w-32 h-32 focus:outline-none ' +
+                      (bodyCount === 3 ? 'border-2 border-base-400' : '')
+                    }
                     onClick={() => setBodyCount(3)}
                   >
-                    Body 4
+                    <img src={body4} alt="body4" />
                   </button>
                   <button
-                    className="px-4 py-6 bg-base-700  text-white focus:outline-none"
+                    className={
+                      ' bg-base-700 w-32 h-32 focus:outline-none ' +
+                      (bodyCount === 4 ? 'border-2 border-base-400' : '')
+                    }
                     onClick={() => setBodyCount(4)}
                   >
-                    Body 5
+                    <img src={body5} alt="body5" />
                   </button>
                 </div>
                 <div
@@ -664,34 +732,49 @@ const Customizer = () => {
                 >
                   {' '}
                   <button
-                    className="px-4 py-6 bg-base-700  text-white focus:outline-none"
+                    className={
+                      ' bg-base-700 w-32 h-32 focus:outline-none ' +
+                      (legCount === 0 ? 'border-2 border-base-400' : '')
+                    }
                     onClick={() => setLegCount(0)}
                   >
-                    Legs 1
+                    <img src={legs1} alt="legs1" />
                   </button>
                   <button
-                    className="px-4 py-6 bg-base-700  text-white focus:outline-none"
+                    className={
+                      ' bg-base-700 w-32 h-32 focus:outline-none ' +
+                      (legCount === 1 ? 'border-2 border-base-400' : '')
+                    }
                     onClick={() => setLegCount(1)}
                   >
-                    Legs 2
+                    <img src={legs2} alt="legs2" />
                   </button>
                   <button
-                    className="px-4 py-6 bg-base-700  text-white focus:outline-none"
+                    className={
+                      ' bg-base-700 w-32 h-32 focus:outline-none ' +
+                      (legCount === 2 ? 'border-2 border-base-400' : '')
+                    }
                     onClick={() => setLegCount(2)}
                   >
-                    Legs 3
+                    <img src={legs3} alt="legs3" />
                   </button>
                   <button
-                    className="px-4 py-6 bg-base-700  text-white focus:outline-none"
+                    className={
+                      ' bg-base-700 w-32 h-32 focus:outline-none ' +
+                      (legCount === 3 ? 'border-2 border-base-400' : '')
+                    }
                     onClick={() => setLegCount(3)}
                   >
-                    Legs 4
+                    <img src={legs4} alt="legs4" />
                   </button>
                   <button
-                    className="px-4 py-6 bg-base-700  text-white focus:outline-none"
+                    className={
+                      ' bg-base-700 w-32 h-32 focus:outline-none ' +
+                      (legCount === 4 ? 'border-2 border-base-400' : '')
+                    }
                     onClick={() => setLegCount(4)}
                   >
-                    Legs 5
+                    <img src={legs5} alt="legs5" />
                   </button>
                 </div>
               </div>

@@ -37,7 +37,7 @@ const CodingInterface = ({
   );
 
   useEffect(() => {
-    monaco.init().then((monacoInstance) => {
+    monaco.init().then(monacoInstance => {
       monacoInstance.editor.defineTheme('cryptoverse-theme', {
         base: 'vs-dark',
         inherit: true,
@@ -76,11 +76,12 @@ const CodingInterface = ({
           <button className={`mr-6`} onClick={resetEditorCode}>
             <RefreshIcon />
           </button>
-          <button
+          <a
+            href="https://t.me/joinchat/FA99PXywCizUbfE7"
             className={`mr-9 px-3 py-1 border-2 border-base-500 rounded focus:outline-none`}
           >
             Have a doubt?
-          </button>
+          </a>
         </div>
       </header>
       <div className={`flex-1`}>

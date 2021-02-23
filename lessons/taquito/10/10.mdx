@@ -7,7 +7,7 @@ editor:
   language: javascript
   startingCode: |
     print("Starting...")
-    Tezos.contract.at("KT1Gyk8KanMsaAt39ijcTvGgFajFagtMsAdT")
+    Tezos.contract.at("KT1T4wLsRSQUhfiBWsBPSeT2yYrkPghrFKUf")
     .then(contract => {
         // Return contract storage.
         
@@ -25,14 +25,14 @@ editor:
 
   answer: |
     print("Starting...")
-    Tezos.contract.at("KT1Gyk8KanMsaAt39ijcTvGgFajFagtMsAdT")
+    Tezos.contract.at("KT1T4wLsRSQUhfiBWsBPSeT2yYrkPghrFKUf")
     .then(contract => {
         // Return contract storage.
         return contract.storage()
     })
     .then(storage => {
         // Access and return the value of tokens your account is left with.
-        return storage.ledger.get("tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7")
+        return storage.ledger.get("tz1WvExrfb4hPQZhoXeY8DqmmtvceYnDv8Pt")
     })  
     .then(res => {
         print(res)

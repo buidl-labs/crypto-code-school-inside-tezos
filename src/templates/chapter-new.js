@@ -54,6 +54,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
   const [michelsonDrawer, setMichelsonDrawer] = useState(false);
   const [michelsonResult, setMichelsonResult] = useState('');
   const [editorValue, setEditorValue] = useState(getDefaultEditorValue);
+  const [startingCode, setStartingCode] = useState(getDefaultEditorValue);
   const NavHeading = useMemo(() => {
     let { module, title } = useModules(chapter.frontmatter.filterBy);
     return `${(module.charAt(0).toUpperCase() + module.slice(1))
@@ -77,6 +78,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
   useEffect(() => {
     if (result.success === true) {
       setIsChapterCompleted(true);
+      setStartingCode(chapter.frontmatter.editor.answer);
       if (isUser) {
         updateProgress(
           user,
@@ -108,11 +110,14 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
       (typeof window != 'undefined' &&
         JSON.parse(localStorage.getItem('progress'))) ||
       '{}';
-
+    console.log(progress, typeof progress);
     if (progress[module]) {
       console.log('getDef', progress[module]);
-      if (progress[module][chapter.frontmatter.slug])
+      console.log(progress[module][chapter.frontmatter.slug]);
+      if (progress[module][chapter.frontmatter.slug]) {
+        console.log(chapter.frontmatter.editor.answer);
         return chapter.frontmatter.editor.answer;
+      }
     }
     return chapter.frontmatter.editor.startingCode;
   }
@@ -136,6 +141,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           setDrawerOpen={setIsChapterDrawerOpen}
         />
         <CodingInterface
+          code={startingCode}
           answer={chapter.frontmatter.editor.answer}
           editorValue={editorValue}
           setEditorValue={setEditorValue}

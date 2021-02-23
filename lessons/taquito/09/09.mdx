@@ -9,7 +9,7 @@ editor:
     print("Starting transfer...")
     Tezos.contract.at("<CONTRACT_ADDRESS>")
     .then(contract => {
-        // transfer 2 tokens from `tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7` to `tz1YLnvKy2ycBZ9TpTCv9ngXd1eUw2uxzhDd`.
+        // transfer 2 tokens from `tz1WvExrfb4hPQZhoXeY8DqmmtvceYnDv8Pt` to `tz1YLnvKy2ycBZ9TpTCv9ngXd1eUw2uxzhDd`.
         
         
     })
@@ -24,12 +24,12 @@ editor:
 
   answer: |
     print("Starting transfer...")
-    Tezos.contract.at("KT1Gyk8KanMsaAt39ijcTvGgFajFagtMsAdT")
+    Tezos.contract.at("KT1T4wLsRSQUhfiBWsBPSeT2yYrkPghrFKUf")
     .then(contract => {
         // transfer 2 tokens from your previous account to the new one which you generated recently.
         return contract.methods.transfer([
           {
-            from_: "tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7",
+            from_: "tz1WvExrfb4hPQZhoXeY8DqmmtvceYnDv8Pt",
             txs: [{ to_: "tz1YLnvKy2ycBZ9TpTCv9ngXd1eUw2uxzhDd", token_id: 0, amount: 2 }]
           }
         ]).send();

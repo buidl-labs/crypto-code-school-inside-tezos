@@ -18,6 +18,7 @@
     "@taquito/beacon-wallet": "^7.1.0-beta.0",
     "@taquito/signer": "^7.0.0-beta.0",
     "@taquito/taquito": "^7.0.0-beta-RC.0",
+    "@taquito/tzip16": "^8.0.3-beta.0",
     "@thanos-wallet/dapp": "^2.2.1",
     "amplitude-js": "^5.11.0",
     "autoprefixer": "^10.2.3",
