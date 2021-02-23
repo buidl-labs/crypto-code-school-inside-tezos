@@ -137,8 +137,6 @@ const Bot = ({
   const { scene } = useGLTF('/compressed.glb');
   const [hovered, set] = useState(null);
 
-  const link = useRef();
-
   const head = useGroup(scene, 'head');
   const arm = useGroup(scene, 'arm');
   const body = useGroup(scene, 'body');
@@ -283,7 +281,7 @@ const WelcomeModal = ({ close, isUser }) => {
             {signedIn ? `Take me to my Cryptobot` : `Sign in`}
           </button>
           <Link
-            href={'/tezos/academy'}
+            to={'/tezos/academy'}
             className={`flex mt-6 justify-center text-lg font-bold`}
           >
             Go back to academy
@@ -808,8 +806,8 @@ const Customizer = () => {
                       setBotColors={setBotColors}
                       shininess={shininess}
                     />
+                    <Environment files="royal_esplanade_1k.hdr" />
                   </Suspense>
-                  <Environment files="royal_esplanade_1k.hdr" />
                   <OrbitControls enableZoom={false} />
                 </Canvas>
               </div>
