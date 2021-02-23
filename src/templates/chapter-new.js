@@ -148,6 +148,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           module={chapter.frontmatter.filterBy}
           isCode={chapter.frontmatter.isCode}
           openMichelsonDrawer={() => setMichelsonDrawer(true)}
+          michelsonResult={michelsonResult}
           setMichelsonResult={setMichelsonResult}
           setResult={setResult}
           result={result}
