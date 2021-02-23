@@ -110,7 +110,7 @@ function LessonsOverview({ data: { mdx: module } }) {
             className={`bg-base-700 rounded-tr-2xl rounded-br-2xl h-full w-full`}
           >
             {' '}
-            <img src={module.frontmatter.img.childImageSharp.fluid.src} className="" />
+            <img src={module.frontmatter.img.childImageSharp.fluid.src} className="object-cover object-center" />
           </div>
           <div className={`pl-6 py-8`}>
             <h3 className={`text-4xl font-black`}>Chapters</h3>
