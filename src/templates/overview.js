@@ -46,6 +46,13 @@ export const query = graphql`
         slug
         next
         title
+        img {
+          childImageSharp {
+            fluid(maxWidth: 800) {
+              ...GatsbyImageSharpFluid
+            }
+          }
+        }
       }
       body
     }
@@ -97,9 +104,14 @@ function LessonsOverview({ data: { mdx: module } }) {
         </header>
         <main
           className={`mt-24 mr-36 grid text-white`}
-          style={{ gridTemplateColumns: '1fr 2fr' }}
+          style={{ gridTemplateColumns: '2fr 3fr' }}
         >
-          <div className={`bg-base-700 rounded-tr-2xl rounded-br-2xl`}></div>
+          <div
+            className={`bg-base-700 rounded-tr-2xl rounded-br-2xl flex justify-items-center`}
+          >
+            {' '}
+            <img src={module.frontmatter.img.childImageSharp.fluid.src} />
+          </div>
           <div className={`pl-6 py-8`}>
             <h3 className={`text-4xl font-black`}>Chapters</h3>
             <ul className={`mt-8 space-y-6`}>
