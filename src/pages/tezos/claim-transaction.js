@@ -262,7 +262,7 @@ function Transaction({ location }) {
                           <strong>
                             <a
                               target="_blank"
-                              href="https://t.me/joinchat/FA99PXywCizUbfE7"
+                              href="https://www.finder.com/how-to-buy-tezos"
                               className="underline"
                             >
                               How to obtain XTZ tokens ?
@@ -279,7 +279,7 @@ function Transaction({ location }) {
                           <strong>
                             <a
                               target="_blank"
-                              href="https://t.me/joinchat/FA99PXywCizUbfE7"
+                              href="https://www.finder.com/how-to-buy-tezos"
                               className="underline"
                             >
                               How to obtain XTZ tokens ?
