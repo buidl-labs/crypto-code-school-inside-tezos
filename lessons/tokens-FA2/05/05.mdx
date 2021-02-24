@@ -12,7 +12,7 @@ editor:
     FA2 = sp.import_script_from_url("https://smartpy.io/dev/templates/FA2.py")
 
     class Cryptobot(FA2.FA2):
-        
+
         @sp.entry_point
         def mint(self, params):
             sp.verify(sp.sender == self.data.administrator)
@@ -31,14 +31,10 @@ editor:
             sp.if self.data.tokens.contains(params.token_id):
                 pass
             sp.else:
-                self.data.tokens[params.token_id] = sp.record(
-                        token_id = params.token_id,
-                        symbol = params.symbol,
-                        name = "", 
-                        decimals = 0,
-                        extras = params.extras
-                    )
-                
+                self.data.tokens[params.token_id] = self.token_meta_data.make(
+                    amount = params.amount, 
+                    metadata = params.metadata
+                )
 
     @sp.add_test(name = "Cryptobot")
     def test():
@@ -53,10 +49,10 @@ editor:
         # (2) Add it to the scenario.
         
         
-        # Mint 1 token to mark with symbol - "CTB", amount - 1, token_id - 0 and extras - {"value": "First bot"}
+        # Mint 1 token to mark with symbol - "CTB", amount - 1, token_id - 0 and name - "Mark bot"
         
         
-        # Mint 1 token to mark with symbol - "CTB", amount - 1, token_id - 1 and extras - {"value": "Second bot"}                           
+        # Mint 1 token to elon with symbol - "CTB", amount - 1, token_id - 1 and name - "Elon bot"                           
         
         
         
@@ -67,7 +63,7 @@ editor:
     FA2 = sp.import_script_from_url("https://smartpy.io/dev/templates/FA2.py")
 
     class Cryptobot(FA2.FA2):
-        
+
         @sp.entry_point
         def mint(self, params):
             sp.verify(sp.sender == self.data.administrator)
@@ -86,14 +82,11 @@ editor:
             sp.if self.data.tokens.contains(params.token_id):
                 pass
             sp.else:
-                self.data.tokens[params.token_id] = sp.record(
-                        token_id = params.token_id,
-                        symbol = params.symbol,
-                        name = "", 
-                        decimals = 0,
-                        extras = params.extras
-                    )
-                
+                self.data.tokens[params.token_id] = self.token_meta_data.make(
+                    amount = params.amount, 
+                    metadata = params.metadata
+                )
+            
 
     @sp.add_test(name = "Cryptobot")
     def test():
@@ -106,21 +99,29 @@ editor:
         
         # (1) Initialize Cryptobot as `cryptobot` with non_fungible set to True.
         # (2) Add it to the scenario.
-        cryptobot = Cryptobot(FA2.FA2_config(non_fungible = True), admin.address)
+        cryptobot = Cryptobot(FA2.FA2_config(non_fungible = True), admin = admin.address, metadata = sp.big_map({"": sp.bytes_of_string("tezos-storage:content"),"content": sp.bytes_of_string("""{"name" : "Cryptobot"}""")}))
         scenario += cryptobot
         
-        # Mint 1 token to mark with symbol - "CTB", amount - 1, token_id - 0 and extras - {"value": "First bot"}
+        # Mint 1 token to mark with symbol - "CTB", amount - 1, token_id - 0 and name - "Mark bot"
         scenario += cryptobot.mint(address = mark.address, 
                                 amount = 1,
-                                symbol = 'CTB',
-                                token_id = 0,
-                                extras = { "value": "First bot"}).run(sender = admin)
-        # Mint 1 token to mark with symbol - "CTB", amount - 1, token_id - 1 and extras - {"value": "Second bot"}                           
+                                metadata= Cryptobot.make_metadata(
+                                    decimals = 0,
+                                    name = "Mark bot",
+                                    symbol = "CTB"
+                                ),
+                                token_id= 0
+                                ).run(sender = admin)
+
+        # Mint 1 token to elon with symbol - "CTB", amount - 1, token_id - 0 and name - "Elon bot"
         scenario += cryptobot.mint(address = elon.address,
                                 amount = 1,
-                                symbol = 'CTB',
-                                token_id = 1,
-                                extras = { "value": "Second bot" }).run(sender = admin)
+                                metadata = Cryptobot.make_metadata(
+                                    decimals = 0,
+                                    name = "Elon bot",
+                                    symbol = "CTB"
+                                ),
+                                token_id = 1).run(sender = admin)
         
 ---
 
@@ -138,52 +139,52 @@ But each and every non-fungible token is different hence there needs to be a way
 
 #### Characteristics of a Non-fungible token - 
 1. Each token needs to have a unique `token_id`, otherwise you won't even be able to create the token.
-2. May or may not have additonal data(`extras`) attached to it. For example, might have an URL which points to an image.
+2. Every token also has `metadata`. By default this is only `name`, `symbol`, and `decimal` - but you can add more to these, to store whatever extra data you need for your NFT.
 
-How do we add extra data to an NFT?
+How do we add metadata to an NFT?
 We're going to **override the mint** entry point provided to us in the FA2 template.
 ( You **don't need** to dive deep into this code but it's good to just go through once )
 ```python=
 @sp.entry_point
 def mint(self, params):
     sp.verify(sp.sender == self.data.administrator)
-
+        
     if self.config.non_fungible:
         sp.verify(params.amount == 1, "NFT-asset: amount <> 1")
         sp.verify(~ self.token_id_set.contains(self.data.all_tokens, params.token_id), "NFT-asset: cannon mint the same token twice")
-
+        
     user = self.ledger_key.make(params.address, params.token_id)
     self.token_id_set.add(self.data.all_tokens, params.token_id)
     sp.if self.data.ledger.contains(user):
         self.data.ledger[user].balance += params.amount
     sp.else:
         self.data.ledger[user] = FA2.Ledger_value.make(params.amount)
-
+        
     sp.if self.data.tokens.contains(params.token_id):
         pass
     sp.else:
-        self.data.tokens[params.token_id] = sp.record(
-                 token_id = params.token_id,
-                 symbol = params.symbol,
-                 name = "",
-                 decimals = 0,
-                 extras = params.extras
-             )
+        self.data.tokens[params.token_id] = self.token_meta_data.make(
+            amount = params.amount, 
+            metadata = params.metadata
+        )
 ```
 
 ### Show me an example
 ```python=
 your_bot = Yourbot(FA2.FA2_config(non_fungible = True), admin.address)
+cryptobot = YourBot(FA2.FA2_config(non_fungible = True), admin = admin.address, metadata = sp.big_map({"": sp.bytes_of_string("tezos-storage:content"),"content": sp.bytes_of_string("""{"name" : "Yourbot"}""")}))
 scenario += your_bot
 
 scenario += your_bot.mint(address = mark.address, 
-                           amount = 1,
-                           symbol = 'YBT',
-                           token_id = 0,
-                           extras = { "value": "I am your first bot."}).run(sender = admin)
-
+                            amount = 1,
+                            metadata= YourBot.make_metadata(
+                                        decimals = 0,
+                                        name = 'Yourbot',
+                                        symbol = 'YBT'
+                            ),
+                            token_id= 0
+                            ).run(sender = admin)
 ```
-The arguments to `mint` are similar to how we did it for fungible tokens, but here we're also passing in `extras` which is of type `sp.TMap`.
 
 ### #buidl-ing time
  
@@ -191,6 +192,6 @@ The arguments to `mint` are similar to how we did it for fungible tokens, but he
 Time to mint some `Cryptobot`s to build out the new world.
 
 #### Step by step walkthrough
-1. Initialize `Cryptobot` which can hold non-fungible tokens.
-2. Mint 1 token for `mark` with extras as ``{"value": "First bot"}`
-3. 2. Mint 1 token for `elon` with extras as ``{"value": "Second bot"}`
+1. Initialize `Cryptobot` which can hold non-fungible tokens. Also, in metadata, it's name should be "Cryptobot". Take reference from previous chapters for a refresher on how to add metadata to the contract.
+2. Mint 1 token for `mark` with name as `"Mark bot"` in the `name`.
+3. 2. Mint 1 token for `elon` with name as `"Elon bot"` in the `name`.
