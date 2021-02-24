@@ -206,10 +206,10 @@ const SavingBotModal = () => {
         className={`absolute bg-base-700 flex items-center justify-center flex-col py-9 px-24 rounded-3xl`}
         style={{ maxWidth: `65vw` }}
       >
-        <ModalHeading>Saving your 3D Cryptobot</ModalHeading>
-        <div className="flex justify-center w-full">
+        <div className="flex justify-center w-full mb-5">
           <Loader type="BallTriangle" color="#2563EB" height={80} width={80} />
         </div>
+        <ModalHeading>Saving your 3D Cryptobot</ModalHeading>
       </div>
     </div>
   );
