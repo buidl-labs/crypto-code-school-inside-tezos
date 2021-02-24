@@ -96,6 +96,8 @@ function Transaction({ location }) {
   const [user, setUser] = useAtom(userAtom);
   const [isUser] = useAtom(isUserAtom);
 
+  const [claimButtonDisabled, setClaimButtonDisabledStatus] = useState(true);
+
   useAsync(async () => {
     try {
       const result = await getXTZPrice();
@@ -155,6 +157,21 @@ function Transaction({ location }) {
     //TODO: replace with purchase gas fee estimate
     const x = await estimateNFTMintFee();
     setNetworkFeeEstimate(x);
+  }, []);
+
+  const getUserBalance = useAsync(async () => {
+    if (!user) return;
+
+    try {
+      const balance = await Tezos.tz.getBalance(user.xtzAddress);
+      const xtz = balance / 1000000;
+      if (xtz > 0.5) {
+        setClaimButtonDisabledStatus(false);
+      }
+      return xtz;
+    } catch (err) {
+      console.log(JSON.stringify(error));
+    }
   }, []);
 
   return (
@@ -231,14 +248,57 @@ function Transaction({ location }) {
                     />
                   )}
                 </div>
+                <div>
+                  {getUserBalance.loading ? null : getUserBalance.error ? (
+                    <div>Error: {getUserBalance.error.message}</div>
+                  ) : (
+                    <div>
+                      {getUserBalance.value === 0 ? (
+                        <div
+                          className="mt-3 py-3 px-5 mb-4 bg-primary-100 text-primary-900 text-sm rounded-md border border-primary-600"
+                          role="alert"
+                        >
+                          Your account is empty ?{' '}
+                          <strong>
+                            <a
+                              target="_blank"
+                              href="https://t.me/joinchat/FA99PXywCizUbfE7"
+                              className="underline"
+                            >
+                              How to obtain XTZ tokens ?
+                            </a>
+                          </strong>
+                        </div>
+                      ) : getUserBalance.value < 0.5 ? (
+                        <div
+                          className="mt-3 py-3 px-5 mb-4 bg-error-100 text-error-900 text-sm rounded-md border border-error-600"
+                          role="alert"
+                        >
+                          Insufficient balance. You need additional of 0.5 XTZ
+                          balance to proceed further.{' '}
+                          <strong>
+                            <a
+                              target="_blank"
+                              href="https://t.me/joinchat/FA99PXywCizUbfE7"
+                              className="underline"
+                            >
+                              How to obtain XTZ tokens ?
+                            </a>
+                          </strong>
+                        </div>
+                      ) : null}
+                    </div>
+                  )}
+                </div>
                 <div className="grid mx-auto justify-center mt-6">
                   <Button
                     onClick={() => {
-                      console.log('Clicked 🔥');
+                      if (claimButtonDisabled) return;
                       mintNFT();
                     }}
                     size="lg"
                     type="primary"
+                    disabled={claimButtonDisabled}
                   >
                     Confirm
                   </Button>

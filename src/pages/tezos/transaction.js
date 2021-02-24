@@ -12,6 +12,10 @@ import { convertMutezToXtz, getXTZPriceInUSD } from 'src/utils/indexer';
 import { MdDone } from 'react-icons/md';
 import Confetti from 'react-confetti';
 
+import userAtom from 'src/atoms/user-atom';
+import isUserAtom from 'src/atoms/is-user-atom';
+import { useAtom } from 'jotai';
+
 const Steppers = ({ number, name, clickEvent, tick = false }) => {
   return (
     <div onClick={clickEvent}>
@@ -78,6 +82,9 @@ function Transaction({ location }) {
   const xtzPrice = location.state ? location.state.xtzPrice : null;
   const bot = location.state ? location.state.bot : null;
   const { width, height } = useWindowSize();
+  const [user, setUser] = useAtom(userAtom);
+
+  const [claimButtonDisabled, setClaimButtonDisabledStatus] = useState(true);
 
   const buyCryptobot = async (mutez, tokenId) => {
     try {
@@ -102,6 +109,21 @@ function Transaction({ location }) {
       console.log(err);
     }
   };
+
+  const getUserBalance = useAsync(async () => {
+    if (!user) return;
+
+    try {
+      const balance = await Tezos.tz.getBalance(user.xtzAddress);
+      const xtz = balance / 1000000;
+      if (xtz > convertMutezToXtz(bot.saleValueInMutez) + 0.5) {
+        setClaimButtonDisabledStatus(false);
+      }
+      return xtz;
+    } catch (err) {
+      console.log(JSON.stringify(error));
+    }
+  }, []);
 
   return (
     <div className=" bg-base-900 ">
@@ -188,13 +210,63 @@ function Transaction({ location }) {
                     }
                   />
                 </div>
+                <div>
+                  {getUserBalance.loading ? null : getUserBalance.error ? (
+                    <div>Error: {getUserBalance.error.message}</div>
+                  ) : (
+                    <div>
+                      {getUserBalance.value === 0 ? (
+                        <div
+                          className="mt-3 py-3 px-5 mb-4 bg-primary-100 text-primary-900 text-sm rounded-md border border-primary-600"
+                          role="alert"
+                        >
+                          Your account is empty ?{' '}
+                          <strong>
+                            <a
+                              target="_blank"
+                              href="https://www.finder.com/how-to-buy-tezos"
+                              className="underline"
+                            >
+                              How to obtain XTZ tokens ?
+                            </a>
+                          </strong>
+                        </div>
+                      ) : getUserBalance.value <
+                        convertMutezToXtz(bot.saleValueInMutez) + 0.5 ? (
+                        <div
+                          className="mt-3 py-3 px-5 mb-4 bg-error-100 text-error-900 text-sm rounded-md border border-error-600"
+                          role="alert"
+                        >
+                          Insufficient balance. You need additional of{' '}
+                          {(
+                            convertMutezToXtz(bot.saleValueInMutez) -
+                            getUserBalance.value +
+                            0.5
+                          ).toFixed(2)}{' '}
+                          XTZ balance to proceed further.{' '}
+                          <strong>
+                            <a
+                              target="_blank"
+                              href="https://www.finder.com/how-to-buy-tezos"
+                              className="underline"
+                            >
+                              How to obtain XTZ tokens ?
+                            </a>
+                          </strong>
+                        </div>
+                      ) : null}
+                    </div>
+                  )}
+                </div>
                 <div className="grid mx-auto justify-center mt-6">
                   <Button
                     onClick={() => {
+                      if (claimButtonDisabled) return;
                       buyCryptobot(bot.saleValueInMutez, bot.tokenId);
                     }}
                     size="lg"
                     type="primary"
+                    disabled={claimButtonDisabled}
                   >
                     Confirm
                   </Button>
