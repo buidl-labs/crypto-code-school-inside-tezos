@@ -94,12 +94,10 @@ function Transaction({ location }) {
       //Go to 2nd Step
       setStep(2);
       setOpHash(op.opHash);
-      console.log(`Awaiting for hash to be confirmed...`, op);
 
       const result = await op.confirmation(1);
       // Go to 3rd Step
       setStep(3);
-      console.log('result', result);
     } catch (err) {
       console.log(err);
     }
@@ -192,9 +190,9 @@ function Transaction({ location }) {
                 </div>
                 <div className="grid mx-auto justify-center mt-6">
                   <Button
-                    onClick={() =>
-                      buyCryptobot(bot.saleValueInMutez, bot.tokenId)
-                    }
+                    onClick={() => {
+                      buyCryptobot(bot.saleValueInMutez, bot.tokenId);
+                    }}
                     size="lg"
                     type="primary"
                   >

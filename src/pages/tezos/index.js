@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'gatsby';
 import NavBar from '../../components/NavBar';
 import Button from '../../components/Buttons';
 import Footer from '../../components/Footer';
@@ -7,7 +8,8 @@ import PlayButton from '../../components/LandingPage/playbutton';
 import learningInterface from '../../images/Interface.png';
 import cryptobots from '../../images/cryptobots.png';
 import earnWhileYouLearn from 'src/assets/videos/earn while you learn-anim.mp4';
-import createCurrency from 'src/assets/videos/anim - create your own currency.webm';
+import createCurrency from 'src/assets/videos/anim-create-currency.mp4';
+import FinanceIllustration from 'src/assets/wealth.png';
 
 const FeatureGrid = ({
   heading,
@@ -17,6 +19,7 @@ const FeatureGrid = ({
   videoType,
   order,
   padding,
+  to,
 }) => {
   return (
     <div className="grid md:grid-cols-2 grid-cols-1 gap-6 ">
@@ -27,9 +30,13 @@ const FeatureGrid = ({
           {heading}
         </h1>
         <p className="text-base-50 text-base mb-6">{subtext}</p>
-        <Button type="outline" size="lg">
+
+        <Link
+          className={`py-3 px-9 text-xl border-primary-600 border-2 hover:border-primary-700 text-white font-bold rounded focus:outline-none`}
+          to={to}
+        >
           {buttontext}
-        </Button>
+        </Link>
       </div>
       <div className="h-full w-full">
         <video
@@ -89,9 +96,12 @@ function Landing() {
               fight in the Cryptoverse Wars.
             </p>
             <div className="flex justify-center">
-              <Button type="primary" size="lg">
+              <Link
+                to="/tezos/academy"
+                className={`py-3 px-9 text-xl bg-primary-600 hover:bg-primary-700 text-white font-bold rounded focus:outline-none`}
+              >
                 Start Building 🛠
-              </Button>
+              </Link>
             </div>
           </div>
         </div>
@@ -119,8 +129,8 @@ function Landing() {
               </p>
             </div>
           </div>
-          <div className="col-span-2 bg-base-600 h-full w-full">
-            <img src="" className="object-cover object-center" />
+          <div className="col-span-2 h-full w-full">
+            <img src={FinanceIllustration} />
           </div>
         </div>
       </section>
@@ -139,6 +149,7 @@ function Landing() {
           buttontext="Become a Blockchain Pro "
           video={createCurrency}
           videoType="webm"
+          to="/tezos/academy"
           padding="l"
         />
         <FeatureGrid
@@ -147,6 +158,7 @@ function Landing() {
           buttontext="Explore mind-blowing Cryptobots"
           video={earnWhileYouLearn}
           videoType="mp4"
+          to="/tezos/marketplace"
           order="2"
           padding="r"
         />
@@ -196,9 +208,12 @@ function Landing() {
             </h1>
           </div>
           <div className="flex justify-center">
-            <Button type="primary" size="lg">
+            <Link
+              className={`py-3 px-9 text-xl bg-primary-600 hover:bg-primary-700 text-white font-bold rounded focus:outline-none`}
+              to="/tezos/academy"
+            >
               Take me to my mission
-            </Button>
+            </Link>
           </div>
           <img src={cryptobots} className="object-cover object-center " />
         </div>
