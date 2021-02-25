@@ -36,6 +36,7 @@ import { NETWORK } from 'src/defaults';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { BeaconContext } from 'src/context/beacon-context';
 import { createUser, batchUpdateProgress } from 'src/api';
+import { trackEvent } from 'src/utils/analytics';
 
 const network =
   NETWORK === 'delphinet' ? NetworkType.DELPHINET : NetworkType.MAINNET;
@@ -362,6 +363,10 @@ const Customizer = () => {
   });
 
   const [isUser] = useAtom(isUserAtom);
+
+  useEffect(() => {
+    trackEvent('Customizer-View');
+  }, []);
 
   const getMeshName = name => {
     const filterType = Object.keys(botColors.items);
@@ -857,6 +862,8 @@ const Customizer = () => {
                     state.items.body,
                     state.items.leg,
                   );
+
+                  trackEvent('Claim-Bot');
                 }}
                 size="sm"
                 type="primary"
