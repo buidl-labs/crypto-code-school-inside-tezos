@@ -278,7 +278,7 @@ function Transaction({ location }) {
             <div className={step === 1 ? 'block' : 'hidden'}>
               <Heading heading="Confirm your claim" />
               <TransactionContainer>
-                <Cost type="Total" main={'Free'} caption={''} />
+                <Cost type="Cryptobot Cost" main={'Free'} caption={''} />
                 <div className="bg-base-600 mt-4 px-8 rounded">
                   {/* <Cost
                     type="Cost"
@@ -311,7 +311,7 @@ function Transaction({ location }) {
                 </div>
                 <div>
                   {getUserBalance.loading ? null : getUserBalance.error ? (
-                    <div>Error: {getUserBalance.error.message}</div>
+                    <div className="text-error-500">Error: {getUserBalance.error.message}</div>
                   ) : (
                     <div>
                       {getUserBalance.value === 0 ? (
@@ -370,7 +370,7 @@ function Transaction({ location }) {
             <div className={step === 2 ? 'block' : 'hidden'}>
               <Heading heading="Transaction Operation Started" />
               <TransactionContainer>
-                <div className="grid grid-cols mx-auto justify-center mt-6 text-white mb-2">
+                <div className="grid grid-cols mx-auto justify-center mt-6 text-white mb-4">
                   <Loader
                     type="BallTriangle"
                     color="#2563EB"

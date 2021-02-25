@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect,createRef } from 'react';
 import { Link } from 'gatsby';
 import { useAsync, useWindowSize } from 'react-use';
 import Loader from 'react-loader-spinner';
@@ -185,7 +185,7 @@ function Transaction({ location }) {
       <NavBar />
       <Confetti width={width} height={height} run={step === 3} />
       <div className="container px-12 mx-auto ">
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-4 h-screen">
           <div>
             <model-viewer
               style={{ width: '100%', height: '100%' }}
@@ -230,7 +230,7 @@ function Transaction({ location }) {
               <Heading heading="Confirm your claim" />
               <TransactionContainer>
                 <Cost
-                  type="Total"
+                  type="Cryptobot Cost"
                   main={
                     bot
                       ? bot.saleValueInMutez
@@ -268,7 +268,7 @@ function Transaction({ location }) {
                 </div>
                 <div>
                   {getUserBalance.loading ? null : getUserBalance.error ? (
-                    <div>Error: {getUserBalance.error.message}</div>
+                    <div className="text-error-500">Error: {getUserBalance.error.message}</div>
                   ) : (
                     <div>
                       {getUserBalance.value === 0 ? (
@@ -439,12 +439,12 @@ function Transaction({ location }) {
                 <div className="grid md:grid-cols-2 grid-cols-1 space-x-4  mx-auto justify-center text-white mt-8">
                   <Link to="/tezos/marketplace">
                     <Button size="lg" type="secondary">
-                      Explore Marketplace
+                      Go to Marketplace
                     </Button>
                   </Link>
                   <Link to="/tezos/academy">
                     <Button size="lg" type="primary">
-                      Go to Academy
+                      Start Learning
                     </Button>
                   </Link>
                 </div>

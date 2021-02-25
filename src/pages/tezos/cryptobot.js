@@ -264,7 +264,8 @@ function BotView({ location }) {
                   <h2 className="text-5xl font-mulish font-black text-white">
                     Cryptobot{' '}
                     <span className="text-3xl">
-                      (#{bot ? bot.tokenId : ''})
+                      (#{bot  ? bot.tokenId : ''})
+                      {console.log(bot)}
                     </span>
                   </h2>
                 </div>
