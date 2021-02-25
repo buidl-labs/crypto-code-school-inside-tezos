@@ -234,7 +234,7 @@ function Transaction({ location }) {
       <NavBar />
       <Confetti width={width} height={height} run={step === 3} />
       <div className="container px-12 mx-auto ">
-        <div className="grid grid-cols-2 gap-4 h-screen">
+        <div className="grid grid-cols-2 gap-4">
           <div>
             <model-viewer
               style={{ width: '100%', height: '100%' }}
@@ -370,6 +370,18 @@ function Transaction({ location }) {
             <div className={step === 2 ? 'block' : 'hidden'}>
               <Heading heading="Transaction Operation Started" />
               <TransactionContainer>
+                <div className="grid grid-cols mx-auto justify-center mt-6 text-white mb-2">
+                  <Loader
+                    type="BallTriangle"
+                    color="#2563EB"
+                    height={80}
+                    width={80}
+                  />
+                </div>
+                <h4 className="text-white text-center text-base mb-2">
+                  It can take a few seconds, the transaction has successfully
+                  been broadcasted to the network.
+                </h4>
                 <div className="grid grid-cols mx-auto justify-center mt-6 text-white">
                   <Button
                     onClick={() => {
@@ -381,23 +393,9 @@ function Transaction({ location }) {
                     size="lg"
                     type="outline"
                   >
-                    <span>
-                      The transaction has successfully been broadcasted to the
-                      network.
-                    </span>
+                    <span>Show Status in Tezos Blockchain</span>
                   </Button>
                 </div>
-                <div className="grid grid-cols mx-auto justify-center mt-6 text-white">
-                  <Loader
-                    type="BallTriangle"
-                    color="#2563EB"
-                    height={80}
-                    width={80}
-                  />
-                </div>
-                <h4 className="text-white text-center">
-                  Waiting for confirmation
-                </h4>
               </TransactionContainer>
             </div>
 
@@ -474,7 +472,7 @@ function Transaction({ location }) {
                   Earn more super cool cryptobots by completing Modules or
                   exploring Marketplace
                 </h4>
-                <div className="grid grid-cols-2 gap-4  mx-auto justify-center text-white mt-8">
+                <div className="grid md:grid-cols-2 grid-cols-1 space-x-4  mx-auto justify-center text-white mt-8">
                   <Link to="/tezos/marketplace">
                     <Button size="lg" type="secondary">
                       Explore Marketplace
@@ -482,7 +480,7 @@ function Transaction({ location }) {
                   </Link>
                   <Link to="/tezos/academy">
                     <Button size="lg" type="primary">
-                      Continue learning
+                      Continue Learning
                     </Button>
                   </Link>
                 </div>
