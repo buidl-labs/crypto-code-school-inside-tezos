@@ -372,7 +372,7 @@ function BotView({ location }) {
                       Owner
                     </span>
                     <span className=" font-mulish font-extrabold text-lg text-white ">
-                      {bot ? bot.seller : ''}
+                      {bot ? bot.owner : ''}
                     </span>
                   </span>
                 </div>
