@@ -120,7 +120,7 @@ function BotView({ location }) {
           onClick={() => updateSellNowStep(0)}
           className="rounded-full bg-base-500 p-1 absolute right-3 top-3 cursor-pointer"
         >
-          <MdClose size="38px" />
+          <MdClose size="24px" />
         </div>
         <ModalTextSection>
           <ModalHeading>Sell Cryptobot (#{bot.tokenId})</ModalHeading>

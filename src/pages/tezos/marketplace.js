@@ -121,9 +121,10 @@ const Marketplace = () => {
               <label className="inline-flex items-center ">
                 <input
                   type="checkbox"
-                  className="form-checkbox h-6 w-6 text-gray-600 rounded"
+                  className={`form-checkbox h-6 w-6 text-gray-600 rounded`}
                   checked={forSale}
                   onChange={() => updateForSale(val => !val)}
+                  disabled={forSale&&!notForSale?true:false}
                 />
                 <span className="ml-2 text-gray-700 font-mulish">for sale</span>
               </label>
@@ -134,6 +135,7 @@ const Marketplace = () => {
                   className="form-checkbox h-6 w-6 text-gray-600 rounded bg-base-900"
                   checked={notForSale}
                   onChange={() => updateNotForSale(val => !val)}
+                  disabled={!forSale&&notForSale?true:false}
                 />
                 <span className="ml-2 text-gray-700 font-mulish">
                   not for sale

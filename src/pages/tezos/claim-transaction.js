@@ -233,7 +233,7 @@ function Transaction({ location }) {
     <div className=" bg-base-900 ">
       <NavBar />
       <Confetti width={width} height={height} run={step === 3} />
-      <div className="container px-12 mx-auto ">
+      <div className="container px-12 mx-auto h-screen ">
         <div className="grid grid-cols-2 gap-4">
           <div>
             <model-viewer
@@ -378,7 +378,7 @@ function Transaction({ location }) {
                     width={80}
                   />
                 </div>
-                <h4 className="text-white text-center text-base mb-2">
+                <h4 className="text-white text-center text-base mb-4">
                   It can take a few seconds, the transaction has successfully
                   been broadcasted to the network.
                 </h4>
