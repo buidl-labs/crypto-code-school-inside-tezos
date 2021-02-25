@@ -1,7 +1,9 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, createRef } from 'react';
 import { Link } from 'gatsby';
 import { useAsync, useWindowSize } from 'react-use';
 import Loader from 'react-loader-spinner';
+import Popper from 'popper.js';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 
 import NavBar from 'src/components/NavBar';
 import Button from 'src/components/Buttons';
@@ -66,11 +68,64 @@ const TransactionContainer = ({ children }) => {
   );
 };
 
-const Cost = ({ type, main, caption }) => {
+const Tooltip = () => {
+  const [tooltipShow, setTooltipShow] = useState(false);
+  const btnRef = createRef();
+  const tooltipRef = createRef();
+  const openLeftTooltip = () => {
+    new Popper(btnRef.current, tooltipRef.current, {
+      placement: 'top',
+    });
+    setTooltipShow(true);
+  };
+  const closeLeftTooltip = () => {
+    setTooltipShow(false);
+  };
+  return (
+    <>
+      <div className="flex flex-wrap">
+        <div className="w-full text-center">
+          <button
+            className={
+              'text-white  text-sm  outline-none focus:outline-none mr-1 mb-1'
+            }
+            type="button"
+            style={{ transition: 'all .15s ease' }}
+            onMouseEnter={openLeftTooltip}
+            onMouseLeave={closeLeftTooltip}
+            ref={btnRef}
+          >
+            <InfoOutlinedIcon />
+          </button>
+          <div
+            className={
+              (tooltipShow ? '' : 'hidden ') +
+              'bg-primary-600 border-0 mb-3 block z-50 leading-normal text-sm max-w-xs text-left no-underline break-words rounded-lg'
+            }
+            ref={tooltipRef}
+          >
+            <div className="text-white p-3 font-mulish">
+              Transaction fee that is charged to users when performing crypto
+              transactions. The fee is collected in order to process the
+              transaction on the network
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+const Cost = ({ type, main, caption, tooltip }) => {
   return (
     <div className="grid grid-cols-2 gap-4 py-6">
       <div>
-        <h5 className="text-base-100 text-lg font-bold font-mulish">{type}</h5>
+        <div className="inline-flex space-x-2">
+          <h5 className="text-base-100 text-lg font-bold font-mulish">
+            {type}{' '}
+          </h5>{' '}
+          <span>{tooltip ? <Tooltip /> : ''}</span>
+        </div>
       </div>
       <div className="grid justify-items-end">
         <h5 className="text-white text-xl font-extrabold font-mulish">
@@ -232,7 +287,12 @@ function Transaction({ location }) {
                   /> */}
                   {/* <hr className="my-2 bg-base-400 border-2 h-0.5" /> */}
                   {networkFeeEstimate === 0 ? (
-                    <Cost type="Network Fee" main={`LOADING...`} caption={``} />
+                    <Cost
+                      type="Network Fee"
+                      main={`LOADING...`}
+                      caption={``}
+                      tooltip
+                    />
                   ) : (
                     <Cost
                       type="Network Fee"
@@ -245,6 +305,7 @@ function Transaction({ location }) {
                             )}`
                           : null
                       }
+                      tooltip
                     />
                   )}
                 </div>
@@ -255,7 +316,7 @@ function Transaction({ location }) {
                     <div>
                       {getUserBalance.value === 0 ? (
                         <div
-                          className="mt-3 py-3 px-5 mb-4 bg-primary-100 text-primary-900 text-sm rounded-md border border-primary-600"
+                          className="mt-3 py-3 px-5 mb-4  text-white text-sm rounded border border-primary-600 bg-opacity-25 bg-primary-500"
                           role="alert"
                         >
                           Your account is empty ?{' '}
@@ -271,7 +332,7 @@ function Transaction({ location }) {
                         </div>
                       ) : getUserBalance.value < 0.5 ? (
                         <div
-                          className="mt-3 py-3 px-5 mb-4 bg-error-100 text-error-900 text-sm rounded-md border border-error-600"
+                          className="mt-3 py-3 px-5 mb-4  text-white text-sm rounded border border-error-600 bg-opacity-25 bg-error-500"
                           role="alert"
                         >
                           Insufficient balance. You need additional of 0.5 XTZ
