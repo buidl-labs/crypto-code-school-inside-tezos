@@ -6,6 +6,7 @@ import Footer from 'src/components/Footer';
 import Cryptobot from 'src/images/cryptobot-yellow.png';
 import DoneIcon from '@material-ui/icons/Done';
 import useChapters from 'src/hooks/use-chapters';
+import { trackEvent } from 'src/utils/analytics';
 
 const CourseCard = ({ m, i, progress }) => {
   const chapters = useChapters(m.frontmatter.slug);
@@ -37,7 +38,10 @@ const CourseCard = ({ m, i, progress }) => {
         className={`grid grid-cols-2 w-full bg-base-800 border border-base-400 rounded-xl`}
       >
         <div className={`block my-0 mx-auto`}>
-          <img src={m.frontmatter.img.childImageSharp.fluid.src} className="object-cover object-center" />
+          <img
+            src={m.frontmatter.img.childImageSharp.fluid.src}
+            className="object-cover object-center"
+          />
         </div>
         <div className={`my-auto`}>
           <h2 className={`font-black text-5xl`}>{m.frontmatter.title}</h2>
@@ -93,6 +97,10 @@ const CurriculumOverview = ({
       typeof window != 'undefined' &&
       JSON.parse(localStorage.getItem('progress') || '{}');
     return p;
+  }, []);
+
+  useEffect(() => {
+    trackEvent('Academy-View');
   }, []);
 
   return (

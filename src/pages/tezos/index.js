@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'gatsby';
 import NavBar from '../../components/NavBar';
 import Button from '../../components/Buttons';
@@ -10,6 +10,8 @@ import cryptobots from '../../images/cryptobots.png';
 import earnWhileYouLearn from 'src/assets/videos/earn while you learn-anim.mp4';
 import createCurrency from 'src/assets/videos/anim-create-currency.mp4';
 import FinanceIllustration from 'src/assets/wealth.png';
+
+import { trackEvent } from 'src/utils/analytics';
 
 const FeatureGrid = ({
   heading,
@@ -76,6 +78,10 @@ const TestimonialCard = ({ link, img, name, username, text }) => {
 };
 
 function Landing() {
+  useEffect(() => {
+    trackEvent('Homepage-View');
+  }, []);
+
   return (
     <div>
       <NavBar />
