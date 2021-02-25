@@ -15,6 +15,7 @@ const CodingInterface = ({
   editorValue,
   setEditorValue,
   module,
+  chapterSlug,
   isCode,
   openMichelsonDrawer,
   setMichelsonResult,
@@ -135,7 +136,12 @@ const CodingInterface = ({
             </button>
             <button
               className={`bg-base-500 hover:bg-base-600 flex items-center pl-2 pr-4 focus:outline-none`}
-              onClick={() => setShowAnswer(true)}
+              onClick={() => {
+                setShowAnswer(true);
+                trackEventWithProperties('Show-Answer-Clicked', {
+                  slug: `${module}/${chapterSlug}`,
+                });
+              }}
             >
               <HelpOutlineIcon />
               Show Answer
