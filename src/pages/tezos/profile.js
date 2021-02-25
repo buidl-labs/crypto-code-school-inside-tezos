@@ -124,7 +124,7 @@ function Profile() {
             href="#link3"
             role="tablist"
           >
-            Profile Settings
+            Profile Details
           </button>
         </div>
         {/*tab nav ends */}
