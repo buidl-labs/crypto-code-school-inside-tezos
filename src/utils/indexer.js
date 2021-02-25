@@ -60,9 +60,14 @@ export const fetchAllNfts = async () => {
   try {
     const allTokens = await getAllNFTsMetadata();
     const tokensOnOffer = await nftOnOffer();
+    const tokenHolders = await getAllTokenHolders();
 
     const combined = allTokens.map(elm => {
       const token = tokensOnOffer.find(
+        element => element.tokenId == elm.tokenId,
+      );
+
+      const holder = tokenHolders.find(
         element => element.tokenId == elm.tokenId,
       );
 
@@ -74,6 +79,7 @@ export const fetchAllNfts = async () => {
         saleValueInMutez: token ? token.saleValueInMutez : null,
         seller: token ? token.seller : null,
         offerDate: token ? token.timestamp : null,
+        owner: holder ? holder.address : null,
       };
     });
 
@@ -156,9 +162,38 @@ export const getNftInfoByXTZAddress = async (address = '') => {
       saleValueInMutez: offer ? offer.saleValueInMutez : null,
       seller: offer ? offer.seller : null,
       offerDate: offer ? offer.timestamp : null,
+      owner: elm.address,
     };
   });
 
-  console.log(filtered);
+  // console.log(filtered);
   return filtered;
+};
+
+const getAllTokenHolders = async () => {
+  try {
+    const response = await fetch(
+      `https://api.better-call.dev/v1/contract/${NETWORK}/${CONTRACT_ADDRESS}/storage`,
+    );
+    const result = await response.json();
+    const tokens = result.children.find(elm => elm.name === 'ledger');
+    const tk = await fetch(
+      `https://api.better-call.dev/v1/bigmap/${NETWORK}/${tokens.value}/keys`,
+    );
+
+    const ledger = await tk.json();
+
+    const owners = ledger.filter(elm => elm.data.value.value !== '0');
+
+    const allTokenHolders = owners.map(elm => {
+      return {
+        address: elm.data.key.children[0].value,
+        tokenId: elm.data.key.children[1].value,
+      };
+    });
+
+    return allTokenHolders;
+  } catch (error) {
+    console.log(error);
+  }
 };
