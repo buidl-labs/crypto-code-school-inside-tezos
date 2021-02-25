@@ -79,6 +79,8 @@ const CodingInterface = ({
           <a
             href="https://t.me/joinchat/FA99PXywCizUbfE7"
             className={`mr-9 px-3 py-1 border-2 border-base-500 rounded focus:outline-none`}
+            target="_blank"
+            rel="noopener noreferrer"
           >
             Have a doubt?
           </a>
