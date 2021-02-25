@@ -6,7 +6,7 @@ import Footer from 'src/components/Footer';
 import Cryptobot from 'src/images/cryptobot-yellow.png';
 import DoneIcon from '@material-ui/icons/Done';
 import useChapters from 'src/hooks/use-chapters';
-import { trackEvent } from 'src/utils/analytics';
+import { trackEvent, trackEventWithProperties } from 'src/utils/analytics';
 
 const CourseCard = ({ m, i, progress }) => {
   const chapters = useChapters(m.frontmatter.slug);
@@ -51,12 +51,17 @@ const CourseCard = ({ m, i, progress }) => {
               {p}% complete
             </h3>
           )}
-          <Link
-            to={`/tezos/academy/${m.frontmatter.slug}`}
+          <button
+            onClick={() => {
+              trackEventWithProperties('Module-Click-From-Academy', {
+                slug: m.frontmatter.slug,
+              });
+              navigate(`/tezos/academy/${m.frontmatter.slug}`);
+            }}
             className={`bg-primary-600 mt-4 inline-block py-3 px-9 font-bold text-2xl rounded hover:no-underline`}
           >
             {p === 100 ? 'Revisit' : p > 0 ? 'Continue' : 'Start'} Module
-          </Link>
+          </button>
         </div>
       </div>
     </article>
