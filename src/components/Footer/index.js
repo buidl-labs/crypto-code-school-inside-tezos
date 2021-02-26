@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'gatsby';
 import Theme from 'src/assets/theme.svg';
 import tezoslogo from '../../images/tezos_logo.png';
@@ -46,8 +46,23 @@ const LinkContainer = ({ children }) => {
 };
 
 const Footer = () => {
+  //fix: sync this with localStorage
   const [cookieBanner, setCookieBanner] = useState(true);
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      let banner = localStorage.getItem('cookieBanner');
+      if (banner !== null) {
+        setCookieBanner(JSON.parse(banner));
+      } else {
+        localStorage.setItem('cookieBanner', JSON.stringify(cookieBanner));
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('cookieBanner', JSON.stringify(cookieBanner));
+  }, [cookieBanner]);
   return (
     <footer className="bg-base-900 font-mulish">
       <div
@@ -55,9 +70,12 @@ const Footer = () => {
           cookieBanner === true ? 'flex' : 'hidden'
         }`}
       >
-        We use cookies to inform us of how you use the course. This lets us
-        understand how to make the course better and track bugs.
-        <button onClick={() => setCookieBanner(false)}>
+        <p>
+          We use cookies to inform us of how you use the course. This lets us
+          understand how to make the course better and track bugs.
+          <p>By using Cryptoverse Wars, you accept our use of cookies.</p>
+        </p>
+        <button onClick={() => setCookieBanner(false)} className={`ml-4`}>
           <CloseIcon />
         </button>
       </div>
