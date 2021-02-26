@@ -370,7 +370,7 @@ function Transaction({ location }) {
             <div className={step === 2 ? 'block' : 'hidden'}>
               <Heading heading="Transaction Operation Started" />
               <TransactionContainer>
-                <div className="grid grid-cols mx-auto justify-center mt-6 text-white mb-4">
+                <div className="grid grid-cols mx-auto justify-center mt-6 text-white mb-2">
                   <Loader
                     type="BallTriangle"
                     color="#2563EB"

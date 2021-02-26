@@ -112,8 +112,8 @@ const Cost = ({ type, main, caption, tooltip }) => {
   return (
     <div className="grid grid-cols-2 gap-4 py-6">
       <div>
-        <div className="inline-flex space-x-2">
-          <h5 className="text-base-100 text-lg font-bold font-mulish">
+        <div className="inline-flex space-x-1">
+          <h5 className="text-base-100 text-lg font-bold font-mulish text-left">
             {type}{' '}
           </h5>{' '}
           <span>{tooltip ? <Tooltip /> : ''}</span>
@@ -333,7 +333,7 @@ function Transaction({ location }) {
             <div className={step === 2 ? 'block' : 'hidden'}>
               <Heading heading="Transaction Operation Started" />
               <TransactionContainer>
-                <div className="grid grid-cols mx-auto justify-center mt-6 text-white">
+                <div className="grid grid-cols mx-auto justify-center mt-6 text-white mb-2">
                 <Loader
                     type="BallTriangle"
                     color="#2563EB"
@@ -341,7 +341,7 @@ function Transaction({ location }) {
                     width={80}
                   />
                 </div>
-                <h4 className="text-white text-center text-base mb-2">
+                <h4 className="text-white text-center text-base mb-4">
                   It can take a few seconds, the transaction has successfully
                   been broadcasted to the network.
                 </h4>

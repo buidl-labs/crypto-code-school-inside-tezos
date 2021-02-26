@@ -1,6 +1,8 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, createRef } from 'react';
 import { Link, navigate } from 'gatsby';
 import { useAsync } from 'react-use';
+import Popper from 'popper.js';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 
 import NavBar from 'src/components/NavBar';
 import Button from 'src/components/Buttons';
@@ -78,9 +80,9 @@ function BotView({ location }) {
       <BaseModal>
         <div
           onClick={() => updateWithdrawNowStep(0)}
-          className="rounded-full bg-base-500 p-1 absolute right-3 top-3 cursor-pointer"
+          className="h-12 w-12 rounded-full bg-base-500 p-1 absolute right-8 top-6 cursor-pointer flex items-center justify-center"
         >
-          <MdClose size="38px" />
+          <MdClose size="24px" />
         </div>
         <ModalTextSection>
           <ModalHeading>
@@ -93,6 +95,7 @@ function BotView({ location }) {
               caption={
                 xtzPrice ? `$ ${getXTZPriceInUSD(xtzPrice.price, 4556)}` : null
               }
+              tooltip
             />
           </TransactionContainer>
           <div>
@@ -107,6 +110,15 @@ function BotView({ location }) {
             >
               Yes
             </Button>
+            <Button
+              size="lg"
+              type="outline"
+              disabled={false}
+              style={{ width: '100%', marginBottom: '1rem' }}
+              onClick={() => updateWithdrawNowStep(0)}
+            >
+              No
+            </Button>
           </div>
         </ModalTextSection>
       </BaseModal>
@@ -118,7 +130,7 @@ function BotView({ location }) {
       <BaseModal>
         <div
           onClick={() => updateSellNowStep(0)}
-          className="rounded-full bg-base-500 p-1 absolute right-3 top-3 cursor-pointer"
+          className="h-12 w-12 rounded-full bg-base-500 p-1 absolute right-8 top-6 cursor-pointer flex items-center justify-center"
         >
           <MdClose size="24px" />
         </div>
@@ -132,40 +144,65 @@ function BotView({ location }) {
             className={`mt-8 space-y-4 flex flex-col justify-center w-full`}
           >
             <InputContainer>
-              <input
-                className={`px-6 py-2.5 w-full text-lg bg-base-600 rounded border ${
-                  onSaleError === 'INSUFFICIENT_AMOUNT'
-                    ? 'border-error-400'
-                    : 'border-base-500'
-                }`}
-                placeholder={'Enter Price'}
-                autoFocus
-                type="number"
-                min="0"
-                value={salePrice}
-                onChange={e => {
-                  setSalePrice(Math.abs(e.target.value));
-                  const x = Math.abs(e.target.value);
-                  if (!x || x === 0) {
-                    setOnSaleError('INSUFFICIENT_AMOUNT');
-                  } else {
-                    setOnSaleError('');
-                  }
-                }}
-              />
-              <div style={{ color: 'cornflowerblue' }}>
-                {salePrice &&
-                  xtzPrice &&
-                  `$ ${getXTZPriceInUSD(
-                    xtzPrice.price,
-                    convertXtzToMutez(salePrice),
-                  )}`}
+              <div className="grid grid-cols-2 gap-4 py-6">
+                <div>
+                  <div className="inline-flex space-x-2">
+                    <h5 className="text-base-100 text-lg font-bold font-mulish justify-center">
+                      Enter Price
+                    </h5>{' '}
+                  </div>
+                  <p>
+                    {' '}
+                    {onSaleError === 'INSUFFICIENT_AMOUNT' && (
+                      <ErrorMessage>
+                        Please make sure price is more than 0 XTZ
+                      </ErrorMessage>
+                    )}
+                  </p>
+                </div>
+                <div className="grid justify-items-end">
+                  <div className="inline-flex text-white text-xl font-extrabold font-mulish">
+                    <input
+                      className={`px-6 py-2.5 w-full text-lg border-b-1 bg-base-700 rounded border focus:outline-none text-right ${
+                        onSaleError === 'INSUFFICIENT_AMOUNT'
+                          ? 'border-error-400'
+                          : 'border-base-500'
+                      }`}
+                      placeholder={'0'}
+                      autoFocus
+                      type="number"
+                      min="0"
+                      value={salePrice}
+                      onChange={e => {
+                        setSalePrice(Math.abs(e.target.value));
+                        const x = Math.abs(e.target.value);
+                        if (!x || x === 0) {
+                          setOnSaleError('INSUFFICIENT_AMOUNT');
+                        } else {
+                          setOnSaleError('');
+                        }
+                      }}
+                    />
+
+                    <div className="flex -mr-px">
+                      <span className="flex items-center leading-normal px-3 whitespace-no-wrap text-white">
+                        XTZ
+                      </span>
+                    </div>
+                  </div>
+                  <p className="text-white text-lg font-mulish mt-2 text-right">
+                    {' '}
+                    <div style={{ color: 'cornflowerblue' }}>
+                      {salePrice &&
+                        xtzPrice &&
+                        `$ ${getXTZPriceInUSD(
+                          xtzPrice.price,
+                          convertXtzToMutez(salePrice),
+                        )}`}
+                    </div>
+                  </p>
+                </div>
               </div>
-              {onSaleError === 'INSUFFICIENT_AMOUNT' && (
-                <ErrorMessage>
-                  Please make sure price is more than 0 XTZ
-                </ErrorMessage>
-              )}
             </InputContainer>
           </form>
           <TransactionContainer>
@@ -175,6 +212,7 @@ function BotView({ location }) {
               caption={
                 xtzPrice ? `$ ${getXTZPriceInUSD(xtzPrice.price, 4556)}` : null
               }
+              tooltip
             />
           </TransactionContainer>
           <div>
@@ -203,7 +241,7 @@ function BotView({ location }) {
     <div className="h-screen w-screen fixed bg-base-900">
       {withdrawNowStep === 1 && (
         <div
-          className={`bg-base-900 min-h-screen text-white flex items-center justify-center`}
+          className={`bg-base-900 min-h-screen text-white flex items-center justify-center `}
         >
           <WithdrawalPopup />
         </div>
@@ -264,8 +302,7 @@ function BotView({ location }) {
                   <h2 className="text-5xl font-mulish font-black text-white">
                     Cryptobot{' '}
                     <span className="text-3xl">
-                      (#{bot  ? bot.tokenId : ''})
-                      {console.log(bot)}
+                      (#{bot ? bot.tokenId : ''}){console.log(bot)}
                     </span>
                   </h2>
                 </div>
@@ -471,11 +508,16 @@ function InputContainer({ children }) {
   );
 }
 
-const Cost = ({ type, main, caption }) => {
+const Cost = ({ type, main, caption, tooltip }) => {
   return (
     <div className="grid grid-cols-2 gap-4 py-6">
       <div>
-        <h5 className="text-base-100 text-lg font-bold font-mulish">{type}</h5>
+        <div className="inline-flex space-x-1">
+          <h5 className="text-base-100 text-lg font-bold font-mulish text-left">
+            {type}{' '}
+          </h5>{' '}
+          <span>{tooltip ? <Tooltip /> : ''}</span>
+        </div>
       </div>
       <div className="grid justify-items-end">
         <h5 className="text-white text-xl font-extrabold font-mulish">
@@ -489,15 +531,20 @@ const Cost = ({ type, main, caption }) => {
 
 const TransactionContainer = ({ children }) => {
   return (
-    <div className="w-full rounded-md bg-base-800 p-3 mt-6 mb-6">
-      {children}
-    </div>
+    <div className="w-full rounded-md bg-base-600 p-4 my-3">{children}</div>
   );
 };
 
 function ConfirmationModel(opHash) {
   return (
     <BaseModal>
+      <div className="grid grid-cols mx-auto justify-center mt-6 text-white mb-2">
+        <Loader type="BallTriangle" color="#2563EB" height={80} width={80} />
+      </div>
+      <h4 className="text-white text-center text-base mb-4">
+        It can take a few seconds, the transaction has successfully been
+        broadcasted to the network.
+      </h4>
       <div className="grid grid-cols mx-auto justify-center mt-6 text-white">
         <Button
           onClick={() => {
@@ -509,15 +556,9 @@ function ConfirmationModel(opHash) {
           size="lg"
           type="outline"
         >
-          <span>
-            The transaction has successfully been broadcasted to the network.
-          </span>
+          <span>Show Status in Tezos Blockchain</span>
         </Button>
       </div>
-      <div className="grid grid-cols mx-auto justify-center mt-6 text-white">
-        <Loader type="BallTriangle" color="#2563EB" height={80} width={80} />
-      </div>
-      <h4 className="text-white text-center">Waiting for confirmation</h4>
     </BaseModal>
   );
 }
@@ -543,5 +584,53 @@ const GoBackModel = (bot, botWithdrawn = true) => {
         </Button>
       </ModalTextSection>
     </BaseModal>
+  );
+};
+
+const Tooltip = () => {
+  const [tooltipShow, setTooltipShow] = useState(false);
+  const btnRef = createRef();
+  const tooltipRef = createRef();
+  const openLeftTooltip = () => {
+    new Popper(btnRef.current, tooltipRef.current, {
+      placement: 'top',
+    });
+    setTooltipShow(true);
+  };
+  const closeLeftTooltip = () => {
+    setTooltipShow(false);
+  };
+  return (
+    <>
+      <div className="flex flex-wrap">
+        <div className="w-full text-center">
+          <button
+            className={
+              'text-white  text-sm  outline-none focus:outline-none mr-1 mb-1'
+            }
+            type="button"
+            style={{ transition: 'all .15s ease' }}
+            onMouseEnter={openLeftTooltip}
+            onMouseLeave={closeLeftTooltip}
+            ref={btnRef}
+          >
+            <InfoOutlinedIcon />
+          </button>
+          <div
+            className={
+              (tooltipShow ? '' : 'hidden ') +
+              'bg-primary-600 border-0 mb-3 block z-50 leading-normal text-sm max-w-xs text-left no-underline break-words rounded-lg'
+            }
+            ref={tooltipRef}
+          >
+            <div className="text-white p-3 font-mulish">
+              Transaction fee that is charged to users when performing crypto
+              transactions. The fee is collected in order to process the
+              transaction on the network
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
