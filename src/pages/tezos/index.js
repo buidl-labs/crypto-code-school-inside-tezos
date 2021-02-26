@@ -137,31 +137,33 @@ function Landing() {
       {/* Why Blockchain ends here */}
       {/* Features start here */}
       <section className="bg-base-900 py-20">
-        <div className="flex flex-col text-center w-full mb-20">
-          <h1 className="sm:text-7xl text-4xl font-black font-mulish text-white">
-            What’s there for You?
-          </h1>
-        </div>
-        <FeatureGrid
-          heading="Create your own currency!"
-          subtext="Learn how to create apps on the Tezos blockchain through our exciting
+        <div className="container mx-auto">
+          <div className="flex flex-col text-center w-full mb-20">
+            <h1 className="sm:text-7xl text-4xl font-black font-mulish text-white">
+              What’s there for You?
+            </h1>
+          </div>
+          <FeatureGrid
+            heading="Create your own currency!"
+            subtext="Learn how to create apps on the Tezos blockchain through our exciting
           course. You even learn how to make your own currency 🤑"
-          buttontext="Become a Blockchain Pro "
-          video={createCurrency}
-          videoType="webm"
-          to="/tezos/academy"
-          padding="l"
-        />
-        <FeatureGrid
-          heading="Earn while you learn!"
-          subtext="Join the Cryptobot clan by winning your unique Cryptobot and earn real money by trading with others in our marketplace! Major throwback to the  pokémon cards trading era ⚡️"
-          buttontext="Explore mind-blowing Cryptobots"
-          video={earnWhileYouLearn}
-          videoType="mp4"
-          to="/tezos/marketplace"
-          order="2"
-          padding="r"
-        />
+            buttontext="Become a Blockchain Pro "
+            video={createCurrency}
+            videoType="webm"
+            to="/tezos/academy"
+            padding="l"
+          />
+          <FeatureGrid
+            heading="Earn while you learn!"
+            subtext="Join the Cryptobot clan by winning your unique Cryptobot as NFT's and earn real money by trading with others in our marketplace! Major throwback to the  pokémon cards trading era ⚡️"
+            buttontext="Explore mind-blowing Cryptobots"
+            video={earnWhileYouLearn}
+            videoType="mp4"
+            to="/tezos/marketplace"
+            order="2"
+            padding="r"
+          />
+        </div>
       </section>
       {/* Features end here */}
 
