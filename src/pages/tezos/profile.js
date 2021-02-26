@@ -15,7 +15,7 @@ import { useAtom } from 'jotai';
 import { getXTZPrice, getNftInfoByXTZAddress } from 'src/utils/indexer';
 
 import model from 'src/images/Col-1.png';
-import add_img from 'src/images/Add.png';
+import add_img from 'src/images/add.png';
 
 const Empty = () => {
   return (
