@@ -76,6 +76,10 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
   );
 
   useEffect(() => {
+    console.log('michelson', michelsonResult);
+  }, [michelsonResult.success]);
+
+  useEffect(() => {
     if (result.success === true) {
       setIsChapterCompleted(true);
       setStartingCode(chapter.frontmatter.editor.answer);

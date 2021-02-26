@@ -29,7 +29,7 @@ editor:
 
     # Import FA2 template
     FA2 = sp.import_script_from_url("https://smartpy.io/dev/templates/FA2.py")
-    # Define `Cryber_Token`
+    # Define `Cyber_Token`
     class Cyber_Token(FA2.FA2):
         pass
 
@@ -39,7 +39,7 @@ editor:
         admin = sp.test_account("Decentralized Dictator")
 
         # Initialize Cyber_Token as cyber_token with single_asset = True
-        cyber_token = Cyber_Token(FA2.FA2_config(single_asset=True), admin.address)
+        cyber_token = Cyber_Token(FA2.FA2_config(single_asset=True, assume_consecutive_token_ids = False), admin = admin.address, metadata = sp.big_map({"": sp.bytes_of_string("tezos-storage:content"),"content": sp.bytes_of_string("""{"name" : "Cyber Token"}""")}))
         #Add cyber_token to the scenario
         scenario += cyber_token
 ---
