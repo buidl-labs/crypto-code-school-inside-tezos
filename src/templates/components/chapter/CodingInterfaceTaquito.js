@@ -107,7 +107,7 @@ const CodingInterface = ({ code, answer }) => {
           <div
             className={`bg-editor-console p-4 flex items-center justify-center h-full font-mono text-lg font-bold`}
           >
-            filename.py
+            contract.py
           </div>
           <div className={`mr-12`}>
             <button className={`mr-6 focus:outline-none`} onClick={resetEditorCode}>
