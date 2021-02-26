@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'gatsby';
 import Theme from 'src/assets/theme.svg';
 import tezoslogo from '../../images/tezos_logo.png';
 import buidllogo from '../../images/buidl_logo.png';
+import CloseIcon from '@material-ui/icons/Close';
 
 const OutboundLink = ({ href, children }) => {
   return (
@@ -45,8 +46,21 @@ const LinkContainer = ({ children }) => {
 };
 
 const Footer = () => {
+  const [cookieBanner, setCookieBanner] = useState(true);
+
   return (
     <footer className="bg-base-900 font-mulish">
+      <div
+        className={`text-white fixed inset-x-0 bottom-0 bg-primary-900 bg-opacity-90 px-30 py-6 flex justify-between items-center ${
+          cookieBanner === true ? 'flex' : 'hidden'
+        }`}
+      >
+        We use cookies to inform us of how you use the course. This lets us
+        understand how to make the course better and track bugs.
+        <button onClick={() => setCookieBanner(false)}>
+          <CloseIcon />
+        </button>
+      </div>
       <div className="container px-30 py-16 mx-auto flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
         <div className="flex flex-col justify-start text-white">
           <Heading>Powered By</Heading>
