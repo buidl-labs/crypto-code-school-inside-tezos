@@ -35,7 +35,24 @@ function BotView({ location }) {
   const [salePrice, setSalePrice] = useState();
   const [sellNowStep, updateSellNowStep] = useState(0);
 
-  // console.log('xtzPrice', xtzPrice);
+  const [user, setUser] = useAtom(userAtom);
+
+  const [claimButtonDisabled, setClaimButtonDisabledStatus] = useState(true);
+
+  const getUserBalance = useAsync(async () => {
+    if (!user) return;
+
+    try {
+      const balance = await Tezos.tz.getBalance(user.xtzAddress);
+      const xtz = balance / 1000000;
+      if (xtz > 0.5) {
+        setClaimButtonDisabledStatus(false);
+      }
+      return xtz;
+    } catch (err) {
+      console.log(JSON.stringify(error));
+    }
+  }, []);
 
   const withdrawBotFromSale = async tokenId => {
     await connectToBeacon(beacon);
@@ -101,14 +118,59 @@ function BotView({ location }) {
               }
               tooltip
             />
+            <div>
+              {getUserBalance.loading ? null : getUserBalance.error ? (
+                <div className="text-error-500">
+                  Error: {getUserBalance.error.message}
+                </div>
+              ) : (
+                <div>
+                  {getUserBalance.value === 0 ? (
+                    <div
+                      className="mt-3 py-3 px-5 mb-4  text-white text-sm rounded border border-primary-600 bg-opacity-25 bg-primary-500"
+                      role="alert"
+                    >
+                      Your account is empty ?{' '}
+                      <strong>
+                        <a
+                          target="_blank"
+                          href="https://www.finder.com/how-to-buy-tezos"
+                          className="underline"
+                        >
+                          How to obtain XTZ tokens ?
+                        </a>
+                      </strong>
+                    </div>
+                  ) : getUserBalance.value < 0.5 ? (
+                    <div
+                      className="mt-3 py-3 px-5 mb-4  text-white text-sm rounded border border-error-600 bg-opacity-25 bg-error-500"
+                      role="alert"
+                    >
+                      Insufficient balance. You need additional of 0.5 XTZ
+                      balance to proceed further.{' '}
+                      <strong>
+                        <a
+                          target="_blank"
+                          href="https://www.finder.com/how-to-buy-tezos"
+                          className="underline"
+                        >
+                          How to obtain XTZ tokens ?
+                        </a>
+                      </strong>
+                    </div>
+                  ) : null}
+                </div>
+              )}
+            </div>
           </TransactionContainer>
           <div>
             <Button
               size="lg"
               type="primary"
-              disabled={false}
+              disabled={claimButtonDisabled}
               style={{ width: '100%', marginBottom: '1rem' }}
               onClick={() => {
+                if (claimButtonDisabled) return;
                 withdrawBotFromSale(bot.tokenId);
               }}
             >
@@ -218,14 +280,59 @@ function BotView({ location }) {
               }
               tooltip
             />
+            <div>
+              {getUserBalance.loading ? null : getUserBalance.error ? (
+                <div className="text-error-500">
+                  Error: {getUserBalance.error.message}
+                </div>
+              ) : (
+                <div>
+                  {getUserBalance.value === 0 ? (
+                    <div
+                      className="mt-3 py-3 px-5 mb-4  text-white text-sm rounded border border-primary-600 bg-opacity-25 bg-primary-500"
+                      role="alert"
+                    >
+                      Your account is empty ?{' '}
+                      <strong>
+                        <a
+                          target="_blank"
+                          href="https://www.finder.com/how-to-buy-tezos"
+                          className="underline"
+                        >
+                          How to obtain XTZ tokens ?
+                        </a>
+                      </strong>
+                    </div>
+                  ) : getUserBalance.value < 0.5 ? (
+                    <div
+                      className="mt-3 py-3 px-5 mb-4  text-white text-sm rounded border border-error-600 bg-opacity-25 bg-error-500"
+                      role="alert"
+                    >
+                      Insufficient balance. You need additional of 0.5 XTZ
+                      balance to proceed further.{' '}
+                      <strong>
+                        <a
+                          target="_blank"
+                          href="https://www.finder.com/how-to-buy-tezos"
+                          className="underline"
+                        >
+                          How to obtain XTZ tokens ?
+                        </a>
+                      </strong>
+                    </div>
+                  ) : null}
+                </div>
+              )}
+            </div>
           </TransactionContainer>
           <div>
             <Button
               size="lg"
               type="primary"
               style={{ width: '100%', marginBottom: '1rem' }}
-              disabled={false}
+              disabled={claimButtonDisabled}
               onClick={() => {
+                if (claimButtonDisabled) return;
                 if (!salePrice || salePrice === 0) {
                   setOnSaleError('INSUFFICIENT_AMOUNT');
                 } else {
