@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect,createRef } from 'react';
+import React, { useState, useContext, useEffect, createRef } from 'react';
 import { Link } from 'gatsby';
 import { useAsync, useWindowSize } from 'react-use';
 import Loader from 'react-loader-spinner';
@@ -97,9 +97,10 @@ const Tooltip = () => {
             ref={tooltipRef}
           >
             <div className="text-white p-3 font-mulish">
-              Transaction fee that is charged to users when performing crypto
-              transactions. The fee is collected in order to process the
-              transaction on the network
+              Network fee is what you offer to pay the validators ( responsible
+              for verifying transactions on the tezos blockchain ) in a tiny
+              measurement of XTZ for each operation to execute the smart
+              contract.
             </div>
           </div>
         </div>
@@ -268,7 +269,9 @@ function Transaction({ location }) {
                 </div>
                 <div>
                   {getUserBalance.loading ? null : getUserBalance.error ? (
-                    <div className="text-error-500">Error: {getUserBalance.error.message}</div>
+                    <div className="text-error-500">
+                      Error: {getUserBalance.error.message}
+                    </div>
                   ) : (
                     <div>
                       {getUserBalance.value === 0 ? (
@@ -334,7 +337,7 @@ function Transaction({ location }) {
               <Heading heading="Transaction Operation Started" />
               <TransactionContainer>
                 <div className="grid grid-cols mx-auto justify-center mt-6 text-white mb-2">
-                <Loader
+                  <Loader
                     type="BallTriangle"
                     color="#2563EB"
                     height={80}
@@ -359,7 +362,6 @@ function Transaction({ location }) {
                     <span>Show Status in Tezos Blockchain</span>
                   </Button>
                 </div>
-
               </TransactionContainer>
             </div>
 

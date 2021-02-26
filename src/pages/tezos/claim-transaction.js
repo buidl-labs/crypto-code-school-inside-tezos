@@ -105,9 +105,10 @@ const Tooltip = () => {
             ref={tooltipRef}
           >
             <div className="text-white p-3 font-mulish">
-              Transaction fee that is charged to users when performing crypto
-              transactions. The fee is collected in order to process the
-              transaction on the network
+              Network fee is what you offer to pay the validators ( responsible
+              for verifying transactions on the tezos blockchain ) in a tiny
+              measurement of XTZ for each operation to execute the smart
+              contract.
             </div>
           </div>
         </div>
@@ -311,7 +312,9 @@ function Transaction({ location }) {
                 </div>
                 <div>
                   {getUserBalance.loading ? null : getUserBalance.error ? (
-                    <div className="text-error-500">Error: {getUserBalance.error.message}</div>
+                    <div className="text-error-500">
+                      Error: {getUserBalance.error.message}
+                    </div>
                   ) : (
                     <div>
                       {getUserBalance.value === 0 ? (
