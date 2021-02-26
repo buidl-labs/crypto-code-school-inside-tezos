@@ -73,7 +73,13 @@ const Footer = () => {
         <p>
           We use cookies to inform us of how you use the course. This lets us
           understand how to make the course better and track bugs.
-          <p>By using Cryptoverse Wars, you accept our use of cookies.</p>
+          <p>
+            By using Cryptoverse Wars, you accept our{' '}
+            <Link to="/tezos/privacy-policy" className={`underline font-bold`}>
+              use of cookies
+            </Link>
+            .
+          </p>
         </p>
         <button onClick={() => setCookieBanner(false)} className={`ml-4`}>
           <CloseIcon />
