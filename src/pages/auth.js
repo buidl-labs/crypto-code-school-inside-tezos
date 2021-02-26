@@ -46,7 +46,7 @@ function Button({ children, clickHandler, disabled = false }) {
   return (
     <button
       onClick={clickHandler}
-      className={`w-full bg-primary-600 py-3 rounded font-bold text-2xl mt-16 disabled:opacity-50 disabled:cursor-not-allowed`}
+      className={`w-full bg-primary-600 py-3 rounded font-bold text-2xl mt-16 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed`}
       disabled={disabled}
     >
       {children}
@@ -83,10 +83,10 @@ function BrowserSupportMissingModal() {
     <BaseModal img_src={SadBot}>
       <ModalTextSection>
         <ModalHeading>
-          Your Browser doesn’t supports Thanos Wallet Extension
+          Your Browser doesn’t supports Temple - Tezos Wallet Extension
         </ModalHeading>
         <ModalTextBody>
-          Currently, the Thanos Wallet extension is supported only on Firefox,
+          Currently, the Temple - Tezos Wallet extension is supported only on Firefox,
           Chrome and Brave Browser. Please visit from one of those browsers to
           proceed with acquiring cryptobot.
         </ModalTextBody>
@@ -99,9 +99,9 @@ function ThanosNotAvailableModal() {
   return (
     <BaseModal img_src={thanosLogo}>
       <ModalTextSection>
-        <ModalHeading>Install Thanos Wallet browser extension</ModalHeading>
+        <ModalHeading>Install Temple - Tezos Wallet browser extension</ModalHeading>
         <ModalTextBody>
-          Thanos Wallet will serve as a safe place to store your super cool
+        Temple - Tezos Wallet will serve as a safe place to store your super cool
           Cryptobots. This will also act as your login to the platform (no extra
           password needed).
           <div className={`mt-4`}>
@@ -120,12 +120,12 @@ function ThanosNotAvailableModal() {
         target="_blank"
         className={`w-full bg-primary-600 py-3 rounded font-bold text-2xl mt-16`}
       >
-        Install Thanos
+        Install Temple - Tezos Wallet
       </a>
       <p className={`mt-6 text-sm`}>
         Got stuck?{' '}
         <a href="#" className={`underline`}>
-          Here’s a Guide to Install and Setup Thanos Wallet
+          Here’s a Guide to Install and Setup Temple - Tezos Wallet
         </a>
       </p>
     </BaseModal>
@@ -136,9 +136,9 @@ function ConnectWalletModal({ clickHandler }) {
   return (
     <BaseModal img_src={thanosLogo}>
       <ModalTextSection>
-        <ModalHeading>Connect Thanos Wallet</ModalHeading>
+        <ModalHeading>Connect Temple - Tezos Wallet</ModalHeading>
         <ModalTextBody>
-          Thanos Wallet will serve as a safe place to store your super cool
+        Temple - Tezos Wallet will serve as a safe place to store your super cool
           Cryptobots. This will also act as your login to the platform (no extra
           password needed).
         </ModalTextBody>
