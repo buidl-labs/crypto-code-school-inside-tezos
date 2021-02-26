@@ -26,7 +26,7 @@ const FeatureGrid = ({
       <div
         className={`flex flex-col md:p${padding}-30 px-8 py-12 md:items-start items-center md:text-left text-center  justify-center order-${order}`}
       >
-        <h1 className="sm:text-5xl text-3xl mb-3 font-black text-white">
+        <h1 className="sm:text-5xl text-3xl mb-3 font-black text-white heading-glow">
           {heading}
         </h1>
         <p className="text-base-50 text-base mb-6">{subtext}</p>
@@ -85,7 +85,7 @@ function Landing() {
             <PlayButton />
           </a>
           <div className="text-center lg:w-2/3 w-full">
-            <h1 className="sm:text-7xl text-4xl mb-4 text-white font-black">
+            <h1 className="sm:text-7xl text-4xl mb-4 text-white font-black heading-glow">
               Learn to code on the blockchain, the fun way!
             </h1>
             <p className="mb-8 leading-relaxed text-base-50">
@@ -111,7 +111,7 @@ function Landing() {
         <div className="grid md:grid-cols-5 grid-cols-1 gap-6 ">
           <div className="col-span-3 ">
             <div
-              className={`flex flex-col md:pl-30 px-8 md:text-left text-center  items-start justify-center space-y-8`}
+              className={`flex flex-col md:pl-30 px-8 md:text-left text-center  items-start justify-center space-y-8 heading-glow`}
             >
               <h1 className="sm:text-7xl text-4xl mb-3 font-black text-white">
                 With blockchain, build better finance.
@@ -139,7 +139,7 @@ function Landing() {
       <section className="bg-base-900 py-20">
         <div className="container mx-auto">
           <div className="flex flex-col text-center w-full mb-20">
-            <h1 className="sm:text-7xl text-4xl font-black font-mulish text-white">
+            <h1 className="sm:text-7xl text-4xl font-black font-mulish text-white heading-glow">
               What’s there for You?
             </h1>
           </div>
@@ -171,7 +171,7 @@ function Landing() {
       <section className="bg-base-800 py-20">
         <div className="container px-30 mx-auto">
           <div className="flex flex-col justify-center w-full text-center  mb-20">
-            <h1 className="sm:text-7xl text-4xl font-black font-mulish text-white">
+            <h1 className="sm:text-7xl text-4xl font-black font-mulish text-white heading-glow">
               Here’s what people say <br /> about us
             </h1>
           </div>
@@ -205,7 +205,7 @@ function Landing() {
       <section className="bg-base-900 py-20">
         <div class="container mx-auto flex flex-col justify-center items-center">
           <div className="flex flex-col text-center w-full mb-6">
-            <h1 className="sm:text-7xl text-4xl font-black font-mulish text-white">
+            <h1 className="sm:text-7xl text-4xl font-black font-mulish text-white heading-glow">
               Ready to start your mission?
             </h1>
           </div>

@@ -19,3 +19,8 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+/* Heading glow on Landing page */
+.heading-glow{
+  text-shadow: 4px 4px 36px rgba(37, 99, 235, 0.64);
+}
