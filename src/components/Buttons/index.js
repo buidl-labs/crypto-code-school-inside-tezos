@@ -16,7 +16,7 @@ const ButtonSize = {
 };
 
 const Disabled = {
-  true: 'opacity-50',
+  true: 'opacity-50 cursor-not-allowed',
 };
 
 function Button({ type, size, disabled, children, ...props }) {

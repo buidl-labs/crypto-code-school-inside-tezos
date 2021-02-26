@@ -23,7 +23,7 @@ function NavButton({ children, clickHandler }) {
   return (
     <button
       onClick={clickHandler}
-      className={`bg-primary-600 px-6 py-2 rounded text-white text-lg font-bold`}
+      className={`bg-primary-600 hover:bg-primary-700 px-6 py-2 rounded text-white text-lg font-bold focus:outline-none`}
     >
       {children}
     </button>

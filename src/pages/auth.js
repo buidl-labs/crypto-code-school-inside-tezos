@@ -19,6 +19,8 @@ import { NetworkType } from '@airgap/beacon-sdk';
 import { Magic } from 'magic-sdk';
 import { NETWORK } from 'src/defaults';
 
+import { MdClose } from 'react-icons/md';
+
 // To connect to Delphinet, change this to NetworkType.DELPHINET
 const network =
   NETWORK === 'delphinet' ? NetworkType.DELPHINET : NetworkType.MAINNET;
@@ -46,7 +48,7 @@ function Button({ children, clickHandler, disabled = false }) {
   return (
     <button
       onClick={clickHandler}
-      className={`w-full bg-primary-600 py-3 rounded font-bold text-2xl mt-16 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed`}
+      className={`w-full bg-primary-600 hover:bg-primary-700 py-3 rounded font-bold text-2xl mt-16 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed`}
       disabled={disabled}
     >
       {children}
@@ -86,9 +88,9 @@ function BrowserSupportMissingModal() {
           Your Browser doesn’t supports Temple - Tezos Wallet Extension
         </ModalHeading>
         <ModalTextBody>
-          Currently, the Temple - Tezos Wallet extension is supported only on Firefox,
-          Chrome and Brave Browser. Please visit from one of those browsers to
-          proceed with acquiring cryptobot.
+          Currently, the Temple - Tezos Wallet extension is supported only on
+          Firefox, Chrome and Brave Browser. Please visit from one of those
+          browsers to proceed with acquiring cryptobot.
         </ModalTextBody>
       </ModalTextSection>
     </BaseModal>
@@ -99,11 +101,13 @@ function ThanosNotAvailableModal() {
   return (
     <BaseModal img_src={thanosLogo}>
       <ModalTextSection>
-        <ModalHeading>Install Temple - Tezos Wallet browser extension</ModalHeading>
+        <ModalHeading>
+          Install Temple - Tezos Wallet browser extension
+        </ModalHeading>
         <ModalTextBody>
-        Temple - Tezos Wallet will serve as a safe place to store your super cool
-          Cryptobots. This will also act as your login to the platform (no extra
-          password needed).
+          Temple - Tezos Wallet will serve as a safe place to store your super
+          cool Cryptobots. This will also act as your login to the platform (no
+          extra password needed).
           <div className={`mt-4`}>
             Installed?{' '}
             <button
@@ -138,9 +142,9 @@ function ConnectWalletModal({ clickHandler }) {
       <ModalTextSection>
         <ModalHeading>Connect Temple - Tezos Wallet</ModalHeading>
         <ModalTextBody>
-        Temple - Tezos Wallet will serve as a safe place to store your super cool
-          Cryptobots. This will also act as your login to the platform (no extra
-          password needed).
+          Temple - Tezos Wallet will serve as a safe place to store your super
+          cool Cryptobots. This will also act as your login to the platform (no
+          extra password needed).
         </ModalTextBody>
         <Button clickHandler={clickHandler} disabled={false}>
           Connect Wallet

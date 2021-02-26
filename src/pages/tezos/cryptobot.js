@@ -4,6 +4,10 @@ import { useAsync } from 'react-use';
 import Popper from 'popper.js';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 
+import isUserAtom from 'src/atoms/is-user-atom';
+import userAtom from 'src/atoms/user-atom';
+import { useAtom } from 'jotai';
+
 import NavBar from 'src/components/NavBar';
 import Button from 'src/components/Buttons';
 import {
@@ -219,8 +223,8 @@ function BotView({ location }) {
             <Button
               size="lg"
               type="primary"
-              disabled={false}
               style={{ width: '100%', marginBottom: '1rem' }}
+              disabled={false}
               onClick={() => {
                 if (!salePrice || salePrice === 0) {
                   setOnSaleError('INSUFFICIENT_AMOUNT');
