@@ -8,18 +8,13 @@ import isUserAtom from 'src/atoms/is-user-atom';
 import { BeaconContext } from 'src/context/beacon-context';
 import { useAtom } from 'jotai';
 import { createUser, batchUpdateProgress } from 'src/api';
+import Popper from 'popper.js';
+import { MdExpandMore } from 'react-icons/md';
+
+import model from 'src/images/Col-1.png';
 
 function UserDisplay({ user, beacon }) {
-  return (
-    <div className={`flex items-center`}>
-      <Link
-        className={`bg-primary-600 px-6 py-2 rounded text-lg font-bold ml-12`}
-        to="/tezos/profile"
-      >
-        {user.name}
-      </Link>
-    </div>
-  );
+  return <Dropdown beacon={beacon} user={user} />;
 }
 
 const NavBar = ({ heading, module }) => {
@@ -83,3 +78,96 @@ const NavBar = ({ heading, module }) => {
 };
 
 export default NavBar;
+
+const Dropdown = ({ color = 'white', beacon, user }) => {
+  // dropdown props
+  const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
+  const btnDropdownRef = React.createRef();
+  const popoverDropdownRef = React.createRef();
+  const openDropdownPopover = () => {
+    new Popper(btnDropdownRef.current, popoverDropdownRef.current, {
+      placement: 'bottom-start',
+    });
+    setDropdownPopoverShow(true);
+  };
+  const closeDropdownPopover = () => {
+    setDropdownPopoverShow(false);
+  };
+
+  return (
+    <>
+      <div className="flex flex-wrap">
+        <div className="w-full sm:w-6/12 md:w-4/12 px-4">
+          <div className="relative inline-flex align-middle w-full">
+            <div
+              className={
+                'cursor-pointer text-white font-bold text-sm py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none'
+              }
+              style={{ transition: 'all .15s ease' }}
+              type="button"
+              ref={btnDropdownRef}
+              onClick={() => {
+                dropdownPopoverShow
+                  ? closeDropdownPopover()
+                  : openDropdownPopover();
+              }}
+            >
+              <div className={`flex items-center`}>
+                <div
+                  className={`text-white text-lg font-bold inline-flex items-center space-x-2`}
+                >
+                  <img
+                    src={model}
+                    className="w-8 h-8 rounded-full bg-primary-800"
+                  />
+                  <span className="select-none">{user.name}</span>
+                  <span>
+                    {' '}
+                    <MdExpandMore color="white" size="24px" />
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div
+              ref={popoverDropdownRef}
+              className={
+                (dropdownPopoverShow ? 'block ' : 'hidden ') +
+                (color === 'white' ? 'bg-base-700 ' : bgColor + ' ') +
+                'text-base z-50 float-left py-2 list-none text-left rounded shadow-lg mt-1'
+              }
+              style={{ minWidth: '12rem' }}
+            >
+              <a
+                href="#profile"
+                className={
+                  'text-base py-2 px-4 font-bold block w-full whitespace-no-wrap bg-transparent' +
+                  (color === 'white' ? ' text-white' : 'text-white')
+                }
+              >
+                <Link to="/tezos/profile"> My Profile</Link>
+              </a>
+              <a
+                href="#sign out"
+                className={
+                  'text-base py-2 px-4 font-bold block w-full whitespace-no-wrap bg-transparent ' +
+                  (color === 'white' ? ' text-error-500' : 'text-error-500')
+                }
+                onClick={e => {
+                  e.preventDefault();
+                  //close the drop down
+                  dropdownPopoverShow ? closeDropdownPopover() : null;
+
+                  beacon.client.destroy().then(() => {
+                    window.location.href = '/tezos';
+                  });
+                }}
+              >
+                Sign Out
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
