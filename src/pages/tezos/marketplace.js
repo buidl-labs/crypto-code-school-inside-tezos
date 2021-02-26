@@ -16,8 +16,6 @@ import Loader from 'react-loader-spinner';
 import isUserAtom from 'src/atoms/is-user-atom';
 import { useAtom } from 'jotai';
 
-import { trackEvent } from 'src/utils/analytics';
-
 const Marketplace = () => {
   const [forSale, updateForSale] = useState(true);
   const [notForSale, updateNotForSale] = useState(false);
@@ -25,10 +23,6 @@ const Marketplace = () => {
   const [nftList, updateNftList] = useState([]);
   const [xtzPrice, updateXtzPrice] = useState(null);
   const [isUser] = useAtom(isUserAtom);
-
-  useEffect(() => {
-    trackEvent('Marketplace-View');
-  }, []);
 
   const allNFTS = useAsync(async () => {
     try {

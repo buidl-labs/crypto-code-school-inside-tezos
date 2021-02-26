@@ -2,7 +2,6 @@ import React, { useState, useEffect, useMemo } from 'react';
 import Layout from 'src/components/Layout/layout';
 import useChapters from 'src/hooks/use-chapters';
 import { Link, graphql } from 'gatsby';
-import { trackEvent } from 'src/utils/analytics';
 import Footer from 'src/components/Footer';
 import SEO from 'src/components/Seo';
 import { MDXRenderer } from 'gatsby-plugin-mdx';

@@ -6,7 +6,7 @@ import Footer from 'src/components/Footer';
 import Cryptobot from 'src/images/cryptobot-yellow.png';
 import DoneIcon from '@material-ui/icons/Done';
 import useChapters from 'src/hooks/use-chapters';
-import { trackEvent, trackEventWithProperties } from 'src/utils/analytics';
+import { trackEventWithProperties } from 'src/utils/analytics';
 
 const CourseCard = ({ m, i, progress }) => {
   const chapters = useChapters(m.frontmatter.slug);
@@ -102,10 +102,6 @@ const CurriculumOverview = ({
       typeof window != 'undefined' &&
       JSON.parse(localStorage.getItem('progress') || '{}');
     return p;
-  }, []);
-
-  useEffect(() => {
-    trackEvent('Academy-View');
   }, []);
 
   return (

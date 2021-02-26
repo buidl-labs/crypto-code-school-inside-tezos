@@ -364,9 +364,7 @@ const Customizer = () => {
 
   const [isUser] = useAtom(isUserAtom);
 
-  useEffect(() => {
-    trackEvent('Customizer-View');
-  }, []);
+  
 
   const getMeshName = name => {
     const filterType = Object.keys(botColors.items);

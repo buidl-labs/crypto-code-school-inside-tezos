@@ -11,8 +11,6 @@ import earnWhileYouLearn from 'src/assets/videos/earn while you learn-anim.mp4';
 import createCurrency from 'src/assets/videos/anim-create-currency.mp4';
 import FinanceIllustration from 'src/assets/wealth.png';
 
-import { trackEvent } from 'src/utils/analytics';
-
 const FeatureGrid = ({
   heading,
   subtext,
@@ -78,10 +76,6 @@ const TestimonialCard = ({ link, img, name, username, text }) => {
 };
 
 function Landing() {
-  useEffect(() => {
-    trackEvent('Homepage-View');
-  }, []);
-
   return (
     <div>
       <NavBar />
