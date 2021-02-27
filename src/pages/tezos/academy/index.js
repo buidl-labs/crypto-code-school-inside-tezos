@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
-import { graphql, Link } from 'gatsby';
+import { graphql, Link, navigate } from 'gatsby';
 import Layout from 'src/components/Layout/layout';
 import SEO from 'src/components/Seo';
 import Footer from 'src/components/Footer';
@@ -112,7 +112,9 @@ const CurriculumOverview = ({
           className={`text-center my-0 mx-auto`}
           style={{ maxWidth: '60vw' }}
         >
-          <h1 className={`text-6xl font-black heading-glow`}>Welcome to Academy</h1>
+          <h1 className={`text-6xl font-black heading-glow`}>
+            Welcome to Academy
+          </h1>
           <p className={`mt-6 text-2xl`}>
             Get started on your journey of becoming a blockchain pro. Learn how
             to code decentralized apps on the Tezos blockchain using SmartPy and
