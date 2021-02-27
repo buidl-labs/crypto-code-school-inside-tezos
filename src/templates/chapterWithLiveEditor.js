@@ -13,6 +13,8 @@ import isUserAtom from 'src/atoms/is-user-atom';
 import { useAtom } from 'jotai';
 import { updateProgress } from 'src/api';
 
+import { trackEventWithProperties } from 'src/utils/analytics';
+
 export const query = graphql`
   query($slug: String!, $module: String!) {
     mdx(frontmatter: { slug: { eq: $slug }, filterBy: { eq: $module } }) {
@@ -51,15 +53,25 @@ const ChapterWithLiveEditorTemplate = ({ data: { mdx: chapter } }) => {
     [chapters],
   );
 
+  useEffect(() => {
+    trackEventWithProperties('Chapter-View', {
+      slug: `${chapter.frontmatter.filterBy}/${chapter.frontmatter.slug}`,
+      title: chapter.frontmatter.title,
+    });
+  }, []);
+
   async function markChapterAsDone() {
-    console.log('🔥 Inside markChapterAsDone');
-    console.log('🔥', progress);
     if (!progress[chapter.frontmatter.filterBy])
       progress[chapter.frontmatter.filterBy] = {};
 
     progress[chapter.frontmatter.filterBy][chapter.frontmatter.slug] = true;
     typeof window != 'undefined' &&
       localStorage.setItem('progress', JSON.stringify(progress));
+
+    trackEventWithProperties('Chapter-Completed', {
+      slug: `${chapter.frontmatter.filterBy}/${chapter.frontmatter.slug}`,
+      title: chapter.frontmatter.title,
+    });
 
     if (isUser) {
       console.log('🔥Sync with backend');

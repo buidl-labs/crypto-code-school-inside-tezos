@@ -2,7 +2,6 @@ import React, { useState, useEffect, useMemo } from 'react';
 import Layout from 'src/components/Layout/layout';
 import useChapters from 'src/hooks/use-chapters';
 import { Link, graphql } from 'gatsby';
-import { trackEvent } from 'src/utils/analytics';
 import Footer from 'src/components/Footer';
 import SEO from 'src/components/Seo';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
@@ -10,6 +9,7 @@ import { MDXProvider } from '@mdx-js/react';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import DoneIcon from '@material-ui/icons/Done';
+import { trackEventWithProperties } from 'src/utils/analytics';
 
 const MDXParagraph = props => <p className={`text-2xl pt-6`} {...props} />;
 
@@ -72,7 +72,10 @@ function LessonsOverview({ data: { mdx: module } }) {
   }, [module.frontmatter.slug]);
 
   useEffect(() => {
-    trackEvent('Chapters-Overview-View');
+    trackEventWithProperties('Module-Overview-View', {
+      slug: module.frontmatter.slug,
+      title: module.frontmatter.title,
+    });
   }, []);
 
   return (
@@ -110,7 +113,10 @@ function LessonsOverview({ data: { mdx: module } }) {
             className={`bg-base-700 rounded-tr-2xl rounded-br-2xl h-full w-full`}
           >
             {' '}
-            <img src={module.frontmatter.img.childImageSharp.fluid.src} className="object-cover object-center" />
+            <img
+              src={module.frontmatter.img.childImageSharp.fluid.src}
+              className="object-cover object-center"
+            />
           </div>
           <div className={`pl-6 py-8`}>
             <h3 className={`text-4xl font-black`}>Chapters</h3>
