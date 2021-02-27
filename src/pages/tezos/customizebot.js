@@ -276,17 +276,20 @@ const WelcomeModal = ({ close, isUser }) => {
         <img src={cryptobots} className={`mt-6`} />
         <div className={`flex items-center flex-col`}>
           <button
-            className={`bg-primary-700 font-bold text-2xl px-9 py-3 rounded`}
+            className={`bg-primary-700 font-bold text-2xl px-9 py-3 rounded focus:outline-none`}
             onClick={signedIn ? close : signInHandler}
           >
             {signedIn ? `Take me to my Cryptobot` : `Sign in`}
           </button>
           <Link
             to={'/tezos/academy'}
-            className={`flex mt-6 justify-center text-lg font-bold`}
+            className={`flex mt-6 justify-center text-lg font-bold items-center`}
           >
-            Go back to academy
-            <ChevronRightIcon className={`ml-2`} />
+            <span>Go back to academy</span>
+            <span>
+              {' '}
+              <ChevronRightIcon className={`ml-2`} />
+            </span>
           </Link>
         </div>
       </div>

@@ -71,15 +71,17 @@ const CodingInterface = ({
         <div
           className={`bg-editor-console p-4 flex items-center justify-center h-full font-mono text-lg font-bold`}
         >
-          filename.py
+          contract.py
         </div>
         <div className={`mr-12`}>
-          <button className={`mr-6`} onClick={resetEditorCode}>
+          <button className={`mr-6 focus:outline-none`} onClick={resetEditorCode}>
             <RefreshIcon />
           </button>
           <a
             href="https://t.me/joinchat/FA99PXywCizUbfE7"
-            className={`mr-9 px-3 py-1 border-2 border-base-500 rounded focus:outline-none`}
+            className={`mr-9 px-3 py-1 border-2 border-base-500 hover:border-primary-500 rounded focus:outline-none`}
+            target="_blank"
+            rel="noopener noreferrer"
           >
             Have a doubt?
           </a>

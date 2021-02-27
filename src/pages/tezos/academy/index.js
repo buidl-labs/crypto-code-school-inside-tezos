@@ -44,7 +44,7 @@ const CourseCard = ({ m, i, progress }) => {
           />
         </div>
         <div className={`my-auto`}>
-          <h2 className={`font-black text-5xl`}>{m.frontmatter.title}</h2>
+          <h2 className={`font-black text-5xl my-1`}>{m.frontmatter.title}</h2>
           <p className={`text-lg pr-9`}>{m.frontmatter.description}</p>
           {p > 0 && (
             <h3 className={`text-success-500 text-3xl mt-4 font-black`}>
@@ -112,7 +112,7 @@ const CurriculumOverview = ({
           className={`text-center my-0 mx-auto`}
           style={{ maxWidth: '60vw' }}
         >
-          <h1 className={`text-6xl font-black`}>Welcome to Academy</h1>
+          <h1 className={`text-6xl font-black heading-glow`}>Welcome to Academy</h1>
           <p className={`mt-6 text-2xl`}>
             Get started on your journey of becoming a blockchain pro. Learn how
             to code decentralized apps on the Tezos blockchain using SmartPy and

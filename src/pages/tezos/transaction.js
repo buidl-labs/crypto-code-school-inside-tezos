@@ -1,7 +1,9 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, createRef } from 'react';
 import { Link } from 'gatsby';
 import { useAsync, useWindowSize } from 'react-use';
 import Loader from 'react-loader-spinner';
+import Popper from 'popper.js';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 
 import NavBar from 'src/components/NavBar';
 import Button from 'src/components/Buttons';
@@ -58,11 +60,65 @@ const TransactionContainer = ({ children }) => {
   );
 };
 
-const Cost = ({ type, main, caption }) => {
+const Tooltip = () => {
+  const [tooltipShow, setTooltipShow] = useState(false);
+  const btnRef = createRef();
+  const tooltipRef = createRef();
+  const openLeftTooltip = () => {
+    new Popper(btnRef.current, tooltipRef.current, {
+      placement: 'top',
+    });
+    setTooltipShow(true);
+  };
+  const closeLeftTooltip = () => {
+    setTooltipShow(false);
+  };
+  return (
+    <>
+      <div className="flex flex-wrap">
+        <div className="w-full text-center">
+          <button
+            className={
+              'text-white  text-sm  outline-none focus:outline-none mr-1 mb-1'
+            }
+            type="button"
+            style={{ transition: 'all .15s ease' }}
+            onMouseEnter={openLeftTooltip}
+            onMouseLeave={closeLeftTooltip}
+            ref={btnRef}
+          >
+            <InfoOutlinedIcon />
+          </button>
+          <div
+            className={
+              (tooltipShow ? '' : 'hidden ') +
+              'bg-primary-600 border-0 mb-3 block z-50 leading-normal text-sm max-w-xs text-left no-underline break-words rounded-lg'
+            }
+            ref={tooltipRef}
+          >
+            <div className="text-white p-3 font-mulish">
+              Network fee is what you offer to pay the validators ( responsible
+              for verifying transactions on the tezos blockchain ) in a tiny
+              measurement of XTZ for each operation to execute the smart
+              contract.
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+const Cost = ({ type, main, caption, tooltip }) => {
   return (
     <div className="grid grid-cols-2 gap-4 py-6">
       <div>
-        <h5 className="text-base-100 text-lg font-bold font-mulish">{type}</h5>
+        <div className="inline-flex space-x-1">
+          <h5 className="text-base-100 text-lg font-bold font-mulish text-left">
+            {type}{' '}
+          </h5>{' '}
+          <span>{tooltip ? <Tooltip /> : ''}</span>
+        </div>
       </div>
       <div className="grid justify-items-end">
         <h5 className="text-white text-xl font-extrabold font-mulish">
@@ -175,7 +231,7 @@ function Transaction({ location }) {
               <Heading heading="Confirm your claim" />
               <TransactionContainer>
                 <Cost
-                  type="Total"
+                  type="Cryptobot Cost"
                   main={
                     bot
                       ? bot.saleValueInMutez
@@ -208,16 +264,19 @@ function Transaction({ location }) {
                         ? `$ ${getXTZPriceInUSD(xtzPrice.price, 4556)}`
                         : null
                     }
+                    tooltip
                   />
                 </div>
                 <div>
                   {getUserBalance.loading ? null : getUserBalance.error ? (
-                    <div>Error: {getUserBalance.error.message}</div>
+                    <div className="text-error-500">
+                      Error: {getUserBalance.error.message}
+                    </div>
                   ) : (
                     <div>
                       {getUserBalance.value === 0 ? (
                         <div
-                          className="mt-3 py-3 px-5 mb-4 bg-primary-100 text-primary-900 text-sm rounded-md border border-primary-600"
+                          className="mt-3 py-3 px-5 mb-4  text-white text-sm rounded border border-primary-600 bg-opacity-25 bg-primary-500"
                           role="alert"
                         >
                           Your account is empty ?{' '}
@@ -234,7 +293,7 @@ function Transaction({ location }) {
                       ) : getUserBalance.value <
                         convertMutezToXtz(bot.saleValueInMutez) + 0.5 ? (
                         <div
-                          className="mt-3 py-3 px-5 mb-4 bg-error-100 text-error-900 text-sm rounded-md border border-error-600"
+                          className="mt-3 py-3 px-5 mb-4  text-white text-sm rounded border border-error-600 bg-opacity-25 bg-error-500"
                           role="alert"
                         >
                           Insufficient balance. You need additional of{' '}
@@ -277,6 +336,18 @@ function Transaction({ location }) {
             <div className={step === 2 ? 'block' : 'hidden'}>
               <Heading heading="Transaction Operation Started" />
               <TransactionContainer>
+                <div className="grid grid-cols mx-auto justify-center mt-6 text-white mb-2">
+                  <Loader
+                    type="BallTriangle"
+                    color="#2563EB"
+                    height={80}
+                    width={80}
+                  />
+                </div>
+                <h4 className="text-white text-center text-base mb-4">
+                  It can take a few seconds, the transaction has successfully
+                  been broadcasted to the network.
+                </h4>
                 <div className="grid grid-cols mx-auto justify-center mt-6 text-white">
                   <Button
                     onClick={() => {
@@ -288,23 +359,9 @@ function Transaction({ location }) {
                     size="lg"
                     type="outline"
                   >
-                    <span>
-                      The transaction has successfully been broadcasted to the
-                      network.
-                    </span>
+                    <span>Show Status in Tezos Blockchain</span>
                   </Button>
                 </div>
-                <div className="grid grid-cols mx-auto justify-center mt-6 text-white">
-                  <Loader
-                    type="BallTriangle"
-                    color="#2563EB"
-                    height={80}
-                    width={80}
-                  />
-                </div>
-                <h4 className="text-white text-center">
-                  Waiting for confirmation
-                </h4>
               </TransactionContainer>
             </div>
 
@@ -381,15 +438,15 @@ function Transaction({ location }) {
                   Earn more super cool cryptobots by completing Modules or
                   exploring Marketplace
                 </h4>
-                <div className="grid grid-cols-2 gap-4  mx-auto justify-center text-white mt-8">
+                <div className="grid md:grid-cols-2 grid-cols-1 space-x-4  mx-auto justify-center text-white mt-8">
                   <Link to="/tezos/marketplace">
                     <Button size="lg" type="secondary">
-                      Explore Marketplace
+                      Go to Marketplace
                     </Button>
                   </Link>
                   <Link to="/tezos/academy">
                     <Button size="lg" type="primary">
-                      Go to Academy
+                      Start Learning
                     </Button>
                   </Link>
                 </div>

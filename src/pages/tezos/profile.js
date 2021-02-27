@@ -15,6 +15,35 @@ import { useAtom } from 'jotai';
 import { getXTZPrice, getNftInfoByXTZAddress } from 'src/utils/indexer';
 
 import model from 'src/images/Col-1.png';
+import add_img from 'src/images/add.png';
+
+const Empty = () => {
+  return (
+    <div
+      className={`px-12 py-4 rounded-lg relative flex flex-col items-center shadow-lg text-center`}
+      style={{ maxWidth: '40vw' }}
+    >
+      <img className={`m-0 w-auto`} src={add_img} />
+      <h4 className={`text-2xl font-extrabold`}>No Cryptobots found</h4>
+      <p className={`mt-2 text-lg`}>
+        Claim your own cryptobot in academy or try to browse something for you
+        on our marketplace
+      </p>
+      <div className="grid md:grid-cols-2 grid-cols-1 space-x-4  mx-auto justify-center mt-4">
+        <Link to="/tezos/marketplace">
+          <Button size="lg" type="secondary">
+          Browse Marketplace
+          </Button>
+        </Link>
+        <Link to="/tezos/academy">
+          <Button size="lg" type="primary">
+          Go to Academy
+          </Button>
+        </Link>
+      </div>
+    </div>
+  );
+};
 
 function Profile() {
   const [openTab, setOpenTab] = useState(1);
@@ -124,7 +153,7 @@ function Profile() {
             href="#link3"
             role="tablist"
           >
-            Profile Settings
+            Profile Details
           </button>
         </div>
         {/*tab nav ends */}
@@ -160,9 +189,9 @@ function Profile() {
                           );
                         })
                       ) : (
-                        <p className="font-mulish text-white">
-                          No bots available
-                        </p>
+                        <div className="col-span-3 flex items-center justify-center font-mulish text-white">
+                          <Empty />
+                        </div>
                       )}
                     </div>
                   )}
@@ -201,9 +230,9 @@ function Profile() {
                             );
                           })
                       ) : (
-                        <p className="font-mulish text-white">
-                          No bots available
-                        </p>
+                        <div className="col-span-3 flex items-center justify-center font-mulish text-white">
+                          <Empty />
+                        </div>
                       )}
                     </div>
                   )}

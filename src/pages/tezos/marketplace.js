@@ -104,11 +104,11 @@ const Marketplace = () => {
       <NavBar />
       <div className="container px-30 py-12 mx-auto">
         <div className="flex flex-col text-center w-full mb-12">
-          <h1 className="text-7xl font-black font-mulish mb-6 text-white">
+          <h1 className="text-6xl font-black font-mulish mb-6 text-white heading-glow">
             Welcome to Marketplace
           </h1>
-          <p className="lg:w-2/3 mx-auto text-lg text-white">
-            Buy, sell, discover and trade the super cool cryptobots
+          <p className="lg:w-2/3 mx-auto text-xl text-white">
+            Buy, sell, discover and trade the super cool cryptobots as NFT's
           </p>
         </div>
 
@@ -121,9 +121,10 @@ const Marketplace = () => {
               <label className="inline-flex items-center ">
                 <input
                   type="checkbox"
-                  className="form-checkbox h-6 w-6 text-gray-600 rounded"
+                  className={`form-checkbox h-6 w-6 text-gray-600 rounded`}
                   checked={forSale}
                   onChange={() => updateForSale(val => !val)}
+                  disabled={forSale && !notForSale ? true : false}
                 />
                 <span className="ml-2 text-gray-700 font-mulish">for sale</span>
               </label>
@@ -134,6 +135,7 @@ const Marketplace = () => {
                   className="form-checkbox h-6 w-6 text-gray-600 rounded bg-base-900"
                   checked={notForSale}
                   onChange={() => updateNotForSale(val => !val)}
+                  disabled={!forSale && notForSale ? true : false}
                 />
                 <span className="ml-2 text-gray-700 font-mulish">
                   not for sale

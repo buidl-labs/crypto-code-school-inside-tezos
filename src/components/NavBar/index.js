@@ -9,6 +9,8 @@ import { createUser, batchUpdateProgress } from '../../api';
 import Popper from 'popper.js';
 import { MdExpandMore } from 'react-icons/md';
 
+import model from 'src/images/Col-1.png';
+
 function NavLink({ to, children }) {
   return (
     <Link className={`text-white text-lg font-bold`} to={to}>
@@ -21,7 +23,7 @@ function NavButton({ children, clickHandler }) {
   return (
     <button
       onClick={clickHandler}
-      className={`bg-primary-600 px-6 py-2 rounded text-white text-lg font-bold`}
+      className={`bg-primary-600 hover:bg-primary-700 px-6 py-2 rounded text-white text-lg font-bold focus:outline-none`}
     >
       {children}
     </button>
@@ -29,14 +31,7 @@ function NavButton({ children, clickHandler }) {
 }
 
 function UserDisplay({ user, beacon }) {
-  return (
-    <div className={`flex space-x-3 items-center`}>
-      <Dropdown beacon={beacon} />
-      <Link style={{ display: 'flex' }} to="/tezos/profile">
-        <NavButton className={`text-lg text-white`}>{user.name}</NavButton>
-      </Link>
-    </div>
-  );
+  return <Dropdown beacon={beacon} user={user} />;
 }
 
 function NavBar(props) {
@@ -103,7 +98,7 @@ function NavBar(props) {
 
 export default NavBar;
 
-const Dropdown = ({ color = 'white', beacon }) => {
+const Dropdown = ({ color = 'white', beacon, user }) => {
   // dropdown props
   const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
   const btnDropdownRef = React.createRef();
@@ -125,7 +120,7 @@ const Dropdown = ({ color = 'white', beacon }) => {
           <div className="relative inline-flex align-middle w-full">
             <div
               className={
-                'cursor-pointer text-white font-bold uppercase text-sm py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none'
+                'cursor-pointer text-white font-bold text-sm py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none'
               }
               style={{ transition: 'all .15s ease' }}
               type="button"
@@ -136,22 +131,45 @@ const Dropdown = ({ color = 'white', beacon }) => {
                   : openDropdownPopover();
               }}
             >
-              <MdExpandMore color="white" size="38px" />
+              <div className={`flex items-center`}>
+                <div
+                  className={`text-white text-lg font-bold inline-flex items-center space-x-2`}
+                >
+                  <img
+                    src={model}
+                    className="w-8 h-8 rounded-full bg-primary-800"
+                  />
+                  <span className="select-none">{user.name}</span>
+                  <span>
+                    {' '}
+                    <MdExpandMore color="white" size="24px" />
+                  </span>
+                </div>
+              </div>
             </div>
             <div
               ref={popoverDropdownRef}
               className={
                 (dropdownPopoverShow ? 'block ' : 'hidden ') +
-                (color === 'white' ? 'bg-white ' : bgColor + ' ') +
+                (color === 'white' ? 'bg-base-700 ' : bgColor + ' ') +
                 'text-base z-50 float-left py-2 list-none text-left rounded shadow-lg mt-1'
               }
               style={{ minWidth: '12rem' }}
             >
               <a
-                href="#pablo"
+                href="#profile"
                 className={
-                  'text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent ' +
-                  (color === 'white' ? ' text-gray-800' : 'text-white')
+                  'text-base py-2 px-4 font-bold block w-full whitespace-no-wrap bg-transparent' +
+                  (color === 'white' ? ' text-white' : 'text-white')
+                }
+              >
+                <Link to="/tezos/profile"> My Profile</Link>
+              </a>
+              <a
+                href="#sign out"
+                className={
+                  'text-base py-2 px-4 font-bold block w-full whitespace-no-wrap bg-transparent ' +
+                  (color === 'white' ? ' text-error-500' : 'text-error-500')
                 }
                 onClick={e => {
                   e.preventDefault();
