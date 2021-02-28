@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
-import { graphql, Link } from 'gatsby';
+import { graphql, Link, navigate } from 'gatsby';
 import Layout from 'src/components/Layout/layout';
 import SEO from 'src/components/Seo';
 import Footer from 'src/components/Footer';
