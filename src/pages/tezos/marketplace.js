@@ -27,7 +27,7 @@ const Marketplace = () => {
   const allNFTS = useAsync(async () => {
     try {
       const combined = await fetchAllNfts();
-      // console.log('combined', combined);
+      console.log('combined', combined);
 
       // Default filter settings
       const x = combined.filter(elm => elm.isForSale === forSale);

@@ -14,10 +14,7 @@ function CryptobotCard({ bot, xtzPrice, owned }) {
           src={`https://cloudflare-ipfs.com/ipfs/${bot.uri}`}
         ></model-viewer>
       </div>
-      <Link
-        to={`/tezos/cryptobot`}
-        state={{ id: bot.tokenId, bot: bot, xtzPrice: xtzPrice, owned: owned }}
-      >
+      <Link to={`/tezos/cryptobot/${bot.tokenId}`}>
         <div className="p-6">
           <h1 className="font-mulish text-2xl font-bold text-white mb-2">
             Cryptobot (#{bot.tokenId})

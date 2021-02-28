@@ -1,32 +1,73 @@
-import React, { useContext, useState, useEffect, createRef } from 'react';
+import React, {
+  useMemo,
+  useState,
+  useEffect,
+  useContext,
+  createRef,
+} from 'react';
 import { Link, navigate } from 'gatsby';
 import { useAsync } from 'react-use';
-import Popper from 'popper.js';
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
-
-import isUserAtom from 'src/atoms/is-user-atom';
-import userAtom from 'src/atoms/user-atom';
-import { useAtom } from 'jotai';
-
-import NavBar from 'src/components/NavBar';
-import Button from 'src/components/Buttons';
 import {
+  fetchOneNFT,
   convertMutezToXtz,
   convertXtzToMutez,
   getXTZPriceInUSD,
+  getXTZPrice,
 } from 'src/utils/indexer';
-import model from 'src/images/Col-1.png';
-import { BeaconContext } from '../../context/beacon-context';
+import Loader from 'react-loader-spinner';
+import { BeaconContext } from 'src/context/beacon-context';
 import { CONTRACT_ADDRESS } from 'src/defaults';
 import { connectToBeacon, Tezos } from 'src/utils/wallet';
-import Loader from 'react-loader-spinner';
 import { MdClose } from 'react-icons/md';
+import userAtom from 'src/atoms/user-atom';
+import isUserAtom from 'src/atoms/is-user-atom';
+import { useAtom } from 'jotai';
+import Popper from 'popper.js';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import NavBar from 'src/components/NavBar';
+import Button from 'src/components/Buttons';
+import model from 'src/images/Col-1.png';
+
+// const CryptoBotPage = ({ location }) => {
+//   const beacon = useContext(BeaconContext);
+//   const tokenId = useMemo(() => {
+//     const pathArr =
+//       typeof window !== 'undefined' && location.pathname.split('/');
+//     return pathArr[pathArr.length - 1];
+//   }, [location.pathname, window]);
+
+//   const NFT = useAsync(async () => {
+//     if (!tokenId) return;
+//     const nft = await fetchOneNFT(tokenId);
+//     return nft;
+//   }, [tokenId, window]);
+
+//   return (
+//     <>
+//       <NavBar />
+//       <pre
+//         className={`font-mono h-screen text-xl flex items-center justify-center bg-base-800 text-primary-300 p-10`}
+//       >
+//         <code>
+//           {NFT.loading
+//             ? JSON.stringify({ ...location, tokenId }, null, 4)
+//             : JSON.stringify(NFT, null, 4)}
+//         </code>
+//       </pre>
+//     </>
+//   );
+// };
+
+// export default CryptoBotPage;
 
 function BotView({ location }) {
   let beacon = useContext(BeaconContext);
-  const xtzPrice = location.state ? location.state.xtzPrice : null;
-  const bot = location.state ? location.state.bot : null;
-  const owned = location.state ? location.state.owned : null;
+  const [user] = useAtom(userAtom);
+  const [isUser] = useAtom(isUserAtom);
+  const [xtzPrice, setXtzPrice] = useState(0);
+  const [bot, setBot] = useState({});
+  const [owned, setOwned] = useState(false);
+
   const [opHash, setOpHash] = useState(null);
   const [networkFeeEstimate, setNetworkFeeEstimate] = useState(0);
   const [withdrawNowStep, updateWithdrawNowStep] = useState(0);
@@ -35,24 +76,74 @@ function BotView({ location }) {
   const [salePrice, setSalePrice] = useState();
   const [sellNowStep, updateSellNowStep] = useState(0);
 
-  const [user, setUser] = useAtom(userAtom);
-
   const [claimButtonDisabled, setClaimButtonDisabledStatus] = useState(true);
 
+  const tokenId = useMemo(() => {
+    const pathArr =
+      typeof window !== 'undefined' && location.pathname.split('/');
+    return pathArr[pathArr.length - 1];
+  }, [location.pathname, window]);
+
+  const NFT = useAsync(async () => {
+    if (!tokenId) return;
+    const nft = await fetchOneNFT(tokenId);
+    console.log('🔥', nft);
+    return nft;
+  }, [tokenId, window]);
+
+  useEffect(() => {
+    const { value: bot } = NFT;
+    if (!NFT.loading) {
+      if (isUser) {
+        console.log('owner 🔥', bot.holderAddress);
+        console.log('isOwned 🔥', user.xtzAddress == bot.holderAddress);
+        if (user.xtzAddress == bot.holderAddress) setOwned(true);
+      }
+      setBot(bot);
+      console.log('loaded 🔥');
+    }
+  }, [NFT.loading]);
+
+  useEffect(() => {
+    if (user?.xtzAddress) setOwned(bot?.holderAddress == user?.xtzAddress);
+  }, [user.xtzAddress]);
+
+  useEffect(() => {
+    console.log('owned 🔥', owned);
+  }, [owned]);
+
+  // useEffect(() => {
+  //   if (!isUser) {
+  //     const url =
+  //       typeof window !== 'undefined' ? window.location.pathname : '/tezos';
+  //     navigate('/auth', { state: { pathname: url } });
+  //   }
+  // }, []);
+
+  useAsync(async () => {
+    try {
+      const result = await getXTZPrice();
+      setXtzPrice(result);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
   const getUserBalance = useAsync(async () => {
-    if (!user) return;
+    if (!isUser) return;
 
     try {
       const balance = await Tezos.tz.getBalance(user.xtzAddress);
       const xtz = balance / 1000000;
       if (xtz > 0.5) {
+        console.log('🔥', 'enabling claim button');
         setClaimButtonDisabledStatus(false);
       }
       return xtz;
     } catch (err) {
       console.log(JSON.stringify(error));
     }
-  }, []);
+  }, [isUser]);
 
   const withdrawBotFromSale = async tokenId => {
     await connectToBeacon(beacon);
@@ -63,13 +154,10 @@ function BotView({ location }) {
       const op = await contract.methods
         .bot_no_longer_for_sale(Number(tokenId))
         .send();
-
-      console.log(`Awaiting for ${op.opHash} to be confirmed...`);
       setOpHash(op.opHash);
       updateWithdrawNowStep(2);
       const result = await op.confirmation(1);
       updateWithdrawNowStep(3);
-      console.log('result', result);
     } catch (err) {
       console.log(err);
     }
@@ -420,7 +508,11 @@ function BotView({ location }) {
                 {/* social icons start */}
                 <div className="grid grid-cols-3 gap-2">
                   {/* twitter icon */}
-                  <div className="w-12 h-12 inline-flex items-center justify-center rounded-full bg-primary-600 text-white">
+                  <a
+                    href={`https://twitter.com/intent/tweet?text=Look at this cool Cryptobot at https://cryptocodeschool.in/tezos/cryptobot/${bot.tokenId}&related=twitter%3ABUIDLabs`}
+                    target="_blank"
+                    className="w-12 h-12 inline-flex items-center justify-center rounded-full bg-primary-600 text-white"
+                  >
                     <svg
                       width="24"
                       height="24"
@@ -433,9 +525,9 @@ function BotView({ location }) {
                         fill="white"
                       />
                     </svg>
-                  </div>
+                  </a>
                   {/* fb icon */}
-                  <div className="w-12 h-12 inline-flex items-center justify-center rounded-full bg-primary-600 text-white ">
+                  {/* <div className="w-12 h-12 inline-flex items-center justify-center rounded-full bg-primary-600 text-white ">
                     <svg
                       width="24"
                       height="24"
@@ -448,9 +540,9 @@ function BotView({ location }) {
                         fill="white"
                       />
                     </svg>
-                  </div>
+                  </div> */}
                   {/* copy icon */}
-                  <div className="w-12 h-12 inline-flex items-center justify-center rounded-full bg-primary-600 text-white ">
+                  <button className="w-12 h-12 inline-flex items-center justify-center rounded-full bg-primary-600 text-white ">
                     <svg
                       width="24"
                       height="24"
@@ -468,7 +560,7 @@ function BotView({ location }) {
                       />
                       <path d="M8 11H16V13H8V11Z" fill="white" />
                     </svg>
-                  </div>
+                  </button>
                 </div>
                 {/* social icons ends*/}
               </div>
@@ -521,7 +613,7 @@ function BotView({ location }) {
                       Owner
                     </span>
                     <span className=" font-mulish font-extrabold text-lg text-white ">
-                      {bot ? bot.owner : ''}
+                      {bot ? bot.holderAddress : ''}
                     </span>
                   </span>
                 </div>
@@ -532,49 +624,59 @@ function BotView({ location }) {
             <div className="bottom-0 w-full bg-base-900">
               <div className="flex mx-auto justify-center py-9">
                 {bot ? (
-                  owned ? (
-                    bot.isForSale ? (
-                      <Button
-                        onClick={() => updateWithdrawNowStep(1)}
-                        size="lg"
-                        type="primary"
-                      >
-                        Withdraw from sale
-                      </Button>
-                    ) : (
-                      <Button
-                        onClick={() => {
-                          updateSellNowStep(1);
+                  isUser ? (
+                    owned ? (
+                      bot.isForSale ? (
+                        <Button
+                          onClick={() => updateWithdrawNowStep(1)}
+                          size="lg"
+                          type="primary"
+                        >
+                          Withdraw from sale
+                        </Button>
+                      ) : (
+                        <Button
+                          onClick={() => {
+                            updateSellNowStep(1);
+                          }}
+                          size="lg"
+                          type="primary"
+                        >
+                          Sell Now
+                        </Button>
+                      )
+                    ) : bot.isForSale ? (
+                      <Link
+                        to={'/tezos/transaction'}
+                        state={{
+                          id: bot.tokenId,
+                          bot: bot,
+                          xtzPrice: xtzPrice,
+                          action: 'purchaseBotAtSaleValue',
                         }}
-                        size="lg"
-                        type="primary"
                       >
-                        Sell Now
-                      </Button>
+                        <Button
+                          // onClick={() =>
+                          //   buyCryptobot(bot.saleValueInMutez, bot.tokenId)
+                          // }
+                          size="lg"
+                          type="primary"
+                        >
+                          Buy Now
+                        </Button>
+                      </Link>
+                    ) : (
+                      <div className="font-mulish font-bold mb-3 text-white text-xl">
+                        Bot not available for sale{' '}
+                      </div>
                     )
                   ) : bot.isForSale ? (
-                    <Link
-                      to={'/tezos/transaction'}
-                      state={{
-                        id: bot.tokenId,
-                        bot: bot,
-                        xtzPrice: xtzPrice,
-                        action: 'purchaseBotAtSaleValue',
-                      }}
-                    >
-                      <Button
-                        // onClick={() =>
-                        //   buyCryptobot(bot.saleValueInMutez, bot.tokenId)
-                        // }
-                        size="lg"
-                        type="primary"
-                      >
-                        Buy Now
-                      </Button>
-                    </Link>
+                    <div className="font-mulish font-bold mb-3 text-white text-xl">
+                      Sign in to buy this Cryptobot
+                    </div>
                   ) : (
                     <div className="font-mulish font-bold mb-3 text-white text-xl">
-                      Bot not available for sale{' '}
+                      This bot is not available for sale.
                     </div>
                   )
                 ) : null}

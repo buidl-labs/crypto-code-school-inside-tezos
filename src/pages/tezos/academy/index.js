@@ -3,7 +3,6 @@ import { graphql, Link, navigate } from 'gatsby';
 import Layout from 'src/components/Layout/layout';
 import SEO from 'src/components/Seo';
 import Footer from 'src/components/Footer';
-import Cryptobot from 'src/images/cryptobot-yellow.png';
 import DoneIcon from '@material-ui/icons/Done';
 import useChapters from 'src/hooks/use-chapters';
 import { trackEventWithProperties } from 'src/utils/analytics';
