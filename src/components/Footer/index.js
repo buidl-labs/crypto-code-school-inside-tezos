@@ -47,7 +47,7 @@ const LinkContainer = ({ children }) => {
 
 const Footer = () => {
   //fix: sync this with localStorage
-  const [cookieBanner, setCookieBanner] = useState(true);
+  const [cookieBanner, setCookieBanner] = useState(false);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -55,7 +55,7 @@ const Footer = () => {
       if (banner !== null) {
         setCookieBanner(JSON.parse(banner));
       } else {
-        localStorage.setItem('cookieBanner', JSON.stringify(cookieBanner));
+        setCookieBanner(true);
       }
     }
   }, []);
