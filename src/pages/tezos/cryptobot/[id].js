@@ -28,38 +28,6 @@ import NavBar from 'src/components/NavBar';
 import Button from 'src/components/Buttons';
 import model from 'src/images/Col-1.png';
 
-// const CryptoBotPage = ({ location }) => {
-//   const beacon = useContext(BeaconContext);
-//   const tokenId = useMemo(() => {
-//     const pathArr =
-//       typeof window !== 'undefined' && location.pathname.split('/');
-//     return pathArr[pathArr.length - 1];
-//   }, [location.pathname, window]);
-
-//   const NFT = useAsync(async () => {
-//     if (!tokenId) return;
-//     const nft = await fetchOneNFT(tokenId);
-//     return nft;
-//   }, [tokenId, window]);
-
-//   return (
-//     <>
-//       <NavBar />
-//       <pre
-//         className={`font-mono h-screen text-xl flex items-center justify-center bg-base-800 text-primary-300 p-10`}
-//       >
-//         <code>
-//           {NFT.loading
-//             ? JSON.stringify({ ...location, tokenId }, null, 4)
-//             : JSON.stringify(NFT, null, 4)}
-//         </code>
-//       </pre>
-//     </>
-//   );
-// };
-
-// export default CryptoBotPage;
-
 function BotView({ location }) {
   let beacon = useContext(BeaconContext);
   const [user] = useAtom(userAtom);
@@ -82,14 +50,14 @@ function BotView({ location }) {
     const pathArr =
       typeof window !== 'undefined' && location.pathname.split('/');
     return pathArr[pathArr.length - 1];
-  }, [location.pathname, window]);
+  }, [location.pathname, typeof window]);
 
   const NFT = useAsync(async () => {
     if (!tokenId) return;
     const nft = await fetchOneNFT(tokenId);
     console.log('🔥', nft);
     return nft;
-  }, [tokenId, window]);
+  }, [tokenId, typeof window]);
 
   useEffect(() => {
     const { value: bot } = NFT;
