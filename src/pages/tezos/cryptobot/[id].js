@@ -40,7 +40,7 @@ function BotView({ location }) {
   const [xtzPrice, setXtzPrice] = useState(0);
   const [bot, setBot] = useState({});
   const [owned, setOwned] = useState(false);
-
+  const [errorFetching, setErrorFetching] = useState('');
   const [opHash, setOpHash] = useState(null);
   const [networkFeeEstimate, setNetworkFeeEstimate] = useState(0);
   const [withdrawNowStep, updateWithdrawNowStep] = useState(0);
@@ -68,7 +68,12 @@ function BotView({ location }) {
     const { value: bot } = NFT;
     if (!NFT.loading) {
       if (isUser) {
+        if (!bot) {
+          setErrorFetching(true);
+          return;
+        }
         console.log('owner 🔥', bot.holderAddress);
+
         console.log('isOwned 🔥', user.xtzAddress == bot.holderAddress);
         if (user.xtzAddress == bot.holderAddress) setOwned(true);
       }
@@ -669,8 +674,10 @@ function BotView({ location }) {
               <img src={ErrorBot} className={`h-64 w-64`} />
               <h3 className={`font-black text-4xl mt-4`}>Oops</h3>
               <p className={`text-center text-2xl mt-4`}>
-                This cryptobot does not exists. Try exploring on Marketplace or
-                build your own while learning in Academy
+                {errorFetching
+                  ? `Sorry, we encountered an error! Try again.`
+                  : `This cryptobot does not exists. Try exploring on Marketplace or
+                build your own while learning in Academy`}
               </p>
               <div className={`mt-6 space-x-4`}>
                 <Link
