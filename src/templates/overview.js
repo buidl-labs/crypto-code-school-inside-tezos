@@ -110,9 +110,8 @@ function LessonsOverview({ data: { mdx: module } }) {
           style={{ gridTemplateColumns: '2fr 3fr' }}
         >
           <div
-            className={`bg-base-700 rounded-tr-2xl rounded-br-2xl h-full w-full`}
+            className={`rounded-tr-2xl rounded-br-2xl h-full w-full flex items-center justify-center`}
           >
-            {' '}
             <img
               src={module.frontmatter.img.childImageSharp.fluid.src}
               className="object-cover object-center"
