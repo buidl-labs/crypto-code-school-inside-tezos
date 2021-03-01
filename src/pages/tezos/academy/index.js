@@ -40,7 +40,7 @@ const CourseCard = ({ m, i, progress }) => {
         <div className={`block my-0 mx-auto`}>
           <img
             src={m.frontmatter.img.childImageSharp.fluid.src}
-            className="object-cover object-center"
+            className="object-cover object-center min-h-25rem"
           />
         </div>
         <div className={`my-auto`}>
