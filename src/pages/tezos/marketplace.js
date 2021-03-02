@@ -27,7 +27,7 @@ const Marketplace = () => {
   const allNFTS = useAsync(async () => {
     try {
       const combined = await fetchAllNfts();
-      // console.log('combined', combined);
+      console.log('combined', combined);
 
       // Default filter settings
       const x = combined.filter(elm => elm.isForSale === forSale);
@@ -185,7 +185,11 @@ const Marketplace = () => {
                 nftList.map(el => {
                   return (
                     <div key={el.tokenId}>
-                      <CryptobotCard xtzPrice={xtzPrice} bot={el} />
+                      <CryptobotCard
+                        xtzPrice={xtzPrice}
+                        bot={el}
+                        slugPath="marketplace"
+                      />
                     </div>
                   );
                 })}
