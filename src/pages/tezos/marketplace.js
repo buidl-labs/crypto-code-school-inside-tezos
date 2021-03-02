@@ -185,7 +185,11 @@ const Marketplace = () => {
                 nftList.map(el => {
                   return (
                     <div key={el.tokenId}>
-                      <CryptobotCard xtzPrice={xtzPrice} bot={el} />
+                      <CryptobotCard
+                        xtzPrice={xtzPrice}
+                        bot={el}
+                        slugPath="marketplace"
+                      />
                     </div>
                   );
                 })}

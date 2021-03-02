@@ -3,7 +3,7 @@ import model from 'src/images/Col-1.png';
 import { Link } from 'gatsby';
 import { convertMutezToXtz, getXTZPriceInUSD } from 'src/utils/indexer';
 
-function CryptobotCard({ bot, xtzPrice, owned }) {
+function CryptobotCard({ bot, xtzPrice, owned, slugPath }) {
   return (
     <div className="bg-base-800  font-mulish h-full border-2 border-base-400 rounded-lg overflow-hidden">
       <div>
@@ -14,7 +14,14 @@ function CryptobotCard({ bot, xtzPrice, owned }) {
           src={`https://cloudflare-ipfs.com/ipfs/${bot.uri}`}
         ></model-viewer>
       </div>
-      <Link to={`/tezos/cryptobot/${bot.tokenId}`}>
+      <Link
+        to={
+          slugPath === 'marketplace'
+            ? `/tezos/cryptobot/${bot.tokenId}`
+            : `/tezos/ownedbot`
+        }
+        state={{ id: bot.tokenId, bot: bot, xtzPrice: xtzPrice, owned: owned }}
+      >
         <div className="p-6">
           <h1 className="font-mulish text-2xl font-bold text-white mb-2">
             Cryptobot (#{bot.tokenId})
