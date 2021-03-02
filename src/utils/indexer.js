@@ -123,6 +123,7 @@ export const fetchOneNFT = async token_id => {
       seller: sale ? sale.seller : null,
       offerDate: sale ? sale.timestamp : null,
       owner: holder ? holder.address : null,
+      holderAddress: holder ? holder.address : null,
     };
   } catch (e) {
     console.log(e);
