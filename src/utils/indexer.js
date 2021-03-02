@@ -94,41 +94,21 @@ export const fetchOneNFT = async token_id => {
     const allTokens = await getAllNFTsMetadata();
     const tokensOnOffer = await nftOnOffer();
     const tokenHolders = await getAllTokenHolders();
-    console.log(allTokens);
 
     const token = allTokens.find(bot => bot.tokenId == token_id);
-    console.log();
-    const tokenHolder = tokenHolders.find(
-      holder => holder.tokenId == token.tokenId,
-    );
-    let bot = { ...token, holderAddress: tokenHolder.address };
-    const offer = tokensOnOffer.find(offer => offer.tokenId == token.tokenId);
-    bot = offer?.isForSale
-      ? { ...bot, ...offer }
-      : { ...bot, isForSale: false };
+    const sale = tokensOnOffer.find(element => element.tokenId == token_id);
+    const holder = tokenHolders.find(element => element.tokenId == token_id);
 
-    // const combined = allTokens.map(elm => {
-    //   const token = tokensOnOffer.find(
-    //     element => element.tokenId == elm.tokenId,
-    //   );
-
-    //   const holder = tokenHolders.find(
-    //     element => element.tokenId == elm.tokenId,
-    //   );
-
-    //   return {
-    //     tokenId: elm.tokenId,
-    //     uri: elm.uri,
-    //     mintDate: elm.timestamp,
-    //     isForSale: token ? token.isForSale : false,
-    //     saleValueInMutez: token ? token.saleValueInMutez : null,
-    //     seller: token ? token.seller : null,
-    //     offerDate: token ? token.timestamp : null,
-    //     owner: holder ? holder.address : null,
-    //   };
-    // });
-    console.log('Returning from fetching nft...');
-    return bot;
+    return {
+      tokenId: token.tokenId,
+      uri: token.uri,
+      mintDate: token.timestamp,
+      isForSale: sale ? sale.isForSale : false,
+      saleValueInMutez: sale ? sale.saleValueInMutez : null,
+      seller: sale ? sale.seller : null,
+      offerDate: sale ? sale.timestamp : null,
+      owner: holder ? holder.address : null,
+    };
   } catch (e) {
     console.log(e);
   }
