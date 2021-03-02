@@ -203,18 +203,6 @@ function Transaction({ location }) {
     }
   };
 
-  useAsync(async () => {
-    Tezos.setProvider({
-      signer: new InMemorySigner(
-        'edskRo7CmqNdMfnEeBCPNevy9jGo2MvwNdomoxVvmwqPJTFtFrubg1spFK1aZdywS8QxkhfnAWpAVVEgCsmkSnWMyNXM1aJ4Ka',
-      ),
-    });
-
-    //TODO: replace with purchase gas fee estimate
-    const x = await estimateNFTMintFee();
-    setNetworkFeeEstimate(x);
-  }, []);
-
   const getUserBalance = useAsync(async () => {
     if (!user) return;
 
@@ -281,34 +269,16 @@ function Transaction({ location }) {
               <TransactionContainer>
                 <Cost type="Cryptobot Cost" main={'Free'} caption={''} />
                 <div className="bg-base-600 mt-4 px-8 rounded">
-                  {/* <Cost
-                    type="Cost"
-                    main="FREE"
-                    caption="Your first bot is on us!"
-                  /> */}
-                  {/* <hr className="my-2 bg-base-400 border-2 h-0.5" /> */}
-                  {networkFeeEstimate === 0 ? (
-                    <Cost
-                      type="Network Fee"
-                      main={`LOADING...`}
-                      caption={``}
-                      tooltip
-                    />
-                  ) : (
-                    <Cost
-                      type="Network Fee"
-                      main={`${convertMutezToXtz(networkFeeEstimate)} XTZ`}
-                      caption={
-                        xtzPrice
-                          ? `$ ${getXTZPriceInUSD(
-                              xtzPrice.price,
-                              networkFeeEstimate,
-                            )}`
-                          : null
-                      }
-                      tooltip
-                    />
-                  )}
+                  <Cost
+                    type="Estimated Network Fee"
+                    main={`${convertMutezToXtz(4556)} XTZ`}
+                    caption={
+                      xtzPrice
+                        ? `$ ${getXTZPriceInUSD(xtzPrice.price, 4556)}`
+                        : null
+                    }
+                    tooltip
+                  />
                 </div>
                 <div>
                   {getUserBalance.loading ? null : getUserBalance.error ? (
