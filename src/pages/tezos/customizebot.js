@@ -367,8 +367,6 @@ const Customizer = () => {
 
   const [isUser] = useAtom(isUserAtom);
 
-  
-
   const getMeshName = name => {
     const filterType = Object.keys(botColors.items);
 
