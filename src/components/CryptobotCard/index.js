@@ -15,11 +15,7 @@ function CryptobotCard({ bot, xtzPrice, owned, slugPath }) {
         ></model-viewer>
       </div>
       <Link
-        to={
-          slugPath === 'marketplace'
-            ? `/tezos/cryptobot/${bot.tokenId}`
-            : `/tezos/ownedbot`
-        }
+        to={`/tezos/cryptobot/${bot.tokenId}`}
         state={{ id: bot.tokenId, bot: bot, xtzPrice: xtzPrice, owned: owned }}
       >
         <div className="p-6">
