@@ -485,10 +485,6 @@ const Customizer = () => {
   };
 
   const isBrowser = typeof window !== 'undefined';
-  const canvas = useRef(null);
-  useEffect(() => {
-    console.log('🔥', canvas);
-  }, []);
 
   return (
     <div
@@ -795,7 +791,6 @@ const Customizer = () => {
                   concurrent
                   pixelRatio={[1, 1.5]}
                   camera={{ position: [0, 0, 5.75], fov: 80 }}
-                  ref={canvas}
                 >
                   <ambientLight intensity={0.5} />
                   <spotLight
