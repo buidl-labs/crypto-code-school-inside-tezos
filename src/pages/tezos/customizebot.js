@@ -135,7 +135,7 @@ const Bot = ({
   shininess,
 }) => {
   const group = useRef();
-  const { scene } = useGLTF('/compressed.glb');
+  const { scene } = useGLTF('/compressedv5.glb');
   const [hovered, set] = useState(null);
 
   const head = useGroup(scene, 'head');
