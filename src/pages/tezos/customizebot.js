@@ -8,7 +8,7 @@ import React, {
 import NavBar from '../../components/NavBar';
 import Button from '../../components/Buttons';
 import { navigate, Link } from 'gatsby';
-import { Canvas, useFrame } from 'react-three-fiber';
+import { Canvas, useFrame, useThree } from 'react-three-fiber';
 import {
   ContactShadows,
   Environment,
@@ -37,6 +37,8 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { BeaconContext } from 'src/context/beacon-context';
 import { createUser, batchUpdateProgress } from 'src/api';
 import { trackEvent } from 'src/utils/analytics';
+
+import { axios } from 'axios';
 
 const network =
   NETWORK === 'delphinet' ? NetworkType.DELPHINET : NetworkType.MAINNET;
@@ -156,7 +158,7 @@ const Bot = ({
       onPointerMissed={() => (state.current = null)}
       onPointerDown={e => {
         e.stopPropagation();
-        console.log(e.object.name);
+
         setBotColors(current => {
           const copy = { ...current };
           copy.current = getMeshName(e.object.name);
@@ -298,6 +300,18 @@ const WelcomeModal = ({ close, isUser }) => {
   );
 };
 
+const CustomAmbientLight = ({ setImage, grabImage }) => {
+  const canvas = useThree().gl.domElement;
+
+  useEffect(() => {
+    if (grabImage) {
+      setImage(canvas.toDataURL('image/png'));
+    }
+  }, [grabImage]);
+
+  return <ambientLight intensity={0.5} />;
+};
+
 const Customizer = () => {
   const [selectPart, setselectPart] = useState(1);
   const [headCount, setHeadCount] = useState(0);
@@ -306,7 +320,8 @@ const Customizer = () => {
   const [legCount, setLegCount] = useState(0);
 
   const [isModalOpen, setIsModalOpen] = useState(true);
-
+  const [claimButtonClicked, setClaimButtonClicked] = useState(false);
+  const [image, setImage] = useState('');
   const [showSavingBotModel, setShowSavingBotModel] = useState(false);
   const [shininess, setShininess] = useState(0);
   const [showColorPicker, updateShowColorPicker] = useState(false);
@@ -366,6 +381,10 @@ const Customizer = () => {
   });
 
   const [isUser] = useAtom(isUserAtom);
+
+  useEffect(() => {
+    console.log(image);
+  }, [image]);
 
   const getMeshName = name => {
     const filterType = Object.keys(botColors.items);
@@ -454,33 +473,35 @@ const Customizer = () => {
       { binary: true },
     );
 
-    function upload(blob) {
+    async function upload(blob) {
       setShowSavingBotModel(true);
       var fd = new FormData();
-      // fd.append('bot', blob, 'bot.glb');
+
       fd.append('file', blob);
-      fetch(
+      const res = await fetch(
         'https://cryptoverse-wars-backend-nfjp.onrender.com/api/upload-3d-model-to-ipfs',
         {
           method: 'post',
           body: fd,
         },
-      )
-        .then(res => {
-          // console.log(res)
-          return res.json();
-        })
-        .then(res => {
-          console.log(res.body.ipfsHash);
-          console.log('yo', res);
-          navigate('/tezos/claim-transaction', {
-            state: { uri: res.body.ipfsHash },
-          });
-        })
-        .catch(err => {
-          console.log(err);
-          setShowSavingBotModel(false);
-        });
+      );
+
+      const resJSON = await res.json();
+
+      
+      // TODO:
+      //   1. Access the `image` state variable
+      //   2. Upload to ipfs through the backend
+      //   3. Wait for the Response
+      //   4. Navigate with `photoURI: resPhotoJSON.ipfsHash`
+
+
+
+      console.log(await resJSON.body.ipfsHash);
+      console.log('yo', await resJSON);
+      navigate('/tezos/claim-transaction', {
+        state: { uri: await resJSON.body.ipfsHash },
+      });
     }
   };
 
@@ -791,8 +812,13 @@ const Customizer = () => {
                   concurrent
                   pixelRatio={[1, 1.5]}
                   camera={{ position: [0, 0, 5.75], fov: 80 }}
+                  gl={{ preserveDrawingBuffer: true }}
                 >
-                  <ambientLight intensity={0.5} />
+                  <CustomAmbientLight
+                    setImage={setImage}
+                    image={image}
+                    grabImage={claimButtonClicked == true}
+                  />
                   <spotLight
                     intensity={0.3}
                     angle={0.1}
@@ -838,7 +864,7 @@ const Customizer = () => {
                         namedColors[
                           Math.floor(Math.random() * namedColors.length)
                         ];
-                      console.log(elm, item);
+
                       copy.items[elm] = item.hex;
                     });
                     return copy;
@@ -850,6 +876,7 @@ const Customizer = () => {
 
               <Button
                 onClick={() => {
+                  setClaimButtonClicked(true);
                   setHeadCount(headCount);
                   setBodyCount(bodyCount);
                   setArmCount(armCount);
@@ -896,7 +923,6 @@ const Customizer = () => {
                   name="roughness"
                   value={shininess}
                   onChange={e => {
-                    console.log(e.target.value);
                     setShininess(e.target.value);
                   }}
                   min="0"
