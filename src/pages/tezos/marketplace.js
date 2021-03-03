@@ -12,7 +12,7 @@ import Footer from 'src/components/Footer';
 import CryptobotCard from 'src/components/CryptobotCard';
 import uniqBy from 'lodash.uniqby';
 import Loader from 'react-loader-spinner';
-
+import userAtom from 'src/atoms/user-atom';
 import isUserAtom from 'src/atoms/is-user-atom';
 import { useAtom } from 'jotai';
 
@@ -22,6 +22,7 @@ const Marketplace = () => {
   const [sortBy, updateSortBy] = useState('offerDate');
   const [nftList, updateNftList] = useState([]);
   const [xtzPrice, updateXtzPrice] = useState(null);
+  const [user] = useAtom(userAtom);
   const [isUser] = useAtom(isUserAtom);
 
   const allNFTS = useAsync(async () => {
@@ -91,8 +92,8 @@ const Marketplace = () => {
   }, []);
 
   useEffect(() => {
-    // console.log(user, isUser);
-    if (!isUser) {
+    console.log(user, isUser);
+    if (!isUser || !user?.verified) {
       const url =
         typeof window !== 'undefined' ? window.location.pathname : '/tezos';
       navigate('/auth', { state: { pathname: url } });

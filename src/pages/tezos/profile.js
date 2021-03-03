@@ -32,12 +32,12 @@ const Empty = () => {
       <div className="grid md:grid-cols-2 grid-cols-1 space-x-4  mx-auto justify-center mt-4">
         <Link to="/tezos/marketplace">
           <Button size="lg" type="secondary">
-          Browse Marketplace
+            Browse Marketplace
           </Button>
         </Link>
         <Link to="/tezos/academy">
           <Button size="lg" type="primary">
-          Go to Academy
+            Go to Academy
           </Button>
         </Link>
       </div>
@@ -52,8 +52,8 @@ function Profile() {
   const [isUser] = useAtom(isUserAtom);
 
   useEffect(() => {
-    // console.log(user, isUser);
-    if (!isUser) {
+    console.log(user, isUser);
+    if (!isUser || !user?.verified) {
       const url =
         typeof window !== 'undefined' ? window.location.pathname : '/tezos';
       navigate('/auth', { state: { pathname: url } });
