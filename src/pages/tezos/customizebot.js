@@ -322,6 +322,7 @@ const Customizer = () => {
   const [isModalOpen, setIsModalOpen] = useState(true);
   const [claimButtonClicked, setClaimButtonClicked] = useState(false);
   const [image, setImage] = useState('');
+  const [grabImage, setGrabImage] = useState(false);
   const [showSavingBotModel, setShowSavingBotModel] = useState(false);
   const [shininess, setShininess] = useState(0);
   const [showColorPicker, updateShowColorPicker] = useState(false);
@@ -380,10 +381,33 @@ const Customizer = () => {
     },
   });
 
+  function uploadData() {
+    upload3dModel(
+      state.items.head,
+      state.items.arm,
+      state.items.body,
+      state.items.leg,
+    );
+  }
+
   const [isUser] = useAtom(isUserAtom);
 
   useEffect(() => {
-    console.log(image);
+    if (claimButtonClicked) {
+      /*
+        1. Upload 3d model to ipfs.
+        2. Upload Cryptobot image to ipfs
+        3. Navigate to /claim-transaction with ipfsHash of image and 3d model as state
+      */
+      setGrabImage(true);
+    }
+  }, [claimButtonClicked]);
+
+  useEffect(() => {
+    if (image !== '') {
+      // console.log('image -> ', image);
+      uploadData();
+    }
   }, [image]);
 
   const getMeshName = name => {
@@ -475,32 +499,47 @@ const Customizer = () => {
 
     async function upload(blob) {
       setShowSavingBotModel(true);
-      var fd = new FormData();
 
-      fd.append('file', blob);
+      var fdModel = new FormData();
+
+      fdModel.append('file', blob);
       const res = await fetch(
         'https://cryptoverse-wars-backend-nfjp.onrender.com/api/upload-3d-model-to-ipfs',
         {
           method: 'post',
-          body: fd,
+          body: fdModel,
         },
       );
 
       const resJSON = await res.json();
 
-      
-      // TODO:
-      //   1. Access the `image` state variable
-      //   2. Upload to ipfs through the backend
-      //   3. Wait for the Response
-      //   4. Navigate with `photoURI: resPhotoJSON.ipfsHash`
+      var fdImage = new FormData();
+      // console.log('img before converting to blob 🔥->', image);
+      const imageBlob = new Blob([image], {
+        type: 'image/png',
+      });
+      // console.log('blob 🔥', imageBlob);
+      fdImage.append('file', imageBlob);
+      // console.log('fdImage 🔥', fdImage);
+      // ('https://cryptoverse-wars-backend-nfjp.onrender.com/api/upload-image-to-ipfs');
+      const resImage = await fetch(
+        'https://cryptoverse-wars-backend-nfjp.onrender.com/api/upload-image-to-ipfs',
+        {
+          method: 'post',
+          body: fdImage,
+        },
+      );
 
+      const resImageJSON = await resImage.json();
 
-
-      console.log(await resJSON.body.ipfsHash);
-      console.log('yo', await resJSON);
+      // console.log('3d model hash --> 🔥', await resJSON.body.ipfsHash);
+      // console.log('image hash -> 🔥', await resImageJSON.body.ipfsHash);
+      // console.log('yo', await resJSON);
       navigate('/tezos/claim-transaction', {
-        state: { uri: await resJSON.body.ipfsHash },
+        state: {
+          modelURI: await resJSON.body.ipfsHash,
+          imageURI: resImageJSON.body.ipfsHash,
+        },
       });
     }
   };
@@ -881,13 +920,6 @@ const Customizer = () => {
                   setBodyCount(bodyCount);
                   setArmCount(armCount);
                   setLegCount(legCount);
-
-                  upload3dModel(
-                    state.items.head,
-                    state.items.arm,
-                    state.items.body,
-                    state.items.leg,
-                  );
 
                   trackEvent('Claim-Bot');
                 }}

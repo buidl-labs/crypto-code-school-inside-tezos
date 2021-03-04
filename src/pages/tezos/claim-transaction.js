@@ -144,7 +144,8 @@ function Transaction({ location }) {
   const [opHash, setOpHash] = useState(null);
   const [networkFeeEstimate, setNetworkFeeEstimate] = useState(0);
   //   const xtzPrice = location.state ? location.state.xtzPrice : null;
-  const uri = location.state ? location.state.uri : null;
+  const modelURI = location.state ? location.state.modelURI : null;
+  const imageURI = location.state ? location.state.imageURI : null;
   console.log(location.state);
   const { width, height } = useWindowSize();
   const [xtzPrice, updateXtzPrice] = useState(null);
@@ -169,7 +170,8 @@ function Transaction({ location }) {
       await connectToBeacon(beacon);
 
       const metadata = MichelsonMap.fromLiteral({
-        uri: uri,
+        uri: modelURI,
+        imageURI: imageURI,
       });
 
       const RnId = (deepness = 10) =>
@@ -229,7 +231,9 @@ function Transaction({ location }) {
               style={{ width: '100%', height: '100%' }}
               camera-controls
               alt="3D Cryptobot"
-              src={`https://cloudflare-ipfs.com/ipfs/${uri ? uri : ''}`}
+              src={`https://cloudflare-ipfs.com/ipfs/${
+                modelURI ? modelURI : ''
+              }`}
             ></model-viewer>
           </div>
           <div className="px-12 pt-4 ">
