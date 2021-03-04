@@ -6,11 +6,13 @@ const ErrorMessage = ({ errors }) => {
   }, []);
   return (
     <ul>
-      {errors.map(err => (
-        <li key={err}>
-          {'>'} {err}
-        </li>
-      ))}
+      {errors
+        .filter(err => err !== '')
+        .map(err => (
+          <li key={err}>
+            {'>'} {err}
+          </li>
+        ))}
       <li>{'>'} Click on "Show Answer" for reference.</li>
     </ul>
   );

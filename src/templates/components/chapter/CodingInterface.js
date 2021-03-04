@@ -6,7 +6,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import { checkCode } from '../../../utils/compiler';
 import DisplayResult from './DisplayResult';
-
+import { trackEventWithProperties } from 'src/utils/analytics';
 import { ControlledEditor, monaco, DiffEditor } from '@monaco-editor/react';
 
 const CodingInterface = ({
@@ -18,6 +18,7 @@ const CodingInterface = ({
   chapterSlug,
   isCode,
   openMichelsonDrawer,
+  michelsonResult,
   setMichelsonResult,
   setResult,
   result,
@@ -32,6 +33,7 @@ const CodingInterface = ({
       setDisplayMichelsonBtn(
         result.success &&
           isCode &&
+          michelsonResult.success &&
           (module.indexOf('2') !== -1 || module.indexOf('3') !== -1),
       ),
     [checkAnswer, result.success],
@@ -74,7 +76,10 @@ const CodingInterface = ({
           contract.py
         </div>
         <div className={`mr-12`}>
-          <button className={`mr-6 focus:outline-none`} onClick={resetEditorCode}>
+          <button
+            className={`mr-6 focus:outline-none`}
+            onClick={resetEditorCode}
+          >
             <RefreshIcon />
           </button>
           <a
@@ -120,16 +125,24 @@ const CodingInterface = ({
               onClick={() => {
                 setCheckAnswer(true);
                 setShowAnswer(false);
+                let compiledCode = {};
                 let res = checkCode(editorValue, answer, module);
                 if (
                   isCode &&
                   (module.indexOf('2') !== -1 || module.indexOf('3') !== -1)
                 ) {
-                  let compiledCode =
+                  compiledCode =
                     typeof window !== undefined && window.runCode(editorValue);
 
                   setMichelsonResult(compiledCode);
+                  setResult({
+                    error: [...res.error, compiledCode.error],
+                    success: res.success && compiledCode.success,
+                  });
+                  console.log(typeof res.error, res.error);
+                  return;
                 }
+
                 setResult(res);
               }}
             >

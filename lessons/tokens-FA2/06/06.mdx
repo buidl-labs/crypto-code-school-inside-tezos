@@ -12,7 +12,7 @@ editor:
     FA2 = sp.import_script_from_url("https://smartpy.io/dev/templates/FA2.py")
 
     class Cryptobot(FA2.FA2):
-        
+
         @sp.entry_point
         def mint(self, params):
             sp.verify(sp.sender == self.data.administrator)
@@ -31,14 +31,11 @@ editor:
             sp.if self.data.tokens.contains(params.token_id):
                 pass
             sp.else:
-                self.data.tokens[params.token_id] = sp.record(
-                        token_id = params.token_id,
-                        symbol = params.symbol,
-                        name = "", 
-                        decimals = 0,
-                        extras = params.extras
-                    )
-                
+                self.data.tokens[params.token_id] = self.token_meta_data.make(
+                    amount = params.amount, 
+                    metadata = params.metadata
+                )
+            
 
     @sp.add_test(name = "Cryptobot")
     def test():
@@ -49,22 +46,29 @@ editor:
         mark = sp.test_account("Mark")
         elon = sp.test_account("Mars")
         
-        
-        cryptobot = Cryptobot(FA2.FA2_config(non_fungible = True), admin.address)
+        cryptobot = Cryptobot(FA2.FA2_config(non_fungible = True), admin = admin.address, metadata = sp.big_map({"": sp.bytes_of_string("tezos-storage:content"),"content": sp.bytes_of_string("""{"name" : "Cryptobot"}""")}))
         scenario += cryptobot
         
         
         scenario += cryptobot.mint(address = mark.address, 
                                 amount = 1,
-                                symbol = 'CTB',
-                                token_id = 0,
-                                extras = { "value": "First bot"}).run(sender = admin)
+                                metadata= Cryptobot.make_metadata(
+                                    decimals = 0,
+                                    name = "Mark bot",
+                                    symbol = "CTB"
+                                ),
+                                token_id= 0
+                                ).run(sender = admin)
+
         
         scenario += cryptobot.mint(address = elon.address,
                                 amount = 1,
-                                symbol = 'CTB',
-                                token_id = 1,
-                                extras = { "value": "Second bot" }).run(sender = admin)
+                                metadata = Cryptobot.make_metadata(
+                                    decimals = 0,
+                                    name = "Elon bot",
+                                    symbol = "CTB"
+                                ),
+                                token_id = 1).run(sender = admin)
                                 
         # (1) Create a test account `operator` with the seed of "operator".              
         
@@ -79,7 +83,7 @@ editor:
     FA2 = sp.import_script_from_url("https://smartpy.io/dev/templates/FA2.py")
 
     class Cryptobot(FA2.FA2):
-        
+
         @sp.entry_point
         def mint(self, params):
             sp.verify(sp.sender == self.data.administrator)
@@ -98,14 +102,11 @@ editor:
             sp.if self.data.tokens.contains(params.token_id):
                 pass
             sp.else:
-                self.data.tokens[params.token_id] = sp.record(
-                        token_id = params.token_id,
-                        symbol = params.symbol,
-                        name = "", 
-                        decimals = 0,
-                        extras = params.extras
-                    )
-                
+                self.data.tokens[params.token_id] = self.token_meta_data.make(
+                    amount = params.amount, 
+                    metadata = params.metadata
+                )
+            
 
     @sp.add_test(name = "Cryptobot")
     def test():
@@ -116,22 +117,29 @@ editor:
         mark = sp.test_account("Mark")
         elon = sp.test_account("Mars")
         
-        
-        cryptobot = Cryptobot(FA2.FA2_config(non_fungible = True), admin.address)
+        cryptobot = Cryptobot(FA2.FA2_config(non_fungible = True), admin = admin.address, metadata = sp.big_map({"": sp.bytes_of_string("tezos-storage:content"),"content": sp.bytes_of_string("""{"name" : "Cryptobot"}""")}))
         scenario += cryptobot
         
-        
+
         scenario += cryptobot.mint(address = mark.address, 
                                 amount = 1,
-                                symbol = 'CTB',
-                                token_id = 0,
-                                extras = { "value": "First bot"}).run(sender = admin)
+                                metadata= Cryptobot.make_metadata(
+                                    decimals = 0,
+                                    name = "Mark bot",
+                                    symbol = "CTB"
+                                ),
+                                token_id= 0
+                                ).run(sender = admin)
+
         
         scenario += cryptobot.mint(address = elon.address,
                                 amount = 1,
-                                symbol = 'CTB',
-                                token_id = 1,
-                                extras = { "value": "Second bot" }).run(sender = admin)
+                                metadata = Cryptobot.make_metadata(
+                                    decimals = 0,
+                                    name = "Elon bot",
+                                    symbol = "CTB"
+                                ),
+                                token_id = 1).run(sender = admin)
                                 
         # (1) Create a test account `operator` with the seed of "operator".              
         operator = sp.test_account("operator")
