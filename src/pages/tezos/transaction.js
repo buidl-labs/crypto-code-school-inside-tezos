@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect, createRef } from 'react';
-import { Link } from 'gatsby';
+import { Link,navigate } from 'gatsby';
 import { useAsync, useWindowSize } from 'react-use';
 import Loader from 'react-loader-spinner';
 import Popper from 'popper.js';
@@ -137,13 +137,20 @@ function Transaction({ location }) {
   const [opHash, setOpHash] = useState(null);
   const [networkFeeEstimate, setNetworkFeeEstimate] = useState(0);
   const xtzPrice = location.state ? location.state.xtzPrice : null;
-  const bot = location.state ? location.state.bot : null;
+  const bot = location.state ? location.state.bot : false;
   console.log('cryptobot object :', bot);
   const [copyLink, setCopyLink] = useState(false);
   const { width, height } = useWindowSize();
   const [user, setUser] = useAtom(userAtom);
 
   const [claimButtonDisabled, setClaimButtonDisabledStatus] = useState(true);
+
+  useEffect(() => {
+    if (bot===false) {
+      console.log(window)
+      window.location.pathname="/tezos/marketplace";
+    }
+  }, []);
 
   const buyCryptobot = async (mutez, tokenId) => {
     try {
