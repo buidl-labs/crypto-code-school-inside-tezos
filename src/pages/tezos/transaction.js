@@ -13,6 +13,7 @@ import { BeaconContext } from 'src/context/beacon-context';
 import { convertMutezToXtz, getXTZPriceInUSD } from 'src/utils/indexer';
 import { MdDone } from 'react-icons/md';
 import Confetti from 'react-confetti';
+import Clipboard from 'react-clipboard.js';
 
 import userAtom from 'src/atoms/user-atom';
 import isUserAtom from 'src/atoms/is-user-atom';
@@ -137,6 +138,8 @@ function Transaction({ location }) {
   const [networkFeeEstimate, setNetworkFeeEstimate] = useState(0);
   const xtzPrice = location.state ? location.state.xtzPrice : null;
   const bot = location.state ? location.state.bot : null;
+  console.log('cryptobot object :', bot);
+  const [copyLink, setCopyLink] = useState(false);
   const { width, height } = useWindowSize();
   const [user, setUser] = useAtom(userAtom);
 
@@ -375,15 +378,28 @@ function Transaction({ location }) {
                   Share your unique cryptobot with your friends and start
                   trading with other on marketplace!
                 </h4>
-                <h4 className="text-white text-center text-lg font-mulish mt-8">
+                <div className="text-white text-center text-lg font-mulish mt-8">
                   Here’s the link to your unique cryptobot:
-                  https://cryptocodeschool.in/mybot-4433
-                </h4>
+                  <a
+                    href={`https://cryptocodeschool.in/tezos/cryptobot/${bot.tokenId}`}
+                    className="text-primary-400 underline"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {' '}
+                    https://cryptocodeschool.in/tezos/cryptobot/{bot.tokenId}
+                  </a>
+                </div>
 
                 {/* social icons start */}
                 <div className="flex flex-row space-x-6 justify-center mt-4">
                   {/* twitter icon */}
-                  <div className="w-12 h-12 inline-flex items-center justify-center rounded-full bg-primary-600 text-white">
+                  {/* twitter icon */}
+                  <a
+                    href={`https://twitter.com/intent/tweet?text=Look at this cool Cryptobot at https://cryptocodeschool.in/tezos/cryptobot/${bot.tokenId}&related=twitter%3ABUIDLabs`}
+                    target="_blank"
+                    className="w-12 h-12 inline-flex items-center justify-center rounded-full bg-primary-600 text-white focus:outline-none"
+                  >
                     <svg
                       width="24"
                       height="24"
@@ -396,42 +412,48 @@ function Transaction({ location }) {
                         fill="white"
                       />
                     </svg>
-                  </div>
-                  {/* fb icon */}
-                  <div className="w-12 h-12 inline-flex items-center justify-center rounded-full bg-primary-600 text-white ">
-                    <svg
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M13.397 20.9969V12.8009H16.162L16.573 9.59191H13.397V7.54791C13.397 6.62191 13.655 5.98791 14.984 5.98791H16.668V3.12691C15.849 3.03891 15.025 2.99691 14.201 2.99991C11.757 2.99991 10.079 4.49191 10.079 7.23091V9.58591H7.33203V12.7949H10.085V20.9969H13.397Z"
-                        fill="white"
-                      />
-                    </svg>
-                  </div>
+                  </a>
+
                   {/* copy icon */}
-                  <div className="w-12 h-12 inline-flex items-center justify-center rounded-full bg-primary-600 text-white ">
-                    <svg
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
+                  <button
+                    className={
+                      'w-12 h-12 inline-flex items-center justify-center rounded-full text-white focus:outline-none  ' +
+                      (copyLink == 1 ? 'bg-success-600' : 'bg-primary-600')
+                    }
+                  >
+                    <Clipboard
+                      data-clipboard-text={`https://cryptocodeschool.in/tezos/cryptobot/${bot.tokenId}`}
+                      onClick={() => {
+                        setCopyLink(true);
+                      }}
                     >
-                      <path
-                        d="M17 7H13V9H17C18.65 9 20 10.35 20 12C20 13.65 18.65 15 17 15H13V17H17C19.76 17 22 14.76 22 12C22 9.24 19.76 7 17 7Z"
-                        fill="white"
-                      />
-                      <path
-                        d="M11 15H7C5.35 15 4 13.65 4 12C4 10.35 5.35 9 7 9H11V7H7C4.24 7 2 9.24 2 12C2 14.76 4.24 17 7 17H11V15Z"
-                        fill="white"
-                      />
-                      <path d="M8 11H16V13H8V11Z" fill="white" />
-                    </svg>
-                  </div>
+                      {copyLink ? (
+                        <div className="focus:outline-none text-white">
+                          <MdDone />
+                        </div>
+                      ) : (
+                        <div className="focus:outline-none">
+                          <svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M17 7H13V9H17C18.65 9 20 10.35 20 12C20 13.65 18.65 15 17 15H13V17H17C19.76 17 22 14.76 22 12C22 9.24 19.76 7 17 7Z"
+                              fill="white"
+                            />
+                            <path
+                              d="M11 15H7C5.35 15 4 13.65 4 12C4 10.35 5.35 9 7 9H11V7H7C4.24 7 2 9.24 2 12C2 14.76 4.24 17 7 17H11V15Z"
+                              fill="white"
+                            />
+                            <path d="M8 11H16V13H8V11Z" fill="white" />
+                          </svg>
+                        </div>
+                      )}
+                    </Clipboard>
+                  </button>
                 </div>
                 {/* social icons ends*/}
                 <h4 className="text-white text-center text-lg font-mulish mt-6">
