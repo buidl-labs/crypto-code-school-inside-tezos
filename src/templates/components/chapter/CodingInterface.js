@@ -6,7 +6,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import { checkCode } from '../../../utils/compiler';
 import DisplayResult from './DisplayResult';
-
+import { trackEventWithProperties } from 'src/utils/analytics';
 import { ControlledEditor, monaco, DiffEditor } from '@monaco-editor/react';
 
 const CodingInterface = ({
@@ -76,7 +76,10 @@ const CodingInterface = ({
           contract.py
         </div>
         <div className={`mr-12`}>
-          <button className={`mr-6 focus:outline-none`} onClick={resetEditorCode}>
+          <button
+            className={`mr-6 focus:outline-none`}
+            onClick={resetEditorCode}
+          >
             <RefreshIcon />
           </button>
           <a
