@@ -17,6 +17,7 @@ import isUserAtom from 'src/atoms/is-user-atom';
 import { useAtom } from 'jotai';
 import SEO from '../components/Seo';
 import { updateProgress } from 'src/api';
+import { trackEventWithProperties } from 'src/utils/analytics';
 
 export const query = graphql`
   query($slug: String!, $module: String!) {
@@ -39,13 +40,6 @@ export const query = graphql`
 `;
 
 const ChapterTemplate = ({ data: { mdx: chapter } }) => {
-  /*
-    TODO:
-      - Sync state in localStorage
-        1. Progress stored under the 'progress' key in localStorage.
-        2. Every object is marked with a key `${chapter.frontmatter.slug}-${chapter.frontmatter.filterBy}`
-        3. On completing a chapter, progress[`${chapter.frontmatter.slug}-${chapter.frontmatter.filterBy}`] is marked as true for "complete."
-  */
   const [user] = useAtom(userAtom);
   const [isUser] = useAtom(isUserAtom);
   const [isChapterDrawerOpen, setIsChapterDrawerOpen] = useState(false);
@@ -76,9 +70,22 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
   );
 
   useEffect(() => {
+    trackEventWithProperties('Chapter-View', {
+      slug: `${chapter.frontmatter.filterBy}/${chapter.frontmatter.slug}`,
+      title: chapter.frontmatter.title,
+    });
+  }, []);
+
+  useEffect(() => {
     if (result.success === true) {
       setIsChapterCompleted(true);
       setStartingCode(chapter.frontmatter.editor.answer);
+
+      trackEventWithProperties('Chapter-Completed', {
+        slug: `${chapter.frontmatter.filterBy}/${chapter.frontmatter.slug}`,
+        title: chapter.frontmatter.title,
+      });
+
       if (isUser) {
         updateProgress(
           user,
@@ -146,6 +153,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
           editorValue={editorValue}
           setEditorValue={setEditorValue}
           module={chapter.frontmatter.filterBy}
+          chapterSlug={chapter.frontmatter.slug}
           isCode={chapter.frontmatter.isCode}
           openMichelsonDrawer={() => setMichelsonDrawer(true)}
           michelsonResult={michelsonResult}

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Link } from 'gatsby';
 import NavBar from '../../components/NavBar';
 import Button from '../../components/Buttons';
 import Footer from '../../components/Footer';
@@ -7,7 +8,8 @@ import PlayButton from '../../components/LandingPage/playbutton';
 import learningInterface from '../../images/Interface.png';
 import cryptobots from '../../images/cryptobots.png';
 import earnWhileYouLearn from 'src/assets/videos/earn while you learn-anim.mp4';
-import createCurrency from 'src/assets/videos/anim - create your own currency.webm';
+import createCurrency from 'src/assets/videos/anim-create-currency.mp4';
+import FinanceIllustration from 'src/assets/wealth.png';
 
 const FeatureGrid = ({
   heading,
@@ -17,19 +19,24 @@ const FeatureGrid = ({
   videoType,
   order,
   padding,
+  to,
 }) => {
   return (
     <div className="grid md:grid-cols-2 grid-cols-1 gap-6 ">
       <div
         className={`flex flex-col md:p${padding}-30 px-8 py-12 md:items-start items-center md:text-left text-center  justify-center order-${order}`}
       >
-        <h1 className="sm:text-5xl text-3xl mb-3 font-black text-white">
+        <h1 className="sm:text-5xl text-3xl mb-3 font-black text-white heading-glow">
           {heading}
         </h1>
         <p className="text-base-50 text-base mb-6">{subtext}</p>
-        <Button type="outline" size="lg">
+
+        <Link
+          className={`py-3 px-9 text-xl border-primary-600 border-2 hover:border-primary-700 text-white font-bold rounded focus:outline-none`}
+          to={to}
+        >
           {buttontext}
-        </Button>
+        </Link>
       </div>
       <div className="h-full w-full">
         <video
@@ -78,7 +85,7 @@ function Landing() {
             <PlayButton />
           </a>
           <div className="text-center lg:w-2/3 w-full">
-            <h1 className="sm:text-7xl text-4xl mb-4 text-white font-black">
+            <h1 className="sm:text-7xl text-4xl mb-4 text-white font-black heading-glow">
               Learn to code on the blockchain, the fun way!
             </h1>
             <p className="mb-8 leading-relaxed text-base-50">
@@ -89,9 +96,12 @@ function Landing() {
               fight in the Cryptoverse Wars.
             </p>
             <div className="flex justify-center">
-              <Button type="primary" size="lg">
+              <Link
+                to="/tezos/academy"
+                className={`py-3 px-9 text-xl bg-primary-600 hover:bg-primary-700 text-white font-bold rounded focus:outline-none`}
+              >
                 Start Building 🛠
-              </Button>
+              </Link>
             </div>
           </div>
         </div>
@@ -101,7 +111,7 @@ function Landing() {
         <div className="grid md:grid-cols-5 grid-cols-1 gap-6 ">
           <div className="col-span-3 ">
             <div
-              className={`flex flex-col md:pl-30 px-8 md:text-left text-center  items-start justify-center space-y-8`}
+              className={`flex flex-col md:pl-30 px-8 md:text-left text-center  items-start justify-center space-y-8 heading-glow`}
             >
               <h1 className="sm:text-7xl text-4xl mb-3 font-black text-white">
                 With blockchain, build better finance.
@@ -119,37 +129,41 @@ function Landing() {
               </p>
             </div>
           </div>
-          <div className="col-span-2 bg-base-600 h-full w-full">
-            <img src="" className="object-cover object-center" />
+          <div className="col-span-2 h-full w-full">
+            <img src={FinanceIllustration} />
           </div>
         </div>
       </section>
       {/* Why Blockchain ends here */}
       {/* Features start here */}
       <section className="bg-base-900 py-20">
-        <div className="flex flex-col text-center w-full mb-20">
-          <h1 className="sm:text-7xl text-4xl font-black font-mulish text-white">
-            What’s there for You?
-          </h1>
-        </div>
-        <FeatureGrid
-          heading="Create your own currency!"
-          subtext="Learn how to create apps on the Tezos blockchain through our exciting
+        <div className="container mx-auto">
+          <div className="flex flex-col text-center w-full mb-20">
+            <h1 className="sm:text-7xl text-4xl font-black font-mulish text-white heading-glow">
+              What’s there for You?
+            </h1>
+          </div>
+          <FeatureGrid
+            heading="Create your own currency!"
+            subtext="Learn how to create apps on the Tezos blockchain through our exciting
           course. You even learn how to make your own currency 🤑"
-          buttontext="Become a Blockchain Pro "
-          video={createCurrency}
-          videoType="webm"
-          padding="l"
-        />
-        <FeatureGrid
-          heading="Earn while you learn!"
-          subtext="Join the Cryptobot clan by winning your unique Cryptobot and earn real money by trading with others in our marketplace! Major throwback to the  pokémon cards trading era ⚡️"
-          buttontext="Explore mind-blowing Cryptobots"
-          video={earnWhileYouLearn}
-          videoType="mp4"
-          order="2"
-          padding="r"
-        />
+            buttontext="Become a Blockchain Pro "
+            video={createCurrency}
+            videoType="webm"
+            to="/tezos/academy"
+            padding="l"
+          />
+          <FeatureGrid
+            heading="Earn while you learn!"
+            subtext="Join the Cryptobot clan by winning your unique Cryptobot as NFT's and earn real money by trading with others in our marketplace! Major throwback to the  pokémon cards trading era ⚡️"
+            buttontext="Explore mind-blowing Cryptobots"
+            video={earnWhileYouLearn}
+            videoType="mp4"
+            to="/tezos/marketplace"
+            order="2"
+            padding="r"
+          />
+        </div>
       </section>
       {/* Features end here */}
 
@@ -157,7 +171,7 @@ function Landing() {
       <section className="bg-base-800 py-20">
         <div className="container px-30 mx-auto">
           <div className="flex flex-col justify-center w-full text-center  mb-20">
-            <h1 className="sm:text-7xl text-4xl font-black font-mulish text-white">
+            <h1 className="sm:text-7xl text-4xl font-black font-mulish text-white heading-glow">
               Here’s what people say <br /> about us
             </h1>
           </div>
@@ -191,14 +205,17 @@ function Landing() {
       <section className="bg-base-900 py-20">
         <div class="container mx-auto flex flex-col justify-center items-center">
           <div className="flex flex-col text-center w-full mb-6">
-            <h1 className="sm:text-7xl text-4xl font-black font-mulish text-white">
+            <h1 className="sm:text-7xl text-4xl font-black font-mulish text-white heading-glow">
               Ready to start your mission?
             </h1>
           </div>
           <div className="flex justify-center">
-            <Button type="primary" size="lg">
+            <Link
+              className={`py-3 px-9 text-xl bg-primary-600 hover:bg-primary-700 text-white font-bold rounded focus:outline-none`}
+              to="/tezos/academy"
+            >
               Take me to my mission
-            </Button>
+            </Link>
           </div>
           <img src={cryptobots} className="object-cover object-center " />
         </div>

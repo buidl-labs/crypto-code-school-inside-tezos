@@ -5,3 +5,22 @@
 body{
   min-height: 100vh;
 }
+
+/* Remove dropdown from Input Number */
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+/* Heading glow on Landing page */
+.heading-glow{
+  text-shadow: 4px 4px 36px rgba(37, 99, 235, 0.64);
+}

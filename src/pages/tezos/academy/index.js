@@ -1,11 +1,11 @@
 import React, { useEffect, useMemo } from 'react';
-import { graphql, Link } from 'gatsby';
+import { graphql, Link, navigate } from 'gatsby';
 import Layout from 'src/components/Layout/layout';
 import SEO from 'src/components/Seo';
 import Footer from 'src/components/Footer';
-import Cryptobot from 'src/images/cryptobot-yellow.png';
 import DoneIcon from '@material-ui/icons/Done';
 import useChapters from 'src/hooks/use-chapters';
+import { trackEventWithProperties } from 'src/utils/analytics';
 
 const CourseCard = ({ m, i, progress }) => {
   const chapters = useChapters(m.frontmatter.slug);
@@ -37,22 +37,30 @@ const CourseCard = ({ m, i, progress }) => {
         className={`grid grid-cols-2 w-full bg-base-800 border border-base-400 rounded-xl`}
       >
         <div className={`block my-0 mx-auto`}>
-          <img src={m.frontmatter.img.childImageSharp.fluid.src} className="object-cover object-center" />
+          <img
+            src={m.frontmatter.img.childImageSharp.fluid.src}
+            className="object-cover object-center min-h-25rem"
+          />
         </div>
         <div className={`my-auto`}>
-          <h2 className={`font-black text-5xl`}>{m.frontmatter.title}</h2>
+          <h2 className={`font-black text-5xl my-1`}>{m.frontmatter.title}</h2>
           <p className={`text-lg pr-9`}>{m.frontmatter.description}</p>
           {p > 0 && (
             <h3 className={`text-success-500 text-3xl mt-4 font-black`}>
               {p}% complete
             </h3>
           )}
-          <Link
-            to={`/tezos/academy/${m.frontmatter.slug}`}
+          <button
+            onClick={() => {
+              trackEventWithProperties('Module-Click-From-Academy', {
+                slug: m.frontmatter.slug,
+              });
+              navigate(`/tezos/academy/${m.frontmatter.slug}`);
+            }}
             className={`bg-primary-600 mt-4 inline-block py-3 px-9 font-bold text-2xl rounded hover:no-underline`}
           >
             {p === 100 ? 'Revisit' : p > 0 ? 'Continue' : 'Start'} Module
-          </Link>
+          </button>
         </div>
       </div>
     </article>
@@ -103,7 +111,9 @@ const CurriculumOverview = ({
           className={`text-center my-0 mx-auto`}
           style={{ maxWidth: '60vw' }}
         >
-          <h1 className={`text-6xl font-black`}>Welcome to Academy</h1>
+          <h1 className={`text-6xl font-black heading-glow`}>
+            Welcome to Academy
+          </h1>
           <p className={`mt-6 text-2xl`}>
             Get started on your journey of becoming a blockchain pro. Learn how
             to code decentralized apps on the Tezos blockchain using SmartPy and

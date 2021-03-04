@@ -10,7 +10,9 @@ const Footer = ({
   const [nextLink, nextText] = useMemo(() => {
     return nextSlug
       ? [`/tezos/academy/${module}/${nextSlug}`, 'Next']
-      : ['/tezos/academy', 'Finish'];
+      : module === 'module-0'
+      ? ['/tezos/customizebot', 'Finish']
+      : ['/tezos/customizebot', 'Finish'];
   });
 
   const progress =
@@ -25,7 +27,7 @@ const Footer = ({
     >
       <div className={`flex items-center space-x-10`}>
         {prev && (
-          <Link className={`flex items-center hover:no-underline`} to={prev}>
+          <Link className={`flex items-center hover:no-underline focus:outline-none`} to={prev}>
             <ChevronLeftIcon />
             <span>Prev</span>
           </Link>
@@ -34,11 +36,12 @@ const Footer = ({
           {current}/{total}
         </p>
         <button
-          className={`flex items-center hover:no-underline`}
+          className={`flex items-center hover:no-underline focus:outline-none`}
           onClick={() => {
             if (module === 'module-04') {
               markDone();
             }
+
             navigate(nextLink);
           }}
         >

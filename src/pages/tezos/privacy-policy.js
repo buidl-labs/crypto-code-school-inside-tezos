@@ -53,11 +53,7 @@ const PrivacyPolicy = () => {
       <p>
         We share your Personal Information with third parties to help us use
         your Personal Information, as described above.We use amplitude to help
-        us understand how our customers use the Site, You can also opt-out of
-        amplitude here:
-        <a href="javascript:window.Metomic('ConsentManager:show')">
-          manage cookies
-        </a>
+        us understand how our customers use the Site.
       </p>
       <h2>DO NOT TRACK</h2>
       <p>

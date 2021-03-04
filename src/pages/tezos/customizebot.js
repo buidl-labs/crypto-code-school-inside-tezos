@@ -1,7 +1,13 @@
-import React, { Suspense, useRef, useState, useEffect } from 'react';
+import React, {
+  Suspense,
+  useRef,
+  useState,
+  useEffect,
+  useContext,
+} from 'react';
 import NavBar from '../../components/NavBar';
 import Button from '../../components/Buttons';
-import { navigate } from 'gatsby';
+import { navigate, Link } from 'gatsby';
 import { Canvas, useFrame } from 'react-three-fiber';
 import {
   ContactShadows,
@@ -17,10 +23,23 @@ import 'src/utils/react-colorful.css';
 import namedColors from 'color-name-list';
 
 import isUserAtom from 'src/atoms/is-user-atom';
+import userAtom from 'src/atoms/user-atom';
 import { useAtom } from 'jotai';
+
+import cryptobots from 'src/images/crypto-modal.png';
 
 import GLTFExporter from 'three-gltf-exporter';
 
+import { NetworkType } from '@airgap/beacon-sdk';
+import { NETWORK } from 'src/defaults';
+
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import { BeaconContext } from 'src/context/beacon-context';
+import { createUser, batchUpdateProgress } from 'src/api';
+import { trackEvent } from 'src/utils/analytics';
+
+const network =
+  NETWORK === 'delphinet' ? NetworkType.DELPHINET : NetworkType.MAINNET;
 import head1 from '../../assets/CryptobotImages/Head/01xhead.png';
 import head2 from '../../assets/CryptobotImages/Head/02xhead.png';
 import head3 from '../../assets/CryptobotImages/Head/03xhead.png';
@@ -116,10 +135,8 @@ const Bot = ({
   shininess,
 }) => {
   const group = useRef();
-  const { scene } = useGLTF('/compressed.glb');
+  const { scene } = useGLTF('/compressedv5.glb');
   const [hovered, set] = useState(null);
-
-  const link = useRef();
 
   const head = useGroup(scene, 'head');
   const arm = useGroup(scene, 'arm');
@@ -183,14 +200,101 @@ function ModalTextSection({ children }) {
 
 const SavingBotModal = () => {
   return (
-    <BaseModal>
-      <ModalTextSection>
-        <ModalHeading>Saving your 3D Cryptobot on IPFS</ModalHeading>
-        <div className="flex justify-center w-full">
+    <div
+      className={`bg-base-900 bg-opacity-80 absolute inset-0 flex items-center justify-center text-white`}
+    >
+      <div
+        className={`absolute bg-base-700 flex items-center justify-center flex-col py-9 px-24 rounded-3xl`}
+        style={{ maxWidth: `65vw` }}
+      >
+        <div className="flex justify-center w-full mb-5">
           <Loader type="BallTriangle" color="#2563EB" height={80} width={80} />
         </div>
-      </ModalTextSection>
-    </BaseModal>
+        <ModalHeading>Saving your 3D Cryptobot</ModalHeading>
+      </div>
+    </div>
+  );
+};
+
+const WelcomeModal = ({ close, isUser }) => {
+  const [user, setUser] = useAtom(userAtom);
+  const signedIn = isUser && user.verified;
+
+  const beacon = useContext(BeaconContext);
+
+  async function signInHandler() {
+    if (typeof beacon === `undefined`) {
+      return;
+    }
+    const url =
+      typeof window !== 'undefined' ? window.location.pathname : '/tezos';
+
+    let acc = await beacon.client.getActiveAccount({
+      network: {
+        type: network,
+      },
+    });
+
+    if (acc) {
+      let u = await createUser(acc.address);
+      if (u.verified) {
+        console.log(`u is verified`);
+        setUser(u);
+        let progress =
+          typeof window !== `undefined` && localStorage.getItem('progress');
+        if (progress) {
+          progress = JSON.parse(progress);
+          const res = await batchUpdateProgress(u, progress);
+          console.log(res);
+        }
+        return;
+      } else navigate('/auth', { state: { pathname: url } });
+      console.log(acc);
+    } else {
+      navigate('/auth', { state: { pathname: url } });
+    }
+  }
+
+  return (
+    <div
+      className={`bg-base-900 bg-opacity-80 absolute inset-0 flex items-center justify-center text-white`}
+    >
+      <div
+        className={`absolute bg-base-700 flex items-center justify-center flex-col py-9 px-24 rounded-3xl`}
+        style={{ maxWidth: `65vw` }}
+      >
+        <h3 className={`text-4xl font-black`}>Congratulations</h3>
+        <p className={`text-lg mt-4 text-center`}>
+          You have earned a Unique Cryptobot You can customise it and share it
+          with your friends.
+          {signedIn ? (
+            <p>Let’s do it 🚀</p>
+          ) : (
+            <p>Please Sign in to customise and claim your bot.</p>
+          )}
+        </p>
+        <img src={cryptobots} className={`mt-6`} />
+        <div className={`flex items-center flex-col`}>
+          <button
+            className={`bg-primary-700 font-bold text-2xl px-9 py-3 rounded focus:outline-none`}
+            onClick={signedIn ? close : signInHandler}
+          >
+            {signedIn ? `Take me to my Cryptobot` : `Sign in`}
+          </button>
+          <Link
+            to={'/tezos/academy'}
+            className={`flex mt-6 justify-center text-lg font-bold items-center`}
+          >
+            <span>Go back to academy</span>
+            <span>
+              {' '}
+              <ChevronRightIcon className={`ml-2`} />
+            </span>
+          </Link>
+        </div>
+      </div>
+      ;
+    </div>
   );
 };
 
@@ -200,6 +304,8 @@ const Customizer = () => {
   const [armCount, setArmCount] = useState(0);
   const [bodyCount, setBodyCount] = useState(0);
   const [legCount, setLegCount] = useState(0);
+
+  const [isModalOpen, setIsModalOpen] = useState(true);
 
   const [showSavingBotModel, setShowSavingBotModel] = useState(false);
   const [shininess, setShininess] = useState(0);
@@ -260,15 +366,6 @@ const Customizer = () => {
   });
 
   const [isUser] = useAtom(isUserAtom);
-
-  useEffect(() => {
-    // console.log(user, isUser);
-    if (!isUser) {
-      const url =
-        typeof window !== 'undefined' ? window.location.pathname : '/tezos';
-      navigate('/auth', { state: { pathname: url } });
-    }
-  }, []);
 
   const getMeshName = name => {
     const filterType = Object.keys(botColors.items);
@@ -392,15 +489,8 @@ const Customizer = () => {
   return (
     <div
       style={{ background: 'rgba(55, 65, 81)' }}
-      className="h-screen bg-grey-900"
+      className="h-screen bg-grey-900 relative"
     >
-      {showSavingBotModel && (
-        <div
-          className={`bg-base-900 min-h-screen text-white flex items-center justify-center`}
-        >
-          <SavingBotModal />
-        </div>
-      )}
       <div id="main" className="relative h-full">
         <div
           id="editor"
@@ -719,7 +809,6 @@ const Customizer = () => {
                       getMeshName={getMeshName}
                       setBotColors={setBotColors}
                       shininess={shininess}
-                      upload3dModel={upload3dModel}
                     />
                     <Environment files="royal_esplanade_1k.hdr" />
                   </Suspense>
@@ -772,6 +861,8 @@ const Customizer = () => {
                     state.items.body,
                     state.items.leg,
                   );
+
+                  trackEvent('Claim-Bot');
                 }}
                 size="sm"
                 type="primary"
@@ -853,6 +944,10 @@ const Customizer = () => {
           </div>
         </div>
       </div>
+      {isModalOpen && (
+        <WelcomeModal close={() => setIsModalOpen(false)} isUser={isUser} />
+      )}
+      {showSavingBotModel && <SavingBotModal />}
     </div>
   );
 };
