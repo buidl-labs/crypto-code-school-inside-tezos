@@ -2451,7 +2451,9 @@ class Test:
                 contract = window.smartmlCtx.call("importContract", window.contracts[cIndex].contract.export())
                 compiledContract = window.smartmlCtx.call("compileContract", contract)
                 michelson = window.smartmlCtx.call("compiledContract_to_michelson", compiledContract)
-                results.append(michelson)
+                storage = window.smartmlCtx.call(
+                    'compileContractStorage', contract)
+                results.append({'code': michelson, 'initialStorage': storage})
                 window.editor.appendOutput(michelson)
 
             return results
