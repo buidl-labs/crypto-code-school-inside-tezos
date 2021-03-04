@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Link } from 'gatsby';
+import { Link} from 'gatsby';
 import NavBar from '../../components/NavBar';
 import Button from '../../components/Buttons';
 import Footer from '../../components/Footer';
 import PlayButton from '../../components/LandingPage/playbutton';
 
-import learningInterface from '../../images/Interface.png';
+import hero from '../../images/hero.png';
 import cryptobots from '../../images/cryptobots.png';
 import earnWhileYouLearn from 'src/assets/videos/earn while you learn-anim.mp4';
 import createCurrency from 'src/assets/videos/anim-create-currency.mp4';
@@ -90,7 +90,7 @@ function Landing() {
         >
           <MdClose size="24px" />
         </div>
-        <div >
+        <div>
           <iframe
             width="800"
             height="450"
@@ -116,7 +116,10 @@ function Landing() {
       )}
 
       <NavBar />
-      <section className="bg-base-900">
+      <section
+        className="bg-base-900 justify-center items-center bg-no-repeat bg-top lg:bg-auto bg-contain"
+        style={{ backgroundImage: `url(${hero})` }}
+      >
         <div className="container mx-auto flex px-5 py-24 items-center justify-center flex-col">
           <button
             className="focus:outline-none"
