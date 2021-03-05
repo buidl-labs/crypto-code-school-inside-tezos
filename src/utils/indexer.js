@@ -1,52 +1,73 @@
-import { APP_NAME, NETWORK, CONTRACT_ADDRESS } from 'src/defaults';
+import { APP_NAME, INDEXER_NETWORK, CONTRACT_ADDRESS } from 'src/defaults';
+
+function sanitizeJsonUri(origin) {
+  if (origin.startsWith('ipfs://')) {
+    return `https://ipfs.io/ipfs/${origin.substring(7)}/`;
+  }
+
+  return null;
+}
+
+export function sanitizeIpfsLink(origin) {
+  if (origin.startsWith('ipfs://')) {
+    return origin.substring(7);
+  }
+
+  return null;
+}
 
 export const getAllNFTsMetadata = async () => {
   const response = await fetch(
-    `https://api.better-call.dev/v1/contract/${NETWORK}/${CONTRACT_ADDRESS}/storage`,
+    `https://api.better-call.dev/v1/contract/${INDEXER_NETWORK}/${CONTRACT_ADDRESS}/storage`,
   );
   const result = await response.json();
   const tokens = result.children.find(elm => elm.name === 'tokens');
 
   const tokensMetataData = await fetch(
-    `https://api.better-call.dev/v1/bigmap/${NETWORK}/${tokens.value}`,
+    `https://api.better-call.dev/v1/bigmap/${INDEXER_NETWORK}/${tokens.value}`,
   );
   const tokensMetataDataJSON = await tokensMetataData.json();
 
   const tk = await fetch(
-    `https://api.better-call.dev/v1/bigmap/${NETWORK}/${tokens.value}/keys?size=${tokensMetataDataJSON.active_keys}`,
+    `https://api.better-call.dev/v1/bigmap/${INDEXER_NETWORK}/${tokens.value}/keys?size=${tokensMetataDataJSON.active_keys}`,
   );
   const all_tokens = await tk.json();
-  console.log('all_tokensxxx', all_tokens);
+  // console.log('all_tokensxxx', all_tokens);
 
   if (typeof all_tokens === 'undefined' || all_tokens.length <= 0) {
     return [];
   }
 
-  const filtered = all_tokens.map(elm => {
-    return {
-      tokenId: elm.data.key.value,
-      uri: elm.data.value.children[0].children[0].value,
-      timestamp: elm.data.timestamp,
-    };
-  });
+  const grabContent = elm =>
+    fetch(sanitizeJsonUri(elm.data.value.children[0].value))
+      .then(res => res.json())
+      .then(obj => {
+        return {
+          tokenId: elm.data.key.value,
+          uri: sanitizeIpfsLink(obj.artifactUri),
+          timestamp: elm.data.timestamp,
+        };
+      });
+
+  const filtered = await Promise.all(all_tokens.map(grabContent));
 
   return filtered;
 };
 
 export const nftOnOffer = async () => {
   const response = await fetch(
-    `https://api.better-call.dev/v1/contract/${NETWORK}/${CONTRACT_ADDRESS}/storage`,
+    `https://api.better-call.dev/v1/contract/${INDEXER_NETWORK}/${CONTRACT_ADDRESS}/storage`,
   );
   const result = await response.json();
   const tokens = result.children.find(elm => elm.name === 'offer');
 
   const offerMetadata = await fetch(
-    `https://api.better-call.dev/v1/bigmap/${NETWORK}/${tokens.value}`,
+    `https://api.better-call.dev/v1/bigmap/${INDEXER_NETWORK}/${tokens.value}`,
   );
   const offerMetadataJSON = await offerMetadata.json();
 
   const tk = await fetch(
-    `https://api.better-call.dev/v1/bigmap/${NETWORK}/${tokens.value}/keys?size=${offerMetadataJSON.active_keys}`,
+    `https://api.better-call.dev/v1/bigmap/${INDEXER_NETWORK}/${tokens.value}/keys?size=${offerMetadataJSON.active_keys}`,
   );
   const offers = await tk.json();
 
@@ -75,7 +96,7 @@ export const fetchAllNfts = async () => {
     const tokensOnOffer = await nftOnOffer();
     const tokenHolders = await getAllTokenHolders();
 
-    console.log('allTokens', allTokens);
+    // console.log('allTokens', allTokens);
 
     const combined = allTokens.map(elm => {
       const token = tokensOnOffer.find(
@@ -165,18 +186,18 @@ export const getNftInfoByXTZAddress = async (address = '') => {
   const tokensOnOffer = await nftOnOffer();
 
   const response = await fetch(
-    `https://api.better-call.dev/v1/contract/${NETWORK}/${CONTRACT_ADDRESS}/storage`,
+    `https://api.better-call.dev/v1/contract/${INDEXER_NETWORK}/${CONTRACT_ADDRESS}/storage`,
   );
   const result = await response.json();
   const tokens = result.children.find(elm => elm.name === 'ledger');
 
   const ledgerMetadata = await fetch(
-    `https://api.better-call.dev/v1/bigmap/${NETWORK}/${tokens.value}`,
+    `https://api.better-call.dev/v1/bigmap/${INDEXER_NETWORK}/${tokens.value}`,
   );
   const ledgerMetadataJSON = await ledgerMetadata.json();
 
   const tk = await fetch(
-    `https://api.better-call.dev/v1/bigmap/${NETWORK}/${tokens.value}/keys?size=${ledgerMetadataJSON.active_keys}`,
+    `https://api.better-call.dev/v1/bigmap/${INDEXER_NETWORK}/${tokens.value}/keys?size=${ledgerMetadataJSON.active_keys}`,
   );
 
   const ledger = await tk.json();
@@ -220,18 +241,18 @@ export const getNftInfoByXTZAddress = async (address = '') => {
 const getAllTokenHolders = async () => {
   try {
     const response = await fetch(
-      `https://api.better-call.dev/v1/contract/${NETWORK}/${CONTRACT_ADDRESS}/storage`,
+      `https://api.better-call.dev/v1/contract/${INDEXER_NETWORK}/${CONTRACT_ADDRESS}/storage`,
     );
     const result = await response.json();
     const tokens = result.children.find(elm => elm.name === 'ledger');
 
     const ledgerMetadata = await fetch(
-      `https://api.better-call.dev/v1/bigmap/${NETWORK}/${tokens.value}`,
+      `https://api.better-call.dev/v1/bigmap/${INDEXER_NETWORK}/${tokens.value}`,
     );
     const ledgerMetadataJSON = await ledgerMetadata.json();
 
     const tk = await fetch(
-      `https://api.better-call.dev/v1/bigmap/${NETWORK}/${tokens.value}/keys?size=${ledgerMetadataJSON.active_keys}`,
+      `https://api.better-call.dev/v1/bigmap/${INDEXER_NETWORK}/${tokens.value}/keys?size=${ledgerMetadataJSON.active_keys}`,
     );
 
     const ledger = await tk.json();
