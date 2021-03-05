@@ -15,15 +15,10 @@ import {
   verifyUser,
   batchUpdateProgress,
 } from '../api';
-import { NetworkType } from '@airgap/beacon-sdk';
 import { Magic } from 'magic-sdk';
 import { NETWORK } from 'src/defaults';
 
 import { MdClose } from 'react-icons/md';
-
-// To connect to Delphinet, change this to NetworkType.DELPHINET
-const network =
-  NETWORK === 'delphinet' ? NetworkType.DELPHINET : NetworkType.MAINNET;
 
 function isBrowserSupported() {
   if (typeof window !== 'undefined') {
@@ -313,7 +308,7 @@ const AuthPage = ({ location }) => {
   async function connectWallet() {
     const acc = await beacon.client.getActiveAccount({
       network: {
-        type: network,
+        type: NETWORK,
       },
     });
     console.log(acc);
@@ -325,7 +320,7 @@ const AuthPage = ({ location }) => {
       try {
         const resp = await beacon.client.requestPermissions({
           network: {
-            type: network,
+            type: NETWORK,
           },
         });
         if (!resp.address) throw new Error();
