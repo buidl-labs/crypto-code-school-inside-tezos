@@ -8,7 +8,7 @@ import React, {
 import NavBar from '../../components/NavBar';
 import Button from '../../components/Buttons';
 import { navigate, Link } from 'gatsby';
-import { Canvas, useFrame } from 'react-three-fiber';
+import { Canvas, useFrame, useThree } from 'react-three-fiber';
 import {
   ContactShadows,
   Environment,
@@ -30,7 +30,6 @@ import cryptobots from 'src/images/crypto-modal.png';
 
 import GLTFExporter from 'three-gltf-exporter';
 
-import { NetworkType } from '@airgap/beacon-sdk';
 import { NETWORK } from 'src/defaults';
 
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -38,8 +37,6 @@ import { BeaconContext } from 'src/context/beacon-context';
 import { createUser, batchUpdateProgress } from 'src/api';
 import { trackEvent } from 'src/utils/analytics';
 
-const network =
-  NETWORK === 'delphinet' ? NetworkType.DELPHINET : NetworkType.MAINNET;
 import head1 from '../../assets/CryptobotImages/Head/01xhead.png';
 import head2 from '../../assets/CryptobotImages/Head/02xhead.png';
 import head3 from '../../assets/CryptobotImages/Head/03xhead.png';
@@ -156,7 +153,7 @@ const Bot = ({
       onPointerMissed={() => (state.current = null)}
       onPointerDown={e => {
         e.stopPropagation();
-        console.log(e.object.name);
+
         setBotColors(current => {
           const copy = { ...current };
           copy.current = getMeshName(e.object.name);
@@ -231,7 +228,7 @@ const WelcomeModal = ({ close, isUser }) => {
 
     let acc = await beacon.client.getActiveAccount({
       network: {
-        type: network,
+        type: NETWORK,
       },
     });
 
@@ -298,6 +295,18 @@ const WelcomeModal = ({ close, isUser }) => {
   );
 };
 
+const CustomAmbientLight = ({ setImage, grabImage }) => {
+  const canvas = useThree().gl.domElement;
+
+  useEffect(() => {
+    if (grabImage) {
+      setImage(canvas.toDataURL('image/png'));
+    }
+  }, [grabImage]);
+
+  return <ambientLight intensity={0.5} />;
+};
+
 const Customizer = () => {
   const [selectPart, setselectPart] = useState(1);
   const [headCount, setHeadCount] = useState(0);
@@ -306,7 +315,9 @@ const Customizer = () => {
   const [legCount, setLegCount] = useState(0);
 
   const [isModalOpen, setIsModalOpen] = useState(true);
-
+  const [claimButtonClicked, setClaimButtonClicked] = useState(false);
+  const [image, setImage] = useState('');
+  const [grabImage, setGrabImage] = useState(false);
   const [showSavingBotModel, setShowSavingBotModel] = useState(false);
   const [shininess, setShininess] = useState(0);
   const [showColorPicker, updateShowColorPicker] = useState(false);
@@ -365,7 +376,34 @@ const Customizer = () => {
     },
   });
 
+  function uploadData() {
+    upload3dModel(
+      state.items.head,
+      state.items.arm,
+      state.items.body,
+      state.items.leg,
+    );
+  }
+
   const [isUser] = useAtom(isUserAtom);
+
+  useEffect(() => {
+    if (claimButtonClicked) {
+      /*
+        1. Upload 3d model to ipfs.
+        2. Upload Cryptobot image to ipfs
+        3. Navigate to /claim-transaction with ipfsHash of image and 3d model as state
+      */
+      setGrabImage(true);
+    }
+  }, [claimButtonClicked]);
+
+  useEffect(() => {
+    if (image !== '') {
+      // console.log('image -> ', image);
+      uploadData();
+    }
+  }, [image]);
 
   const getMeshName = name => {
     const filterType = Object.keys(botColors.items);
@@ -454,33 +492,72 @@ const Customizer = () => {
       { binary: true },
     );
 
-    function upload(blob) {
+    async function upload(blob) {
       setShowSavingBotModel(true);
-      var fd = new FormData();
-      // fd.append('bot', blob, 'bot.glb');
-      fd.append('file', blob);
-      fetch(
+
+      var fdModel = new FormData();
+
+      fdModel.append('file', blob);
+      const res = await fetch(
         'https://cryptoverse-wars-backend-nfjp.onrender.com/api/upload-3d-model-to-ipfs',
         {
           method: 'post',
-          body: fd,
+          body: fdModel,
         },
-      )
-        .then(res => {
-          // console.log(res)
-          return res.json();
-        })
-        .then(res => {
-          console.log(res.body.ipfsHash);
-          console.log('yo', res);
-          navigate('/tezos/claim-transaction', {
-            state: { uri: res.body.ipfsHash },
-          });
-        })
-        .catch(err => {
-          console.log(err);
-          setShowSavingBotModel(false);
-        });
+      );
+
+      const resJSON = await res.json();
+
+      var fdImage = new FormData();
+      // console.log('img before converting to blob 🔥->', image);
+      const imageBlob = new Blob([image], {
+        type: 'image/png',
+      });
+      // console.log('blob 🔥', imageBlob);
+      fdImage.append('file', imageBlob);
+      // console.log('fdImage 🔥', fdImage);
+      // ('https://cryptoverse-wars-backend-nfjp.onrender.com/api/upload-image-to-ipfs');
+      const resImage = await fetch(
+        'https://cryptoverse-wars-backend-nfjp.onrender.com/api/upload-image-to-ipfs',
+        {
+          method: 'post',
+          body: fdImage,
+        },
+      );
+
+      const resImageJSON = await resImage.json();
+
+      // console.log('resImageJSON', resImageJSON);
+      // console.log('resJSON', resJSON);
+
+      const resMetadata = await fetch(
+        'https://cryptoverse-wars-backend-nfjp.onrender.com/api/upload-json-metadata-to-ipfs',
+        {
+          method: 'post',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            artifactURI: resJSON.body.ipfsHash,
+            displayURI: resImageJSON.body.ipfsHash,
+          }),
+        },
+      );
+
+      const jsonMetadata = await resMetadata.json();
+
+      // console.log('jsonMetadata', jsonMetadata);
+
+      // console.log('3d model hash --> 🔥', await resJSON.body.ipfsHash);
+      // console.log('image hash -> 🔥', await resImageJSON.body.ipfsHash);
+      // console.log('yo', await resJSON);
+      navigate('/tezos/claim-transaction', {
+        state: {
+          modelURI: resJSON.body.ipfsHash,
+          jsonURI: jsonMetadata.ipfsHash,
+        },
+      });
     }
   };
 
@@ -791,8 +868,13 @@ const Customizer = () => {
                   concurrent
                   pixelRatio={[1, 1.5]}
                   camera={{ position: [0, 0, 5.75], fov: 80 }}
+                  gl={{ preserveDrawingBuffer: true }}
                 >
-                  <ambientLight intensity={0.5} />
+                  <CustomAmbientLight
+                    setImage={setImage}
+                    image={image}
+                    grabImage={claimButtonClicked == true}
+                  />
                   <spotLight
                     intensity={0.3}
                     angle={0.1}
@@ -838,7 +920,7 @@ const Customizer = () => {
                         namedColors[
                           Math.floor(Math.random() * namedColors.length)
                         ];
-                      console.log(elm, item);
+
                       copy.items[elm] = item.hex;
                     });
                     return copy;
@@ -850,17 +932,11 @@ const Customizer = () => {
 
               <Button
                 onClick={() => {
+                  setClaimButtonClicked(true);
                   setHeadCount(headCount);
                   setBodyCount(bodyCount);
                   setArmCount(armCount);
                   setLegCount(legCount);
-
-                  upload3dModel(
-                    state.items.head,
-                    state.items.arm,
-                    state.items.body,
-                    state.items.leg,
-                  );
 
                   trackEvent('Claim-Bot');
                 }}
@@ -896,7 +972,6 @@ const Customizer = () => {
                   name="roughness"
                   value={shininess}
                   onChange={e => {
-                    console.log(e.target.value);
                     setShininess(e.target.value);
                   }}
                   min="0"

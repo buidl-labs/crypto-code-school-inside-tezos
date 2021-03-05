@@ -1,18 +1,9 @@
 import { TezosToolkit } from '@taquito/taquito';
 import { NETWORK } from 'src/defaults';
-import { NetworkType } from '@airgap/beacon-sdk';
 
-let TezosObj;
-
-if (NETWORK === 'delphinet') {
-  TezosObj = new TezosToolkit('https://api.tez.ie/rpc/delphinet');
-} else {
-  TezosObj = new TezosToolkit(' https://api.tez.ie/rpc/mainnet');
-}
+let TezosObj = new TezosToolkit(`https://api.tez.ie/rpc/${NETWORK}`);
 
 export const connectToBeacon = async walletContext => {
-  const network =
-    NETWORK === 'delphinet' ? NetworkType.DELPHINET : NetworkType.MAINNET;
   let globalWallet;
 
   if (!globalWallet) {
@@ -26,7 +17,7 @@ export const connectToBeacon = async walletContext => {
 
   const account = await globalWallet.client.getActiveAccount({
     network: {
-      type: network,
+      type: NETWORK,
     },
   });
 
@@ -38,7 +29,7 @@ export const connectToBeacon = async walletContext => {
   // Send permission request to the connected wallet. This will either be the browser extension, or a wallet over the P2P network.
   await globalWallet.requestPermissions({
     network: {
-      type: network,
+      type: NETWORK,
     },
   });
 
