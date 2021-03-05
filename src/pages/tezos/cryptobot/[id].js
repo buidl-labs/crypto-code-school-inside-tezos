@@ -18,7 +18,10 @@ import Loader from 'react-loader-spinner';
 import { BeaconContext } from 'src/context/beacon-context';
 import { CONTRACT_ADDRESS } from 'src/defaults';
 import { connectToBeacon, Tezos } from 'src/utils/wallet';
-import { MdClose } from 'react-icons/md';
+
+import Clipboard from 'react-clipboard.js';
+
+import { MdClose, MdDone } from 'react-icons/md';
 import userAtom from 'src/atoms/user-atom';
 import isUserAtom from 'src/atoms/is-user-atom';
 import { useAtom } from 'jotai';
@@ -50,6 +53,8 @@ function BotView({ location }) {
   const [sellNowStep, updateSellNowStep] = useState(0);
 
   const [claimButtonDisabled, setClaimButtonDisabledStatus] = useState(true);
+
+  const [copyLink, setCopyLink] = useState(false);
 
   const tokenId = useMemo(() => {
     const pathArr =
@@ -490,7 +495,7 @@ function BotView({ location }) {
                       <a
                         href={`https://twitter.com/intent/tweet?text=Look at this cool Cryptobot at https://cryptocodeschool.in/tezos/cryptobot/${bot.tokenId}&related=twitter%3ABUIDLabs`}
                         target="_blank"
-                        className="w-12 h-12 inline-flex items-center justify-center rounded-full bg-primary-600 text-white"
+                        className="w-12 h-12 inline-flex items-center justify-center rounded-full bg-primary-600 text-white focus:outline-none"
                       >
                         <svg
                           width="24"
@@ -507,24 +512,44 @@ function BotView({ location }) {
                       </a>
 
                       {/* copy icon */}
-                      <button className="w-12 h-12 inline-flex items-center justify-center rounded-full bg-primary-600 text-white ">
-                        <svg
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
+                      <button
+                        className={
+                          'w-12 h-12 inline-flex items-center justify-center rounded-full text-white focus:outline-none  ' +
+                          (copyLink==1 ? 'bg-success-600' : 'bg-primary-600')
+                        }
+                      >
+                        <Clipboard
+                          data-clipboard-text={`https://cryptocodeschool.in/tezos/cryptobot/${bot.tokenId}`}
+                          onClick={() => {
+                            setCopyLink(true);
+                          }}
                         >
-                          <path
-                            d="M17 7H13V9H17C18.65 9 20 10.35 20 12C20 13.65 18.65 15 17 15H13V17H17C19.76 17 22 14.76 22 12C22 9.24 19.76 7 17 7Z"
-                            fill="white"
-                          />
-                          <path
-                            d="M11 15H7C5.35 15 4 13.65 4 12C4 10.35 5.35 9 7 9H11V7H7C4.24 7 2 9.24 2 12C2 14.76 4.24 17 7 17H11V15Z"
-                            fill="white"
-                          />
-                          <path d="M8 11H16V13H8V11Z" fill="white" />
-                        </svg>
+                          {copyLink ? (
+                            <div className="focus:outline-none text-white">
+                              <MdDone />
+                            </div>
+                          ) : (
+                            <div className="focus:outline-none">
+                              <svg
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M17 7H13V9H17C18.65 9 20 10.35 20 12C20 13.65 18.65 15 17 15H13V17H17C19.76 17 22 14.76 22 12C22 9.24 19.76 7 17 7Z"
+                                  fill="white"
+                                />
+                                <path
+                                  d="M11 15H7C5.35 15 4 13.65 4 12C4 10.35 5.35 9 7 9H11V7H7C4.24 7 2 9.24 2 12C2 14.76 4.24 17 7 17H11V15Z"
+                                  fill="white"
+                                />
+                                <path d="M8 11H16V13H8V11Z" fill="white" />
+                              </svg>
+                            </div>
+                          )}
+                        </Clipboard>
                       </button>
                     </div>
                     {/* social icons ends*/}
