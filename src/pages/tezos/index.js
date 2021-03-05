@@ -1,15 +1,16 @@
-import React, { useEffect } from 'react';
-import { Link } from 'gatsby';
+import React, { useState } from 'react';
+import { Link} from 'gatsby';
 import NavBar from '../../components/NavBar';
 import Button from '../../components/Buttons';
 import Footer from '../../components/Footer';
 import PlayButton from '../../components/LandingPage/playbutton';
 
-import learningInterface from '../../images/Interface.png';
+import hero from '../../images/hero.png';
 import cryptobots from '../../images/cryptobots.png';
 import earnWhileYouLearn from 'src/assets/videos/earn while you learn-anim.mp4';
 import createCurrency from 'src/assets/videos/anim-create-currency.mp4';
 import FinanceIllustration from 'src/assets/wealth.png';
+import { MdClose } from 'react-icons/md';
 
 const FeatureGrid = ({
   heading,
@@ -76,14 +77,58 @@ const TestimonialCard = ({ link, img, name, username, text }) => {
 };
 
 function Landing() {
+  const [videoModal, setVideoModal] = useState(0);
+  function VideoModal() {
+    return (
+      <div
+        className={`bg-base-700 px-12 py-16 rounded-lg relative flex flex-col items-center shadow-lg text-center`}
+        style={{ maxWidth: '60vw' }}
+      >
+        <div
+          onClick={() => setVideoModal(0)}
+          className="h-12 w-12 rounded-full bg-base-500 absolute right-8 top-8 cursor-pointer flex items-center justify-center"
+        >
+          <MdClose size="24px" />
+        </div>
+        <div>
+          <iframe
+            width="800"
+            height="450"
+            src="https://www.youtube.com/embed/26XkW67TaCw?autoplay=1"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            autoPlay
+          ></iframe>
+        </div>
+      </div>
+    );
+  }
   return (
     <div>
+      {videoModal === 1 && (
+        <div
+          className="bg-base-700 bg-opacity-75 justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+          onClick={() => setVideoModal(false)}
+        >
+          <VideoModal />
+        </div>
+      )}
+
       <NavBar />
-      <section className="bg-base-900">
+      <section
+        className="bg-base-900 justify-center items-center bg-no-repeat bg-top lg:bg-auto bg-contain"
+        style={{ backgroundImage: `url(${hero})` }}
+      >
         <div className="container mx-auto flex px-5 py-24 items-center justify-center flex-col">
-          <a href="#" alt="video">
+          <button
+            className="focus:outline-none"
+            style={{ transition: 'all .15s ease' }}
+            onClick={() => setVideoModal(1)}
+          >
+            {' '}
             <PlayButton />
-          </a>
+          </button>
           <div className="text-center lg:w-2/3 w-full">
             <h1 className="sm:text-7xl text-4xl mb-4 text-white font-black heading-glow">
               Learn to code on the blockchain, the fun way!

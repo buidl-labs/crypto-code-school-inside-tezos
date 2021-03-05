@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect, createRef } from 'react';
-import { Link } from 'gatsby';
+import { Link, navigate } from 'gatsby';
 import { useAsync, useWindowSize } from 'react-use';
 import Loader from 'react-loader-spinner';
 import Popper from 'popper.js';
@@ -13,7 +13,8 @@ import { BeaconContext } from 'src/context/beacon-context';
 import { convertMutezToXtz, getXTZPriceInUSD } from 'src/utils/indexer';
 import { MdDone } from 'react-icons/md';
 import Confetti from 'react-confetti';
-
+import Clipboard from 'react-clipboard.js';
+import ErrorBot from 'src/images/error.png';
 import userAtom from 'src/atoms/user-atom';
 import isUserAtom from 'src/atoms/is-user-atom';
 import { useAtom } from 'jotai';
@@ -136,11 +137,46 @@ function Transaction({ location }) {
   const [opHash, setOpHash] = useState(null);
   const [networkFeeEstimate, setNetworkFeeEstimate] = useState(0);
   const xtzPrice = location.state ? location.state.xtzPrice : null;
-  const bot = location.state ? location.state.bot : null;
+  const bot = location.state ? location.state.bot : false;
+  console.log('cryptobot object :', bot);
+  const [copyLink, setCopyLink] = useState(false);
   const { width, height } = useWindowSize();
   const [user, setUser] = useAtom(userAtom);
 
   const [claimButtonDisabled, setClaimButtonDisabledStatus] = useState(true);
+
+  const ErrorModal = () => {
+    return (
+        <div
+          className={`bg-base-700 px-12 py-8 rounded-lg relative flex flex-col items-center shadow-lg text-center text-white`}
+          style={{ maxWidth: '40vw' }}
+        >
+          <img src={ErrorBot}/>
+          <div className={`mt-6`}>
+            <h4 className={`text-2xl font-extrabold`}>Cryptobot not Found</h4>
+            <p className={`mt-6 text-lg`}>
+              We couldn’t find the cryptobot you were trying to buy. Explore
+              marketplace to buy more cryptobots or build your own in Academy.
+            </p>
+          </div>
+          <div className={`flex items-center flex-col w-full mb-2`}>
+            <Link
+              to={'/tezos/marketplace'}
+              className={`w-full bg-primary-600 hover:bg-primary-700 text-white font-bold rounded focus:outline-none mt-8 py-3 px-9 text-xl`}
+            >
+              Explore Marketplace
+            </Link>
+            <Link
+              to={'/tezos/academy'}
+              className={`w-full border-2 border-primary-600 hover:border-primary-700 text-white font-bold rounded focus:outline-none mt-4 py-3 px-9 text-xl`}
+            >
+              Go to Academy
+            </Link>
+          </div>
+        </div>
+        
+    );
+  };
 
   const buyCryptobot = async (mutez, tokenId) => {
     try {
@@ -375,15 +411,28 @@ function Transaction({ location }) {
                   Share your unique cryptobot with your friends and start
                   trading with other on marketplace!
                 </h4>
-                <h4 className="text-white text-center text-lg font-mulish mt-8">
+                <div className="text-white text-center text-lg font-mulish mt-8">
                   Here’s the link to your unique cryptobot:
-                  https://cryptocodeschool.in/mybot-4433
-                </h4>
+                  <a
+                    href={`https://cryptocodeschool.in/tezos/cryptobot/${bot.tokenId}`}
+                    className="text-primary-400 underline"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {' '}
+                    https://cryptocodeschool.in/tezos/cryptobot/{bot.tokenId}
+                  </a>
+                </div>
 
                 {/* social icons start */}
                 <div className="flex flex-row space-x-6 justify-center mt-4">
                   {/* twitter icon */}
-                  <div className="w-12 h-12 inline-flex items-center justify-center rounded-full bg-primary-600 text-white">
+                  {/* twitter icon */}
+                  <a
+                    href={`https://twitter.com/intent/tweet?text=Look at this cool Cryptobot at https://cryptocodeschool.in/tezos/cryptobot/${bot.tokenId}&related=twitter%3ABUIDLabs`}
+                    target="_blank"
+                    className="w-12 h-12 inline-flex items-center justify-center rounded-full bg-primary-600 text-white focus:outline-none"
+                  >
                     <svg
                       width="24"
                       height="24"
@@ -396,42 +445,48 @@ function Transaction({ location }) {
                         fill="white"
                       />
                     </svg>
-                  </div>
-                  {/* fb icon */}
-                  <div className="w-12 h-12 inline-flex items-center justify-center rounded-full bg-primary-600 text-white ">
-                    <svg
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M13.397 20.9969V12.8009H16.162L16.573 9.59191H13.397V7.54791C13.397 6.62191 13.655 5.98791 14.984 5.98791H16.668V3.12691C15.849 3.03891 15.025 2.99691 14.201 2.99991C11.757 2.99991 10.079 4.49191 10.079 7.23091V9.58591H7.33203V12.7949H10.085V20.9969H13.397Z"
-                        fill="white"
-                      />
-                    </svg>
-                  </div>
+                  </a>
+
                   {/* copy icon */}
-                  <div className="w-12 h-12 inline-flex items-center justify-center rounded-full bg-primary-600 text-white ">
-                    <svg
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
+                  <button
+                    className={
+                      'w-12 h-12 inline-flex items-center justify-center rounded-full text-white focus:outline-none  ' +
+                      (copyLink == 1 ? 'bg-success-600' : 'bg-primary-600')
+                    }
+                  >
+                    <Clipboard
+                      data-clipboard-text={`https://cryptocodeschool.in/tezos/cryptobot/${bot.tokenId}`}
+                      onClick={() => {
+                        setCopyLink(true);
+                      }}
                     >
-                      <path
-                        d="M17 7H13V9H17C18.65 9 20 10.35 20 12C20 13.65 18.65 15 17 15H13V17H17C19.76 17 22 14.76 22 12C22 9.24 19.76 7 17 7Z"
-                        fill="white"
-                      />
-                      <path
-                        d="M11 15H7C5.35 15 4 13.65 4 12C4 10.35 5.35 9 7 9H11V7H7C4.24 7 2 9.24 2 12C2 14.76 4.24 17 7 17H11V15Z"
-                        fill="white"
-                      />
-                      <path d="M8 11H16V13H8V11Z" fill="white" />
-                    </svg>
-                  </div>
+                      {copyLink ? (
+                        <div className="focus:outline-none text-white">
+                          <MdDone />
+                        </div>
+                      ) : (
+                        <div className="focus:outline-none">
+                          <svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M17 7H13V9H17C18.65 9 20 10.35 20 12C20 13.65 18.65 15 17 15H13V17H17C19.76 17 22 14.76 22 12C22 9.24 19.76 7 17 7Z"
+                              fill="white"
+                            />
+                            <path
+                              d="M11 15H7C5.35 15 4 13.65 4 12C4 10.35 5.35 9 7 9H11V7H7C4.24 7 2 9.24 2 12C2 14.76 4.24 17 7 17H11V15Z"
+                              fill="white"
+                            />
+                            <path d="M8 11H16V13H8V11Z" fill="white" />
+                          </svg>
+                        </div>
+                      )}
+                    </Clipboard>
+                  </button>
                 </div>
                 {/* social icons ends*/}
                 <h4 className="text-white text-center text-lg font-mulish mt-6">
@@ -455,6 +510,11 @@ function Transaction({ location }) {
           </div>
         </div>
       </div>
+
+      {!bot && ( <div
+          className="bg-base-700 bg-opacity-75 justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+        ><ErrorModal />
+        </div>)}
     </div>
   );
 }
