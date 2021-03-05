@@ -1,5 +1,16 @@
 let id = 0;
-window.nextId = () => ++id;
+// window.nextId = () => ++id;
+
+window.editor = {
+  getValue: () => '',
+  appendOutput: output => output,
+};
+
+window.smartpyContext = {
+  nextId: () => ++id,
+  setOutput: () => null,
+  // Bls12: window.Bls12
+};
 
 window.runCode = code => {
   try {
