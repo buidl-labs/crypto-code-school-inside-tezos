@@ -30,7 +30,6 @@ import cryptobots from 'src/images/crypto-modal.png';
 
 import GLTFExporter from 'three-gltf-exporter';
 
-import { NetworkType } from '@airgap/beacon-sdk';
 import { NETWORK } from 'src/defaults';
 
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -38,10 +37,6 @@ import { BeaconContext } from 'src/context/beacon-context';
 import { createUser, batchUpdateProgress } from 'src/api';
 import { trackEvent } from 'src/utils/analytics';
 
-import { axios } from 'axios';
-
-const network =
-  NETWORK === 'delphinet' ? NetworkType.DELPHINET : NetworkType.MAINNET;
 import head1 from '../../assets/CryptobotImages/Head/01xhead.png';
 import head2 from '../../assets/CryptobotImages/Head/02xhead.png';
 import head3 from '../../assets/CryptobotImages/Head/03xhead.png';
@@ -233,7 +228,7 @@ const WelcomeModal = ({ close, isUser }) => {
 
     let acc = await beacon.client.getActiveAccount({
       network: {
-        type: network,
+        type: NETWORK,
       },
     });
 
