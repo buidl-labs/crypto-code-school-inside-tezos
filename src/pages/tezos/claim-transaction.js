@@ -147,7 +147,7 @@ function Transaction({ location }) {
   const [networkFeeEstimate, setNetworkFeeEstimate] = useState(0);
   //   const xtzPrice = location.state ? location.state.xtzPrice : null;
   const modelURI = location.state ? location.state.modelURI : null;
-  const imageURI = location.state ? location.state.imageURI : null;
+  const jsonURI = location.state ? location.state.jsonURI : null;
   console.log(location.state);
   const { width, height } = useWindowSize();
   const [xtzPrice, updateXtzPrice] = useState(null);
@@ -206,8 +206,7 @@ function Transaction({ location }) {
       await connectToBeacon(beacon);
 
       const metadata = MichelsonMap.fromLiteral({
-        uri: modelURI,
-        imageURI: imageURI,
+        '': jsonURI,
       });
 
       const RnId = (deepness = 10) =>
@@ -521,11 +520,6 @@ function Transaction({ location }) {
           </div>
         </div>
       </div>
-      {!uri && (
-        <div className="bg-base-700 bg-opacity-75 justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-          <ErrorModal />
-        </div>
-      )}
     </div>
   );
 }

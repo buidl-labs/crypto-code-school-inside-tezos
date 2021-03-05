@@ -532,13 +532,35 @@ const Customizer = () => {
 
       const resImageJSON = await resImage.json();
 
+      // console.log('resImageJSON', resImageJSON);
+      // console.log('resJSON', resJSON);
+
+      const resMetadata = await fetch(
+        'https://cryptoverse-wars-backend-nfjp.onrender.com/api/upload-json-metadata-to-ipfs',
+        {
+          method: 'post',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            artifactURI: resJSON.body.ipfsHash,
+            displayURI: resImageJSON.body.ipfsHash,
+          }),
+        },
+      );
+
+      const jsonMetadata = await resMetadata.json();
+
+      // console.log('jsonMetadata', jsonMetadata);
+
       // console.log('3d model hash --> 🔥', await resJSON.body.ipfsHash);
       // console.log('image hash -> 🔥', await resImageJSON.body.ipfsHash);
       // console.log('yo', await resJSON);
       navigate('/tezos/claim-transaction', {
         state: {
-          modelURI: await resJSON.body.ipfsHash,
-          imageURI: resImageJSON.body.ipfsHash,
+          modelURI: resJSON.body.ipfsHash,
+          jsonURI: jsonMetadata.ipfsHash,
         },
       });
     }
