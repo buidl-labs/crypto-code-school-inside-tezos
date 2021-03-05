@@ -31,7 +31,7 @@ export default function MichelsonResult({
 
   return (
     <>
-      {drawerOpen ? (
+      {drawerOpen && success ? (
         <div
           className={`absolute inset-x-0 inset-y-0 bg-base-900 bg-opacity-50 z-10`}
           onClick={closeDrawer}
