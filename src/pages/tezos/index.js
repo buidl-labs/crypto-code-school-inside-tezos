@@ -94,7 +94,7 @@ function Landing() {
           <iframe
             width="800"
             height="450"
-            src="https://www.youtube.com/embed/8VrlUL8W__Q?autoplay=1"
+            src="https://www.youtube.com/embed/26XkW67TaCw?autoplay=1"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen
