@@ -145,7 +145,7 @@ function Transaction({ location }) {
 
   const [claimButtonDisabled, setClaimButtonDisabledStatus] = useState(true);
 
-  const ErrorModal = ({}) => {
+  const ErrorModal = () => {
     return (
         <div
           className={`bg-base-700 px-12 py-8 rounded-lg relative flex flex-col items-center shadow-lg text-center text-white`}

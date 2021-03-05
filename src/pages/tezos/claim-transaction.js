@@ -4,6 +4,7 @@ import { useAsync, useWindowSize } from 'react-use';
 import Loader from 'react-loader-spinner';
 import Popper from 'popper.js';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import ErrorBot from 'src/images/error.png';
 
 import NavBar from 'src/components/NavBar';
 import Button from 'src/components/Buttons';
@@ -145,7 +146,7 @@ function Transaction({ location }) {
   const [opHash, setOpHash] = useState(null);
   const [networkFeeEstimate, setNetworkFeeEstimate] = useState(0);
   //   const xtzPrice = location.state ? location.state.xtzPrice : null;
-  const uri = location.state ? location.state.uri : null;
+  const uri = location.state ? location.state.uri : false;
   console.log(location.state);
   const { width, height } = useWindowSize();
   const [xtzPrice, updateXtzPrice] = useState(null);
@@ -157,12 +158,37 @@ function Transaction({ location }) {
   const [copyLink, setCopyLink] = useState(false);
   const [claimButtonDisabled, setClaimButtonDisabledStatus] = useState(true);
 
-  useEffect(() => {
-    if (botTokenId===false) {
-      console.log(window)
-      window.location.pathname="/tezos/marketplace";
-    }
-  }, []);
+  const ErrorModal = () => {
+    return (
+      <div
+        className={`bg-base-700 px-12 py-8 rounded-lg relative flex flex-col items-center shadow-lg text-center text-white`}
+        style={{ maxWidth: '40vw' }}
+      >
+        <img src={ErrorBot} />
+        <div className={`mt-6`}>
+          <h4 className={`text-2xl font-extrabold`}>Cryptobot not Found</h4>
+          <p className={`mt-6 text-lg`}>
+            We couldn’t find the cryptobot you were trying to claim. Explore
+            marketplace to buy more cryptobots or build your own in Academy.
+          </p>
+        </div>
+        <div className={`flex items-center flex-col w-full mb-2`}>
+          <Link
+            to={'/tezos/marketplace'}
+            className={`w-full bg-primary-600 hover:bg-primary-700 text-white font-bold rounded focus:outline-none mt-8 py-3 px-9 text-xl`}
+          >
+            Explore Marketplace
+          </Link>
+          <Link
+            to={'/tezos/academy'}
+            className={`w-full border-2 border-primary-600 hover:border-primary-700 text-white font-bold rounded focus:outline-none mt-4 py-3 px-9 text-xl`}
+          >
+            Go to Academy
+          </Link>
+        </div>
+      </div>
+    );
+  };
 
   useAsync(async () => {
     try {
@@ -491,6 +517,11 @@ function Transaction({ location }) {
           </div>
         </div>
       </div>
+      {!uri && (
+        <div className="bg-base-700 bg-opacity-75 justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+          <ErrorModal />
+        </div>
+      )}
     </div>
   );
 }
