@@ -39,7 +39,7 @@ const FeatureGrid = ({
           {buttontext}
         </Link>
       </div>
-      <div className="h-full w-full">
+      <div className="h-full w-full justify-items-center grid">
         <video
           className="object-contain object-center"
           loop
