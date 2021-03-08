@@ -24,42 +24,49 @@ export default function HTML(props) {
           type="text/javascript"
           charSet="utf-8"
           async
+          defer
         ></script>
         <script
           src={withPrefix('sodium-sumo-master.js')}
           type="text/javascript"
           charSet="utf-8"
           async
+          defer
         ></script>
         <script
           src={withPrefix('execute.js')}
           type="text/javascript"
           charSet="utf-8"
           async
+          defer
         ></script>
         <script
           src={withPrefix('smartjs/smart.js')}
           type="text/javascript"
           charSet="utf-8"
           async
+          defer
         ></script>
         <script
           src={withPrefix('smartjs/smartmljs.bc.js')}
           type="text/javascript"
           charSet="utf-8"
           async
+          defer
         ></script>
         <script
           src={withPrefix('brython/brython.js')}
           type="text/javascript"
           charSet="utf-8"
           async
+          defer
         ></script>
         <script
           src={withPrefix('brython/brython_stdlib.js')}
           type="text/javascript"
           charSet="utf-8"
           async
+          defer
         ></script>
         {props.headComponents}
       </head>

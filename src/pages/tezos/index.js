@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link} from 'gatsby';
+import { Link } from 'gatsby';
 import NavBar from '../../components/NavBar';
 import Button from '../../components/Buttons';
 import Footer from '../../components/Footer';
