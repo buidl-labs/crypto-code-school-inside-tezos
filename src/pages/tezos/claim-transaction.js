@@ -253,7 +253,7 @@ function Transaction({ location }) {
     } catch (err) {
       console.log(JSON.stringify(error));
     }
-  }, []);
+  }, [user]);
 
   return (
     <div className=" bg-base-900 ">
