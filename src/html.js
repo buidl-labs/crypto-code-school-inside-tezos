@@ -33,6 +33,7 @@ export default function HTML(props) {
           async
           defer
         ></script>
+        {/*
         <script
           src={withPrefix('execute.js')}
           type="text/javascript"
@@ -53,7 +54,7 @@ export default function HTML(props) {
           charSet="utf-8"
           async
           defer
-        ></script>
+        ></script> */}
         <script
           src={withPrefix('brython/brython.js')}
           type="text/javascript"
@@ -78,7 +79,7 @@ export default function HTML(props) {
           dangerouslySetInnerHTML={{ __html: props.body }}
         />
         {props.postBodyComponents}
-        <script type="text/python" src={withPrefix('smartpyio.py')}></script>
+        {/* <script type="text/python" src={withPrefix('smartpyio.py')}></script> */}
       </body>
     </html>
   );
