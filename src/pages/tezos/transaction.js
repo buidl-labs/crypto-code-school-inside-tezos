@@ -147,34 +147,33 @@ function Transaction({ location }) {
 
   const ErrorModal = () => {
     return (
-        <div
-          className={`bg-base-700 px-12 py-8 rounded-lg relative flex flex-col items-center shadow-lg text-center text-white`}
-          style={{ maxWidth: '40vw' }}
-        >
-          <img src={ErrorBot}/>
-          <div className={`mt-6`}>
-            <h4 className={`text-2xl font-extrabold`}>Cryptobot not Found</h4>
-            <p className={`mt-6 text-lg`}>
-              We couldn’t find the cryptobot you were trying to buy. Explore
-              marketplace to buy more cryptobots or build your own in Academy.
-            </p>
-          </div>
-          <div className={`flex items-center flex-col w-full mb-2`}>
-            <Link
-              to={'/tezos/marketplace'}
-              className={`w-full bg-primary-600 hover:bg-primary-700 text-white font-bold rounded focus:outline-none mt-8 py-3 px-9 text-xl`}
-            >
-              Explore Marketplace
-            </Link>
-            <Link
-              to={'/tezos/academy'}
-              className={`w-full border-2 border-primary-600 hover:border-primary-700 text-white font-bold rounded focus:outline-none mt-4 py-3 px-9 text-xl`}
-            >
-              Go to Academy
-            </Link>
-          </div>
+      <div
+        className={`bg-base-700 px-12 py-8 rounded-lg relative flex flex-col items-center shadow-lg text-center text-white`}
+        style={{ maxWidth: '40vw' }}
+      >
+        <img src={ErrorBot} />
+        <div className={`mt-6`}>
+          <h4 className={`text-2xl font-extrabold`}>Cryptobot not Found</h4>
+          <p className={`mt-6 text-lg`}>
+            We couldn’t find the cryptobot you were trying to buy. Explore
+            marketplace to buy more cryptobots or build your own in Academy.
+          </p>
         </div>
-        
+        <div className={`flex items-center flex-col w-full mb-2`}>
+          <Link
+            to={'/tezos/marketplace'}
+            className={`w-full bg-primary-600 hover:bg-primary-700 text-white font-bold rounded focus:outline-none mt-8 py-3 px-9 text-xl`}
+          >
+            Explore Marketplace
+          </Link>
+          <Link
+            to={'/tezos/academy'}
+            className={`w-full border-2 border-primary-600 hover:border-primary-700 text-white font-bold rounded focus:outline-none mt-4 py-3 px-9 text-xl`}
+          >
+            Go to Academy
+          </Link>
+        </div>
+      </div>
     );
   };
 
@@ -215,7 +214,7 @@ function Transaction({ location }) {
     } catch (err) {
       console.log(JSON.stringify(error));
     }
-  }, []);
+  }, [user]);
 
   return (
     <div className=" bg-base-900 ">
@@ -305,8 +304,8 @@ function Transaction({ location }) {
                 </div>
                 <div>
                   {getUserBalance.loading ? null : getUserBalance.error ? (
-                    <div className="text-error-500">
-                      Error: {getUserBalance.error.message}
+                    <div className="text-error-500 text-center">
+                      Please login in to continue.
                     </div>
                   ) : (
                     <div>
@@ -511,10 +510,11 @@ function Transaction({ location }) {
         </div>
       </div>
 
-      {!bot && ( <div
-          className="bg-base-700 bg-opacity-75 justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
-        ><ErrorModal />
-        </div>)}
+      {!bot && (
+        <div className="bg-base-700 bg-opacity-75 justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+          <ErrorModal />
+        </div>
+      )}
     </div>
   );
 }
