@@ -6,4 +6,4 @@ export const APP_NAME = 'Cryptocodeschool';
 export const NETWORK = NetworkType.EDONET;
 export const INDEXER_NETWORK = 'edo2net';
 
-export const CONTRACT_ADDRESS = 'KT1CTXcSov9xMmQjrKYw5KYP9BbB4v8SqrkQ';
+export const CONTRACT_ADDRESS = 'KT1CyW59rcJZFW6Mn4HVDepwZ4pPytPA6NjT';
