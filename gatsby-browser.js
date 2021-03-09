@@ -15,6 +15,7 @@ export const onClientEntry = () => {
 
 import React from 'react';
 import { Provider } from 'jotai';
+
 import { BeaconProvider } from './src/context/beacon-context';
 
 export const wrapRootElement = ({ element }) => {
@@ -40,10 +41,14 @@ export const onRouteUpdate = ({ location, prevLocation }) => {
     location.pathname.indexOf('module-02') != -1 ||
     location.pathname.indexOf('module-03') != -1
   ) {
+    debugger;
     const scripts = Array.from(document.querySelectorAll('script'));
-    const srcVals = scripts.map(sc => sc.attributes.src.value);
+    const srcVals = scripts
+      .filter(sc => typeof sc.attributes.src != 'undefined')
+      .map(sc => sc.attributes.src.value);
     const hasSmartpy = srcVals.indexOf('/smartpyio.py');
     console.log('hasSmartpy', hasSmartpy);
+
     if (hasSmartpy == -1) {
       addScript('/execute.js');
       addScript('/smartjs/smart.js');
