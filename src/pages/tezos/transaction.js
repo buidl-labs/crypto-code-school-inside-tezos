@@ -304,8 +304,8 @@ function Transaction({ location }) {
                 </div>
                 <div>
                   {getUserBalance.loading ? null : getUserBalance.error ? (
-                    <div className="text-error-500">
-                      Error: {getUserBalance.error.message}
+                    <div className="text-error-500 text-center">
+                      Please login in to continue.
                     </div>
                   ) : (
                     <div>
