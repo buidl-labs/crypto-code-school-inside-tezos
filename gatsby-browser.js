@@ -41,7 +41,6 @@ export const onRouteUpdate = ({ location, prevLocation }) => {
     location.pathname.indexOf('module-02') != -1 ||
     location.pathname.indexOf('module-03') != -1
   ) {
-    debugger;
     const scripts = Array.from(document.querySelectorAll('script'));
     const srcVals = scripts
       .filter(sc => typeof sc.attributes.src != 'undefined')
