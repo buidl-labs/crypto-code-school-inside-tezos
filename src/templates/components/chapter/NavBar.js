@@ -17,7 +17,7 @@ function UserDisplay({ user, beacon }) {
   return <Dropdown beacon={beacon} user={user} />;
 }
 
-const NavBar = ({ heading, module }) => {
+const NavBar = ({ heading, module, location }) => {
   let beacon = useContext(BeaconContext);
   const [user, setUser] = useAtom(userAtom);
   const [isUser] = useAtom(isUserAtom);
@@ -26,7 +26,11 @@ const NavBar = ({ heading, module }) => {
     if (beacon === null) {
       return;
     }
-    const url = typeof window !== 'undefined' ? window.location.pathname : '';
+
+    const url = typeof window !== 'undefined' ? location.pathname : '/tezos';
+
+    typeof window !== 'undefined' && localStorage.setItem('last-page', url);
+
     console.log(url);
     let acc = await beacon.client.getActiveAccount();
 
