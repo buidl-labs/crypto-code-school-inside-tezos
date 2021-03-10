@@ -220,6 +220,9 @@ const WelcomeModal = ({ close, isUser }) => {
   const beacon = useContext(BeaconContext);
 
   async function signInHandler() {
+    typeof window !== 'undefined' &&
+      localStorage.setItem('last-page', '/customizebot');
+
     if (typeof beacon === `undefined`) {
       return;
     }

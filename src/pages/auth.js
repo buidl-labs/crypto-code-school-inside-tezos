@@ -22,9 +22,11 @@ import { MdClose } from 'react-icons/md';
 
 function isBrowserSupported() {
   if (typeof window !== 'undefined') {
-    const chrome =
-      !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
+    console.log('window exists inside browser');
+    const chrome = !!window.chrome;
+    console.log('chrome', chrome);
     const firefox = typeof InstallTrigger !== 'undefined';
+    console.log('firefox', firefox);
     return chrome || firefox;
   }
   return false;
@@ -289,6 +291,8 @@ const AuthPage = ({ location }) => {
       ThanosWallet.onAvailabilityChange(available =>
         setThanosAvailable(available),
       );
+
+    console.log('isBrowserSupported', browserSupport);
   }, []);
 
   useEffect(() => {
@@ -301,7 +305,16 @@ const AuthPage = ({ location }) => {
           console.log('bath update', res),
         );
       }
-      navigate(location.state ? location.state.pathname : '/tezos');
+      const fallBackURL =
+        (typeof window !== 'undefined' && localStorage.getItem('last-page')) ||
+        '/tezos';
+      navigate(
+        location.state
+          ? location.state.pathname
+          : fallBackURL
+          ? fallBackURL
+          : '/tezos',
+      );
     }
   }, [isUserVerified]);
 
