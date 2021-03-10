@@ -493,8 +493,9 @@ function BotView({ location }) {
                     <div className="grid grid-cols-3 gap-2">
                       {/* twitter icon */}
                       <a
-                        href={`https://twitter.com/intent/tweet?text=Look at this cool Cryptobot at https://cryptocodeschool.in/tezos/cryptobot/${bot.tokenId}&related=twitter%3ABUIDLabs`}
+                        href={`https://twitter.com/intent/tweet?text=Take a look at Cryptobot-${bot.tokenId}, a super cool one-of-a-kind collectible, you can collect and build on Cryptoverse Wars. Create your own Cryptobot army today!  https://cryptocodeschool.in/tezos/cryptobot/${bot.tokenId}&related=twitter%3ABUIDLabs&via=buidllabs&hashtags=NFTs`}
                         target="_blank"
+                        rel="noopener noreferrer"
                         className="w-12 h-12 inline-flex items-center justify-center rounded-full bg-primary-600 text-white focus:outline-none"
                       >
                         <svg
@@ -515,7 +516,7 @@ function BotView({ location }) {
                       <button
                         className={
                           'w-12 h-12 inline-flex items-center justify-center rounded-full text-white focus:outline-none  ' +
-                          (copyLink==1 ? 'bg-success-600' : 'bg-primary-600')
+                          (copyLink == 1 ? 'bg-success-600' : 'bg-primary-600')
                         }
                       >
                         <Clipboard
