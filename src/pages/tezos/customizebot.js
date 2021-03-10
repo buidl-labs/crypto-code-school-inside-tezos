@@ -15,6 +15,7 @@ import {
   useGLTF,
   OrbitControls,
   Html,
+  Loader as Loading,
 } from '@react-three/drei';
 import Loader from 'react-loader-spinner';
 import { HexColorPicker } from 'react-colorful';
@@ -260,7 +261,7 @@ const WelcomeModal = ({ close, isUser }) => {
       className={`bg-base-900 bg-opacity-80 absolute inset-0 flex items-center justify-center text-white`}
     >
       <div
-        className={`absolute bg-base-700 flex items-center justify-center flex-col py-9 px-24 rounded-3xl`}
+        className={`absolute bg-base-700 flex items-center justify-center flex-col py-9 px-24 rounded-3xl z-50`}
         style={{ maxWidth: `65vw` }}
       >
         <h3 className={`text-4xl font-black`}>Congratulations</h3>
@@ -863,7 +864,7 @@ const Customizer = () => {
 
           <div
             id="middle-menu"
-            className="relative col-span-2 col-start-3 col-end-7 row-start-0 row-span-full"
+            className="relative col-span-2 col-start-3 col-end-7 row-start-0 row-span-full z-0"
           >
             {isBrowser && (
               <div id="customizer-canvas" className="w-full h-full">
@@ -899,6 +900,7 @@ const Customizer = () => {
                   </Suspense>
                   <OrbitControls enableZoom={false} />
                 </Canvas>
+                <Loading containerStyles={{ background: 'rgba(55, 65, 81)' }} />
               </div>
             )}
           </div>

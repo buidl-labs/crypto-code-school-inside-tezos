@@ -439,8 +439,9 @@ function Transaction({ location }) {
                   {/* twitter icon */}
                   {/* twitter icon */}
                   <a
-                    href={`https://twitter.com/intent/tweet?text=Look at this cool Cryptobot at https://cryptocodeschool.in/tezos/cryptobot/${botTokenId}&related=twitter%3ABUIDLabs`}
+                    href={`https://twitter.com/intent/tweet?text=Take a look at my Cryptobot-${botTokenId}, which I built and earned as a reward for completing a module on Cryptoverse Wars. Join me and others in learning and creating your own army of Cryptobots! https://cryptocodeschool.in/tezos/cryptobot/${botTokenId}&related=twitter%3ABUIDLabs&via=buidllabs&hashtags=NFTs`}
                     target="_blank"
+                    rel="noopener noreferrer"
                     className="w-12 h-12 inline-flex items-center justify-center rounded-full bg-primary-600 text-white focus:outline-none"
                   >
                     <svg
