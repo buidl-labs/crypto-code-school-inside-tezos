@@ -22,11 +22,8 @@ import { MdClose } from 'react-icons/md';
 
 function isBrowserSupported() {
   if (typeof window !== 'undefined') {
-    console.log('window exists inside browser');
     const chrome = !!window.chrome;
-    console.log('chrome', chrome);
     const firefox = typeof InstallTrigger !== 'undefined';
-    console.log('firefox', firefox);
     return chrome || firefox;
   }
   return false;
@@ -306,8 +303,10 @@ const AuthPage = ({ location }) => {
         );
       }
       const fallBackURL =
-        (typeof window !== 'undefined' && localStorage.getItem('last-page')) ||
-        '/tezos';
+        typeof window !== 'undefined' &&
+        (localStorage.getItem('last-page') || '/tezos');
+
+      typeof window !== 'undefined' && localStorage.setItem('last-page', '');
       navigate(
         location.state
           ? location.state.pathname

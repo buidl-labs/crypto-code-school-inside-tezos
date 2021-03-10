@@ -221,7 +221,7 @@ const WelcomeModal = ({ close, isUser }) => {
 
   async function signInHandler() {
     typeof window !== 'undefined' &&
-      localStorage.setItem('last-page', '/customizebot');
+      localStorage.setItem('last-page', '/tezos/customizebot');
 
     if (typeof beacon === `undefined`) {
       return;
