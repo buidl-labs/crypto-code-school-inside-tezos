@@ -15,9 +15,9 @@ import {
   useGLTF,
   OrbitControls,
   Html,
-  Loader,
+  Loader as Loading,
 } from '@react-three/drei';
-import { Loader as Loading } from 'react-loader-spinner';
+import Loader from 'react-loader-spinner';
 import { HexColorPicker } from 'react-colorful';
 import 'react-colorful/dist/index.css';
 import 'src/utils/react-colorful.css';
@@ -206,7 +206,7 @@ const SavingBotModal = () => {
         style={{ maxWidth: `65vw` }}
       >
         <div className="flex justify-center w-full mb-5">
-          <Loading type="BallTriangle" color="#2563EB" height={80} width={80} />
+          <Loader type="BallTriangle" color="#2563EB" height={80} width={80} />
         </div>
         <ModalHeading>Saving your 3D Cryptobot</ModalHeading>
       </div>
@@ -897,7 +897,7 @@ const Customizer = () => {
                   </Suspense>
                   <OrbitControls enableZoom={false} />
                 </Canvas>
-                <Loader containerStyles={{ background: 'rgba(55, 65, 81)' }} />
+                <Loading containerStyles={{ background: 'rgba(55, 65, 81)' }} />
               </div>
             )}
           </div>
