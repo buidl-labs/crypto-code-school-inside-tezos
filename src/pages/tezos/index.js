@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { Link} from 'gatsby';
+import { Link } from 'gatsby';
 import NavBar from '../../components/NavBar';
 import Button from '../../components/Buttons';
 import Footer from '../../components/Footer';
 import PlayButton from '../../components/LandingPage/playbutton';
 
-import hero from '../../images/hero.png';
+import hero from '../../images/hero.webp';
 import cryptobots from '../../images/cryptobots.png';
 import earnWhileYouLearn from 'src/assets/videos/earn while you learn-anim.mp4';
 import createCurrency from 'src/assets/videos/anim-create-currency.mp4';
-import FinanceIllustration from 'src/assets/wealth.png';
+import FinanceIllustration from 'src/assets/wealth.webp';
 import { MdClose } from 'react-icons/md';
 
 const FeatureGrid = ({
