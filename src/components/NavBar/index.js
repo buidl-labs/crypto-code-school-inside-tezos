@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { BeaconContext } from '../../context/beacon-context';
 import { Link, navigate } from 'gatsby';
 import Theme from 'src/assets/theme.svg';
@@ -37,12 +37,45 @@ function UserDisplay({ user, beacon }) {
 function NavBar(props) {
   const [user, setUser] = useAtom(userAtom);
   const [isUser] = useAtom(isUserAtom);
+
   let beacon = useContext(BeaconContext);
+
+  async function checkIfActive() {
+    const acc = await beacon.client.getActiveAccount();
+    
+    if (acc) {
+      
+      const u 
+        typeof window !== 'undefined' &&
+        JSON.parse(localStorage.getItem('user') || '{}');
+      
+      if (u && acc.address === u.xtzAddress) {
+        if (u.verified) {
+          setUser(u);
+      
+          let progress =
+            typeof window !== `undefined` && localStorage.getItem('progress');
+          if (progress) {
+            progress = JSON.parse(progress);
+            const res = await batchUpdateProgress(u, progress);
+      
+          }
+        }
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (beacon !== null) {
+      checkIfActive();
+    }
+  }, []);
 
   async function signInHandler() {
     if (beacon === null) {
       return;
     }
+    console.log('running sign in handler');
     const url = typeof window !== 'undefined' ? window.location.pathname : '';
     console.log(url);
     let acc = await beacon.client.getActiveAccount();

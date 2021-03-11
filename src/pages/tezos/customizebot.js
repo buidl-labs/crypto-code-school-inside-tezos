@@ -318,6 +318,7 @@ const Customizer = () => {
   const [bodyCount, setBodyCount] = useState(0);
   const [legCount, setLegCount] = useState(0);
 
+  const beacon = useContext(BeaconContext);
   const [isModalOpen, setIsModalOpen] = useState(true);
   const [claimButtonClicked, setClaimButtonClicked] = useState(false);
   const [image, setImage] = useState('');
@@ -390,6 +391,41 @@ const Customizer = () => {
   }
 
   const [isUser] = useAtom(isUserAtom);
+  const [user, setUser] = useAtom(userAtom);
+  async function authHandler() {
+    console.log('running auth handler');
+    typeof window !== 'undefined' &&
+      localStorage.setItem('last-page', '/tezos/customizebot');
+    if (typeof beacon === `undefined`) {
+      return;
+    }
+    let acc = await beacon.client.getActiveAccount({
+      network: {
+        type: NETWORK,
+      },
+    });
+
+    if (acc) {
+      const u =
+        typeof window !== 'undefined' &&
+        JSON.parse(localStorage.getItem('user') || '{}');
+      if (u && acc.address === u.xtzAddress) {
+        if (u.verified) {
+          setUser(u);
+          let progress =
+            typeof window !== `undefined` && localStorage.getItem('progress');
+          if (progress) {
+            progress = JSON.parse(progress);
+            const res = await batchUpdateProgress(u, progress);
+          }
+        }
+      }
+    }
+  }
+
+  useEffect(() => {
+    authHandler();
+  }, []);
 
   useEffect(() => {
     if (claimButtonClicked) {
@@ -404,7 +440,6 @@ const Customizer = () => {
 
   useEffect(() => {
     if (image !== '') {
-      // console.log('image -> ', image);
       uploadData();
     }
   }, [image]);

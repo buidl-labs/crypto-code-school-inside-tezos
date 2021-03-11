@@ -1,8 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link, navigate } from 'gatsby';
 import Theme from 'src/assets/theme.svg';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import userAtom from 'src/atoms/user-atom';
 import isUserAtom from 'src/atoms/is-user-atom';
 import { BeaconContext } from 'src/context/beacon-context';
@@ -21,6 +20,33 @@ const NavBar = ({ heading, module, location }) => {
   let beacon = useContext(BeaconContext);
   const [user, setUser] = useAtom(userAtom);
   const [isUser] = useAtom(isUserAtom);
+
+  useEffect(() => {
+    checkIfActive();
+  }, []);
+
+  async function checkIfActive() {
+    const acc = await beacon.client.getActiveAccount();
+
+    if (acc) {
+      const u =
+        typeof window !== 'undefined' &&
+        JSON.parse(localStorage.getItem('user') || '{}');
+
+      if (u && acc.address === u.xtzAddress) {
+        if (u.verified) {
+          setUser(u);
+
+          let progress =
+            typeof window !== `undefined` && localStorage.getItem('progress');
+          if (progress) {
+            progress = JSON.parse(progress);
+            const res = await batchUpdateProgress(u, progress);
+          }
+        }
+      }
+    }
+  }
 
   async function signInHandler() {
     if (beacon === null) {
