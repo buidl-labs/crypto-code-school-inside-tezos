@@ -42,23 +42,21 @@ function NavBar(props) {
 
   async function checkIfActive() {
     const acc = await beacon.client.getActiveAccount();
-    
+
     if (acc) {
-      
-      const u 
+      const u =
         typeof window !== 'undefined' &&
         JSON.parse(localStorage.getItem('user') || '{}');
-      
+
       if (u && acc.address === u.xtzAddress) {
         if (u.verified) {
           setUser(u);
-      
+
           let progress =
             typeof window !== `undefined` && localStorage.getItem('progress');
           if (progress) {
             progress = JSON.parse(progress);
             const res = await batchUpdateProgress(u, progress);
-      
           }
         }
       }
