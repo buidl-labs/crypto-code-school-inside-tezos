@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import { ThanosWallet } from '@thanos-wallet/dapp';
 import { Link, navigate } from 'gatsby';
 import Theme from 'src/assets/theme.svg';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -31,6 +32,8 @@ const NavBar = ({ heading, module, location }) => {
       return;
     }
 
+    const thanosIsAvailable = await ThanosWallet.isAvailable();
+
     const url = typeof window !== 'undefined' ? location.pathname : '/tezos';
 
     typeof window !== 'undefined' && localStorage.setItem('last-page', url);
@@ -38,7 +41,7 @@ const NavBar = ({ heading, module, location }) => {
     console.log(url);
     let acc = await beacon.client.getActiveAccount();
 
-    if (acc) {
+    if (acc && thanosIsAvailable) {
       let u = await createUser(acc.address);
       if (u.verified) {
         console.log(`u is verified`);

@@ -11,6 +11,7 @@ import Popper from 'popper.js';
 import { MdExpandMore } from 'react-icons/md';
 
 import model from 'src/images/Col-1.png';
+import { ThanosWallet } from '@thanos-wallet/dapp';
 
 function NavLink({ to, children }) {
   return (
@@ -50,12 +51,14 @@ function NavBar(props) {
     if (beacon === null) {
       return;
     }
-    console.log('running sign in handler');
+
     const url = typeof window !== 'undefined' ? window.location.pathname : '';
     console.log(url);
+    const thanosIsAvailable = await ThanosWallet.isAvailable();
+
     let acc = await beacon.client.getActiveAccount();
 
-    if (acc) {
+    if (acc && thanosIsAvailable) {
       let u = await createUser(acc.address);
       if (u.verified) {
         console.log(`u is verified`);

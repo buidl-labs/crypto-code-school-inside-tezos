@@ -7,6 +7,7 @@ import React, {
 } from 'react';
 import NavBar from '../../components/NavBar';
 import Button from '../../components/Buttons';
+import { ThanosWallet } from '@thanos-wallet/dapp';
 import { navigate, Link } from 'gatsby';
 import { Canvas, useFrame, useThree } from 'react-three-fiber';
 import {
@@ -221,6 +222,8 @@ const WelcomeModal = ({ close, isUser }) => {
   const beacon = useContext(BeaconContext);
 
   async function signInHandler() {
+    const thanosIsAvailable = await ThanosWallet.isAvailable();
+
     typeof window !== 'undefined' &&
       localStorage.setItem('last-page', '/tezos/customizebot');
 
@@ -236,7 +239,7 @@ const WelcomeModal = ({ close, isUser }) => {
       },
     });
 
-    if (acc) {
+    if (acc && thanosIsAvailable) {
       let u = await createUser(acc.address);
       if (u.verified) {
         console.log(`u is verified`);
