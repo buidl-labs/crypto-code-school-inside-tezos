@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { BeaconContext } from '../../context/beacon-context';
 import { Link, navigate } from 'gatsby';
 import Theme from 'src/assets/theme.svg';
@@ -6,10 +6,12 @@ import userAtom from '../../atoms/user-atom';
 import isUserAtom from '../../atoms/is-user-atom';
 import { useAtom } from 'jotai';
 import { createUser, batchUpdateProgress } from '../../api';
+import checkIfUserActive from 'src/utils/automaticLogin';
 import Popper from 'popper.js';
 import { MdExpandMore } from 'react-icons/md';
 
 import model from 'src/images/Col-1.png';
+import { ThanosWallet } from '@thanos-wallet/dapp';
 
 function NavLink({ to, children }) {
   return (
@@ -37,17 +39,26 @@ function UserDisplay({ user, beacon }) {
 function NavBar(props) {
   const [user, setUser] = useAtom(userAtom);
   const [isUser] = useAtom(isUserAtom);
+
   let beacon = useContext(BeaconContext);
+
+  useEffect(() => {
+    typeof window !== 'undefined' &&
+      checkIfUserActive(setUser, beacon, window.location);
+  }, []);
 
   async function signInHandler() {
     if (beacon === null) {
       return;
     }
+
     const url = typeof window !== 'undefined' ? window.location.pathname : '';
     console.log(url);
+    const thanosIsAvailable = await ThanosWallet.isAvailable();
+
     let acc = await beacon.client.getActiveAccount();
 
-    if (acc) {
+    if (acc && thanosIsAvailable) {
       let u = await createUser(acc.address);
       if (u.verified) {
         console.log(`u is verified`);
