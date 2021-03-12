@@ -21,7 +21,13 @@ const LearningInterface = ({ heading, body, setDrawerOpen }) => {
       <div className={`py-8 px-10 overflow-y-auto flex-1`}>
         <MDXProvider
           components={{
-            p: props => <p {...props} className={`text-white text-lg mb-6`} />,
+            p: props => (
+              <p
+                {...props}
+                className={`text-white mb-6 text-lg`}
+                style={{ color: '#CACACA' }}
+              />
+            ),
             ol: props => (
               <ol
                 {...props}
@@ -38,19 +44,19 @@ const LearningInterface = ({ heading, body, setDrawerOpen }) => {
             h1: props => (
               <h1
                 {...props}
-                className={`text-white text-3xl font-extrabold mt-12 mb-3`}
+                className={`text-white font-extrabold mt-12 mb-3 text-4xl`}
               />
             ),
             h2: props => (
               <h2
                 {...props}
-                className={`text-white text-2xl font-bold mt-10 mb-2`}
+                className={`text-white font-bold mt-10 mb-2 text-3xl`}
               />
             ),
             h3: props => (
               <h3
                 {...props}
-                className={`text-white text-xl font-bold mt-8 mb-2`}
+                className={`text-white font-bold mt-8 mb-2 text-2xl`}
               />
             ),
             h4: props => (
@@ -61,7 +67,7 @@ const LearningInterface = ({ heading, body, setDrawerOpen }) => {
                 {...props}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`text-primary-300`}
+                className={`underline text-primary-400`}
               />
             ),
           }}
