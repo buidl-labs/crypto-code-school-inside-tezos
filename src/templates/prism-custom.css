@@ -7,14 +7,14 @@
  * add modified color all the css template code ```css <code> ```
  */
 .gatsby-highlight code[class*='language-pythoncss'] {
-  color: #a71d5d;
+  color: #0e0d0d;
 }
 
 /**
  * update all of code elements style i.e inline code block created using ``
  */
 code.language-pythontext {
-  color: #18b77e;
+  color: #0e0d0d;
   padding: 0.2em 0.5em !important;
   font-size: 85%;
   font-weight: 700 !important;
@@ -23,7 +23,7 @@ code.language-pythontext {
 }
 
 .string-highlight {
-  color: #927501;
+  color: #0e0d0d;
   font-weight: 700;
 }
 
@@ -36,9 +36,9 @@ code.language-pythontext {
   overflow: auto;
   font-size: 85%;
   line-height: 1.45;
-  background-color: #f7f7f7;
   border-radius: 3px;
   margin-bottom: 16px;
+  border: 1px solid #cccccc;
 }
 
 /**

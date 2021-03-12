@@ -131,13 +131,13 @@ After all, this is how the population in your civilization will interact with th
 
 To see how to interact with FA2 based tokens, you need to first know what all entry points are available to us.
 
-**1. `transfer`**
-This entry point transfers tokens from one account to another.
+`transfer` - This entry point transfers tokens from one account to another.
+
 It accepts two arguments -
 
-1. `from` - This specifies the address of the account from where the tokens need to be sent.
+`from` - This specifies the address of the account from where the tokens need to be sent.
 
-2. `transactions` - It's a list and every item has is a dictionary that has three items -
+`transactions` - It's a list and every item has is a dictionary that has three items -
    - `to` - this holds the address of the account tokens are being sent to.
    - `amount` - amount of token to be transferred.
    - `token_id` - specifies which token has to be transferred(as an FA2 contract can hold multiple tokens). `token_id` is always 0 in case `single_asset = True` for the contract.
