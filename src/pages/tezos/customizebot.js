@@ -163,6 +163,7 @@ const Bot = ({
       }}
       ref={group}
       dispose={null}
+      position={[0, 1.5, 0]}
     >
       {renderGroup(head, headCount, colors, getMeshName, shininess)}
       {renderGroup(arm, armCount, colors, getMeshName, shininess)}
@@ -258,7 +259,7 @@ const WelcomeModal = ({ close, isUser }) => {
 
   return (
     <div
-      className={`bg-base-900 bg-opacity-80 absolute inset-0 flex items-center justify-center text-white`}
+      className={`bg-base-900 bg-opacity-80 absolute inset-0 flex items-center justify-center text-white hidden`}
     >
       <div
         className={`absolute bg-base-700 flex items-center justify-center flex-col py-9 px-24 rounded-3xl z-50`}
@@ -871,7 +872,7 @@ const Customizer = () => {
                 <Canvas
                   concurrent
                   pixelRatio={[1, 1.5]}
-                  camera={{ position: [0, 0, 5.75], fov: 80 }}
+                  camera={{ position: [0, 1.4, 5.75], fov: 80 }}
                   gl={{ preserveDrawingBuffer: true }}
                 >
                   <CustomAmbientLight
@@ -883,7 +884,7 @@ const Customizer = () => {
                     intensity={0.3}
                     angle={0.1}
                     penumbra={1}
-                    position={[5, 25, 20]}
+                    position={[5, 27, 20]}
                   />
                   <Suspense fallback={null}>
                     <Bot
