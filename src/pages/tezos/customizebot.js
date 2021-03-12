@@ -898,6 +898,7 @@ const Customizer = () => {
                       shininess={shininess}
                     />
                     <Environment files="royal_esplanade_1k_compressed_50ppi.hdr" />
+                    <Preload all />
                   </Suspense>
                   <OrbitControls enableZoom={false} />
                 </Canvas>
