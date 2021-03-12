@@ -1,11 +1,11 @@
 import { batchUpdateProgress } from 'src/api';
 
-async function checkIfUserActive(setUser, beacon, location, from = '') {
+async function checkIfUserActive(setUser, beacon, location) {
   if (typeof window == 'undefined' || typeof beacon == 'undefined') return;
-  console.log(location);
-  if (from == 'customizer') {
-    localStorage.setItem('last-page', '/tezos/customizebot');
-  }
+  console.log(location.pathname);
+  // if (from == 'customizer') {
+  localStorage.setItem('last-page', '/tezos/customizebot');
+  // }
 
   const acc = await beacon.client.getActiveAccount();
 

@@ -26,7 +26,7 @@ import namedColors from 'color-name-list';
 import isUserAtom from 'src/atoms/is-user-atom';
 import userAtom from 'src/atoms/user-atom';
 import { useAtom } from 'jotai';
-
+import checkIfUserActive from 'src/utils/automaticLogin';
 import cryptobots from 'src/images/crypto-modal.png';
 
 import GLTFExporter from 'three-gltf-exporter';
@@ -311,7 +311,7 @@ const CustomAmbientLight = ({ setImage, grabImage }) => {
   return <ambientLight intensity={0.5} />;
 };
 
-const Customizer = () => {
+const Customizer = ({ location }) => {
   const [selectPart, setselectPart] = useState(1);
   const [headCount, setHeadCount] = useState(0);
   const [armCount, setArmCount] = useState(0);
@@ -392,39 +392,9 @@ const Customizer = () => {
 
   const [isUser] = useAtom(isUserAtom);
   const [user, setUser] = useAtom(userAtom);
-  async function authHandler() {
-    console.log('running auth handler');
-    typeof window !== 'undefined' &&
-      localStorage.setItem('last-page', '/tezos/customizebot');
-    if (typeof beacon === `undefined`) {
-      return;
-    }
-    let acc = await beacon.client.getActiveAccount({
-      network: {
-        type: NETWORK,
-      },
-    });
-
-    if (acc) {
-      const u =
-        typeof window !== 'undefined' &&
-        JSON.parse(localStorage.getItem('user') || '{}');
-      if (u && acc.address === u.xtzAddress) {
-        if (u.verified) {
-          setUser(u);
-          let progress =
-            typeof window !== `undefined` && localStorage.getItem('progress');
-          if (progress) {
-            progress = JSON.parse(progress);
-            const res = await batchUpdateProgress(u, progress);
-          }
-        }
-      }
-    }
-  }
 
   useEffect(() => {
-    authHandler();
+    checkIfUserActive(setUser, beacon, location);
   }, []);
 
   useEffect(() => {

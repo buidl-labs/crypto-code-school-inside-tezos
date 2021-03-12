@@ -7,6 +7,7 @@ import isUserAtom from 'src/atoms/is-user-atom';
 import { BeaconContext } from 'src/context/beacon-context';
 import { useAtom } from 'jotai';
 import { createUser, batchUpdateProgress } from 'src/api';
+import checkIfUserActive from 'src/utils/automaticLogin';
 import Popper from 'popper.js';
 import { MdExpandMore } from 'react-icons/md';
 
@@ -22,31 +23,8 @@ const NavBar = ({ heading, module, location }) => {
   const [isUser] = useAtom(isUserAtom);
 
   useEffect(() => {
-    checkIfActive();
+    checkIfUserActive(setUser, beacon, location);
   }, []);
-
-  async function checkIfActive() {
-    const acc = await beacon.client.getActiveAccount();
-
-    if (acc) {
-      const u =
-        typeof window !== 'undefined' &&
-        JSON.parse(localStorage.getItem('user') || '{}');
-
-      if (u && acc.address === u.xtzAddress) {
-        if (u.verified) {
-          setUser(u);
-
-          let progress =
-            typeof window !== `undefined` && localStorage.getItem('progress');
-          if (progress) {
-            progress = JSON.parse(progress);
-            const res = await batchUpdateProgress(u, progress);
-          }
-        }
-      }
-    }
-  }
 
   async function signInHandler() {
     if (beacon === null) {
