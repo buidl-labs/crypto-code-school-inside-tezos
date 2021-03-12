@@ -7,6 +7,7 @@ import React, {
 } from 'react';
 import NavBar from '../../components/NavBar';
 import Button from '../../components/Buttons';
+import { ThanosWallet } from '@thanos-wallet/dapp';
 import { navigate, Link } from 'gatsby';
 import { Canvas, useFrame, useThree } from 'react-three-fiber';
 import {
@@ -26,7 +27,7 @@ import namedColors from 'color-name-list';
 import isUserAtom from 'src/atoms/is-user-atom';
 import userAtom from 'src/atoms/user-atom';
 import { useAtom } from 'jotai';
-
+import checkIfUserActive from 'src/utils/automaticLogin';
 import cryptobots from 'src/images/crypto-modal.png';
 
 import GLTFExporter from 'three-gltf-exporter';
@@ -221,6 +222,8 @@ const WelcomeModal = ({ close, isUser }) => {
   const beacon = useContext(BeaconContext);
 
   async function signInHandler() {
+    const thanosIsAvailable = await ThanosWallet.isAvailable();
+
     typeof window !== 'undefined' &&
       localStorage.setItem('last-page', '/tezos/customizebot');
 
@@ -236,7 +239,7 @@ const WelcomeModal = ({ close, isUser }) => {
       },
     });
 
-    if (acc) {
+    if (acc && thanosIsAvailable) {
       let u = await createUser(acc.address);
       if (u.verified) {
         console.log(`u is verified`);
@@ -311,13 +314,14 @@ const CustomAmbientLight = ({ setImage, grabImage }) => {
   return <ambientLight intensity={0.5} />;
 };
 
-const Customizer = () => {
+const Customizer = ({ location }) => {
   const [selectPart, setselectPart] = useState(1);
   const [headCount, setHeadCount] = useState(0);
   const [armCount, setArmCount] = useState(0);
   const [bodyCount, setBodyCount] = useState(0);
   const [legCount, setLegCount] = useState(0);
 
+  const beacon = useContext(BeaconContext);
   const [isModalOpen, setIsModalOpen] = useState(true);
   const [claimButtonClicked, setClaimButtonClicked] = useState(false);
   const [image, setImage] = useState('');
@@ -390,6 +394,11 @@ const Customizer = () => {
   }
 
   const [isUser] = useAtom(isUserAtom);
+  const [user, setUser] = useAtom(userAtom);
+
+  useEffect(() => {
+    checkIfUserActive(setUser, beacon, location);
+  }, []);
 
   useEffect(() => {
     if (claimButtonClicked) {
@@ -404,7 +413,6 @@ const Customizer = () => {
 
   useEffect(() => {
     if (image !== '') {
-      // console.log('image -> ', image);
       uploadData();
     }
   }, [image]);

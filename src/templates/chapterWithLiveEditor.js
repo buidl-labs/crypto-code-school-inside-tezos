@@ -34,7 +34,10 @@ export const query = graphql`
   }
 `;
 
-const ChapterWithLiveEditorTemplate = ({ data: { mdx: chapter } }) => {
+const ChapterWithLiveEditorTemplate = ({
+  data: { mdx: chapter },
+  location,
+}) => {
   const [user] = useAtom(userAtom);
   const [isUser] = useAtom(isUserAtom);
   const [isChapterDrawerOpen, setIsChapterDrawerOpen] = useState(false);
@@ -85,7 +88,11 @@ const ChapterWithLiveEditorTemplate = ({ data: { mdx: chapter } }) => {
 
   return (
     <div className={`overflow-hidden`}>
-      <NavBar chapter={chapterHeading} module={chapter.frontmatter.filterBy} />
+      <NavBar
+        chapter={chapterHeading}
+        module={chapter.frontmatter.filterBy}
+        location={location}
+      />
       <main
         className={`grid grid-cols-2 gap-x-6 bg-base-900 h-full relative`}
         style={{ height: 'calc(100vh - 5rem - 3.5em)' }}
