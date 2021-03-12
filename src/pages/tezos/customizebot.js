@@ -896,7 +896,7 @@ const Customizer = () => {
                       setBotColors={setBotColors}
                       shininess={shininess}
                     />
-                    <Environment files="royal_esplanade_1k.hdr" />
+                    <Environment files="royal_esplanade_1k_compressed_50ppi.hdr" />
                   </Suspense>
                   <OrbitControls enableZoom={false} />
                 </Canvas>
