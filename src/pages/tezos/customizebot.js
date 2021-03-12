@@ -89,7 +89,7 @@ function useGroup(scene, type) {
   return result;
 }
 
-const renderGroup = (groupObject, id = 0, colors, getMeshName, shininess) => {
+const renderGroup = (groupObject, id = 0, colors, getMeshName) => {
   // console.log('group object', colors, getMeshName);
   return (
     <>
@@ -113,7 +113,6 @@ const renderGroup = (groupObject, id = 0, colors, getMeshName, shininess) => {
                 material-color={
                   colors.items[getMeshName(child.name)] || '#ffffff'
                 }
-                material-shininess={shininess}
               ></mesh>
             );
           })}
@@ -130,7 +129,6 @@ const Bot = ({
   colors,
   getMeshName,
   setBotColors,
-  shininess,
 }) => {
   const group = useRef();
   const { scene } = useGLTF('/compressedv5.glb');
@@ -165,10 +163,10 @@ const Bot = ({
       dispose={null}
       position={[0, 1.5, 0]}
     >
-      {renderGroup(head, headCount, colors, getMeshName, shininess)}
-      {renderGroup(arm, armCount, colors, getMeshName, shininess)}
-      {renderGroup(body, bodyCount, colors, getMeshName, shininess)}
-      {renderGroup(leg, legCount, colors, getMeshName, shininess)}
+      {renderGroup(head, headCount, colors, getMeshName)}
+      {renderGroup(arm, armCount, colors, getMeshName)}
+      {renderGroup(body, bodyCount, colors, getMeshName)}
+      {renderGroup(leg, legCount, colors, getMeshName)}
     </group>
   );
 };
@@ -324,7 +322,6 @@ const Customizer = () => {
   const [image, setImage] = useState('');
   const [grabImage, setGrabImage] = useState(false);
   const [showSavingBotModel, setShowSavingBotModel] = useState(false);
-  const [shininess, setShininess] = useState(0);
   const [showColorPicker, updateShowColorPicker] = useState(false);
   const [colorPicker, setColorPicker] = useState('#ffffff');
   const [botColors, setBotColors] = useState({
@@ -895,10 +892,8 @@ const Customizer = () => {
                       colors={botColors}
                       getMeshName={getMeshName}
                       setBotColors={setBotColors}
-                      shininess={shininess}
                     />
                     <Environment files="royal_esplanade_1k_compressed_50ppi.hdr" />
-                    <Preload all />
                   </Suspense>
                   <OrbitControls enableZoom={false} />
                 </Canvas>
@@ -954,40 +949,17 @@ const Customizer = () => {
               </Button>
             </div>
             <hr className="my-2 bg-base-400 border-2 h-0.5" />
-            <div className="space-y-6">
+            <div className="space-y-6 mt-4">
               <div>
                 {' '}
                 <h4 className="text-xl text-white font-bold">
                   Colors & Textures
                 </h4>
               </div>
-              {/* <div className="flex flex-col  text-white ">
-                <label className="font-regular text-lg ">Metallic</label>
-                <input
-                  type="range"
-                  id="metallic"
-                  name="metallic"
-                  min="0"
-                  max="10"
-                />
-              </div> */}
-              <div className="flex flex-col  text-white ">
-                <label className="font-regular text-lg ">Shininess</label>
-                <input
-                  type="range"
-                  id="roughness"
-                  name="roughness"
-                  value={shininess}
-                  onChange={e => {
-                    setShininess(e.target.value);
-                  }}
-                  min="0"
-                  max="100"
-                />
-              </div>
               <div id="colors" className="space-y-4">
                 <h5 className="text-lg text-white font-bold">
-                  Body Part : <span>{botColors.current}</span>
+                  Body Part :{' '}
+                  <span className="text-primary-500">{botColors.current}</span>
                 </h5>
                 {showColorPicker ? (
                   <Picker />
