@@ -1,7 +1,10 @@
+import { ThanosWallet } from '@thanos-wallet/dapp';
 import { batchUpdateProgress } from 'src/api';
 
 async function checkIfUserActive(setUser, beacon, location) {
   if (typeof window == 'undefined' || typeof beacon == 'undefined') return;
+  console.log('thanos available', await ThanosWallet.isAvailable());
+  if (!(await ThanosWallet.isAvailable())) return;
 
   localStorage.setItem('last-page', location.pathname);
 
