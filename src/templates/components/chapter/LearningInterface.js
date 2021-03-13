@@ -2,6 +2,7 @@ import React from 'react';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import { MDXProvider } from '@mdx-js/react';
 import SubjectIcon from '@material-ui/icons/Subject';
+import '../../prism-custom.css';
 
 const LearningInterface = ({ heading, body, setDrawerOpen }) => {
   return (
