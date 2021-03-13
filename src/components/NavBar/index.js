@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { BeaconContext } from '../../context/beacon-context';
 import { Link, navigate } from 'gatsby';
 import Theme from 'src/assets/theme.svg';
@@ -8,7 +8,9 @@ import { useAtom } from 'jotai';
 import { createUser, batchUpdateProgress } from '../../api';
 import checkIfUserActive from 'src/utils/automaticLogin';
 import Popper from 'popper.js';
-import { MdExpandMore } from 'react-icons/md';
+import { MdExpandMore, MdWarning, MdClose } from 'react-icons/md';
+import CloseIcon from '@material-ui/icons/Close';
+import WarningIcon from '@material-ui/icons/Warning';
 
 import model from 'src/images/Col-1.png';
 import { ThanosWallet } from '@thanos-wallet/dapp';
@@ -41,6 +43,8 @@ function NavBar(props) {
   const [isUser] = useAtom(isUserAtom);
 
   let beacon = useContext(BeaconContext);
+  //fix: sync this with localStorage
+  const [alertBanner, setAlertBanner] = useState(false);
 
   useEffect(() => {
     typeof window !== 'undefined' &&
@@ -77,32 +81,78 @@ function NavBar(props) {
       navigate('/auth', { state: { pathname: url } });
     }
   }
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      let banner = localStorage.getItem('alertBanner');
+      if (banner !== null) {
+        setAlertBanner(JSON.parse(banner));
+      } else {
+        setAlertBanner(true);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('alertBanner', JSON.stringify(alertBanner));
+  }, [alertBanner]);
+
   return (
-    <nav
-      className={`bg-base-900 px-30 py-8 flex justify-between items-center font-mulish`}
-    >
-      <Link to="/tezos">
-        <Theme className={`h-18 w-auto`} />
-      </Link>
-      <ul className={`flex items-center space-x-12`}>
-        <li>
-          <NavLink to={'/tezos/academy'}>Academy</NavLink>
-        </li>
-        <li>
-          <NavLink to={'/tezos/marketplace'}>Marketplace</NavLink>
-        </li>
-        {!isUser ? (
+    <nav className={`bg-base-900  font-mulish`}>
+      <div
+        style={{ background: 'rgba(245,158,11,0.2)' }}
+        className={`text-white top-0 px-30 py-2 flex items-center justify-between ${
+          alertBanner === true ? 'flex' : 'hidden'
+        }`}
+      >
+        <div className="inline-flex justify-center items-center">
+          <div
+            className="mr-2 w-8 h-8 rounded-full inline-flex items-center justify-center"
+            style={{
+              color: 'rgba(245,158,11,1)',
+              background: 'rgba(245,158,11,0.3)',
+            }}
+          >
+            <MdWarning size="16" />
+          </div>
+          <div>
+            <p className="text-sm ">
+              Cryptoverse Wars is currently on Testnet. You will lose all the
+              chapter progress & cryptobots when we will shift to Mainnet.
+              <span className="ml-1 font-bold">
+               Please proceed in discretion.
+              </span>
+            </p>
+          </div>
+        </div>
+        <button onClick={() => setAlertBanner(false)}>
+          <MdClose size="24" />
+        </button>
+      </div>
+      <div className="px-30 py-8 flex justify-between items-center">
+        <Link to="/tezos">
+          <Theme className={`h-18 w-auto`} />
+        </Link>
+        <ul className={`flex items-center space-x-12`}>
           <li>
-            <NavButton clickHandler={signInHandler}>Sign in</NavButton>
+            <NavLink to={'/tezos/academy'}>Academy</NavLink>
           </li>
-        ) : (
           <li>
-            <div style={{ display: 'flex' }}>
-              <UserDisplay user={user} beacon={beacon} />
-            </div>
+            <NavLink to={'/tezos/marketplace'}>Marketplace</NavLink>
           </li>
-        )}
-      </ul>
+          {!isUser ? (
+            <li>
+              <NavButton clickHandler={signInHandler}>Sign in</NavButton>
+            </li>
+          ) : (
+            <li>
+              <div style={{ display: 'flex' }}>
+                <UserDisplay user={user} beacon={beacon} />
+              </div>
+            </li>
+          )}
+        </ul>
+      </div>
     </nav>
   );
 }
