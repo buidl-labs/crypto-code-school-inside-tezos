@@ -86,7 +86,7 @@ function useGroup(scene, type) {
     }
   });
 
-  // console.log('result', result);
+  console.log('result', result);
   return result;
 }
 
@@ -136,6 +136,7 @@ const Bot = ({
   const group = useRef();
   const { scene } = useGLTF('/compressedv5.glb');
   const [hovered, set] = useState(null);
+  console.log("scene", scene);
 
   const head = useGroup(scene, 'head');
   const arm = useGroup(scene, 'arm');
