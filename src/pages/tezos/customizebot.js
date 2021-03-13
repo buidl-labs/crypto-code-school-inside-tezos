@@ -131,7 +131,7 @@ const Bot = ({
   setBotColors,
 }) => {
   const group = useRef();
-  const { scene } = useGLTF('/compressedv5.glb');
+  const { scene } = useGLTF('/v6.glb');
   const [hovered, set] = useState(null);
 
   const head = useGroup(scene, 'head');
@@ -367,7 +367,6 @@ const Customizer = () => {
       thighsR: '#ffffff',
       thighsL: '#ffffff',
       upper_armsR: '#ffffff',
-      torso: '#ffffff',
       base_jointsL: '#ffffff',
       base_jointsR: '#ffffff',
       Body_base: '#ffffff',
@@ -375,6 +374,7 @@ const Customizer = () => {
       LowerLegL: '#ffffff',
       leg_jointsR: '#ffffff',
       leg_jointsL: '#ffffff',
+      floor: '#ffffff',
     },
   });
 
@@ -893,9 +893,13 @@ const Customizer = () => {
                       getMeshName={getMeshName}
                       setBotColors={setBotColors}
                     />
-                    <Environment files="royal_esplanade_1k_compressed_50ppi.hdr" />
                   </Suspense>
                   <OrbitControls enableZoom={false} />
+                  <Environment
+                    files="royal_esplanade_1k_compressed_50ppi.hdr"
+                    path="/"
+                    preset={null}
+                  />
                 </Canvas>
                 <Loading containerStyles={{ background: 'rgba(55, 65, 81)' }} />
               </div>
@@ -958,8 +962,7 @@ const Customizer = () => {
               </div>
               <div id="colors" className="space-y-4">
                 <h5 className="text-lg text-white font-bold">
-                  Body Part :{' '}
-                  <span className="text-primary-500">{botColors.current}</span>
+                  Body Part : <span>{botColors.current}</span>
                 </h5>
                 {showColorPicker ? (
                   <Picker />
