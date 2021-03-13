@@ -16,6 +16,7 @@ import {
   OrbitControls,
   Html,
   Loader as Loading,
+  Preload,
 } from '@react-three/drei';
 import Loader from 'react-loader-spinner';
 import { HexColorPicker } from 'react-colorful';
@@ -61,6 +62,10 @@ import legs2 from '../../assets/CryptobotImages/Leg/02xlegs.png';
 import legs3 from '../../assets/CryptobotImages/Leg/03xlegs.png';
 import legs4 from '../../assets/CryptobotImages/Leg/04xlegs.png';
 import legs5 from '../../assets/CryptobotImages/Leg/05xlegs.png';
+
+//Custom Environment function
+import { UnsignedByteType, PMREMGenerator } from 'three';
+import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
 
 const state = {
   current: null,
@@ -308,6 +313,28 @@ const CustomAmbientLight = ({ setImage, grabImage }) => {
   }, [grabImage]);
 
   return <ambientLight intensity={0.5} />;
+};
+
+const CustomEnvironment = () => {
+  const { gl, scene } = useThree();
+  const pmremGenerator = new PMREMGenerator(gl);
+  const loader = new RGBELoader();
+  loader.setDataType(UnsignedByteType);
+  pmremGenerator.compileEquirectangularShader();
+
+  useEffect(() => {
+    loader.load('/royal_esplanade_1k_compressed_50ppi.hdr', texture => {
+      const envMap = pmremGenerator.fromEquirectangular(texture).texture;
+
+      scene.environment = envMap;
+      // one can also set scene.background to envMap here
+
+      texture.dispose();
+      pmremGenerator.dispose();
+    });
+  }, [scene, loader, pmremGenerator]);
+
+  return null;
 };
 
 const Customizer = () => {
@@ -893,13 +920,9 @@ const Customizer = () => {
                       getMeshName={getMeshName}
                       setBotColors={setBotColors}
                     />
+                    <CustomEnvironment />
                   </Suspense>
                   <OrbitControls enableZoom={false} />
-                  <Environment
-                    files="royal_esplanade_1k_compressed_50ppi.hdr"
-                    path="/"
-                    preset={null}
-                  />
                 </Canvas>
                 <Loading containerStyles={{ background: 'rgba(55, 65, 81)' }} />
               </div>
