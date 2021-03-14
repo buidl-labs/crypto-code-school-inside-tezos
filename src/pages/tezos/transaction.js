@@ -311,17 +311,18 @@ function Transaction({ location }) {
                     <div>
                       {getUserBalance.value === 0 ? (
                         <div
-                          className="mt-3 py-3 px-5 mb-4  text-white text-sm rounded border border-primary-600 bg-opacity-25 bg-primary-500"
+                          className="mt-3 py-3 px-5 mb-4  text-white text-sm rounded border border-error-600 bg-opacity-25 bg-error-500"
                           role="alert"
                         >
-                          Your account is empty ?{' '}
+                          Your account is empty.{' '}
                           <strong>
                             <a
                               target="_blank"
+                              rel="noopener noreferrer"
                               href="https://www.finder.com/how-to-buy-tezos"
                               className="underline"
                             >
-                              How to obtain XTZ tokens ?
+                              How to obtain XTZ tokens?
                             </a>
                           </strong>
                         </div>
@@ -341,10 +342,11 @@ function Transaction({ location }) {
                           <strong>
                             <a
                               target="_blank"
+                              rel="noopener noreferrer"
                               href="https://www.finder.com/how-to-buy-tezos"
                               className="underline"
                             >
-                              How to obtain XTZ tokens ?
+                              How to obtain XTZ tokens?
                             </a>
                           </strong>
                         </div>

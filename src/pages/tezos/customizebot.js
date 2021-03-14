@@ -17,6 +17,7 @@ import {
   OrbitControls,
   Html,
   Loader as Loading,
+  Preload,
 } from '@react-three/drei';
 import Loader from 'react-loader-spinner';
 import { HexColorPicker } from 'react-colorful';
@@ -63,6 +64,10 @@ import legs3 from '../../assets/CryptobotImages/Leg/03xlegs.png';
 import legs4 from '../../assets/CryptobotImages/Leg/04xlegs.png';
 import legs5 from '../../assets/CryptobotImages/Leg/05xlegs.png';
 
+//Custom Environment function
+import { UnsignedByteType, PMREMGenerator } from 'three';
+import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
+
 const state = {
   current: null,
   items: {
@@ -86,11 +91,11 @@ function useGroup(scene, type) {
     }
   });
 
-  // console.log('result', result);
+  console.log('result', result);
   return result;
 }
 
-const renderGroup = (groupObject, id = 0, colors, getMeshName, shininess) => {
+const renderGroup = (groupObject, id = 0, colors, getMeshName) => {
   // console.log('group object', colors, getMeshName);
   return (
     <>
@@ -114,7 +119,6 @@ const renderGroup = (groupObject, id = 0, colors, getMeshName, shininess) => {
                 material-color={
                   colors.items[getMeshName(child.name)] || '#ffffff'
                 }
-                material-shininess={shininess}
               ></mesh>
             );
           })}
@@ -131,11 +135,11 @@ const Bot = ({
   colors,
   getMeshName,
   setBotColors,
-  shininess,
 }) => {
   const group = useRef();
   const { scene } = useGLTF('/compressed.glb');
   const [hovered, set] = useState(null);
+  console.log("scene", scene);
 
   const head = useGroup(scene, 'head');
   const arm = useGroup(scene, 'arm');
@@ -164,11 +168,12 @@ const Bot = ({
       }}
       ref={group}
       dispose={null}
+      position={[0, 1.5, 0]}
     >
-      {renderGroup(head, headCount, colors, getMeshName, shininess)}
-      {renderGroup(arm, armCount, colors, getMeshName, shininess)}
-      {renderGroup(body, bodyCount, colors, getMeshName, shininess)}
-      {renderGroup(leg, legCount, colors, getMeshName, shininess)}
+      {renderGroup(head, headCount, colors, getMeshName)}
+      {renderGroup(arm, armCount, colors, getMeshName)}
+      {renderGroup(body, bodyCount, colors, getMeshName)}
+      {renderGroup(leg, legCount, colors, getMeshName)}
     </group>
   );
 };
@@ -314,6 +319,28 @@ const CustomAmbientLight = ({ setImage, grabImage }) => {
   return <ambientLight intensity={0.5} />;
 };
 
+const CustomEnvironment = () => {
+  const { gl, scene } = useThree();
+  const pmremGenerator = new PMREMGenerator(gl);
+  const loader = new RGBELoader();
+  loader.setDataType(UnsignedByteType);
+  pmremGenerator.compileEquirectangularShader();
+
+  useEffect(() => {
+    loader.load('/royal_esplanade_1k_compressed_50ppi.hdr', texture => {
+      const envMap = pmremGenerator.fromEquirectangular(texture).texture;
+
+      scene.environment = envMap;
+      // one can also set scene.background to envMap here
+
+      texture.dispose();
+      pmremGenerator.dispose();
+    });
+  }, [scene, loader, pmremGenerator]);
+
+  return null;
+};
+
 const Customizer = ({ location }) => {
   const [selectPart, setselectPart] = useState(1);
   const [headCount, setHeadCount] = useState(0);
@@ -327,7 +354,6 @@ const Customizer = ({ location }) => {
   const [image, setImage] = useState('');
   const [grabImage, setGrabImage] = useState(false);
   const [showSavingBotModel, setShowSavingBotModel] = useState(false);
-  const [shininess, setShininess] = useState(0);
   const [showColorPicker, updateShowColorPicker] = useState(false);
   const [colorPicker, setColorPicker] = useState('#ffffff');
   const [botColors, setBotColors] = useState({
@@ -373,7 +399,6 @@ const Customizer = ({ location }) => {
       thighsR: '#ffffff',
       thighsL: '#ffffff',
       upper_armsR: '#ffffff',
-      torso: '#ffffff',
       base_jointsL: '#ffffff',
       base_jointsR: '#ffffff',
       Body_base: '#ffffff',
@@ -381,6 +406,7 @@ const Customizer = ({ location }) => {
       LowerLegL: '#ffffff',
       leg_jointsR: '#ffffff',
       leg_jointsL: '#ffffff',
+      floor: '#ffffff',
     },
   });
 
@@ -879,7 +905,7 @@ const Customizer = ({ location }) => {
                 <Canvas
                   concurrent
                   pixelRatio={[1, 1.5]}
-                  camera={{ position: [0, 0, 5.75], fov: 80 }}
+                  camera={{ position: [0, 1.4, 5.75], fov: 80 }}
                   gl={{ preserveDrawingBuffer: true }}
                 >
                   <CustomAmbientLight
@@ -891,7 +917,7 @@ const Customizer = ({ location }) => {
                     intensity={0.3}
                     angle={0.1}
                     penumbra={1}
-                    position={[5, 25, 20]}
+                    position={[5, 27, 20]}
                   />
                   <Suspense fallback={null}>
                     <Bot
@@ -902,9 +928,8 @@ const Customizer = ({ location }) => {
                       colors={botColors}
                       getMeshName={getMeshName}
                       setBotColors={setBotColors}
-                      shininess={shininess}
                     />
-                    <Environment files="royal_esplanade_1k.hdr" />
+                    <CustomEnvironment />
                   </Suspense>
                   <OrbitControls enableZoom={false} />
                 </Canvas>
@@ -960,36 +985,12 @@ const Customizer = ({ location }) => {
               </Button>
             </div>
             <hr className="my-2 bg-base-400 border-2 h-0.5" />
-            <div className="space-y-6">
+            <div className="space-y-6 mt-4">
               <div>
                 {' '}
                 <h4 className="text-xl text-white font-bold">
                   Colors & Textures
                 </h4>
-              </div>
-              {/* <div className="flex flex-col  text-white ">
-                <label className="font-regular text-lg ">Metallic</label>
-                <input
-                  type="range"
-                  id="metallic"
-                  name="metallic"
-                  min="0"
-                  max="10"
-                />
-              </div> */}
-              <div className="flex flex-col  text-white ">
-                <label className="font-regular text-lg ">Shininess</label>
-                <input
-                  type="range"
-                  id="roughness"
-                  name="roughness"
-                  value={shininess}
-                  onChange={e => {
-                    setShininess(e.target.value);
-                  }}
-                  min="0"
-                  max="100"
-                />
               </div>
               <div id="colors" className="space-y-4">
                 <h5 className="text-lg text-white font-bold">

@@ -14,16 +14,17 @@
  * update all of code elements style i.e inline code block created using ``
  */
 code.language-pythontext {
-  color: #18b77e;
+  color: #f7f7f7;
   padding: 0.2em 0.5em !important;
   font-size: 85%;
   font-weight: 700 !important;
-  background-color: #f7f7f7 !important;
+  background-color: #0e0d0d !important;
   border-radius: 3px;
+  border: 1px solid #cccccc;
 }
 
 .string-highlight {
-  color: #927501;
+  color: #0e0d0d;
   font-weight: 700;
 }
 
@@ -36,9 +37,9 @@ code.language-pythontext {
   overflow: auto;
   font-size: 85%;
   line-height: 1.45;
-  background-color: #f7f7f7;
   border-radius: 3px;
   margin-bottom: 16px;
+  border: 1px solid #cccccc;
 }
 
 /**
@@ -77,11 +78,13 @@ table {
 }
 table tr {
   border-top: 1px solid #cccccc;
-  background-color: white;
+  background-color: #0e0d0d;
+  color: #f8f8f8;
   margin: 0;
 }
 table tr:nth-child(2n) {
-  background-color: #f8f8f8;
+  background-color: #0e0d0d;
+  color: #f8f8f8;
 }
 table tr th {
   font-weight: bold;
