@@ -176,7 +176,7 @@ function Profile() {
                     <div>Error: {ownedBots.error.message}</div>
                   ) : (
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                      {ownedBots.value.length > 0 ? (
+                      {ownedBots.value && ownedBots.value.length > 0 ? (
                         ownedBots.value.map(el => {
                           return (
                             <div key={el.tokenId}>
@@ -214,7 +214,7 @@ function Profile() {
                     <div>Error: {ownedBots.error.message}</div>
                   ) : (
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                      {ownedBots.value.filter(el => el.isForSale === true)
+                      {ownedBots.value && ownedBots.value.filter(el => el.isForSale === true)
                         .length > 0 ? (
                         ownedBots.value
                           .filter(el => el.isForSale === true)
