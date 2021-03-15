@@ -15,6 +15,7 @@
     "@mdx-js/react": "^1.5.7",
     "@monaco-editor/react": "^3.1.2",
     "@react-three/drei": "^3.3.0",
+    "@sentry/gatsby": "^6.2.2",
     "@taquito/beacon-wallet": "^8.0.3-beta.0",
     "@taquito/signer": "^8.0.3-beta.0",
     "@taquito/taquito": "^8.0.3-beta.0",
