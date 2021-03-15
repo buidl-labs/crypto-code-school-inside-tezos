@@ -99,7 +99,9 @@ module.exports = {
       resolve: `gatsby-plugin-amplitude-analytics`,
       options: {
         // API key for your Amplitude Project (required)
-        apiKey: '9f25945960748d67e7f7cf101ece3422',
+        //TODO: BEFORE merging it in master, resolve whether to use beta-or main-master api key
+        //cryptoverse-wars beta amplitude tracking api key
+        apiKey: "b8c4bfb895ccfd2479ce7fd4507b1256",
         // Puts tracking script in the head instead of the body (optional)
         head: true,
         // Prevents loading Amplitude and logging events if visitors have "Do Not Track" enabled (optional)
