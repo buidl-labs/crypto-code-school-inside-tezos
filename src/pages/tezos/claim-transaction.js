@@ -28,6 +28,8 @@ import { useAtom } from 'jotai';
 
 import { MichelsonMap } from '@taquito/taquito';
 
+import { trackEvent } from 'src/utils/analytics';
+
 const Steppers = ({ number, name, clickEvent, tick = false }) => {
   return (
     <div onClick={clickEvent}>
@@ -234,6 +236,7 @@ function Transaction({ location }) {
       const result = await op.confirmation(1);
       // Go to 3rd Step
       setStep(3);
+      trackEvent('Bot-Minted-Successfully');
       console.log('result 🔥', result);
     } catch (err) {
       console.log(err);
