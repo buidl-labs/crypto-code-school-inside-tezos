@@ -137,7 +137,7 @@ const Bot = ({
   setBotColors,
 }) => {
   const group = useRef();
-  const { scene } = useGLTF('/compressed.glb');
+  const { scene } = useGLTF('/compressedv5.glb');
   const [hovered, set] = useState(null);
   console.log("scene", scene);
 
