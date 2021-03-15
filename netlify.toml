@@ -1,0 +1,19 @@
+# Production context: all deploys from the Production branch set in your site’s
+# deploy contexts will inherit these settings.
+[context.production.environment]
+  AMPLITUDE_ENVIRONMENT = "PRODUCTION"
+
+# Here is another way to define context specific environment variables.
+[context.develop.environment]
+  AMPLITUDE_ENVIRONMENT = "DEVELOP"
+  
+# Here is another way to define context specific environment variables.
+[context.deploy-preview.environment]
+  AMPLITUDE_ENVIRONMENT = "TEST"
+
+# The following redirect is intended for use with most SPAs that handle
+# routing internally.
+[[redirects]]
+  from = "/"
+  to = "/tezos"
+  status = 200

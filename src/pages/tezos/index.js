@@ -104,6 +104,7 @@ function Landing() {
       </div>
     );
   }
+  console.log("homepage env", process.env.AMPLITUDE_ENVIRONMENT);
   return (
     <div>
       {videoModal === 1 && (
