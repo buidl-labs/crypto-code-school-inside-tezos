@@ -711,6 +711,7 @@ const Customizer = ({ location }) => {
                   <ArrowForwardIosIcon />
                 </div>
               }
+              disableKeyboardNavigation={true}
             />
           ) : (
             ''
