@@ -9,6 +9,7 @@ import NavBar from '../../components/NavBar';
 import Button from '../../components/Buttons';
 import { ThanosWallet } from '@thanos-wallet/dapp';
 import { navigate, Link } from 'gatsby';
+import Tour from 'reactour';
 import { Canvas, useFrame, useThree } from 'react-three-fiber';
 import {
   ContactShadows,
@@ -36,6 +37,10 @@ import GLTFExporter from 'three-gltf-exporter';
 import { NETWORK } from 'src/defaults';
 
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+
 import { BeaconContext } from 'src/context/beacon-context';
 import { createUser, batchUpdateProgress } from 'src/api';
 import { trackEvent } from 'src/utils/analytics';
@@ -139,7 +144,7 @@ const Bot = ({
   const group = useRef();
   const { scene } = useGLTF('/compressedv5.glb');
   const [hovered, set] = useState(null);
-  console.log("scene", scene);
+  console.log('scene', scene);
 
   const head = useGroup(scene, 'head');
   const arm = useGroup(scene, 'arm');
@@ -269,7 +274,7 @@ const WelcomeModal = ({ close, isUser }) => {
       className={`bg-base-900 bg-opacity-80 absolute inset-0 flex items-center justify-center text-white`}
     >
       <div
-        className={`absolute bg-base-700 flex items-center justify-center flex-col py-9 px-24 rounded-3xl z-50`}
+        className={`absolute bg-base-700 flex items-center justify-center flex-col py-9 px-24 rounded-3xl`}
         style={{ maxWidth: `65vw` }}
       >
         <h3 className={`text-4xl font-black`}>Congratulations</h3>
@@ -341,12 +346,66 @@ const CustomEnvironment = () => {
   return null;
 };
 
+//INTRO TO CUSTOMIZER TOUR
+const steps = [
+  {
+    selector: '.first-step',
+    content: () => {
+      return (
+        <div className="space-y-1 mt-1">
+          <h3 className="font-extrabold">Give your Cryptobot some muscles!</h3>
+          <p>Choose different body parts for your cryptobot.</p>
+        </div>
+      );
+    },
+    style: {
+      backgroundColor: '#061B2F',
+      color: 'white',
+    },
+  },
+  {
+    selector: '.second-step',
+    content: () => {
+      return (
+        <div className="space-y-1 mt-1">
+          <h3 className="font-extrabold">
+            Give your Cryptobot a Unique Style!
+          </h3>
+          <p>
+            Select a body part to give it a color from the palette below or
+            choose a custom color.
+          </p>
+        </div>
+      );
+    },
+    style: {
+      backgroundColor: '#061B2F',
+      color: 'white',
+    },
+  },
+  {
+    selector: '.third-step',
+    content: () => {
+      return (
+        <div className="space-y-1 mt-1">
+          <h3 className="font-extrabold">Claim your Unique Cryptobot!</h3>
+          <p>After you are done customizing claim your cryptobot🤖</p>
+        </div>
+      );
+    },
+    style: {
+      backgroundColor: '#061B2F',
+      color: 'white',
+    },
+  },
+];
+
 const Customizer = ({ location }) => {
   const [selectPart, setselectPart] = useState(1);
-  const [headCount, setHeadCount] = useState(0);
-  const [armCount, setArmCount] = useState(0);
-  const [bodyCount, setBodyCount] = useState(0);
-  const [legCount, setLegCount] = useState(0);
+  const [headCount, setHeadCount] = useState(getRandomNumber(0, 4));
+  const [armCount, setArmCount] = useState(getRandomNumber(0, 4));
+  const [bodyCount, setBodyCount] = useState(getRandomNumber(0, 4));
+  const [legCount, setLegCount] = useState(getRandomNumber(0, 4));
 
   const beacon = useContext(BeaconContext);
   const [isModalOpen, setIsModalOpen] = useState(true);
@@ -418,6 +477,24 @@ const Customizer = ({ location }) => {
       state.items.leg,
     );
   }
+
+  const [isTourOpen, setIsTourOpen] = useState(true);
+
+  //persist tour to local storage
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      let tour = localStorage.getItem('isTourOpen');
+      if (tour !== null) {
+        setIsTourOpen(JSON.parse(tour));
+      } else {
+        setIsTourOpen(true);
+      }
+    }
+  }, [isModalOpen]);
+
+  useEffect(() => {
+    localStorage.setItem('isTourOpen', JSON.stringify(isTourOpen));
+  }, [isTourOpen]);
 
   const [isUser] = useAtom(isUserAtom);
   const [user, setUser] = useAtom(userAtom);
@@ -609,11 +686,39 @@ const Customizer = ({ location }) => {
       <div id="main" className="relative h-full">
         <div
           id="editor"
-          className="relative h-full min-h-screen grid grid-cols-8 gap-4 w-full"
+          className="relative h-full min-h-screen grid grid-cols-8 gap-4 w-full z-0"
         >
+          {!isModalOpen ? (
+            <Tour
+              steps={steps}
+              isOpen={isTourOpen}
+              onRequestClose={() => setIsTourOpen(false)}
+              accentColor="#2563EB"
+              lastStepNextButton={
+                <div className="text-white font-mulish">Let's get started!</div>
+              }
+              className="text-white"
+              prevButton={
+                <div className="text-base-50 font-mulish text-base space-x-1">
+                  {' '}
+                  <ArrowBackIosIcon />
+                  Prev
+                </div>
+              }
+              nextButton={
+                <div className="text-base-50 font-mulish text-base space-x-1">
+                  Next
+                  <ArrowForwardIosIcon />
+                </div>
+              }
+            />
+          ) : (
+            ''
+          )}
+
           <div
             id="left-menu"
-            className="col-start-1 col-span-2 px-4 pt-4 rounded"
+            className="col-start-1 col-span-2 px-4 pt-4 rounded first-step"
           >
             <div className="grid grid-cols-2 gap-2">
               <div className="flex flex-col w-full list-none" role="tablist">
@@ -931,7 +1036,7 @@ const Customizer = ({ location }) => {
                     />
                     <CustomEnvironment />
                   </Suspense>
-                  <OrbitControls enableZoom={false} />
+                  <OrbitControls enableZoom={true} />
                 </Canvas>
                 <Loading containerStyles={{ background: 'rgba(55, 65, 81)' }} />
               </div>
@@ -941,7 +1046,7 @@ const Customizer = ({ location }) => {
             id="right-menu"
             className="col-span-2 col-start-7 bg-base-900 px-4 "
           >
-            <div className="grid grid-cols-2 gap-4  mx-auto justify-center text-white  py-4">
+            <div className="grid grid-cols-2 gap-4  mx-auto justify-center text-white  py-4 third-step">
               <Button
                 size="sm"
                 type="secondary"
@@ -985,12 +1090,20 @@ const Customizer = ({ location }) => {
               </Button>
             </div>
             <hr className="my-2 bg-base-400 border-2 h-0.5" />
-            <div className="space-y-6 mt-4">
-              <div>
+            <div className="space-y-6 mt-4 second-step">
+              <div className="flex flex-row">
                 {' '}
-                <h4 className="text-xl text-white font-bold">
+                <h4 className="text-xl text-white font-bold flex-1">
                   Colors & Textures
                 </h4>
+                <button
+                  className="text-white focus:outline-none"
+                  onClick={() => {
+                    setIsTourOpen(true);
+                  }}
+                >
+                  <HelpOutlineIcon /> Help
+                </button>
               </div>
               <div id="colors" className="space-y-4">
                 <h5 className="text-lg text-white font-bold">
