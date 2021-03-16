@@ -117,9 +117,7 @@ editor:
         
         # test our code over here.
 
-
-
-  answer: |  
+  answer: |
     import smartpy as sp
 
     class Cryptobot(sp.Contract):
@@ -235,31 +233,35 @@ editor:
         scenario += test_bot.buy_powerup('time_freeze')
         scenario.verify(test_bot.data.mutez_points == sp.mutez(2000))
         scenario.verify(test_bot.data.active_powerup.power == 'time_freeze')
-
 ---
 
-### Intro
+## Intro
+
 You've told `Market` which `powerup` you want, but don't you want to get the `powerup` back!?
 After all, `powerups` will help you destroy the aliens.
 
-### Study time
+## Study time
+
 So far, we've implemented only one inter-contract call.
 But to complete the whole process of buying a powerup, we're going to need one more from `Market` to `Cryptobot` to send the real `powerup`.
 
 ![inter-contract call](https://i.imgur.com/JjgArPu.png)
 
 This in loose terms is called **cyclic inter-contract calls**.
+
 - First contract calls the Second contract and then the Second contract calls the First contract.
 
-
+<br />
 
 There's a last piece in the puzzle that you need to understand to implement the full functionality - `sp.to_address`.
 
 `sp.to_address` accepts a contract(`sp.TContract`) and returns the address(`sp.TAddress`) of that contract.
 
 It can be used in combination with `sp.self` to generate the address of the currenty smart contract inside an entry point.
+
 > Note - `sp.self` refers to the contract it's being used inside.
-```python=
+
+```python
 sp.to_address(sp.self)
 ```
 
@@ -267,29 +269,30 @@ Super useful for our case because the `Cryptobot` needs to send its own address 
 
 Puzzle clicking together now? 🔥
 
-### #buidl-ing time
- 
-#### New feature request!
+## #buidl-ing time
+
+### New feature request!
+
 We're going to have to **buidl** a lot of stuff in this one.
 Let's go and complete our whole system so that you can finally use the powerups to blow the nasty alien to pieces
 
+### Step by step walkthrough
 
-#### Step by step walkthrough
 1. Modify `buy_powerup` in `Cryptobot`
-    1. Modify `data_type` to also include `cryptobot_address` which is of type `sp.TContract` that accepts a record of string `power` and nat `duration`.
-    2. Define `self_contract` - it's the contract that holds the details to `receive_powerup` entry point in `Cryptobot`.
-        - accepts a record of same shape as `active_powerup`.
-        - address points to `Cryptobot`( use `sp.to_address`)
-        - points to `recieve_powerup` entry point.
-    3. Modify `data_to_be_sent` to hold `cryptobot_contract` as well, which is equal to `self_contract`.
-    
+   * Modify `data_type` to also include `cryptobot_address` which is of type `sp.TContract` that accepts a record of string `power` and nat `duration`.
+   * Define `self_contract` - it's the contract that holds the details to `receive_powerup` entry point in `Cryptobot`.
+      * accepts a record of same shape as `active_powerup`.
+      * address points to `Cryptobot`( use `sp.to_address`)
+      * points to `recieve_powerup` entry point.
+   * Modify `data_to_be_sent` to hold `cryptobot_contract` as well, which is equal to `self_contract`.
 2. Implement `send_powerup` in `Market`
-    1. Define `powerup_to_send` as the result of `find_powerup`.
-    2. Make an inter-contract call to `cryptobot_contract` and send to it the `powerup_to_send`.
+    * Define `powerup_to_send` as the result of `find_powerup`.
+    * Make an inter-contract call to `cryptobot_contract` and send to it the `powerup_to_send`.
 3. Implement `receive_powerup` in `Cryptobot`.
-    - Set `active_powerup` equal to the `poweup` being received as the parameter.
+   - Set `active_powerup` equal to the `poweup` being received as the parameter.
 
-#### Testing our code
+### Testing our code
+
 1. Invoke `Cryptobot.buy_powerup` inside `test` function with the parameter `time_freeze`.
 2. Use `scenario.verify` to check whether `mutez_points` held by `Cryptobot` is equal to 2000 mutez.
 3. Use `scenario.verify` to check wether the `active_power.power` of `Cryptobot` is `"time_freeze"` or not.
