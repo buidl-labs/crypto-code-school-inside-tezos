@@ -143,12 +143,11 @@ function Landing() {
               </p>
               <p className={`mt-2`}>
                 We've got you covered with our fun and free course, which will
-                take you from a noob to blockchain pro in matter of a few hours
-                🥳
+                take you from a noob to blockchain pro in a quick few hours 🥳
               </p>
               <p>
-                You'll build your own Cryptobot and then an army of them to
-                fight in the Cryptoverse Wars ⚔️
+                You'll build your Cryptobot and then an army of them to fight in
+                the Cryptoverse Wars ⚔️
               </p>
             </div>
             <div className="flex justify-center">
@@ -179,7 +178,7 @@ function Landing() {
                   </li>
                   <li>
                     You can’t transfer money from one continent to another
-                    without the hassle of high bank fee
+                    without the hassle of a high bank fee
                   </li>
                   <li>
                     You can’t invest in companies without giving away all your
@@ -191,7 +190,8 @@ function Landing() {
                   blockchain 🦄
                 </p>
                 <p>
-                  So much in finance is getting built on top of blockchain 💰
+                  So much in finance is getting built on top of the blockchain
+                  💰
                 </p>
                 <p>
                   Just in 2020 alone, Crypto’s market has grown by a frickin’
@@ -220,12 +220,12 @@ function Landing() {
             </h1>
           </div>
           <FeatureGrid
-            heading="Create your own currency!"
+            heading="Create your currency!"
             subtext={`
             <p>
               Learn how to create apps on the Tezos blockchain through our exciting course. 
           </p>
-          <p>You even learn how to make your own currency 🤑</p>
+          <p>You even learn how to make your currency 🤑</p>
             `}
             buttontext="Become a Blockchain Pro "
             video={createCurrency}

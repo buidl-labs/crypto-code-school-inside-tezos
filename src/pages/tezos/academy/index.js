@@ -162,8 +162,8 @@ const CurriculumOverview = ({
               javascript library.
             </p>
             <p className={`mt-4`}>
-              You’ll build your own Cryptobot, fight aliens, create your own
-              currency, and so much more exciting stuff ✨
+              You’ll build your Cryptobot, fight aliens, create your currency,
+              and so much more exciting stuff ✨
             </p>
             <p className={`mt-2`}>
               I know, it can sound like too much. But don't worry, we'll take
