@@ -274,7 +274,7 @@ const WelcomeModal = ({ close, isUser }) => {
       className={`bg-base-900 bg-opacity-80 absolute inset-0 flex items-center justify-center text-white`}
     >
       <div
-        className={`absolute bg-base-700 flex items-center justify-center flex-col py-9 px-24 rounded-3xl`}
+        className={`absolute bg-base-700 flex items-center justify-center flex-col py-9 px-24 rounded-3xl z-50`}
         style={{ maxWidth: `65vw` }}
       >
         <h3 className={`text-4xl font-black`}>Congratulations</h3>
@@ -686,7 +686,7 @@ const Customizer = ({ location }) => {
       <div id="main" className="relative h-full">
         <div
           id="editor"
-          className="relative h-full min-h-screen grid grid-cols-8 gap-4 w-full z-0"
+          className="relative h-full min-h-screen grid grid-cols-8 gap-4 w-full"
         >
           {!isModalOpen ? (
             <Tour
