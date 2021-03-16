@@ -426,11 +426,11 @@ function Transaction({ location }) {
                   Share your unique cryptobot with your friends and start
                   trading with other on marketplace!
                 </h4>
-                <div className="text-white text-center text-lg font-mulish mt-8">
-                  Here’s the link to your unique cryptobot:
+                <div className="text-white text-center text-lg font-mulish mt-8 break-all">
+                  <p>Here’s the link to your unique cryptobot:</p>
                   <a
                     href={`https://cryptocodeschool.in/tezos/cryptobot/${botTokenId}`}
-                    className="text-primary-400 underline"
+                    className="text-primary-400 underline break-all"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -509,7 +509,7 @@ function Transaction({ location }) {
                   Earn more super cool cryptobots by completing Modules or
                   exploring Marketplace
                 </h4>
-                <div className="grid md:grid-cols-2 grid-cols-1 space-x-4  mx-auto justify-center text-white mt-8">
+                <div className="grid md:grid-cols-2 grid-cols-1 space-x-4 mx-auto justify-center text-white mt-8">
                   <Link to="/tezos/marketplace">
                     <Button size="lg" type="secondary">
                       Explore Marketplace
