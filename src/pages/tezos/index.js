@@ -30,7 +30,10 @@ const FeatureGrid = ({
         <h1 className="sm:text-5xl text-3xl mb-3 font-black text-white heading-glow">
           {heading}
         </h1>
-        <p className="text-base-50 text-base mb-6">{subtext}</p>
+        <div
+          className="text-base-50 text-base mb-6"
+          dangerouslySetInnerHTML={{ __html: subtext }}
+        />
 
         <Link
           className={`py-3 px-9 text-xl border-primary-600 border-2 hover:border-primary-700 text-white font-bold rounded focus:outline-none`}
@@ -145,7 +148,7 @@ function Landing() {
               </p>
               <p>
                 You'll build your own Cryptobot and then an army of them to
-                fight in the Cryptoverse Wars.
+                fight in the Cryptoverse Wars ⚔️
               </p>
             </div>
             <div className="flex justify-center">
@@ -218,8 +221,12 @@ function Landing() {
           </div>
           <FeatureGrid
             heading="Create your own currency!"
-            subtext="Learn how to create apps on the Tezos blockchain through our exciting
-          course. You even learn how to make your own currency 🤑"
+            subtext={`
+            <p>
+              Learn how to create apps on the Tezos blockchain through our exciting course. 
+          </p>
+          <p>You even learn how to make your own currency 🤑</p>
+            `}
             buttontext="Become a Blockchain Pro "
             video={createCurrency}
             videoType="webm"
@@ -228,7 +235,17 @@ function Landing() {
           />
           <FeatureGrid
             heading="Earn while you learn!"
-            subtext="Join the Cryptobot clan by winning your unique Cryptobot as NFT's and earn real money by trading with others in our marketplace! Major throwback to the  pokémon cards trading era ⚡️"
+            subtext={`
+              <p>
+                Join the Cryptobot clan by winning your unique Cryptobot as NFT's!!! 
+              </p>
+              <p>
+                Earn real money by trading with others in our marketplace!
+              </p>
+              <p>
+                Major throwback to the  pokémon cards trading era ⚡️
+              </p>
+            `}
             buttontext="Explore mind-blowing Cryptobots"
             video={earnWhileYouLearn}
             videoType="mp4"
