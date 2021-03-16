@@ -1734,12 +1734,12 @@ editor:
     };
     
 ---
-### Intro
+## Intro
 Michelson is the language than runs on the Tezos network, rest all higher-level languages are an abstraction over it which directly compile to michelson.
 
-### Study time
+## Study time
 
-To deploy contracts through Taquito you need to grab the "Code JSON" and "Storage JSON" for the contract that you wrote in SmartPy and this process is made SUPER EASY thanks to the [SmartPy IDE](https://smartpy.io/dev) - it generates "Storage JSON" and "Code JSON" for you which you can directly copy.
+To deploy contracts through Taquito you need to grab the "Code JSON" and "Storage JSON" for the contract that you wrote in SmartPy and this process is made SUPER EASY thanks to the [SmartPy IDE](https://smartpy.io/ide) - it generates "Storage JSON" and "Code JSON" for you which you can directly copy.
 
 ### Show me an example
 If we've the following contract - 
@@ -1771,7 +1771,7 @@ def test():
 ```
 
 It generates the following **Code JSON** - 
-```json=
+```json
 [
   { "prim": "storage", "args": [ { "prim": "int" } ] },
   { "prim": "parameter", "args": [ { "prim": "unit" } ] },
@@ -1779,25 +1779,23 @@ It generates the following **Code JSON** -
 ]
 ```
 And **Storage JSON** - 
-```json=
+```json
 { "int": "5" }
 ```
 
-### #buidl-ing time
+## #buidl-ing time
  
-#### New feature request!
+### New feature request!
 We're going to generate the JSON Code and Storage for the contract we want to originate and store it in our code.
 This is super important for originating(deploying) a contract, because Tezos blockchain only understands Michelson.
 
-#### Step by step walkthrough
+### Step by step walkthrough
 1. Grab the **Code JSON** and **Storage JSON** for the contract - 
-    1. Head over the following link to the [SmartPy IDE](https://smartpy.io/ide?code=eJxtkE9vwjAMxe_9FFa4NBrjsCMa0xB_NC47APeQtqaL1iZVYoY6xHefmwLbJCq1Vfz883uOqRvnCUKtPTUt6AChSZIBrPr6cvoEhHVTacKkO0xYH5koqquQClZGTSskg3PcG4uwm_k2Q6@27hPtLskrHQLMfktph_Arxwnw07CcJK88WxcFDw6UWl0j24nlwZYmqxAixx4F7iF2XNiQo9XeuD5bp6hrKZWxI34G0BwIWnfwcNRVhQRs5ZFjGQv0gfDFhO6MMqzccXQDdVFzRxx@IVLxvHrfLNZbNZ3P14vNRr0t1osXzpZEIo97UpeXuTtbq9zZvSnTYGxZoeLlkSZbf0A5vNnF_xBqJF1o0n2AzJSq1k16ij5CjGOx5aWV26tAngemgvDbhcdAzusSx@xFaEnIYQ9dz_dZIU6iu3oBYxAx@uXizyzJs5T_7_xh8nfbqP0Apoa9VA--) - we've pre-loaded the script for `Cyber_token`.
+    1. Head over the following link to the [SmartPy IDE](https://smartpy.io/ide?cid=QmT1Kn7rtZbtM89oM75MSxmM7CwBUUng7goqVRBEWVSgM8&k=a187fb27545a0bf44f31) - we've pre-loaded the script for `Cyber_token`.
     1. Replace your wallet address for admin - 
         - Several operations in a fungible token require to be called by the `admin`. We'll be injecting operations through the account that you obtained from the faucet, hence, that account needs to be specified as the `admin` in our code for the fungible token.
         1. In the account data you generated from the faucet, there's a key `"pkh"`(value starts from "tz") - this is your wallet address and stands for "public key hash"
-        2. In the SmartPy code, initialize the admin interfact with the value of your `pkh`.
-        - Eg: `admin = sp.address("tz1WvExrfb4hPQZhoXeY8DqmmtvceYnDv8Pt")`
-       
+        2. In the SmartPy code, initialize the admin interfact with the value of your `pkh`. Eg: `admin = sp.address("tz1WvExrfb4hPQZhoXeY8DqmmtvceYnDv8Pt")`
     2. Run the smart contract in the IDE.
     3. The first section that you see in the output is your contract, click on "Deploy Michelson Contract".
     4. Click "Code JSON" and copy the code from there.

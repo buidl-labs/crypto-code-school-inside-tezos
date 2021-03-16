@@ -39,18 +39,20 @@ editor:
     })
     .catch(error => print(error));
 ---
-### Intro
+## Intro
 Now your society is starting to function well. 
+
 But there has to be a way to monitor your civilization right? 
+
 How else are you supposed to run your society if you don't know what's happening!?
 
 In this chapter, we'll explore how you can access contract storage through Taquito.
 
-### Study time
+## Study time
 Each contract has a global storage that holds all the data that is needed in the contract. For example, our `Cyber_Token` holds `administrator` and `ledger` among other fields.
 
 Contract storage can also be accessed through the `contract` object that we get back through `Tezos.contract.at`.
-```javascript=
+```javascript
 Tezos.contract.at("<CONTRACT_ADDRESS>")
 .then(contract => {
     return contract.storage();
@@ -93,8 +95,11 @@ def test():
     w = Wallet(initial_amount = 1000, owner_address = account_owner.address)
     scenario += w
 ```
+
+<br />
+
 Now let's try accessing the storage of this smart contract.
-```javascript=
+```javascript
 Tezos.contract.at("KT1CTQ7CteorSXcKZPRcZqt2G8gCkPA3YbsA")
 .then(contract => {
     return contract.storage();
@@ -105,7 +110,7 @@ Tezos.contract.at("KT1CTQ7CteorSXcKZPRcZqt2G8gCkPA3YbsA")
 .catch(error => print(error));
 ```
 We'll get a result similar to - 
-```json=
+```json
 {
   "amount": "1500",
   "owner": "tz1PNnMSshdD4KCt8T1khDnxUcjFTvsk8BnM",
@@ -117,14 +122,14 @@ We'll get a result similar to -
 ```
 
 
-### #buidl-ing time
+## #buidl-ing time
  
-#### New feature request!
+### New feature request!
 You need to keep a check on your civilization, to make sure they don't start minting a different token(currency) other than what you're minting.
 
 You'll need to access `all_tokens` inside the contract storage of the `Cyber_Token` contract you originated.
 
-#### Step by step walkthrough
+### Step by step walkthrough
 1. Replace the `"<CONTRACT_ADDRESS>"` with the address of the contract you orginated.
 2. Return the contract storage.
 3. Initialize `numTokens` as `all_tokens` present in the `storage`.
