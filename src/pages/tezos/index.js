@@ -133,13 +133,21 @@ function Landing() {
             <h1 className="sm:text-7xl text-4xl mb-4 text-white font-black heading-glow">
               Learn to code on the blockchain, the fun way!
             </h1>
-            <p className="mb-8 leading-relaxed text-base-50">
-              Blockchain is all the hype these days, but learning blockchain can
-              be tough! We've got you covered with our fun and free course,
-              which will take you from a noob to blockchain pro in matter of a
-              few hours and build your own Cryptobot and then an army of them to
-              fight in the Cryptoverse Wars.
-            </p>
+            <div className="mb-8 leading-relaxed text-base-50">
+              <p>
+                Blockchain is all the hype these days, but learning blockchain
+                can be tough 😢
+              </p>
+              <p className={`mt-2`}>
+                We've got you covered with our fun and free course, which will
+                take you from a noob to blockchain pro in matter of a few hours
+                🥳
+              </p>
+              <p>
+                You'll build your own Cryptobot and then an army of them to
+                fight in the Cryptoverse Wars.
+              </p>
+            </div>
             <div className="flex justify-center">
               <Link
                 to="/tezos/academy"
@@ -161,17 +169,37 @@ function Landing() {
               <h1 className="sm:text-7xl text-4xl mb-3 font-black text-white">
                 With blockchain, build better finance.
               </h1>
-              <p className="text-base-50 text-lg">
-                A kid under 18 years can’t get a personal bank account, you
-                can’t transfer money from one continent to another without the
-                hassle of high bank fee, you can’t invest in companies without
-                putting in all your details. What if we told you, all that and
-                more is possible on the blockchain.
-                <br /> So much in finance is getting built on top of blockchain
-                in the DeFi sector and just in 2020 alone, Crypto’s market has
-                grown by a frickin’ 5x. <br />
-                Learn how to code on the blockchain, now’s the right time!
-              </p>
+              <div className="text-base-50 text-lg">
+                <ul className={`space-y-2 mb-4 list-disc`}>
+                  <li>
+                    A kid under 18 years can’t get a personal bank account.
+                  </li>
+                  <li>
+                    You can’t transfer money from one continent to another
+                    without the hassle of high bank fee
+                  </li>
+                  <li>
+                    You can’t invest in companies without giving away all your
+                    details.
+                  </li>
+                </ul>
+                <p>
+                  What if we told you, all that and more is possible on the
+                  blockchain 🦄
+                </p>
+                <p>
+                  So much in finance is getting built on top of blockchain 💰
+                </p>
+                <p>
+                  Just in 2020 alone, Crypto’s market has grown by a frickin’
+                  5x.
+                </p>
+                <p
+                  className={`border border-base-700 rounded text-xl px-4 py-3 mt-4 bg-base-900 text-white shadow-xl`}
+                >
+                  Learn how to code on the blockchain, now’s the right time!
+                </p>
+              </div>
             </div>
           </div>
           <div className="col-span-2 h-full w-full">
