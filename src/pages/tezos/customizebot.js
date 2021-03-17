@@ -5,11 +5,12 @@ import React, {
   useEffect,
   useContext,
 } from 'react';
+import loadable from '@loadable/component';
+import Tour from 'reactour';
 import NavBar from '../../components/NavBar';
 import Button from '../../components/Buttons';
 import { ThanosWallet } from '@thanos-wallet/dapp';
 import { navigate, Link } from 'gatsby';
-import Tour from 'reactour';
 import { Canvas, useFrame, useThree } from 'react-three-fiber';
 import {
   ContactShadows,
@@ -1156,3 +1157,5 @@ const Customizer = ({ location }) => {
 };
 
 export default Customizer;
+
+const LoadableTour = loadable(() => import(Tour));
