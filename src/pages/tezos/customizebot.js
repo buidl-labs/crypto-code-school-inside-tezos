@@ -976,7 +976,7 @@ const Customizer = ({ location }) => {
                   setArmCount(armCount);
                   setLegCount(legCount);
 
-                  trackEvent('Claim-Bot');
+                  trackEvent('click claim bot button');
                 }}
                 size="sm"
                 type="primary"
