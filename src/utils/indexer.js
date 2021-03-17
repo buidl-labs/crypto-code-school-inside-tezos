@@ -30,7 +30,7 @@ export const getAllNFTsMetadata = async () => {
   const tokensMetataDataJSON = await tokensMetataData.json();
 
   const tk = await fetch(
-    `https://api.better-call.dev/v1/bigmap/${INDEXER_NETWORK}/${tokens.value}/keys?size=${tokensMetataDataJSON.active_keys}`,
+    `https://api.better-call.dev/v1/bigmap/${INDEXER_NETWORK}/${tokens.value}/keys`,
   );
   const all_tokens = await tk.json();
 
@@ -69,7 +69,7 @@ export const nftOnOffer = async () => {
   const offerMetadataJSON = await offerMetadata.json();
 
   const tk = await fetch(
-    `https://api.better-call.dev/v1/bigmap/${INDEXER_NETWORK}/${tokens.value}/keys?size=${offerMetadataJSON.active_keys}`,
+    `https://api.better-call.dev/v1/bigmap/${INDEXER_NETWORK}/${tokens.value}/keys`,
   );
   const offers = await tk.json();
 
