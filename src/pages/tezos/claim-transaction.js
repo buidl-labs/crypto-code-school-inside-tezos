@@ -152,7 +152,7 @@ function Transaction({ location }) {
   // const jsonURI = location.state ? location.state.jsonURI : null;
   const [modelURI, setModelURI] = useState();
   const [jsonURI, setJsonURI] = useState();
-  console.log('location.state', location.state);
+
   const { width, height } = useWindowSize();
   const [xtzPrice, updateXtzPrice] = useState(null);
 
@@ -167,15 +167,13 @@ function Transaction({ location }) {
     if (typeof window === `undefined`) return;
     if (location.state == null) {
       const stateJSON = localStorage.getItem('claim-transaction-state');
-      console.log('state JSON', stateJSON);
+
       if (stateJSON != null) {
         const state = JSON.parse(stateJSON);
-        console.log('state', state);
         setModelURI(state.modelURI);
         setJsonURI(state.jsonURI);
       }
     } else {
-      console.log('setting localStorage.');
       localStorage.setItem(
         'claim-transaction-state',
         JSON.stringify({
@@ -223,7 +221,7 @@ function Transaction({ location }) {
   useAsync(async () => {
     try {
       const result = await getXTZPrice();
-      console.log(result);
+
       updateXtzPrice(result);
     } catch (error) {
       console.log(error);
