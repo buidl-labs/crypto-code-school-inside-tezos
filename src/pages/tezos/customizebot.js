@@ -39,6 +39,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { BeaconContext } from 'src/context/beacon-context';
 import { createUser, batchUpdateProgress } from 'src/api';
 import { trackEvent } from 'src/utils/analytics';
+import { isMobile, isTablet } from 'react-device-detect';
 
 import head1 from '../../assets/CryptobotImages/Head/01xhead.png';
 import head2 from '../../assets/CryptobotImages/Head/02xhead.png';
@@ -139,7 +140,7 @@ const Bot = ({
   const group = useRef();
   const { scene } = useGLTF('/compressedv5.glb');
   const [hovered, set] = useState(null);
-  console.log("scene", scene);
+  console.log('scene', scene);
 
   const head = useGroup(scene, 'head');
   const arm = useGroup(scene, 'arm');
@@ -418,7 +419,12 @@ const Customizer = ({ location }) => {
       state.items.leg,
     );
   }
-
+  //redirect to home if in mobile/tablet
+  useEffect(() => {
+    if (isMobile || isTablet) {
+      navigate('/tezos');
+    }
+  });
   const [isUser] = useAtom(isUserAtom);
   const [user, setUser] = useAtom(userAtom);
 
