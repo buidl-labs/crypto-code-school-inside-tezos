@@ -198,7 +198,7 @@ function Landing() {
                   5x.
                 </p>
                 <p
-                  className={`border border-base-700 rounded text-xl px-4 py-3 mt-4 bg-base-900 text-white shadow-xl`}
+                  className={`text-xl text-primary-400 font-black mt-4 heading-glow`}
                 >
                   Learn how to code on the blockchain, now’s the right time!
                 </p>
