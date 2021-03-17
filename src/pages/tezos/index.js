@@ -169,7 +169,8 @@ function Landing() {
         <div className="container mx-auto">
           <div className="flex flex-col text-center w-full mb-20">
             <h1 className="sm:text-7xl text-4xl font-black font-mulish text-white heading-glow">
-              Here’s what people say <span>about us</span>
+              Here’s what people say <br />
+              about us
             </h1>
           </div>
           <div className="grid md:grid-cols-3 gap-4 px-8 md:px-30">

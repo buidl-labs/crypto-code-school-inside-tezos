@@ -425,6 +425,7 @@ const Customizer = ({ location }) => {
       navigate('/tezos');
     }
   });
+  
   const [isUser] = useAtom(isUserAtom);
   const [user, setUser] = useAtom(userAtom);
 
