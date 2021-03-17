@@ -6,12 +6,8 @@ import ErrorBot from 'src/images/error.png';
 const Error404 = () => {
   return (
     <>
-      <NavBar />
       <main
-        className={`flex h-full w-full items-center justify-center bg-base-900 text-white`}
-        style={{
-          minHeight: `calc(100vh - 5rem)`,
-        }}
+        className={`flex h-screen w-screen items-center justify-center bg-base-900 text-white`}
       >
         <div
           className={`flex justify-center items-center flex-col -mt-16`}
@@ -22,7 +18,8 @@ const Error404 = () => {
           <img src={ErrorBot} className={`h-64 w-64`} />
           <h3 className={`font-black text-4xl mt-4`}>Oops</h3>
           <p className={`text-center text-2xl mt-4`}>
-          This page does not exists, just click the big button and get started again
+            This page does not exists, just click the big button and get started
+            again
           </p>
           <div className={`mt-6 space-x-4`}>
             <Link

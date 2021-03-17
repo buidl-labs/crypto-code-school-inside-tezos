@@ -18,6 +18,7 @@ import ErrorBot from 'src/images/error.png';
 import userAtom from 'src/atoms/user-atom';
 import isUserAtom from 'src/atoms/is-user-atom';
 import { useAtom } from 'jotai';
+import { isMobile, isTablet } from 'react-device-detect';
 
 const Steppers = ({ number, name, clickEvent, tick = false }) => {
   return (
@@ -144,6 +145,13 @@ function Transaction({ location }) {
   const [user, setUser] = useAtom(userAtom);
 
   const [claimButtonDisabled, setClaimButtonDisabledStatus] = useState(true);
+
+  //redirect to home if in mobile/tablet
+  useEffect(() => {
+    if (isMobile || isTablet) {
+      navigate('/tezos');
+    }
+  });
 
   const ErrorModal = () => {
     return (

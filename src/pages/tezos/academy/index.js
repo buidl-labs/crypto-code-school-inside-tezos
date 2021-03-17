@@ -6,6 +6,7 @@ import Footer from 'src/components/Footer';
 import DoneIcon from '@material-ui/icons/Done';
 import useChapters from 'src/hooks/use-chapters';
 import { trackEventWithProperties } from 'src/utils/analytics';
+import { isMobile, isTablet } from 'react-device-detect';
 
 const CourseCard = ({ m, i, progress }) => {
   const chapters = useChapters(m.frontmatter.slug);
@@ -102,6 +103,13 @@ const CurriculumOverview = ({
       JSON.parse(localStorage.getItem('progress') || '{}');
     return p;
   }, []);
+
+  //redirect to home if in mobile/tablet
+  useEffect(() => {
+    if (isMobile || isTablet) {
+      navigate('/tezos');
+    }
+  });
 
   return (
     <Layout>

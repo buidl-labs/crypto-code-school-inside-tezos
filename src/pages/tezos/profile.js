@@ -14,6 +14,8 @@ import { useAtom } from 'jotai';
 
 import { getXTZPrice, getNftInfoByXTZAddress } from 'src/utils/indexer';
 
+import { isMobile, isTablet } from 'react-device-detect';
+
 import model from 'src/images/Col-1.png';
 import add_img from 'src/images/add.png';
 
@@ -51,6 +53,12 @@ function Profile() {
   const [user, setUser] = useAtom(userAtom);
   const [isUser] = useAtom(isUserAtom);
 
+  //redirect to home if in mobile/tablet
+  useEffect(() => {
+    if (isMobile || isTablet) {
+      navigate('/tezos');
+    }
+  });
   useEffect(() => {
     console.log(user, isUser);
     if (!isUser || !user?.verified) {
@@ -214,7 +222,8 @@ function Profile() {
                     <div>Error: {ownedBots.error.message}</div>
                   ) : (
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                      {ownedBots.value && ownedBots.value.filter(el => el.isForSale === true)
+                      {ownedBots.value &&
+                      ownedBots.value.filter(el => el.isForSale === true)
                         .length > 0 ? (
                         ownedBots.value
                           .filter(el => el.isForSale === true)
