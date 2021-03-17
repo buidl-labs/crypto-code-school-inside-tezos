@@ -5,8 +5,7 @@ import React, {
   useEffect,
   useContext,
 } from 'react';
-import loadable from '@loadable/component';
-import Tour from 'reactour';
+import Loadable from 'react-loadable';
 import NavBar from '../../components/NavBar';
 import Button from '../../components/Buttons';
 import { ThanosWallet } from '@thanos-wallet/dapp';
@@ -401,6 +400,11 @@ const steps = [
   },
 ];
 
+const Tour = Loadable({
+  loader: () => import('reactour'),
+  loading: () => null,
+});
+
 const Customizer = ({ location }) => {
   const [selectPart, setselectPart] = useState(1);
   const [headCount, setHeadCount] = useState(getRandomNumber(0, 4));
@@ -469,6 +473,7 @@ const Customizer = ({ location }) => {
       floor: '#ffffff',
     },
   });
+
 
   function uploadData() {
     upload3dModel(
@@ -1157,5 +1162,3 @@ const Customizer = ({ location }) => {
 };
 
 export default Customizer;
-
-const LoadableTour = loadable(() => import(Tour));
