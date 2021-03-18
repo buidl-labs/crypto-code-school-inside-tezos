@@ -70,7 +70,7 @@ const ChapterTemplate = ({ data: { mdx: chapter }, location }) => {
   );
 
   useEffect(() => {
-    trackEventWithProperties('Chapter-View', {
+    trackEventWithProperties('view modules chapters', {
       slug: `${chapter.frontmatter.filterBy}/${chapter.frontmatter.slug}`,
       title: chapter.frontmatter.title,
     });
@@ -81,7 +81,7 @@ const ChapterTemplate = ({ data: { mdx: chapter }, location }) => {
       setIsChapterCompleted(true);
       setStartingCode(chapter.frontmatter.editor.answer);
 
-      trackEventWithProperties('Chapter-Completed', {
+      trackEventWithProperties('successfully complete modules chapters', {
         slug: `${chapter.frontmatter.filterBy}/${chapter.frontmatter.slug}`,
         title: chapter.frontmatter.title,
       });
