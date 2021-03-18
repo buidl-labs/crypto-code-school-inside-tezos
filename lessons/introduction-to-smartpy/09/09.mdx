@@ -146,9 +146,7 @@ But at the moment, there is no way to know whether your Cryptobot is dead or ali
 #### Step by step walkthrough: 
 
 1. Let us add `is_alive` variable to our `Cryptobot` contract storage which takes in the current state of life from the user at the time of contract initialization. 
-
 2. Since we want to let user initialize `is_alive` value at class invocation time, add `life_state` as an argument to the `__init__` function. 
-
 3. Assign `life_state` argument to `is_alive` state variable. 
  
 
@@ -156,9 +154,9 @@ But at the moment, there is no way to know whether your Cryptobot is dead or ali
 #### Testing our code: 
 
 1. In our test function, pass `life_state = True` as an argument when invoking `Cryptobot` class 
-
 2. We will use `scenario.verify`, to check the current whether Cryptobot is alive or not by checking the current value of `is_alive` state variable:
 
+<br />
 
 ```python
 ## Syntax for using `scenario.verify`: 

@@ -185,15 +185,14 @@ Let’s also add the ability to record alien kills. This is going to be importan
 
 #### Step-by-step walkthrough: 
 
-1. Add `plasma_bullet_count ` to our contract's storage and initialize with <span class="string-highlight">5</span> bullets. 
-2. Add `record_alien_kills` to our contract's storage and initialize with: 
-    * key `simple_alien` and it's value as <span class="string-highlight">0</span> of type `sp.TNat`
+* Add `plasma_bullet_count ` to our contract's storage and initialize with <span class="string-highlight">5</span> bullets. 
+* Add `record_alien_kills` to our contract's storage and initialize with: 
+* key `simple_alien` and it's value as <span class="string-highlight">0</span> of type `sp.TNat`
+* key `boss_alien` and it's value as <span class="string-highlight">0</span> of type `sp.TNat`
+* Complete the `shoot_alien` function's code by adding code: 
+* to reduce `plasma_bullet_count` by <span class="string-highlight">1</span>.
+* use `alien_type` argument as key to access it's value in `record_alien_kills` map and increase it by  <span class="string-highlight">1</span>. 
 
-    * key `boss_alien` and it's value as <span class="string-highlight">0</span> of type `sp.TNat`
-
-3. Complete the `shoot_alien` function's code by adding code: 
-    * to reduce `plasma_bullet_count` by <span class="string-highlight">1</span>.
-    * use `alien_type` argument as key to access it's value in `record_alien_kills` map and increase it by  <span class="string-highlight">1</span>. 
 
 
  
