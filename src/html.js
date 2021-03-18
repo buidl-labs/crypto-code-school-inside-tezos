@@ -11,6 +11,10 @@ export default function HTML(props) {
           name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no"
         />
+        <meta
+          name="ahrefs-site-verification"
+          content="8cd0305e74b2fd42de579434ad307197d6dd94c55c34246110be242c4df562ea"
+        />
         <script
           type="module"
           src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"
