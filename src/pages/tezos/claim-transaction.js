@@ -148,9 +148,11 @@ function Transaction({ location }) {
   const [opHash, setOpHash] = useState(null);
   const [networkFeeEstimate, setNetworkFeeEstimate] = useState(0);
   //   const xtzPrice = location.state ? location.state.xtzPrice : null;
-  const modelURI = location.state ? location.state.modelURI : null;
-  const jsonURI = location.state ? location.state.jsonURI : null;
-  console.log(location.state);
+  // const modelURI = location.state ? location.state.modelURI : null;
+  // const jsonURI = location.state ? location.state.jsonURI : null;
+  const [modelURI, setModelURI] = useState();
+  const [jsonURI, setJsonURI] = useState();
+
   const { width, height } = useWindowSize();
   const [xtzPrice, updateXtzPrice] = useState(null);
 
@@ -160,6 +162,29 @@ function Transaction({ location }) {
   const [botTokenId, setTokenId] = useState(false);
   const [copyLink, setCopyLink] = useState(false);
   const [claimButtonDisabled, setClaimButtonDisabledStatus] = useState(true);
+
+  useEffect(() => {
+    if (typeof window === `undefined`) return;
+    if (location.state == null) {
+      const stateJSON = localStorage.getItem('claim-transaction-state');
+
+      if (stateJSON != null) {
+        const state = JSON.parse(stateJSON);
+        setModelURI(state.modelURI);
+        setJsonURI(state.jsonURI);
+      }
+    } else {
+      localStorage.setItem(
+        'claim-transaction-state',
+        JSON.stringify({
+          modelURI: location.state.modelURI,
+          jsonURI: location.state.jsonURI,
+        }),
+      );
+      setModelURI(location.state.modelURI);
+      setJsonURI(location.state.jsonURI);
+    }
+  }, []);
 
   const ErrorModal = () => {
     return (
@@ -196,7 +221,7 @@ function Transaction({ location }) {
   useAsync(async () => {
     try {
       const result = await getXTZPrice();
-      console.log(result);
+
       updateXtzPrice(result);
     } catch (error) {
       console.log(error);
