@@ -45,7 +45,7 @@ const CourseCard = ({ m, i, progress }) => {
         <div className={`my-auto`}>
           <h2 className={`font-black text-5xl my-1`}>{m.frontmatter.title}</h2>
           <p
-            className={`text-lg pr-9`}
+            className={`text-lg pr-9 mt-6`}
             dangerouslySetInnerHTML={{ __html: m.frontmatter.description }}
           />
           {p > 0 && (
