@@ -139,7 +139,7 @@ const Bot = ({
   const group = useRef();
   const { scene } = useGLTF('/compressedv5.glb');
   const [hovered, set] = useState(null);
-  console.log("scene", scene);
+  console.log('scene', scene);
 
   const head = useGroup(scene, 'head');
   const arm = useGroup(scene, 'arm');
@@ -355,7 +355,6 @@ const Customizer = ({ location }) => {
   const [grabImage, setGrabImage] = useState(false);
   const [showSavingBotModel, setShowSavingBotModel] = useState(false);
   const [showColorPicker, updateShowColorPicker] = useState(false);
-  const [colorPicker, setColorPicker] = useState('#ffffff');
   const [botColors, setBotColors] = useState({
     current: null,
     items: {
@@ -495,24 +494,16 @@ const Customizer = ({ location }) => {
     },
   ];
 
-  function Picker() {
+  const Picker = () => {
+    const [value, setValue] = useState('#ffffff');
+    // console.log('color', value);
+    //TODO: add feature where user can create custom color palette
     return (
       <div style={{ display: true ? 'block' : 'none' }}>
-        <HexColorPicker
-          className="picker"
-          color={colorPicker}
-          onChange={color => {
-            setColorPicker(color);
-            setBotColors(current => {
-              const copy = { ...current };
-              copy.items[copy.current] = color;
-              return copy;
-            });
-          }}
-        />
+        <HexColorPicker color={value} onChange={setValue} />
       </div>
     );
-  }
+  };
 
   const upload3dModel = (head, arm, body, leg) => {
     const gltfExporter = new GLTFExporter();
