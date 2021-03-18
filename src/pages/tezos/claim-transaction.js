@@ -265,7 +265,7 @@ function Transaction({ location }) {
       const result = await op.confirmation(1);
       // Go to 3rd Step
       setStep(3);
-      trackEvent('Bot-Minted-Successfully');
+      trackEvent('successful bot mint');
       console.log('result 🔥', result);
     } catch (err) {
       console.log(err);
