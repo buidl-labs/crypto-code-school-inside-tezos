@@ -457,40 +457,34 @@ const Customizer = ({ location }) => {
 
   const colors = [
     {
-      backgroundColor: '#FFBF41',
+      hex: ['#161426', '#252140', '#F23D3D', '#D93250', '#8C2048'],
     },
     {
-      backgroundColor: '#FF6161',
+      hex: ['#FF00F2', '#BA00F2', '#8000FF', '#3000CC', '#0005A1'],
     },
     {
-      backgroundColor: '#4AA4FF',
+      hex: ['#F2AF5C', '#F2CDA0', '#F28A2E', '#D95204', '#BF3604'],
     },
     {
-      backgroundColor: '#43E871',
+      hex: ['#008893', '#009F9D', '#52CDC3', '#8DDCCE', '#026775'],
     },
     {
-      backgroundColor: '#E7E7E7',
+      hex: ['#8C354C', '#0B1226', '#122140', '#F2B9B3', '#F28D8D'],
     },
     {
-      backgroundColor: '#9148E7',
+      hex: ['#260B12', '#F2D06B', '#F2AF5C', '#BF7E45', '#8C2323'],
     },
     {
-      backgroundColor: '#E76F16',
+      hex: ['#012340', '#03658C', '#F23827', '#A60A0A', '#400101'],
     },
     {
-      backgroundColor: '#00D8E7',
+      hex: ['#F90112', '#BF0404', '#730202', '#260101', '#F2F2F2'],
     },
     {
-      backgroundColor: '#1D1D1D',
+      hex: ['#177580', '#1C3F4D', '#012533', '#8A6341', '#CCA06B'],
     },
     {
-      backgroundColor: '#643C28',
-    },
-    {
-      backgroundColor: '#FFB6EB',
-    },
-    {
-      backgroundColor: '#0C2661',
+      hex: ['#1D5902', '#57A608', '#F2CC0F', '#F2B90F', '#D9910D'],
     },
   ];
 
@@ -922,7 +916,7 @@ const Customizer = ({ location }) => {
                     />
                     <CustomEnvironment />
                   </Suspense>
-                  <OrbitControls enableZoom={false} />
+                  <OrbitControls enableZoom={true} />
                 </Canvas>
                 <Loading containerStyles={{ background: 'rgba(55, 65, 81)' }} />
               </div>
@@ -932,32 +926,36 @@ const Customizer = ({ location }) => {
             id="right-menu"
             className="col-span-2 col-start-7 bg-base-900 px-4 "
           >
-            <div className="grid grid-cols-2 gap-4  mx-auto justify-center text-white  py-4">
-              <Button
+            <div className="grid grid-cols-1 gap-4  mx-auto justify-center text-white  py-4">
+              {/* <Button
                 size="sm"
                 type="secondary"
                 onClick={() => {
-                  setHeadCount(getRandomNumber(0, 4));
-                  setBodyCount(getRandomNumber(0, 4));
-                  setArmCount(getRandomNumber(0, 4));
-                  setLegCount(getRandomNumber(0, 4));
+                  // setHeadCount(getRandomNumber(0, 4));
+                  // setBodyCount(getRandomNumber(0, 4));
+                  // setArmCount(getRandomNumber(0, 4));
+                  // setLegCount(getRandomNumber(0, 4));
 
                   setBotColors(current => {
                     const copy = { ...current };
                     Object.keys(copy.items).forEach(elm => {
-                      const item =
-                        namedColors[
-                          Math.floor(Math.random() * namedColors.length)
-                        ];
+                      const x = [
+                        '#161426',
+                        '#252140',
+                        '#F23D3D',
+                        '#D93250',
+                        '#8C2048',
+                      ];
+                      const item = x[Math.floor(Math.random() * x.length)];
 
-                      copy.items[elm] = item.hex;
+                      copy.items[elm] = item;
                     });
                     return copy;
                   });
                 }}
               >
                 Randomize
-              </Button>
+              </Button> */}
 
               <Button
                 onClick={() => {
@@ -984,11 +982,31 @@ const Customizer = ({ location }) => {
                 </h4>
               </div>
               <div id="colors" className="space-y-4">
-                <h5 className="text-lg text-white font-bold">
-                  Body Part : <span>{botColors.current}</span>
-                </h5>
                 {showColorPicker ? (
-                  <Picker />
+                  <>
+                    <Picker />
+                    <div className="grid grid-cols-4 gap-x-2 gap-y-4 cursor-pointer">
+                      {[
+                        { color: '' },
+                        { color: '' },
+                        { color: '' },
+                        { color: '' },
+                        { color: '' },
+                      ].map(col => (
+                        <div
+                          style={{ backgroundColor: 'grey' }}
+                          className="flex w-14 h-16 rounded"
+                        ></div>
+                      ))}
+                    </div>
+                    <Button
+                      size="sm"
+                      type="secondary"
+                      style={{ width: '100%' }}
+                    >
+                      Add
+                    </Button>
+                  </>
                 ) : (
                   <div className="grid grid-cols-4 gap-x-2 gap-y-4 cursor-pointer	">
                     {colors.map((color, index) => (
@@ -996,14 +1014,27 @@ const Customizer = ({ location }) => {
                         onClick={() => {
                           setBotColors(current => {
                             const copy = { ...current };
-                            copy.items[copy.current] = color.backgroundColor;
+                            Object.keys(copy.items).forEach(elm => {
+                              const item =
+                                color.hex[
+                                  Math.floor(Math.random() * color.hex.length)
+                                ];
+
+                              copy.items[elm] = item;
+                            });
                             return copy;
                           });
                         }}
                         key={index}
-                        className="w-16 h-16 rounded"
-                        style={{ backgroundColor: color.backgroundColor }}
-                      ></div>
+                        className="flex w-16 h-16 rounded"
+                      >
+                        {color.hex.map(hex => (
+                          <div
+                            className="w-3 h-16"
+                            style={{ backgroundColor: hex }}
+                          />
+                        ))}
+                      </div>
                     ))}
                   </div>
                 )}
@@ -1018,7 +1049,9 @@ const Customizer = ({ location }) => {
                     : updateShowColorPicker(true);
                 }}
               >
-                {showColorPicker ? `Close` : `+ Custom color`}
+                {showColorPicker
+                  ? `Close`
+                  : `create your own custom color palette`}
               </Button>
             </div>
           </div>
