@@ -310,39 +310,10 @@ const WelcomeModal = ({ close, isUser }) => {
 const CustomLight = () => {
   return (
     <>
-      {/* <ambientLight intensity={0.3} color={0x404040} />
-      <rectAreaLight
-        width={100}
-        height={100}
-        intensity={5000}
-        position={[0, 0, 10]}
-        lookAt={[0, 0, 0]}
-      />
-      <rectAreaLight
-        width={10}
-        height={10}
-        intensity={1000}
-        position={[9, -5, 0]}
-        lookAt={[-120, 75.6, -145]}
-      />
-      <rectAreaLight
-        width={10}
-        height={10}
-        intensity={1000}
-        position={[-12, -5, 3.78]}
-        lookAt={[-69.9, 45.7, -237]}
-      />
-      <rectAreaLight
-        width={5}
-        height={5}
-        intensity={250}
-        position={[0, 10.8, 8.2]}
-        lookAt={[-61.5, 0, 4.17]}
-      /> */}
       <ambientLight intensity={1} />
       <directionalLight position={[1, 10, 8]} intensity={1.2} />
       <directionalLight position={[-1, -10, -2]} intensity={1.2} />
-      <directionalLight position={[0, 10, 0]} intensity={1.2} />
+      <directionalLight position={[0, 6, 0]} intensity={1.2} />
       <spotLight intensity={1} position={[1000, 0, 0]} angle={0.2} />
       <spotLight
         intensity={0.3}
@@ -364,28 +335,6 @@ const CustomAmbientLight = ({ setImage, grabImage }) => {
   }, [grabImage]);
 
   return <ambientLight intensity={0.5} />;
-};
-
-const CustomEnvironment = () => {
-  const { gl, scene } = useThree();
-  const pmremGenerator = new PMREMGenerator(gl);
-  const loader = new RGBELoader();
-  loader.setDataType(UnsignedByteType);
-  pmremGenerator.compileEquirectangularShader();
-
-  useEffect(() => {
-    loader.load('/royal_esplanade_1k_compressed_50ppi.hdr', texture => {
-      const envMap = pmremGenerator.fromEquirectangular(texture).texture;
-
-      scene.environment = envMap;
-      // one can also set scene.background to envMap here
-
-      texture.dispose();
-      pmremGenerator.dispose();
-    });
-  }, [scene, loader, pmremGenerator]);
-
-  return null;
 };
 
 const Customizer = ({ location }) => {
@@ -962,7 +911,6 @@ const Customizer = ({ location }) => {
                   />
                   <CustomLight />
                   <Suspense fallback={null}>
-                    {/* <CustomEnvironment /> */}
                     <Bot
                       headCount={headCount}
                       armCount={armCount}
