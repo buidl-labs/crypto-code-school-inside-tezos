@@ -19,7 +19,7 @@ import userAtom from 'src/atoms/user-atom';
 import isUserAtom from 'src/atoms/is-user-atom';
 import { useAtom } from 'jotai';
 
-const Steppers = ({ number, name, clickEvent, tick = false }) => {
+const Steppers = ({ number, name, clickEvent, step, tick = false }) => {
   return (
     <div onClick={clickEvent}>
       <div className="flex items-center text-primary-600 relative">
@@ -33,7 +33,11 @@ const Steppers = ({ number, name, clickEvent, tick = false }) => {
             <MdDone size={24} />
           </div>
         ) : (
-          <div className="rounded-full h-12 w-12 py-3 inline-flex items-center justify-center bg-primary-600 text-white">
+          <div
+            className={`rounded-full h-12 w-12 py-3 inline-flex items-center justify-center ${
+              number == step ? 'bg-primary-600' : 'bg-base-600'
+            } text-white`}
+          >
             {number}
           </div>
         )}
@@ -236,26 +240,37 @@ function Transaction({ location }) {
                 number="1"
                 name="Confirm Claim"
                 tick={step >= 2}
+                step={step}
                 clickEvent={e => {
                   e.preventDefault();
                   // setStep(1);
                 }}
               />
-              <div className="flex-auto border-t-2  border-primary-600"></div>
+              <div
+                className={`flex-auto border-t-2 ${
+                  step >= 2 ? 'border-primary-600' : 'border-base-600'
+                }`}
+              ></div>
               <Steppers
                 number="2"
                 name="Transaction"
                 tick={step === 3}
+                step={step}
                 clickEvent={e => {
                   e.preventDefault();
                   // setStep(2);
                 }}
               />
-              <div className="flex-auto border-t-2 border-primary-600"></div>
+              <div
+                className={`flex-auto border-t-2 ${
+                  step == 3 ? 'border-primary-600' : 'border-base-600'
+                }`}
+              ></div>
               <Steppers
                 number="3"
                 name="Finished"
                 tick={step === 3}
+                step={step}
                 clickEvent={e => {
                   e.preventDefault();
                   // setStep(3);

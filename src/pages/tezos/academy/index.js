@@ -52,7 +52,7 @@ const CourseCard = ({ m, i, progress }) => {
           )}
           <button
             onClick={() => {
-              trackEventWithProperties('Module-Click-From-Academy', {
+              trackEventWithProperties('click academy view module button', {
                 slug: m.frontmatter.slug,
               });
               navigate(`/tezos/academy/${m.frontmatter.slug}`);
