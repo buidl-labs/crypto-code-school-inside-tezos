@@ -139,7 +139,7 @@ const Bot = ({
   const group = useRef();
   const { scene } = useGLTF('/compressedv5.glb');
   const [hovered, set] = useState(null);
-  console.log("scene", scene);
+  console.log('scene', scene);
 
   const head = useGroup(scene, 'head');
   const arm = useGroup(scene, 'arm');
@@ -920,6 +920,7 @@ const Customizer = ({ location }) => {
                     position={[5, 27, 20]}
                   />
                   <Suspense fallback={null}>
+                    <CustomEnvironment />
                     <Bot
                       headCount={headCount}
                       armCount={armCount}
@@ -929,7 +930,6 @@ const Customizer = ({ location }) => {
                       getMeshName={getMeshName}
                       setBotColors={setBotColors}
                     />
-                    <CustomEnvironment />
                   </Suspense>
                   <OrbitControls enableZoom={false} />
                 </Canvas>
