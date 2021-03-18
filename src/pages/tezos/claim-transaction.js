@@ -292,7 +292,7 @@ function Transaction({ location }) {
               />
               <div
                 className={`flex-auto border-t-2 ${
-                  step == 2 ? 'border-primary-600' : 'border-base-600'
+                  step >= 2 ? 'border-primary-600' : 'border-base-600'
                 }`}
               ></div>
               <Steppers
