@@ -30,7 +30,7 @@ export const getAllNFTsMetadata = async () => {
   const tokensMetataDataJSON = await tokensMetataData.json();
 
   const tk = await fetch(
-    `https://api.better-call.dev/v1/bigmap/${INDEXER_NETWORK}/${tokens.value}/keys?size=${tokensMetataDataJSON.active_keys}`,
+    `https://api.better-call.dev/v1/bigmap/${INDEXER_NETWORK}/${tokens.value}/keys`,
   );
   const all_tokens = await tk.json();
 
@@ -69,7 +69,7 @@ export const nftOnOffer = async () => {
   const offerMetadataJSON = await offerMetadata.json();
 
   const tk = await fetch(
-    `https://api.better-call.dev/v1/bigmap/${INDEXER_NETWORK}/${tokens.value}/keys?size=${offerMetadataJSON.active_keys}`,
+    `https://api.better-call.dev/v1/bigmap/${INDEXER_NETWORK}/${tokens.value}/keys`,
   );
   const offers = await tk.json();
 
@@ -193,13 +193,13 @@ export const getNftInfoByXTZAddress = async (address = '') => {
   const result = await response.json();
   const tokens = result[0].children.find(elm => elm.name === 'ledger');
 
-  const ledgerMetadata = await fetch(
-    `https://api.better-call.dev/v1/bigmap/${INDEXER_NETWORK}/${tokens.value}`,
-  );
-  const ledgerMetadataJSON = await ledgerMetadata.json();
+  // const ledgerMetadata = await fetch(
+  //   `https://api.better-call.dev/v1/bigmap/${INDEXER_NETWORK}/${tokens.value}`,
+  // );
+  // const ledgerMetadataJSON = await ledgerMetadata.json();
 
   const tk = await fetch(
-    `https://api.better-call.dev/v1/bigmap/${INDEXER_NETWORK}/${tokens.value}/keys?size=${ledgerMetadataJSON.active_keys}`,
+    `https://api.better-call.dev/v1/bigmap/${INDEXER_NETWORK}/${tokens.value}/keys`,
   );
 
   const ledger = await tk.json();
@@ -248,13 +248,13 @@ const getAllTokenHolders = async () => {
     const result = await response.json();
     const tokens = result[0].children.find(elm => elm.name === 'ledger');
 
-    const ledgerMetadata = await fetch(
-      `https://api.better-call.dev/v1/bigmap/${INDEXER_NETWORK}/${tokens.value}`,
-    );
-    const ledgerMetadataJSON = await ledgerMetadata.json();
+    // const ledgerMetadata = await fetch(
+    //   `https://api.better-call.dev/v1/bigmap/${INDEXER_NETWORK}/${tokens.value}`,
+    // );
+    // const ledgerMetadataJSON = await ledgerMetadata.json();
 
     const tk = await fetch(
-      `https://api.better-call.dev/v1/bigmap/${INDEXER_NETWORK}/${tokens.value}/keys?size=${ledgerMetadataJSON.active_keys}`,
+      `https://api.better-call.dev/v1/bigmap/${INDEXER_NETWORK}/${tokens.value}/keys`,
     );
 
     const ledger = await tk.json();

@@ -72,7 +72,7 @@ function LessonsOverview({ data: { mdx: module } }) {
   }, [module.frontmatter.slug]);
 
   useEffect(() => {
-    trackEventWithProperties('Module-Overview-View', {
+    trackEventWithProperties('land on modules overview page', {
       slug: module.frontmatter.slug,
       title: module.frontmatter.title,
     });

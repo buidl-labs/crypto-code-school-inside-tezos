@@ -30,10 +30,10 @@ import { MichelsonMap } from '@taquito/taquito';
 
 import { trackEvent } from 'src/utils/analytics';
 
-const Steppers = ({ number, name, clickEvent, tick = false }) => {
+const Steppers = ({ number, name, clickEvent, step, tick = false }) => {
   return (
     <div onClick={clickEvent}>
-      <div className="flex items-center text-primary-600 relative">
+      <div className={`flex items-center text-primary-600  relative`}>
         {tick ? (
           <div
             style={{
@@ -44,7 +44,11 @@ const Steppers = ({ number, name, clickEvent, tick = false }) => {
             <MdDone size={24} />
           </div>
         ) : (
-          <div className="rounded-full h-12 w-12 py-3 inline-flex items-center justify-center bg-primary-600 text-white">
+          <div
+            className={`rounded-full h-12 w-12 py-3 inline-flex items-center justify-center ${
+              number == step ? 'bg-primary-600' : 'bg-base-600'
+            } text-white`}
+          >
             {number}
           </div>
         )}
@@ -148,9 +152,11 @@ function Transaction({ location }) {
   const [opHash, setOpHash] = useState(null);
   const [networkFeeEstimate, setNetworkFeeEstimate] = useState(0);
   //   const xtzPrice = location.state ? location.state.xtzPrice : null;
-  const modelURI = location.state ? location.state.modelURI : null;
-  const jsonURI = location.state ? location.state.jsonURI : null;
-  console.log(location.state);
+  // const modelURI = location.state ? location.state.modelURI : null;
+  // const jsonURI = location.state ? location.state.jsonURI : null;
+  const [modelURI, setModelURI] = useState();
+  const [jsonURI, setJsonURI] = useState();
+
   const { width, height } = useWindowSize();
   const [xtzPrice, updateXtzPrice] = useState(null);
 
@@ -160,6 +166,29 @@ function Transaction({ location }) {
   const [botTokenId, setTokenId] = useState(false);
   const [copyLink, setCopyLink] = useState(false);
   const [claimButtonDisabled, setClaimButtonDisabledStatus] = useState(true);
+
+  useEffect(() => {
+    if (typeof window === `undefined`) return;
+    if (location.state == null) {
+      const stateJSON = localStorage.getItem('claim-transaction-state');
+
+      if (stateJSON != null) {
+        const state = JSON.parse(stateJSON);
+        setModelURI(state.modelURI);
+        setJsonURI(state.jsonURI);
+      }
+    } else {
+      localStorage.setItem(
+        'claim-transaction-state',
+        JSON.stringify({
+          modelURI: location.state.modelURI,
+          jsonURI: location.state.jsonURI,
+        }),
+      );
+      setModelURI(location.state.modelURI);
+      setJsonURI(location.state.jsonURI);
+    }
+  }, []);
 
   const ErrorModal = () => {
     return (
@@ -196,7 +225,7 @@ function Transaction({ location }) {
   useAsync(async () => {
     try {
       const result = await getXTZPrice();
-      console.log(result);
+
       updateXtzPrice(result);
     } catch (error) {
       console.log(error);
@@ -236,7 +265,7 @@ function Transaction({ location }) {
       const result = await op.confirmation(1);
       // Go to 3rd Step
       setStep(3);
-      trackEvent('Bot-Minted-Successfully');
+      trackEvent('successful bot mint');
       console.log('result 🔥', result);
     } catch (err) {
       console.log(err);
@@ -280,26 +309,37 @@ function Transaction({ location }) {
                 number="1"
                 name="Confirm Claim"
                 tick={step >= 2}
+                step={step}
                 clickEvent={e => {
                   e.preventDefault();
                   // setStep(1);
                 }}
               />
-              <div className="flex-auto border-t-2  border-primary-600"></div>
+              <div
+                className={`flex-auto border-t-2 ${
+                  step >= 2 ? 'border-primary-600' : 'border-base-600'
+                }`}
+              ></div>
               <Steppers
                 number="2"
                 name="Transaction"
                 tick={step === 3}
+                step={step}
                 clickEvent={e => {
                   e.preventDefault();
                   // setStep(2);
                 }}
               />
-              <div className="flex-auto border-t-2 border-primary-600"></div>
+              <div
+                className={`flex-auto border-t-2 ${
+                  step == 3 ? 'border-primary-600' : 'border-base-600'
+                }`}
+              ></div>
               <Steppers
                 number="3"
                 name="Finished"
                 tick={step === 3}
+                step={step}
                 clickEvent={e => {
                   e.preventDefault();
                   // setStep(3);
@@ -426,11 +466,11 @@ function Transaction({ location }) {
                   Share your unique cryptobot with your friends and start
                   trading with other on marketplace!
                 </h4>
-                <div className="text-white text-center text-lg font-mulish mt-8">
-                  Here’s the link to your unique cryptobot:
+                <div className="text-white text-center text-lg font-mulish mt-8 break-all">
+                  <p>Here’s the link to your unique cryptobot:</p>
                   <a
                     href={`https://cryptocodeschool.in/tezos/cryptobot/${botTokenId}`}
-                    className="text-primary-400 underline"
+                    className="text-primary-400 underline break-all"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -509,7 +549,7 @@ function Transaction({ location }) {
                   Earn more super cool cryptobots by completing Modules or
                   exploring Marketplace
                 </h4>
-                <div className="grid md:grid-cols-2 grid-cols-1 space-x-4  mx-auto justify-center text-white mt-8">
+                <div className="grid md:grid-cols-2 grid-cols-1 space-x-4 mx-auto justify-center text-white mt-8">
                   <Link to="/tezos/marketplace">
                     <Button size="lg" type="secondary">
                       Explore Marketplace

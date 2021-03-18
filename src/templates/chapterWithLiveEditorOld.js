@@ -116,7 +116,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
   const liveProvider = useRef(null);
 
   useEffect(() => {
-    trackEventWithProperties('Learning_Interface_View', {
+    trackEventWithProperties('view modules chapters', {
       slug: chapterList[index.current - 1].slug,
       title: chapterList[index.current - 1].title,
     });
@@ -204,7 +204,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
       if (!chapterAlreadyExists) {
         list.push(ch);
         //track user progress on successful chapter completion
-        trackEventWithProperties('Chapter-Completed', {
+        trackEventWithProperties('successfully complete chapters', {
           chapterSlug: chapterList[index.current - 1].slug,
         });
       }
