@@ -3,7 +3,7 @@ title: Inter-contract calling, part-1
 chapter: Chapter 5
 slug: chapter-05
 filterBy: module-02
-isCode: true
+isCode: false
 editor:
   language: python
   startingCode: |
@@ -91,7 +91,7 @@ editor:
         
         # test code over here.
 
-  answer: |  
+  answer: |
     import smartpy as sp
 
     class Cryptobot(sp.Contract):
@@ -113,7 +113,7 @@ editor:
                 # add market_address over here.
                 market_address = market_address,
                 # add active_powerup here.
-                active_powerup = sp.record(power = '', duration = 0)
+                active_powerup = sp.record(power = "", duration = 0)
             )
 
             
@@ -139,7 +139,7 @@ editor:
             # 4. Define data_to_be_sent - record that holds a variable powerup which is equal to powerup accepted in the parameter.
             # 5. Call the market_contract with powerup and 0 mutez.
             data_type = sp.TRecord(powerup = sp.TString)
-            market_contract = sp.contract(data_type, self.data.market_address, 'send_powerup').open_some()
+            market_contract = sp.contract(data_type, self.data.market_address).open_some()
             self.data.mutez_points -= sp.mutez(3000)
             data_to_be_sent = sp.record(powerup = powerup)
             sp.transfer(data_to_be_sent, sp.mutez(0), market_contract)
@@ -179,17 +179,18 @@ editor:
         scenario += test_bot
         
         # test code over here.
-        scenario += test_bot.buy_powerup('time_freeze')
+        scenario += test_bot.buy_powerup("time_freeze")
         scenario.verify(test_bot.data.mutez_points == sp.mutez(2000))
 ---
 
 ## Intro
+
 How do you plan on winning the war if you can't order `powerups` from the Market?
 **Inter-contract calling** is here to save us.
-It can make your smart contracts go *super saiyan* 🔥.
-
+It can make your smart contracts go _super saiyan_ 🔥.
 
 ## Study time
+
 Inter-contract calling is simply the method of invoking the entry point of a contract, from another smart contract.
 This means, your `Cryptobot` will be able to call an entry point that exists in `Market`.
 
@@ -198,20 +199,25 @@ Inter-contract calling not only **helps two contracts talk to each other** but a
 > Note - You can learn about oracles through this [article](https://academy.binance.com/en/articles/blockchain-oracles-explained).
 
 To implement inter-contract calling, you need to understand `sp.transfer` first. As the name suggests it transfers some data and amount to a destination contract(this is what calls the desired entry point).
+
 ```python
 sp.transfer(data_to_be_sent, amount_of_tezos, destination_contract)
 ```
+
 It calls the destination contract with `data_to_be_sent` as a parameter while sending the specified `amount_of_tezos` to it.
 `destination_contract` needs to be of type, `sp.TContract` created with `sp.contract`.
+
 ```python
 sp.contract(t, address, entry_point = "")
 ```
+
 Don't worry if it looks overwhelming at first glance, we're going to break it down :)
 
-`sp.contract` takes three arguments - 
+`sp.contract` takes three arguments -
+
 1. `t` - it's the **type** of data that the contract is accepting. `t` has to match the type of `data_to_be_sent` in the `sp.transfer`.
 2. `address` - this specifies the adress of the contract inside which you'll be calling an entry point. Needs to be of the type `sp.TAdress`.
-3. `entry_point` - this is to specify exactly which entry point you want to call in the contract.
+3. `entry_point` - this is an optional parameter which specifies which entry point do you want to call. The catch is, you don't need to specify the entry point if the contract only has 1 entry point (like our `Market` contract).
 
 The result of `sp.contract` is passed to `destination_contract` in `sp.transfer`.
 
@@ -219,13 +225,12 @@ The result of `sp.contract` is passed to `destination_contract` in `sp.transfer`
 @sp.entry_point
 def send(self):
 
-    target_contract = sp.contract(sp.TString, 
-    self.data.target_address, 
-    entry_point = "recieve").open_some()
+    target_contract = sp.contract(sp.TString,
+    self.data.target_address).open_some()
 
     data_to_be_sent = "This message should be sent!"
-    sp.transfer(data_to_be_sent, 
-                sp.mutez(0), 
+    sp.transfer(data_to_be_sent,
+                sp.mutez(0),
                 target_contract)
 ```
 
@@ -233,31 +238,31 @@ def send(self):
 - `.open_some` chained to `sp.contract` simply checks if the specified entry point in the `target` contract is accepting a string(the specified data type which is the first argument to `sp.contract`) or not.
 - Look how the type of `data_to_be_sent` matches the type specified in `sp.contract`, this is mandatory.
 
-
-The full example below will clear up things even more :dart: 
+The full example below will clear up things even more :dart:
 
 ### Show me an example
+
 ```python
 class Sender(sp.Contract):
-   
+
 	def __init__(self, target_address):
 		self.init(target = target_address)
-	
+
 	@sp.entry_point
 	def send(self, payload):
 	    data_type = sp.TRecord(payload = sp.TString)
-	    c = sp.contract(data_type, self.data.target, entry_point = "recieve").open_some()
+	    c = sp.contract(data_type, self.data.target).open_some()
 	    data_to_be_sent = sp.record(payload = payload)
 	    sp.transfer(data_to_be_sent, sp.mutez(0), c)
 
 class Target(sp.Contract):
 	def __init__(self):
 	    self.init(msg = "")
-	
+
     @sp.entry_point
 	def recieve(self, params):
 		self.data.msg = params.payload
-		
+
 @sp.add_test(name = "Test")
 def test():
     scenario = sp.test_scenario()
@@ -266,7 +271,7 @@ def test():
     test_sender =  Sender(target_address = test_target.address)
     scenario += test_sender
     scenario += test_sender.send('this should be sent to target.')
-    
+
     scenario.verify(test_target.data.msg == 'this should be sent to target.')
 ```
 
@@ -276,24 +281,27 @@ This is a bare-bones example, we covered the `send` function in the section abov
 2. Inside the `Sender` contract, we're calling the `receive` entry point present inside the `Target` contract.
 3. `recieve` entry point simply assigns `msg` the value it's being sent as the `payload`.
 
-    
+> Note: If the `Target` contract had more than one entry point. We would also need to specify the entry point in `sp.contract`
+
 ## #buidl-ing time
 
 ### New feature request!
+
 It's time to build the functionality of buying a powerup from the `Market` finally 🚀
 Let's give our `Cryptobot` the ability to buy a `powerup`.
 
 ### Step by step walkthrough
+
 1. Accept `market_address` as an arugment for `Cryptobot` and initialize the `Cryptobot` with `market_address` equal to `market.address`.(Look at the example above to see how we store `target_address` inside the `Sender` contract.)
 2. Add `active_powerup` to `Cryptobot`'s contract storage and initialize it to be a record which holds -
-    * power which is an empty string
-    * duration which is equal to 0
+   - power which is an empty string
+   - duration which is equal to 0
 3. Implement `buy_powerup` inside `Cryptobot`
-    - Define `data_type` as a record which holds a variable called `powerup` of type string.
-    - Define the `market_contract` using `Market's` address that is pointed at the entry point `send_powerup` and accepts a data type of string. Don't forget about `.open_some()`
-    - Reduce 3000 mutez from `mutez_points` in `Cryptobot` as each `powerup` costs 3000 mutez.
-    - Define `data_to_be_sent` which is a record inside which a variable `powerup` is to be set equal to the parameter accepted through the function.
-    - Finally, send the `data_to_be_sent` to the Market(`market_contract`) using `sp.transfer` along with 0 Mutez.
+   - Define `data_type` as a record which holds a variable called `powerup` of type string.
+   - Define the `market_contract` using `Market's` address which accepts a data type of string. Don't forget about `.open_some()`
+   - Reduce 3000 mutez from `mutez_points` in `Cryptobot` as each `powerup` costs 3000 mutez.
+   - Define `data_to_be_sent` which is a record inside which a variable `powerup` is to be set equal to the parameter accepted through the function.
+   - Finally, send the `data_to_be_sent` to the Market(`market_contract`) using `sp.transfer` along with 0 Mutez.
 
 <br />
 
