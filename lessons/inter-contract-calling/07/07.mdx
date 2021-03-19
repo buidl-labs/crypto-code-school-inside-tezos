@@ -25,7 +25,7 @@ editor:
                 },
                 mutez_points = sp.mutez(initial_mutez),
                 market_address = market_address,
-                active_powerup = sp.record(power = '', duration = 0)
+                active_powerup = sp.record(power = "", duration = 0)
             )
 
             
@@ -50,7 +50,7 @@ editor:
             # cryptobot_address is of type `sp.TContract` which accepts a record that has the same variables as `active_powerup`.
             data_type = sp.TRecord(powerup = sp.TString)
                 
-            market_contract = sp.contract(data_type, self.data.market_address, 'send_powerup').open_some()
+            market_contract = sp.contract(data_type, self.data.market_address).open_some()
             self.data.mutez_points -= sp.mutez(3000)
             
             # define self_contract -
@@ -83,7 +83,7 @@ editor:
         
         @sp.sub_entry_point
         def find_powerup(self, powerup):
-            powerup_to_send = sp.local('powerup_to_send', sp.record(power = '', duration = sp.nat(0)))
+            powerup_to_send = sp.local("powerup_to_send", sp.record(power = "", duration = sp.nat(0)))
             
             sp.for p in self.data.powerups:
                 
@@ -136,7 +136,7 @@ editor:
                 },
                 mutez_points = sp.mutez(initial_mutez),
                 market_address = market_address,
-                active_powerup = sp.record(power = '', duration = 0)
+                active_powerup = sp.record(power = "", duration = 0)
             )
 
             
@@ -161,7 +161,7 @@ editor:
             # cryptobot_address is of type `sp.TContract` which accepts a record that has the same variables as `active_powerup`.
             data_type = sp.TRecord(powerup = sp.TString, cryptobot_contract = sp.TContract(sp.TRecord(power = sp.TString, duration = sp.TNat)))
                 
-            market_contract = sp.contract(data_type, self.data.market_address, 'send_powerup').open_some()
+            market_contract = sp.contract(data_type, self.data.market_address).open_some()
             self.data.mutez_points -= sp.mutez(3000)
             
             # define self_contract -
@@ -195,7 +195,7 @@ editor:
         
         @sp.sub_entry_point
         def find_powerup(self, powerup):
-            powerup_to_send = sp.local('powerup_to_send', sp.record(power = '', duration = sp.nat(0)))
+            powerup_to_send = sp.local("powerup_to_send", sp.record(power = "", duration = sp.nat(0)))
             
             sp.for p in self.data.powerups:
                 
@@ -230,9 +230,9 @@ editor:
         scenario += test_bot
         
         # test our code over here.
-        scenario += test_bot.buy_powerup('time_freeze')
+        scenario += test_bot.buy_powerup("time_freeze")
         scenario.verify(test_bot.data.mutez_points == sp.mutez(2000))
-        scenario.verify(test_bot.data.active_powerup.power == 'time_freeze')
+        scenario.verify(test_bot.data.active_powerup.power == "time_freeze")
 ---
 
 ## Intro
@@ -279,15 +279,15 @@ Let's go and complete our whole system so that you can finally use the powerups 
 ### Step by step walkthrough
 
 1. Modify `buy_powerup` in `Cryptobot`
-   * Modify `data_type` to also include `cryptobot_address` which is of type `sp.TContract` that accepts a record of string `power` and nat `duration`.
-   * Define `self_contract` - it's the contract that holds the details to `receive_powerup` entry point in `Cryptobot`.
-      * accepts a record of same shape as `active_powerup`.
-      * address points to `Cryptobot`( use `sp.to_address`)
-      * points to `recieve_powerup` entry point.
-   * Modify `data_to_be_sent` to hold `cryptobot_contract` as well, which is equal to `self_contract`.
+   - Modify `data_type` to also include `cryptobot_address` which is of type `sp.TContract` that accepts a record of string `power` and nat `duration`.
+   - Define `self_contract` - it's the contract that holds the details to `receive_powerup` entry point in `Cryptobot`.
+     - accepts a record of same shape as `active_powerup`.
+     - address points to `Cryptobot`( use `sp.to_address`)
+     - points to `recieve_powerup` entry point.
+   - Modify `data_to_be_sent` to hold `cryptobot_contract` as well, which is equal to `self_contract`.
 2. Implement `send_powerup` in `Market`
-    * Define `powerup_to_send` as the result of `find_powerup`.
-    * Make an inter-contract call to `cryptobot_contract` and send to it the `powerup_to_send`.
+   - Define `powerup_to_send` as the result of `find_powerup`.
+   - Make an inter-contract call to `cryptobot_contract` and send to it the `powerup_to_send`.
 3. Implement `receive_powerup` in `Cryptobot`.
    - Set `active_powerup` equal to the `poweup` being received as the parameter.
 

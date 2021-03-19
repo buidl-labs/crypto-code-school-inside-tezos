@@ -139,7 +139,7 @@ const CodingInterface = ({
                     error: [...res.error, compiledCode.error],
                     success: res.success && compiledCode.success,
                   });
-                  console.log(typeof res.error, res.error);
+                  console.log('error from compiler', res.error);
                   return;
                 }
 
