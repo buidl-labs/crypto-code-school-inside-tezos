@@ -43,15 +43,15 @@ editor:
     .then(hash => print(`Operation injected: https://carthagenet.tzstats.com/${hash}`))
     .catch(error => console.error(error));
 ---
-### Intro
+## Intro
 
 In this one we're going to play around a bit with calling an entry point whose arguments are relatively complex through Taquito to help you see and understand how to construct parameters like these.
 
-### Study time
+## Study time
 
 In this chapter we'll call the `transfer` entry point of the `Cyber_Token` contract we deployed.
 Even if you didn't know what arguments the `transfer` entry point takes, by looking at the JSON Code for this entry point you can faintly deduce what sort of arguments it requires - 
-```json=
+```json
 {
 "prim": "list",
 "args": [
@@ -87,7 +87,7 @@ Basically, `transfer` accepts a list. Inside the list every item is a nested pai
     3. `amount` - Number of tokens to transfer.
 
 Now, how would you go about calling the entry point - 
-```javascript=
+```javascript
 contract.methods.transfer([
           {
             from_: "tz1YLnvKy2ycBZ9TpTCv9ngXd1eUw2uxzhDd",
@@ -102,7 +102,7 @@ The question that might arise is, why does `transfer` accept a list? Becuase it 
 We can have multiple transactions in one `transfer` call as well.
 
 Another helpful function that can help us debug our arguments better is `.toTransferParams()`.
-```javascript=
+```javascript
 let inspectArguments = contract.methods.transfer([
           {
             from_: "tz1YLnvKy2ycBZ9TpTCv9ngXd1eUw2uxzhDd",
@@ -115,13 +115,16 @@ print(inspectArguments);
 `.toTransferParams` creates a nice object which you can look at to see if the arguments are being passed in as you want them to.
 
 
-### #buidl-ing time
+## #buidl-ing time
  
-#### New feature request!
+### New feature request!
 Your oldest friend has called for help. 
 In a land far far away he fought his battle against the aliens and saved thousands of lives. 
+
 Like you, he's starting his own civilization. 
 But he needs your help getting the economy started, **he's requested you send him 3 Cyber Tokens**.
 
-#### Step by step walkthrough
-1. Transfer 2 tokens of `token_id` 0 from your previous account(`tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7`)(the one you used while minting the tokens) to this account - ``, which you generated right now. Take reference from the code snippet we explored above.
+### Step by step walkthrough
+1. Transfer 2 tokens of `token_id` 0 from your previous account(`tz1Q654L2qnt5mDM1Lbi4rMSTtnE5JHvD8M7`)(the one you used while minting the tokens) to this account - ``, which you generated right now. 
+
+Take reference from the code snippet we explored above.

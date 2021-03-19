@@ -29,7 +29,7 @@ const CourseCard = ({ m, i, progress }) => {
             p > 0 ? 'bg-primary-600' : 'bg-base-400'
           } text-white flex items-center justify-center text-2xl mr-14 flex-none`}
         >
-          {i + 1}
+          {i}
         </div>
       )}
 
@@ -44,7 +44,10 @@ const CourseCard = ({ m, i, progress }) => {
         </div>
         <div className={`my-auto`}>
           <h2 className={`font-black text-5xl my-1`}>{m.frontmatter.title}</h2>
-          <p className={`text-lg pr-9`}>{m.frontmatter.description}</p>
+          <p
+            className={`text-lg pr-9 mt-6`}
+            dangerouslySetInnerHTML={{ __html: m.frontmatter.description }}
+          />
           {p > 0 && (
             <h3 className={`text-success-500 text-3xl mt-4 font-black`}>
               {p}% complete
@@ -96,6 +99,7 @@ const CurriculumOverview = ({
     allMdx: { nodes: modules },
   },
 }) => {
+  const linkClasses = useMemo(() => `text-primary-300`, []);
   const progress = useMemo(() => {
     let p =
       typeof window != 'undefined' &&
@@ -114,16 +118,58 @@ const CurriculumOverview = ({
           <h1 className={`text-6xl font-black heading-glow`}>
             Welcome to Academy
           </h1>
-          <p className={`mt-6 text-2xl`}>
-            Get started on your journey of becoming a blockchain pro. Learn how
-            to code decentralized apps on the Tezos blockchain using SmartPy and
-            how to interact with smart contracts using the Taquito javascript
-            library.
-            <p className={`mt-4`}>
-              You’ll build your own Cryptobot, fight aliens, create your own
-              currency, and so much more exciting stuff ✨
+          <div className={`mt-6 text-2xl`}>
+            <p>Get started on your journey of becoming a blockchain pro 🤘</p>
+            <p className={`mt-2`}>
+              Learn how to code{' '}
+              <Link
+                to="/tezos/academy/module-0/chapter-05"
+                className={linkClasses}
+              >
+                decentralized apps
+              </Link>{' '}
+              on the{' '}
+              <a
+                href="https://tezos.com/"
+                target="_blank"
+                className={linkClasses}
+              >
+                Tezos blockchain
+              </a>{' '}
+              using{' '}
+              <a
+                href="https://smartpy.io/"
+                target="_blank"
+                className={linkClasses}
+              >
+                SmartPy
+              </a>{' '}
+              and how to interact with{' '}
+              <Link
+                to="/tezos/academy/module-0/chapter-04"
+                className={linkClasses}
+              >
+                smart contracts
+              </Link>{' '}
+              using the{' '}
+              <a
+                href="https://tezostaquito.io/"
+                target="_blank"
+                className={linkClasses}
+              >
+                Taquito
+              </a>{' '}
+              javascript library.
             </p>
-          </p>
+            <p className={`mt-4`}>
+              You’ll build your Cryptobot, fight aliens, create your currency,
+              and so much more exciting stuff ✨
+            </p>
+            <p className={`mt-2`}>
+              I know, it can sound like too much. But don't worry, we'll take
+              you through this step-by-step ❤️
+            </p>
+          </div>
         </div>
         <ul className={`my-12 space-y-12 relative`}>
           {modules.map((m, i) => (
