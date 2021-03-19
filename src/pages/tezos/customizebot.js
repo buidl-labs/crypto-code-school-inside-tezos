@@ -316,15 +316,16 @@ const CustomLight = () => {
   return (
     <>
       <ambientLight intensity={1} />
-      <directionalLight position={[1, 10, 8]} intensity={1.2} />
-      <directionalLight position={[-1, -10, -2]} intensity={1.2} />
-      <directionalLight position={[0, 6, 0]} intensity={1.2} />
-      <spotLight intensity={1} position={[1000, 0, 0]} angle={0.2} />
+      <directionalLight position={[5, 10, 7.5]} intensity={0.8} />
+      <directionalLight position={[-8.958, -3.806, 0.55]} intensity={0.5} />
+      <directionalLight position={[-0.451, 2.829, -8.008]} intensity={0.8} />
+      <directionalLight position={[-11.645, 4.276, 7.5]} intensity={0.8} />
+      <directionalLight position={[9.032, 6.939, 7.5]} intensity={0.8} />
+      <directionalLight position={[-0.049, 10.0, 0.084]} intensity={0.8} />
       <spotLight
-        intensity={0.3}
-        angle={0.1}
-        penumbra={1}
-        position={[5, 27, 20]}
+        intensity={1}
+        position={[0.738, 0.223, 16.669]}
+        angle={0.314}
       />
     </>
   );
@@ -469,7 +470,6 @@ const Customizer = ({ location }) => {
       floor: '#ffffff',
     },
   });
-
 
   function uploadData() {
     upload3dModel(
