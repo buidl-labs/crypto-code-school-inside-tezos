@@ -217,7 +217,7 @@ export const getNftInfoByXTZAddress = async (address = '') => {
   );
   const ledgerMetadataJSON = await ledgerMetadata.json();
   const num_keys = ledgerMetadataJSON.active_keys;
-  let ledger;
+  let ledger = [];
   let tk;
   for (let i = 0; i < parseInt(num_keys / 10) + 1; i++) {
     tk = await fetch(
