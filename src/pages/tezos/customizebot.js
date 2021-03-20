@@ -142,7 +142,7 @@ const Bot = ({
   setBotColors,
 }) => {
   const group = useRef();
-  const { scene } = useGLTF('/compressedv5.glb');
+  const { scene } = useGLTF('/v10.glb');
   const [hovered, set] = useState(null);
   console.log('scene', scene);
 
@@ -173,7 +173,8 @@ const Bot = ({
       }}
       ref={group}
       dispose={null}
-      position={[0, 1.5, 0]}
+      position={[0, 0.5, 0]}
+      scale={[0.5,0.5,0.5]}
     >
       {renderGroup(head, headCount, colors, getMeshName)}
       {renderGroup(arm, armCount, colors, getMeshName)}
@@ -471,6 +472,7 @@ const Customizer = ({ location }) => {
       leg_jointsR: '#ffffff',
       leg_jointsL: '#ffffff',
       floor: '#ffffff',
+      eyes:'#ffffff'
     },
   });
 
