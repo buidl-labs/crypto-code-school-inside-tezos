@@ -1,6 +1,7 @@
 import { APP_NAME, INDEXER_NETWORK, CONTRACT_ADDRESS } from 'src/defaults';
 import { bytes2Char } from '@taquito/tzip16';
 import { OctahedronBufferGeometry } from 'three';
+import { isJSDocUnknownType } from 'typescript';
 
 function sanitizeJsonUri(origin) {
   if (origin.startsWith('ipfs://')) {
@@ -203,71 +204,65 @@ export const getXTZPriceInUSD = (usd, mutez) => {
 // export const getAllNFTHoldersInfo = () => {};
 
 export const getNftInfoByXTZAddress = async (address = '') => {
-  const allTokens = await getAllNFTsMetadata();
-  const tokensOnOffer = await nftOnOffer();
+  try {
+    const allTokens = await getAllNFTsMetadata();
+    const tokensOnOffer = await nftOnOffer();
 
-  const response = await fetch(
-    `https://api.better-call.dev/v1/contract/${INDEXER_NETWORK}/${CONTRACT_ADDRESS}/storage`,
-  );
-  const result = await response.json();
-  const tokens = result[0].children.find(elm => elm.name === 'ledger');
-
-  const ledgerMetadata = await fetch(
-    `https://api.better-call.dev/v1/bigmap/${INDEXER_NETWORK}/${tokens.value}`,
-  );
-  const ledgerMetadataJSON = await ledgerMetadata.json();
-  const num_keys = ledgerMetadataJSON.active_keys;
-  let ledger = [];
-  let tk;
-  for (let i = 0; i < parseInt(num_keys / 10) + 1; i++) {
-    tk = await fetch(
-      `https://api.better-call.dev/v1/bigmap/${INDEXER_NETWORK}/${
-        tokens.value
-      }/keys?offset=${10 * i}`,
+    const response = await fetch(
+      `https://api.better-call.dev/v1/contract/${INDEXER_NETWORK}/${CONTRACT_ADDRESS}/storage`,
     );
-    ledger.push(...(await tk.json()));
-  }
+    const result = await response.json();
+    const tokens = result[0].children.find(elm => elm.name === 'ledger');
 
-  // const tk = await fetch(
-  //   `https://api.better-call.dev/v1/bigmap/${INDEXER_NETWORK}/${tokens.value}/keys`,
-  // );
+    let ledger = [];
+    let tk;
+    let offset = 0;
+    while (true) {
+      tk = await fetch(
+        `https://api.better-call.dev/v1/bigmap/${INDEXER_NETWORK}/${tokens.value}/keys?q=${address}&offset=${offset}`,
+      );
+      const res = await tk.json();
 
-  // const ledger = await tk.json();
+      if (res.length === 0) {
+        break;
+      }
 
-  const owners = ledger.filter(elm => elm.data.value.value !== '0');
+      ledger.push(...res);
+      offset += 10;
+    }
 
-  const allTokenHolders = owners.map(elm => {
-    return {
+    const owners = ledger.filter(elm => elm.data.value.value !== '0');
+
+    const tokenHolder = owners.map(elm => ({
       address: elm.data.key.children[0].value,
       tokenId: elm.data.key.children[1].value,
-    };
-  });
+    }));
+    console.log('holder', tokenHolder);
+    if (tokenHolder.length <= 0) {
+      return [];
+    }
 
-  const tokenHolderUser = allTokenHolders.filter(el => el.address === address);
+    const filtered = tokenHolder.map(elm => {
+      const nft = allTokens.find(element => element.tokenId == elm.tokenId);
+      const offer = tokensOnOffer.find(
+        element => element.tokenId == elm.tokenId,
+      );
 
-  if (tokenHolderUser.length <= 0) {
-    return [];
+      return {
+        address: elm.address,
+        tokenId: elm.tokenId,
+        uri: nft.uri,
+        isForSale: offer ? offer.isForSale : false,
+        saleValueInMutez: offer ? offer.saleValueInMutez : null,
+        seller: offer ? offer.seller : null,
+        offerDate: offer ? offer.timestamp : null,
+        owner: elm.address,
+      };
+    });
+    return filtered;
+  } catch (err) {
+    console.log(err);
   }
-
-  const filtered = tokenHolderUser.map(elm => {
-    const nft = allTokens.find(element => element.tokenId == elm.tokenId);
-
-    const offer = tokensOnOffer.find(element => element.tokenId == elm.tokenId);
-
-    return {
-      address: elm.address,
-      tokenId: elm.tokenId,
-      uri: nft.uri,
-      isForSale: offer ? offer.isForSale : false,
-      saleValueInMutez: offer ? offer.saleValueInMutez : null,
-      seller: offer ? offer.seller : null,
-      offerDate: offer ? offer.timestamp : null,
-      owner: elm.address,
-    };
-  });
-
-  // console.log(filtered);
-  return filtered;
 };
 
 const getAllTokenHolders = async () => {
