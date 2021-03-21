@@ -37,6 +37,13 @@ export default function HTML(props) {
           async
           defer
         ></script>
+        <script
+          src={withPrefix('tezos-bls12-381.min.js')}
+          type="text/javascript"
+          charSet="utf-8"
+          async
+          defer
+        ></script>
         {/*
         <script
           src={withPrefix('execute.js')}
