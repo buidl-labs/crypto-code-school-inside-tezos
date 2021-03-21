@@ -1,7 +1,5 @@
 import { APP_NAME, INDEXER_NETWORK, CONTRACT_ADDRESS } from 'src/defaults';
 import { bytes2Char } from '@taquito/tzip16';
-import { OctahedronBufferGeometry } from 'three';
-import { isJSDocUnknownType } from 'typescript';
 
 function sanitizeJsonUri(origin) {
   if (origin.startsWith('ipfs://')) {
