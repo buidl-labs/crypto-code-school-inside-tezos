@@ -122,27 +122,27 @@ editor:
         scenario += market
 ---
 
-### Intro
+## Intro
 Right now, the system is broken.
 You can't afford broken systems, you've got the threat of aliens looming over your head in case you forgot!
 You've stored `powerups` in the `Market`, but we've no idea how long a `powerup` lasts. 
 
 Let's fix this with data type provided by SmartPy - [record](https://smartpy.io/dev/reference.html#_records)
 
-### Study time
+## Study time
 Records are the kind of structures that seem not of much use at first but turn out to be extremely crucial on taking a closer look, it's the underdog of types 🐶
 
 A record can hold multiple variales of different(or same) types under one namespace and it's represented by the type `sp.TRecord` in SmartPy.
 
 Confused? 
 Take a look at the snippet below ⬇️
-```python=
+```python
 money = sp.record(amount = 1000, currency = "$")
 ```
 As I told you before, a record is just multiple variables gathered under one. 
 
 You can access `amount` and `currency` through the following -
-```python=
+```python
 money.amount
 money.currency
 ```
@@ -151,7 +151,7 @@ Wondering why can't you use `sp.TMap` to do the same thing?
 Because `sp.TMap` only allows the same type of data as values. 
 
 For example, the following `sp.TMap` is invalid and will throw an error - 
-```python=
+```python
 ❌ ❌ ❌
 money = {
     "amount": 4000,
@@ -165,7 +165,7 @@ This won't be a problem with records because they're designed to hold multiples 
 ### Show me an example
 Following the lead from previous chapters, this example is also building on top of our `Wallet` smart contract.
 
-```python=
+```python
 class Wallet(sp.Contract):
     def __init__(self, initial_amount, owner_address):
         self.init(
@@ -194,7 +194,7 @@ def test():
 ```
 Using records we've revamped the `add_transaction` entry point.
 Let's take a closer look.
-```python=
+```python
     @sp.entry_point
     def add_transaction(self, transaction):
         sp.if transaction.action == "sent":
@@ -209,19 +209,19 @@ If the `action` is `sent` we deduct the `amount`.
 
 But, how do we call this entry point?
 Look at the snippet below.
-```python=
+```python
 scenario += w.add_transaction(sp.record(amount = sp.mutez(500), action = "sent"))
 ```
 Passing `sp.record` with the fields inside it to `add_transaction`.
 
 Records seem simple now, don't they!?
 
-### #buidl-ing time
+## #buidl-ing time
  
-#### New feature request!
+### New feature request!
 In the last chapter, we successfuly defined the smart contract for `Market` but we forgot that powerups don't last forever! We listed out the `powerups` in the list but didn't mention the `duration` for them.
 It's time to fix it 🔧
-#### Step by step walkthrough
+### Step by step walkthrough
 1. Edit the `powerups` list inside the `Market` contract to hold two records, both of them will have a `power` field and a `duration` field -
 
 

@@ -427,11 +427,11 @@ function Transaction({ location }) {
                   Share your unique cryptobot with your friends and start
                   trading with other on marketplace!
                 </h4>
-                <div className="text-white text-center text-lg font-mulish mt-8">
-                  Here’s the link to your unique cryptobot:
+                <div className="text-white text-center text-lg font-mulish mt-8 break-all">
+                  <p>Here’s the link to your unique cryptobot:</p>
                   <a
                     href={`https://cryptocodeschool.in/tezos/cryptobot/${bot.tokenId}`}
-                    className="text-primary-400 underline"
+                    className="text-primary-400 underline break-all"
                     target="_blank"
                     rel="noopener noreferrer"
                   >

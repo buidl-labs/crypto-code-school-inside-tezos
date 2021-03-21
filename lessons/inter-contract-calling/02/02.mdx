@@ -107,13 +107,13 @@ editor:
         scenario += test_bot
 ---
 
-### Intro
+## Intro
 
 Calibrating our plasma cannons for the next wave of aliens - what better way than to make your script a teeny bit better?
 Right now, we're using `sp.address` to give a `bot_manager` address to our `Cryptobot`.
 But, SmartPy has a special function called `sp.test_account(seed)` which we'll use to improve upon this.
 
-### Study time
+## Study time
 `sp.test_account(seed)` takes a random string as an argument and generates several properties based on this `seed` value.
 A test accounts has the following fields - 
 - `address`
@@ -121,10 +121,12 @@ A test accounts has the following fields -
 - `public_key`
 - `secret_key`
 
+<br />
+
 Don't worry about what all the fields mean. We only need the `address` for our purpose :D
 
 ### Show me an example
-```python=
+```python
 class Wallet(sp.Contract):
     def __init__(self, initial_amount, owner_address):
         self.init(
@@ -142,11 +144,11 @@ def test():
 Building on our example from the previous chapter, here a new field has been added in contract storage, `owner`. 
 Inside the test, we generated a test account using `sp.test_account("Wallet Example Account")` and passed in the address to wallet using `account_owner.address`.
 
-### #buidl-ing time
+## #buidl-ing time
  
-#### Let's refactor!
+### Let's refactor!
 Now you know about `sp.test_account`, use it instead of `sp.address` in our `Cryptobot`.
 
-#### Step by step walkthrough
+### Step by step walkthrough
 1. Replace `my_address` variable with `my_account` and assign and invoke it with `sp.test_account` with the `seed` of `"Cryptobot Owner"`.
 2. Replace `my_address` in the Contract initialization with `my_account.address`.
