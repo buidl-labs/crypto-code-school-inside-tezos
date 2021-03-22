@@ -421,16 +421,24 @@ function Transaction({ location }) {
                       claimButtonDisabled
                         ? 'cursor-not-allowed'
                         : 'hover:bg-primary-700'
-                    } bg-primary-600  text-white font-bold rounded focus:outline-none py-3 px-9 text-xl`}
+                    } text-white font-bold rounded focus:outline-none py-3 px-9 text-xl ${
+                      getUserBalance.value < 0.5
+                        ? 'bg-primary-400 cursor-not-allowed'
+                        : 'bg-primary-600'
+                    }`}
                     disabled={claimButtonDisabled}
                   >
                     {claimButtonDisabled ? (
-                      <Loader
-                        type="ThreeDots"
-                        color="#BFDBFE"
-                        height={28}
-                        // width={80}
-                      />
+                      getUserBalance.value > 0.5 ? (
+                        <Loader
+                          type="ThreeDots"
+                          color="#BFDBFE"
+                          height={28}
+                          // width={80}
+                        />
+                      ) : (
+                        `Low Balance`
+                      )
                     ) : (
                       `Confirm`
                     )}

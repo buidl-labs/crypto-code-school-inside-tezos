@@ -383,12 +383,16 @@ function Transaction({ location }) {
                     disabled={claimButtonDisabled}
                   >
                     {claimButtonDisabled ? (
-                      <Loader
-                        type="ThreeDots"
-                        color="#BFDBFE"
-                        height={28}
-                        // width={80}
-                      />
+                      getUserBalance.value > 0.5 ? (
+                        <Loader
+                          type="ThreeDots"
+                          color="#BFDBFE"
+                          height={28}
+                          // width={80}
+                        />
+                      ) : (
+                        'Low Balance'
+                      )
                     ) : (
                       `Confirm`
                     )}
