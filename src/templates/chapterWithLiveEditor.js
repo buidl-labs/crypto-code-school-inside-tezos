@@ -57,7 +57,7 @@ const ChapterWithLiveEditorTemplate = ({
   );
 
   useEffect(() => {
-    trackEventWithProperties('Chapter-View', {
+    trackEventWithProperties('view modules chapters', {
       slug: `${chapter.frontmatter.filterBy}/${chapter.frontmatter.slug}`,
       title: chapter.frontmatter.title,
     });
@@ -71,7 +71,7 @@ const ChapterWithLiveEditorTemplate = ({
     typeof window != 'undefined' &&
       localStorage.setItem('progress', JSON.stringify(progress));
 
-    trackEventWithProperties('Chapter-Completed', {
+    trackEventWithProperties('successfully complete modules chapters', {
       slug: `${chapter.frontmatter.filterBy}/${chapter.frontmatter.slug}`,
       title: chapter.frontmatter.title,
     });

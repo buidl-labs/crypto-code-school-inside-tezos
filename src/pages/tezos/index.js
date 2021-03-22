@@ -30,7 +30,10 @@ const FeatureGrid = ({
         <h1 className="sm:text-5xl text-3xl mb-3 font-black text-white heading-glow">
           {heading}
         </h1>
-        <p className="text-base-50 text-base mb-6">{subtext}</p>
+        <div
+          className="text-base-50 text-base mb-6"
+          dangerouslySetInnerHTML={{ __html: subtext }}
+        />
 
         <Link
           className={`py-3 px-9 text-xl border-primary-600 border-2 hover:border-primary-700 text-white font-bold rounded focus:outline-none`}
@@ -133,13 +136,20 @@ function Landing() {
             <h1 className="sm:text-7xl text-4xl mb-4 text-white font-black heading-glow">
               Learn to code on the blockchain, the fun way!
             </h1>
-            <p className="mb-8 leading-relaxed text-base-50">
-              Blockchain is all the hype these days, but learning blockchain can
-              be tough! We've got you covered with our fun and free course,
-              which will take you from a noob to blockchain pro in matter of a
-              few hours and build your own Cryptobot and then an army of them to
-              fight in the Cryptoverse Wars.
-            </p>
+            <div className="mb-8 leading-relaxed text-base-50">
+              <p>
+                Blockchain is all the hype these days, but learning blockchain
+                can be tough 😢
+              </p>
+              <p className={`mt-2`}>
+                We've got you covered with our fun and free course, which will
+                take you from a noob to blockchain pro in a quick few hours 🥳
+              </p>
+              <p>
+                You'll build your Cryptobot and then an army of them to fight in
+                the Cryptoverse Wars ⚔️
+              </p>
+            </div>
             <div className="flex justify-center">
               <Link
                 to="/tezos/academy"
@@ -161,17 +171,38 @@ function Landing() {
               <h1 className="sm:text-7xl text-4xl mb-3 font-black text-white">
                 With blockchain, build better finance.
               </h1>
-              <p className="text-base-50 text-lg">
-                A kid under 18 years can’t get a personal bank account, you
-                can’t transfer money from one continent to another without the
-                hassle of high bank fee, you can’t invest in companies without
-                putting in all your details. What if we told you, all that and
-                more is possible on the blockchain.
-                <br /> So much in finance is getting built on top of blockchain
-                in the DeFi sector and just in 2020 alone, Crypto’s market has
-                grown by a frickin’ 5x. <br />
-                Learn how to code on the blockchain, now’s the right time!
-              </p>
+              <div className="text-base-50 text-lg">
+                <ul className={`space-y-2 mb-4 list-disc`}>
+                  <li>
+                    A kid under 18 years can’t get a personal bank account.
+                  </li>
+                  <li>
+                    You can’t transfer money from one continent to another
+                    without the hassle of a high bank fee
+                  </li>
+                  <li>
+                    You can’t invest in companies without giving away all your
+                    details.
+                  </li>
+                </ul>
+                <p>
+                  What if we told you, all that and more is possible on the
+                  blockchain 🦄
+                </p>
+                <p>
+                  So much in finance is getting built on top of the blockchain
+                  💰
+                </p>
+                <p>
+                  Just in 2020 alone, Crypto’s market has grown by a frickin’
+                  5x.
+                </p>
+                <p
+                  className={`text-xl text-primary-400 font-black mt-4 heading-glow`}
+                >
+                  Learn how to code on the blockchain, now’s the right time!
+                </p>
+              </div>
             </div>
           </div>
           <div className="col-span-2 h-full w-full">
@@ -189,9 +220,13 @@ function Landing() {
             </h1>
           </div>
           <FeatureGrid
-            heading="Create your own currency!"
-            subtext="Learn how to create apps on the Tezos blockchain through our exciting
-          course. You even learn how to make your own currency 🤑"
+            heading="Create your currency!"
+            subtext={`
+            <p>
+              Learn how to create apps on the Tezos blockchain through our exciting course. 
+          </p>
+          <p>You even learn how to make your currency 🤑</p>
+            `}
             buttontext="Become a Blockchain Pro "
             video={createCurrency}
             videoType="webm"
@@ -200,7 +235,17 @@ function Landing() {
           />
           <FeatureGrid
             heading="Earn while you learn!"
-            subtext="Join the Cryptobot clan by winning your unique Cryptobot as NFT's and earn real money by trading with others in our marketplace! Major throwback to the  pokémon cards trading era ⚡️"
+            subtext={`
+              <p>
+                Join the Cryptobot clan by winning your unique Cryptobot as NFT's!!! 
+              </p>
+              <p>
+                Earn real money by trading with others in our marketplace!
+              </p>
+              <p>
+                Major throwback to the  pokémon cards trading era ⚡️
+              </p>
+            `}
             buttontext="Explore mind-blowing Cryptobots"
             video={earnWhileYouLearn}
             videoType="mp4"
