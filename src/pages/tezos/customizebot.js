@@ -316,12 +316,12 @@ const CustomLight = () => {
   return (
     <>
       <ambientLight intensity={1} />
-      <directionalLight position={[5, 10, 7.5]} intensity={0.8} />
+      <directionalLight position={[5, 10, 7.5]} intensity={0.6} />
       <directionalLight position={[-8.958, -3.806, 0.55]} intensity={0.5} />
-      <directionalLight position={[-0.451, 2.829, -8.008]} intensity={0.8} />
+      <directionalLight position={[-0.451, 2.829, -8.008]} intensity={1} />
       <directionalLight position={[-11.645, 4.276, 7.5]} intensity={0.8} />
       <directionalLight position={[9.032, 6.939, 7.5]} intensity={0.8} />
-      <directionalLight position={[-0.049, 10.0, 0.084]} intensity={0.8} />
+      <directionalLight position={[-0.049, 10.0, 0.084]} intensity={0.4} />
       <spotLight
         intensity={1}
         position={[0.738, 0.223, 16.669]}
