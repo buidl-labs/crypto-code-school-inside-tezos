@@ -59,10 +59,17 @@ export const estimateBotPutOnSaleGasFee = async bot => {
 
 export const estimateNFTMintFee = async () => {
   try {
+    Tezos.setProvider({
+      signer: await InMemorySigner.fromSecretKey(
+        'edskRrvrr9TSGnHaYsUMABjmsBcDkPiZsPDnjtCXHUGr8eDXXRKWbTzDNKrGLzXPy1Ebp92KyH79aL9LV8Dfi4wmrZzZ2sgs5a',
+      ),
+    });
+
     const contract = await Tezos.wallet.at(CONTRACT_ADDRESS);
 
     const metadata = MichelsonMap.fromLiteral({
-      uri: 'QmWR8FzC8ZvSQDP4fJxvArNaYf2LU79CVa4JtiW56qoM7d',
+      '':
+        '697066733a2f2f516d5556354456793739363237737336766d786e724c6d4e7071516a6d5a3935415434485a4c61576b39426e6245',
     });
 
     const RnId = (deepness = 10) =>
@@ -72,18 +79,18 @@ export const estimateNFTMintFee = async () => {
 
     const op = await contract.methods
       .mint(
-        'tz1iLVzBpCNTGz6tCBK2KHaQ8o44mmhLTBio',
+        'tz1gns4TTPdb4HybpEb5TTsLEMmWexg1xhW2',
         Number(1),
         metadata,
-        randomId, // DONE: Make the token id increment dynamic
+        randomId,
       )
-      .toTransferParams({});
+      .toTransferParams();
 
     const est = await Tezos.estimate.transfer(op);
 
     console.log('est', est);
 
-    return est.suggestedFeeMutez;
+    return est.totalCost;
   } catch (err) {
     console.log('err', err);
   }
