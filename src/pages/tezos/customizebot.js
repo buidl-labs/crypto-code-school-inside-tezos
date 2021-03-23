@@ -474,7 +474,6 @@ const Customizer = ({ location }) => {
     },
   });
 
-
   function uploadData() {
     upload3dModel(
       state.items.head,
@@ -700,6 +699,7 @@ const Customizer = ({ location }) => {
               isOpen={isTourOpen}
               onRequestClose={() => setIsTourOpen(false)}
               accentColor="#2563EB"
+              closeWithMask={false}
               lastStepNextButton={
                 <div className="text-white font-mulish">Let's get started!</div>
               }
