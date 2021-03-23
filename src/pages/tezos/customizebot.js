@@ -642,6 +642,7 @@ const Customizer = ({ location }) => {
     },
   ];
 
+
   function Picker() {
     return (
       <div style={{ display: true ? 'block' : 'none' }}>
@@ -1120,7 +1121,7 @@ const Customizer = ({ location }) => {
           </div>
           <div
             id="right-menu"
-            className="col-span-2 col-start-7 bg-base-900 px-4 overflow-y-scroll pb-8"
+            className="col-span-2 col-start-7 bg-base-900 px-4 overflow-y-scroll"
           >
             <div className="grid grid-cols-2 gap-4  mx-auto justify-center text-white  py-4 third-step">
               <Button
@@ -1134,13 +1135,14 @@ const Customizer = ({ location }) => {
 
                   setBotColors(current => {
                     const copy = { ...current };
+                    const palette = colorPaletteList[getRandomNumber(0, 9)];
                     Object.keys(copy.items).forEach(elm => {
                       const item =
-                        namedColors[
-                          Math.floor(Math.random() * namedColors.length)
+                        palette.hex[
+                          Math.floor(Math.random() * palette.hex.length)
                         ];
 
-                      copy.items[elm] = item.hex;
+                      copy.items[elm] = item;
                     });
                     return copy;
                   });
@@ -1219,9 +1221,7 @@ const Customizer = ({ location }) => {
                           //close color picker
                           updateShowPaletteColorPicker(false);
                         } else {
-                          console.log(colorPalettePicker);
                           setColorPalette(el => [...el, colorPalettePicker]);
-                          console.log(colorPalette);
                         }
                       }}
                     >
