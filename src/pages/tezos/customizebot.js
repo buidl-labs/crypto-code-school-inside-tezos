@@ -145,9 +145,6 @@ const Bot = ({
   const { scene } = useGLTF('/v10.glb');
 
   console.log('scene', scene);
-  useEffect(() => {
-    document.body.style.cursor = hovered ? 'pointer' : 'auto';
-  });
 
   const [hovered, set] = useState(null)
   useEffect(() => {
