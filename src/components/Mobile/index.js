@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'gatsby';
 import NavBar from '../../components/NavBar';
 import Button from '../../components/Buttons';
@@ -15,11 +15,13 @@ import FinanceIllustration from 'src/assets/wealth.webp';
 import { MdClose } from 'react-icons/md';
 import SadBot from 'src/images/SadBot.png';
 import Theme from 'src/assets/theme.svg';
+import emailjs from 'emailjs-com';
 
 const MobileHome = () => {
   const [videoModal, setVideoModal] = useState(0);
 
   const [emailModal, setEmailModal] = useState(0);
+  const [userEmail, setUserEmail] = useState('');
 
   function VideoModal() {
     return (
@@ -49,6 +51,16 @@ const MobileHome = () => {
   }
 
   function EmailModal() {
+    const [isEmailValid, setIsEmailValid] = useState(false);
+    useEffect(() => {
+      setIsEmailValid(validateEmail(userEmail));
+    }, [userEmail]);
+
+    function validateEmail(email) {
+      var re = /\S+@\S+\.\S+/;
+      return re.test(email);
+    }
+
     return (
       <div
         className={`bg-base-700 px-6 py-8 rounded-lg relative flex flex-col items-center shadow-lg text-center`}
@@ -74,11 +86,30 @@ const MobileHome = () => {
               type="email"
               className="text-sm px-6 py-2 rounded bg-base-600 outline-none border-2 border-base-500 h-12 focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent"
               placeholder="Your Email Address"
+              value={userEmail}
+              onChange={e => setUserEmail(e.target.value)}
               autoFocus
             />
           </div>
           <button
+            onClick={() => {
+              console.log(`user email is ${userEmail}`);
+              emailjs
+                .send(
+                  'service_09aub7y',
+                  'template_l2pls7s',
+                  { to_email: userEmail },
+                  'user_l51yKKZZQxbLwPxAqTuXR',
+                )
+                .then(res => {
+                  console.log(res.text);
+                  setEmailModal(0);
+                  console.log('email sent!');
+                })
+                .catch(err => console.log(err));
+            }}
             className={`w-full bg-primary-600 hover:bg-primary-700 h-12 rounded font-bold text-sm focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed`}
+            disabled={!isEmailValid}
           >
             Remind Me!
           </button>
@@ -100,10 +131,7 @@ const MobileHome = () => {
         )}
 
         {emailModal === 1 && (
-          <div
-            className="bg-base-700 bg-opacity-75 justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
-            onClick={() => setEmailModal(false)}
-          >
+          <div className="bg-base-700 bg-opacity-75 justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
             <EmailModal />
           </div>
         )}
