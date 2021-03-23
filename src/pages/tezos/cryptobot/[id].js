@@ -251,7 +251,7 @@ function BotView({ location }) {
                   {getUserBalance.value > 0.5 ? (
                     <Loader type="ThreeDots" color="#BFDBFE" height={28} />
                   ) : (
-                    'Low Balance'
+                    'Yes'
                   )}
                 </div>
               ) : (
@@ -428,7 +428,7 @@ function BotView({ location }) {
                   {getUserBalance.value > 0.5 ? (
                     <Loader type="ThreeDots" color="#BFDBFE" height={28} />
                   ) : (
-                    'Low Balance'
+                    'Yes'
                   )}
                 </div>
               ) : (

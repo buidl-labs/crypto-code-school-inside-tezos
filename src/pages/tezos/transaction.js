@@ -391,7 +391,7 @@ function Transaction({ location }) {
                           // width={80}
                         />
                       ) : (
-                        'Low Balance'
+                        'Confirm'
                       )
                     ) : (
                       `Confirm`
