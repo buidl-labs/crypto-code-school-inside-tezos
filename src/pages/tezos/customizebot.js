@@ -433,6 +433,23 @@ const Customizer = ({ location }) => {
   const [botColors, setBotColors] = useState({
     current: null,
     items: {
+      Face: '#ffffff',
+      Ears:'#ffffff',
+      InnerEyes:'#ffffff',
+      OuterEyes:'#ffffff',
+      Joints:'#ffffff',
+      BodyBase:'#ffffff',
+      BodyDetails:'#ffffff',
+      Gem:'#ffffff',
+      ShellGem:'#ffffff',
+      LegDetails:'#ffffff',
+      ArmsDetails:'#ffffff',
+      DetailsArmsInner:'#ffffff',
+      Hands:'#ffffff',
+      Mount:'#ffffff',
+      Leg:'#ffffff',
+      LowerLeg:'#ffffff',
+      EyeScreen:'#ffffff',
       face: '#ffffff',
       eye: '#ffffff',
       neck: '#ffffff',
@@ -481,7 +498,6 @@ const Customizer = ({ location }) => {
       leg_jointsR: '#ffffff',
       leg_jointsL: '#ffffff',
       floor: '#ffffff',
-      eyes: '#ffffff',
     },
   });
 
