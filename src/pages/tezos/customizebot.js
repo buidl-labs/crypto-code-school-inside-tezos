@@ -96,7 +96,7 @@ function useGroup(scene, type) {
     }
   });
 
-  console.log('result', result);
+  // console.log('result', result);
   return result;
 }
 
@@ -144,7 +144,7 @@ const Bot = ({
   const group = useRef();
   const { scene } = useGLTF('/v10.glb');
 
-  console.log('scene', scene);
+  // console.log('scene', scene);
 
   const [hovered, set] = useState(null);
   useEffect(() => {
@@ -261,7 +261,7 @@ const WelcomeModal = ({ close, isUser }) => {
     if (acc && thanosIsAvailable) {
       let u = await createUser(acc.address);
       if (u.verified) {
-        console.log(`u is verified`);
+        // console.log(`u is verified`);
         setUser(u);
         let progress =
           typeof window !== `undefined` && localStorage.getItem('progress');
@@ -272,7 +272,7 @@ const WelcomeModal = ({ close, isUser }) => {
         }
         return;
       } else navigate('/auth', { state: { pathname: url } });
-      console.log(acc);
+      // console.log(acc);
     } else {
       navigate('/auth', { state: { pathname: url } });
     }
@@ -428,7 +428,13 @@ const Customizer = ({ location }) => {
   const [grabImage, setGrabImage] = useState(false);
   const [showSavingBotModel, setShowSavingBotModel] = useState(false);
   const [showColorPicker, updateShowColorPicker] = useState(false);
+  const [showPaletteColorPicker, updateShowPaletteColorPicker] = useState(
+    false,
+  );
   const [colorPicker, setColorPicker] = useState('#ffffff');
+  const [colorPalettePicker, setColorPalettePicker] = useState('#ffffff');
+  const [colorPalette, setColorPalette] = useState([]);
+  const [customColorPaletteList, updateCustomColorPaletteList] = useState([]);
   const [botColors, setBotColors] = useState({
     current: null,
     items: {
@@ -603,6 +609,39 @@ const Customizer = ({ location }) => {
     },
   ];
 
+  const colorPaletteList = [
+    {
+      hex: ['#161426', '#252140', '#F23D3D', '#D93250', '#8C2048'],
+    },
+    {
+      hex: ['#FF00F2', '#BA00F2', '#8000FF', '#3000CC', '#0005A1'],
+    },
+    {
+      hex: ['#F2AF5C', '#F2CDA0', '#F28A2E', '#D95204', '#BF3604'],
+    },
+    {
+      hex: ['#008893', '#009F9D', '#52CDC3', '#8DDCCE', '#026775'],
+    },
+    {
+      hex: ['#8C354C', '#0B1226', '#122140', '#F2B9B3', '#F28D8D'],
+    },
+    {
+      hex: ['#260B12', '#F2D06B', '#F2AF5C', '#BF7E45', '#8C2323'],
+    },
+    {
+      hex: ['#012340', '#03658C', '#F23827', '#A60A0A', '#400101'],
+    },
+    {
+      hex: ['#F90112', '#BF0404', '#730202', '#260101', '#F2F2F2'],
+    },
+    {
+      hex: ['#177580', '#1C3F4D', '#012533', '#8A6341', '#CCA06B'],
+    },
+    {
+      hex: ['#1D5902', '#57A608', '#F2CC0F', '#F2B90F', '#D9910D'],
+    },
+  ];
+
   function Picker() {
     return (
       <div style={{ display: true ? 'block' : 'none' }}>
@@ -712,12 +751,17 @@ const Customizer = ({ location }) => {
   return (
     <div
       style={{ background: 'rgba(55, 65, 81)' }}
-      className="h-screen bg-grey-900 relative"
+      className="h-screen bg-base-900 fixed"
     >
-      <div id="main" className="relative h-full">
+      <div
+        id="main"
+        className="relative h-full"
+        style={{ background: 'rgba(55, 65, 81)' }}
+      >
         <div
           id="editor"
           className="relative h-full min-h-screen grid grid-cols-8 gap-4 w-full"
+          style={{ background: 'rgba(55, 65, 81)' }}
         >
           {!isModalOpen ? (
             <Tour
@@ -1076,7 +1120,7 @@ const Customizer = ({ location }) => {
           </div>
           <div
             id="right-menu"
-            className="col-span-2 col-start-7 bg-base-900 px-4 "
+            className="col-span-2 col-start-7 bg-base-900 px-4 overflow-y-scroll pb-8"
           >
             <div className="grid grid-cols-2 gap-4  mx-auto justify-center text-white  py-4 third-step">
               <Button
@@ -1137,9 +1181,153 @@ const Customizer = ({ location }) => {
                   <HelpOutlineIcon /> Help
                 </button>
               </div>
+              <div id="palette" className="space-y-4">
+                {showPaletteColorPicker ? (
+                  <>
+                    <div>
+                      <h4 className="text-base text-white font-bold">
+                        Create Your Own Custom Color Palette
+                      </h4>
+                    </div>
+                    <div style={{ display: true ? 'block' : 'none' }}>
+                      <HexColorPicker
+                        color={colorPalettePicker}
+                        onChange={setColorPalettePicker}
+                      />
+                    </div>
+                    <div className="grid grid-cols-4 gap-x-2 gap-y-4 cursor-pointer">
+                      {colorPalette.map(col => (
+                        <div
+                          style={{ backgroundColor: col }}
+                          className="flex w-14 h-16 rounded"
+                        ></div>
+                      ))}
+                    </div>
+                    <Button
+                      size="sm"
+                      type="secondary"
+                      style={{ width: '100%' }}
+                      onClick={() => {
+                        if (colorPalette && colorPalette.length >= 5) {
+                          //Add color palette to custom color palette section
+                          updateCustomColorPaletteList(el => [
+                            ...el,
+                            { hex: colorPalette },
+                          ]);
+                          //clear ColorPicker
+                          setColorPalette([]);
+                          //close color picker
+                          updateShowPaletteColorPicker(false);
+                        } else {
+                          console.log(colorPalettePicker);
+                          setColorPalette(el => [...el, colorPalettePicker]);
+                          console.log(colorPalette);
+                        }
+                      }}
+                    >
+                      {colorPalette && colorPalette.length >= 5
+                        ? 'Create Color Palette'
+                        : 'Add'}
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    {customColorPaletteList &&
+                    customColorPaletteList.length > 0 ? (
+                      <>
+                        <div>
+                          <h4 className="text-lg text-white font-bold">
+                            Custom Color Palettes
+                          </h4>
+                        </div>
+                        <div className="grid grid-cols-4 gap-x-2 gap-y-4">
+                          {customColorPaletteList.map((color, index) => (
+                            <div
+                              onClick={() => {
+                                setBotColors(current => {
+                                  const copy = { ...current };
+                                  Object.keys(copy.items).forEach(elm => {
+                                    const item =
+                                      color.hex[
+                                        Math.floor(
+                                          Math.random() * color.hex.length,
+                                        )
+                                      ];
+
+                                    copy.items[elm] = item;
+                                  });
+                                  return copy;
+                                });
+                              }}
+                              key={index}
+                              className="flex w-16 h-16 rounded cursor-pointer"
+                            >
+                              {color.hex.map(hex => (
+                                <div
+                                  className="w-3 h-16"
+                                  style={{ backgroundColor: hex }}
+                                />
+                              ))}
+                            </div>
+                          ))}
+                        </div>
+                      </>
+                    ) : null}
+                    <div>
+                      <h4 className="text-lg text-white font-bold">
+                        Color Palettes
+                      </h4>
+                    </div>
+                    <div className="grid grid-cols-4 gap-x-2 gap-y-4 cursor-pointer	">
+                      {colorPaletteList.map((color, index) => (
+                        <div
+                          onClick={() => {
+                            setBotColors(current => {
+                              const copy = { ...current };
+                              Object.keys(copy.items).forEach(elm => {
+                                const item =
+                                  color.hex[
+                                    Math.floor(Math.random() * color.hex.length)
+                                  ];
+
+                                copy.items[elm] = item;
+                              });
+                              return copy;
+                            });
+                          }}
+                          key={index}
+                          className="flex w-16 h-16 rounded"
+                        >
+                          {color.hex.map(hex => (
+                            <div
+                              className="w-3 h-16"
+                              style={{ backgroundColor: hex }}
+                            />
+                          ))}
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                )}
+              </div>
+              <Button
+                size="sm"
+                type="outline_secondary"
+                style={{ width: '100%' }}
+                onClick={() => {
+                  showPaletteColorPicker
+                    ? updateShowPaletteColorPicker(false)
+                    : updateShowPaletteColorPicker(true);
+                  //clear color palette
+                  setColorPalette([]);
+                }}
+              >
+                {showPaletteColorPicker ? `Close` : `Custom Color Palette`}
+              </Button>
               <div id="colors" className="space-y-4">
                 <h5 className="text-lg text-white font-bold">
-                  Body Part : <span>{botColors.current}</span>
+                  Body Part :{' '}
+                  <span className="font-normal">( {botColors.current} )</span>
                 </h5>
                 {showColorPicker ? (
                   <Picker />
