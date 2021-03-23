@@ -1,6 +1,7 @@
 import { CONTRACT_ADDRESS } from 'src/defaults';
 import { Tezos } from 'src/utils/wallet';
 import { MichelsonMap } from '@taquito/taquito';
+import { InMemorySigner } from '@taquito/signer';
 
 export const estimateWithdrawalGasFee = async bot => {
   try {
@@ -20,6 +21,12 @@ export const estimateWithdrawalGasFee = async bot => {
 
 export const estimateBotPurchaseGasFee = async bot => {
   try {
+    Tezos.setProvider({
+      signer: await InMemorySigner.fromSecretKey(
+        'edskRrvrr9TSGnHaYsUMABjmsBcDkPiZsPDnjtCXHUGr8eDXXRKWbTzDNKrGLzXPy1Ebp92KyH79aL9LV8Dfi4wmrZzZ2sgs5a',
+      ),
+    });
+
     const contract = await Tezos.wallet.at(CONTRACT_ADDRESS);
 
     const op = await contract.methods
@@ -28,7 +35,7 @@ export const estimateBotPurchaseGasFee = async bot => {
 
     const est = await Tezos.estimate.transfer(op);
 
-    return est.suggestedFeeMutez;
+    return est.totalCost;
   } catch (err) {
     console.log('err', err);
   }
