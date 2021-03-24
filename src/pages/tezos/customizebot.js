@@ -21,7 +21,7 @@ import {
   Preload,
 } from '@react-three/drei';
 import Loader from 'react-loader-spinner';
-import { HexColorPicker } from 'react-colorful';
+import { HexColorPicker, HexColorInput } from 'react-colorful';
 import 'react-colorful/dist/index.css';
 import 'src/utils/react-colorful.css';
 import namedColors from 'color-name-list';
@@ -642,10 +642,12 @@ const Customizer = ({ location }) => {
     },
   ];
 
-
   function Picker() {
     return (
-      <div style={{ display: true ? 'block' : 'none' }}>
+      <div
+        style={{ display: true ? 'block' : 'none' }}
+        className=" space-y-3 picker"
+      >
         <HexColorPicker
           className="picker"
           color={colorPicker}
@@ -658,6 +660,7 @@ const Customizer = ({ location }) => {
             });
           }}
         />
+        <HexColorInput color={colorPicker} onChange={setColorPicker} />
       </div>
     );
   }
@@ -1121,7 +1124,7 @@ const Customizer = ({ location }) => {
           </div>
           <div
             id="right-menu"
-            className="col-span-2 col-start-7 bg-base-900 px-4 overflow-y-scroll"
+            className="col-span-2 col-start-7 bg-base-900 px-4 overflow-y-scroll pb-4"
           >
             <div className="grid grid-cols-2 gap-4  mx-auto justify-center text-white  py-4 third-step">
               <Button
@@ -1185,14 +1188,21 @@ const Customizer = ({ location }) => {
               </div>
               <div id="palette" className="space-y-4">
                 {showPaletteColorPicker ? (
-                  <>
+                  <div className="space-y-2">
                     <div>
                       <h4 className="text-base text-white font-bold">
                         Create Your Own Custom Color Palette
                       </h4>
                     </div>
-                    <div style={{ display: true ? 'block' : 'none' }}>
+                    <div
+                      style={{ display: true ? 'block' : 'none' }}
+                      className="space-y-3 picker"
+                    >
                       <HexColorPicker
+                        color={colorPalettePicker}
+                        onChange={setColorPalettePicker}
+                      />
+                      <HexColorInput
                         color={colorPalettePicker}
                         onChange={setColorPalettePicker}
                       />
@@ -1229,7 +1239,7 @@ const Customizer = ({ location }) => {
                         ? 'Create Color Palette'
                         : 'Add'}
                     </Button>
-                  </>
+                  </div>
                 ) : (
                   <>
                     {customColorPaletteList &&
@@ -1309,21 +1319,22 @@ const Customizer = ({ location }) => {
                     </div>
                   </>
                 )}
+                <Button
+                  size="sm"
+                  type="outline_secondary"
+                  style={{ width: '100%' }}
+                  onClick={() => {
+                    showPaletteColorPicker
+                      ? updateShowPaletteColorPicker(false)
+                      : updateShowPaletteColorPicker(true);
+                    //clear color palette
+                    setColorPalette([]);
+                  }}
+                >
+                  {showPaletteColorPicker ? `Close` : `+ Custom Color Palette`}
+                </Button>
               </div>
-              <Button
-                size="sm"
-                type="outline_secondary"
-                style={{ width: '100%' }}
-                onClick={() => {
-                  showPaletteColorPicker
-                    ? updateShowPaletteColorPicker(false)
-                    : updateShowPaletteColorPicker(true);
-                  //clear color palette
-                  setColorPalette([]);
-                }}
-              >
-                {showPaletteColorPicker ? `Close` : `Custom Color Palette`}
-              </Button>
+
               <div id="colors" className="space-y-4">
                 <h5 className="text-lg text-white font-bold">
                   Body Part :{' '}
@@ -1349,19 +1360,19 @@ const Customizer = ({ location }) => {
                     ))}
                   </div>
                 )}
+                <Button
+                  size="sm"
+                  type="outline_secondary"
+                  style={{ width: '100%' }}
+                  onClick={() => {
+                    showColorPicker
+                      ? updateShowColorPicker(false)
+                      : updateShowColorPicker(true);
+                  }}
+                >
+                  {showColorPicker ? `Close` : `+ Custom color`}
+                </Button>
               </div>
-              <Button
-                size="sm"
-                type="secondary"
-                style={{ width: '100%' }}
-                onClick={() => {
-                  showColorPicker
-                    ? updateShowColorPicker(false)
-                    : updateShowColorPicker(true);
-                }}
-              >
-                {showColorPicker ? `Close` : `+ Custom color`}
-              </Button>
             </div>
           </div>
         </div>
