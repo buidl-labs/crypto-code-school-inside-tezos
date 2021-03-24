@@ -145,7 +145,7 @@ const Bot = ({
   setBotColors,
 }) => {
   const group = useRef();
-  const { scene } = useGLTF('/v10.glb');
+  const { scene } = useGLTF('/v11.glb');
 
   // console.log('scene', scene);
 
@@ -187,7 +187,8 @@ const Bot = ({
       }}
       ref={group}
       dispose={null}
-      position={[0, 1.5, 0]}
+      position={[0, 0.8, 0]}
+      scale={[0.5, 0.5, 0.5]}
     >
       {renderGroup(head, headCount, colors, getMeshName)}
       {renderGroup(arm, armCount, colors, getMeshName)}
@@ -1141,7 +1142,7 @@ const Customizer = ({ location }) => {
                 <Canvas
                   concurrent
                   pixelRatio={[1, 1.5]}
-                  camera={{ position: [0, 1.4, 5.75], fov: 80 }}
+                  camera={{ position: [0, 1.4, 5.75], fov: 35 }}
                   gl={{ preserveDrawingBuffer: true }}
                 >
                   <CustomAmbientLight
