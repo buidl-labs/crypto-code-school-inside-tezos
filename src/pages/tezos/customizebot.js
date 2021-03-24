@@ -4,6 +4,7 @@ import React, {
   useState,
   useEffect,
   useContext,
+  createRef,
 } from 'react';
 import Loadable from 'react-loadable';
 import NavBar from '../../components/NavBar';
@@ -40,6 +41,8 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import Popper from 'popper.js';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 
 import { BeaconContext } from 'src/context/beacon-context';
 import { createUser, batchUpdateProgress } from 'src/api';
@@ -318,6 +321,52 @@ const WelcomeModal = ({ close, isUser }) => {
       </div>
       ;
     </div>
+  );
+};
+
+const Tooltip = () => {
+  const [tooltipShow, setTooltipShow] = useState(false);
+  const btnRef = createRef();
+  const tooltipRef = createRef();
+  const openLeftTooltip = () => {
+    new Popper(btnRef.current, tooltipRef.current, {
+      placement: 'top',
+    });
+    setTooltipShow(true);
+  };
+  const closeLeftTooltip = () => {
+    setTooltipShow(false);
+  };
+  return (
+    <>
+      <div className="flex flex-wrap">
+        <div className="w-full text-center">
+          <button
+            className={
+              'text-white text-xs  outline-none focus:outline-none mr-1 mb-1'
+            }
+            type="button"
+            style={{ transition: 'all .15s ease' }}
+            onMouseEnter={openLeftTooltip}
+            onMouseLeave={closeLeftTooltip}
+            ref={btnRef}
+          >
+            <InfoOutlinedIcon fontSize="small" />
+          </button>
+          <div
+            className={
+              (tooltipShow ? '' : 'hidden ') +
+              'bg-primary-600 border-0 mb-3 block z-50 leading-normal text-sm max-w-xs text-left no-underline break-words rounded-lg'
+            }
+            ref={tooltipRef}
+          >
+            <div className="text-white p-3 font-mulish">
+              Click multiple times on a color palette to create variations
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 
@@ -1283,10 +1332,14 @@ const Customizer = ({ location }) => {
                         </div>
                       </>
                     ) : null}
-                    <div>
+                    <div className="inline-flex space-x-1 items-center justify-center">
                       <h4 className="text-lg text-white font-bold">
-                        Color Palettes
+                        Color Palettes{' '}
                       </h4>
+                      <span>
+                        {' '}
+                        <Tooltip />
+                      </span>
                     </div>
                     <div className="grid grid-cols-4 gap-x-2 gap-y-4 cursor-pointer	">
                       {colorPaletteList.map((color, index) => (
