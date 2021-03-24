@@ -18,6 +18,7 @@ import ErrorBot from 'src/images/error.png';
 import userAtom from 'src/atoms/user-atom';
 import isUserAtom from 'src/atoms/is-user-atom';
 import { useAtom } from 'jotai';
+import { estimateBotPurchaseGasFee } from 'src/utils/gas_estimates';
 
 const Steppers = ({ number, name, clickEvent, step, tick = false }) => {
   return (
@@ -220,6 +221,14 @@ function Transaction({ location }) {
     }
   }, [user]);
 
+  const estimatedTotalCost = useAsync(async () => {
+    try {
+      return await estimateBotPurchaseGasFee(bot);
+    } catch (err) {
+      console.log('err', err);
+    }
+  }, []);
+
   return (
     <div className=" bg-base-900 ">
       <NavBar />
@@ -306,16 +315,36 @@ function Transaction({ location }) {
                     caption="Your first bot is on us!"
                   /> */}
                   {/* <hr className="my-2 bg-base-400 border-2 h-0.5" /> */}
-                  <Cost
-                    type="Estimated Network Fee"
-                    main={`${convertMutezToXtz(4556)} XTZ`}
-                    caption={
-                      xtzPrice
-                        ? `$ ${getXTZPriceInUSD(xtzPrice.price, 4556)}`
-                        : null
-                    }
-                    tooltip
-                  />
+                  {estimatedTotalCost.loading ? (
+                    <Cost
+                      type="Estimated Network Fee"
+                      main={`LOADING...`}
+                      caption={``}
+                      tooltip
+                    />
+                  ) : estimatedTotalCost.error ? (
+                    <div className="text-error-500 text-center">
+                      Error calculating estimated gas fee
+                    </div>
+                  ) : (
+                    <div>
+                      <Cost
+                        type="Estimated Network Fee"
+                        main={`${convertMutezToXtz(
+                          estimatedTotalCost.value,
+                        )} XTZ`}
+                        caption={
+                          xtzPrice
+                            ? `$ ${getXTZPriceInUSD(
+                                xtzPrice.price,
+                                Number(estimatedTotalCost.value),
+                              )}`
+                            : null
+                        }
+                        tooltip
+                      />
+                    </div>
+                  )}
                 </div>
                 <div>
                   {getUserBalance.loading ? null : getUserBalance.error ? (
