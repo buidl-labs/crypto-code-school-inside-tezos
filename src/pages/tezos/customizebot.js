@@ -1370,7 +1370,7 @@ const Customizer = ({ location }) => {
                       : updateShowColorPicker(true);
                   }}
                 >
-                  {showColorPicker ? `Close` : `+ Custom color`}
+                  {showColorPicker ? `Close` : `+ Custom Color`}
                 </Button>
               </div>
             </div>
