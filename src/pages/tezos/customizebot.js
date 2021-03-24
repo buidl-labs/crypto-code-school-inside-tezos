@@ -272,7 +272,7 @@ const WelcomeModal = ({ close, isUser }) => {
 
   return (
     <div
-      className={`bg-base-900 bg-opacity-80 absolute inset-0 flex items-center justify-center text-white`}
+      className={`bg-base-900 bg-opacity-80 absolute inset-0 flex items-center justify-center text-white hidden`}
     >
       <div
         className={`absolute bg-base-700 flex items-center justify-center flex-col py-9 px-24 rounded-3xl z-50`}
@@ -1009,7 +1009,7 @@ const Customizer = ({ location }) => {
                     penumbra={1}
                     position={[5, 27, 20]}
                   />
-                  <Suspense fallback={null}>
+                  <Suspense fallback={Loading}>
                     <Bot
                       headCount={headCount}
                       armCount={armCount}
@@ -1023,7 +1023,7 @@ const Customizer = ({ location }) => {
                   <CustomEnvironment />
                   <OrbitControls enableZoom={true} />
                 </Canvas>
-                <Loading containerStyles={{ background: 'rgba(55, 65, 81)' }} />
+                <Loading />
               </div>
             )}
           </div>
