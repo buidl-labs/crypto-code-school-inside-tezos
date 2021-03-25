@@ -193,7 +193,7 @@ function Transaction({ location }) {
       const op = await contract.methods
         .purchase_bot_at_sale_price(Number(tokenId))
         .send(sendArgs);
-
+      setClaimButtonDisabledStatus(false);
       //Go to 2nd Step
       setStep(2);
       setOpHash(op.opHash);
@@ -202,6 +202,8 @@ function Transaction({ location }) {
       // Go to 3rd Step
       setStep(3);
     } catch (err) {
+      if (err?.message?.includes('ABORTED'))
+        setClaimButtonDisabledStatus(false);
       console.log(err);
     }
   };
@@ -402,13 +404,27 @@ function Transaction({ location }) {
                   <Button
                     onClick={() => {
                       if (claimButtonDisabled) return;
+                      setClaimButtonDisabledStatus(true);
                       buyCryptobot(bot.saleValueInMutez, bot.tokenId);
                     }}
                     size="lg"
                     type="primary"
                     disabled={claimButtonDisabled}
                   >
-                    Confirm
+                    {claimButtonDisabled ? (
+                      getUserBalance.value > 0.5 ? (
+                        <Loader
+                          type="ThreeDots"
+                          color="#BFDBFE"
+                          height={28}
+                          // width={80}
+                        />
+                      ) : (
+                        'Confirm'
+                      )
+                    ) : (
+                      `Confirm`
+                    )}
                   </Button>
                 </div>
               </TransactionContainer>

@@ -132,11 +132,14 @@ function BotView({ location }) {
       const op = await contract.methods
         .bot_no_longer_for_sale(Number(tokenId))
         .send();
+      setClaimButtonDisabledStatus(false);
       setOpHash(op.opHash);
       updateWithdrawNowStep(2);
       const result = await op.confirmation(1);
       updateWithdrawNowStep(3);
     } catch (err) {
+      if (err?.message?.includes('ABORTED'))
+        setClaimButtonDisabledStatus(false);
       console.log(err);
     }
   };
@@ -150,7 +153,7 @@ function BotView({ location }) {
       const op = await contract.methods
         .offer_bot_for_sale(saleValue, Number(tokenId))
         .send();
-
+      setClaimButtonDisabledStatus(false);
       console.log(`Awaiting for ${op.opHash} to be confirmed...`);
       setOpHash(op.opHash);
       updateSellNowStep(2);
@@ -158,6 +161,8 @@ function BotView({ location }) {
       updateSellNowStep(3);
       console.log('result', result);
     } catch (err) {
+      if (err?.message?.includes('ABORTED'))
+        setClaimButtonDisabledStatus(false);
       console.log(err);
     }
   };
@@ -238,9 +243,20 @@ function BotView({ location }) {
               onClick={() => {
                 if (claimButtonDisabled) return;
                 withdrawBotFromSale(bot.tokenId);
+                setClaimButtonDisabledStatus(true);
               }}
             >
-              Yes
+              {claimButtonDisabled ? (
+                <div className={`flex justify-center align-center`}>
+                  {getUserBalance.value > 0.5 ? (
+                    <Loader type="ThreeDots" color="#BFDBFE" height={28} />
+                  ) : (
+                    'Yes'
+                  )}
+                </div>
+              ) : (
+                `Yes`
+              )}
             </Button>
             <Button
               size="lg"
@@ -403,10 +419,21 @@ function BotView({ location }) {
                   setOnSaleError('INSUFFICIENT_AMOUNT');
                 } else {
                   putBotOnSale(bot.tokenId, convertXtzToMutez(salePrice));
+                  setClaimButtonDisabledStatus(true);
                 }
               }}
             >
-              Continue
+              {claimButtonDisabled ? (
+                <div className={`flex justify-center align-center`}>
+                  {getUserBalance.value > 0.5 ? (
+                    <Loader type="ThreeDots" color="#BFDBFE" height={28} />
+                  ) : (
+                    'Yes'
+                  )}
+                </div>
+              ) : (
+                `Continue`
+              )}
             </Button>
           </div>
         </ModalTextSection>
@@ -782,7 +809,7 @@ const TransactionContainer = ({ children }) => {
 function ConfirmationModel(opHash) {
   return (
     <BaseModal>
-      <div className="grid grid-cols mx-auto justify-center mt-6 text-white mb-2">
+      <div className="grid grid-cols mx-auto justify-center mt-6 mb-4 text-white">
         <Loader type="BallTriangle" color="#2563EB" height={80} width={80} />
       </div>
       <h4 className="text-white text-center text-base mb-4">
@@ -819,7 +846,7 @@ const GoBackModel = (bot, botWithdrawn = true) => {
           size="lg"
           type="primary"
           disabled={false}
-          style={{ width: '100%', marginBottom: '1rem' }}
+          style={{ width: '100%', marginBottom: '1rem', marginTop: '1rem' }}
           onClick={() => {
             navigate('/tezos/profile');
           }}
