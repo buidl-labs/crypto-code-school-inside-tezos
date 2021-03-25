@@ -694,29 +694,6 @@ const Customizer = ({ location }) => {
     },
   ];
 
-  function Picker() {
-    return (
-      <div
-        style={{ display: true ? 'block' : 'none' }}
-        className=" space-y-3 picker"
-      >
-        <HexColorPicker
-          className="picker"
-          color={colorPicker}
-          onChange={color => {
-            setColorPicker(color);
-            setBotColors(current => {
-              const copy = { ...current };
-              copy.items[copy.current] = color;
-              return copy;
-            });
-          }}
-        />
-        <HexColorInput color={colorPicker} onChange={setColorPicker} />
-      </div>
-    );
-  }
-
   const upload3dModel = (head, arm, body, leg) => {
     const gltfExporter = new GLTFExporter();
 
@@ -1397,7 +1374,27 @@ const Customizer = ({ location }) => {
                   <span className="font-normal">( {botColors.current} )</span>
                 </h5>
                 {showColorPicker ? (
-                  <Picker />
+                  <div
+                    style={{ display: true ? 'block' : 'none' }}
+                    className=" space-y-3 picker"
+                  >
+                    <HexColorPicker
+                      className="picker"
+                      color={colorPicker}
+                      onChange={color => {
+                        setColorPicker(color);
+                        setBotColors(current => {
+                          const copy = { ...current };
+                          copy.items[copy.current] = color;
+                          return copy;
+                        });
+                      }}
+                    />
+                    <HexColorInput
+                      color={colorPicker}
+                      onChange={setColorPicker}
+                    />
+                  </div>
                 ) : (
                   <div className="grid grid-cols-4 gap-x-2 gap-y-4 cursor-pointer	">
                     {colors.map((color, index) => (
