@@ -809,8 +809,8 @@ const TransactionContainer = ({ children }) => {
 function ConfirmationModel(opHash) {
   return (
     <BaseModal>
-      <div className="grid grid-cols mx-auto justify-center mt-6 mb-4 text-white mb-2">
-        <Loader type="ThreeDots" color="#BFDBFE" height={28} />
+      <div className="grid grid-cols mx-auto justify-center mt-6 mb-4 text-white">
+        <Loader type="BallTriangle" color="#2563EB" height={80} width={80} />
       </div>
       <h4 className="text-white text-center text-base mb-4">
         It can take a few seconds, the transaction has successfully been

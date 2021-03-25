@@ -451,7 +451,7 @@ function Transaction({ location }) {
                         : 'hover:bg-primary-700'
                     } text-white font-bold rounded focus:outline-none py-3 px-9 text-xl ${
                       getUserBalance.value < 0.5
-                        ? 'bg-primary-400 cursor-not-allowed'
+                        ? 'bg-primary-600 opacity-50 cursor-not-allowed'
                         : 'bg-primary-600'
                     }`}
                     disabled={claimButtonDisabled}
