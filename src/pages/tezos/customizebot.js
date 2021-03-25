@@ -17,8 +17,7 @@ import {
   useGLTF,
   OrbitControls,
   Html,
-  Preload,
-  useProgress,
+  Plane,
 } from '@react-three/drei';
 import Loader from 'react-loader-spinner';
 import { HexColorPicker } from 'react-colorful';
@@ -74,20 +73,24 @@ const CustomEnvironment = Loadable({
   loading: () => Loading,
 });
 
-function Loading() {
-  const { active, progress, errors, item, loaded, total } = useProgress();
+function Loading(props) {
+  const mesh = useRef();
+  useFrame(() => {
+    mesh.current.rotation.y += 0.01;
+  });
+
   return (
-    <Html center transform>
-      {progress} % loaded
-      <div className="relative pt-1">
-        <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-primary-200">
-          <div
-            style={{ width: progress }}
-            className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-primary-500"
-          ></div>
-        </div>
-      </div>
-    </Html>
+    <group>
+      <mesh {...props} ref={mesh} position={[0, 1, 0]}>
+        <Plane args={[1, 1]}>
+          {' '}
+          <meshStandardMaterial attach="material" color={'lightblue'} />
+        </Plane>
+      </mesh>
+      <Html center>
+        <h1 className="text-white text-2xl font-bold">Loading...</h1>
+      </Html>
+    </group>
   );
 }
 
