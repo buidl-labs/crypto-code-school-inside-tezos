@@ -77,10 +77,16 @@ const CustomEnvironment = Loadable({
 function Loading() {
   const { active, progress, errors, item, loaded, total } = useProgress();
   return (
-    <Html center transform sprite>
-      {' '}
-      <Loader type="BallTriangle" color="#2563EB" height={65} width={65} />
-      <h1 className="text-white">Loading</h1>
+    <Html center transform>
+      {progress} % loaded
+      <div className="relative pt-1">
+        <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-primary-200">
+          <div
+            style={{ width: progress }}
+            className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-primary-500"
+          ></div>
+        </div>
+      </div>
     </Html>
   );
 }
