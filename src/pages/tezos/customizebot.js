@@ -76,7 +76,13 @@ const CustomEnvironment = Loadable({
 
 function Loading() {
   const { active, progress, errors, item, loaded, total } = useProgress();
-  return <Html center>{progress} % loaded</Html>;
+  return (
+    <Html center transform sprite>
+      {' '}
+      <Loader type="BallTriangle" color="#2563EB" height={65} width={65} />
+      <h1 className="text-white">Loading</h1>
+    </Html>
+  );
 }
 
 const state = {
