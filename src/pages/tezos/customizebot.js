@@ -17,8 +17,8 @@ import {
   useGLTF,
   OrbitControls,
   Html,
-  Loader as Loading,
   Preload,
+  useProgress,
 } from '@react-three/drei';
 import Loader from 'react-loader-spinner';
 import { HexColorPicker } from 'react-colorful';
@@ -73,6 +73,11 @@ const CustomEnvironment = Loadable({
   loader: () => import('src/components/CustomEnvironment'),
   loading: () => Loading,
 });
+
+function Loading() {
+  const { active, progress, errors, item, loaded, total } = useProgress();
+  return <Html center>{progress} % loaded</Html>;
+}
 
 const state = {
   current: null,
@@ -1009,7 +1014,7 @@ const Customizer = ({ location }) => {
                     penumbra={1}
                     position={[5, 27, 20]}
                   />
-                  <Suspense fallback={Loading}>
+                  <Suspense fallback={<Loading />}>
                     <Bot
                       headCount={headCount}
                       armCount={armCount}
@@ -1019,11 +1024,10 @@ const Customizer = ({ location }) => {
                       getMeshName={getMeshName}
                       setBotColors={setBotColors}
                     />
+                    <Environment files="royal_esplanade_1k_compressed_50ppi.hdr" />
                   </Suspense>
-                  <CustomEnvironment />
                   <OrbitControls enableZoom={true} />
                 </Canvas>
-                <Loading />
               </div>
             )}
           </div>
