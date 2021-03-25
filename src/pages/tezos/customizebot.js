@@ -4,6 +4,7 @@ import React, {
   useState,
   useEffect,
   useContext,
+  createRef,
 } from 'react';
 import Loadable from 'react-loadable';
 import NavBar from '../../components/NavBar';
@@ -12,16 +13,14 @@ import { ThanosWallet } from '@thanos-wallet/dapp';
 import { navigate, Link } from 'gatsby';
 import { Canvas, useFrame, useThree } from 'react-three-fiber';
 import {
-  ContactShadows,
   Environment,
   useGLTF,
   OrbitControls,
   Html,
-  Loader as Loading,
-  Preload,
+  Octahedron,
 } from '@react-three/drei';
 import Loader from 'react-loader-spinner';
-import { HexColorPicker } from 'react-colorful';
+import { HexColorPicker, HexColorInput } from 'react-colorful';
 import 'react-colorful/dist/index.css';
 import 'src/utils/react-colorful.css';
 import namedColors from 'color-name-list';
@@ -40,6 +39,8 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import Popper from 'popper.js';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 
 import { BeaconContext } from 'src/context/beacon-context';
 import { createUser, batchUpdateProgress } from 'src/api';
@@ -69,10 +70,6 @@ import legs3 from '../../assets/CryptobotImages/Leg/03xlegs.png';
 import legs4 from '../../assets/CryptobotImages/Leg/04xlegs.png';
 import legs5 from '../../assets/CryptobotImages/Leg/05xlegs.png';
 
-//Custom Environment function
-import { UnsignedByteType, PMREMGenerator } from 'three';
-import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
-
 const state = {
   current: null,
   items: {
@@ -81,6 +78,22 @@ const state = {
     arm: null,
     leg: null,
   },
+};
+
+const Loading = props => {
+  const mesh = useRef();
+  return (
+    <group>
+      <mesh {...props} ref={mesh} position={[0, 1.2, 0]}>
+        <Octahedron args={[1, 1, 1]}>
+          <meshBasicMaterial attach="material" color="#fff" wireframe />
+        </Octahedron>
+      </mesh>
+      <Html center>
+        <h1 className="text-white text-2xl font-bold mt-4">Loading...</h1>
+      </Html>
+    </group>
+  );
 };
 
 function useGroup(scene, type) {
@@ -96,7 +109,7 @@ function useGroup(scene, type) {
     }
   });
 
-  console.log('result', result);
+  // console.log('result', result);
   return result;
 }
 
@@ -142,9 +155,20 @@ const Bot = ({
   setBotColors,
 }) => {
   const group = useRef();
-  const { scene } = useGLTF('/compressedv5.glb');
+  const { scene } = useGLTF('/compressedv11.glb');
+
+  // console.log('scene', scene);
+
   const [hovered, set] = useState(null);
-  console.log('scene', scene);
+  useEffect(() => {
+    const cursor = `<svg width="84" height="84" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0)"><path fill="rgba(255, 255, 255, 0.5)" d="M29.5 54C43.031 54 54 43.031 54 29.5S43.031 5 29.5 5 5 15.969 5 29.5 15.969 54 29.5 54z" stroke="#000"/><g filter="url(#filter0_d)"><path d="M29.5 47C39.165 47 47 39.165 47 29.5S39.165 12 29.5 12 12 19.835 12 29.5 19.835 47 29.5 47z" fill="#fff"/></g><path d="M2 2l11 2.947L4.947 13 2 2z" fill="#000"/><text fill="#fff " style="white-space:pre" font-family="Inter var, sans-serif" font-size="12" letter-spacing="-.01em"><tspan x="4" y="63">${hovered}</tspan></text></g><defs><clipPath id="clip0"><path fill="#fff" d="M0 0h64v64H0z"/></clipPath><filter id="filter0_d" x="6" y="8" width="47" height="47" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feColorMatrix in="SourceAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/><feOffset dy="2"/><feGaussianBlur stdDeviation="3"/><feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0"/><feBlend in2="BackgroundImageFix" result="effect1_dropShadow"/><feBlend in="SourceGraphic" in2="effect1_dropShadow" result="shape"/></filter></defs></svg>`;
+    const auto = `<svg width="64" height="64" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill="rgba(255, 255, 255, 0.5)" d="M29.5 54C43.031 54 54 43.031 54 29.5S43.031 5 29.5 5 5 15.969 5 29.5 15.969 54 29.5 54z" stroke="#000"/><path d="M2 2l11 2.947L4.947 13 2 2z" fill="#000"/></svg>`;
+    document.getElementById(
+      'middle-menu',
+    ).style.cursor = `url('data:image/svg+xml;base64,${btoa(
+      hovered ? cursor : auto,
+    )}'), auto`;
+  });
 
   const head = useGroup(scene, 'head');
   const arm = useGroup(scene, 'arm');
@@ -173,7 +197,8 @@ const Bot = ({
       }}
       ref={group}
       dispose={null}
-      position={[0, 1.5, 0]}
+      position={[0, 0.8, 0]}
+      scale={[0.5, 0.5, 0.5]}
     >
       {renderGroup(head, headCount, colors, getMeshName)}
       {renderGroup(arm, armCount, colors, getMeshName)}
@@ -252,7 +277,7 @@ const WelcomeModal = ({ close, isUser }) => {
     if (acc && thanosIsAvailable) {
       let u = await createUser(acc.address);
       if (u.verified) {
-        console.log(`u is verified`);
+        // console.log(`u is verified`);
         setUser(u);
         let progress =
           typeof window !== `undefined` && localStorage.getItem('progress');
@@ -263,7 +288,7 @@ const WelcomeModal = ({ close, isUser }) => {
         }
         return;
       } else navigate('/auth', { state: { pathname: url } });
-      console.log(acc);
+      // console.log(acc);
     } else {
       navigate('/auth', { state: { pathname: url } });
     }
@@ -312,6 +337,52 @@ const WelcomeModal = ({ close, isUser }) => {
   );
 };
 
+const Tooltip = () => {
+  const [tooltipShow, setTooltipShow] = useState(false);
+  const btnRef = createRef();
+  const tooltipRef = createRef();
+  const openLeftTooltip = () => {
+    new Popper(btnRef.current, tooltipRef.current, {
+      placement: 'top',
+    });
+    setTooltipShow(true);
+  };
+  const closeLeftTooltip = () => {
+    setTooltipShow(false);
+  };
+  return (
+    <>
+      <div className="flex flex-wrap">
+        <div className="w-full text-center">
+          <button
+            className={
+              'text-white text-xs  outline-none focus:outline-none mr-1 mb-1'
+            }
+            type="button"
+            style={{ transition: 'all .15s ease' }}
+            onMouseEnter={openLeftTooltip}
+            onMouseLeave={closeLeftTooltip}
+            ref={btnRef}
+          >
+            <InfoOutlinedIcon fontSize="small" />
+          </button>
+          <div
+            className={
+              (tooltipShow ? '' : 'hidden ') +
+              'bg-primary-600 border-0 mb-3 block z-50 leading-normal text-sm max-w-xs text-left no-underline break-words rounded-lg'
+            }
+            ref={tooltipRef}
+          >
+            <div className="text-white p-3 font-mulish">
+              Click multiple times on a color palette to create variations
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
 const CustomAmbientLight = ({ setImage, grabImage }) => {
   const canvas = useThree().gl.domElement;
 
@@ -322,28 +393,6 @@ const CustomAmbientLight = ({ setImage, grabImage }) => {
   }, [grabImage]);
 
   return <ambientLight intensity={0.5} />;
-};
-
-const CustomEnvironment = () => {
-  const { gl, scene } = useThree();
-  const pmremGenerator = new PMREMGenerator(gl);
-  const loader = new RGBELoader();
-  loader.setDataType(UnsignedByteType);
-  pmremGenerator.compileEquirectangularShader();
-
-  useEffect(() => {
-    loader.load('/royal_esplanade_1k_compressed_50ppi.hdr', texture => {
-      const envMap = pmremGenerator.fromEquirectangular(texture).texture;
-
-      scene.environment = envMap;
-      // one can also set scene.background to envMap here
-
-      texture.dispose();
-      pmremGenerator.dispose();
-    });
-  }, [scene, loader, pmremGenerator]);
-
-  return null;
 };
 
 //INTRO TO CUSTOMIZER TOUR
@@ -419,10 +468,33 @@ const Customizer = ({ location }) => {
   const [grabImage, setGrabImage] = useState(false);
   const [showSavingBotModel, setShowSavingBotModel] = useState(false);
   const [showColorPicker, updateShowColorPicker] = useState(false);
+  const [showPaletteColorPicker, updateShowPaletteColorPicker] = useState(
+    false,
+  );
   const [colorPicker, setColorPicker] = useState('#ffffff');
+  const [colorPalettePicker, setColorPalettePicker] = useState('#ffffff');
+  const [colorPalette, setColorPalette] = useState([]);
+  const [customColorPaletteList, updateCustomColorPaletteList] = useState([]);
   const [botColors, setBotColors] = useState({
     current: null,
     items: {
+      Face: '#ffffff',
+      Ears: '#ffffff',
+      InnerEyes: '#ffffff',
+      OuterEyes: '#ffffff',
+      Joints: '#ffffff',
+      BodyBase: '#ffffff',
+      BodyDetails: '#ffffff',
+      Gem: '#ffffff',
+      ShellGem: '#ffffff',
+      DetailsLeg: '#ffffff',
+      ArmsDetails: '#ffffff',
+      DetailsArmsInner: '#ffffff',
+      Hands: '#ffffff',
+      Mount: '#ffffff',
+      Foot: '#ffffff',
+      LowerLeg: '#ffffff',
+      EyeScreen: '#ffffff',
       face: '#ffffff',
       eye: '#ffffff',
       neck: '#ffffff',
@@ -465,7 +537,7 @@ const Customizer = ({ location }) => {
       upper_armsR: '#ffffff',
       base_jointsL: '#ffffff',
       base_jointsR: '#ffffff',
-      Body_base: '#ffffff',
+      Body_Base: '#ffffff',
       LowerLegR: '#ffffff',
       LowerLegL: '#ffffff',
       leg_jointsR: '#ffffff',
@@ -577,24 +649,38 @@ const Customizer = ({ location }) => {
     },
   ];
 
-  function Picker() {
-    return (
-      <div style={{ display: true ? 'block' : 'none' }}>
-        <HexColorPicker
-          className="picker"
-          color={colorPicker}
-          onChange={color => {
-            setColorPicker(color);
-            setBotColors(current => {
-              const copy = { ...current };
-              copy.items[copy.current] = color;
-              return copy;
-            });
-          }}
-        />
-      </div>
-    );
-  }
+  const colorPaletteList = [
+    {
+      hex: ['#161426', '#252140', '#F23D3D', '#D93250', '#8C2048'],
+    },
+    {
+      hex: ['#FF00F2', '#BA00F2', '#8000FF', '#3000CC', '#0005A1'],
+    },
+    {
+      hex: ['#F2AF5C', '#F2CDA0', '#F28A2E', '#D95204', '#BF3604'],
+    },
+    {
+      hex: ['#008893', '#009F9D', '#52CDC3', '#8DDCCE', '#026775'],
+    },
+    {
+      hex: ['#8C354C', '#0B1226', '#122140', '#F2B9B3', '#F28D8D'],
+    },
+    {
+      hex: ['#260B12', '#F2D06B', '#F2AF5C', '#BF7E45', '#8C2323'],
+    },
+    {
+      hex: ['#012340', '#03658C', '#F23827', '#A60A0A', '#400101'],
+    },
+    {
+      hex: ['#F90112', '#BF0404', '#730202', '#260101', '#F2F2F2'],
+    },
+    {
+      hex: ['#177580', '#1C3F4D', '#012533', '#8A6341', '#CCA06B'],
+    },
+    {
+      hex: ['#1D5902', '#57A608', '#F2CC0F', '#F2B90F', '#D9910D'],
+    },
+  ];
 
   const upload3dModel = (head, arm, body, leg) => {
     const gltfExporter = new GLTFExporter();
@@ -686,12 +772,17 @@ const Customizer = ({ location }) => {
   return (
     <div
       style={{ background: 'rgba(55, 65, 81)' }}
-      className="h-screen bg-grey-900 relative"
+      className="h-screen bg-base-900 fixed"
     >
-      <div id="main" className="relative h-full">
+      <div
+        id="main"
+        className="relative h-full"
+        style={{ background: 'rgba(55, 65, 81)' }}
+      >
         <div
           id="editor"
           className="relative h-full min-h-screen grid grid-cols-8 gap-4 w-full"
+          style={{ background: 'rgba(55, 65, 81)' }}
         >
           {!isModalOpen ? (
             <Tour
@@ -1017,7 +1108,7 @@ const Customizer = ({ location }) => {
                 <Canvas
                   concurrent
                   pixelRatio={[1, 1.5]}
-                  camera={{ position: [0, 1.4, 5.75], fov: 80 }}
+                  camera={{ position: [0, 1.4, 6.45], fov: 35 }}
                   gl={{ preserveDrawingBuffer: true }}
                 >
                   <CustomAmbientLight
@@ -1031,7 +1122,7 @@ const Customizer = ({ location }) => {
                     penumbra={1}
                     position={[5, 27, 20]}
                   />
-                  <Suspense fallback={null}>
+                  <Suspense fallback={<Loading />}>
                     <Bot
                       headCount={headCount}
                       armCount={armCount}
@@ -1041,17 +1132,16 @@ const Customizer = ({ location }) => {
                       getMeshName={getMeshName}
                       setBotColors={setBotColors}
                     />
-                    <CustomEnvironment />
+                    <Environment files="royal_esplanade_1k_compressed_50ppi.hdr" />
                   </Suspense>
                   <OrbitControls enableZoom={true} />
                 </Canvas>
-                <Loading containerStyles={{ background: 'rgba(55, 65, 81)' }} />
               </div>
             )}
           </div>
           <div
             id="right-menu"
-            className="col-span-2 col-start-7 bg-base-900 px-4 "
+            className="col-span-2 col-start-7 bg-base-900 px-4 overflow-y-scroll pb-4"
           >
             <div className="grid grid-cols-2 gap-4  mx-auto justify-center text-white  py-4 third-step">
               <Button
@@ -1065,13 +1155,14 @@ const Customizer = ({ location }) => {
 
                   setBotColors(current => {
                     const copy = { ...current };
+                    const palette = colorPaletteList[getRandomNumber(0, 9)];
                     Object.keys(copy.items).forEach(elm => {
                       const item =
-                        namedColors[
-                          Math.floor(Math.random() * namedColors.length)
+                        palette.hex[
+                          Math.floor(Math.random() * palette.hex.length)
                         ];
 
-                      copy.items[elm] = item.hex;
+                      copy.items[elm] = item;
                     });
                     return copy;
                   });
@@ -1112,12 +1203,186 @@ const Customizer = ({ location }) => {
                   <HelpOutlineIcon /> Help
                 </button>
               </div>
+              <div id="palette" className="space-y-4">
+                {showPaletteColorPicker ? (
+                  <div className="space-y-2">
+                    <div>
+                      <h4 className="text-base text-white font-bold">
+                        Create Your Own Custom Color Palette
+                      </h4>
+                    </div>
+                    <div
+                      style={{ display: true ? 'block' : 'none' }}
+                      className="space-y-3 picker"
+                    >
+                      <HexColorPicker
+                        color={colorPalettePicker}
+                        onChange={setColorPalettePicker}
+                      />
+                      <HexColorInput
+                        color={colorPalettePicker}
+                        onChange={setColorPalettePicker}
+                      />
+                    </div>
+                    <div className="grid grid-cols-4 gap-x-2 gap-y-4 cursor-pointer">
+                      {colorPalette.map(col => (
+                        <div
+                          style={{ backgroundColor: col }}
+                          className="flex w-14 h-16 rounded"
+                        ></div>
+                      ))}
+                    </div>
+                    <Button
+                      size="sm"
+                      type="secondary"
+                      style={{ width: '100%' }}
+                      onClick={() => {
+                        if (colorPalette && colorPalette.length >= 5) {
+                          //Add color palette to custom color palette section
+                          updateCustomColorPaletteList(el => [
+                            ...el,
+                            { hex: colorPalette },
+                          ]);
+                          //clear ColorPicker
+                          setColorPalette([]);
+                          //close color picker
+                          updateShowPaletteColorPicker(false);
+                        } else {
+                          setColorPalette(el => [...el, colorPalettePicker]);
+                        }
+                      }}
+                    >
+                      {colorPalette && colorPalette.length >= 5
+                        ? 'Create Color Palette'
+                        : 'Add'}
+                    </Button>
+                  </div>
+                ) : (
+                  <>
+                    {customColorPaletteList &&
+                    customColorPaletteList.length > 0 ? (
+                      <>
+                        <div>
+                          <h4 className="text-lg text-white font-bold">
+                            Custom Color Palettes
+                          </h4>
+                        </div>
+                        <div className="grid grid-cols-4 gap-x-2 gap-y-4">
+                          {customColorPaletteList.map((color, index) => (
+                            <div
+                              onClick={() => {
+                                setBotColors(current => {
+                                  const copy = { ...current };
+                                  Object.keys(copy.items).forEach(elm => {
+                                    const item =
+                                      color.hex[
+                                        Math.floor(
+                                          Math.random() * color.hex.length,
+                                        )
+                                      ];
+
+                                    copy.items[elm] = item;
+                                  });
+                                  return copy;
+                                });
+                              }}
+                              key={index}
+                              className="flex w-16 h-16 rounded cursor-pointer"
+                            >
+                              {color.hex.map(hex => (
+                                <div
+                                  className="w-3 h-16"
+                                  style={{ backgroundColor: hex }}
+                                />
+                              ))}
+                            </div>
+                          ))}
+                        </div>
+                      </>
+                    ) : null}
+                    <div className="inline-flex space-x-1 items-center justify-center">
+                      <h4 className="text-lg text-white font-bold">
+                        Color Palettes{' '}
+                      </h4>
+                      <span>
+                        {' '}
+                        <Tooltip />
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-4 gap-x-2 gap-y-4 cursor-pointer	">
+                      {colorPaletteList.map((color, index) => (
+                        <div
+                          onClick={() => {
+                            setBotColors(current => {
+                              const copy = { ...current };
+                              Object.keys(copy.items).forEach(elm => {
+                                const item =
+                                  color.hex[
+                                    Math.floor(Math.random() * color.hex.length)
+                                  ];
+
+                                copy.items[elm] = item;
+                              });
+                              return copy;
+                            });
+                          }}
+                          key={index}
+                          className="flex w-16 h-16 rounded"
+                        >
+                          {color.hex.map(hex => (
+                            <div
+                              className="w-3 h-16"
+                              style={{ backgroundColor: hex }}
+                            />
+                          ))}
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                )}
+                <Button
+                  size="sm"
+                  type="outline_secondary"
+                  style={{ width: '100%' }}
+                  onClick={() => {
+                    showPaletteColorPicker
+                      ? updateShowPaletteColorPicker(false)
+                      : updateShowPaletteColorPicker(true);
+                    //clear color palette
+                    setColorPalette([]);
+                  }}
+                >
+                  {showPaletteColorPicker ? `Close` : `+ Custom Color Palette`}
+                </Button>
+              </div>
+
               <div id="colors" className="space-y-4">
                 <h5 className="text-lg text-white font-bold">
-                  Body Part : <span>{botColors.current}</span>
+                  Body Part :{' '}
+                  <span className="font-normal">( {botColors.current} )</span>
                 </h5>
                 {showColorPicker ? (
-                  <Picker />
+                  <div
+                    style={{ display: true ? 'block' : 'none' }}
+                    className=" space-y-3 picker"
+                  >
+                    <HexColorPicker
+                      className="picker"
+                      color={colorPicker}
+                      onChange={color => {
+                        setColorPicker(color);
+                        setBotColors(current => {
+                          const copy = { ...current };
+                          copy.items[copy.current] = color;
+                          return copy;
+                        });
+                      }}
+                    />
+                    <HexColorInput
+                      color={colorPicker}
+                      onChange={setColorPicker}
+                    />
+                  </div>
                 ) : (
                   <div className="grid grid-cols-4 gap-x-2 gap-y-4 cursor-pointer	">
                     {colors.map((color, index) => (
@@ -1136,19 +1401,19 @@ const Customizer = ({ location }) => {
                     ))}
                   </div>
                 )}
+                <Button
+                  size="sm"
+                  type="outline_secondary"
+                  style={{ width: '100%' }}
+                  onClick={() => {
+                    showColorPicker
+                      ? updateShowColorPicker(false)
+                      : updateShowColorPicker(true);
+                  }}
+                >
+                  {showColorPicker ? `Close` : `+ Custom Color`}
+                </Button>
               </div>
-              <Button
-                size="sm"
-                type="secondary"
-                style={{ width: '100%' }}
-                onClick={() => {
-                  showColorPicker
-                    ? updateShowColorPicker(false)
-                    : updateShowColorPicker(true);
-                }}
-              >
-                {showColorPicker ? `Close` : `+ Custom color`}
-              </Button>
             </div>
           </div>
         </div>
