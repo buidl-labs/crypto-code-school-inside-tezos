@@ -2,8 +2,15 @@ import React, { useContext, useState, useEffect, createRef } from 'react';
 import NavBar from 'src/components/NavBar';
 import { Link, navigate } from 'gatsby';
 import ErrorBot from 'src/images/error.png';
+import { isMobile, isTablet } from 'react-device-detect';
 
 function BotView() {
+  //redirect to home if in mobile/tablet
+  useEffect(() => {
+    if (isMobile || isTablet) {
+      navigate('/tezos');
+    }
+  });
   return (
     <>
       <NavBar />

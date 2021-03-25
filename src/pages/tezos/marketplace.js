@@ -15,6 +15,7 @@ import Loader from 'react-loader-spinner';
 import userAtom from 'src/atoms/user-atom';
 import isUserAtom from 'src/atoms/is-user-atom';
 import { useAtom } from 'jotai';
+import { isMobile, isTablet } from 'react-device-detect';
 
 const Marketplace = () => {
   const [forSale, updateForSale] = useState(true);
@@ -25,6 +26,12 @@ const Marketplace = () => {
   const [user] = useAtom(userAtom);
   const [isUser] = useAtom(isUserAtom);
 
+  //redirect to home if in mobile/tablet
+  useEffect(() => {
+    if (isMobile || isTablet) {
+      navigate('/tezos');
+    }
+  });
   const allNFTS = useAsync(async () => {
     try {
       const combined = await fetchAllNfts();

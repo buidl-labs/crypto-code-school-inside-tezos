@@ -30,6 +30,8 @@ import { MichelsonMap } from '@taquito/taquito';
 
 import { trackEvent } from 'src/utils/analytics';
 
+import { isMobile, isTablet } from 'react-device-detect';
+
 const Steppers = ({ number, name, clickEvent, step, tick = false }) => {
   return (
     <div onClick={clickEvent}>
@@ -166,6 +168,14 @@ function Transaction({ location }) {
   const [botTokenId, setTokenId] = useState(false);
   const [copyLink, setCopyLink] = useState(false);
   const [claimButtonDisabled, setClaimButtonDisabledStatus] = useState(true);
+
+
+  //redirect to home if in mobile/tablet
+  useEffect(() => {
+    if (isMobile || isTablet) {
+      navigate('/tezos');
+    }
+  });
 
   useEffect(() => {
     if (typeof window === `undefined`) return;

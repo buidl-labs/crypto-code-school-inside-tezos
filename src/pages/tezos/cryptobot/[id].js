@@ -31,6 +31,7 @@ import NavBar from 'src/components/NavBar';
 import Button from 'src/components/Buttons';
 import model from 'src/images/Col-1.png';
 import ErrorBot from 'src/images/error.png';
+import { isMobile, isTablet } from 'react-device-detect';
 
 // TODO:
 //   1. LOADING STATE
@@ -55,6 +56,13 @@ function BotView({ location }) {
   const [claimButtonDisabled, setClaimButtonDisabledStatus] = useState(true);
 
   const [copyLink, setCopyLink] = useState(false);
+
+  //redirect to home if in mobile/tablet
+  useEffect(() => {
+    if (isMobile || isTablet) {
+      navigate('/tezos');
+    }
+  });
 
   const tokenId = useMemo(() => {
     const pathArr =

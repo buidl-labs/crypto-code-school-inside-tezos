@@ -139,7 +139,12 @@ const Footer = () => {
         <div className="container mx-auto py-8 px-5 flex flex-col justify-center">
           <p className="text-white text-xl text-center">
             2020 | Made with ❤️ by people @
-            <a href="https://buidllabs.io/" className="underline">
+            <a
+              href="https://buidllabs.io/"
+              className="underline"
+              rel="noopener"
+              target="_blank"
+            >
               BUIDL Labs
             </a>
           </p>

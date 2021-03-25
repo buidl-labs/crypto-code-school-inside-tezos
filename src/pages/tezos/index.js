@@ -4,6 +4,10 @@ import NavBar from '../../components/NavBar';
 import Button from '../../components/Buttons';
 import Footer from '../../components/Footer';
 import PlayButton from '../../components/LandingPage/playbutton';
+import TestimonialCard from 'src/components/TestimonialCard';
+import FeatureGrid from 'src/components/FeatureGrid';
+
+import MobileHome from 'src/components/Mobile';
 
 import hero from '../../images/hero.webp';
 import cryptobots from '../../images/cryptobots.png';
@@ -12,75 +16,78 @@ import createCurrency from 'src/assets/videos/anim-create-currency.mp4';
 import FinanceIllustration from 'src/assets/wealth.webp';
 import { MdClose } from 'react-icons/md';
 
-const FeatureGrid = ({
-  heading,
-  subtext,
-  buttontext,
-  video,
-  videoType,
-  order,
-  padding,
-  to,
-}) => {
-  return (
-    <div className="grid md:grid-cols-2 grid-cols-1 gap-6 ">
-      <div
-        className={`flex flex-col md:p${padding}-30 px-8 py-12 md:items-start items-center md:text-left text-center  justify-center order-${order}`}
-      >
-        <h1 className="sm:text-5xl text-3xl mb-3 font-black text-white heading-glow">
-          {heading}
-        </h1>
-        <div
-          className="text-base-50 text-base mb-6"
-          dangerouslySetInnerHTML={{ __html: subtext }}
-        />
+import { isMobile, isTablet } from 'react-device-detect';
 
-        <Link
-          className={`py-3 px-9 text-xl border-primary-600 border-2 hover:border-primary-700 text-white font-bold rounded focus:outline-none`}
-          to={to}
-        >
-          {buttontext}
-        </Link>
-      </div>
-      <div className="h-full w-full justify-items-center grid">
-        <video
-          className="object-contain object-center"
-          loop
-          autoPlay
-          muted
-          preload="auto"
-          height={`80%`}
-          width={`80%`}
-        >
-          <source src={video} type={`video/${videoType}`} />
-        </video>
-      </div>
-    </div>
-  );
-};
+// const FeatureGrid = ({
+//   heading,
+//   subtext,
+//   buttontext,
+//   video,
+//   videoType,
+//   order,
+//   padding,
+//   to,
+// }) => {
+//   return (
+//     <div className="grid md:grid-cols-2 grid-cols-1 gap-6 ">
+//       <div
+//         className={`flex flex-col md:p${padding}-30 px-8 py-12 md:items-start items-center md:text-left text-center  justify-center order-${order}`}
+//       >
+//         <h1 className="sm:text-5xl text-3xl mb-3 font-black text-white heading-glow">
+//           {heading}
+//         </h1>
+//         <div
+//           className="text-base-50 text-base mb-6"
+//           dangerouslySetInnerHTML={{ __html: subtext }}
+//         />
 
-const TestimonialCard = ({ link, img, name, username, text }) => {
-  return (
-    <a
-      className="h-full text-center bg-base-700 border-2 border-base-400 p-6 rounded-md transform transition ease-in-out duration-500 hover:scale-95"
-      href={link}
-      rel="noopener"
-      target="_blank"
-    >
-      <img
-        alt="testimonial"
-        className="w-20 h-20 mb-3 object-cover object-center rounded-full inline-block"
-        src={img}
-      />
-      <h4 className="text-white font-bold text-xl mb-1">{name}</h4>
-      <p className="text-white text-base mb-2">@{username}</p>
-      <p className="text-base-50 text-center">{text}</p>
-    </a>
-  );
-};
+//         <Link
+//           className={`py-3 px-9 text-xl border-primary-600 border-2 hover:border-primary-700 text-white font-bold rounded focus:outline-none`}
+//           to={to}
+//         >
+//           {buttontext}
+//         </Link>
+//       </div>
+//       <div className="h-full w-full justify-items-center grid">
+//         <video
+//           className="object-contain object-center"
+//           loop
+//           autoPlay
+//           muted
+//           preload="auto"
+//           height={`80%`}
+//           width={`80%`}
+//         >
+//           <source src={video} type={`video/${videoType}`} />
+//         </video>
+//       </div>
+//     </div>
+//   );
+// };
+
+// const TestimonialCard = ({ link, img, name, username, text }) => {
+//   return (
+//     <a
+//       className="h-full text-center bg-base-700 border-2 border-base-400 p-6 rounded-md transform transition ease-in-out duration-500 hover:scale-95"
+//       href={link}
+//       rel="noopener"
+//       target="_blank"
+//     >
+//       <img
+//         alt="testimonial"
+//         className="w-20 h-20 mb-3 object-cover object-center rounded-full inline-block"
+//         src={img}
+//       />
+//       <h4 className="text-white font-bold text-xl mb-1">{name}</h4>
+//       <p className="text-white text-base mb-2">@{username}</p>
+//       <p className="text-base-50 text-center">{text}</p>
+//     </a>
+//   );
+// };
 
 function Landing() {
   const [videoModal, setVideoModal] = useState(0);
+
   function VideoModal() {
     return (
       <div
@@ -89,7 +96,7 @@ function Landing() {
       >
         <div
           onClick={() => setVideoModal(0)}
-          className="h-12 w-12 rounded-full bg-base-500 absolute right-8 top-8 cursor-pointer flex items-center justify-center"
+          className="h-12 w-12 rounded-full bg-base-500 absolute right-8 top-8 cursor-pointer flex items-center justify-center text-white"
         >
           <MdClose size="24px" />
         </div>
@@ -106,6 +113,9 @@ function Landing() {
         </div>
       </div>
     );
+  }
+  if (isMobile || isTablet) {
+    return <MobileHome />;
   }
   return (
     <div>
@@ -205,8 +215,11 @@ function Landing() {
               </div>
             </div>
           </div>
-          <div className="col-span-2 h-full w-full">
-            <img src={FinanceIllustration} />
+          <div className="col-span-2 h-full w-full grid justify-items-center">
+            <img
+              src={FinanceIllustration}
+              className="object-contain object-center max-h-104"
+            />
           </div>
         </div>
       </section>
@@ -229,9 +242,11 @@ function Landing() {
             `}
             buttontext="Become a Blockchain Pro "
             video={createCurrency}
-            videoType="webm"
+            videoType="mp4"
             to="/tezos/academy"
             padding="l"
+            mobileOrder="last"
+            order="first"
           />
           <FeatureGrid
             heading="Earn while you learn!"
@@ -250,7 +265,8 @@ function Landing() {
             video={earnWhileYouLearn}
             videoType="mp4"
             to="/tezos/marketplace"
-            order="2"
+            order="last"
+            mobileOrder="last"
             padding="r"
           />
         </div>
@@ -259,13 +275,14 @@ function Landing() {
 
       {/* testimonials start here */}
       <section className="bg-base-800 py-20">
-        <div className="container px-30 mx-auto">
-          <div className="flex flex-col justify-center w-full text-center  mb-20">
+        <div className="container mx-auto">
+          <div className="flex flex-col text-center w-full mb-20">
             <h1 className="sm:text-7xl text-4xl font-black font-mulish text-white heading-glow">
-              Here’s what people say <br /> about us
+              Here’s what people say <br />
+              about us
             </h1>
           </div>
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="grid md:grid-cols-3 gap-4 px-8 md:px-30">
             <TestimonialCard
               link="https://twitter.com/SydneyIfergan/status/1275990749327343616"
               img="https://pbs.twimg.com/profile_images/1352168053598015489/--A0kHHm_400x400.jpg"

@@ -17,6 +17,7 @@ import {
 } from '../api';
 import { Magic } from 'magic-sdk';
 import { NETWORK } from 'src/defaults';
+import { isMobile, isTablet } from 'react-device-detect';
 
 import { MdClose } from 'react-icons/md';
 
@@ -282,6 +283,13 @@ const AuthPage = ({ location }) => {
 
   const [email, setEmail] = useState('');
   const [nickname, setNickname] = useState('');
+
+  //redirect to home if in mobile/tablet
+  useEffect(() => {
+    if (isMobile || isTablet) {
+      navigate('/tezos');
+    }
+  });
 
   useEffect(() => {
     typeof window !== 'undefined' &&
