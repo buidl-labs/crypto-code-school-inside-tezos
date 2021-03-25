@@ -288,6 +288,14 @@ function Transaction({ location }) {
     }
   }, [user]);
 
+  const estimatedTotalCost = useAsync(async () => {
+    try {
+      return await estimateNFTMintFee();
+    } catch (err) {
+      console.log('err', err);
+    }
+  }, []);
+
   return (
     <div className=" bg-base-900 ">
       <NavBar />
@@ -352,16 +360,36 @@ function Transaction({ location }) {
               <TransactionContainer>
                 <Cost type="Cryptobot Cost" main={'Free'} caption={''} />
                 <div className="bg-base-600 mt-4 px-8 rounded">
-                  <Cost
-                    type="Estimated Network Fee"
-                    main={`${convertMutezToXtz(4556)} XTZ`}
-                    caption={
-                      xtzPrice
-                        ? `$ ${getXTZPriceInUSD(xtzPrice.price, 4556)}`
-                        : null
-                    }
-                    tooltip
-                  />
+                  {estimatedTotalCost.loading ? (
+                    <Cost
+                      type="Estimated Network Fee"
+                      main={`LOADING...`}
+                      caption={``}
+                      tooltip
+                    />
+                  ) : estimatedTotalCost.error ? (
+                    <div className="text-error-500 text-center">
+                      Error calculating estimated gas fee
+                    </div>
+                  ) : (
+                    <div>
+                      <Cost
+                        type="Estimated Network Fee"
+                        main={`${convertMutezToXtz(
+                          estimatedTotalCost.value,
+                        )} XTZ`}
+                        caption={
+                          xtzPrice
+                            ? `$ ${getXTZPriceInUSD(
+                                xtzPrice.price,
+                                Number(estimatedTotalCost.value),
+                              )}`
+                            : null
+                        }
+                        tooltip
+                      />
+                    </div>
+                  )}
                 </div>
                 <div>
                   {getUserBalance.loading ? null : getUserBalance.error ? (
