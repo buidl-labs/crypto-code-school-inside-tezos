@@ -281,7 +281,7 @@ const WelcomeModal = ({ close, isUser }) => {
 
   return (
     <div
-      className={`bg-base-900 bg-opacity-80 absolute inset-0 flex items-center justify-center text-white hidden`}
+      className={`bg-base-900 bg-opacity-80 absolute inset-0 flex items-center justify-center text-white`}
     >
       <div
         className={`absolute bg-base-700 flex items-center justify-center flex-col py-9 px-24 rounded-3xl z-50`}
