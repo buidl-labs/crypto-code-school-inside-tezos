@@ -12,13 +12,11 @@ import { ThanosWallet } from '@thanos-wallet/dapp';
 import { navigate, Link } from 'gatsby';
 import { Canvas, useFrame, useThree } from 'react-three-fiber';
 import {
-  ContactShadows,
   Environment,
   useGLTF,
   OrbitControls,
   Html,
-  Loader as Loading,
-  Preload,
+  Octahedron,
 } from '@react-three/drei';
 import Loader from 'react-loader-spinner';
 import { HexColorPicker } from 'react-colorful';
@@ -69,10 +67,6 @@ import legs3 from '../../assets/CryptobotImages/Leg/03xlegs.png';
 import legs4 from '../../assets/CryptobotImages/Leg/04xlegs.png';
 import legs5 from '../../assets/CryptobotImages/Leg/05xlegs.png';
 
-//Custom Environment function
-import { UnsignedByteType, PMREMGenerator } from 'three';
-import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
-
 const state = {
   current: null,
   items: {
@@ -81,6 +75,22 @@ const state = {
     arm: null,
     leg: null,
   },
+};
+
+const Loading = props => {
+  const mesh = useRef();
+  return (
+    <group>
+      <mesh {...props} ref={mesh} position={[0, 1.2, 0]}>
+        <Octahedron args={[1, 1, 1]}>
+          <meshBasicMaterial attach="material" color="#fff" wireframe />
+        </Octahedron>
+      </mesh>
+      <Html center>
+        <h1 className="text-white text-2xl font-bold mt-4">Loading...</h1>
+      </Html>
+    </group>
+  );
 };
 
 function useGroup(scene, type) {
@@ -271,7 +281,7 @@ const WelcomeModal = ({ close, isUser }) => {
 
   return (
     <div
-      className={`bg-base-900 bg-opacity-80 absolute inset-0 flex items-center justify-center text-white`}
+      className={`bg-base-900 bg-opacity-80 absolute inset-0 flex items-center justify-center text-white hidden`}
     >
       <div
         className={`absolute bg-base-700 flex items-center justify-center flex-col py-9 px-24 rounded-3xl z-50`}
@@ -322,28 +332,6 @@ const CustomAmbientLight = ({ setImage, grabImage }) => {
   }, [grabImage]);
 
   return <ambientLight intensity={0.5} />;
-};
-
-const CustomEnvironment = () => {
-  const { gl, scene } = useThree();
-  const pmremGenerator = new PMREMGenerator(gl);
-  const loader = new RGBELoader();
-  loader.setDataType(UnsignedByteType);
-  pmremGenerator.compileEquirectangularShader();
-
-  useEffect(() => {
-    loader.load('/royal_esplanade_1k_compressed_50ppi.hdr', texture => {
-      const envMap = pmremGenerator.fromEquirectangular(texture).texture;
-
-      scene.environment = envMap;
-      // one can also set scene.background to envMap here
-
-      texture.dispose();
-      pmremGenerator.dispose();
-    });
-  }, [scene, loader, pmremGenerator]);
-
-  return null;
 };
 
 //INTRO TO CUSTOMIZER TOUR
@@ -473,7 +461,6 @@ const Customizer = ({ location }) => {
       floor: '#ffffff',
     },
   });
-
 
   function uploadData() {
     upload3dModel(
@@ -1031,7 +1018,7 @@ const Customizer = ({ location }) => {
                     penumbra={1}
                     position={[5, 27, 20]}
                   />
-                  <Suspense fallback={null}>
+                  <Suspense fallback={<Loading />}>
                     <Bot
                       headCount={headCount}
                       armCount={armCount}
@@ -1041,11 +1028,10 @@ const Customizer = ({ location }) => {
                       getMeshName={getMeshName}
                       setBotColors={setBotColors}
                     />
-                    <CustomEnvironment />
+                    <Environment files="royal_esplanade_1k_compressed_50ppi.hdr" />
                   </Suspense>
                   <OrbitControls enableZoom={true} />
                 </Canvas>
-                <Loading containerStyles={{ background: 'rgba(55, 65, 81)' }} />
               </div>
             )}
           </div>
