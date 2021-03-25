@@ -145,7 +145,7 @@ const Bot = ({
   setBotColors,
 }) => {
   const group = useRef();
-  const { scene } = useGLTF('/v11.glb');
+  const { scene } = useGLTF('/compressedv11.glb');
 
   // console.log('scene', scene);
 
@@ -1119,7 +1119,7 @@ const Customizer = ({ location }) => {
                 <Canvas
                   concurrent
                   pixelRatio={[1, 1.5]}
-                  camera={{ position: [0, 1.4, 5.75], fov: 35 }}
+                  camera={{ position: [0, 1.4, 6.45], fov: 35 }}
                   gl={{ preserveDrawingBuffer: true }}
                 >
                   <CustomAmbientLight
