@@ -256,7 +256,6 @@ function Transaction({ location }) {
       const randomId = RnId();
       setTokenId(randomId);
       const contract = await Tezos.wallet.at(CONTRACT_ADDRESS);
-      console.log('🔥', contract);
 
       const op = await contract.methods
         .mint(
@@ -278,6 +277,8 @@ function Transaction({ location }) {
       trackEvent('successful bot mint');
       console.log('result 🔥', result);
     } catch (err) {
+      if (err?.message?.includes('ABORTED'))
+        setClaimButtonDisabledStatus(false);
       console.log(err);
     }
   };
@@ -447,17 +448,39 @@ function Transaction({ location }) {
                   )}
                 </div>
                 <div className="grid mx-auto justify-center mt-6">
-                  <Button
+                  <button
                     onClick={() => {
                       if (claimButtonDisabled) return;
+                      setClaimButtonDisabledStatus(true);
                       mintNFT();
                     }}
                     size="lg"
-                    type="primary"
+                    className={`${
+                      claimButtonDisabled
+                        ? 'cursor-not-allowed'
+                        : 'hover:bg-primary-700'
+                    } text-white font-bold rounded focus:outline-none py-3 px-9 text-xl ${
+                      getUserBalance.value < 0.5
+                        ? 'bg-primary-600 opacity-50 cursor-not-allowed'
+                        : 'bg-primary-600'
+                    }`}
                     disabled={claimButtonDisabled}
                   >
-                    Confirm
-                  </Button>
+                    {claimButtonDisabled ? (
+                      getUserBalance.value > 0.5 ? (
+                        <Loader
+                          type="ThreeDots"
+                          color="#BFDBFE"
+                          height={28}
+                          // width={80}
+                        />
+                      ) : (
+                        `Confirm`
+                      )
+                    ) : (
+                      `Confirm`
+                    )}
+                  </button>
                 </div>
               </TransactionContainer>
             </div>
