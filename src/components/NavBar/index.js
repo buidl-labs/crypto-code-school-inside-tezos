@@ -107,7 +107,7 @@ function NavBar(props) {
       >
         <div className="inline-flex justify-center items-center">
           <div
-            className="mr-2 w-8 h-8 rounded-full inline-flex items-center justify-center"
+            className="mr-2 w-8 h-8 flex-shrink-0 rounded-full inline-flex items-center justify-center"
             style={{
               color: 'rgba(245,158,11,1)',
               background: 'rgba(245,158,11,0.3)',
@@ -117,11 +117,8 @@ function NavBar(props) {
           </div>
           <div>
             <p className="text-sm ">
-              Cryptoverse Wars is currently on Testnet. You will lose all the
-              chapter progress & cryptobots when we will shift to Mainnet.
-              <span className="ml-1 font-bold">
-               Please proceed in discretion.
-              </span>
+              Cryptoverse Wars is currently on Edo2 testnet. You will lose all
+              your Cryptobots when we will shift to Tezos mainnet.
             </p>
           </div>
         </div>

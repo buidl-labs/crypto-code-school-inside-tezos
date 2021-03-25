@@ -16,7 +16,75 @@ import createCurrency from 'src/assets/videos/anim-create-currency.mp4';
 import FinanceIllustration from 'src/assets/wealth.webp';
 import { MdClose } from 'react-icons/md';
 
+
 import { isMobile, isTablet } from 'react-device-detect';
+
+const FeatureGrid = ({
+  heading,
+  subtext,
+  buttontext,
+  video,
+  videoType,
+  order,
+  padding,
+  to,
+}) => {
+  return (
+    <div className="grid md:grid-cols-2 grid-cols-1 gap-6 ">
+      <div
+        className={`flex flex-col md:p${padding}-30 px-8 py-12 md:items-start items-center md:text-left text-center  justify-center order-${order}`}
+      >
+        <h1 className="sm:text-5xl text-3xl mb-3 font-black text-white heading-glow">
+          {heading}
+        </h1>
+        <div
+          className="text-base-50 text-base mb-6"
+          dangerouslySetInnerHTML={{ __html: subtext }}
+        />
+
+        <Link
+          className={`py-3 px-9 text-xl border-primary-600 border-2 hover:border-primary-700 text-white font-bold rounded focus:outline-none`}
+          to={to}
+        >
+          {buttontext}
+        </Link>
+      </div>
+      <div className="h-full w-full justify-items-center grid">
+        <video
+          className="object-contain object-center"
+          loop
+          autoPlay
+          muted
+          preload="auto"
+          height={`80%`}
+          width={`80%`}
+        >
+          <source src={video} type={`video/${videoType}`} />
+        </video>
+      </div>
+    </div>
+  );
+};
+
+const TestimonialCard = ({ link, img, name, username, text }) => {
+  return (
+    <a
+      className="h-full text-center bg-base-700 border-2 border-base-400 p-6 rounded-md transform transition ease-in-out duration-500 hover:scale-95"
+      href={link}
+      rel="noopener"
+      target="_blank"
+    >
+      <img
+        alt="testimonial"
+        className="w-20 h-20 mb-3 object-cover object-center rounded-full inline-block"
+        src={img}
+      />
+      <h4 className="text-white font-bold text-xl mb-1">{name}</h4>
+      <p className="text-white text-base mb-2">@{username}</p>
+      <p className="text-base-50 text-center">{text}</p>
+    </a>
+  );
+};
 
 function Landing() {
   const [videoModal, setVideoModal] = useState(0);
@@ -79,13 +147,20 @@ function Landing() {
             <h1 className="sm:text-7xl text-4xl mb-4 text-white font-black heading-glow">
               Learn to code on the blockchain, the fun way!
             </h1>
-            <p className="mb-8 leading-relaxed text-base-50">
-              Blockchain is all the hype these days, but learning blockchain can
-              be tough! We've got you covered with our fun and free course,
-              which will take you from a noob to blockchain pro in matter of a
-              few hours and build your own Cryptobot and then an army of them to
-              fight in the Cryptoverse Wars.
-            </p>
+            <div className="mb-8 leading-relaxed text-base-50">
+              <p>
+                Blockchain is all the hype these days, but learning blockchain
+                can be tough 😢
+              </p>
+              <p className={`mt-2`}>
+                We've got you covered with our fun and free course, which will
+                take you from a noob to blockchain pro in a quick few hours 🥳
+              </p>
+              <p>
+                You'll build your Cryptobot and then an army of them to fight in
+                the Cryptoverse Wars ⚔️
+              </p>
+            </div>
             <div className="flex justify-center">
               <Link
                 to="/tezos/academy"
@@ -107,17 +182,38 @@ function Landing() {
               <h1 className="sm:text-7xl text-4xl mb-3 font-black text-white">
                 With blockchain, build better finance.
               </h1>
-              <p className="text-base-50 text-lg">
-                A kid under 18 years can’t get a personal bank account, you
-                can’t transfer money from one continent to another without the
-                hassle of high bank fee, you can’t invest in companies without
-                putting in all your details. What if we told you, all that and
-                more is possible on the blockchain.
-                <br /> So much in finance is getting built on top of blockchain
-                in the DeFi sector and just in 2020 alone, Crypto’s market has
-                grown by a frickin’ 5x. <br />
-                Learn how to code on the blockchain, now’s the right time!
-              </p>
+              <div className="text-base-50 text-lg">
+                <ul className={`space-y-2 mb-4 list-disc`}>
+                  <li>
+                    A kid under 18 years can’t get a personal bank account.
+                  </li>
+                  <li>
+                    You can’t transfer money from one continent to another
+                    without the hassle of a high bank fee
+                  </li>
+                  <li>
+                    You can’t invest in companies without giving away all your
+                    details.
+                  </li>
+                </ul>
+                <p>
+                  What if we told you, all that and more is possible on the
+                  blockchain 🦄
+                </p>
+                <p>
+                  So much in finance is getting built on top of the blockchain
+                  💰
+                </p>
+                <p>
+                  Just in 2020 alone, Crypto’s market has grown by a frickin’
+                  5x.
+                </p>
+                <p
+                  className={`text-xl text-primary-400 font-black mt-4 heading-glow`}
+                >
+                  Learn how to code on the blockchain, now’s the right time!
+                </p>
+              </div>
             </div>
           </div>
           <div className="col-span-2 h-full w-full grid justify-items-center">
@@ -138,9 +234,13 @@ function Landing() {
             </h1>
           </div>
           <FeatureGrid
-            heading="Create your own currency!"
-            subtext="Learn how to create apps on the Tezos blockchain through our exciting
-          course. You even learn how to make your own currency 🤑"
+            heading="Create your currency!"
+            subtext={`
+            <p>
+              Learn how to create apps on the Tezos blockchain through our exciting course. 
+          </p>
+          <p>You even learn how to make your currency 🤑</p>
+            `}
             buttontext="Become a Blockchain Pro "
             video={createCurrency}
             videoType="mp4"
@@ -151,7 +251,17 @@ function Landing() {
           />
           <FeatureGrid
             heading="Earn while you learn!"
-            subtext="Join the Cryptobot clan by winning your unique Cryptobot as NFT's and earn real money by trading with others in our marketplace! Major throwback to the  pokémon cards trading era ⚡️"
+            subtext={`
+              <p>
+                Join the Cryptobot clan by winning your unique Cryptobot as NFT's!!! 
+              </p>
+              <p>
+                Earn real money by trading with others in our marketplace!
+              </p>
+              <p>
+                Major throwback to the  pokémon cards trading era ⚡️
+              </p>
+            `}
             buttontext="Explore mind-blowing Cryptobots"
             video={earnWhileYouLearn}
             videoType="mp4"

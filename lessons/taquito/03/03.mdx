@@ -88,31 +88,36 @@ editor:
     print(Tezos._rpc)
 
 ---
-### Intro
+## Intro
+
 When you develop an application - do you directly deploy it with ZERO testing?
 
 That's what the testnets exist for, to originate your contract on for testing.
 
 Once you've thoroughly tested your contract, you can originate on the **mainnet**, where tokens have real value.
+
 On testnet, tokens don't have real value - hence, you can test as much as you'd like.
 
-### Study time
+## Study time
 
 There are 3-4 testnets but currently **delphinet** is the one that's being used and it's the one that we'll be originating our contracts on as well.
 
-Youneed to provide the RPC url when you instantiate the Tezos object through -
-```
+You need to provide the RPC url when you instantiate the Tezos object through -
+
+```javascript
 const Tezos = new TezosToolkit('https://api.tez.ie/rpc/delphinet')
 ```
 
+<br />
+
 But then, you can change the RPC url too through - 
-```javascript=
+```javascript
 Tezos.setProvider({ rpc: 'https://api.tez.ie/rpc/delphinet' });
 print(Tezos._rpc); // prints the network you're connected to.
 ```
 
-### #buidl-ing time
+## #buidl-ing time
  
-#### Step by step walkthrough
+### Step by step walkthrough
 - Use `Tezos.setProvider` to specify you're using **delphinet**.
 - Print the rpc you've connected to.

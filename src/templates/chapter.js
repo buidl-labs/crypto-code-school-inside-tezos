@@ -98,7 +98,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
   });
 
   useEffect(() => {
-    trackEventWithProperties('Learning_Interface_View', {
+    trackEventWithProperties('view modules chapters', {
       slug: chapterList[index.current - 1].slug,
       title: chapterList[index.current - 1].title,
     });
@@ -231,7 +231,7 @@ const ChapterTemplate = ({ data: { mdx: chapter } }) => {
       if (!chapterAlreadyExists) {
         list.push(ch);
         //track user progress on successful chapter completion
-        trackEventWithProperties('Chapter-Completed', {
+        trackEventWithProperties('successfully complete modules chapters', {
           chapterSlug: chapterList[index.current - 1].slug,
         });
       }

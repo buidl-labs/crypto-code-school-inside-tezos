@@ -72,7 +72,7 @@ function LessonsOverview({ data: { mdx: module } }) {
   }, [module.frontmatter.slug]);
 
   useEffect(() => {
-    trackEventWithProperties('Module-Overview-View', {
+    trackEventWithProperties('land on modules overview page', {
       slug: module.frontmatter.slug,
       title: module.frontmatter.title,
     });
@@ -86,7 +86,7 @@ function LessonsOverview({ data: { mdx: module } }) {
         <header className={`px-30 pt-6 text-white`}>
           <Link
             to="/tezos/academy"
-            className={`inline-flex items-center text-lg text-base-50 hover:no-underline`}
+            className={`inline-flex items-center  text-white border border-base-600 hover:no-underline bg-base-800 rounded px-3 py-3`}
           >
             <ChevronLeftIcon className={`h-6 w-6 mr-3`} />
             Back to Modules

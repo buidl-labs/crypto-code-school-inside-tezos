@@ -139,7 +139,7 @@ const CodingInterface = ({
                     error: [...res.error, compiledCode.error],
                     success: res.success && compiledCode.success,
                   });
-                  console.log(typeof res.error, res.error);
+                  console.log('error from compiler', res.error);
                   return;
                 }
 
@@ -153,7 +153,7 @@ const CodingInterface = ({
               className={`bg-base-500 hover:bg-base-600 flex items-center pl-2 pr-4 focus:outline-none`}
               onClick={() => {
                 setShowAnswer(true);
-                trackEventWithProperties('Show-Answer-Clicked', {
+                trackEventWithProperties('click on show answer', {
                   slug: `${module}/${chapterSlug}`,
                 });
               }}

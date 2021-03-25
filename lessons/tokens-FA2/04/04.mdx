@@ -119,7 +119,7 @@ editor:
 
 ---
 
-### Intro
+## Intro
 
 In this chapter we'll explore the different entry points FA2 offers to interact with it.
 
@@ -127,11 +127,13 @@ This is important as it'll help you gain a deeper understanding of the standard 
 
 After all, this is how the population in your civilization will interact with the currency.
 
-### Study time
+## Study time
 
 To see how to interact with FA2 based tokens, you need to first know what all entry points are available to us.
 
-`transfer` - This entry point transfers tokens from one account to another.
+#### 1. `transfer` - 
+
+This entry point transfers tokens from one account to another.
 
 It accepts two arguments -
 
@@ -142,7 +144,9 @@ It accepts two arguments -
    - `amount` - amount of token to be transferred.
    - `token_id` - specifies which token has to be transferred(as an FA2 contract can hold multiple tokens). `token_id` is always 0 in case `single_asset = True` for the contract.
 
-The `transfer` entry point loops through the transactions and for every item in the transaction, it checks if the tokens can be transferred based on the [`transfer policy`](https://gitlab.com/tzip/tzip/-/blob/master/proposals/tzip-12/tzip-12.md#default-transfer-permission-policy) - if they can be transferred, it sends the `amount` of tokens from the address passed as `from` to the account passed as the `to` in that item.
+<br />
+
+The <span class="string-highlight">`transfer` entry point loops through the transactions and for every item in the transaction, it checks if the tokens can be transferred based on the [`transfer policy`](https://gitlab.com/tzip/tzip/-/blob/master/proposals/tzip-12/tzip-12.md#default-transfer-permission-policy)</span> - if they can be transferred, it sends the `amount` of tokens from the address passed as `from` to the account passed as the `to` in that item.
 **But, even if one transaction fails in the whole list, it has to cancel all others - either all of them happen or none of them happen.**
 
 Let's look at an example -
@@ -155,21 +159,23 @@ Let's look at an example -
     2. Second item will be the address to Mark's wallet, 2 tokens as amount and 0 as token_id.
 - Now, in case Jon has only 3 tokens but total he has to send 4. One scenario could be that he sends 2 tokens to Lisa and then the transaction fails for Mark. But remember, either all transaction will happen or all will fail. Hence, if Jon has less tokens than total needed for all the transactions, it will fail with the message - `"FA2_INSUFFICIENT_BALANCE"`(PS - even the [error messages are specified in the FA2 standard](https://gitlab.com/tzip/tzip/-/blob/master/proposals/tzip-12/tzip-12.md#error-handling).)
 
-**2. `balance_of`**
+#### 2. `balance_of`
 As the name suggests, it tells you the amount of particular token an account holds.
 
 Similar to `transfer`, it accepts a list of requests.
 Each item in the list holds -
 
 1. `owner` - Address of the account you want to check the balance for.
-
 2. `token_id` - ID of the token for which you want to check the balance.
+
+<br />
 
 It goes through the list and sends to a `consumer` a `response` list, each item in the list has 2 fields -
 
 1. `balance` - this is the amount of a specific token the account holds.
-
 2. `request` - this is the exact `request` that was sent to the entry point in the list.
+
+<br />
 
 So, each item in the `response` list ends up looking like -
 
@@ -177,31 +183,35 @@ So, each item in the `response` list ends up looking like -
 | ---------------- | --------------- |
 | amount of tokens | owner, token_id |
 
+<br />
+
 `balance_of` behaves differently than `transfer` in terms of logistics.
+
 Along with the `request` you also pass in a callback(contract) to `balance_of` and to the contract that has been passed in, `balance_of` sends the response.
+
 This is similar to how we implemented the intergration between our `Cryptobot` and `Market` in the previous module through **inter-contract calling**.
 Here what happens is, when calling `balance_of`, we also pass in a `consumer`(this **consumes** the result from the entry point) and `balance_of` sends the response the the `consumer` through an inter-contract call.
 
 > Note - Most of the entry points in FA2 perform **batch operations**; they accept a list of requests and processes it atomically. If one request fails, all of them fail(atomic updates).
 
-**3. `mint`**
+#### 3. `mint`
 It creates a specified number of tokens in an account. This is how you'll jump-start your society's economy.
+
 FA2 standard doesn't specify any details for `mint` but the FA2 template in SmartPy has built a `mint` entry point that we can use.
 It accepts 4 arguments -
 
 1. `address` - Address to the account where you want to mint the tokens.
-
 2. `amount` - Number of tokens you want to create.
-
 3. `metadata` - This is similar to a map and has three values - **decimals**, **name**, and **symbol**.
-
 4. `token_id` - 0 in case you only have a single-asset fungible tokens. Used by FA2 standard to differentiate between different tokens.
+
+<br />
 
 So far we've explored 3 entry points available in entry points, down the line we'll explore a few more 🍪
 
 ### Show me an example
 
-```python=
+```python
 @sp.add_test(name = "Fungible Token")
 def test():
     scenario = sp.test_scenario()
@@ -228,7 +238,7 @@ One thing that stands out is `make_metadata`. It's a helper method defined in `F
 
 Now let's take a look at how you can transfer.
 
-```python=
+```python
 scenario += your_token.transfer(
         [
             your_token.batch_transfer.item(from_ = mark.address,
@@ -247,7 +257,7 @@ Why write the logic yourself when it's coming baked in to the template directly 
 
 Now, you'd like to check how much balance `elon` and `mark` have -
 
-```python=
+```python
 consumer = FA2.View_consumer(your_token)
 scenario += consumer
 
@@ -266,22 +276,26 @@ scenario += your_token.balance_of(arguments_for_balance_of(consumer, [
     ]))
 ```
 
+<br />
+
 First of all, we initialize our `consumer` contract. Remember, this is the contract which will accept the result from `balance_of`.
+
 Second, the function `arguments_for_balance_of` abstracts away some of the details for you to not worry about, but feel free to ponder on it for a couple minutes.
+
 Third, we call the `balance_of` entry point and as arguments we pass to it the `consumer` contract and a list of records which signify the accounts for which we need the balance.
 
-### #buidl-ing time
+## #buidl-ing time
 
-#### New feature request!
+### New feature request!
 
 It's time to mint some tokens and bring to life your economy!
 
-#### Step by step walkthrough
+### Step by step walkthrough
 
 1. Minting tokens
-   1. Mint 5 tokens with symbol `'CB'` and token_id as 0 to `mark`.
-   2. Mint 10 tokens with symbol `'CB'` and token_id as 0 to `elon`.
+   * Mint 5 tokens with symbol `'CB'` and token_id as 0 to `mark`.
+   * Mint 10 tokens with symbol `'CB'` and token_id as 0 to `elon`.
 2. Transfer 2 tokens from `elon` to `mark`.
 3. Check `elon`'s balance.
-   1. Create an `FA2.View_consumer` as `consumer` and add it to the scenario
-   2. Call `balance_of` with necessary arugments to check `elon`'s balance.
+   * Create an `FA2.View_consumer` as `consumer` and add it to the scenario
+   * Call `balance_of` with necessary arugments to check `elon`'s balance.

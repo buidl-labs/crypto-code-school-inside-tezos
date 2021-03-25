@@ -15,16 +15,16 @@
  */
 code.language-pythontext {
   color: #f7f7f7;
-  padding: 0.2em 0.5em !important;
+  padding: 0.12em 0.3em !important;
   font-size: 85%;
   font-weight: 700 !important;
   background-color: #0e0d0d !important;
   border-radius: 3px;
-  border: 1px solid #cccccc;
+  border: 1.5px solid #434343;
 }
 
 .string-highlight {
-  color: #0e0d0d;
+  color: #e5a1e7;
   font-weight: 700;
 }
 
@@ -37,9 +37,9 @@ code.language-pythontext {
   overflow: auto;
   font-size: 85%;
   line-height: 1.45;
-  border-radius: 3px;
+  border-radius: 2px;
   margin-bottom: 16px;
-  border: 1px solid #cccccc;
+  border: 2px solid #434343;
 }
 
 /**

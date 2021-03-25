@@ -19,8 +19,9 @@ import userAtom from 'src/atoms/user-atom';
 import isUserAtom from 'src/atoms/is-user-atom';
 import { useAtom } from 'jotai';
 import { isMobile, isTablet } from 'react-device-detect';
+import { estimateBotPurchaseGasFee } from 'src/utils/gas_estimates';
 
-const Steppers = ({ number, name, clickEvent, tick = false }) => {
+const Steppers = ({ number, name, clickEvent, step, tick = false }) => {
   return (
     <div onClick={clickEvent}>
       <div className="flex items-center text-primary-600 relative">
@@ -34,7 +35,11 @@ const Steppers = ({ number, name, clickEvent, tick = false }) => {
             <MdDone size={24} />
           </div>
         ) : (
-          <div className="rounded-full h-12 w-12 py-3 inline-flex items-center justify-center bg-primary-600 text-white">
+          <div
+            className={`rounded-full h-12 w-12 py-3 inline-flex items-center justify-center ${
+              number == step ? 'bg-primary-600' : 'bg-base-600'
+            } text-white`}
+          >
             {number}
           </div>
         )}
@@ -224,6 +229,14 @@ function Transaction({ location }) {
     }
   }, [user]);
 
+  const estimatedTotalCost = useAsync(async () => {
+    try {
+      return await estimateBotPurchaseGasFee(bot);
+    } catch (err) {
+      console.log('err', err);
+    }
+  }, []);
+
   return (
     <div className=" bg-base-900 ">
       <NavBar />
@@ -244,26 +257,37 @@ function Transaction({ location }) {
                 number="1"
                 name="Confirm Claim"
                 tick={step >= 2}
+                step={step}
                 clickEvent={e => {
                   e.preventDefault();
                   // setStep(1);
                 }}
               />
-              <div className="flex-auto border-t-2  border-primary-600"></div>
+              <div
+                className={`flex-auto border-t-2 ${
+                  step >= 2 ? 'border-primary-600' : 'border-base-600'
+                }`}
+              ></div>
               <Steppers
                 number="2"
                 name="Transaction"
                 tick={step === 3}
+                step={step}
                 clickEvent={e => {
                   e.preventDefault();
                   // setStep(2);
                 }}
               />
-              <div className="flex-auto border-t-2 border-primary-600"></div>
+              <div
+                className={`flex-auto border-t-2 ${
+                  step == 3 ? 'border-primary-600' : 'border-base-600'
+                }`}
+              ></div>
               <Steppers
                 number="3"
                 name="Finished"
                 tick={step === 3}
+                step={step}
                 clickEvent={e => {
                   e.preventDefault();
                   // setStep(3);
@@ -299,16 +323,36 @@ function Transaction({ location }) {
                     caption="Your first bot is on us!"
                   /> */}
                   {/* <hr className="my-2 bg-base-400 border-2 h-0.5" /> */}
-                  <Cost
-                    type="Estimated Network Fee"
-                    main={`${convertMutezToXtz(4556)} XTZ`}
-                    caption={
-                      xtzPrice
-                        ? `$ ${getXTZPriceInUSD(xtzPrice.price, 4556)}`
-                        : null
-                    }
-                    tooltip
-                  />
+                  {estimatedTotalCost.loading ? (
+                    <Cost
+                      type="Estimated Network Fee"
+                      main={`LOADING...`}
+                      caption={``}
+                      tooltip
+                    />
+                  ) : estimatedTotalCost.error ? (
+                    <div className="text-error-500 text-center">
+                      Error calculating estimated gas fee
+                    </div>
+                  ) : (
+                    <div>
+                      <Cost
+                        type="Estimated Network Fee"
+                        main={`${convertMutezToXtz(
+                          estimatedTotalCost.value,
+                        )} XTZ`}
+                        caption={
+                          xtzPrice
+                            ? `$ ${getXTZPriceInUSD(
+                                xtzPrice.price,
+                                Number(estimatedTotalCost.value),
+                              )}`
+                            : null
+                        }
+                        tooltip
+                      />
+                    </div>
+                  )}
                 </div>
                 <div>
                   {getUserBalance.loading ? null : getUserBalance.error ? (
@@ -420,11 +464,11 @@ function Transaction({ location }) {
                   Share your unique cryptobot with your friends and start
                   trading with other on marketplace!
                 </h4>
-                <div className="text-white text-center text-lg font-mulish mt-8">
-                  Here’s the link to your unique cryptobot:
+                <div className="text-white text-center text-lg font-mulish mt-8 break-all">
+                  <p>Here’s the link to your unique cryptobot:</p>
                   <a
                     href={`https://cryptocodeschool.in/tezos/cryptobot/${bot.tokenId}`}
-                    className="text-primary-400 underline"
+                    className="text-primary-400 underline break-all"
                     target="_blank"
                     rel="noopener noreferrer"
                   >

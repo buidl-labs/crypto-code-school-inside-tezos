@@ -113,7 +113,7 @@ editor:
         scenario += market
 ---
 
-### Intro
+## Intro
 In battle, lists are important! 
 How else would you keep track of all the powerups you can buy!?
 
@@ -122,30 +122,30 @@ In this one, let's learn how to use the **list** data type in SmartPy.
 Later in this chapter you'll also start working on a new smart contract, `Market`, which will allow you to get powerups in your final battle 🚀
 Let's go!
 
-### Study time
+## Study time
 
 List type in SmartPy is represented by `sp.TList`. 
 It can be initialized by using either `[]` or `sp.list()`.
-```python=
+```python
 self.init(
     history = sp.list() # or []
 )
 ```
 
 Unlike lists in Python, a list in SmartPy can't hold data of differ data types. All the items in a SmartPy list should be of the same type. 
-```python=
+```python
 ✅ [1, 2, 3]
 ❌ ["one", 2, 3.0]
 ```
 
 > #### Note
 > Not all python lists functions are available for lists in SmartPy. 
-> Check the reference [here:scroll:](https://smartpy.io/dev/reference.html#_lists) to see a detailed list of functions available.
+> Check the reference [here 📜](https://smartpy.io/dev/reference.html#_lists) to see a detailed list of functions available.
 
 ### Show me an example
 We're going to build on top of the `Wallet` example from the previous chapter.
 
-```python=
+```python
 class Wallet(sp.Contract):
     def __init__(self, initial_amount, owner_address):
         self.init(
@@ -163,9 +163,10 @@ def test():
     
     scenario.verify(w.data.amount == sp.mutez(1000))
 ```
+
 Notice a new `transaction` state variable? It's a list.
 Now, we're going to add a new `entry_point` to this smart contract.
-```python=
+```python
 @sp.entry_point
 def add_transaction(self, amount):
     self.data.amount += amount
@@ -174,20 +175,20 @@ def add_transaction(self, amount):
 Take a look at the `entry_point` right above, it uses `.push` which is a method you can use to add items to the top of the list.
 
 **Now to test this code(coz you know, testing is a thing) -**
-```python=
+```python
 scenario += w.add_transaction(sp.mutez(500))
 scenario += w.add_transaction(sp.mutez(300))
 scenario.verify(w.data.amount == sp.mutez(1800))
 ```
 
 
-### #buidl-ing time
+## #buidl-ing time
  
-#### New feature request!
+### New feature request!
 You're the smart contract expert in town. 
 The Cryptoverse `Market` has tasked you with writing the smart contract, `Market`, for it to interact with your `Cryptobot`.
 
-#### Step by step walkthrough
+### Step by step walkthrough
 1. Create a new smart contract, `Market`.
 2. Market will have a contract storage variable -  `powerups` which will be equal to `["time_freeze", "one_shot_kill"]`.
 3. Inside test function, initialize an instance of the `Market` contract and store it inside `market`.

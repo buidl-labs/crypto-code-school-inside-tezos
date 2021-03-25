@@ -42,20 +42,21 @@ editor:
 
 
 ---
-### Intro
+## Intro
 
 The smart contract for `Cyber_Token` that we've originated has an entry point called `mint`, through which we can create new tokens.
 
 In this chapter, we're going to interact with the contract by calling the `mint` entry point.
 
 Hope you saved the address of the contract we originated in the previous chapter, we'll use it in this one.
+
 If you haven't, please go back to the previous chapter, originate the contract once again and take note of the contract address.
 
-### Study time
+## Study time
 
 Taquito gives you a smooth API to work with contracts.
 
-```javascript=
+```javascript
 Tezos.contract.at("<CONTRACT_ADDRESS>")
 .then(c  => {
     print(c);
@@ -68,14 +69,14 @@ The object `c` gives you a whole lot of fields to play around with - most notabl
 
 Through `c.methods` you can access all the entry points that are available.
 
-```javascript=
+```javascript
 c.methods.increment(100).send();
 ```
 If we had a smart contract with the entry point `increment`, this is how you would call it while passing the `100` as an argument to the entry point.
 
 ### Show me an example
 If we have the following smart contract - 
-```python=
+```python
 import smartpy as sp
 
 class Counter(sp.Contract):
@@ -100,7 +101,7 @@ def test():
     scenario += counter
 ```
 To call the increment entry point through Taquito - 
-```javascript=
+```javascript
 Tezos.contract.at("<CONTRACT_ADDRESS>")
 .then(c => {
     return c.methods.increment(10).send();
@@ -142,15 +143,9 @@ How about you start minting some money for the society now?
             3. metadata (Map[string: bytes]) - `{symbol: "CBT"}`
             4. token_id (Int)
         - Here's how you create a map in Taquito -
-            ```
-            MichelsonMap.fromLiteral({symbol: char2Bytes('CBT')})
-            ```
-            Don't forget to import `MichelsonMap` from `@taquito/taquito`.
+            `MichelsonMap.fromLiteral({symbol: char2Bytes('CBT')})` - don't forget to import `MichelsonMap` from `@taquito/taquito`.
             Also, you notice we've used `char2Bytes`, it's a helper function provided by Taquito to convert string to bytes, as FA2 expects metadata values to be in bytes.
-            It's imported from another package called `@taquito/tzip16`. So you need to first install the package using npm/yarn. And then import it like this -
-            ```
-            import { char2Bytes } from '@taquito/tzip16'
-            ```
+            It's imported from another package called `@taquito/tzip16`. So you need to first install the package using npm/yarn. And then import it like this - `import { char2Bytes } from '@taquito/tzip16';`
             Don't worry, we've imported it for you. 
     3. Return the operation recieved while specifying it to wait for 3 confirmations.
     4. When you finally recieve the `hash` of the operation, print to the console: `Operation injected: {hash}`.
