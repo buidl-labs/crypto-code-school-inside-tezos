@@ -21,10 +21,13 @@ const FeatureGrid = ({
         <h1 className="sm:text-5xl text-3xl mb-3 font-black text-white heading-glow">
           {heading}
         </h1>
-        <p className="text-base-50 text-base mb-6">{subtext}</p>
+        <div
+          className="text-base-50 text-base mb-6"
+          dangerouslySetInnerHTML={{ __html: subtext }}
+        />
 
         <Link
-          className={`py-3 px-9 text-xl border-primary-600 border-2 hover:border-primary-700 text-white font-bold rounded focus:outline-none ${buttonHidden}`}
+          className={`py-3 px-9 text-xl border-primary-600 border-2 hover:border-primary-700 text-white font-bold rounded focus:outline-none  ${buttonHidden}`}
           to={to}
         >
           {buttontext}
