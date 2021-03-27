@@ -117,7 +117,7 @@ const CurriculumOverview = ({
 
   return (
     <Layout>
-      <SEO title="Chapters Overview" />
+      <SEO title="Academy" />
       <main className={`px-30 py-12 bg-base-900 text-white`}>
         <div
           className={`text-center my-0 mx-auto`}

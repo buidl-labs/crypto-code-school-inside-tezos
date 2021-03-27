@@ -22,6 +22,8 @@ import { MdDone } from 'react-icons/md';
 import Confetti from 'react-confetti';
 import Clipboard from 'react-clipboard.js';
 
+import SEO from 'src/components/Seo';
+
 import userAtom from 'src/atoms/user-atom';
 import isUserAtom from 'src/atoms/is-user-atom';
 import { useAtom } from 'jotai';
@@ -169,7 +171,6 @@ function Transaction({ location }) {
   const [copyLink, setCopyLink] = useState(false);
   const [claimButtonDisabled, setClaimButtonDisabledStatus] = useState(true);
 
-
   //redirect to home if in mobile/tablet
   useEffect(() => {
     if (isMobile || isTablet) {
@@ -308,6 +309,7 @@ function Transaction({ location }) {
 
   return (
     <div className=" bg-base-900 ">
+      <SEO title={`Claim your bot`} />
       <NavBar />
       <Confetti width={width} height={height} run={step === 3} />
       <div className="container px-12 mx-auto h-screen ">

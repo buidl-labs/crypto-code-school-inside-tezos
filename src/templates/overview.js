@@ -80,7 +80,7 @@ function LessonsOverview({ data: { mdx: module } }) {
 
   return (
     <Layout>
-      <SEO title="Chapters Overview" />
+      <SEO title={module.frontmatter.title} />
       <div></div>
       <main className={`bg-base-900 pb-24`}>
         <header className={`px-30 pt-6 text-white`}>

@@ -16,6 +16,7 @@ import userAtom from 'src/atoms/user-atom';
 import isUserAtom from 'src/atoms/is-user-atom';
 import { useAtom } from 'jotai';
 import { isMobile, isTablet } from 'react-device-detect';
+import SEO from 'src/components/Seo';
 
 const Marketplace = () => {
   const [forSale, updateForSale] = useState(true);
@@ -109,6 +110,7 @@ const Marketplace = () => {
 
   return (
     <div className="bg-base-900 font-mulish">
+      <SEO title={`Marketplace`} />
       <NavBar />
       <div className="container px-30 py-12 mx-auto">
         <div className="flex flex-col text-center w-full mb-12">

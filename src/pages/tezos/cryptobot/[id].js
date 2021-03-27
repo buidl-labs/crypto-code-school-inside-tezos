@@ -32,10 +32,7 @@ import Button from 'src/components/Buttons';
 import model from 'src/images/Col-1.png';
 import ErrorBot from 'src/images/error.png';
 import { isMobile, isTablet } from 'react-device-detect';
-
-// TODO:
-//   1. LOADING STATE
-//   2. NO CRYPTOBOT FOUND STATE
+import SEO from 'src/components/Seo';
 
 function BotView({ location }) {
   let beacon = useContext(BeaconContext);
@@ -451,6 +448,7 @@ function BotView({ location }) {
 
   return (
     <div className="h-screen w-screen fixed bg-base-900">
+      <SEO title={`Cryptobot`} />
       {withdrawNowStep === 1 && (
         <div
           className={`bg-base-900 min-h-screen text-white flex items-center justify-center `}
