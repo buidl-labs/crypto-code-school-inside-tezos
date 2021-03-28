@@ -101,7 +101,7 @@ module.exports = {
         // API key for your Amplitude Project (required)
         //TODO: BEFORE merging it in master, resolve whether to use beta-or main-master api key
         //cryptoverse-wars beta amplitude tracking api key
-        apiKey: "b8c4bfb895ccfd2479ce7fd4507b1256",
+        apiKey: 'b8c4bfb895ccfd2479ce7fd4507b1256',
         // Puts tracking script in the head instead of the body (optional)
         head: true,
         // Prevents loading Amplitude and logging events if visitors have "Do Not Track" enabled (optional)
@@ -127,13 +127,13 @@ module.exports = {
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
-    {
-      resolve: "@sentry/gatsby",
-      options: {
-        dsn: "https://d2e5097585b0401aab888bfa8a8570ac@o551788.ingest.sentry.io/5675666",
-        sampleRate: 0.7,
-        denyUrls: ["localhost:8000"]
-      },
-    },
+    // {
+    //   resolve: "@sentry/gatsby",
+    //   options: {
+    //     dsn: "https://d2e5097585b0401aab888bfa8a8570ac@o551788.ingest.sentry.io/5675666",
+    //     sampleRate: 0.7,
+    //     denyUrls: ["localhost:8000"]
+    //   },
+    // },
   ],
 };
