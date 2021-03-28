@@ -450,8 +450,8 @@ function BotView({ location }) {
   return (
     <div className="h-screen w-screen fixed bg-base-900">
       <SEO
-        title={`Cryptobot-${tokenId}`}
-        description={`Take a look at the awesome Cryptobot-${tokenId}`}
+        title={`Cryptobot`}
+        description={`Take a look at this awesome Cryptobot NFT ⚡️`}
       />
       {withdrawNowStep === 1 && (
         <div

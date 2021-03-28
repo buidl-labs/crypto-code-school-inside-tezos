@@ -91,7 +91,7 @@ function Profile() {
 
   return (
     <div className="bg-base-900 font-mulish">
-      <SEO title={`Profile${user && ` - ${user.name}`}`} />
+      <SEO title={`Profile`} />
       <NavBar />
       <div className="container px-30 py-12">
         {/*profile header starts */}
