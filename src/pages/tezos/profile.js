@@ -8,7 +8,7 @@ import { useAsync } from 'react-use';
 import Loader from 'react-loader-spinner';
 import CryptobotCard from 'src/components/CryptobotCard';
 
-import SEO from 'src/components/SEO';
+import SEO from 'src/components/Seo';
 
 import userAtom from 'src/atoms/user-atom';
 import isUserAtom from 'src/atoms/is-user-atom';
