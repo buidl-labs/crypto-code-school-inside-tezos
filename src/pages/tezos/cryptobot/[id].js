@@ -83,6 +83,7 @@ function BotView({ location }) {
         if (user.xtzAddress == bot.holderAddress) setOwned(true);
       }
       setBot(bot);
+      console.log(bot);
       console.log('loaded 🔥');
     }
   }, [NFT.loading]);
@@ -448,7 +449,10 @@ function BotView({ location }) {
 
   return (
     <div className="h-screen w-screen fixed bg-base-900">
-      <SEO title={`Cryptobot`} />
+      <SEO
+        title={`Cryptobot-${tokenId}`}
+        description={`Take a look at the awesome Cryptobot-${tokenId}`}
+      />
       {withdrawNowStep === 1 && (
         <div
           className={`bg-base-900 min-h-screen text-white flex items-center justify-center `}

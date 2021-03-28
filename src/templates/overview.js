@@ -80,7 +80,11 @@ function LessonsOverview({ data: { mdx: module } }) {
 
   return (
     <Layout>
-      <SEO title={module.frontmatter.title} />
+      <SEO
+        title={module.frontmatter.title}
+        description={module.frontmatter.body}
+        image={{ src: module.frontmatter.img.childImageSharp.fluid.src }}
+      />
       <div></div>
       <main className={`bg-base-900 pb-24`}>
         <header className={`px-30 pt-6 text-white`}>

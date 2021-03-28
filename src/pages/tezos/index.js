@@ -7,7 +7,7 @@ import PlayButton from '../../components/LandingPage/playbutton';
 import TestimonialCard from 'src/components/TestimonialCard';
 import FeatureGrid from 'src/components/FeatureGrid';
 import MobileHome from 'src/components/Mobile';
-
+import SEO from 'src/components/Seo';
 import hero from '../../images/hero.webp';
 import cryptobots from '../../images/cryptobots.png';
 import earnWhileYouLearn from 'src/assets/videos/earn while you learn-anim.mp4';
@@ -59,7 +59,15 @@ function Landing() {
           <VideoModal />
         </div>
       )}
-
+      <SEO
+        title={`Cryptoverse Wars`}
+        description={`Learn to code on the Tezos blockchain, the fun way.`}
+        image={{
+          src: cryptobots,
+          width: 560,
+          height: 300,
+        }}
+      />
       <NavBar />
       <section
         className="bg-base-900 justify-center items-center bg-no-repeat bg-top lg:bg-auto bg-contain"

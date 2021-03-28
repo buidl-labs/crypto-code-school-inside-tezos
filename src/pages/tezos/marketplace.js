@@ -110,7 +110,10 @@ const Marketplace = () => {
 
   return (
     <div className="bg-base-900 font-mulish">
-      <SEO title={`Marketplace`} />
+      <SEO
+        title={`Marketplace`}
+        description="Explore, buy, and sell exciting Cryptobot NFTs 🔥"
+      />
       <NavBar />
       <div className="container px-30 py-12 mx-auto">
         <div className="flex flex-col text-center w-full mb-12">

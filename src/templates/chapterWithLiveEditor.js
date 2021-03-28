@@ -7,7 +7,7 @@ import NavBar from './components/chapter/NavBar';
 import Footer from './components/chapter/Footer';
 import LearningInterface from './components/chapter/LearningInterface';
 import CodingInterfaceTaquito from './components/chapter/CodingInterfaceTaquito';
-
+import SEO from 'src/components/Seo';
 import userAtom from 'src/atoms/user-atom';
 import isUserAtom from 'src/atoms/is-user-atom';
 import { useAtom } from 'jotai';
@@ -88,6 +88,7 @@ const ChapterWithLiveEditorTemplate = ({
 
   return (
     <div className={`overflow-hidden`}>
+      <SEO title={chapterHeading} />
       <NavBar
         chapter={chapterHeading}
         module={chapter.frontmatter.filterBy}

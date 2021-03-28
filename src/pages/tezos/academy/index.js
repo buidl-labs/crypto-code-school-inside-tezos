@@ -117,7 +117,10 @@ const CurriculumOverview = ({
 
   return (
     <Layout>
-      <SEO title="Academy" />
+      <SEO
+        title="Academy"
+        description="5 fun courses to take you from zero-to-hero in blockchain development with SmartPy"
+      />
       <main className={`px-30 py-12 bg-base-900 text-white`}>
         <div
           className={`text-center my-0 mx-auto`}
