@@ -169,7 +169,6 @@ function Transaction({ location }) {
   const [copyLink, setCopyLink] = useState(false);
   const [claimButtonDisabled, setClaimButtonDisabledStatus] = useState(true);
 
-
   //redirect to home if in mobile/tablet
   useEffect(() => {
     if (isMobile || isTablet) {
@@ -418,7 +417,7 @@ function Transaction({ location }) {
                             <a
                               target="_blank"
                               rel="noopener noreferrer"
-                              href="https://www.finder.com/how-to-buy-tezos"
+                              href="https://www.notion.so/Guide-to-getting-XTZ-57aeea1b7a1947ef9ffc195189f4a0ff"
                               className="underline"
                             >
                               How to obtain XTZ tokens?
@@ -436,7 +435,7 @@ function Transaction({ location }) {
                             <a
                               target="_blank"
                               rel="noopener noreferrer"
-                              href="https://www.finder.com/how-to-buy-tezos"
+                              href="https://www.notion.so/Guide-to-getting-XTZ-57aeea1b7a1947ef9ffc195189f4a0ff"
                               className="underline"
                             >
                               How to obtain XTZ tokens?
