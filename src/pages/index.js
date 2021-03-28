@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { navigate } from 'gatsby';
 import SEO from 'src/components/Seo';
-import landingPage from 'src/images/landing_page.jpg';
+import cryptobots from 'src/images/cryptobots.png';
 
 //redirect homepage view to /tezos
 const HomePage = () => {
@@ -21,8 +21,9 @@ const HomePage = () => {
           `tezos`,
           `blockchain`,
         ]}
+        description="Learn how to code on the blockchain, the fun way."
         image={{
-          src: landingPage,
+          src: cryptobots,
           width: 560,
           height: 300,
         }}

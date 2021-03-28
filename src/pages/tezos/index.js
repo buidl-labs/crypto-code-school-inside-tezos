@@ -6,7 +6,6 @@ import Footer from '../../components/Footer';
 import PlayButton from '../../components/LandingPage/playbutton';
 import TestimonialCard from 'src/components/TestimonialCard';
 import FeatureGrid from 'src/components/FeatureGrid';
-
 import MobileHome from 'src/components/Mobile';
 
 import hero from '../../images/hero.webp';

@@ -11,7 +11,7 @@ const Layout = ({ children, background }) => {
       <Helmet>
         <html lang="en" />
         <title>{title}</title>
-        <meta name="description" content={description} />
+        <meta name="description" content={''} />
       </Helmet>
       <NavBar />
       <main>{children}</main>
