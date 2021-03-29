@@ -256,14 +256,7 @@ function Transaction({ location }) {
       setTokenId(randomId);
       const contract = await Tezos.wallet.at(CONTRACT_ADDRESS);
 
-      const op = await contract.methods
-        .mint(
-          user.xtzAddress,
-          Number(1),
-          metadata,
-          randomId, // DONE: Make the token id increment dynamic
-        )
-        .send();
+      const op = await contract.methods.mint(metadata).send();
 
       //Go to 2nd Step
       setStep(2);
