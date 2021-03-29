@@ -756,6 +756,7 @@ const Customizer = ({ location }) => {
           body: JSON.stringify({
             artifactURI: resJSON.body.ipfsHash,
             displayURI: resImageJSON.body.ipfsHash,
+            xtzAddress: user.xtzAddress,
           }),
         },
       );
