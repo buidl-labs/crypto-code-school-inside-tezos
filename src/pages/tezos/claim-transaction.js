@@ -15,6 +15,7 @@ import {
   convertMutezToXtz,
   getXTZPriceInUSD,
   getXTZPrice,
+  getAllTokensCount,
 } from 'src/utils/indexer';
 import { InMemorySigner } from '@taquito/signer';
 import { estimateNFTMintFee } from 'src/utils/gas_estimates';
@@ -199,6 +200,15 @@ function Transaction({ location }) {
     }
   }, []);
 
+  useAsync(async () => {
+    try {
+      const result = await getAllTokensCount();
+      setTokenId(result);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
   const ErrorModal = () => {
     return (
       <div
@@ -249,8 +259,8 @@ function Transaction({ location }) {
         '': jsonURI,
       });
 
-      const RnId = (deepness = 10) =>
-        parseInt(Date.now() + Math.random() * deepness);
+      // const RnId = (deepness = 10) =>
+      // parseInt(Date.now() + Math.random() * deepness);
 
       // const randomId = RnId();
       // setTokenId(randomId);
