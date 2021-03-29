@@ -186,60 +186,58 @@ function BotView({ location }) {
           <ModalHeading>
             Are you sure to withdraw cryptobot from sale ?
           </ModalHeading>
-          <TransactionContainer>
-            <Cost
+          {/* <Cost
               type="Estimated Network Fee"
               main={`${convertMutezToXtz(4556)} XTZ`}
               caption={
                 xtzPrice ? `$ ${getXTZPriceInUSD(xtzPrice.price, 4556)}` : null
               }
               tooltip
-            />
-            <div>
-              {getUserBalance.loading ? null : getUserBalance.error ? (
-                <div className="text-error-500">
-                  Error: {getUserBalance.error.message}
-                </div>
-              ) : (
-                <div>
-                  {getUserBalance.value === 0 ? (
-                    <div
-                      className="mt-3 py-3 px-5 mb-4  text-white text-sm rounded border border-error-600 bg-opacity-25 bg-error-500"
-                      role="alert"
-                    >
-                      Your account is empty.{' '}
-                      <strong>
-                        <a
-                          target="_blank"
-                          href="https://www.notion.so/Guide-to-getting-XTZ-57aeea1b7a1947ef9ffc195189f4a0ff"
-                          className="underline"
-                        >
-                          How to obtain XTZ tokens ?
-                        </a>
-                      </strong>
-                    </div>
-                  ) : getUserBalance.value < 0.5 ? (
-                    <div
-                      className="mt-3 py-3 px-5 mb-4  text-white text-sm rounded border border-error-600 bg-opacity-25 bg-error-500"
-                      role="alert"
-                    >
-                      Insufficient balance. You need additional of 0.5 XTZ
-                      balance to proceed further.{' '}
-                      <strong>
-                        <a
-                          target="_blank"
-                          href="https://www.notion.so/Guide-to-getting-XTZ-57aeea1b7a1947ef9ffc195189f4a0ff"
-                          className="underline"
-                        >
-                          How to obtain XTZ tokens ?
-                        </a>
-                      </strong>
-                    </div>
-                  ) : null}
-                </div>
-              )}
-            </div>
-          </TransactionContainer>
+            /> */}
+          <div>
+            {getUserBalance.loading ? null : getUserBalance.error ? (
+              <div className="text-error-500">
+                Error: {getUserBalance.error.message}
+              </div>
+            ) : (
+              <div>
+                {getUserBalance.value === 0 ? (
+                  <div
+                    className="mt-3 py-3 px-5 mb-4  text-white text-sm rounded border border-error-600 bg-opacity-25 bg-error-500"
+                    role="alert"
+                  >
+                    Your account is empty.{' '}
+                    <strong>
+                      <a
+                        target="_blank"
+                        href="https://www.notion.so/Guide-to-getting-XTZ-57aeea1b7a1947ef9ffc195189f4a0ff"
+                        className="underline"
+                      >
+                        How to obtain XTZ tokens ?
+                      </a>
+                    </strong>
+                  </div>
+                ) : getUserBalance.value < 0.5 ? (
+                  <div
+                    className="mt-3 py-3 px-5 mb-4  text-white text-sm rounded border border-error-600 bg-opacity-25 bg-error-500"
+                    role="alert"
+                  >
+                    Insufficient balance. You need additional of 0.5 XTZ balance
+                    to proceed further.{' '}
+                    <strong>
+                      <a
+                        target="_blank"
+                        href="https://www.notion.so/Guide-to-getting-XTZ-57aeea1b7a1947ef9ffc195189f4a0ff"
+                        className="underline"
+                      >
+                        How to obtain XTZ tokens ?
+                      </a>
+                    </strong>
+                  </div>
+                ) : null}
+              </div>
+            )}
+          </div>
           <div>
             <Button
               size="lg"
@@ -359,60 +357,50 @@ function BotView({ location }) {
               </div>
             </InputContainer>
           </form>
-          <TransactionContainer>
-            <Cost
-              type="Estimated Network Fee"
-              main={`${convertMutezToXtz(4556)} XTZ`}
-              caption={
-                xtzPrice ? `$ ${getXTZPriceInUSD(xtzPrice.price, 4556)}` : null
-              }
-              tooltip
-            />
-            <div>
-              {getUserBalance.loading ? null : getUserBalance.error ? (
-                <div className="text-error-500">
-                  Error: {getUserBalance.error.message}
-                </div>
-              ) : (
-                <div>
-                  {getUserBalance.value === 0 ? (
-                    <div
-                      className="mt-3 py-3 px-5 mb-4  text-white text-sm rounded border border-error-600 bg-opacity-25 bg-error-500"
-                      role="alert"
-                    >
-                      Your account is empty.{' '}
-                      <strong>
-                        <a
-                          target="_blank"
-                          href="https://www.notion.so/Guide-to-getting-XTZ-57aeea1b7a1947ef9ffc195189f4a0ff"
-                          className="underline"
-                        >
-                          How to obtain XTZ tokens ?
-                        </a>
-                      </strong>
-                    </div>
-                  ) : getUserBalance.value < 0.5 ? (
-                    <div
-                      className="mt-3 py-3 px-5 mb-4  text-white text-sm rounded border border-error-600 bg-opacity-25 bg-error-500"
-                      role="alert"
-                    >
-                      Insufficient balance. You need additional of 0.5 XTZ
-                      balance to proceed further.{' '}
-                      <strong>
-                        <a
-                          target="_blank"
-                          href="https://www.notion.so/Guide-to-getting-XTZ-57aeea1b7a1947ef9ffc195189f4a0ff"
-                          className="underline"
-                        >
-                          How to obtain XTZ tokens ?
-                        </a>
-                      </strong>
-                    </div>
-                  ) : null}
-                </div>
-              )}
-            </div>
-          </TransactionContainer>
+          <div>
+            {getUserBalance.loading ? null : getUserBalance.error ? (
+              <div className="text-error-500">
+                Error: {getUserBalance.error.message}
+              </div>
+            ) : (
+              <div>
+                {getUserBalance.value === 0 ? (
+                  <div
+                    className="mt-3 py-3 px-5 mb-4  text-white text-sm rounded border border-error-600 bg-opacity-25 bg-error-500"
+                    role="alert"
+                  >
+                    Your account is empty.{' '}
+                    <strong>
+                      <a
+                        target="_blank"
+                        href="https://www.notion.so/Guide-to-getting-XTZ-57aeea1b7a1947ef9ffc195189f4a0ff"
+                        className="underline"
+                      >
+                        How to obtain XTZ tokens ?
+                      </a>
+                    </strong>
+                  </div>
+                ) : getUserBalance.value < 0.5 ? (
+                  <div
+                    className="mt-3 py-3 px-5 mb-4  text-white text-sm rounded border border-error-600 bg-opacity-25 bg-error-500"
+                    role="alert"
+                  >
+                    Insufficient balance. You need additional of 0.5 XTZ balance
+                    to proceed further.{' '}
+                    <strong>
+                      <a
+                        target="_blank"
+                        href="https://www.notion.so/Guide-to-getting-XTZ-57aeea1b7a1947ef9ffc195189f4a0ff"
+                        className="underline"
+                      >
+                        How to obtain XTZ tokens ?
+                      </a>
+                    </strong>
+                  </div>
+                ) : null}
+              </div>
+            )}
+          </div>
           <div>
             <Button
               size="lg"
@@ -830,7 +818,7 @@ function ConfirmationModel(opHash) {
         <Button
           onClick={() => {
             window.open(
-              `https://delphinet.tzkt.io/${opHash ? opHash : ''}`,
+              `https://mainnet.tzkt.io/${opHash ? opHash : ''}`,
               '_blank',
             );
           }}
