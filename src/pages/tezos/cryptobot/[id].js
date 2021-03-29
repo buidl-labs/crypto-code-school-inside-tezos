@@ -138,7 +138,7 @@ function BotView({ location }) {
       const contract = await Tezos.wallet.at(CONTRACT_ADDRESS);
 
       const op = await contract.methods
-        .bot_no_longer_for_sale(Number(tokenId))
+        .withdraw_bot_from_sale(Number(tokenId))
         .send();
       setClaimButtonDisabledStatus(false);
       setOpHash(op.opHash);

@@ -165,7 +165,7 @@ function Transaction({ location }) {
   const [user, setUser] = useAtom(userAtom);
   const [isUser] = useAtom(isUserAtom);
 
-  const [botTokenId, setTokenId] = useState(false);
+  const [botTokenId, setTokenId] = useState(0);
   const [copyLink, setCopyLink] = useState(false);
   const [claimButtonDisabled, setClaimButtonDisabledStatus] = useState(true);
 
@@ -252,18 +252,11 @@ function Transaction({ location }) {
       const RnId = (deepness = 10) =>
         parseInt(Date.now() + Math.random() * deepness);
 
-      const randomId = RnId();
-      setTokenId(randomId);
+      // const randomId = RnId();
+      // setTokenId(randomId);
       const contract = await Tezos.wallet.at(CONTRACT_ADDRESS);
 
-      const op = await contract.methods
-        .mint(
-          user.xtzAddress,
-          Number(1),
-          metadata,
-          randomId, // DONE: Make the token id increment dynamic
-        )
-        .send();
+      const op = await contract.methods.mint(metadata).send();
 
       //Go to 2nd Step
       setStep(2);
