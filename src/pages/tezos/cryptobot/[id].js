@@ -828,7 +828,7 @@ function ConfirmationModel(opHash) {
         <Button
           onClick={() => {
             window.open(
-              `https://delphinet.tzkt.io/${opHash ? opHash : ''}`,
+              `https://mainnet.tzkt.io/${opHash ? opHash : ''}`,
               '_blank',
             );
           }}

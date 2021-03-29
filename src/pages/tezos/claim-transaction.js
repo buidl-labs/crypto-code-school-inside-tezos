@@ -169,7 +169,6 @@ function Transaction({ location }) {
   const [copyLink, setCopyLink] = useState(false);
   const [claimButtonDisabled, setClaimButtonDisabledStatus] = useState(true);
 
-
   //redirect to home if in mobile/tablet
   useEffect(() => {
     if (isMobile || isTablet) {
@@ -504,7 +503,7 @@ function Transaction({ location }) {
                   <Button
                     onClick={() => {
                       window.open(
-                        `https://delphinet.tzkt.io/${opHash ? opHash : ''}`,
+                        `https://mainnet.tzkt.io/${opHash ? opHash : ''}`,
                         '_blank',
                       );
                     }}
