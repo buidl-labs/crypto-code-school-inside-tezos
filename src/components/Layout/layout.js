@@ -12,6 +12,11 @@ const Layout = ({ children, background }) => {
         <html lang="en" />
         <title>{title}</title>
         <meta name="description" content={description} />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Sigmar+One&display=swap"
+          rel="stylesheet"
+        />
       </Helmet>
       <NavBar />
       <main>{children}</main>
