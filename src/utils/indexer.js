@@ -22,13 +22,13 @@ export const getAllNFTsMetadata = async () => {
   );
 
   const result = await response.json();
-  const tokens = result[0].children.find(elm => elm.name === 'tokens');
+  const tokens = result[0].children.find(elm => elm.name === 'token_metadata');
 
   const tokensMetataData = await fetch(
     `https://api.better-call.dev/v1/bigmap/${INDEXER_NETWORK}/${tokens.value}`,
   );
   const tokensMetataDataJSON = await tokensMetataData.json();
-  // console.log('tokenMetadata', tokensMetataDataJSON);
+  console.log('tokenMetadata', tokensMetataDataJSON);
   const num_keys = tokensMetataDataJSON.active_keys;
   const all_tokens = [];
   let tk;
@@ -49,7 +49,10 @@ export const getAllNFTsMetadata = async () => {
   }
 
   const grabContent = elm => {
-    return fetch(sanitizeJsonUri(bytes2Char(elm.data.value.children[0].value)))
+    console.log('elm', elm);
+    return fetch(
+      sanitizeJsonUri(bytes2Char(elm.data.value.children[1].children[0].value)),
+    )
       .then(res => res.json())
       .then(obj => {
         console.log('from indexer', obj);
@@ -61,6 +64,8 @@ export const getAllNFTsMetadata = async () => {
         };
       });
   };
+
+  console.log('all_tokensx', all_tokens);
 
   const filtered = await Promise.all(all_tokens.map(grabContent));
   // console.log('filtered allTokens', filtered);
@@ -102,9 +107,9 @@ export const nftOnOffer = async () => {
   const filtered = nullValuesRemoved.map(elm => {
     return {
       tokenId: elm.data.key.value,
-      isForSale: elm.data.value.children[0].value,
-      saleValueInMutez: elm.data.value.children[1].value,
-      seller: elm.data.value.children[2].value,
+      isForSale: true,
+      saleValueInMutez: elm.data.value.children[0].value,
+      seller: elm.data.value.children[1].value,
       timestamp: elm.data.timestamp,
     };
   });

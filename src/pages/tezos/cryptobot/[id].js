@@ -136,7 +136,7 @@ function BotView({ location }) {
       const contract = await Tezos.wallet.at(CONTRACT_ADDRESS);
 
       const op = await contract.methods
-        .bot_no_longer_for_sale(Number(tokenId))
+        .withdraw_bot_from_sale(Number(tokenId))
         .send();
       setClaimButtonDisabledStatus(false);
       setOpHash(op.opHash);
@@ -211,7 +211,7 @@ function BotView({ location }) {
                       <strong>
                         <a
                           target="_blank"
-                          href="https://www.finder.com/how-to-buy-tezos"
+                          href="https://www.notion.so/Guide-to-getting-XTZ-57aeea1b7a1947ef9ffc195189f4a0ff"
                           className="underline"
                         >
                           How to obtain XTZ tokens ?
@@ -228,7 +228,7 @@ function BotView({ location }) {
                       <strong>
                         <a
                           target="_blank"
-                          href="https://www.finder.com/how-to-buy-tezos"
+                          href="https://www.notion.so/Guide-to-getting-XTZ-57aeea1b7a1947ef9ffc195189f4a0ff"
                           className="underline"
                         >
                           How to obtain XTZ tokens ?
@@ -384,7 +384,7 @@ function BotView({ location }) {
                       <strong>
                         <a
                           target="_blank"
-                          href="https://www.finder.com/how-to-buy-tezos"
+                          href="https://www.notion.so/Guide-to-getting-XTZ-57aeea1b7a1947ef9ffc195189f4a0ff"
                           className="underline"
                         >
                           How to obtain XTZ tokens ?
@@ -401,7 +401,7 @@ function BotView({ location }) {
                       <strong>
                         <a
                           target="_blank"
-                          href="https://www.finder.com/how-to-buy-tezos"
+                          href="https://www.notion.so/Guide-to-getting-XTZ-57aeea1b7a1947ef9ffc195189f4a0ff"
                           className="underline"
                         >
                           How to obtain XTZ tokens ?

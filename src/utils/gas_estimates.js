@@ -77,14 +77,7 @@ export const estimateNFTMintFee = async () => {
 
     const randomId = RnId();
 
-    const op = await contract.methods
-      .mint(
-        'tz1gns4TTPdb4HybpEb5TTsLEMmWexg1xhW2',
-        Number(1),
-        metadata,
-        randomId,
-      )
-      .toTransferParams();
+    const op = await contract.methods.mint(metadata).toTransferParams();
 
     const est = await Tezos.estimate.transfer(op);
 

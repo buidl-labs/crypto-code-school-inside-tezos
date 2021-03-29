@@ -101,11 +101,11 @@ const Marketplace = () => {
 
   useEffect(() => {
     console.log(user, isUser);
-    if (!isUser || !user?.verified) {
-      const url =
-        typeof window !== 'undefined' ? window.location.pathname : '/tezos';
-      navigate('/auth', { state: { pathname: url } });
-    }
+    // if (!isUser || !user?.verified) {
+    //   const url =
+    //     typeof window !== 'undefined' ? window.location.pathname : '/tezos';
+    //   navigate('/auth', { state: { pathname: url } });
+    // }
   }, []);
 
   return (
@@ -161,26 +161,28 @@ const Marketplace = () => {
           <div className="text-white grid justify-items-end">
             <div>
               <h5 className="font-mulish font-bold">SORT BY:</h5>
-              <select
-                defaultValue={'offerDate'}
-                onChange={e => {
-                  updateSortBy(e.target.value);
-                }}
-                className="mt-3 font-mulish bg-base-900 pb-1 border-b-2 border-white"
-              >
-                <option value={'offerDate'}>Recently Added</option>
-                <option value={'lowestPrice'}>Lowest Price</option>
-                <option value={'highestPrice'}>Highest Price</option>
-              </select>
+              <div className={`pb-1 border-b border-white`}>
+                <select
+                  defaultValue={'offerDate'}
+                  onChange={e => {
+                    updateSortBy(e.target.value);
+                  }}
+                  className="mt-3 font-mulish bg-base-900 cursor-pointer"
+                >
+                  <option value={'offerDate'}>Recently Added</option>
+                  <option value={'lowestPrice'}>Lowest Price</option>
+                  <option value={'highestPrice'}>Highest Price</option>
+                </select>
+              </div>
             </div>
           </div>
           {/* sort ends  here */}
         </div>
         {/* filter & sort end  here */}
 
-        <hr className="mt-6 mb-8 bg-base-400 border-2 h-0.5" />
+        {/* <hr className="mt-6 mb-8 bg-base-400 border-2 h-0.5" /> */}
 
-        <div>
+        <div className={`mt-12`}>
           {allNFTS.loading ? (
             <div className="flex justify-center w-full">
               <Loader
