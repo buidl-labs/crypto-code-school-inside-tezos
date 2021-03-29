@@ -15,6 +15,7 @@ import {
   convertMutezToXtz,
   getXTZPriceInUSD,
   getXTZPrice,
+  getAllTokensCount,
 } from 'src/utils/indexer';
 import { InMemorySigner } from '@taquito/signer';
 import { estimateNFTMintFee } from 'src/utils/gas_estimates';
@@ -165,7 +166,7 @@ function Transaction({ location }) {
   const [user, setUser] = useAtom(userAtom);
   const [isUser] = useAtom(isUserAtom);
 
-  const [botTokenId, setTokenId] = useState(false);
+  const [botTokenId, setTokenId] = useState(0);
   const [copyLink, setCopyLink] = useState(false);
   const [claimButtonDisabled, setClaimButtonDisabledStatus] = useState(true);
 
@@ -196,6 +197,15 @@ function Transaction({ location }) {
       );
       setModelURI(location.state.modelURI);
       setJsonURI(location.state.jsonURI);
+    }
+  }, []);
+
+  useAsync(async () => {
+    try {
+      const result = await getAllTokensCount();
+      setTokenId(result);
+    } catch (error) {
+      console.log(error);
     }
   }, []);
 
@@ -249,11 +259,11 @@ function Transaction({ location }) {
         '': jsonURI,
       });
 
-      const RnId = (deepness = 10) =>
-        parseInt(Date.now() + Math.random() * deepness);
+      // const RnId = (deepness = 10) =>
+      // parseInt(Date.now() + Math.random() * deepness);
 
-      const randomId = RnId();
-      setTokenId(randomId);
+      // const randomId = RnId();
+      // setTokenId(randomId);
       const contract = await Tezos.wallet.at(CONTRACT_ADDRESS);
 
       const op = await contract.methods.mint(metadata).send();
@@ -290,13 +300,13 @@ function Transaction({ location }) {
     }
   }, [user]);
 
-  const estimatedTotalCost = useAsync(async () => {
-    try {
-      return await estimateNFTMintFee();
-    } catch (err) {
-      console.log('err', err);
-    }
-  }, []);
+  // const estimatedTotalCost = useAsync(async () => {
+  //   try {
+  //     return await estimateNFTMintFee();
+  //   } catch (err) {
+  //     console.log('err', err);
+  //   }
+  // }, []);
 
   return (
     <div className=" bg-base-900 ">
@@ -361,7 +371,7 @@ function Transaction({ location }) {
               <Heading heading="Confirm your claim" />
               <TransactionContainer>
                 <Cost type="Cryptobot Cost" main={'Free'} caption={''} />
-                <div className="bg-base-600 mt-4 px-8 rounded">
+                {/* <div className="bg-base-600 mt-4 px-8 rounded">
                   {estimatedTotalCost.loading ? (
                     <Cost
                       type="Estimated Network Fee"
@@ -392,7 +402,7 @@ function Transaction({ location }) {
                       />
                     </div>
                   )}
-                </div>
+                </div> */}
                 <div>
                   {getUserBalance.loading ? null : getUserBalance.error ? (
                     <div className="text-error-500 text-center">
@@ -496,7 +506,7 @@ function Transaction({ location }) {
                   <Button
                     onClick={() => {
                       window.open(
-                        `https://delphinet.tzkt.io/${opHash ? opHash : ''}`,
+                        `https://mainnet.tzkt.io/${opHash ? opHash : ''}`,
                         '_blank',
                       );
                     }}

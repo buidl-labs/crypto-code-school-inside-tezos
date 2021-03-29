@@ -308,3 +308,17 @@ const getAllTokenHolders = async () => {
     console.log(error);
   }
 };
+
+export const getAllTokensCount = async () => {
+  const response = await fetch(
+    `https://api.better-call.dev/v1/contract/${INDEXER_NETWORK}/${CONTRACT_ADDRESS}/storage`,
+  );
+
+  const result = await response.json();
+
+  const getAllTokenObject = result[0].children.find(
+    elm => elm.name === 'all_tokens',
+  );
+
+  return getAllTokenObject.children.length;
+};
