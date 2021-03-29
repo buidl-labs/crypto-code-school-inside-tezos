@@ -2,7 +2,8 @@
 title: Tinkering with integers and basic math in SmartPy
 chapter: Chapter 10
 slug: chapter-10
-filterBy: lesson-1
+filterBy: module-01
+isCode: true
 editor:
   showEditor: true
   language: python
@@ -147,13 +148,10 @@ How do you imagine a Cryptobot to hide and seek aliens without it being able to 
 #### Step by step walkthrough: 
 
 1. Let’s add `coordinate_x`, `coordinate_y` state variables to act as the initial coordinate of our `Cryptobot`.
-
-    * Initialize `coordinate_x` with `sp.int(0)` as we know coordinate x can range from <span class="string-highlight">[-10, 10]</span> i.e coordinate x can hold signed integers. 
-
-    * Initialize `coordinate_y` with `sp.nat(0)` as we know coordinate y can range from <span class="string-highlight">[0, 5]</span> i.e coordinate y can only hold non-negative integers. 
-
+* Initialize `coordinate_x` with `sp.int(0)` as we know coordinate x can range from <span class="string-highlight">[-10, 10]</span> i.e coordinate x can hold signed integers. 
+* Initialize `coordinate_y` with `sp.nat(0)` as we know coordinate y can range from <span class="string-highlight">[0, 5]</span> i.e coordinate y can only hold non-negative integers. 
 2. Then add two entry point functions `move_horizontally` and `move_vertically` which will update the coordinates of our Cryptobot. 
-    * Both these functions take an argument `update_to`  which is used to update the coordinate's values. 
+* Both these functions take an argument `update_to`  which is used to update the coordinate's values. 
 
 We have left this exercise a little vague so that you can practice working with state variables and entry point functions. Check out [Chapter 5](/lesson/chapter-05) and [Chapter 7](/lesson/chapter-07) for a quick refresher.  
 

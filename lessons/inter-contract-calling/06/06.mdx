@@ -1,0 +1,329 @@
+---
+title: Sub-entry point, loops and local variables
+chapter: Chapter 6
+slug: chapter-06
+filterBy: module-02
+isCode: true
+editor:
+  language: python
+  startingCode: |
+    import smartpy as sp
+    # TODO: Code needs to be fixed.
+    class Cryptobot(sp.Contract):
+
+        def __init__(self, manager_address, life_state, initial_mutez, market_address):
+            
+            self.init(
+                bot_manager = manager_address,
+                name = "terminator",
+                is_alive = life_state,
+                plasma_bullet_count = 5,
+
+                record_alien_kills = {
+                    "simple_alien": sp.nat(0), 
+                    "boss_alien": sp.nat(0), 
+                },
+                mutez_points = sp.mutez(initial_mutez),
+                market_address = market_address,
+                active_powerup = sp.record(power = "", duration = 0)
+            )
+
+            
+        @sp.entry_point
+        def shoot_alien(self, alien_type):
+            
+            sp.verify(
+                self.data.bot_manager == sp.sender, 
+                message = "Error: non manager call"
+            )
+
+            sp.if self.data.plasma_bullet_count >= 1:
+                self.data.plasma_bullet_count -= 1
+                self.data.record_alien_kills[alien_type] += 1
+            sp.else:
+                sp.failwith("Error: you ran out of bullets! Please buy more!")
+                
+        @sp.entry_point
+        def buy_powerup(self, powerup):
+            data_type = sp.TRecord(powerup = sp.TString)
+            market_contract = sp.contract(data_type, self.data.market_address).open_some()
+            
+            self.data.mutez_points -= sp.mutez(3000)
+            
+            data_to_be_sent = sp.record(powerup = powerup)
+            sp.transfer(data_to_be_sent, sp.mutez(0), market_contract)
+            
+        
+        @sp.entry_point
+        def recieve_powerup(self, params):
+            # will implement this in the next chapter
+            pass
+        
+    class Market(sp.Contract):
+        def __init__(self):
+            self.init(
+                
+                powerups = [
+                    sp.record(power = "freeze_bullet", duration = 3), 
+                    sp.record(power = "one_shot_kill", duration = 4)
+                ]
+            )
+            
+        
+        # implement the sub entry point `find_powerup` over here.
+        @sp.sub_entry_point
+        def find_powerup(self, powerup):
+            # define a local variable called `powerup_to_send`
+            # powerup should be a record which holds a variable called power(equal to an empty string) and another variable called duration(equal to 0).
+            
+            
+            
+            # loop through the powerups in the contract storage.
+            # inside the loop, if it matches the powerup we're looking for set `powerup_to_send` equal to the powerup.
+            # remember, local variables are accessed with `<var>.value`
+            
+            
+            
+            #return the value of powerup_to_send
+            
+        
+        @sp.entry_point
+        def send_powerup(self, params):
+            # will implement this in the next chapter
+            pass
+            
+        
+    @sp.add_test(name = "find-power")
+    def test():
+        scenario = sp.test_scenario()
+        
+        ## Class Invokation
+        my_account = sp.test_account("Cryptobot Owner")
+        market = Market()
+        scenario += market
+        
+        test_bot =  Cryptobot(manager_address = my_account.address,life_state = True, initial_mutez=5000, market_address = market.address)
+        scenario += test_bot
+
+  answer: |
+    import smartpy as sp
+
+    class Cryptobot(sp.Contract):
+
+        def __init__(self, manager_address, life_state, initial_mutez, market_address):
+            
+            self.init(
+                bot_manager = manager_address,
+                name = "terminator",
+                is_alive = life_state,
+                plasma_bullet_count = 5,
+
+                record_alien_kills = {
+                    "simple_alien": sp.nat(0), 
+                    "boss_alien": sp.nat(0), 
+                },
+                mutez_points = sp.mutez(initial_mutez),
+                market_address = market_address,
+                active_powerup = sp.record(power = "", duration = 0)
+            )
+
+            
+        @sp.entry_point
+        def shoot_alien(self, alien_type):
+            
+            sp.verify(
+                self.data.bot_manager == sp.sender, 
+                message = "Error: non manager call"
+            )
+
+            sp.if self.data.plasma_bullet_count >= 1:
+                self.data.plasma_bullet_count -= 1
+                self.data.record_alien_kills[alien_type] += 1
+            sp.else:
+                sp.failwith("Error: you ran out of bullets! Please buy more!")
+                
+        @sp.entry_point
+        def buy_powerup(self, powerup):
+            data_type = sp.TRecord(powerup = sp.TString)
+            market_contract = sp.contract(data_type, self.data.market_address).open_some()
+            
+            self.data.mutez_points -= sp.mutez(3000)
+            
+            data_to_be_sent = sp.record(powerup = powerup)
+            sp.transfer(data_to_be_sent, sp.mutez(0), market_contract)
+            
+        
+        @sp.entry_point
+        def recieve_powerup(self, params):
+            # will implement this in the next chapter
+            pass
+        
+    class Market(sp.Contract):
+        def __init__(self):
+            self.init(
+                
+                powerups = [
+                    sp.record(power = "freeze_bullet", duration = 3), 
+                    sp.record(power = "one_shot_kill", duration = 4)
+                ]
+            )
+            
+        
+        # implement the sub entry point `find_powerup` over here.
+        @sp.sub_entry_point
+        def find_powerup(self, powerup):
+            # define a local variable called `powerup_to_send`
+            # powerup should be a record which holds a variable called power(equal to an empty string) and another variable called duration(equal to 0).
+            
+            powerup_to_send = sp.local("powerup_to_send", sp.record(power = "", duration = 0))
+            
+            # loop through the powerups in the contract storage.
+            # inside the loop, if it matches the powerup we're looking for set `powerup_to_send` equal to the powerup.
+            # remember, local variables are accessed with `<var>.value`
+            sp.for p in self.data.powerups:
+                
+                sp.if p.power == powerup:
+        
+                    powerup_to_send.value.power = p.power
+                    powerup_to_send.value.duration = p.duration
+            
+            #return the value of powerup_to_send
+            sp.result(powerup_to_send.value)
+        
+        
+        @sp.entry_point
+        def send_powerup(self, params):
+            # will implement this in the next chapter
+            pass
+            
+        
+    @sp.add_test(name = "find-power")
+    def test():
+        scenario = sp.test_scenario()
+        
+        ## Class Invokation
+        my_account = sp.test_account("Cryptobot Owner")
+        market = Market()
+        scenario += market
+        
+        test_bot =  Cryptobot(manager_address = my_account.address,life_state = True, initial_mutez=5000, market_address = market.address)
+        scenario += test_bot
+---
+
+## Intro
+
+We'll take a short detour from inter-contract calling to learn and explore a few other topics that will help you build the `Cryptobot` of your dream to absolutely dominate the war against the aliens 🤩
+
+In this one we'll cover a slew of different topics including `sub_entry_point` and `sp.for`.
+
+## Study time
+
+### 1. Sub entry point
+
+Sub entry points allow you to define functions in a smart contract that can <span class="string-highlight">**ONLY**</span> be called from other entry points of the same contract.
+But why would you even need something like this?
+
+1. **Modularization** - Break down your code into different pieces to keep the code in your entry points clean and to the point. Makes the code easier to maintain and more readable.
+2. **Re-usability** - Once implemented, you can use them where ever needed. I think of them as **utility functions** that play a role in the success of other functions but aren't of much use indepedently.
+
+<br />
+
+Here's how you define a sub entry point -
+
+```python
+@sp.sub_entry_point
+def double(self, x):
+    sp.result(x * 2)
+```
+
+Notice, **`sp.result`** is used to return from a sub entry point instead of `return`.
+
+And it can be invoked like this -
+
+```python
+@sp.entry_point
+def update_result(self, num):
+    # Assume double is a sub entry point already implemented in the smart contract.
+    self.data.result = self.double(num)
+```
+
+Sub entry points can access the contract storage - if your function doesn't need to access the contract storage, you should use [`sp.global_lamba` ](https://smartpy.io/dev/reference.html#_lambdas).
+
+### 2. Looping with `sp.for`
+
+<br />
+
+Remember how we needed to use `sp.if` instead of `if` in SmartPy?
+Similarly, `for` and `while` have their SmartPy counter-parts as `sp.for` and `sp.while`.
+
+```python
+transfers = [-12, 15, -10, 20, 30]
+sp.for transfer in transfers:
+    self.data.total += transfer
+```
+
+You need to use `sp.range` instead of `range`.
+
+### 3. Local variables using `sp.local`
+
+<br />
+
+You can define local variables in SmartPy using `sp.local` -
+
+```python
+total = sp.local("total", 0)
+```
+
+But why not just define a normal python variable like - `total = 0`?
+Because normal python variables can't be updated during execution of a smart contract but variables defined using `sp.local` can be updated.
+
+- First argument to `sp.local` is the name which will be used to refer to the variable in error message.
+- Second argument is the initial value.
+
+<br />
+
+**Value of a local variable is accessed through `.value`** -
+
+```python
+x = sp.local("x", 0)
+# now to access or modify the value of x, you need to use `x.value`
+x.value = 2
+x.value += 5
+# x.value is now 7.
+```
+
+This is mostly helpful with loops wherever you need to keep track of something.
+Don't worry, we'll use this in our `Market` smart contract. That'll bring more clarity.
+
+### Show me an example
+
+```python
+@sp.sub_entry_point
+def add_to_total_received(self, amount):
+    self.data.total_received += amount
+
+@sp.entry_point
+def calculate_received(self):
+    sp.for transaction in self.data.transactions:
+        sp.if transaction.action == "received":
+            self.add_to_total_received(transaction.amount)
+```
+
+Imagine this as a part of a `Ledger` smart contract.
+We've got an entry point `calculate_received` that loops over the transactions, if the transaction was received - it adds the amount to the total through the sub entry point `add_to_total_received`.
+
+## #buidl-ing time
+
+### New feature request!
+
+We'll have to help the `Market` peeps find which `powerup` we want before they can send it over to your `Cryptobot`.
+
+Let's put our knowledge of sub entry point and loops to use 🚀
+
+### Step by step walkthrough
+
+- Implement the sub entry point `find_powerup` in the `Market` contract.
+  1. Define a local variable called `powerup_to_send` which should be a record which holds a variable called power(equal to an empty string) and another variable called duration(equal to 0).
+  2. Loop through the `powerups` in the contract storage.
+  3. Inside the loop, if it matches the `powerup` we're looking for set `powerup_to_send` equal to the `powerup`.
+  4. Return the value of `powerup_to_send`(remember to use `sp.result`).

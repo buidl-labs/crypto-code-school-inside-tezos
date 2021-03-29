@@ -20,6 +20,8 @@ module.exports = {
     `gatsby-plugin-react-helmet`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
+    `gatsby-plugin-postcss`,
+
     {
       resolve: 'gatsby-plugin-react-svg',
     },
@@ -47,6 +49,20 @@ module.exports = {
         theme_color: `#162F30`,
         display: `minimal-ui`,
         icon: `src/assets/theme.svg`, // This path is relative to the root of the site.
+      },
+    },
+    {
+      resolve: `gatsby-plugin-google-fonts`,
+      options: {
+        fonts: [
+          `Mulish\:400,700,800,900`,
+          `Ubuntu Mono\:400, 700`,
+          `Roboto\:400,500,700`,
+          `Inconsolata\:400,700`,
+          'Open Sans:400,700',
+          `Sigmar One`,
+          `Inter\:400,500,700`,
+        ],
       },
     },
     {
@@ -83,7 +99,9 @@ module.exports = {
       resolve: `gatsby-plugin-amplitude-analytics`,
       options: {
         // API key for your Amplitude Project (required)
-        apiKey: '9f25945960748d67e7f7cf101ece3422',
+        //TODO: BEFORE merging it in master, resolve whether to use beta-or main-master api key
+        //cryptoverse-wars beta amplitude tracking api key
+        apiKey: 'b8c4bfb895ccfd2479ce7fd4507b1256',
         // Puts tracking script in the head instead of the body (optional)
         head: true,
         // Prevents loading Amplitude and logging events if visitors have "Do Not Track" enabled (optional)
@@ -104,25 +122,19 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-plugin-metomic`,
-      options: {
-        clientId: 'prj:328a9ae4-b11d-4e2f-a5e3-4525fd629176',
-      },
-    },
-    {
       resolve: 'gatsby-plugin-root-import',
-    },
-    {
-      resolve: 'gatsby-plugin-page-transitions',
-    },
-    {
-      resolve: `gatsby-plugin-typography`,
-      options: {
-        pathToConfigModule: `src/utils/typography`,
-      },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
+    {
+      resolve: '@sentry/gatsby',
+      options: {
+        dsn:
+          'https://d2e5097585b0401aab888bfa8a8570ac@o551788.ingest.sentry.io/5675666',
+        sampleRate: 0.7,
+        denyUrls: ['localhost:8000'],
+      },
+    },
   ],
 };

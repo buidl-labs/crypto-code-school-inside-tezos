@@ -1,0 +1,136 @@
+---
+title: Who's the admin?
+chapter: Chapter 8
+slug: chapter-08
+filterBy: module-04
+editor:
+  language: javascript
+  startingCode: |
+    print("Starting to access storage...");
+    Tezos.contract.at("<CONTRACT_ADDRESS>")
+    .then(contract => {
+        // Return the storage of the contract.
+        
+        
+    })
+    .then(storage => {
+        // Initialize numTokens with `all_tokens` from conttract `storage`.
+        const numTokens = ???
+        
+        // Print to the console numTokens == 1
+        
+        
+    })
+    .catch(error => print(error));
+
+  answer: |
+    print("Starting to access storage...");
+    Tezos.contract.at("KT1T4wLsRSQUhfiBWsBPSeT2yYrkPghrFKUf")
+    .then(contract => {
+        // Return the storage of the contract.
+        return contract.storage();
+    })
+    .then(storage => {
+        // Initialize numTokens with `all_tokens` from conttract `storage`.
+        const numTokens = storage.all_tokens
+        
+        // Print to the console numTokens == 1
+        print(numTokens == 1)
+    })
+    .catch(error => print(error));
+---
+## Intro
+Now your society is starting to function well. 
+
+But there has to be a way to monitor your civilization right? 
+
+How else are you supposed to run your society if you don't know what's happening!?
+
+In this chapter, we'll explore how you can access contract storage through Taquito.
+
+## Study time
+Each contract has a global storage that holds all the data that is needed in the contract. For example, our `Cyber_Token` holds `administrator` and `ledger` among other fields.
+
+Contract storage can also be accessed through the `contract` object that we get back through `Tezos.contract.at`.
+```javascript
+Tezos.contract.at("<CONTRACT_ADDRESS>")
+.then(contract => {
+    return contract.storage();
+})
+.then(storage => {
+    print(storage)
+})
+.catch(error => print(error));
+```
+Once you get access to the `contract` object you simply have to return the `contract.storage()` - you'll get the storage of that contract as a result. 
+
+> Note - The data types map and big_map are not accessile as normal. We'll see a couple chapters down the line how to access them in the storage through Taquito.
+
+### Show me an example
+We've deployed this example for you and made a few operations on it as well - 
+```python
+import smartpy as sp
+
+class Wallet(sp.Contract):
+    def __init__(self, initial_amount, owner_address):
+        self.init(
+            amount = sp.mutez(initial_amount),
+            owner = owner_address,
+            transactions = sp.list(),
+            test = {
+                "first": "1",
+                "second": "2"
+            }
+        )
+        
+    @sp.entry_point
+    def add_transaction(self, amount):
+        self.data.amount += amount
+        self.data.transactions.push(amount)
+        
+@sp.add_test(name = "Wallet")
+def test():
+    scenario = sp.test_scenario()
+    account_owner = sp.test_account("Wallet Example Account")
+    w = Wallet(initial_amount = 1000, owner_address = account_owner.address)
+    scenario += w
+```
+
+<br />
+
+Now let's try accessing the storage of this smart contract.
+```javascript
+Tezos.contract.at("KT1CTQ7CteorSXcKZPRcZqt2G8gCkPA3YbsA")
+.then(contract => {
+    return contract.storage();
+})
+.then(storage => {
+    print(storage)
+})
+.catch(error => print(error));
+```
+We'll get a result similar to - 
+```json
+{
+  "amount": "1500",
+  "owner": "tz1PNnMSshdD4KCt8T1khDnxUcjFTvsk8BnM",
+  "transactions": [
+    "200",
+    "300"
+  ]
+}
+```
+
+
+## #buidl-ing time
+ 
+### New feature request!
+You need to keep a check on your civilization, to make sure they don't start minting a different token(currency) other than what you're minting.
+
+You'll need to access `all_tokens` inside the contract storage of the `Cyber_Token` contract you originated.
+
+### Step by step walkthrough
+1. Replace the `"<CONTRACT_ADDRESS>"` with the address of the contract you orginated.
+2. Return the contract storage.
+3. Initialize `numTokens` as `all_tokens` present in the `storage`.
+4. Print to the console : `numTokens == 1`

@@ -1,0 +1,175 @@
+---
+title: Intro to Mutez
+chapter: Chapter 1
+slug: chapter-01
+filterBy: module-02
+isCode: true
+editor:
+  language: python
+  startingCode: |
+    import smartpy as sp
+    class Cryptobot(sp.Contract):
+
+        def __init__(self, manager_address, life_state):
+            
+            self.init(
+                bot_manager = manager_address,
+                name = "terminator",
+                is_alive = life_state,
+                plasma_bullet_count = 5,
+
+                record_alien_kills = {
+                    "simple_alien": sp.nat(0), 
+                    "boss_alien": sp.nat(0), 
+                }
+                # add mutez_points here
+                
+                
+            )
+
+            
+        @sp.entry_point
+        def shoot_alien(self, alien_type):
+            
+            sp.verify(
+                self.data.bot_manager == sp.sender, 
+                message = "Error: non manager call"
+            )
+
+            sp.if self.data.plasma_bullet_count >= 1:
+                self.data.plasma_bullet_count -= 1
+                self.data.record_alien_kills[alien_type] += 1
+            sp.else:
+                sp.failwith("Error: you ran out of bullets! Please buy more!")
+
+        
+    @sp.add_test(name = "mutez")
+    def test():
+        scenario = sp.test_scenario()
+        
+        ## Class Invokation
+        my_address = sp.address("tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj")
+
+        test_bot =  Cryptobot(manager_address = my_address, life_state = True)
+        
+        ## Testing contract
+        scenario += test_bot
+        
+        #scenario.verify over here.
+        
+
+  answer: |  
+    import smartpy as sp
+
+    class Cryptobot(sp.Contract):
+
+        def __init__(self, manager_address, life_state):
+            
+            self.init(
+                bot_manager = manager_address,
+                name = "terminator",
+                is_alive = life_state,
+                plasma_bullet_count = 5,
+
+                record_alien_kills = {
+                    "simple_alien": sp.nat(0), 
+                    "boss_alien": sp.nat(0), 
+                },
+                # add mutez_points here
+                mutez_points = sp.mutez(5000)
+                
+            )
+
+            
+        @sp.entry_point
+        def shoot_alien(self, alien_type):
+            
+            sp.verify(
+                self.data.bot_manager == sp.sender, 
+                message = "Error: non manager call"
+            )
+
+            sp.if self.data.plasma_bullet_count >= 1:
+                self.data.plasma_bullet_count -= 1
+                self.data.record_alien_kills[alien_type] += 1
+            sp.else:
+                sp.failwith("Error: you ran out of bullets! Please buy more!")
+
+        
+    @sp.add_test(name = "mutez")
+    def test():
+        scenario = sp.test_scenario()
+        
+        ## Class Invokation
+        my_address = sp.address("tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj")
+
+        test_bot =  Cryptobot(manager_address = my_address, life_state = True)
+        
+        ## Testing contract
+        scenario += test_bot
+        
+        #scenario.verify over here
+        scenario.verify(test_bot.data.mutez_points == sp.mutez(5000))
+---
+
+## Intro
+Awesome work defeating those nasty aliens 🚀
+
+But, beware that was only the **first wave**, there's a greater challenge that lies ahead of you.
+At least one good thing came out of the first battle, you managed to collect some **mutez** 💵 when you defeated the first wave.
+
+Confused what good is this **mutez** thingy? 
+It's a **smaller unit of XTZ**. 
+Simply a way to represent smaller amounts of Tezos.
+
+This will come in handy to defeat the new challenge coming your way. 
+You'll use these `mutez_points` to buy power-ups from the `Market`(we'll implement the market in the coming chapters).
+
+
+## Study time
+Mutez is to XTZ(Currency of Tezos) what a cent is to dollar or what gram is to kg.
+To be more accurate - 
+`1,000,000 mutez = 1 XTZ`(<span class="string-highlight">1 million Mutez = 1 Tez(or XTZ)</span>)
+
+Similar to all other data types in SmartPy(sp.TNat, sp.TMap, etc) there are Tezos specific data types as well and one of them is [`sp.TMutez`](https://smartpy.io/dev/reference.html#_mutez).
+
+> #### Note - 
+> In SmartPy, when a type is being specified - it's referened with `sp.T<Type>`. But when it's being called with a value - it's called with `sp.<type>`.
+> Example - `sp.TNat` and `sp.nat(5)`, `sp.TMutez` and `sp.mutez(500)`
+> If you're not familiar with data types, go through this [chapter](/tezos/academy/module-01/chapter-08)
+
+#### Difference between sp.mutez and sp.tez - 
+When you write `sp.mutez(100000)` it's equated to `0.1 Tez(XTZ)`.
+Hence, when you're specifying a large number of tokens, it's better to use `sp.tez`. Like - `sp.tez(0.1)`.
+Whereas, `sp.mutez` helps you express smaller quantities with much better accuracy.
+
+### Show me an example
+```python
+class Wallet(sp.Contract):
+    def __init__(self, initial_amount):
+        self.init(
+            amount = sp.mutez(initial_amount)
+        )
+    
+@sp.add_test(name = "Wallet")
+def test():
+    scenario = sp.test_scenario()
+    w = Wallet(1000)
+    scenario += w
+    scenario.verify(w.data.amount == sp.mutez(1000))
+```
+Here, `Wallet` is storing `amount` which is of type `sp.TMutez`
+In the expression inside `scenario.verify`, `w.data.amount == sp.mutez(1000)`, we need to wrap `1000` with `sp.mutez()` because `amount` is holding data of type `sp.TMutez`.
+
+Think about it - for two values to be equal, their type also needs to be the same because smartpy scripts get converted to **Michelson** which is the language that runs on the Tezos blockchain. **Michelson is stronly typed**, hence requires same types.
+
+### #buidl-ing time
+
+#### New feature request!
+Now that you've collected some `mutez_points` in your previous battle, you need to have a place to keep track of them as well.
+
+#### Step by step walkthrough
+- Initialize `mutez_points` in your contract storage and set it equal to 5000 mutez.
+    
+#### Testing our code
+- Use `scenario.verify` to confirm whether the `mutez_points` in `Cryptobot` is equal to `5000` or not.

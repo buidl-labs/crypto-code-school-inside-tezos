@@ -4,7 +4,7 @@ var _ = require('lodash');
 
 //-----Error messages for each line------//
 
-var errors = {
+var errorsForModule1 = {
   1: 'smartpy not imported',
   2: 'Contract declared error',
   3: 'Contract not initialized',
@@ -29,7 +29,7 @@ var errors = {
   22: 'invalid assignment of state variable',
 };
 
-const missing = {
+const missingForModule1 = {
   'import smartpy as sp': 'import statement missing or invalid',
 
   // chapter 4
@@ -304,7 +304,7 @@ const mapArrayToObject = code => {
  *  error: array of errors
  * }
  */
-export function checkCode(userInputtedCode, correctSolution) {
+export function checkCode(userInputtedCode, correctSolution, module) {
   const result = {};
 
   const filteredUserInputtedCode = pipe(
@@ -333,86 +333,110 @@ export function checkCode(userInputtedCode, correctSolution) {
     ],
     correctSolution,
   );
-
+  // console.log(filteredUserInputtedCode, filteredCorrectSolution);
   const correctCodeArray = mapArrayToObject(filteredCorrectSolution);
 
   // list of lines (code) that user didn't write
   // var missingFromUser = correctCodeArray.filter(w => !userArray.includes(w));
-  var missingFromUser = []; // it has code without space
-  //Indentation message which will be shown to the user
-  const INDENTATION_ERROR = 'Indentation Error';
-  for (const a in correctCodeArray) {
-    if (userArray[a] === undefined) {
-      // this is for checking if indentation error is present or not
-      // trim out all user inputted line[key + value] for checking if
-      const userTrimmed = {};
-      for (const x in userArray) {
-        const key = x.trim();
-        const value = userArray[x].trim();
-        userTrimmed[key] = value;
-      }
-      // trim correct code line for comparison with user code
-      const correctCodeTrimmed = a.trim();
-      //user code matched with correct answer code
-      //means error type is indentation error
-      if (userTrimmed[correctCodeTrimmed]) {
-        missingFromUser.push(INDENTATION_ERROR);
+  if (module === 'module-01') {
+    var missingFromUser = []; // it has code without space
+    //Indentation message which will be shown to the user
+    const INDENTATION_ERROR = 'Indentation Error';
+    for (const a in correctCodeArray) {
+      if (userArray[a] === undefined) {
+        // this is for checking if indentation error is present or not
+        // trim out all user inputted line[key + value] for checking if
+        const userTrimmed = {};
+        for (const x in userArray) {
+          const key = x.trim();
+          const value = userArray[x].trim();
+          userTrimmed[key] = value;
+        }
+        // trim correct code line for comparison with user code
+        const correctCodeTrimmed = a.trim();
+        //user code matched with correct answer code
+        //means error type is indentation error
+        if (userTrimmed[correctCodeTrimmed]) {
+          missingFromUser.push(INDENTATION_ERROR);
+          continue;
+        }
+        missingFromUser.push(a);
+      } else {
         continue;
       }
-      missingFromUser.push(a);
-    } else {
-      continue;
     }
-  }
-
-  // list of extra lines (code) thats user wrote
-  // var extraInUser = userArray.filter(w => !correctCodeArray.includes(w));
-  //store very line which doesn't match with code solution
-  var extraInUser = []; // it has code without space
-  for (const a in userArray) {
-    if (correctCodeArray[a] === undefined) {
-      extraInUser.push(a);
-    } else {
-      continue;
-    }
-  }
-
-  // invalid statements of extra line of codes
-  for (const i in extraInUser) {
-    const filtered = pipe(
-      [
-        SplitIntoNewLine,
-        removeCarriageReturn,
-        ignoreSemiColons,
-        replaceTabWithSpace,
-        trimAtTheEndOfLine,
-        replaceSingleQuotesWithDoubleQuotes,
-        handleIntraLineWhiteSpace,
-      ],
-      userInputtedCode,
-    );
-    result[filtered.indexOf(userArray[extraInUser[i]]) + 1] =
-      'Invalid statement';
-    // result[user.indexOf(extraInUser[i]) + 1] = 'Invalid statement';
-  }
-
-  if (missingFromUser.length !== 0) {
-    result[404] = [];
-    for (const i in missingFromUser) {
-      //check error type
-      if (missingFromUser[i] === INDENTATION_ERROR) {
-        result[404].push(missingFromUser[i]);
+    // list of extra lines (code) thats user wrote
+    // var extraInUser = userArray.filter(w => !correctCodeArray.includes(w));
+    //store very line which doesn't match with code solution
+    var extraInUser = []; // it has code without space
+    for (const a in userArray) {
+      if (correctCodeArray[a] === undefined) {
+        extraInUser.push(a);
       } else {
-        result[404].push(
-          handleIntraLineWhiteSpace(missing, 'OBJECT')[
-            correctCodeArray[missingFromUser[i]].trim()
-          ],
-        );
+        continue;
       }
-      // result[404].push(missing[missingFromUser[i].trim()]);
+    }
+    // invalid statements of extra line of codes
+    for (const i in extraInUser) {
+      const filtered = pipe(
+        [
+          SplitIntoNewLine,
+          removeCarriageReturn,
+          ignoreSemiColons,
+          replaceTabWithSpace,
+          trimAtTheEndOfLine,
+          replaceSingleQuotesWithDoubleQuotes,
+          handleIntraLineWhiteSpace,
+        ],
+        userInputtedCode,
+      );
+      result[filtered.indexOf(userArray[extraInUser[i]]) + 1] =
+        'Invalid statement';
+      // result[user.indexOf(extraInUser[i]) + 1] = 'Invalid statement';
+    }
+    if (missingFromUser.length !== 0) {
+      result[404] = [];
+      for (const i in missingFromUser) {
+        //check error type
+        if (missingFromUser[i] === INDENTATION_ERROR) {
+          result[404].push(missingFromUser[i]);
+        } else {
+          result[404].push(
+            handleIntraLineWhiteSpace(missingForModule1, 'OBJECT')[
+              correctCodeArray[missingFromUser[i]].trim()
+            ],
+          );
+        }
+        // result[404].push(missing[missingFromUser[i].trim()]);
+      }
+    }
+  } else {
+    let FINAL_RESULT = {
+      success: null,
+      error: null,
+    };
+
+    if (filteredUserInputtedCode.length == filteredCorrectSolution.length) {
+      FINAL_RESULT.success = true;
+      FINAL_RESULT.error = [''];
+      for (let i = 0; i < filteredCorrectSolution.length; i++) {
+        if (filteredUserInputtedCode[i] !== filteredCorrectSolution[i]) {
+          console.log(filteredCorrectSolution[i], filteredUserInputtedCode[i]);
+          console.log('Marking the error');
+          FINAL_RESULT.error = [
+            `Error on line: ${filteredUserInputtedCode[i].trim()}`,
+          ];
+          FINAL_RESULT.success = false;
+          return FINAL_RESULT;
+        }
+      }
+      FINAL_RESULT.error = [''];
+    } else {
+      FINAL_RESULT.success = false;
+      FINAL_RESULT.error = ["Oops, your code doesn't seem to be correct."];
+      return FINAL_RESULT;
     }
   }
-  // console.log('RESULT-3', result);
 
   var FINAL_RESULT = {
     success: null,
@@ -420,7 +444,6 @@ export function checkCode(userInputtedCode, correctSolution) {
   };
 
   var RR = Object.keys(result);
-  //console.log('RR', RR);
 
   if (RR.length === 0) {
     FINAL_RESULT = {

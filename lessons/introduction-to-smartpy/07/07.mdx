@@ -2,7 +2,8 @@
 title: Creating a basic entry point function
 chapter: Chapter 7
 slug: chapter-07
-filterBy: lesson-1
+filterBy: module-01
+isCode: true
 editor:
   showEditor: true
   language: python
@@ -66,7 +67,7 @@ In this chapter, you will learn to add a functionality that enables you to chang
 
 Entry functions are basically class methods with the added superpowers to modify a contract's local storage! 
 
-As we learnt about the concept of <span class="string-highlight">"state"</span> and <span class="string-highlight">"state variables"</span> in <br /> [Chapter 5](/lesson/chapter-05), these functions are mainly used to access and modify a contract's state by altering state variables values after the contract is deployed. 
+As we learnt about the concept of <span class="string-highlight">"state"</span> and <span class="string-highlight">"state variables"</span> in <br /> [Chapter 5](/tezos/academy/module-01/chapter-05), these functions are mainly used to access and modify a contract's state by altering state variables values after the contract is deployed. 
 
 ### Show me an example: 
 
@@ -93,20 +94,14 @@ class Bank(sp.Contract):
 
 Explaining the code above:
 
-1. We add a `@sp.entry_point` decorator to instruct the compiler that the following function is an entry point function.  
-
-2. We then define the `modify_name` function and pass `self` and `new_name` as function arguments. 
-    * `new_name` will contain the new name that we would pass to this function
-
-3. Then we access `name`, which is a variable stored inside our contract storage, by using `self.data`. 
-    * **This is an important concept to remember, for anytime you need to access anything from the contract storage, you need to use `self.data`.**
-
-4. We assign `new_name` to `self.data.name`. 
-   * This line of code will change the `name` contents to whatever you send in the `new_name` variable! 
+* We add a `@sp.entry_point` decorator to instruct the compiler that the following function is an entry point function.
+* We then define the `modify_name` function and pass `self` and `new_name` as function arguments - `new_name` will contain the new name that we would pass to this function.
+* Then we access `name`, which is a variable stored inside our contract storage, by using `self.data`. **This is an important concept to remember, for anytime you need to access anything from the contract storage, you need to use `self.data`.**
+* We assign `new_name` to `self.data.name`. This line of code will change the `name` contents to whatever you send in the `new_name` variable! 
 
 Simple, right? 
 
-Let us use our testing skills that we gained from [Chapter 6](/lesson/chapter-06) to test our newly created `modify_name` function! 
+Let us use our testing skills that we gained from [Chapter 6](/tezos/academy/module-01/chapter-06) to test our newly created `modify_name` function! 
 
 
 ```python
@@ -140,14 +135,14 @@ As we know the above testing code simulates how smart contract code will behave 
 The above code when simulated, will change the `name` variable's content from "World Bank" to "Local Bank"
 
 
-You can also tinker around with the above code on [SmartPy’s online IDE](https://smartpy.io/demo/index.html?code=eJyNUkFq5DAQvPsVRXKZYYMfEBjIJtc9LuSodKT2RKzcMpImYfL6SO1xbEIWYrBBcndVV3X5cYqpII@UynQGZeSp62ygnHFP8m@Xp_4hSklky_62A@B4gDFefDFmlzkM83V72qlvf3ZCI@OAq8eYglOgq32rau9dheSKeDZT9FIWzDE6P5xN61TYG0yUaMwr_PVM4KgQfMYps0OJIGu5TmsvUyKXmOjIPZa@tZ@P_YrR65CJB04sFQLlhaF3r5Q8PQdWKHZrv5fsHWvhVzrEQXWutF@IDhc9vfCbqtS6ruuaH@ScKZxX4_7Wg@Jhcb8a2GzSqosn2bLUUWNtqBjtj1mudvvuU_o1HhmDTxXRJqbCINQh0DblKfj36mNVVqi6sOoaUhwRTwlPbYwnaCYu6p7rjc5rPssPmPOy5f0trnkleGO4FKd68JtF1eVHZch@PAUqPorKA8urT1FGntOx6vx1@IZ6Q_hAIXg56oI2eYLGDRo3DCexM1WEfSE5zkv_AVG_jeiyxbasP9FS2KQc__18AI8cFc4-). Try running the test by clicking on the ▶️ button. 
+You can also tinker around with the above code on [SmartPy’s online IDE](https://smartpy.io/ide?code=eJyNUkFq5DAQvPsVRXKZYYMfEBjIJtc9LuSodKT2RKzcMpImYfL6SO1xbEIWYrBBcndVV3X5cYqpII@UynQGZeSp62ygnHFP8m@Xp_4hSklky_62A@B4gDFefDFmlzkM83V72qlvf3ZCI@OAq8eYglOgq32rau9dheSKeDZT9FIWzDE6P5xN61TYG0yUaMwr_PVM4KgQfMYps0OJIGu5TmsvUyKXmOjIPZa@tZ@P_YrR65CJB04sFQLlhaF3r5Q8PQdWKHZrv5fsHWvhVzrEQXWutF@IDhc9vfCbqtS6ruuaH@ScKZxX4_7Wg@Jhcb8a2GzSqosn2bLUUWNtqBjtj1mudvvuU_o1HhmDTxXRJqbCINQh0DblKfj36mNVVqi6sOoaUhwRTwlPbYwnaCYu6p7rjc5rPssPmPOy5f0trnkleGO4FKd68JtF1eVHZch@PAUqPorKA8urT1FGntOx6vx1@IZ6Q_hAIXg56oI2eYLGDRo3DCexM1WEfSE5zkv_AVG_jeiyxbasP9FS2KQc__18AI8cFc4-). Try running the test by clicking on the ▶️ button. 
 
 
 ## #buidl-ing time:
 
 Let’s change our Cryptobot’s name from <span class="string-highlight">"terminator"</span> to <span class="string-highlight">"punky terminator"</span> by doing the following: 
 
-1. Add a `change_name` entry point function just after the scope of `__init__` initialization function finishes. 
+* Add a `change_name` entry point function just after the scope of `__init__` initialization function finishes. 
      * Pass `self` and `new_name` as arguments to `change_name` function. 
      * Use `self.data.name` to access `Cryptobot` contract’s internal storage. And assign it the value of `new_name`. 
 

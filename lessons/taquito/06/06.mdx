@@ -1,0 +1,79 @@
+---
+title: Originating, finally.
+chapter: Chapter 6
+slug: chapter-06
+filterBy: module-04
+editor:
+  language: javascript
+  startingCode: |
+    // Originate the contract -
+    print("Starting origination...")
+    Tezos.contract.originate({
+        //Pass code: CODE_JSON and storage: STORAGE_JSON
+
+
+    }).then(origination => {
+                
+        
+    }).then(contract => {
+        
+        
+    })
+    .catch(error => print(error))
+    
+
+  answer: |
+    // Originate the contract - 
+    print("Starting origination...")
+    Tezos.contract.originate({
+        code: CODE_JSON,
+        init: STORAGE_JSON
+    }).then(origination => {
+        print(`Origination waiting confirmation...`);
+        return origination.contract()
+    }).then(contract => {
+        print(`Origination completed.`);
+        print(`Contract: ${contract.address}`)
+    })
+    .catch(error => print(error))
+        
+---
+## Intro
+The time has finally come to originate our contract, finally.
+
+## Study time
+It's a super straightforward process to origiante a contract using Taquito - all you need to do is give it the `CODE_JSON` and `STORAGE_JSON`, rest it handles under the hood for you.
+
+
+## Show me an example
+> Note: You need to use `print` as a replacement of `console.log` to output content on our platform
+```javascript
+Tezos.contract.originate({
+        code: CODE_JSON,
+        init: STORAGE_JSON
+    }).then(origination => {
+        print(`Origination waiting confirmation...`);
+        return origination.contract()
+    }).then(contract => {
+        print(`Origination completed.`);
+        print(`Contract: ${contract.address}`)
+    })
+    .catch(error => print(error))
+```
+
+<br />
+
+First, we're giving it the `CODE_JSON` and `STORAGE_JSON`.
+After that, it's mostly the necessary steps - it returns an origination operation, this it the intermediate step where you've sent your contract for origination and waiting for confirmation.
+
+Next, when you get the origination confirmation back, we're returning the originated contract to the next block.
+
+## #buidl-ing time
+ 
+### Step by step walkthrough
+- Originate the contract using `Tezos.contract.originate` and pass it the `CODE_JSON` and `STORAGE_JSON` (use the code snippet present above).
+**- Don't forget to copy/store the contract address that's being printed to the console, we'll use it in the next few chapters!** 
+
+<br />
+
+In a React application you would ideally store the resultant contract as a state variable but we're not choosing to do that to keep this tutorial as isolated as possible from your framework/environment of choice.

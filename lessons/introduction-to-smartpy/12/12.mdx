@@ -2,7 +2,8 @@
 title: Tinkering with addresses in SmartPy
 chapter: Chapter 12
 slug: chapter-12
-filterBy: lesson-1
+filterBy: module-01
+isCode: true
 editor:
   showEditor: true
   language: python
@@ -131,7 +132,7 @@ In Chapter 2,  we read that a blockchain is made up of accounts and each account
 
 The unique identifier points to an account on the blockchain and it looks like this: 
 
-```css
+```
 tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj
 ```
 
@@ -159,7 +160,6 @@ self.init(bot_manager = my_address)
 ## Update bot_manager value 
 ## in case you decide to sell your cryptobot
 self.data.bot_manager = sp.address("tz1dFyuNkiSabQrU1ie9yTKbiTje3YbuXjX1")
-
 ```
 
 
@@ -181,7 +181,6 @@ You are spending so much time evolving the cryptobot’s abilities, that you had
 #### Step by step walkthrough: 
  
 1. Add a `bot_manager` state variable to the contract's storage that will hold the address of the owner. 
-
 2. Pass `manager_address` as parameter to the initialization function and assign it to `bot_manager`
  
 
@@ -189,7 +188,6 @@ You are spending so much time evolving the cryptobot’s abilities, that you had
 #### Testing our code: 
 
 1. Define `my_address` variable and give it the address value of `tz1Syu3KacZ8cy4286a4vaCeoMtwqVKHkaoj`
-
 2. Pass `my_address` as value to `manager_address` function argument and then use it to invoke the `Cryptobot` contract. 
 
 
@@ -201,6 +199,6 @@ When you’re finished:
 2. Click on “Show Answer” in case you get stuck.
 
 
-You can also tinker around with the final code on [SmartPy’s online IDE](https://smartpy.io/demo/index.html?code=eJydVN9r2zAQfvdfIdwXh2Vh3bpRCoWN7mFQBoOOPWwMcbEviVZZ8qRzMnfsf@9JdmI7SUOZnyT5u_vu56fKyjoSvgRHVSPAC18lSa7Be3Hjmors3FLmq9mNNeQgp8lVIvg7E18CpAQDS3QSisIh39keRAUOSiR0gqygFQplFCnQ6gFIWSMWtcnDIToqcCGkDAgpM496MRVaLVB6AsLpPkHHHr6AnQW7bPfUBvahKAQHLTtTsQanYK5RzFHbzQg8hF3vc01H0NHFcH5skHKOpTJA1qVjtPKS810H0CCbpx3m1roieEL5h2243spQ9moyfRLWtDA@H8JGl4p7WYKc11ojydzWhtj07YlgHOZMExJAI@@V1p4N_o4g4Uu9KiuNLS69GkRzCJ1b7w@BI9y_3a1_j4f3jEcevkZWlquym5p8BWaJMvSiGxyDm3jdn5ICCGZdz7aY_RhPUpV2jXJlnXrgLQCtm46wrorQC7JHGUdNfXHdo5PnEa7Rkcr_h64Z052k8ivLWxB709G0jaem4kKKI0THJurltTg_Aj0cpR@9958hytYqCdHx3klCT9l2ve5UWWvWDLMUdmPQ@ZWq0kkSoo64rgw@R8M7btuNCH_k9imLs9Qp1kdcKIOibHZydUQazgSYQizD7iqK6tWDdY3CMvfD@V1Tv7mF_Ptl3ly8vnwHF2u4QfuZNr@_3X66B_sr@howxdC6S5Y@x0M66cdkq7bNUGjbeFhi93RrkAaHb0Tt21Qs6_Da3mNMKip8RMZ6sRByiAPF71WL37@6@lCKg2Du4unLvGsG93brerBrT2JmwzkcS8tp52PDgdBMkkdNuBKM). Try running the test by clicking on the ▶️ button!
+You can also tinker around with the final code on [SmartPy’s online IDE](https://smartpy.io/ide?code=eJydVN9r2zAQfvdfIdwXh2Vh3bpRCoWN7mFQBoOOPWwMcbEviVZZ8qRzMnfsf@9JdmI7SUOZnyT5u_vu56fKyjoSvgRHVSPAC18lSa7Be3Hjmors3FLmq9mNNeQgp8lVIvg7E18CpAQDS3QSisIh39keRAUOSiR0gqygFQplFCnQ6gFIWSMWtcnDIToqcCGkDAgpM496MRVaLVB6AsLpPkHHHr6AnQW7bPfUBvahKAQHLTtTsQanYK5RzFHbzQg8hF3vc01H0NHFcH5skHKOpTJA1qVjtPKS810H0CCbpx3m1roieEL5h2243spQ9moyfRLWtDA@H8JGl4p7WYKc11ojydzWhtj07YlgHOZMExJAI@@V1p4N_o4g4Uu9KiuNLS69GkRzCJ1b7w@BI9y_3a1_j4f3jEcevkZWlquym5p8BWaJMvSiGxyDm3jdn5ICCGZdz7aY_RhPUpV2jXJlnXrgLQCtm46wrorQC7JHGUdNfXHdo5PnEa7Rkcr_h64Z052k8ivLWxB709G0jaem4kKKI0THJurltTg_Aj0cpR@9958hytYqCdHx3klCT9l2ve5UWWvWDLMUdmPQ@ZWq0kkSoo64rgw@R8M7btuNCH_k9imLs9Qp1kdcKIOibHZydUQazgSYQizD7iqK6tWDdY3CMvfD@V1Tv7mF_Ptl3ly8vnwHF2u4QfuZNr@_3X66B_sr@howxdC6S5Y@x0M66cdkq7bNUGjbeFhi93RrkAaHb0Tt21Qs6_Da3mNMKip8RMZ6sRByiAPF71WL37@6@lCKg2Du4unLvGsG93brerBrT2JmwzkcS8tp52PDgdBMkkdNuBKM). Try running the test by clicking on the ▶️ button!
     
 

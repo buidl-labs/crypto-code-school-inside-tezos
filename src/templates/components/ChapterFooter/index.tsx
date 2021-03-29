@@ -14,6 +14,7 @@ import ReactTooltip from 'react-tooltip';
 interface Props {
   chapter: string;
   title: string;
+  currentModule: string;
   chapterIndex: {
     current: number;
     total: number;
@@ -25,6 +26,7 @@ interface Props {
 function ChapterFooter({
   chapter,
   title,
+  currentModule,
   chapterIndex: { current, total, nextSlug, prevSlug },
 }: Props) {
   const [openDrawer, toggleDrawer] = useState(false);
@@ -36,7 +38,7 @@ function ChapterFooter({
       <div>
         <MenuButton>
           <IoIosMenu onClick={toggle} size={36} color="#fff" />
-          <ContentMenuSlider openDrawer={openDrawer} toggle={toggle} />
+          <ContentMenuSlider openDrawer={openDrawer} toggle={toggle} currentModule={currentModule}/>
         </MenuButton>
         <ChapterTitle>
           {chapter}
@@ -46,7 +48,7 @@ function ChapterFooter({
       </div>
       <div>
         {prevSlug ? (
-          <PrevLink to={`/lesson/${prevSlug}`}>
+          <PrevLink to={`/tezos/lesson/${prevSlug}`}>
             <LeftArrow small />
             <span>Prev</span>
           </PrevLink>
@@ -56,11 +58,12 @@ function ChapterFooter({
           {current}/{total}
         </ContentIndex>
         {nextSlug ? (
-          <NextLink to={`/lesson/${nextSlug}`}>
+          <NextLink to={`/tezos/lesson/${nextSlug}`}>
             <span>Next</span> <RightArrow small />
           </NextLink>
         ) : (
-          <NextLink to="/tezos/game">
+
+          <NextLink to={currentModule === 'lesson-1'?'/tezos/game': `/tezos/overview`}>
             <span>Finish</span> <RightArrow small />
           </NextLink>
         )}

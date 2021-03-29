@@ -1,0 +1,162 @@
+---
+title: FA2 template in SmartPy
+chapter: Chapter 3
+slug: chapter-03
+filterBy: module-03
+isCode: true
+editor:
+  language: python
+  startingCode: |
+    import smartpy as sp
+
+    # Import FA2 template
+
+    # Define Cyber_Token
+
+
+    @sp.add_test(name = "Fungible Token")
+    def test():
+        scenario = sp.test_scenario()
+        admin = sp.test_account("Decentralized Dictator")
+
+        # Initialize Cyber_Token as cyber_token with single_asset = True
+
+        #Add cyber_token to the scenario
+
+  answer: |
+    import smartpy as sp
+
+    # Import FA2 template
+    FA2 = sp.import_script_from_url("https://smartpy.io/dev/templates/FA2.py")
+    # Define Cyber_Token
+    class Cyber_Token(FA2.FA2):
+        pass
+
+    @sp.add_test(name = "Fungible Token")
+    def test():
+        scenario = sp.test_scenario()
+        admin = sp.test_account("Decentralized Dictator")
+
+        # Initialize Cyber_Token as cyber_token with single_asset = True
+        cyber_token = Cyber_Token(FA2.FA2_config(single_asset=True, assume_consecutive_token_ids = False), admin = admin.address, metadata = sp.big_map({"": sp.bytes_of_string("tezos-storage:content"),"content": sp.bytes_of_string("""{"name" : "Cyber Token"}""")}))
+        #Add cyber_token to the scenario
+        scenario += cyber_token
+---
+
+## Intro
+
+By now you know, there are multiple languages in which you can write smart contracts for the Tezos blockchain.
+How do you maintain uniformity of the FA2 standards in all these languages?
+Enter, **FA2 template**.
+
+**FA2 template** is your angel from heaven - here to save you from implementing the complexities of the FA2 standard.
+
+## Study time
+
+In the multiple languages through which you can write smart contracts for Tezos, there's an FA2 template implemented in all of those languages by seasoned developers.
+
+And good news! There's an awesome template implemented for SmartPy as well which we can directly use to implement our own tokens.
+
+To build your own tokens, you don't need to know the very deep details of FA2, but if you're interested - you can read the [proposal for FA2(TZIP-12)](https://gitlab.com/tzip/tzip/-/blob/master/proposals/tzip-12/tzip-12.md), after all, wouldn't it be nice to know about what technology will be supporting your civilization?
+
+### How do you use the FA2 template?
+
+The behavior of your token is controled by a set of values you pass in during the initialization of the contract(tokens are implemented as contracts.)
+
+```python
+def __init__(self,
+             single_asset = False,
+             non_fungible = False,
+             assume_consecutive_token_ids = True,
+             ...,
+             ... ):
+```
+
+These are the multiple options that you can play around with that I've ommited above, but honestly you can simply use these 3 options - `single_asset`, `non_fungible`, and `assume_consecutive_token_ids` to implment what we want to.
+
+If you were looking towards implementing a fungible token like [Dai](https://decrypt.co/resources/dai-explained-guide-ethereum-stablecoin), you'll set `non_fungible` as `False`, `single_asset` as True, and `assume_consecutive_token_ids` as True.
+If you wanted to implement collectibles like [CryptoKitties](https://www.cryptokitties.co/), you'll set `single_asset` as `False` and `non_fungible` as True.
+
+But what does `single_asset` mean? It signifies whether the token contract has multiple types of tokens or just one type of token.
+
+> I recommend you go through the [FA2 template](https://smartpy.io/ide?cid=QmZ9g3hBEnBx3P4CF6EHThRQb152p1DTobLjT6AUfBFZsY&k=769499b285ae5023fc69) even if it seems overwhelming at first, it's worth spending some time to understand how it's working behind the scenes.
+
+
+
+
+### Show me an example
+
+To implement a token of your own - you need to import SmartPy's FA2 template and in your own contract, rather than inheriting from `sp.Contract`, you'll inherit from the `FA2` contract.
+
+```python
+FA2 = sp.import_script_from_url("https://smartpy.io/dev/templates/FA2.py")
+```
+
+This line is similar to - `import FA2` in plain python.
+But because we're writing SmartPy, the rules are different.
+You need to use -
+* `sp.import_script_from_url` - If you're not using SmartPy's online IDE.
+* `sp.import_template` - If your code is running in the SmartPy online IDE. When you use this, you would be required to just pass in `"FA2.py"` as the argument and not the whole URL.
+
+<br />
+
+There are a lot of classes in the FA2 template along with the core `FA2` contract which are used in implementing the template in a way that it's easily reusable.
+
+To access the `FA2` contract defined in the template, you need to use the dot(.) notation - `FA2.FA2`, where the first `FA2` represents the template as a whole and the second `FA2` represents the actual contract class defined in the template.
+
+```python
+FA2 = sp.import_script_from_url("https://smartpy.io/dev/templates/FA2.py")
+class Your_Token(FA2.FA2):
+    pass
+
+@sp.add_test(name = "Fungible Token")
+def test():
+    scenario = sp.test_scenario()
+    # Creating test accounts.
+    admin = sp.test_account("Elon Musk owns this account.")
+
+    your_token = Your_Token(FA2.FA2_config(single_asset = True), admin = admin.address,
+    metadata = sp.big_map({"": sp.bytes_of_string("tezos-storage:content"),"content": sp.bytes_of_string("""{"name" : "Your Token"}""")}))
+```
+
+That's all the code needed to implement your own fungible token!
+
+Look at the last line of code in the snippet above -
+
+```python
+your_token = Your_Token(FA2.FA2_config(single_asset = True), admin.address,
+metadata = sp.big_map({"": sp.bytes_of_string("tezos-storage:content"),"content": sp.bytes_of_string("""{"name" : "Your Token"}""")}))
+```
+
+On first look, we're initializing a smart contract like we usually do.
+But, we're also passing in `FA2.FA2_config(single_asset = True)`. `FA2_config` is one of the helper classes defined in the FA2 template through which we can control the behavior of the token.
+We're simply telling the config class that we want our contract to be a **single asset** token.
+As the second argument, we're passing the address to the admin account.
+
+Now, third argument, `metadata`, is where you need to carefully take a look. This `metadata` is neccessary to be passed, and has to be according to [TZIP-16](https://gitlab.com/tzip/tzip/-/blob/master/proposals/tzip-16/tzip-16.md)
+Let's deconstruct it!
+
+
+```python
+metadata = sp.big_map({"": sp.bytes_of_string("tezos-storage:content"),"content": sp.bytes_of_string("""{"name" : "Your Token"}""")}))
+```
+
+<br />
+
+`metadata` needs to be a big map(`sp.big_map`), and the first key NEEDS to be an empty string(`""`) and it's value needs to be a string which points to the location of the metadata content.
+There can be several different ways of specifying the metadata, if you're storing the data in the contract storage itself, then you've to specify it as `"tezos-storage:<name_of_the_key>"`. Over here `"content"` is the key under which data is stored, hence the metadata location specifier is `"tezos-storage:content"`.
+And now, the value of `"content"` is in bytes, a string that represents the JSON object.
+
+## #buidl-ing time
+
+### New feature request!
+
+It's time to introduce some order in your chaotic new world order!
+Take the first steps towards building the universe's most advanced civilization, it's time to make your own economy through fungible tokens 💵
+
+### Step by step walkthrough
+
+1. Import the FA2 template using and set it equal to `FA2`.
+2. Define a smart contract - `Cyber_Token` that inherits from the core FA2 contract. (Use `Your_Token`) in the example above as a reference.
+3. Initialize `Cyber_Token` with `single_asset=True`, `assume_consecutive_tokens=False`, address to the `admin`, and in the `metadata`, `name` needs to be equal to `"Cyber Token"`.
+4. Add `cyber_token` to the scenario.

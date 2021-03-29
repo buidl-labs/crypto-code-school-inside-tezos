@@ -176,7 +176,7 @@ const PlantGrowthModalView = ({ currentChapter, nextSlug, onToggle }) => {
                 Power on the cryptobots part building machine!
               </EvolutionButton>
             ) : nextSlug ? (
-              <StyledLink to={`/lesson/${nextSlug}`}>
+              <StyledLink to={`/tezos/lesson/${nextSlug}`}>
                 Proceed <FaChevronRight />
               </StyledLink>
             ) : (
@@ -186,7 +186,9 @@ const PlantGrowthModalView = ({ currentChapter, nextSlug, onToggle }) => {
             )}
 
             {nextSlug ? (
-              <NextLink to={`/lesson/${nextSlug}`}>Skip and Continue</NextLink>
+              <NextLink to={`/tezos/lesson/${nextSlug}`}>
+                Skip and Continue
+              </NextLink>
             ) : (
               <NextLink to={`/tezos/game`}>Skip and Continue</NextLink>
             )}
