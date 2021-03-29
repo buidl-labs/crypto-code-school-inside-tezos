@@ -189,14 +189,14 @@ function BotView({ location }) {
             Are you sure to withdraw cryptobot from sale ?
           </ModalHeading>
           <TransactionContainer>
-            <Cost
+            {/* <Cost
               type="Estimated Network Fee"
               main={`${convertMutezToXtz(4556)} XTZ`}
               caption={
                 xtzPrice ? `$ ${getXTZPriceInUSD(xtzPrice.price, 4556)}` : null
               }
               tooltip
-            />
+            /> */}
             <div>
               {getUserBalance.loading ? null : getUserBalance.error ? (
                 <div className="text-error-500">
@@ -362,14 +362,14 @@ function BotView({ location }) {
             </InputContainer>
           </form>
           <TransactionContainer>
-            <Cost
+            {/* <Cost
               type="Estimated Network Fee"
               main={`${convertMutezToXtz(4556)} XTZ`}
               caption={
                 xtzPrice ? `$ ${getXTZPriceInUSD(xtzPrice.price, 4556)}` : null
               }
               tooltip
-            />
+            /> */}
             <div>
               {getUserBalance.loading ? null : getUserBalance.error ? (
                 <div className="text-error-500">

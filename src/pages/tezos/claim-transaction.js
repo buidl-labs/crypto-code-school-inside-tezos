@@ -297,13 +297,13 @@ function Transaction({ location }) {
     }
   }, [user]);
 
-  const estimatedTotalCost = useAsync(async () => {
-    try {
-      return await estimateNFTMintFee();
-    } catch (err) {
-      console.log('err', err);
-    }
-  }, []);
+  // const estimatedTotalCost = useAsync(async () => {
+  //   try {
+  //     return await estimateNFTMintFee();
+  //   } catch (err) {
+  //     console.log('err', err);
+  //   }
+  // }, []);
 
   return (
     <div className=" bg-base-900 ">
@@ -368,7 +368,7 @@ function Transaction({ location }) {
               <Heading heading="Confirm your claim" />
               <TransactionContainer>
                 <Cost type="Cryptobot Cost" main={'Free'} caption={''} />
-                <div className="bg-base-600 mt-4 px-8 rounded">
+                {/* <div className="bg-base-600 mt-4 px-8 rounded">
                   {estimatedTotalCost.loading ? (
                     <Cost
                       type="Estimated Network Fee"
@@ -399,7 +399,7 @@ function Transaction({ location }) {
                       />
                     </div>
                   )}
-                </div>
+                </div> */}
                 <div>
                   {getUserBalance.loading ? null : getUserBalance.error ? (
                     <div className="text-error-500 text-center">

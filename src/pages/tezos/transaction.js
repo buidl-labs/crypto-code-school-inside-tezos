@@ -231,13 +231,13 @@ function Transaction({ location }) {
     }
   }, [user]);
 
-  const estimatedTotalCost = useAsync(async () => {
-    try {
-      return await estimateBotPurchaseGasFee(bot);
-    } catch (err) {
-      console.log('err', err);
-    }
-  }, []);
+  // const estimatedTotalCost = useAsync(async () => {
+  //   try {
+  //     return await estimateBotPurchaseGasFee(bot);
+  //   } catch (err) {
+  //     console.log('err', err);
+  //   }
+  // }, []);
 
   return (
     <div className=" bg-base-900 ">
@@ -318,13 +318,7 @@ function Transaction({ location }) {
                       : null
                   }
                 />
-                <div className="bg-base-600 mt-4 px-8 rounded">
-                  {/* <Cost
-                    type="Cost"
-                    main="FREE"
-                    caption="Your first bot is on us!"
-                  /> */}
-                  {/* <hr className="my-2 bg-base-400 border-2 h-0.5" /> */}
+                {/* <div className="bg-base-600 mt-4 px-8 rounded">
                   {estimatedTotalCost.loading ? (
                     <Cost
                       type="Estimated Network Fee"
@@ -355,7 +349,7 @@ function Transaction({ location }) {
                       />
                     </div>
                   )}
-                </div>
+                </div> */}
                 <div>
                   {getUserBalance.loading ? null : getUserBalance.error ? (
                     <div className="text-error-500 text-center">
