@@ -18,10 +18,11 @@ import Loader from 'react-loader-spinner';
 import { BeaconContext } from 'src/context/beacon-context';
 import { CONTRACT_ADDRESS } from 'src/defaults';
 import { connectToBeacon, Tezos } from 'src/utils/wallet';
+import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 
 import Clipboard from 'react-clipboard.js';
 
-import { MdClose, MdDone } from 'react-icons/md';
+import { MdClose, MdDone,MdFullscreen,MdFullscreenExit } from 'react-icons/md';
 import userAtom from 'src/atoms/user-atom';
 import isUserAtom from 'src/atoms/is-user-atom';
 import { useAtom } from 'jotai';
@@ -56,6 +57,7 @@ function BotView({ location }) {
   const [claimButtonDisabled, setClaimButtonDisabledStatus] = useState(true);
 
   const [copyLink, setCopyLink] = useState(false);
+  const handle = useFullScreenHandle();
 
   //redirect to home if in mobile/tablet
   useEffect(() => {
@@ -497,7 +499,25 @@ function BotView({ location }) {
                   camera-controls
                   alt="3D Cryptobot"
                   src={`https://cloudflare-ipfs.com/ipfs/${bot ? bot.uri : ''}`}
-                ></model-viewer>
+                >
+                  <button onClick={handle.enter} className="text-white absolute right-8 top-6 focus:outline-none">
+                    <MdFullscreen size="24"/>
+                  </button>
+                </model-viewer>
+                <FullScreen handle={handle}>
+                  <model-viewer
+                    style={{ width: '100%', height: '100%' }}
+                    camera-controls
+                    alt="3D Cryptobot"
+                    src={`https://cloudflare-ipfs.com/ipfs/${
+                      bot ? bot.uri : ''
+                    }`}
+                  >
+                    <button onClick={handle.exit} className="text-white absolute right-8 top-6 focus:outline-none">
+                    <MdClose size="36"/>
+                    </button>
+                  </model-viewer>
+                </FullScreen>
               </div>
 
               <div className="px-12 pt-9">
