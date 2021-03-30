@@ -82,24 +82,24 @@ function NavBar(props) {
     }
   }
 
-  // useEffect(() => {
-  //   if (typeof window !== 'undefined') {
-  //     let banner = localStorage.getItem('alertBanner');
-  //     if (banner !== null) {
-  //       setAlertBanner(JSON.parse(banner));
-  //     } else {
-  //       setAlertBanner(true);
-  //     }
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      let banner = localStorage.getItem('alertBanner');
+      if (banner !== null) {
+        setAlertBanner(JSON.parse(banner));
+      } else {
+        setAlertBanner(true);
+      }
+    }
+  }, []);
 
-  // useEffect(() => {
-  //   localStorage.setItem('alertBanner', JSON.stringify(alertBanner));
-  // }, [alertBanner]);
+  useEffect(() => {
+    localStorage.setItem('alertBanner', JSON.stringify(alertBanner));
+  }, [alertBanner]);
 
   return (
     <nav className={`bg-base-900  font-mulish`}>
-      {/* <div
+      <div
         style={{ background: 'rgba(245,158,11,0.2)' }}
         className={`text-white top-0 px-30 py-2 flex items-center justify-between ${
           alertBanner === true ? 'flex' : 'hidden'
@@ -117,15 +117,15 @@ function NavBar(props) {
           </div>
           <div>
             <p className="text-sm ">
-              Cryptoverse Wars is currently on Edo2 testnet. You will lose all
-              your Cryptobots when we will shift to Tezos mainnet.
+              Cryptoverse Wars is on mainnet now. Caution, smart contract have
+              not been audited by a third party.
             </p>
           </div>
         </div>
         <button onClick={() => setAlertBanner(false)}>
           <MdClose size="24" />
         </button>
-      </div> */}
+      </div>
       <div className="px-30 py-8 flex justify-between items-center">
         <Link to="/tezos">
           <Theme className={`h-18 w-auto`} />
