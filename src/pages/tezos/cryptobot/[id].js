@@ -22,7 +22,7 @@ import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 
 import Clipboard from 'react-clipboard.js';
 
-import { MdClose, MdDone,MdFullscreen,MdFullscreenExit } from 'react-icons/md';
+import { MdClose, MdDone, MdFullscreen } from 'react-icons/md';
 import userAtom from 'src/atoms/user-atom';
 import isUserAtom from 'src/atoms/is-user-atom';
 import { useAtom } from 'jotai';
@@ -499,9 +499,14 @@ function BotView({ location }) {
                   camera-controls
                   alt="3D Cryptobot"
                   src={`https://cloudflare-ipfs.com/ipfs/${bot ? bot.uri : ''}`}
+                  auto-rotate
+                  rotation-per-second="15deg"
                 >
-                  <button onClick={handle.enter} className="text-white absolute right-8 top-6 focus:outline-none">
-                    <MdFullscreen size="24"/>
+                  <button
+                    onClick={handle.enter}
+                    className="text-white absolute right-8 top-6 focus:outline-none"
+                  >
+                    <MdFullscreen size="24" />
                   </button>
                 </model-viewer>
                 <FullScreen handle={handle}>
@@ -512,9 +517,14 @@ function BotView({ location }) {
                     src={`https://cloudflare-ipfs.com/ipfs/${
                       bot ? bot.uri : ''
                     }`}
+                    auto-rotate
+                    rotation-per-second="15deg"
                   >
-                    <button onClick={handle.exit} className="text-white absolute right-8 top-6 focus:outline-none">
-                    <MdClose size="36"/>
+                    <button
+                      onClick={handle.exit}
+                      className="text-white absolute right-8 top-6 focus:outline-none"
+                    >
+                      <MdClose size="36" />
                     </button>
                   </model-viewer>
                 </FullScreen>
