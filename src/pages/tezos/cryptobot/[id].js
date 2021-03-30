@@ -32,6 +32,7 @@ import NavBar from 'src/components/NavBar';
 import Button from 'src/components/Buttons';
 import model from 'src/images/Col-1.png';
 import ErrorBot from 'src/images/error.png';
+import Theme from 'src/assets/theme.svg';
 import { isMobile, isTablet } from 'react-device-detect';
 
 // TODO:
@@ -60,11 +61,11 @@ function BotView({ location }) {
   const handle = useFullScreenHandle();
 
   //redirect to home if in mobile/tablet
-  useEffect(() => {
-    if (isMobile || isTablet) {
-      navigate('/tezos');
-    }
-  });
+  // useEffect(() => {
+  //   if (isMobile || isTablet) {
+  //     navigate('/tezos');
+  //   }
+  // });
 
   const tokenId = useMemo(() => {
     const pathArr =
@@ -440,7 +441,7 @@ function BotView({ location }) {
   }
 
   return (
-    <div className="h-screen w-screen fixed bg-base-900">
+    <div className="lg:h-screen lg:w-screen lg:fixed bg-base-900">
       {withdrawNowStep === 1 && (
         <div
           className={`bg-base-900 min-h-screen text-white flex items-center justify-center `}
@@ -490,9 +491,17 @@ function BotView({ location }) {
         </div>
       ) : NFT?.value ? (
         <>
-          <NavBar />
-          <div className="container px-12 py-12 mx-auto">
-            <div className="grid grid-cols-2 gap-4">
+          {isMobile || isTablet ? (
+            <div className="py-8 flex justify-center items-center bg-base-900">
+              <Link to="/tezos">
+                <Theme className={`h-18 w-auto`} />
+              </Link>
+            </div>
+          ) : (
+            <NavBar />
+          )}
+          <div className="container px-4 lg:px-12 py-12 mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <div>
                 <model-viewer
                   style={{ width: '100%', height: '100%' }}
@@ -530,20 +539,20 @@ function BotView({ location }) {
                 </FullScreen>
               </div>
 
-              <div className="px-12 pt-9">
+              <div className="lg:px-12 lg:pt-9">
                 <div>
                   {/* name and social icons start */}
-                  <div className="grid grid-cols-3 gap-4">
+                  <div className="grid grid-cols-3 gap-2 lg:gap-4">
                     <div className="col-span-2">
-                      <h2 className="text-5xl font-mulish font-black text-white">
+                      <h2 className="text-3xl lg:text-5xl font-mulish font-black text-white">
                         Cryptobot{' '}
-                        <span className="text-3xl">
+                        <span className="text-2xl lg:text-3xl">
                           (#{bot ? bot.tokenId : ''}){console.log(bot)}
                         </span>
                       </h2>
                     </div>
                     {/* social icons start */}
-                    <div className="grid grid-cols-3 gap-2">
+                    <div className="grid grid-cols-2 gap-1 justify-end grid-flow-col auto-cols-max">
                       {/* twitter icon */}
                       <a
                         href={`https://twitter.com/intent/tweet?text=Take a look at Cryptobot-${bot.tokenId}, a super cool one-of-a-kind collectible, you can collect and build on Cryptoverse Wars. Create your own Cryptobot army today!  https://cryptocodeschool.in/tezos/cryptobot/${bot.tokenId}&related=twitter%3ABUIDLabs&via=buidllabs&hashtags=NFTs`}
@@ -656,7 +665,7 @@ function BotView({ location }) {
                         <span className="font-mulish font-regular text-base-200 text-lg">
                           Owner
                         </span>
-                        <span className=" font-mulish font-extrabold text-lg text-white ">
+                        <span className=" font-mulish font-extrabold text-lg text-white break-all ">
                           {bot ? bot.holderAddress : ''}
                         </span>
                       </span>
