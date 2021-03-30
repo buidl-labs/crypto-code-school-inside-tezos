@@ -312,7 +312,7 @@ function Transaction({ location }) {
 
   return (
     <div className=" bg-base-900 ">
-      <SEO title={`Claim your bot`} />
+      <SEO title={`Claim your Cryptobot`} />
       <NavBar />
       <Confetti width={width} height={height} run={step === 3} />
       <div className="container px-12 mx-auto h-screen ">

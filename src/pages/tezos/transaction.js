@@ -243,7 +243,7 @@ function Transaction({ location }) {
 
   return (
     <div className=" bg-base-900 ">
-      <SEO title={`Cryptobot`} />
+      <SEO title={`Buy the Cryptobot | Cryptoverse Wars`} />
       <NavBar />
       <Confetti width={width} height={height} run={step === 3} />
       <div className="container px-12 mx-auto ">
