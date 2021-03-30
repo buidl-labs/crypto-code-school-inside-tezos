@@ -441,7 +441,7 @@ function BotView({ location }) {
   }
 
   return (
-    <div className="lg:h-screen lg:w-screen lg:fixed bg-base-900">
+    <div className="xl:h-screen xl:w-screen xl:fixed bg-base-900">
       {withdrawNowStep === 1 && (
         <div
           className={`bg-base-900 min-h-screen text-white flex items-center justify-center `}
@@ -492,7 +492,7 @@ function BotView({ location }) {
       ) : NFT?.value ? (
         <>
           {isMobile || isTablet ? (
-            <div className="py-8 flex justify-center items-center bg-base-900">
+            <div className="py-6 flex justify-center items-center bg-base-900">
               <Link to="/tezos">
                 <Theme className={`h-18 w-auto`} />
               </Link>
@@ -500,8 +500,8 @@ function BotView({ location }) {
           ) : (
             <NavBar />
           )}
-          <div className="container px-4 lg:px-12 py-12 mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div className="container px-4 lg:px-12 lg:py-12 mx-auto">
+            <div className="grid grid-rows-2 xl:grid-cols-2 gap-4">
               <div>
                 <model-viewer
                   style={{ width: '100%', height: '100%' }}
@@ -542,9 +542,9 @@ function BotView({ location }) {
               <div className="lg:px-12 lg:pt-9">
                 <div>
                   {/* name and social icons start */}
-                  <div className="grid grid-cols-3 gap-2 lg:gap-4">
+                  <div className="grid grid-cols-3 gap-2 xl:gap-4">
                     <div className="col-span-2">
-                      <h2 className="text-3xl lg:text-5xl font-mulish font-black text-white">
+                      <h2 className="text-3xl xl:text-5xl font-mulish font-black text-white">
                         Cryptobot{' '}
                         <span className="text-2xl lg:text-3xl">
                           (#{bot ? bot.tokenId : ''}){console.log(bot)}
