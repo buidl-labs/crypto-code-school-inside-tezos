@@ -117,7 +117,7 @@ function NavBar(props) {
           </div>
           <div>
             <p className="text-sm ">
-              Cryptoverse Wars is on mainnet now. Caution, smart contract have
+              Cryptoverse Wars is on mainnet now. Caution, smart contract has
               not been audited by a third party.
             </p>
           </div>
