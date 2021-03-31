@@ -1390,7 +1390,14 @@ const Customizer = ({ location }) => {
                     />
                     <HexColorInput
                       color={colorPicker}
-                      onChange={setColorPicker}
+                      onChange={color => {
+                        setColorPicker(color);
+                        setBotColors(current => {
+                          const copy = { ...current };
+                          copy.items[copy.current] = color;
+                          return copy;
+                        });
+                      }}
                     />
                   </div>
                 ) : (
