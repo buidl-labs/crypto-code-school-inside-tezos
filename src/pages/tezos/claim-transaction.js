@@ -322,6 +322,8 @@ function Transaction({ location }) {
               src={`https://cloudflare-ipfs.com/ipfs/${
                 modelURI ? modelURI : ''
               }`}
+              auto-rotate
+              rotation-per-second="15deg"
             ></model-viewer>
           </div>
           <div className="px-12 pt-4 ">

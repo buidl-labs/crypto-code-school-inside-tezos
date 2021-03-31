@@ -18,10 +18,11 @@ import Loader from 'react-loader-spinner';
 import { BeaconContext } from 'src/context/beacon-context';
 import { CONTRACT_ADDRESS } from 'src/defaults';
 import { connectToBeacon, Tezos } from 'src/utils/wallet';
+import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 
 import Clipboard from 'react-clipboard.js';
 
-import { MdClose, MdDone } from 'react-icons/md';
+import { MdClose, MdDone, MdFullscreen } from 'react-icons/md';
 import userAtom from 'src/atoms/user-atom';
 import isUserAtom from 'src/atoms/is-user-atom';
 import { useAtom } from 'jotai';
@@ -31,6 +32,7 @@ import NavBar from 'src/components/NavBar';
 import Button from 'src/components/Buttons';
 import model from 'src/images/Col-1.png';
 import ErrorBot from 'src/images/error.png';
+import Theme from 'src/assets/theme.svg';
 import { isMobile, isTablet } from 'react-device-detect';
 
 // TODO:
@@ -56,13 +58,14 @@ function BotView({ location }) {
   const [claimButtonDisabled, setClaimButtonDisabledStatus] = useState(true);
 
   const [copyLink, setCopyLink] = useState(false);
+  const handle = useFullScreenHandle();
 
   //redirect to home if in mobile/tablet
-  useEffect(() => {
-    if (isMobile || isTablet) {
-      navigate('/tezos');
-    }
-  });
+  // useEffect(() => {
+  //   if (isMobile || isTablet) {
+  //     navigate('/tezos');
+  //   }
+  // });
 
   const tokenId = useMemo(() => {
     const pathArr =
@@ -438,7 +441,7 @@ function BotView({ location }) {
   }
 
   return (
-    <div className="h-screen w-screen fixed bg-base-900">
+    <div className="xl:h-screen xl:w-screen xl:fixed bg-base-900">
       {withdrawNowStep === 1 && (
         <div
           className={`bg-base-900 min-h-screen text-white flex items-center justify-center `}
@@ -488,32 +491,68 @@ function BotView({ location }) {
         </div>
       ) : NFT?.value ? (
         <>
-          <NavBar />
-          <div className="container px-12 py-12 mx-auto">
-            <div className="grid grid-cols-2 gap-4">
+          {isMobile || isTablet ? (
+            <div className="py-6 flex justify-center items-center bg-base-900">
+              <Link to="/tezos">
+                <Theme className={`h-18 w-auto`} />
+              </Link>
+            </div>
+          ) : (
+            <NavBar />
+          )}
+          <div className="container px-4 lg:px-12 lg:py-12 mx-auto">
+            <div className="grid grid-rows-2 xl:grid-cols-2 gap-4">
               <div>
                 <model-viewer
                   style={{ width: '100%', height: '100%' }}
                   camera-controls
                   alt="3D Cryptobot"
                   src={`https://cloudflare-ipfs.com/ipfs/${bot ? bot.uri : ''}`}
-                ></model-viewer>
+                  auto-rotate
+                  rotation-per-second="15deg"
+                >
+                  <button
+                    onClick={handle.enter}
+                    className="text-white absolute right-8 top-6 focus:outline-none"
+                  >
+                    <MdFullscreen size="24" />
+                  </button>
+                </model-viewer>
+                <FullScreen handle={handle}>
+                  <model-viewer
+                    style={{ width: '100%', height: '100%' }}
+                    camera-controls
+                    alt="3D Cryptobot"
+                    src={`https://cloudflare-ipfs.com/ipfs/${
+                      bot ? bot.uri : ''
+                    }`}
+                    auto-rotate
+                    rotation-per-second="15deg"
+                  >
+                    <button
+                      onClick={handle.exit}
+                      className="text-white absolute right-8 top-6 focus:outline-none"
+                    >
+                      <MdClose size="36" />
+                    </button>
+                  </model-viewer>
+                </FullScreen>
               </div>
 
-              <div className="px-12 pt-9">
+              <div className="lg:px-12 lg:pt-9">
                 <div>
                   {/* name and social icons start */}
-                  <div className="grid grid-cols-3 gap-4">
+                  <div className="grid grid-cols-3 gap-2 xl:gap-4">
                     <div className="col-span-2">
-                      <h2 className="text-5xl font-mulish font-black text-white">
+                      <h2 className="text-3xl xl:text-5xl font-mulish font-black text-white">
                         Cryptobot{' '}
-                        <span className="text-3xl">
+                        <span className="text-2xl lg:text-3xl">
                           (#{bot ? bot.tokenId : ''}){console.log(bot)}
                         </span>
                       </h2>
                     </div>
                     {/* social icons start */}
-                    <div className="grid grid-cols-3 gap-2">
+                    <div className="grid grid-cols-2 gap-1 justify-end grid-flow-col auto-cols-max">
                       {/* twitter icon */}
                       <a
                         href={`https://twitter.com/intent/tweet?text=Take a look at Cryptobot-${bot.tokenId}, a super cool one-of-a-kind collectible, you can collect and build on Cryptoverse Wars. Create your own Cryptobot army today!  https://cryptocodeschool.in/tezos/cryptobot/${bot.tokenId}&related=twitter%3ABUIDLabs&via=buidllabs&hashtags=NFTs`}
@@ -626,7 +665,7 @@ function BotView({ location }) {
                         <span className="font-mulish font-regular text-base-200 text-lg">
                           Owner
                         </span>
-                        <span className=" font-mulish font-extrabold text-lg text-white ">
+                        <span className=" font-mulish font-extrabold text-lg text-white break-all ">
                           {bot ? bot.holderAddress : ''}
                         </span>
                       </span>
@@ -702,35 +741,38 @@ function BotView({ location }) {
         </>
       ) : (
         <>
-          <NavBar />
+          {isMobile || isTablet ? (
+            <div className="py-6 flex justify-center items-center bg-base-900">
+              <Link to="/tezos">
+                <Theme className={`h-18 w-auto`} />
+              </Link>
+            </div>
+          ) : (
+            <NavBar />
+          )}
           <main
             className={`flex h-full w-full items-center justify-center bg-base-900 text-white`}
             style={{
               minHeight: `calc(100vh - 5rem)`,
             }}
           >
-            <div
-              className={`flex justify-center items-center flex-col -mt-16`}
-              style={{
-                maxWidth: '70vw',
-              }}
-            >
+            <div className={`flex justify-start items-center flex-col pb-12 max-w-6xl px-4 -mt-16`}>
               <img src={ErrorBot} className={`h-64 w-64`} />
-              <h3 className={`font-black text-4xl mt-4`}>Oops</h3>
-              <p className={`text-center text-2xl mt-4`}>
-                This cryptobot does not exists. Try exploring on Marketplace or
+              <h3 className={`font-black text-3xl lg:text-4xl mt-4`}>Oops!</h3>
+              <p className={`text-center text-xl lg:text-2xl mt-4`}>
+                This cryptobot does not exists. <br/> Try exploring on Marketplace or
                 build your own while learning in Academy
               </p>
-              <div className={`mt-6 space-x-4`}>
+              <div className={`mt-6 gap-4 grid grid-rows-2 lg:grid-cols-2`}>
                 <Link
                   to="/tezos/marketplace"
-                  className={`bg-base-500 px-9 py-3 text-xl font-bold rounded`}
+                  className={`bg-base-500 px-9 py-3 text-lg lg:text-xl text-center font-bold rounded`}
                 >
                   Explore Marketplace
                 </Link>
                 <Link
                   to="/tezos/academy"
-                  className={`bg-primary-600 px-9 py-3 text-xl font-bold rounded`}
+                  className={`bg-primary-600 px-9 py-3 text-lg lg:text-xl text-center font-bold rounded`}
                 >
                   Go to Academy
                 </Link>
