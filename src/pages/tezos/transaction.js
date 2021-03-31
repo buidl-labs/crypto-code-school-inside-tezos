@@ -251,6 +251,8 @@ function Transaction({ location }) {
               camera-controls
               alt="3D Cryptobot"
               src={`https://cloudflare-ipfs.com/ipfs/${bot ? bot.uri : ''}`}
+              auto-rotate
+              rotation-per-second="15deg"
             ></model-viewer>
           </div>
           <div className="px-12 pt-4 ">
