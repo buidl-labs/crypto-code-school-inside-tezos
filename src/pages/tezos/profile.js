@@ -8,6 +8,8 @@ import { useAsync } from 'react-use';
 import Loader from 'react-loader-spinner';
 import CryptobotCard from 'src/components/CryptobotCard';
 
+import SEO from 'src/components/Seo';
+
 import userAtom from 'src/atoms/user-atom';
 import isUserAtom from 'src/atoms/is-user-atom';
 import { useAtom } from 'jotai';
@@ -89,6 +91,7 @@ function Profile() {
 
   return (
     <div className="bg-base-900 font-mulish">
+      <SEO title={`Profile`} />
       <NavBar />
       <div className="container px-30 py-12">
         {/*profile header starts */}

@@ -34,10 +34,7 @@ import model from 'src/images/Col-1.png';
 import ErrorBot from 'src/images/error.png';
 import Theme from 'src/assets/theme.svg';
 import { isMobile, isTablet } from 'react-device-detect';
-
-// TODO:
-//   1. LOADING STATE
-//   2. NO CRYPTOBOT FOUND STATE
+import SEO from 'src/components/Seo';
 
 function BotView({ location }) {
   let beacon = useContext(BeaconContext);
@@ -89,6 +86,7 @@ function BotView({ location }) {
         if (user.xtzAddress == bot.holderAddress) setOwned(true);
       }
       setBot(bot);
+      console.log(bot);
       console.log('loaded 🔥');
     }
   }, [NFT.loading]);
@@ -442,6 +440,10 @@ function BotView({ location }) {
 
   return (
     <div className="xl:h-screen xl:w-screen xl:fixed bg-base-900">
+      <SEO
+        title={`Cryptobot`}
+        description={`Take a look at this awesome Cryptobot NFT ⚡️`}
+      />
       {withdrawNowStep === 1 && (
         <div
           className={`bg-base-900 min-h-screen text-white flex items-center justify-center `}

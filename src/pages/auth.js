@@ -359,7 +359,7 @@ const AuthPage = ({ location }) => {
     <>
       <AuthLayout>
         <SEO
-          title="Cryptobots vs Aliens | Crypto Code School | Learn to program smart contracts in SmartPy"
+          title="Cryptobots vs Aliens | Crypto Code School | Learn to code on the Tezos blockchain"
           keywords={[
             `smartpy`,
             `python`,
