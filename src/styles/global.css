@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
+body {
   min-height: 100vh;
-  background: #06090F;
+  background: #06090f;
 }
 
 /* Remove dropdown from Input Number */
@@ -17,12 +17,12 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type=number] {
+input[type='number'] {
   -moz-appearance: textfield;
 }
 
 /* Heading glow on Landing page */
-.heading-glow{
+.heading-glow {
   text-shadow: 4px 4px 36px rgba(37, 99, 235, 0.64);
 }
 
@@ -31,19 +31,19 @@ input[type=number] {
   box-sizing: border-box;
   width: 50%;
   padding: 6px;
-  border: 2px solid #6A6B6F;
+  border: 2px solid #6a6b6f;
   border-radius: 4px;
-  background:#383A3F;
+  background: #383a3f;
   outline: none;
   font: inherit;
-  color:white;
+  color: white;
   text-transform: uppercase;
   text-align: center;
   outline: none;
-  margin-right:auto;
+  margin-right: auto;
   margin-left: auto;
 }
 
 input:focus {
-  border-color: #2563EB;
+  border-color: #2563eb;
 }

@@ -758,12 +758,14 @@ function BotView({ location }) {
               minHeight: `calc(100vh - 5rem)`,
             }}
           >
-            <div className={`flex justify-start items-center flex-col pb-12 max-w-6xl px-4 -mt-16`}>
+            <div
+              className={`flex justify-start items-center flex-col pb-12 max-w-6xl px-4 -mt-16`}
+            >
               <img src={ErrorBot} className={`h-64 w-64`} />
               <h3 className={`font-black text-3xl lg:text-4xl mt-4`}>Oops!</h3>
               <p className={`text-center text-xl lg:text-2xl mt-4`}>
-                This cryptobot does not exists. <br/> Try exploring on Marketplace or
-                build your own while learning in Academy
+                This cryptobot does not exists. <br /> Try exploring on
+                Marketplace or build your own while learning in Academy
               </p>
               <div className={`mt-6 gap-4 grid grid-rows-2 lg:grid-cols-2`}>
                 <Link
