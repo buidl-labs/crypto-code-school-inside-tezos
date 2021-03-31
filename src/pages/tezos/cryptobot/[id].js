@@ -741,35 +741,38 @@ function BotView({ location }) {
         </>
       ) : (
         <>
-          <NavBar />
+          {isMobile || isTablet ? (
+            <div className="py-6 flex justify-center items-center bg-base-900">
+              <Link to="/tezos">
+                <Theme className={`h-18 w-auto`} />
+              </Link>
+            </div>
+          ) : (
+            <NavBar />
+          )}
           <main
             className={`flex h-full w-full items-center justify-center bg-base-900 text-white`}
             style={{
               minHeight: `calc(100vh - 5rem)`,
             }}
           >
-            <div
-              className={`flex justify-center items-center flex-col -mt-16`}
-              style={{
-                maxWidth: '70vw',
-              }}
-            >
+            <div className={`flex justify-start items-center flex-col pb-12 max-w-6xl px-4 -mt-16`}>
               <img src={ErrorBot} className={`h-64 w-64`} />
-              <h3 className={`font-black text-4xl mt-4`}>Oops</h3>
-              <p className={`text-center text-2xl mt-4`}>
-                This cryptobot does not exists. Try exploring on Marketplace or
+              <h3 className={`font-black text-3xl lg:text-4xl mt-4`}>Oops!</h3>
+              <p className={`text-center text-xl lg:text-2xl mt-4`}>
+                This cryptobot does not exists. <br/> Try exploring on Marketplace or
                 build your own while learning in Academy
               </p>
-              <div className={`mt-6 space-x-4`}>
+              <div className={`mt-6 gap-4 grid grid-rows-2 lg:grid-cols-2`}>
                 <Link
                   to="/tezos/marketplace"
-                  className={`bg-base-500 px-9 py-3 text-xl font-bold rounded`}
+                  className={`bg-base-500 px-9 py-3 text-lg lg:text-xl text-center font-bold rounded`}
                 >
                   Explore Marketplace
                 </Link>
                 <Link
                   to="/tezos/academy"
-                  className={`bg-primary-600 px-9 py-3 text-xl font-bold rounded`}
+                  className={`bg-primary-600 px-9 py-3 text-lg lg:text-xl text-center font-bold rounded`}
                 >
                   Go to Academy
                 </Link>
