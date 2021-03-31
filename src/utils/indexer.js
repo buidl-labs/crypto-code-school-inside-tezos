@@ -55,10 +55,12 @@ export const getAllNFTsMetadata = async () => {
     )
       .then(res => res.json())
       .then(obj => {
+        console.log('from indexer', obj);
         return {
           tokenId: elm.data.key.value,
           uri: sanitizeIpfsLink(obj.artifactUri),
           timestamp: elm.data.timestamp,
+          imageURI: sanitizeIpfsLink(obj.displayUri),
         };
       });
   };
@@ -66,7 +68,7 @@ export const getAllNFTsMetadata = async () => {
   console.log('all_tokensx', all_tokens);
 
   const filtered = await Promise.all(all_tokens.map(grabContent));
-  console.log('filtered allTokens', filtered);
+  // console.log('filtered allTokens', filtered);
   return filtered;
 };
 
@@ -76,7 +78,7 @@ export const nftOnOffer = async () => {
   );
   const result = await response.json();
   const tokens = result[0].children.find(elm => elm.name === 'offer');
-  console.log('fetching offer metadata');
+  // console.log('fetching offer metadata');
   const offerMetadata = await fetch(
     `https://api.better-call.dev/v1/bigmap/${INDEXER_NETWORK}/${tokens.value}`,
   );
@@ -159,6 +161,7 @@ export const fetchOneNFT = async token_id => {
     const token = allTokens.find(bot => bot.tokenId == token_id);
     const sale = tokensOnOffer.find(element => element.tokenId == token_id);
     const holder = tokenHolders.find(element => element.tokenId == token_id);
+    // console.log('from indexer', token);
 
     return {
       tokenId: token.tokenId,
@@ -240,7 +243,7 @@ export const getNftInfoByXTZAddress = async (address = '') => {
       address: elm.data.key.children[0].value,
       tokenId: elm.data.key.children[1].value,
     }));
-    console.log('holder', tokenHolder);
+    // console.log('holder', tokenHolder);
     if (tokenHolder.length <= 0) {
       return [];
     }

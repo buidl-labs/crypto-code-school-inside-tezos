@@ -5,6 +5,8 @@ import Loader from 'react-loader-spinner';
 import Popper from 'popper.js';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 
+import SEO from 'src/components/Seo';
+
 import NavBar from 'src/components/NavBar';
 import Button from 'src/components/Buttons';
 import { CONTRACT_ADDRESS } from 'src/defaults';
@@ -241,6 +243,7 @@ function Transaction({ location }) {
 
   return (
     <div className=" bg-base-900 ">
+      <SEO title={`Buy the Cryptobot | Cryptoverse Wars`} />
       <NavBar />
       <Confetti width={width} height={height} run={step === 3} />
       <div className="container px-12 mx-auto ">
@@ -251,6 +254,8 @@ function Transaction({ location }) {
               camera-controls
               alt="3D Cryptobot"
               src={`https://cloudflare-ipfs.com/ipfs/${bot ? bot.uri : ''}`}
+              auto-rotate
+              rotation-per-second="15deg"
             ></model-viewer>
           </div>
           <div className="px-12 pt-4 ">

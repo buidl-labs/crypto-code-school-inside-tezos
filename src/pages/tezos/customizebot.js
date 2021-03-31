@@ -25,6 +25,8 @@ import 'react-colorful/dist/index.css';
 import 'src/utils/react-colorful.css';
 import namedColors from 'color-name-list';
 
+import SEO from 'src/components/Seo';
+
 import isUserAtom from 'src/atoms/is-user-atom';
 import userAtom from 'src/atoms/user-atom';
 import { useAtom } from 'jotai';
@@ -784,6 +786,7 @@ const Customizer = ({ location }) => {
       style={{ background: 'rgba(55, 65, 81)' }}
       className="h-screen bg-base-900 fixed"
     >
+      <SEO title={`Cryptobot Customizer`} />
       <div
         id="main"
         className="relative h-full"
@@ -1390,7 +1393,14 @@ const Customizer = ({ location }) => {
                     />
                     <HexColorInput
                       color={colorPicker}
-                      onChange={setColorPicker}
+                      onChange={color => {
+                        setColorPicker(color);
+                        setBotColors(current => {
+                          const copy = { ...current };
+                          copy.items[copy.current] = color;
+                          return copy;
+                        });
+                      }}
                     />
                   </div>
                 ) : (

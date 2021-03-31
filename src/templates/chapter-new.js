@@ -131,6 +131,7 @@ const ChapterTemplate = ({ data: { mdx: chapter }, location }) => {
 
   return (
     <div className={`overflow-hidden`}>
+      <SEO title={NavHeading} />
       <NavBar
         heading={NavHeading}
         module={chapter.frontmatter.filterBy}
