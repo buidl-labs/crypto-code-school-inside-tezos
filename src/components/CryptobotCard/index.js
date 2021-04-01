@@ -12,7 +12,15 @@ function CryptobotCard({ bot, xtzPrice, owned, slugPath }) {
           camera-controls
           alt="3D Cryptobot"
           src={`https://cloudflare-ipfs.com/ipfs/${bot.uri}`}
-        ></model-viewer>
+          id="cryptobot"
+        >
+          <div
+            slot="poster"
+            className="text-white flex justify-center pt-4 text-center"
+          >
+            Loading 3D Cryptobot
+          </div>
+        </model-viewer>
       </div>
       <Link
         to={`/tezos/cryptobot/${bot.tokenId}`}

@@ -21,6 +21,13 @@ input[type='number'] {
   -moz-appearance: textfield;
 }
 
+model-viewer#cryptobot {
+  --poster-color: transparent;
+  --progress-bar-color:white;
+  --progress-bar-height:8px;
+  --progress-mask:#06090f;
+}
+
 /* Heading glow on Landing page */
 .heading-glow {
   text-shadow: 4px 4px 36px rgba(37, 99, 235, 0.64);
