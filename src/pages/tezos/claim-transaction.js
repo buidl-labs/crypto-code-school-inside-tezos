@@ -376,6 +376,18 @@ function Transaction({ location }) {
               <Heading heading="Confirm your claim" />
               <TransactionContainer>
                 <Cost type="Cryptobot Cost" main={'Free'} caption={''} />
+                <div className="bg-base-600 mt-4 px-8 rounded">
+                  <Cost
+                    type="Estimated Network Fee"
+                    main={`${convertMutezToXtz(4556)} XTZ`}
+                    caption={
+                      xtzPrice
+                        ? `$ ${getXTZPriceInUSD(xtzPrice.price, 4556)}`
+                        : null
+                    }
+                    tooltip
+                  />
+                </div>
                 {/* <div className="bg-base-600 mt-4 px-8 rounded">
                   {estimatedTotalCost.loading ? (
                     <Cost
