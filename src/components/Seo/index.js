@@ -23,85 +23,31 @@ function SEO({ description, lang, image, meta, keywords, title, pathname }) {
             }}
             title={title}
             titleTemplate={`%s | ${data.site.siteMetadata.title}`}
-            meta={[
-              {
-                name: `description`,
-                content: metaDescription,
-              },
-              {
-                property: `og:title`,
-                content: title,
-              },
-              {
-                property: `og:url`,
-                content: metaUrl,
-              },
-              {
-                property: `og:description`,
-                content: metaDescription,
-              },
-              {
-                property: `og:type`,
-                content: `website`,
-              },
-              {
-                name: `twitter:creator`,
-                content: `@${data.site.siteMetadata.social.twitter}`,
-              },
-              {
-                name: `twitter:title`,
-                content: title,
-              },
-              {
-                name: `twitter:description`,
-                content: metaDescription,
-              },
-              {
-                name: 'google-site-verification',
-                content: '0l33QQ_a2I1oSyXr4TaAyRsKpKMdE3jimfhRNU9EgnA',
-              },
-            ]
-              .concat(
-                metaImage
-                  ? [
-                      {
-                        property: `og:image`,
-                        content: metaImage,
-                      },
-                      {
-                        property: `og:image:alt`,
-                        content: title,
-                      },
-                      {
-                        property: 'og:image:width',
-                        content: image.width,
-                      },
-                      {
-                        property: 'og:image:height',
-                        content: image.height,
-                      },
-                      {
-                        name: `twitter:card`,
-                        content: `summary_large_image`,
-                      },
-                    ]
-                  : [
-                      {
-                        name: `twitter:card`,
-                        content: `summary`,
-                      },
-                    ],
-              )
-              .concat(
-                keywords.length > 0
-                  ? {
-                      name: `keywords`,
-                      content: keywords.join(`, `),
-                    }
-                  : [],
-              )
-              .concat(meta)}
-          />
+          >
+            <title>{title}</title>
+            <meta name="description" content={metaDescription} />
+            <meta
+              name="google-site-verification"
+              content="0l33QQ_a2I1oSyXr4TaAyRsKpKMdE3jimfhRNU9EgnA"
+            />
+            <meta name="image" content={image} />
+            <link rel="canonical" href={metaUrl} />
+            {/* OpenGraph tags */}
+            <meta property="og:url" content={metaUrl} />
+            <meta property="og:title" content={title} />
+            <meta property="og:type" content="website" />
+            <meta property="og:description" content={metaDescription} />
+            <meta property="og:image" content={image} />
+            {/* Twitter Card tags */}
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta
+              name="twitter:creator"
+              content={`@${data.site.siteMetadata.social.twitter}`}
+            />
+            <meta name="twitter:title" content={title} />
+            <meta name="twitter:description" content={metaDescription} />
+            <meta name="twitter:image" content={metaImage} />{' '}
+          </Helmet>
         );
       }}
     />
