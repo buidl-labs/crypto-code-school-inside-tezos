@@ -323,6 +323,18 @@ function Transaction({ location }) {
                       : null
                   }
                 />
+                <div className="bg-base-600 mt-4 px-8 rounded">
+                  <Cost
+                    type="Estimated Network Fee"
+                    main={`${convertMutezToXtz(4556)} XTZ`}
+                    caption={
+                      xtzPrice
+                        ? `$ ${getXTZPriceInUSD(xtzPrice.price, 4556)}`
+                        : null
+                    }
+                    tooltip
+                  />
+                </div>
                 {/* <div className="bg-base-600 mt-4 px-8 rounded">
                   {estimatedTotalCost.loading ? (
                     <Cost
