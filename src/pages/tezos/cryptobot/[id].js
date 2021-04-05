@@ -524,7 +524,15 @@ function BotView({ location }) {
                   src={`https://cloudflare-ipfs.com/ipfs/${bot ? bot.uri : ''}`}
                   auto-rotate
                   rotation-per-second="15deg"
+                  id="cryptobot"
                 >
+                  <div
+                    slot="poster"
+                    className="text-white flex justify-center pt-6 text-center"
+                  >
+                    Please Wait... <br />
+                    Loading 3D Cryptobot
+                  </div>
                   <button
                     onClick={handle.enter}
                     className="text-white absolute right-8 top-6 focus:outline-none"
@@ -542,7 +550,15 @@ function BotView({ location }) {
                     }`}
                     auto-rotate
                     rotation-per-second="15deg"
+                    id="cryptobot"
                   >
+                    <div
+                      slot="poster"
+                      className="text-white flex justify-center pt-6 text-center"
+                    >
+                      Please Wait... <br />
+                      Loading 3D Cryptobot
+                    </div>
                     <button
                       onClick={handle.exit}
                       className="text-white absolute right-8 top-6 focus:outline-none"

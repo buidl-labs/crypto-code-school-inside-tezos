@@ -327,7 +327,16 @@ function Transaction({ location }) {
               }`}
               auto-rotate
               rotation-per-second="15deg"
-            ></model-viewer>
+              id="cryptobot"
+            >
+              <div
+                slot="poster"
+                className="text-white flex justify-center pt-12 text-center"
+              >
+                Please Wait... <br />
+                Loading 3D Cryptobot
+              </div>
+            </model-viewer>
           </div>
           <div className="px-12 pt-4 ">
             <div className="flex items-center">
