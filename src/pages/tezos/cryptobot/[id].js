@@ -189,14 +189,6 @@ function BotView({ location }) {
           <ModalHeading>
             Are you sure to withdraw cryptobot from sale ?
           </ModalHeading>
-          {/* <Cost
-              type="Estimated Network Fee"
-              main={`${convertMutezToXtz(4556)} XTZ`}
-              caption={
-                xtzPrice ? `$ ${getXTZPriceInUSD(xtzPrice.price, 4556)}` : null
-              }
-              tooltip
-            /> */}
           <div>
             {getUserBalance.loading ? null : getUserBalance.error ? (
               <div className="text-error-500">
