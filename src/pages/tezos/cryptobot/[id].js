@@ -565,7 +565,7 @@ function BotView({ location }) {
                     <div className="grid grid-cols-2 gap-1 justify-end grid-flow-col auto-cols-max">
                       {/* twitter icon */}
                       <a
-                        href={`https://twitter.com/intent/tweet?text=Take a look at Cryptobot-${bot.tokenId}, a super cool one-of-a-kind collectible, you can collect and build on Cryptoverse Wars. Create your own Cryptobot army today!  https://cryptocodeschool.in/tezos/cryptobot/${bot.tokenId}&related=twitter%3ABUIDLabs&via=buidllabs&hashtags=NFTs`}
+                        href={`https://twitter.com/intent/tweet?text=Take a look at Cryptobot-${bot.tokenId}, a super cool one-of-a-kind collectible, you can collect and build on Cryptoverse Wars. Create your own Cryptobot army today!  https://nextjs-sharable-harsh242.vercel.app/cryptobot/${bot.tokenId}&related=twitter%3ABUIDLabs&via=buidllabs&hashtags=NFTs`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="w-12 h-12 inline-flex items-center justify-center rounded-full bg-primary-600 text-white focus:outline-none"
@@ -592,7 +592,7 @@ function BotView({ location }) {
                         }
                       >
                         <Clipboard
-                          data-clipboard-text={`https://cryptocodeschool.in/tezos/cryptobot/${bot.tokenId}`}
+                          data-clipboard-text={`https://nextjs-sharable-harsh242.vercel.app/cryptobot/${bot.tokenId}`}
                           onClick={() => {
                             setCopyLink(true);
                           }}
