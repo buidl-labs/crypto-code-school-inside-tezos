@@ -208,12 +208,6 @@ const Marketplace = () => {
             </div>
           ) : (
             <div className="flex flex-col text-center items-center justify-center w-full space-y-6 mb-5 text-white">
-              <Loader
-                type="BallTriangle"
-                color="#2563EB"
-                height={80}
-                width={80}
-              />
               <div className="space-y-2">
                 <h4 className={`text-xl mb-2 font-extrabold`}>
                   Looks like the blockchain network is loaded!
