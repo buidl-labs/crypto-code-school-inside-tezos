@@ -12,6 +12,7 @@ import Footer from 'src/components/Footer';
 import CryptobotCard from 'src/components/CryptobotCard';
 import uniqBy from 'lodash.uniqby';
 import Loader from 'react-loader-spinner';
+import Button from '../../components/Buttons';
 import userAtom from 'src/atoms/user-atom';
 import isUserAtom from 'src/atoms/is-user-atom';
 import { useAtom } from 'jotai';
@@ -194,7 +195,7 @@ const Marketplace = () => {
             </div>
           ) : allNFTS.error ? (
             <div>Error: {allNFTS.error.message}</div>
-          ) : (
+          ) : nftList.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {nftList.length > 0 &&
                 nftList.map(el => {
@@ -204,6 +205,25 @@ const Marketplace = () => {
                     </div>
                   );
                 })}
+            </div>
+          ) : (
+            <div className="flex flex-col text-center items-center justify-center w-full space-y-6 mb-5 text-white">
+              <div className="space-y-2">
+                <h4 className={`text-xl mb-2 font-extrabold`}>
+                  Looks like the blockchain network is loaded!
+                </h4>
+                <p>
+                  Please <span className="font-extrabold">refresh</span> the
+                  page to view cryptobots{' '}
+                </p>
+                <Button
+                  size="sm"
+                  type="primary"
+                  onClick={() => location.reload()}
+                >
+                  Refresh
+                </Button>
+              </div>
             </div>
           )}
         </div>
