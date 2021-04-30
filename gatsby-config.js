@@ -141,6 +141,7 @@ module.exports = {
       options: {
         // Unique site id
         siteId: 'NSFFLTJT',
+        includedDomains: ['cryptocodeschool.in'],
       },
     },
   ],
