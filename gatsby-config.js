@@ -136,5 +136,12 @@ module.exports = {
         denyUrls: ['localhost:8000'],
       },
     },
+    {
+      resolve: 'gatsby-plugin-fathom',
+      options: {
+        // Unique site id
+        siteId: 'NSFFLTJT',
+      },
+    },
   ],
 };
