@@ -74,6 +74,12 @@ export default function HTML(props) {
           defer
         ></script>
         {props.headComponents}
+        <script
+          src="https://cdn.usefathom.com/script.js"
+          data-spa="auto"
+          data-site="NSFFLTJT"
+          defer
+        ></script>
       </head>
       <body {...props.bodyAttributes}>
         {props.preBodyComponents}
