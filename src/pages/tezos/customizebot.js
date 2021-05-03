@@ -11,7 +11,7 @@ import NavBar from '../../components/NavBar';
 import Button from '../../components/Buttons';
 import { ThanosWallet } from '@thanos-wallet/dapp';
 import { navigate, Link } from 'gatsby';
-import { Canvas, useFrame, useThree } from 'react-three-fiber';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import {
   Environment,
   useGLTF,
