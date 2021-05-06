@@ -17,59 +17,67 @@ export function sanitizeIpfsLink(origin) {
 }
 
 export const getAllNFTsMetadata = async () => {
-  const response = await fetch(
-    `https://api.better-call.dev/v1/contract/${INDEXER_NETWORK}/${CONTRACT_ADDRESS}/storage`,
-  );
-
-  const result = await response.json();
-  const tokens = result[0].children.find(elm => elm.name === 'token_metadata');
-
-  const tokensMetataData = await fetch(
-    `https://api.better-call.dev/v1/bigmap/${INDEXER_NETWORK}/${tokens.value}`,
-  );
-  const tokensMetataDataJSON = await tokensMetataData.json();
-  console.log('tokenMetadata', tokensMetataDataJSON);
-  const num_keys = tokensMetataDataJSON.active_keys;
-  const all_tokens = [];
-  let tk;
-
-  for (let i = 0; i < parseInt(num_keys / 10) + 1; i++) {
-    tk = await fetch(
-      `https://api.better-call.dev/v1/bigmap/${INDEXER_NETWORK}/${
-        tokens.value
-      }/keys?offset=${10 * i}`,
+  try {
+    const response = await fetch(
+      `https://api.better-call.dev/v1/contract/${INDEXER_NETWORK}/${CONTRACT_ADDRESS}/storage`,
     );
-    all_tokens.push(...(await tk.json()));
-    console.log('all_tokens', all_tokens.length);
-    if (all_tokens.length == num_keys) break;
+
+    const result = await response.json();
+    const tokens = result[0].children.find(
+      elm => elm.name === 'token_metadata',
+    );
+
+    const tokensMetataData = await fetch(
+      `https://api.better-call.dev/v1/bigmap/${INDEXER_NETWORK}/${tokens.value}`,
+    );
+    const tokensMetataDataJSON = await tokensMetataData.json();
+    // console.log('tokenMetadata', tokensMetataDataJSON);
+    const num_keys = tokensMetataDataJSON.active_keys;
+    const all_tokens = [];
+    let tk;
+
+    for (let i = 0; i < parseInt(num_keys / 10) + 1; i++) {
+      tk = await fetch(
+        `https://api.better-call.dev/v1/bigmap/${INDEXER_NETWORK}/${
+          tokens.value
+        }/keys?offset=${10 * i}`,
+      );
+      all_tokens.push(...(await tk.json()));
+      console.log('all_tokens', all_tokens.length);
+      if (all_tokens.length == num_keys) break;
+    }
+
+    if (typeof all_tokens === 'undefined' || all_tokens.length <= 0) {
+      console.log('returning empty');
+      return [];
+    }
+
+    const grabContent = elm => {
+      console.log('elm', elm.data.value.children[1].children[0].value);
+      return fetch(
+        sanitizeJsonUri(elm.data.value.children[1].children[0].value),
+      )
+        .then(res => res.json())
+        .then(obj => {
+          const cryptobot = {
+            tokenId: elm.data.key.value,
+            uri: sanitizeIpfsLink(obj.artifactUri),
+            timestamp: elm.data.timestamp,
+            imageURI: sanitizeIpfsLink(obj.displayUri),
+          };
+          console.log('cryptobot', cryptobot);
+          return cryptobot;
+        });
+    };
+
+    console.log('all_tokensx', all_tokens);
+
+    const filtered = Promise.all(all_tokens.map(grabContent));
+    console.log('filtered allTokens', await filtered);
+    return filtered;
+  } catch (err) {
+    console.log(err);
   }
-
-  if (typeof all_tokens === 'undefined' || all_tokens.length <= 0) {
-    return [];
-  }
-
-  const grabContent = elm => {
-    console.log('elm', elm);
-    return fetch(
-      sanitizeJsonUri(bytes2Char(elm.data.value.children[1].children[0].value)),
-    )
-      .then(res => res.json())
-      .then(obj => {
-        console.log('from indexer', obj);
-        return {
-          tokenId: elm.data.key.value,
-          uri: sanitizeIpfsLink(obj.artifactUri),
-          timestamp: elm.data.timestamp,
-          imageURI: sanitizeIpfsLink(obj.displayUri),
-        };
-      });
-  };
-
-  console.log('all_tokensx', all_tokens);
-
-  const filtered = await Promise.all(all_tokens.map(grabContent));
-  // console.log('filtered allTokens', filtered);
-  return filtered;
 };
 
 export const nftOnOffer = async () => {
@@ -104,25 +112,24 @@ export const nftOnOffer = async () => {
 
   const nullValuesRemoved = all_offers.filter(elm => elm.data.value != null);
 
-  const filtered = nullValuesRemoved.map(elm => {
-    return {
-      tokenId: elm.data.key.value,
-      isForSale: true,
-      saleValueInMutez: elm.data.value.children[0].value,
-      seller: elm.data.value.children[1].value,
-      timestamp: elm.data.timestamp,
-    };
-  });
+  const filtered = nullValuesRemoved.map(elm => ({
+    tokenId: elm.data.key.value,
+    isForSale: true,
+    saleValueInMutez: elm.data.value.children[0].value,
+    seller: elm.data.value.children[1].value,
+    timestamp: elm.data.timestamp,
+  }));
 
   return filtered;
 };
 
 export const fetchAllNfts = async () => {
+  console.log('fetching all nfts');
   try {
     const allTokens = await getAllNFTsMetadata();
     const tokensOnOffer = await nftOnOffer();
     const tokenHolders = await getAllTokenHolders();
-
+    // return allTokens;
     // console.log('allTokens', allTokens);
 
     const combined = allTokens.map(elm => {
@@ -145,7 +152,7 @@ export const fetchAllNfts = async () => {
         owner: holder ? holder.address : null,
       };
     });
-
+    console.log('returning combined');
     return combined;
   } catch (e) {
     console.log(e);
