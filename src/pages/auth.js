@@ -153,7 +153,7 @@ function VerifyEmailModal(props) {
   let { email, setEmail, nickname, setNickname } = props;
   const { user, setUser } = props;
   const [error, setError] = useState('');
-  const magic = useRef(new Magic('pk_live_AF81E967B87694E3'));
+  const magic = useRef(new Magic('pk_live_855AD00DCBEA58C1'));
 
   async function verifyEmail(e) {
     e.preventDefault();
