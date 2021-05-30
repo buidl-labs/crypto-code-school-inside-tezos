@@ -138,7 +138,7 @@ const Footer = () => {
       <div className="bg-gray-800 bg-opacity-75">
         <div className="container mx-auto py-8 px-5 flex flex-col justify-center">
           <p className="text-white text-xl text-center">
-            2020 | Made with ❤️ by people @
+            {new Date().getFullYear()} | Made with ❤️ by people @
             <a
               href="https://buidllabs.io/"
               className="underline"
