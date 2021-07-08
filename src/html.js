@@ -27,14 +27,18 @@ export default function HTML(props) {
           src={withPrefix('eztz.min.js')}
           type="text/javascript"
           charSet="utf-8"
-          async
           defer
         ></script>
         <script
           src={withPrefix('sodium-sumo-master.js')}
           type="text/javascript"
           charSet="utf-8"
-          async
+          defer
+        ></script>
+        <script
+          src={withPrefix('tezos-bls12-381.min.js')}
+          type="text/javascript"
+          charSet="utf-8"
           defer
         ></script>
         {/*
@@ -63,14 +67,12 @@ export default function HTML(props) {
           src={withPrefix('brython/brython.js')}
           type="text/javascript"
           charSet="utf-8"
-          async
           defer
         ></script>
         <script
           src={withPrefix('brython/brython_stdlib.js')}
           type="text/javascript"
           charSet="utf-8"
-          async
           defer
         ></script>
         {props.headComponents}
