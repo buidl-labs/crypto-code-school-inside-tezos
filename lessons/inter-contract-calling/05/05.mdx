@@ -57,7 +57,7 @@ editor:
             
             
         @sp.entry_point
-        def recieve_powerup(self, params):
+        def receive_powerup(self, params):
             # will implement this in the next chapter
             pass
         
@@ -146,7 +146,7 @@ editor:
             
         
         @sp.entry_point
-        def recieve_powerup(self, params):
+        def receive_powerup(self, params):
             # will implement this in the next chapter
             pass
         
@@ -216,7 +216,7 @@ Don't worry if it looks overwhelming at first glance, we're going to break it do
 `sp.contract` takes three arguments -
 
 1. `t` - it's the **type** of data that the contract is accepting. `t` has to match the type of `data_to_be_sent` in the `sp.transfer`.
-2. `address` - this specifies the adress of the contract inside which you'll be calling an entry point. Needs to be of the type `sp.TAdress`.
+2. `address` - this specifies the adress of the contract inside which you'll be calling an entry point. Needs to be of the type `sp.TAddress`.
 3. `entry_point` - this is an optional parameter which specifies which entry point do you want to call. The catch is, you don't need to specify the entry point if the contract only has 1 entry point (like our `Market` contract).
 
 The result of `sp.contract` is passed to `destination_contract` in `sp.transfer`.
@@ -234,7 +234,7 @@ def send(self):
                 target_contract)
 ```
 
-- This entry point calls the `recieve` entry point in the `target` contract with the data `"This message should be sent!"` as the parameter to `recieve`.
+- This entry point calls the `receive` entry point in the `target` contract with the data `"This message should be sent!"` as the parameter to `receive`.
 - `.open_some` chained to `sp.contract` simply checks if the specified entry point in the `target` contract is accepting a string(the specified data type which is the first argument to `sp.contract`) or not.
 - Look how the type of `data_to_be_sent` matches the type specified in `sp.contract`, this is mandatory.
 
@@ -260,7 +260,7 @@ class Target(sp.Contract):
 	    self.init(msg = "")
 
     @sp.entry_point
-	def recieve(self, params):
+	def receive(self, params):
 		self.data.msg = params.payload
 
 @sp.add_test(name = "Test")
@@ -279,7 +279,7 @@ This is a bare-bones example, we covered the `send` function in the section abov
 
 1. In the `test` we pass in the address of the target to the `Sender`.
 2. Inside the `Sender` contract, we're calling the `receive` entry point present inside the `Target` contract.
-3. `recieve` entry point simply assigns `msg` the value it's being sent as the `payload`.
+3. `receive` entry point simply assigns `msg` the value it's being sent as the `payload`.
 
 > Note: If the `Target` contract had more than one entry point. We would also need to specify the entry point in `sp.contract`
 
@@ -305,7 +305,7 @@ Let's give our `Cryptobot` the ability to buy a `powerup`.
 
 <br />
 
-> In the coming chapters we'll implement `send_powerup` in `Market` and `recieve_powerup` in `Cryptobot`.
+> In the coming chapters we'll implement `send_powerup` in `Market` and `receive_powerup` in `Cryptobot`.
 
 ### Testing our code
 
